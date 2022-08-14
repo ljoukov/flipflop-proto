@@ -66,7 +66,7 @@ struct CardData {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var blocks: [CardBlock] = []
+  var blocks: [CardBlockData] = []
 
   var hashTags: [String] = []
 
@@ -75,12 +75,12 @@ struct CardData {
   init() {}
 }
 
-struct CardBlock {
+struct CardBlockData {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var type: CardBlock.OneOf_Type? = nil
+  var type: CardBlockData.OneOf_Type? = nil
 
   var space: SpaceBlockData {
     get {
@@ -105,7 +105,7 @@ struct CardBlock {
     case image(ImageBlockData)
 
   #if !swift(>=4.1)
-    static func ==(lhs: CardBlock.OneOf_Type, rhs: CardBlock.OneOf_Type) -> Bool {
+    static func ==(lhs: CardBlockData.OneOf_Type, rhs: CardBlockData.OneOf_Type) -> Bool {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
@@ -263,8 +263,8 @@ extension CardData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationB
   }
 }
 
-extension CardBlock: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "CardBlock"
+extension CardBlockData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "CardBlockData"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "space"),
     2: .same(proto: "image"),
@@ -326,7 +326,7 @@ extension CardBlock: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementation
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: CardBlock, rhs: CardBlock) -> Bool {
+  static func ==(lhs: CardBlockData, rhs: CardBlockData) -> Bool {
     if lhs.type != rhs.type {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

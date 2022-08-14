@@ -15,11 +15,11 @@ message StoryData {
 }
 
 message CardData {
-  repeated CardBlock blocks = 1;
+  repeated CardBlockData blocks = 1;
   repeated string hashTags = 2;
 }
 
-message CardBlock {
+message CardBlockData {
   oneof type {
     SpaceBlockData space = 1;
     ImageBlockData image = 2;
