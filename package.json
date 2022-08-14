@@ -2,7 +2,7 @@
   "name": "flipflop-proto",
   "version": "1.0.0",
   "scripts": {
-    "generate": "protoc --swift_out=generated/swift/proto/ --ts_out=generated/ts/proto/ --proto_path=src/ src/StoryProto.proto"
+    "generate": "protoc --swift_out=generated/swift/proto/ --ts_out=generated/ts/proto/ --ts_opt eslint_disable,ts_nocheck --proto_path=src/ src/StoryProto.proto"
   },
   "dependencies": {
     "@protobuf-ts/plugin": "^2.7.0"
