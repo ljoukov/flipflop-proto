@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+message StoryData {
+  string id = 1;
+  
+  string createdBy = 2;
+  google.protobuf.Timestamp createdAt = 3;
+  string lastModifiedBy = 4;
+  google.protobuf.Timestamp lastModifiedAt = 5;
+
+  string title = 6;
+  repeated CardData cards = 7;
+}
+
+message CardData {
+  repeated CardBlock blocks = 1;
+  repeated string hashTags = 2;
+}
+
+message CardBlock {
+  oneof type {
+    SpaceBlockData space = 1;
+    ImageBlockData image = 2;
+  }
+}
+
+message SpaceBlockData {
+  float scale = 1;
+}
+
+message ImageBlockData {
+  float scale = 1;
+}
