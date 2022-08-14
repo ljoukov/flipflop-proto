@@ -20,7 +20,7 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
-struct StoryData {
+struct StoryProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -51,7 +51,7 @@ struct StoryData {
 
   var title: String = String()
 
-  var cards: [CardData] = []
+  var cards: [CardProto] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -61,12 +61,12 @@ struct StoryData {
   fileprivate var _lastModifiedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
-struct CardData {
+struct CardProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var blocks: [CardBlockData] = []
+  var blocks: [CardBlockProto] = []
 
   var hashTags: [String] = []
 
@@ -75,25 +75,25 @@ struct CardData {
   init() {}
 }
 
-struct CardBlockData {
+struct CardBlockProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var type: CardBlockData.OneOf_Type? = nil
+  var type: CardBlockProto.OneOf_Type? = nil
 
-  var space: SpaceBlockData {
+  var space: SpaceBlockProto {
     get {
       if case .space(let v)? = type {return v}
-      return SpaceBlockData()
+      return SpaceBlockProto()
     }
     set {type = .space(newValue)}
   }
 
-  var image: ImageBlockData {
+  var image: ImageBlockProto {
     get {
       if case .image(let v)? = type {return v}
-      return ImageBlockData()
+      return ImageBlockProto()
     }
     set {type = .image(newValue)}
   }
@@ -101,11 +101,11 @@ struct CardBlockData {
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_Type: Equatable {
-    case space(SpaceBlockData)
-    case image(ImageBlockData)
+    case space(SpaceBlockProto)
+    case image(ImageBlockProto)
 
   #if !swift(>=4.1)
-    static func ==(lhs: CardBlockData.OneOf_Type, rhs: CardBlockData.OneOf_Type) -> Bool {
+    static func ==(lhs: CardBlockProto.OneOf_Type, rhs: CardBlockProto.OneOf_Type) -> Bool {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
@@ -127,7 +127,7 @@ struct CardBlockData {
   init() {}
 }
 
-struct SpaceBlockData {
+struct SpaceBlockProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -139,7 +139,7 @@ struct SpaceBlockData {
   init() {}
 }
 
-struct ImageBlockData {
+struct ImageBlockProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -153,8 +153,8 @@ struct ImageBlockData {
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-extension StoryData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "StoryData"
+extension StoryProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoryProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "id"),
     2: .same(proto: "createdBy"),
@@ -212,7 +212,7 @@ extension StoryData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementation
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: StoryData, rhs: StoryData) -> Bool {
+  static func ==(lhs: StoryProto, rhs: StoryProto) -> Bool {
     if lhs.id != rhs.id {return false}
     if lhs.createdBy != rhs.createdBy {return false}
     if lhs._createdAt != rhs._createdAt {return false}
@@ -225,8 +225,8 @@ extension StoryData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementation
   }
 }
 
-extension CardData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "CardData"
+extension CardProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "CardProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "blocks"),
     2: .same(proto: "hashTags"),
@@ -255,7 +255,7 @@ extension CardData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationB
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: CardData, rhs: CardData) -> Bool {
+  static func ==(lhs: CardProto, rhs: CardProto) -> Bool {
     if lhs.blocks != rhs.blocks {return false}
     if lhs.hashTags != rhs.hashTags {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
@@ -263,8 +263,8 @@ extension CardData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationB
   }
 }
 
-extension CardBlockData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "CardBlockData"
+extension CardBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "CardBlockProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "space"),
     2: .same(proto: "image"),
@@ -277,7 +277,7 @@ extension CardBlockData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try {
-        var v: SpaceBlockData?
+        var v: SpaceBlockProto?
         var hadOneofValue = false
         if let current = self.type {
           hadOneofValue = true
@@ -290,7 +290,7 @@ extension CardBlockData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
         }
       }()
       case 2: try {
-        var v: ImageBlockData?
+        var v: ImageBlockProto?
         var hadOneofValue = false
         if let current = self.type {
           hadOneofValue = true
@@ -326,15 +326,15 @@ extension CardBlockData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: CardBlockData, rhs: CardBlockData) -> Bool {
+  static func ==(lhs: CardBlockProto, rhs: CardBlockProto) -> Bool {
     if lhs.type != rhs.type {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
-extension SpaceBlockData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "SpaceBlockData"
+extension SpaceBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "SpaceBlockProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "scale"),
   ]
@@ -358,15 +358,15 @@ extension SpaceBlockData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: SpaceBlockData, rhs: SpaceBlockData) -> Bool {
+  static func ==(lhs: SpaceBlockProto, rhs: SpaceBlockProto) -> Bool {
     if lhs.scale != rhs.scale {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
-extension ImageBlockData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "ImageBlockData"
+extension ImageBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "ImageBlockProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "scale"),
   ]
@@ -390,7 +390,7 @@ extension ImageBlockData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: ImageBlockData, rhs: ImageBlockData) -> Bool {
+  static func ==(lhs: ImageBlockProto, rhs: ImageBlockProto) -> Bool {
     if lhs.scale != rhs.scale {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

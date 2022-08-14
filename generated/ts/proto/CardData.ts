@@ -13,9 +13,9 @@ import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
 import { Timestamp } from "./google/protobuf/timestamp";
 /**
- * @generated from protobuf message StoryData
+ * @generated from protobuf message StoryProto
  */
-export interface StoryData {
+export interface StoryProto {
     /**
      * @generated from protobuf field: string id = 1;
      */
@@ -41,85 +41,85 @@ export interface StoryData {
      */
     title: string;
     /**
-     * @generated from protobuf field: repeated CardData cards = 7;
+     * @generated from protobuf field: repeated CardProto cards = 7;
      */
-    cards: CardData[];
+    cards: CardProto[];
 }
 /**
- * @generated from protobuf message CardData
+ * @generated from protobuf message CardProto
  */
-export interface CardData {
+export interface CardProto {
     /**
-     * @generated from protobuf field: repeated CardBlockData blocks = 1;
+     * @generated from protobuf field: repeated CardBlockProto blocks = 1;
      */
-    blocks: CardBlockData[];
+    blocks: CardBlockProto[];
     /**
      * @generated from protobuf field: repeated string hashTags = 2;
      */
     hashTags: string[];
 }
 /**
- * @generated from protobuf message CardBlockData
+ * @generated from protobuf message CardBlockProto
  */
-export interface CardBlockData {
+export interface CardBlockProto {
     /**
      * @generated from protobuf oneof: type
      */
     type: {
         oneofKind: "space";
         /**
-         * @generated from protobuf field: SpaceBlockData space = 1;
+         * @generated from protobuf field: SpaceBlockProto space = 1;
          */
-        space: SpaceBlockData;
+        space: SpaceBlockProto;
     } | {
         oneofKind: "image";
         /**
-         * @generated from protobuf field: ImageBlockData image = 2;
+         * @generated from protobuf field: ImageBlockProto image = 2;
          */
-        image: ImageBlockData;
+        image: ImageBlockProto;
     } | {
         oneofKind: undefined;
     };
 }
 /**
- * @generated from protobuf message SpaceBlockData
+ * @generated from protobuf message SpaceBlockProto
  */
-export interface SpaceBlockData {
+export interface SpaceBlockProto {
     /**
      * @generated from protobuf field: float scale = 1;
      */
     scale: number;
 }
 /**
- * @generated from protobuf message ImageBlockData
+ * @generated from protobuf message ImageBlockProto
  */
-export interface ImageBlockData {
+export interface ImageBlockProto {
     /**
      * @generated from protobuf field: float scale = 1;
      */
     scale: number;
 }
 // @generated message type with reflection information, may provide speed optimized methods
-class StoryData$Type extends MessageType<StoryData> {
+class StoryProto$Type extends MessageType<StoryProto> {
     constructor() {
-        super("StoryData", [
+        super("StoryProto", [
             { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "createdBy", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "createdAt", kind: "message", T: () => Timestamp },
             { no: 4, name: "lastModifiedBy", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "lastModifiedAt", kind: "message", T: () => Timestamp },
             { no: 6, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 7, name: "cards", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => CardData }
+            { no: 7, name: "cards", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => CardProto }
         ]);
     }
-    create(value?: PartialMessage<StoryData>): StoryData {
+    create(value?: PartialMessage<StoryProto>): StoryProto {
         const message = { id: "", createdBy: "", lastModifiedBy: "", title: "", cards: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<StoryData>(this, message, value);
+            reflectionMergePartial<StoryProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoryData): StoryData {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoryProto): StoryProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -142,8 +142,8 @@ class StoryData$Type extends MessageType<StoryData> {
                 case /* string title */ 6:
                     message.title = reader.string();
                     break;
-                case /* repeated CardData cards */ 7:
-                    message.cards.push(CardData.internalBinaryRead(reader, reader.uint32(), options));
+                case /* repeated CardProto cards */ 7:
+                    message.cards.push(CardProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -156,7 +156,7 @@ class StoryData$Type extends MessageType<StoryData> {
         }
         return message;
     }
-    internalBinaryWrite(message: StoryData, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: StoryProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string id = 1; */
         if (message.id !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.id);
@@ -175,9 +175,9 @@ class StoryData$Type extends MessageType<StoryData> {
         /* string title = 6; */
         if (message.title !== "")
             writer.tag(6, WireType.LengthDelimited).string(message.title);
-        /* repeated CardData cards = 7; */
+        /* repeated CardProto cards = 7; */
         for (let i = 0; i < message.cards.length; i++)
-            CardData.internalBinaryWrite(message.cards[i], writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+            CardProto.internalBinaryWrite(message.cards[i], writer.tag(7, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -185,31 +185,31 @@ class StoryData$Type extends MessageType<StoryData> {
     }
 }
 /**
- * @generated MessageType for protobuf message StoryData
+ * @generated MessageType for protobuf message StoryProto
  */
-export const StoryData = new StoryData$Type();
+export const StoryProto = new StoryProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class CardData$Type extends MessageType<CardData> {
+class CardProto$Type extends MessageType<CardProto> {
     constructor() {
-        super("CardData", [
-            { no: 1, name: "blocks", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => CardBlockData },
+        super("CardProto", [
+            { no: 1, name: "blocks", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => CardBlockProto },
             { no: 2, name: "hashTags", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<CardData>): CardData {
+    create(value?: PartialMessage<CardProto>): CardProto {
         const message = { blocks: [], hashTags: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<CardData>(this, message, value);
+            reflectionMergePartial<CardProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CardData): CardData {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CardProto): CardProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* repeated CardBlockData blocks */ 1:
-                    message.blocks.push(CardBlockData.internalBinaryRead(reader, reader.uint32(), options));
+                case /* repeated CardBlockProto blocks */ 1:
+                    message.blocks.push(CardBlockProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 case /* repeated string hashTags */ 2:
                     message.hashTags.push(reader.string());
@@ -225,10 +225,10 @@ class CardData$Type extends MessageType<CardData> {
         }
         return message;
     }
-    internalBinaryWrite(message: CardData, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated CardBlockData blocks = 1; */
+    internalBinaryWrite(message: CardProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated CardBlockProto blocks = 1; */
         for (let i = 0; i < message.blocks.length; i++)
-            CardBlockData.internalBinaryWrite(message.blocks[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+            CardBlockProto.internalBinaryWrite(message.blocks[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         /* repeated string hashTags = 2; */
         for (let i = 0; i < message.hashTags.length; i++)
             writer.tag(2, WireType.LengthDelimited).string(message.hashTags[i]);
@@ -239,39 +239,39 @@ class CardData$Type extends MessageType<CardData> {
     }
 }
 /**
- * @generated MessageType for protobuf message CardData
+ * @generated MessageType for protobuf message CardProto
  */
-export const CardData = new CardData$Type();
+export const CardProto = new CardProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class CardBlockData$Type extends MessageType<CardBlockData> {
+class CardBlockProto$Type extends MessageType<CardBlockProto> {
     constructor() {
-        super("CardBlockData", [
-            { no: 1, name: "space", kind: "message", oneof: "type", T: () => SpaceBlockData },
-            { no: 2, name: "image", kind: "message", oneof: "type", T: () => ImageBlockData }
+        super("CardBlockProto", [
+            { no: 1, name: "space", kind: "message", oneof: "type", T: () => SpaceBlockProto },
+            { no: 2, name: "image", kind: "message", oneof: "type", T: () => ImageBlockProto }
         ]);
     }
-    create(value?: PartialMessage<CardBlockData>): CardBlockData {
+    create(value?: PartialMessage<CardBlockProto>): CardBlockProto {
         const message = { type: { oneofKind: undefined } };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<CardBlockData>(this, message, value);
+            reflectionMergePartial<CardBlockProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CardBlockData): CardBlockData {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CardBlockProto): CardBlockProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* SpaceBlockData space */ 1:
+                case /* SpaceBlockProto space */ 1:
                     message.type = {
                         oneofKind: "space",
-                        space: SpaceBlockData.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).space)
+                        space: SpaceBlockProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).space)
                     };
                     break;
-                case /* ImageBlockData image */ 2:
+                case /* ImageBlockProto image */ 2:
                     message.type = {
                         oneofKind: "image",
-                        image: ImageBlockData.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).image)
+                        image: ImageBlockProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).image)
                     };
                     break;
                 default:
@@ -285,13 +285,13 @@ class CardBlockData$Type extends MessageType<CardBlockData> {
         }
         return message;
     }
-    internalBinaryWrite(message: CardBlockData, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* SpaceBlockData space = 1; */
+    internalBinaryWrite(message: CardBlockProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* SpaceBlockProto space = 1; */
         if (message.type.oneofKind === "space")
-            SpaceBlockData.internalBinaryWrite(message.type.space, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* ImageBlockData image = 2; */
+            SpaceBlockProto.internalBinaryWrite(message.type.space, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* ImageBlockProto image = 2; */
         if (message.type.oneofKind === "image")
-            ImageBlockData.internalBinaryWrite(message.type.image, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+            ImageBlockProto.internalBinaryWrite(message.type.image, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -299,24 +299,24 @@ class CardBlockData$Type extends MessageType<CardBlockData> {
     }
 }
 /**
- * @generated MessageType for protobuf message CardBlockData
+ * @generated MessageType for protobuf message CardBlockProto
  */
-export const CardBlockData = new CardBlockData$Type();
+export const CardBlockProto = new CardBlockProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class SpaceBlockData$Type extends MessageType<SpaceBlockData> {
+class SpaceBlockProto$Type extends MessageType<SpaceBlockProto> {
     constructor() {
-        super("SpaceBlockData", [
+        super("SpaceBlockProto", [
             { no: 1, name: "scale", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ }
         ]);
     }
-    create(value?: PartialMessage<SpaceBlockData>): SpaceBlockData {
+    create(value?: PartialMessage<SpaceBlockProto>): SpaceBlockProto {
         const message = { scale: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<SpaceBlockData>(this, message, value);
+            reflectionMergePartial<SpaceBlockProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SpaceBlockData): SpaceBlockData {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SpaceBlockProto): SpaceBlockProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -335,7 +335,7 @@ class SpaceBlockData$Type extends MessageType<SpaceBlockData> {
         }
         return message;
     }
-    internalBinaryWrite(message: SpaceBlockData, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: SpaceBlockProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* float scale = 1; */
         if (message.scale !== 0)
             writer.tag(1, WireType.Bit32).float(message.scale);
@@ -346,24 +346,24 @@ class SpaceBlockData$Type extends MessageType<SpaceBlockData> {
     }
 }
 /**
- * @generated MessageType for protobuf message SpaceBlockData
+ * @generated MessageType for protobuf message SpaceBlockProto
  */
-export const SpaceBlockData = new SpaceBlockData$Type();
+export const SpaceBlockProto = new SpaceBlockProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class ImageBlockData$Type extends MessageType<ImageBlockData> {
+class ImageBlockProto$Type extends MessageType<ImageBlockProto> {
     constructor() {
-        super("ImageBlockData", [
+        super("ImageBlockProto", [
             { no: 1, name: "scale", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ }
         ]);
     }
-    create(value?: PartialMessage<ImageBlockData>): ImageBlockData {
+    create(value?: PartialMessage<ImageBlockProto>): ImageBlockProto {
         const message = { scale: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<ImageBlockData>(this, message, value);
+            reflectionMergePartial<ImageBlockProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ImageBlockData): ImageBlockData {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ImageBlockProto): ImageBlockProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -382,7 +382,7 @@ class ImageBlockData$Type extends MessageType<ImageBlockData> {
         }
         return message;
     }
-    internalBinaryWrite(message: ImageBlockData, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: ImageBlockProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* float scale = 1; */
         if (message.scale !== 0)
             writer.tag(1, WireType.Bit32).float(message.scale);
@@ -393,6 +393,6 @@ class ImageBlockData$Type extends MessageType<ImageBlockData> {
     }
 }
 /**
- * @generated MessageType for protobuf message ImageBlockData
+ * @generated MessageType for protobuf message ImageBlockProto
  */
-export const ImageBlockData = new ImageBlockData$Type();
+export const ImageBlockProto = new ImageBlockProto$Type();

@@ -2,7 +2,7 @@ syntax = "proto3";
 
 import "google/protobuf/timestamp.proto";
 
-message StoryData {
+message StoryProto {
   string id = 1;
   
   string createdBy = 2;
@@ -11,25 +11,25 @@ message StoryData {
   google.protobuf.Timestamp lastModifiedAt = 5;
 
   string title = 6;
-  repeated CardData cards = 7;
+  repeated CardProto cards = 7;
 }
 
-message CardData {
-  repeated CardBlockData blocks = 1;
+message CardProto {
+  repeated CardBlockProto blocks = 1;
   repeated string hashTags = 2;
 }
 
-message CardBlockData {
+message CardBlockProto {
   oneof type {
-    SpaceBlockData space = 1;
-    ImageBlockData image = 2;
+    SpaceBlockProto space = 1;
+    ImageBlockProto image = 2;
   }
 }
 
-message SpaceBlockData {
+message SpaceBlockProto {
   float scale = 1;
 }
 
-message ImageBlockData {
+message ImageBlockProto {
   float scale = 1;
 }
