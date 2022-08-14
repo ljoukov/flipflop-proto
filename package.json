@@ -2,7 +2,7 @@
   "name": "flipflop-proto",
   "version": "1.0.0",
   "scripts": {
-    "generate": "protoc --swift_out=generated/swift/proto --ts_out=generated/ts/proto --proto_path=src/proto/ src/proto/CardData.proto"
+    "generate": "protoc --swift_out=generated/swift/gen/ --ts_out=generated/ts/gen/ --proto_path=src/proto/ src/proto/CardData.proto"
   },
   "dependencies": {
     "@protobuf-ts/plugin": "^2.7.0"
