@@ -2,6 +2,11 @@ syntax = "proto3";
 
 import "google/protobuf/timestamp.proto";
 
+message StoriesProto {
+  google.protobuf.Timestamp timestamp = 1;
+  repeated StoryProto stories = 2;
+}
+
 message StoryProto {
   string id = 1;
   

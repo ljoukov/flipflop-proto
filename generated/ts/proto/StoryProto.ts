@@ -15,6 +15,19 @@ import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
 import { Timestamp } from "./google/protobuf/timestamp";
 /**
+ * @generated from protobuf message StoriesProto
+ */
+export interface StoriesProto {
+    /**
+     * @generated from protobuf field: google.protobuf.Timestamp timestamp = 1;
+     */
+    timestamp?: Timestamp;
+    /**
+     * @generated from protobuf field: repeated StoryProto stories = 2;
+     */
+    stories: StoryProto[];
+}
+/**
  * @generated from protobuf message StoryProto
  */
 export interface StoryProto {
@@ -338,6 +351,60 @@ export enum TextHyphensProto {
      */
     AUTO = 2
 }
+// @generated message type with reflection information, may provide speed optimized methods
+class StoriesProto$Type extends MessageType<StoriesProto> {
+    constructor() {
+        super("StoriesProto", [
+            { no: 1, name: "timestamp", kind: "message", T: () => Timestamp },
+            { no: 2, name: "stories", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoryProto }
+        ]);
+    }
+    create(value?: PartialMessage<StoriesProto>): StoriesProto {
+        const message = { stories: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<StoriesProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoriesProto): StoriesProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* google.protobuf.Timestamp timestamp */ 1:
+                    message.timestamp = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.timestamp);
+                    break;
+                case /* repeated StoryProto stories */ 2:
+                    message.stories.push(StoryProto.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: StoriesProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* google.protobuf.Timestamp timestamp = 1; */
+        if (message.timestamp)
+            Timestamp.internalBinaryWrite(message.timestamp, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* repeated StoryProto stories = 2; */
+        for (let i = 0; i < message.stories.length; i++)
+            StoryProto.internalBinaryWrite(message.stories[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message StoriesProto
+ */
+export const StoriesProto = new StoriesProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class StoryProto$Type extends MessageType<StoryProto> {
     constructor() {
