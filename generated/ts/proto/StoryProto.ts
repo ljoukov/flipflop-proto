@@ -14,6 +14,24 @@ import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
 import { Timestamp } from "./google/protobuf/timestamp";
+import { Duration } from "./google/protobuf/duration";
+/**
+ * @generated from protobuf message GetStoriesResponseProto
+ */
+export interface GetStoriesResponseProto {
+    /**
+     * @generated from protobuf field: StoriesProto stories = 1;
+     */
+    stories?: StoriesProto;
+    /**
+     * @generated from protobuf field: google.protobuf.Duration firebase_latency = 2;
+     */
+    firebaseLatency?: Duration;
+    /**
+     * @generated from protobuf field: google.protobuf.Duration conversion_latency = 3;
+     */
+    conversionLatency?: Duration;
+}
 /**
  * @generated from protobuf message StoriesProto
  */
@@ -44,7 +62,7 @@ export interface StoryProto {
      */
     createdAt?: Timestamp;
     /**
-     * @generated from protobuf field: string lastModifiedBy = 4;
+     * @generated from protobuf field: string last_modified_by = 4;
      */
     lastModifiedBy: string;
     /**
@@ -352,6 +370,67 @@ export enum TextHyphensProto {
     AUTO = 2
 }
 // @generated message type with reflection information, may provide speed optimized methods
+class GetStoriesResponseProto$Type extends MessageType<GetStoriesResponseProto> {
+    constructor() {
+        super("GetStoriesResponseProto", [
+            { no: 1, name: "stories", kind: "message", T: () => StoriesProto },
+            { no: 2, name: "firebase_latency", kind: "message", T: () => Duration },
+            { no: 3, name: "conversion_latency", kind: "message", T: () => Duration }
+        ]);
+    }
+    create(value?: PartialMessage<GetStoriesResponseProto>): GetStoriesResponseProto {
+        const message = {};
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<GetStoriesResponseProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetStoriesResponseProto): GetStoriesResponseProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* StoriesProto stories */ 1:
+                    message.stories = StoriesProto.internalBinaryRead(reader, reader.uint32(), options, message.stories);
+                    break;
+                case /* google.protobuf.Duration firebase_latency */ 2:
+                    message.firebaseLatency = Duration.internalBinaryRead(reader, reader.uint32(), options, message.firebaseLatency);
+                    break;
+                case /* google.protobuf.Duration conversion_latency */ 3:
+                    message.conversionLatency = Duration.internalBinaryRead(reader, reader.uint32(), options, message.conversionLatency);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: GetStoriesResponseProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* StoriesProto stories = 1; */
+        if (message.stories)
+            StoriesProto.internalBinaryWrite(message.stories, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.Duration firebase_latency = 2; */
+        if (message.firebaseLatency)
+            Duration.internalBinaryWrite(message.firebaseLatency, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.Duration conversion_latency = 3; */
+        if (message.conversionLatency)
+            Duration.internalBinaryWrite(message.conversionLatency, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message GetStoriesResponseProto
+ */
+export const GetStoriesResponseProto = new GetStoriesResponseProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class StoriesProto$Type extends MessageType<StoriesProto> {
     constructor() {
         super("StoriesProto", [
@@ -412,7 +491,7 @@ class StoryProto$Type extends MessageType<StoryProto> {
             { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "created_by", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "created_at", kind: "message", T: () => Timestamp },
-            { no: 4, name: "lastModifiedBy", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "last_modified_by", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "last_modified_at", kind: "message", T: () => Timestamp },
             { no: 6, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 7, name: "cards", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => CardProto }
@@ -439,7 +518,7 @@ class StoryProto$Type extends MessageType<StoryProto> {
                 case /* google.protobuf.Timestamp created_at */ 3:
                     message.createdAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.createdAt);
                     break;
-                case /* string lastModifiedBy */ 4:
+                case /* string last_modified_by */ 4:
                     message.lastModifiedBy = reader.string();
                     break;
                 case /* google.protobuf.Timestamp last_modified_at */ 5:
@@ -472,7 +551,7 @@ class StoryProto$Type extends MessageType<StoryProto> {
         /* google.protobuf.Timestamp created_at = 3; */
         if (message.createdAt)
             Timestamp.internalBinaryWrite(message.createdAt, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* string lastModifiedBy = 4; */
+        /* string last_modified_by = 4; */
         if (message.lastModifiedBy !== "")
             writer.tag(4, WireType.LengthDelimited).string(message.lastModifiedBy);
         /* google.protobuf.Timestamp last_modified_at = 5; */

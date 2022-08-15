@@ -1,6 +1,13 @@
 syntax = "proto3";
 
+import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
+
+message GetStoriesResponseProto {
+  StoriesProto stories = 1;
+  google.protobuf.Duration firebase_latency = 2;
+  google.protobuf.Duration conversion_latency = 3;
+}
 
 message StoriesProto {
   google.protobuf.Timestamp timestamp = 1;
@@ -12,7 +19,7 @@ message StoryProto {
   
   string created_by = 2;
   google.protobuf.Timestamp created_at = 3;
-  string lastModifiedBy = 4;
+  string last_modified_by = 4;
   google.protobuf.Timestamp last_modified_at = 5;
 
   string title = 6;

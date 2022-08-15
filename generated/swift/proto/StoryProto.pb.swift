@@ -316,6 +316,47 @@ extension TextHyphensProto: CaseIterable {
 
 #endif  // swift(>=4.2)
 
+struct GetStoriesResponseProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var stories: StoriesProto {
+    get {return _stories ?? StoriesProto()}
+    set {_stories = newValue}
+  }
+  /// Returns true if `stories` has been explicitly set.
+  var hasStories: Bool {return self._stories != nil}
+  /// Clears the value of `stories`. Subsequent reads from it will return its default value.
+  mutating func clearStories() {self._stories = nil}
+
+  var firebaseLatency: SwiftProtobuf.Google_Protobuf_Duration {
+    get {return _firebaseLatency ?? SwiftProtobuf.Google_Protobuf_Duration()}
+    set {_firebaseLatency = newValue}
+  }
+  /// Returns true if `firebaseLatency` has been explicitly set.
+  var hasFirebaseLatency: Bool {return self._firebaseLatency != nil}
+  /// Clears the value of `firebaseLatency`. Subsequent reads from it will return its default value.
+  mutating func clearFirebaseLatency() {self._firebaseLatency = nil}
+
+  var conversionLatency: SwiftProtobuf.Google_Protobuf_Duration {
+    get {return _conversionLatency ?? SwiftProtobuf.Google_Protobuf_Duration()}
+    set {_conversionLatency = newValue}
+  }
+  /// Returns true if `conversionLatency` has been explicitly set.
+  var hasConversionLatency: Bool {return self._conversionLatency != nil}
+  /// Clears the value of `conversionLatency`. Subsequent reads from it will return its default value.
+  mutating func clearConversionLatency() {self._conversionLatency = nil}
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+
+  fileprivate var _stories: StoriesProto? = nil
+  fileprivate var _firebaseLatency: SwiftProtobuf.Google_Protobuf_Duration? = nil
+  fileprivate var _conversionLatency: SwiftProtobuf.Google_Protobuf_Duration? = nil
+}
+
 struct StoriesProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -693,6 +734,54 @@ extension TextHyphensProto: SwiftProtobuf._ProtoNameProviding {
   ]
 }
 
+extension GetStoriesResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "GetStoriesResponseProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "stories"),
+    2: .standard(proto: "firebase_latency"),
+    3: .standard(proto: "conversion_latency"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._stories) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._firebaseLatency) }()
+      case 3: try { try decoder.decodeSingularMessageField(value: &self._conversionLatency) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._stories {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    try { if let v = self._firebaseLatency {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
+    try { if let v = self._conversionLatency {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: GetStoriesResponseProto, rhs: GetStoriesResponseProto) -> Bool {
+    if lhs._stories != rhs._stories {return false}
+    if lhs._firebaseLatency != rhs._firebaseLatency {return false}
+    if lhs._conversionLatency != rhs._conversionLatency {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
 extension StoriesProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "StoriesProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -741,7 +830,7 @@ extension StoryProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementatio
     1: .same(proto: "id"),
     2: .standard(proto: "created_by"),
     3: .standard(proto: "created_at"),
-    4: .same(proto: "lastModifiedBy"),
+    4: .standard(proto: "last_modified_by"),
     5: .standard(proto: "last_modified_at"),
     6: .same(proto: "title"),
     7: .same(proto: "cards"),
