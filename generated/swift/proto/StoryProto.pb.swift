@@ -20,6 +20,302 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
+enum FontNameProto: SwiftProtobuf.Enum {
+  typealias RawValue = Int
+  case text // = 0
+  case display // = 1
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .text
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .text
+    case 1: self = .display
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .text: return 0
+    case .display: return 1
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+}
+
+#if swift(>=4.2)
+
+extension FontNameProto: CaseIterable {
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static var allCases: [FontNameProto] = [
+    .text,
+    .display,
+  ]
+}
+
+#endif  // swift(>=4.2)
+
+enum FontWeightProto: SwiftProtobuf.Enum {
+  typealias RawValue = Int
+  case normal // = 0
+  case bold // = 1
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .normal
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .normal
+    case 1: self = .bold
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .normal: return 0
+    case .bold: return 1
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+}
+
+#if swift(>=4.2)
+
+extension FontWeightProto: CaseIterable {
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static var allCases: [FontWeightProto] = [
+    .normal,
+    .bold,
+  ]
+}
+
+#endif  // swift(>=4.2)
+
+enum FontStyleProto: SwiftProtobuf.Enum {
+  typealias RawValue = Int
+  case normal // = 0
+  case italic // = 1
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .normal
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .normal
+    case 1: self = .italic
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .normal: return 0
+    case .italic: return 1
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+}
+
+#if swift(>=4.2)
+
+extension FontStyleProto: CaseIterable {
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static var allCases: [FontStyleProto] = [
+    .normal,
+    .italic,
+  ]
+}
+
+#endif  // swift(>=4.2)
+
+enum TextDecorationProto: SwiftProtobuf.Enum {
+  typealias RawValue = Int
+  case none // = 0
+  case underline // = 1
+  case lineThrough // = 2
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .none
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .none
+    case 1: self = .underline
+    case 2: self = .lineThrough
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .none: return 0
+    case .underline: return 1
+    case .lineThrough: return 2
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+}
+
+#if swift(>=4.2)
+
+extension TextDecorationProto: CaseIterable {
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static var allCases: [TextDecorationProto] = [
+    .none,
+    .underline,
+    .lineThrough,
+  ]
+}
+
+#endif  // swift(>=4.2)
+
+enum TextAlignmentProto: SwiftProtobuf.Enum {
+  typealias RawValue = Int
+  case left // = 0
+  case center // = 1
+  case right // = 2
+  case justify // = 3
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .left
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .left
+    case 1: self = .center
+    case 2: self = .right
+    case 3: self = .justify
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .left: return 0
+    case .center: return 1
+    case .right: return 2
+    case .justify: return 3
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+}
+
+#if swift(>=4.2)
+
+extension TextAlignmentProto: CaseIterable {
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static var allCases: [TextAlignmentProto] = [
+    .left,
+    .center,
+    .right,
+    .justify,
+  ]
+}
+
+#endif  // swift(>=4.2)
+
+enum TextWhitespaceProto: SwiftProtobuf.Enum {
+  typealias RawValue = Int
+  case normal // = 0
+  case preWrap // = 1
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .normal
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .normal
+    case 1: self = .preWrap
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .normal: return 0
+    case .preWrap: return 1
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+}
+
+#if swift(>=4.2)
+
+extension TextWhitespaceProto: CaseIterable {
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static var allCases: [TextWhitespaceProto] = [
+    .normal,
+    .preWrap,
+  ]
+}
+
+#endif  // swift(>=4.2)
+
+enum TextHyphensProto: SwiftProtobuf.Enum {
+  typealias RawValue = Int
+  case none // = 0
+  case manual // = 1
+  case auto // = 2
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .none
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .none
+    case 1: self = .manual
+    case 2: self = .auto
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .none: return 0
+    case .manual: return 1
+    case .auto: return 2
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+}
+
+#if swift(>=4.2)
+
+extension TextHyphensProto: CaseIterable {
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static var allCases: [TextHyphensProto] = [
+    .none,
+    .manual,
+    .auto,
+  ]
+}
+
+#endif  // swift(>=4.2)
+
 struct StoryProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -98,11 +394,38 @@ struct CardBlockProto {
     set {type = .image(newValue)}
   }
 
+  var text: TextBlockProto {
+    get {
+      if case .text(let v)? = type {return v}
+      return TextBlockProto()
+    }
+    set {type = .text(newValue)}
+  }
+
+  var flip: FlipBlockProto {
+    get {
+      if case .flip(let v)? = type {return v}
+      return FlipBlockProto()
+    }
+    set {type = .flip(newValue)}
+  }
+
+  var coffee: CoffeeBlockProto {
+    get {
+      if case .coffee(let v)? = type {return v}
+      return CoffeeBlockProto()
+    }
+    set {type = .coffee(newValue)}
+  }
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_Type: Equatable {
     case space(SpaceBlockProto)
     case image(ImageBlockProto)
+    case text(TextBlockProto)
+    case flip(FlipBlockProto)
+    case coffee(CoffeeBlockProto)
 
   #if !swift(>=4.1)
     static func ==(lhs: CardBlockProto.OneOf_Type, rhs: CardBlockProto.OneOf_Type) -> Bool {
@@ -116,6 +439,18 @@ struct CardBlockProto {
       }()
       case (.image, .image): return {
         guard case .image(let l) = lhs, case .image(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.text, .text): return {
+        guard case .text(let l) = lhs, case .text(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.flip, .flip): return {
+        guard case .flip(let l) = lhs, case .flip(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.coffee, .coffee): return {
+        guard case .coffee(let l) = lhs, case .coffee(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       default: return false
@@ -139,28 +474,210 @@ struct SpaceBlockProto {
   init() {}
 }
 
-struct ImageBlockProto {
+struct ImageRefProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var scale: Float = 0
+  var storagePath: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 }
 
+struct ImageBlockProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var imageRef: ImageRefProto {
+    get {return _imageRef ?? ImageRefProto()}
+    set {_imageRef = newValue}
+  }
+  /// Returns true if `imageRef` has been explicitly set.
+  var hasImageRef: Bool {return self._imageRef != nil}
+  /// Clears the value of `imageRef`. Subsequent reads from it will return its default value.
+  mutating func clearImageRef() {self._imageRef = nil}
+
+  var scale: Float = 0
+
+  var borderRadius: Float = 0
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+
+  fileprivate var _imageRef: ImageRefProto? = nil
+}
+
+struct TextSpanProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var text: String = String()
+
+  var fontWeight: FontWeightProto = .normal
+
+  var fontStyle: FontStyleProto = .normal
+
+  var decoration: TextDecorationProto = .none
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+/// Box of text with styles
+struct StyledTextProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var spans: [TextSpanProto] = []
+
+  var fontName: FontNameProto = .text
+
+  var fontSize: Float = 0
+
+  var paddingStart: Float = 0
+
+  var paddingEnd: Float = 0
+
+  var align: TextAlignmentProto = .left
+
+  var whitespace: TextWhitespaceProto = .normal
+
+  var hyphens: TextHyphensProto = .none
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct TextBlockProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var styledText: StyledTextProto {
+    get {return _styledText ?? StyledTextProto()}
+    set {_styledText = newValue}
+  }
+  /// Returns true if `styledText` has been explicitly set.
+  var hasStyledText: Bool {return self._styledText != nil}
+  /// Clears the value of `styledText`. Subsequent reads from it will return its default value.
+  mutating func clearStyledText() {self._styledText = nil}
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+
+  fileprivate var _styledText: StyledTextProto? = nil
+}
+
+struct FlipBlockProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var label: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct CoffeeBlockProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var label: String = String()
+
+  /// moves the label along the circle
+  var startOffset: Float = 0
+
+  var imageRef: ImageRefProto {
+    get {return _imageRef ?? ImageRefProto()}
+    set {_imageRef = newValue}
+  }
+  /// Returns true if `imageRef` has been explicitly set.
+  var hasImageRef: Bool {return self._imageRef != nil}
+  /// Clears the value of `imageRef`. Subsequent reads from it will return its default value.
+  mutating func clearImageRef() {self._imageRef = nil}
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+
+  fileprivate var _imageRef: ImageRefProto? = nil
+}
+
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
+
+extension FontNameProto: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "FONT_NAME_PROTO_TEXT"),
+    1: .same(proto: "FONT_NAME_PROTO_DISPLAY"),
+  ]
+}
+
+extension FontWeightProto: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "FONT_WEIGHT_PROTO_NORMAL"),
+    1: .same(proto: "FONT_WEIGHT_PROTO_BOLD"),
+  ]
+}
+
+extension FontStyleProto: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "FONT_STYLE_PROTO_NORMAL"),
+    1: .same(proto: "FONT_STYLE_PROTO_ITALIC"),
+  ]
+}
+
+extension TextDecorationProto: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "TEXT_DECORATION_PROTO_NONE"),
+    1: .same(proto: "TEXT_DECORATION_PROTO_UNDERLINE"),
+    2: .same(proto: "TEXT_DECORATION_PROTO_LINE_THROUGH"),
+  ]
+}
+
+extension TextAlignmentProto: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "TEXT_ALIGNMENT_PROTO_LEFT"),
+    1: .same(proto: "TEXT_ALIGNMENT_PROTO_CENTER"),
+    2: .same(proto: "TEXT_ALIGNMENT_PROTO_RIGHT"),
+    3: .same(proto: "TEXT_ALIGNMENT_PROTO_JUSTIFY"),
+  ]
+}
+
+extension TextWhitespaceProto: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "TEXT_WHITESPACE_PROTO_NORMAL"),
+    1: .same(proto: "TEXT_WHITESPACE_PROTO_PRE_WRAP"),
+  ]
+}
+
+extension TextHyphensProto: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "TEXT_HYPHENS_PROTO_NONE"),
+    1: .same(proto: "TEXT_HYPHENS_PROTO_MANUAL"),
+    2: .same(proto: "TEXT_HYPHENS_PROTO_AUTO"),
+  ]
+}
 
 extension StoryProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "StoryProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "id"),
-    2: .same(proto: "createdBy"),
-    3: .same(proto: "createdAt"),
+    2: .standard(proto: "created_by"),
+    3: .standard(proto: "created_at"),
     4: .same(proto: "lastModifiedBy"),
-    5: .same(proto: "lastModifiedAt"),
+    5: .standard(proto: "last_modified_at"),
     6: .same(proto: "title"),
     7: .same(proto: "cards"),
   ]
@@ -229,7 +746,7 @@ extension CardProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementation
   static let protoMessageName: String = "CardProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "blocks"),
-    2: .same(proto: "hashTags"),
+    2: .standard(proto: "hash_tags"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -268,6 +785,9 @@ extension CardBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "space"),
     2: .same(proto: "image"),
+    3: .same(proto: "text"),
+    4: .same(proto: "flip"),
+    5: .same(proto: "coffee"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -302,6 +822,45 @@ extension CardBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
           self.type = .image(v)
         }
       }()
+      case 3: try {
+        var v: TextBlockProto?
+        var hadOneofValue = false
+        if let current = self.type {
+          hadOneofValue = true
+          if case .text(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.type = .text(v)
+        }
+      }()
+      case 4: try {
+        var v: FlipBlockProto?
+        var hadOneofValue = false
+        if let current = self.type {
+          hadOneofValue = true
+          if case .flip(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.type = .flip(v)
+        }
+      }()
+      case 5: try {
+        var v: CoffeeBlockProto?
+        var hadOneofValue = false
+        if let current = self.type {
+          hadOneofValue = true
+          if case .coffee(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.type = .coffee(v)
+        }
+      }()
       default: break
       }
     }
@@ -320,6 +879,18 @@ extension CardBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
     case .image?: try {
       guard case .image(let v)? = self.type else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    }()
+    case .text?: try {
+      guard case .text(let v)? = self.type else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+    }()
+    case .flip?: try {
+      guard case .flip(let v)? = self.type else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+    }()
+    case .coffee?: try {
+      guard case .coffee(let v)? = self.type else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
     }()
     case nil: break
     }
@@ -365,10 +936,10 @@ extension SpaceBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
   }
 }
 
-extension ImageBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "ImageBlockProto"
+extension ImageRefProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "ImageRefProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "scale"),
+    1: .standard(proto: "storage_path"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -377,21 +948,309 @@ extension ImageBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularFloatField(value: &self.scale) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self.storagePath) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.storagePath.isEmpty {
+      try visitor.visitSingularStringField(value: self.storagePath, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: ImageRefProto, rhs: ImageRefProto) -> Bool {
+    if lhs.storagePath != rhs.storagePath {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension ImageBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "ImageBlockProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "image_ref"),
+    2: .same(proto: "scale"),
+    3: .standard(proto: "border_radius"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._imageRef) }()
+      case 2: try { try decoder.decodeSingularFloatField(value: &self.scale) }()
+      case 3: try { try decoder.decodeSingularFloatField(value: &self.borderRadius) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._imageRef {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
     if self.scale != 0 {
-      try visitor.visitSingularFloatField(value: self.scale, fieldNumber: 1)
+      try visitor.visitSingularFloatField(value: self.scale, fieldNumber: 2)
+    }
+    if self.borderRadius != 0 {
+      try visitor.visitSingularFloatField(value: self.borderRadius, fieldNumber: 3)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: ImageBlockProto, rhs: ImageBlockProto) -> Bool {
+    if lhs._imageRef != rhs._imageRef {return false}
     if lhs.scale != rhs.scale {return false}
+    if lhs.borderRadius != rhs.borderRadius {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension TextSpanProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "TextSpanProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "text"),
+    2: .standard(proto: "font_weight"),
+    3: .standard(proto: "font_style"),
+    4: .same(proto: "decoration"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.text) }()
+      case 2: try { try decoder.decodeSingularEnumField(value: &self.fontWeight) }()
+      case 3: try { try decoder.decodeSingularEnumField(value: &self.fontStyle) }()
+      case 4: try { try decoder.decodeSingularEnumField(value: &self.decoration) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.text.isEmpty {
+      try visitor.visitSingularStringField(value: self.text, fieldNumber: 1)
+    }
+    if self.fontWeight != .normal {
+      try visitor.visitSingularEnumField(value: self.fontWeight, fieldNumber: 2)
+    }
+    if self.fontStyle != .normal {
+      try visitor.visitSingularEnumField(value: self.fontStyle, fieldNumber: 3)
+    }
+    if self.decoration != .none {
+      try visitor.visitSingularEnumField(value: self.decoration, fieldNumber: 4)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: TextSpanProto, rhs: TextSpanProto) -> Bool {
+    if lhs.text != rhs.text {return false}
+    if lhs.fontWeight != rhs.fontWeight {return false}
+    if lhs.fontStyle != rhs.fontStyle {return false}
+    if lhs.decoration != rhs.decoration {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension StyledTextProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StyledTextProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "spans"),
+    2: .standard(proto: "font_name"),
+    3: .standard(proto: "font_size"),
+    4: .standard(proto: "padding_start"),
+    5: .standard(proto: "padding_end"),
+    6: .same(proto: "align"),
+    7: .same(proto: "whitespace"),
+    8: .same(proto: "hyphens"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.spans) }()
+      case 2: try { try decoder.decodeSingularEnumField(value: &self.fontName) }()
+      case 3: try { try decoder.decodeSingularFloatField(value: &self.fontSize) }()
+      case 4: try { try decoder.decodeSingularFloatField(value: &self.paddingStart) }()
+      case 5: try { try decoder.decodeSingularFloatField(value: &self.paddingEnd) }()
+      case 6: try { try decoder.decodeSingularEnumField(value: &self.align) }()
+      case 7: try { try decoder.decodeSingularEnumField(value: &self.whitespace) }()
+      case 8: try { try decoder.decodeSingularEnumField(value: &self.hyphens) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.spans.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.spans, fieldNumber: 1)
+    }
+    if self.fontName != .text {
+      try visitor.visitSingularEnumField(value: self.fontName, fieldNumber: 2)
+    }
+    if self.fontSize != 0 {
+      try visitor.visitSingularFloatField(value: self.fontSize, fieldNumber: 3)
+    }
+    if self.paddingStart != 0 {
+      try visitor.visitSingularFloatField(value: self.paddingStart, fieldNumber: 4)
+    }
+    if self.paddingEnd != 0 {
+      try visitor.visitSingularFloatField(value: self.paddingEnd, fieldNumber: 5)
+    }
+    if self.align != .left {
+      try visitor.visitSingularEnumField(value: self.align, fieldNumber: 6)
+    }
+    if self.whitespace != .normal {
+      try visitor.visitSingularEnumField(value: self.whitespace, fieldNumber: 7)
+    }
+    if self.hyphens != .none {
+      try visitor.visitSingularEnumField(value: self.hyphens, fieldNumber: 8)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: StyledTextProto, rhs: StyledTextProto) -> Bool {
+    if lhs.spans != rhs.spans {return false}
+    if lhs.fontName != rhs.fontName {return false}
+    if lhs.fontSize != rhs.fontSize {return false}
+    if lhs.paddingStart != rhs.paddingStart {return false}
+    if lhs.paddingEnd != rhs.paddingEnd {return false}
+    if lhs.align != rhs.align {return false}
+    if lhs.whitespace != rhs.whitespace {return false}
+    if lhs.hyphens != rhs.hyphens {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension TextBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "TextBlockProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "styled_text"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._styledText) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._styledText {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: TextBlockProto, rhs: TextBlockProto) -> Bool {
+    if lhs._styledText != rhs._styledText {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension FlipBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "FlipBlockProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "label"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.label) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.label.isEmpty {
+      try visitor.visitSingularStringField(value: self.label, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: FlipBlockProto, rhs: FlipBlockProto) -> Bool {
+    if lhs.label != rhs.label {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension CoffeeBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "CoffeeBlockProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "label"),
+    2: .standard(proto: "start_offset"),
+    3: .standard(proto: "image_ref"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.label) }()
+      case 2: try { try decoder.decodeSingularFloatField(value: &self.startOffset) }()
+      case 3: try { try decoder.decodeSingularMessageField(value: &self._imageRef) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.label.isEmpty {
+      try visitor.visitSingularStringField(value: self.label, fieldNumber: 1)
+    }
+    if self.startOffset != 0 {
+      try visitor.visitSingularFloatField(value: self.startOffset, fieldNumber: 2)
+    }
+    try { if let v = self._imageRef {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: CoffeeBlockProto, rhs: CoffeeBlockProto) -> Bool {
+    if lhs.label != rhs.label {return false}
+    if lhs.startOffset != rhs.startOffset {return false}
+    if lhs._imageRef != rhs._imageRef {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

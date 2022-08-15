@@ -5,10 +5,10 @@ import "google/protobuf/timestamp.proto";
 message StoryProto {
   string id = 1;
   
-  string createdBy = 2;
-  google.protobuf.Timestamp createdAt = 3;
+  string created_by = 2;
+  google.protobuf.Timestamp created_at = 3;
   string lastModifiedBy = 4;
-  google.protobuf.Timestamp lastModifiedAt = 5;
+  google.protobuf.Timestamp last_modified_at = 5;
 
   string title = 6;
   repeated CardProto cards = 7;
@@ -16,13 +16,16 @@ message StoryProto {
 
 message CardProto {
   repeated CardBlockProto blocks = 1;
-  repeated string hashTags = 2;
+  repeated string hash_tags = 2;
 }
 
 message CardBlockProto {
   oneof type {
     SpaceBlockProto space = 1;
     ImageBlockProto image = 2;
+    TextBlockProto text = 3;
+    FlipBlockProto flip = 4;
+    CoffeeBlockProto coffee = 5;
   }
 }
 
@@ -30,6 +33,84 @@ message SpaceBlockProto {
   float scale = 1;
 }
 
+message ImageRefProto {
+  string storage_path = 1;
+}
+
 message ImageBlockProto {
-  float scale = 1;
+  ImageRefProto image_ref = 1;
+  float scale = 2;
+  float border_radius = 3;
+}
+
+enum FontNameProto {
+  FONT_NAME_PROTO_TEXT = 0;
+  FONT_NAME_PROTO_DISPLAY = 1;
+}
+
+enum FontWeightProto {
+  FONT_WEIGHT_PROTO_NORMAL = 0;
+  FONT_WEIGHT_PROTO_BOLD = 1;
+}
+
+enum FontStyleProto {
+  FONT_STYLE_PROTO_NORMAL = 0;
+  FONT_STYLE_PROTO_ITALIC = 1;
+}
+
+enum TextDecorationProto {
+  TEXT_DECORATION_PROTO_NONE = 0;
+  TEXT_DECORATION_PROTO_UNDERLINE = 1;
+  TEXT_DECORATION_PROTO_LINE_THROUGH = 2;
+}
+
+enum TextAlignmentProto {
+  TEXT_ALIGNMENT_PROTO_LEFT = 0;
+  TEXT_ALIGNMENT_PROTO_CENTER = 1;
+  TEXT_ALIGNMENT_PROTO_RIGHT = 2;
+  TEXT_ALIGNMENT_PROTO_JUSTIFY = 3;
+}
+
+enum TextWhitespaceProto {
+  TEXT_WHITESPACE_PROTO_NORMAL = 0;
+  TEXT_WHITESPACE_PROTO_PRE_WRAP = 1;
+}
+
+enum TextHyphensProto {
+  TEXT_HYPHENS_PROTO_NONE = 0;
+  TEXT_HYPHENS_PROTO_MANUAL = 1;
+  TEXT_HYPHENS_PROTO_AUTO = 2;
+}
+
+message TextSpanProto {
+  string text = 1;
+  FontWeightProto font_weight = 2;
+  FontStyleProto font_style = 3;
+  TextDecorationProto decoration = 4;
+}
+
+// Box of text with styles
+message StyledTextProto {
+  repeated TextSpanProto spans = 1;
+  FontNameProto font_name = 2;
+  float font_size = 3;
+  float padding_start = 4;
+  float padding_end = 5;
+  TextAlignmentProto align = 6;
+  TextWhitespaceProto whitespace = 7;
+  TextHyphensProto hyphens = 8;
+}
+
+message TextBlockProto {
+  StyledTextProto styled_text = 1;
+}
+
+message FlipBlockProto {
+  string label = 1;
+}
+
+message CoffeeBlockProto {
+  string label = 1;
+  float start_offset = 2;  // moves the label along the circle
+  ImageRefProto image_ref = 3;
 }

@@ -23,11 +23,11 @@ export interface StoryProto {
      */
     id: string;
     /**
-     * @generated from protobuf field: string createdBy = 2;
+     * @generated from protobuf field: string created_by = 2;
      */
     createdBy: string;
     /**
-     * @generated from protobuf field: google.protobuf.Timestamp createdAt = 3;
+     * @generated from protobuf field: google.protobuf.Timestamp created_at = 3;
      */
     createdAt?: Timestamp;
     /**
@@ -35,7 +35,7 @@ export interface StoryProto {
      */
     lastModifiedBy: string;
     /**
-     * @generated from protobuf field: google.protobuf.Timestamp lastModifiedAt = 5;
+     * @generated from protobuf field: google.protobuf.Timestamp last_modified_at = 5;
      */
     lastModifiedAt?: Timestamp;
     /**
@@ -56,7 +56,7 @@ export interface CardProto {
      */
     blocks: CardBlockProto[];
     /**
-     * @generated from protobuf field: repeated string hashTags = 2;
+     * @generated from protobuf field: repeated string hash_tags = 2;
      */
     hashTags: string[];
 }
@@ -80,6 +80,24 @@ export interface CardBlockProto {
          */
         image: ImageBlockProto;
     } | {
+        oneofKind: "text";
+        /**
+         * @generated from protobuf field: TextBlockProto text = 3;
+         */
+        text: TextBlockProto;
+    } | {
+        oneofKind: "flip";
+        /**
+         * @generated from protobuf field: FlipBlockProto flip = 4;
+         */
+        flip: FlipBlockProto;
+    } | {
+        oneofKind: "coffee";
+        /**
+         * @generated from protobuf field: CoffeeBlockProto coffee = 5;
+         */
+        coffee: CoffeeBlockProto;
+    } | {
         oneofKind: undefined;
     };
 }
@@ -93,23 +111,242 @@ export interface SpaceBlockProto {
     scale: number;
 }
 /**
+ * @generated from protobuf message ImageRefProto
+ */
+export interface ImageRefProto {
+    /**
+     * @generated from protobuf field: string storage_path = 1;
+     */
+    storagePath: string;
+}
+/**
  * @generated from protobuf message ImageBlockProto
  */
 export interface ImageBlockProto {
     /**
-     * @generated from protobuf field: float scale = 1;
+     * @generated from protobuf field: ImageRefProto image_ref = 1;
+     */
+    imageRef?: ImageRefProto;
+    /**
+     * @generated from protobuf field: float scale = 2;
      */
     scale: number;
+    /**
+     * @generated from protobuf field: float border_radius = 3;
+     */
+    borderRadius: number;
+}
+/**
+ * @generated from protobuf message TextSpanProto
+ */
+export interface TextSpanProto {
+    /**
+     * @generated from protobuf field: string text = 1;
+     */
+    text: string;
+    /**
+     * @generated from protobuf field: FontWeightProto font_weight = 2;
+     */
+    fontWeight: FontWeightProto;
+    /**
+     * @generated from protobuf field: FontStyleProto font_style = 3;
+     */
+    fontStyle: FontStyleProto;
+    /**
+     * @generated from protobuf field: TextDecorationProto decoration = 4;
+     */
+    decoration: TextDecorationProto;
+}
+/**
+ * Box of text with styles
+ *
+ * @generated from protobuf message StyledTextProto
+ */
+export interface StyledTextProto {
+    /**
+     * @generated from protobuf field: repeated TextSpanProto spans = 1;
+     */
+    spans: TextSpanProto[];
+    /**
+     * @generated from protobuf field: FontNameProto font_name = 2;
+     */
+    fontName: FontNameProto;
+    /**
+     * @generated from protobuf field: float font_size = 3;
+     */
+    fontSize: number;
+    /**
+     * @generated from protobuf field: float padding_start = 4;
+     */
+    paddingStart: number;
+    /**
+     * @generated from protobuf field: float padding_end = 5;
+     */
+    paddingEnd: number;
+    /**
+     * @generated from protobuf field: TextAlignmentProto align = 6;
+     */
+    align: TextAlignmentProto;
+    /**
+     * @generated from protobuf field: TextWhitespaceProto whitespace = 7;
+     */
+    whitespace: TextWhitespaceProto;
+    /**
+     * @generated from protobuf field: TextHyphensProto hyphens = 8;
+     */
+    hyphens: TextHyphensProto;
+}
+/**
+ * @generated from protobuf message TextBlockProto
+ */
+export interface TextBlockProto {
+    /**
+     * @generated from protobuf field: StyledTextProto styled_text = 1;
+     */
+    styledText?: StyledTextProto;
+}
+/**
+ * @generated from protobuf message FlipBlockProto
+ */
+export interface FlipBlockProto {
+    /**
+     * @generated from protobuf field: string label = 1;
+     */
+    label: string;
+}
+/**
+ * @generated from protobuf message CoffeeBlockProto
+ */
+export interface CoffeeBlockProto {
+    /**
+     * @generated from protobuf field: string label = 1;
+     */
+    label: string;
+    /**
+     * @generated from protobuf field: float start_offset = 2;
+     */
+    startOffset: number; // moves the label along the circle
+    /**
+     * @generated from protobuf field: ImageRefProto image_ref = 3;
+     */
+    imageRef?: ImageRefProto;
+}
+/**
+ * @generated from protobuf enum FontNameProto
+ */
+export enum FontNameProto {
+    /**
+     * @generated from protobuf enum value: FONT_NAME_PROTO_TEXT = 0;
+     */
+    TEXT = 0,
+    /**
+     * @generated from protobuf enum value: FONT_NAME_PROTO_DISPLAY = 1;
+     */
+    DISPLAY = 1
+}
+/**
+ * @generated from protobuf enum FontWeightProto
+ */
+export enum FontWeightProto {
+    /**
+     * @generated from protobuf enum value: FONT_WEIGHT_PROTO_NORMAL = 0;
+     */
+    NORMAL = 0,
+    /**
+     * @generated from protobuf enum value: FONT_WEIGHT_PROTO_BOLD = 1;
+     */
+    BOLD = 1
+}
+/**
+ * @generated from protobuf enum FontStyleProto
+ */
+export enum FontStyleProto {
+    /**
+     * @generated from protobuf enum value: FONT_STYLE_PROTO_NORMAL = 0;
+     */
+    NORMAL = 0,
+    /**
+     * @generated from protobuf enum value: FONT_STYLE_PROTO_ITALIC = 1;
+     */
+    ITALIC = 1
+}
+/**
+ * @generated from protobuf enum TextDecorationProto
+ */
+export enum TextDecorationProto {
+    /**
+     * @generated from protobuf enum value: TEXT_DECORATION_PROTO_NONE = 0;
+     */
+    NONE = 0,
+    /**
+     * @generated from protobuf enum value: TEXT_DECORATION_PROTO_UNDERLINE = 1;
+     */
+    UNDERLINE = 1,
+    /**
+     * @generated from protobuf enum value: TEXT_DECORATION_PROTO_LINE_THROUGH = 2;
+     */
+    LINE_THROUGH = 2
+}
+/**
+ * @generated from protobuf enum TextAlignmentProto
+ */
+export enum TextAlignmentProto {
+    /**
+     * @generated from protobuf enum value: TEXT_ALIGNMENT_PROTO_LEFT = 0;
+     */
+    LEFT = 0,
+    /**
+     * @generated from protobuf enum value: TEXT_ALIGNMENT_PROTO_CENTER = 1;
+     */
+    CENTER = 1,
+    /**
+     * @generated from protobuf enum value: TEXT_ALIGNMENT_PROTO_RIGHT = 2;
+     */
+    RIGHT = 2,
+    /**
+     * @generated from protobuf enum value: TEXT_ALIGNMENT_PROTO_JUSTIFY = 3;
+     */
+    JUSTIFY = 3
+}
+/**
+ * @generated from protobuf enum TextWhitespaceProto
+ */
+export enum TextWhitespaceProto {
+    /**
+     * @generated from protobuf enum value: TEXT_WHITESPACE_PROTO_NORMAL = 0;
+     */
+    NORMAL = 0,
+    /**
+     * @generated from protobuf enum value: TEXT_WHITESPACE_PROTO_PRE_WRAP = 1;
+     */
+    PRE_WRAP = 1
+}
+/**
+ * @generated from protobuf enum TextHyphensProto
+ */
+export enum TextHyphensProto {
+    /**
+     * @generated from protobuf enum value: TEXT_HYPHENS_PROTO_NONE = 0;
+     */
+    NONE = 0,
+    /**
+     * @generated from protobuf enum value: TEXT_HYPHENS_PROTO_MANUAL = 1;
+     */
+    MANUAL = 1,
+    /**
+     * @generated from protobuf enum value: TEXT_HYPHENS_PROTO_AUTO = 2;
+     */
+    AUTO = 2
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class StoryProto$Type extends MessageType<StoryProto> {
     constructor() {
         super("StoryProto", [
             { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "createdBy", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "createdAt", kind: "message", T: () => Timestamp },
+            { no: 2, name: "created_by", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "created_at", kind: "message", T: () => Timestamp },
             { no: 4, name: "lastModifiedBy", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "lastModifiedAt", kind: "message", T: () => Timestamp },
+            { no: 5, name: "last_modified_at", kind: "message", T: () => Timestamp },
             { no: 6, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 7, name: "cards", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => CardProto }
         ]);
@@ -129,16 +366,16 @@ class StoryProto$Type extends MessageType<StoryProto> {
                 case /* string id */ 1:
                     message.id = reader.string();
                     break;
-                case /* string createdBy */ 2:
+                case /* string created_by */ 2:
                     message.createdBy = reader.string();
                     break;
-                case /* google.protobuf.Timestamp createdAt */ 3:
+                case /* google.protobuf.Timestamp created_at */ 3:
                     message.createdAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.createdAt);
                     break;
                 case /* string lastModifiedBy */ 4:
                     message.lastModifiedBy = reader.string();
                     break;
-                case /* google.protobuf.Timestamp lastModifiedAt */ 5:
+                case /* google.protobuf.Timestamp last_modified_at */ 5:
                     message.lastModifiedAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.lastModifiedAt);
                     break;
                 case /* string title */ 6:
@@ -162,16 +399,16 @@ class StoryProto$Type extends MessageType<StoryProto> {
         /* string id = 1; */
         if (message.id !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.id);
-        /* string createdBy = 2; */
+        /* string created_by = 2; */
         if (message.createdBy !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.createdBy);
-        /* google.protobuf.Timestamp createdAt = 3; */
+        /* google.protobuf.Timestamp created_at = 3; */
         if (message.createdAt)
             Timestamp.internalBinaryWrite(message.createdAt, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
         /* string lastModifiedBy = 4; */
         if (message.lastModifiedBy !== "")
             writer.tag(4, WireType.LengthDelimited).string(message.lastModifiedBy);
-        /* google.protobuf.Timestamp lastModifiedAt = 5; */
+        /* google.protobuf.Timestamp last_modified_at = 5; */
         if (message.lastModifiedAt)
             Timestamp.internalBinaryWrite(message.lastModifiedAt, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
         /* string title = 6; */
@@ -195,7 +432,7 @@ class CardProto$Type extends MessageType<CardProto> {
     constructor() {
         super("CardProto", [
             { no: 1, name: "blocks", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => CardBlockProto },
-            { no: 2, name: "hashTags", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "hash_tags", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<CardProto>): CardProto {
@@ -213,7 +450,7 @@ class CardProto$Type extends MessageType<CardProto> {
                 case /* repeated CardBlockProto blocks */ 1:
                     message.blocks.push(CardBlockProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
-                case /* repeated string hashTags */ 2:
+                case /* repeated string hash_tags */ 2:
                     message.hashTags.push(reader.string());
                     break;
                 default:
@@ -231,7 +468,7 @@ class CardProto$Type extends MessageType<CardProto> {
         /* repeated CardBlockProto blocks = 1; */
         for (let i = 0; i < message.blocks.length; i++)
             CardBlockProto.internalBinaryWrite(message.blocks[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* repeated string hashTags = 2; */
+        /* repeated string hash_tags = 2; */
         for (let i = 0; i < message.hashTags.length; i++)
             writer.tag(2, WireType.LengthDelimited).string(message.hashTags[i]);
         let u = options.writeUnknownFields;
@@ -249,7 +486,10 @@ class CardBlockProto$Type extends MessageType<CardBlockProto> {
     constructor() {
         super("CardBlockProto", [
             { no: 1, name: "space", kind: "message", oneof: "type", T: () => SpaceBlockProto },
-            { no: 2, name: "image", kind: "message", oneof: "type", T: () => ImageBlockProto }
+            { no: 2, name: "image", kind: "message", oneof: "type", T: () => ImageBlockProto },
+            { no: 3, name: "text", kind: "message", oneof: "type", T: () => TextBlockProto },
+            { no: 4, name: "flip", kind: "message", oneof: "type", T: () => FlipBlockProto },
+            { no: 5, name: "coffee", kind: "message", oneof: "type", T: () => CoffeeBlockProto }
         ]);
     }
     create(value?: PartialMessage<CardBlockProto>): CardBlockProto {
@@ -276,6 +516,24 @@ class CardBlockProto$Type extends MessageType<CardBlockProto> {
                         image: ImageBlockProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).image)
                     };
                     break;
+                case /* TextBlockProto text */ 3:
+                    message.type = {
+                        oneofKind: "text",
+                        text: TextBlockProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).text)
+                    };
+                    break;
+                case /* FlipBlockProto flip */ 4:
+                    message.type = {
+                        oneofKind: "flip",
+                        flip: FlipBlockProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).flip)
+                    };
+                    break;
+                case /* CoffeeBlockProto coffee */ 5:
+                    message.type = {
+                        oneofKind: "coffee",
+                        coffee: CoffeeBlockProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).coffee)
+                    };
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -294,6 +552,15 @@ class CardBlockProto$Type extends MessageType<CardBlockProto> {
         /* ImageBlockProto image = 2; */
         if (message.type.oneofKind === "image")
             ImageBlockProto.internalBinaryWrite(message.type.image, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* TextBlockProto text = 3; */
+        if (message.type.oneofKind === "text")
+            TextBlockProto.internalBinaryWrite(message.type.text, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* FlipBlockProto flip = 4; */
+        if (message.type.oneofKind === "flip")
+            FlipBlockProto.internalBinaryWrite(message.type.flip, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* CoffeeBlockProto coffee = 5; */
+        if (message.type.oneofKind === "coffee")
+            CoffeeBlockProto.internalBinaryWrite(message.type.coffee, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -352,14 +619,63 @@ class SpaceBlockProto$Type extends MessageType<SpaceBlockProto> {
  */
 export const SpaceBlockProto = new SpaceBlockProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class ImageRefProto$Type extends MessageType<ImageRefProto> {
+    constructor() {
+        super("ImageRefProto", [
+            { no: 1, name: "storage_path", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<ImageRefProto>): ImageRefProto {
+        const message = { storagePath: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<ImageRefProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ImageRefProto): ImageRefProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string storage_path */ 1:
+                    message.storagePath = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: ImageRefProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string storage_path = 1; */
+        if (message.storagePath !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.storagePath);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message ImageRefProto
+ */
+export const ImageRefProto = new ImageRefProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class ImageBlockProto$Type extends MessageType<ImageBlockProto> {
     constructor() {
         super("ImageBlockProto", [
-            { no: 1, name: "scale", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ }
+            { no: 1, name: "image_ref", kind: "message", T: () => ImageRefProto },
+            { no: 2, name: "scale", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
+            { no: 3, name: "border_radius", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ }
         ]);
     }
     create(value?: PartialMessage<ImageBlockProto>): ImageBlockProto {
-        const message = { scale: 0 };
+        const message = { scale: 0, borderRadius: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<ImageBlockProto>(this, message, value);
@@ -370,8 +686,14 @@ class ImageBlockProto$Type extends MessageType<ImageBlockProto> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* float scale */ 1:
+                case /* ImageRefProto image_ref */ 1:
+                    message.imageRef = ImageRefProto.internalBinaryRead(reader, reader.uint32(), options, message.imageRef);
+                    break;
+                case /* float scale */ 2:
                     message.scale = reader.float();
+                    break;
+                case /* float border_radius */ 3:
+                    message.borderRadius = reader.float();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -385,9 +707,15 @@ class ImageBlockProto$Type extends MessageType<ImageBlockProto> {
         return message;
     }
     internalBinaryWrite(message: ImageBlockProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* float scale = 1; */
+        /* ImageRefProto image_ref = 1; */
+        if (message.imageRef)
+            ImageRefProto.internalBinaryWrite(message.imageRef, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* float scale = 2; */
         if (message.scale !== 0)
-            writer.tag(1, WireType.Bit32).float(message.scale);
+            writer.tag(2, WireType.Bit32).float(message.scale);
+        /* float border_radius = 3; */
+        if (message.borderRadius !== 0)
+            writer.tag(3, WireType.Bit32).float(message.borderRadius);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -398,3 +726,322 @@ class ImageBlockProto$Type extends MessageType<ImageBlockProto> {
  * @generated MessageType for protobuf message ImageBlockProto
  */
 export const ImageBlockProto = new ImageBlockProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class TextSpanProto$Type extends MessageType<TextSpanProto> {
+    constructor() {
+        super("TextSpanProto", [
+            { no: 1, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "font_weight", kind: "enum", T: () => ["FontWeightProto", FontWeightProto, "FONT_WEIGHT_PROTO_"] },
+            { no: 3, name: "font_style", kind: "enum", T: () => ["FontStyleProto", FontStyleProto, "FONT_STYLE_PROTO_"] },
+            { no: 4, name: "decoration", kind: "enum", T: () => ["TextDecorationProto", TextDecorationProto, "TEXT_DECORATION_PROTO_"] }
+        ]);
+    }
+    create(value?: PartialMessage<TextSpanProto>): TextSpanProto {
+        const message = { text: "", fontWeight: 0, fontStyle: 0, decoration: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<TextSpanProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: TextSpanProto): TextSpanProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string text */ 1:
+                    message.text = reader.string();
+                    break;
+                case /* FontWeightProto font_weight */ 2:
+                    message.fontWeight = reader.int32();
+                    break;
+                case /* FontStyleProto font_style */ 3:
+                    message.fontStyle = reader.int32();
+                    break;
+                case /* TextDecorationProto decoration */ 4:
+                    message.decoration = reader.int32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: TextSpanProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string text = 1; */
+        if (message.text !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.text);
+        /* FontWeightProto font_weight = 2; */
+        if (message.fontWeight !== 0)
+            writer.tag(2, WireType.Varint).int32(message.fontWeight);
+        /* FontStyleProto font_style = 3; */
+        if (message.fontStyle !== 0)
+            writer.tag(3, WireType.Varint).int32(message.fontStyle);
+        /* TextDecorationProto decoration = 4; */
+        if (message.decoration !== 0)
+            writer.tag(4, WireType.Varint).int32(message.decoration);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message TextSpanProto
+ */
+export const TextSpanProto = new TextSpanProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class StyledTextProto$Type extends MessageType<StyledTextProto> {
+    constructor() {
+        super("StyledTextProto", [
+            { no: 1, name: "spans", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => TextSpanProto },
+            { no: 2, name: "font_name", kind: "enum", T: () => ["FontNameProto", FontNameProto, "FONT_NAME_PROTO_"] },
+            { no: 3, name: "font_size", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
+            { no: 4, name: "padding_start", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
+            { no: 5, name: "padding_end", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
+            { no: 6, name: "align", kind: "enum", T: () => ["TextAlignmentProto", TextAlignmentProto, "TEXT_ALIGNMENT_PROTO_"] },
+            { no: 7, name: "whitespace", kind: "enum", T: () => ["TextWhitespaceProto", TextWhitespaceProto, "TEXT_WHITESPACE_PROTO_"] },
+            { no: 8, name: "hyphens", kind: "enum", T: () => ["TextHyphensProto", TextHyphensProto, "TEXT_HYPHENS_PROTO_"] }
+        ]);
+    }
+    create(value?: PartialMessage<StyledTextProto>): StyledTextProto {
+        const message = { spans: [], fontName: 0, fontSize: 0, paddingStart: 0, paddingEnd: 0, align: 0, whitespace: 0, hyphens: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<StyledTextProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StyledTextProto): StyledTextProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated TextSpanProto spans */ 1:
+                    message.spans.push(TextSpanProto.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* FontNameProto font_name */ 2:
+                    message.fontName = reader.int32();
+                    break;
+                case /* float font_size */ 3:
+                    message.fontSize = reader.float();
+                    break;
+                case /* float padding_start */ 4:
+                    message.paddingStart = reader.float();
+                    break;
+                case /* float padding_end */ 5:
+                    message.paddingEnd = reader.float();
+                    break;
+                case /* TextAlignmentProto align */ 6:
+                    message.align = reader.int32();
+                    break;
+                case /* TextWhitespaceProto whitespace */ 7:
+                    message.whitespace = reader.int32();
+                    break;
+                case /* TextHyphensProto hyphens */ 8:
+                    message.hyphens = reader.int32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: StyledTextProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated TextSpanProto spans = 1; */
+        for (let i = 0; i < message.spans.length; i++)
+            TextSpanProto.internalBinaryWrite(message.spans[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* FontNameProto font_name = 2; */
+        if (message.fontName !== 0)
+            writer.tag(2, WireType.Varint).int32(message.fontName);
+        /* float font_size = 3; */
+        if (message.fontSize !== 0)
+            writer.tag(3, WireType.Bit32).float(message.fontSize);
+        /* float padding_start = 4; */
+        if (message.paddingStart !== 0)
+            writer.tag(4, WireType.Bit32).float(message.paddingStart);
+        /* float padding_end = 5; */
+        if (message.paddingEnd !== 0)
+            writer.tag(5, WireType.Bit32).float(message.paddingEnd);
+        /* TextAlignmentProto align = 6; */
+        if (message.align !== 0)
+            writer.tag(6, WireType.Varint).int32(message.align);
+        /* TextWhitespaceProto whitespace = 7; */
+        if (message.whitespace !== 0)
+            writer.tag(7, WireType.Varint).int32(message.whitespace);
+        /* TextHyphensProto hyphens = 8; */
+        if (message.hyphens !== 0)
+            writer.tag(8, WireType.Varint).int32(message.hyphens);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message StyledTextProto
+ */
+export const StyledTextProto = new StyledTextProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class TextBlockProto$Type extends MessageType<TextBlockProto> {
+    constructor() {
+        super("TextBlockProto", [
+            { no: 1, name: "styled_text", kind: "message", T: () => StyledTextProto }
+        ]);
+    }
+    create(value?: PartialMessage<TextBlockProto>): TextBlockProto {
+        const message = {};
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<TextBlockProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: TextBlockProto): TextBlockProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* StyledTextProto styled_text */ 1:
+                    message.styledText = StyledTextProto.internalBinaryRead(reader, reader.uint32(), options, message.styledText);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: TextBlockProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* StyledTextProto styled_text = 1; */
+        if (message.styledText)
+            StyledTextProto.internalBinaryWrite(message.styledText, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message TextBlockProto
+ */
+export const TextBlockProto = new TextBlockProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class FlipBlockProto$Type extends MessageType<FlipBlockProto> {
+    constructor() {
+        super("FlipBlockProto", [
+            { no: 1, name: "label", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<FlipBlockProto>): FlipBlockProto {
+        const message = { label: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<FlipBlockProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: FlipBlockProto): FlipBlockProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string label */ 1:
+                    message.label = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: FlipBlockProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string label = 1; */
+        if (message.label !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.label);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message FlipBlockProto
+ */
+export const FlipBlockProto = new FlipBlockProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class CoffeeBlockProto$Type extends MessageType<CoffeeBlockProto> {
+    constructor() {
+        super("CoffeeBlockProto", [
+            { no: 1, name: "label", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "start_offset", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
+            { no: 3, name: "image_ref", kind: "message", T: () => ImageRefProto }
+        ]);
+    }
+    create(value?: PartialMessage<CoffeeBlockProto>): CoffeeBlockProto {
+        const message = { label: "", startOffset: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<CoffeeBlockProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CoffeeBlockProto): CoffeeBlockProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string label */ 1:
+                    message.label = reader.string();
+                    break;
+                case /* float start_offset */ 2:
+                    message.startOffset = reader.float();
+                    break;
+                case /* ImageRefProto image_ref */ 3:
+                    message.imageRef = ImageRefProto.internalBinaryRead(reader, reader.uint32(), options, message.imageRef);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: CoffeeBlockProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string label = 1; */
+        if (message.label !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.label);
+        /* float start_offset = 2; */
+        if (message.startOffset !== 0)
+            writer.tag(2, WireType.Bit32).float(message.startOffset);
+        /* ImageRefProto image_ref = 3; */
+        if (message.imageRef)
+            ImageRefProto.internalBinaryWrite(message.imageRef, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message CoffeeBlockProto
+ */
+export const CoffeeBlockProto = new CoffeeBlockProto$Type();
