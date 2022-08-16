@@ -330,31 +330,13 @@ struct GetStoriesResponseProto {
   /// Clears the value of `stories`. Subsequent reads from it will return its default value.
   mutating func clearStories() {self._stories = nil}
 
-  var firebaseLatency: SwiftProtobuf.Google_Protobuf_Duration {
-    get {return _firebaseLatency ?? SwiftProtobuf.Google_Protobuf_Duration()}
-    set {_firebaseLatency = newValue}
-  }
-  /// Returns true if `firebaseLatency` has been explicitly set.
-  var hasFirebaseLatency: Bool {return self._firebaseLatency != nil}
-  /// Clears the value of `firebaseLatency`. Subsequent reads from it will return its default value.
-  mutating func clearFirebaseLatency() {self._firebaseLatency = nil}
-
-  var conversionLatency: SwiftProtobuf.Google_Protobuf_Duration {
-    get {return _conversionLatency ?? SwiftProtobuf.Google_Protobuf_Duration()}
-    set {_conversionLatency = newValue}
-  }
-  /// Returns true if `conversionLatency` has been explicitly set.
-  var hasConversionLatency: Bool {return self._conversionLatency != nil}
-  /// Clears the value of `conversionLatency`. Subsequent reads from it will return its default value.
-  mutating func clearConversionLatency() {self._conversionLatency = nil}
+  var latencies: Dictionary<String,SwiftProtobuf.Google_Protobuf_Duration> = [:]
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 
   fileprivate var _stories: StoriesProto? = nil
-  fileprivate var _firebaseLatency: SwiftProtobuf.Google_Protobuf_Duration? = nil
-  fileprivate var _conversionLatency: SwiftProtobuf.Google_Protobuf_Duration? = nil
 }
 
 struct StoriesProto {
@@ -738,8 +720,7 @@ extension GetStoriesResponseProto: SwiftProtobuf.Message, SwiftProtobuf._Message
   static let protoMessageName: String = "GetStoriesResponseProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "stories"),
-    2: .standard(proto: "firebase_latency"),
-    3: .standard(proto: "conversion_latency"),
+    2: .same(proto: "latencies"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -749,8 +730,7 @@ extension GetStoriesResponseProto: SwiftProtobuf.Message, SwiftProtobuf._Message
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularMessageField(value: &self._stories) }()
-      case 2: try { try decoder.decodeSingularMessageField(value: &self._firebaseLatency) }()
-      case 3: try { try decoder.decodeSingularMessageField(value: &self._conversionLatency) }()
+      case 2: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.Google_Protobuf_Duration>.self, value: &self.latencies) }()
       default: break
       }
     }
@@ -764,19 +744,15 @@ extension GetStoriesResponseProto: SwiftProtobuf.Message, SwiftProtobuf._Message
     try { if let v = self._stories {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
     } }()
-    try { if let v = self._firebaseLatency {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
-    } }()
-    try { if let v = self._conversionLatency {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
-    } }()
+    if !self.latencies.isEmpty {
+      try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.Google_Protobuf_Duration>.self, value: self.latencies, fieldNumber: 2)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: GetStoriesResponseProto, rhs: GetStoriesResponseProto) -> Bool {
     if lhs._stories != rhs._stories {return false}
-    if lhs._firebaseLatency != rhs._firebaseLatency {return false}
-    if lhs._conversionLatency != rhs._conversionLatency {return false}
+    if lhs.latencies != rhs.latencies {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

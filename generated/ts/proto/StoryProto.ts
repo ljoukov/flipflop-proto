@@ -24,13 +24,11 @@ export interface GetStoriesResponseProto {
      */
     stories?: StoriesProto;
     /**
-     * @generated from protobuf field: google.protobuf.Duration firebase_latency = 2;
+     * @generated from protobuf field: map<string, google.protobuf.Duration> latencies = 2;
      */
-    firebaseLatency?: Duration;
-    /**
-     * @generated from protobuf field: google.protobuf.Duration conversion_latency = 3;
-     */
-    conversionLatency?: Duration;
+    latencies: {
+        [key: string]: Duration;
+    };
 }
 /**
  * @generated from protobuf message StoriesProto
@@ -374,12 +372,11 @@ class GetStoriesResponseProto$Type extends MessageType<GetStoriesResponseProto> 
     constructor() {
         super("GetStoriesResponseProto", [
             { no: 1, name: "stories", kind: "message", T: () => StoriesProto },
-            { no: 2, name: "firebase_latency", kind: "message", T: () => Duration },
-            { no: 3, name: "conversion_latency", kind: "message", T: () => Duration }
+            { no: 2, name: "latencies", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => Duration } }
         ]);
     }
     create(value?: PartialMessage<GetStoriesResponseProto>): GetStoriesResponseProto {
-        const message = {};
+        const message = { latencies: {} };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<GetStoriesResponseProto>(this, message, value);
@@ -393,11 +390,8 @@ class GetStoriesResponseProto$Type extends MessageType<GetStoriesResponseProto> 
                 case /* StoriesProto stories */ 1:
                     message.stories = StoriesProto.internalBinaryRead(reader, reader.uint32(), options, message.stories);
                     break;
-                case /* google.protobuf.Duration firebase_latency */ 2:
-                    message.firebaseLatency = Duration.internalBinaryRead(reader, reader.uint32(), options, message.firebaseLatency);
-                    break;
-                case /* google.protobuf.Duration conversion_latency */ 3:
-                    message.conversionLatency = Duration.internalBinaryRead(reader, reader.uint32(), options, message.conversionLatency);
+                case /* map<string, google.protobuf.Duration> latencies */ 2:
+                    this.binaryReadMap2(message.latencies, reader, options);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -410,16 +404,33 @@ class GetStoriesResponseProto$Type extends MessageType<GetStoriesResponseProto> 
         }
         return message;
     }
+    private binaryReadMap2(map: GetStoriesResponseProto["latencies"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof GetStoriesResponseProto["latencies"] | undefined, val: GetStoriesResponseProto["latencies"][any] | undefined;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case 1:
+                    key = reader.string();
+                    break;
+                case 2:
+                    val = Duration.internalBinaryRead(reader, reader.uint32(), options);
+                    break;
+                default: throw new globalThis.Error("unknown map entry field for field GetStoriesResponseProto.latencies");
+            }
+        }
+        map[key ?? ""] = val ?? Duration.create();
+    }
     internalBinaryWrite(message: GetStoriesResponseProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* StoriesProto stories = 1; */
         if (message.stories)
             StoriesProto.internalBinaryWrite(message.stories, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* google.protobuf.Duration firebase_latency = 2; */
-        if (message.firebaseLatency)
-            Duration.internalBinaryWrite(message.firebaseLatency, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* google.protobuf.Duration conversion_latency = 3; */
-        if (message.conversionLatency)
-            Duration.internalBinaryWrite(message.conversionLatency, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* map<string, google.protobuf.Duration> latencies = 2; */
+        for (let k of Object.keys(message.latencies)) {
+            writer.tag(2, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k);
+            writer.tag(2, WireType.LengthDelimited).fork();
+            Duration.internalBinaryWrite(message.latencies[k], writer, options);
+            writer.join().join();
+        }
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

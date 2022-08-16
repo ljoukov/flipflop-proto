@@ -5,8 +5,7 @@ import "google/protobuf/timestamp.proto";
 
 message GetStoriesResponseProto {
   StoriesProto stories = 1;
-  google.protobuf.Duration firebase_latency = 2;
-  google.protobuf.Duration conversion_latency = 3;
+  map<string, google.protobuf.Duration> latencies = 2;
 }
 
 message StoriesProto {
