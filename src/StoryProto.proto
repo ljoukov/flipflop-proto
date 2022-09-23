@@ -26,8 +26,9 @@ message StoryProto {
 }
 
 message CardProto {
-  repeated CardBlockProto blocks = 1;
-  repeated string hash_tags = 2;
+  string id = 1;
+  repeated CardBlockProto blocks = 2;
+  repeated string hash_tags = 3;
 }
 
 message CardBlockProto {

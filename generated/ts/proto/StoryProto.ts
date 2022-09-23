@@ -81,11 +81,15 @@ export interface StoryProto {
  */
 export interface CardProto {
     /**
-     * @generated from protobuf field: repeated CardBlockProto blocks = 1;
+     * @generated from protobuf field: string id = 1;
+     */
+    id: string;
+    /**
+     * @generated from protobuf field: repeated CardBlockProto blocks = 2;
      */
     blocks: CardBlockProto[];
     /**
-     * @generated from protobuf field: repeated string hash_tags = 2;
+     * @generated from protobuf field: repeated string hash_tags = 3;
      */
     hashTags: string[];
 }
@@ -588,12 +592,13 @@ export const StoryProto = new StoryProto$Type();
 class CardProto$Type extends MessageType<CardProto> {
     constructor() {
         super("CardProto", [
-            { no: 1, name: "blocks", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => CardBlockProto },
-            { no: 2, name: "hash_tags", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "blocks", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => CardBlockProto },
+            { no: 3, name: "hash_tags", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<CardProto>): CardProto {
-        const message = { blocks: [], hashTags: [] };
+        const message = { id: "", blocks: [], hashTags: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<CardProto>(this, message, value);
@@ -604,10 +609,13 @@ class CardProto$Type extends MessageType<CardProto> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* repeated CardBlockProto blocks */ 1:
+                case /* string id */ 1:
+                    message.id = reader.string();
+                    break;
+                case /* repeated CardBlockProto blocks */ 2:
                     message.blocks.push(CardBlockProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
-                case /* repeated string hash_tags */ 2:
+                case /* repeated string hash_tags */ 3:
                     message.hashTags.push(reader.string());
                     break;
                 default:
@@ -622,12 +630,15 @@ class CardProto$Type extends MessageType<CardProto> {
         return message;
     }
     internalBinaryWrite(message: CardProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated CardBlockProto blocks = 1; */
+        /* string id = 1; */
+        if (message.id !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.id);
+        /* repeated CardBlockProto blocks = 2; */
         for (let i = 0; i < message.blocks.length; i++)
-            CardBlockProto.internalBinaryWrite(message.blocks[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* repeated string hash_tags = 2; */
+            CardBlockProto.internalBinaryWrite(message.blocks[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* repeated string hash_tags = 3; */
         for (let i = 0; i < message.hashTags.length; i++)
-            writer.tag(2, WireType.LengthDelimited).string(message.hashTags[i]);
+            writer.tag(3, WireType.LengthDelimited).string(message.hashTags[i]);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
