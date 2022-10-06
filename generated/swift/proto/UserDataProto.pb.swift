@@ -30,11 +30,20 @@ struct CardUserDataProto {
   var liked: Bool = false
 
   /// For cards with "prompt" block.
-  var promptResponse: String = String()
+  var promptResponse: String {
+    get {return _promptResponse ?? String()}
+    set {_promptResponse = newValue}
+  }
+  /// Returns true if `promptResponse` has been explicitly set.
+  var hasPromptResponse: Bool {return self._promptResponse != nil}
+  /// Clears the value of `promptResponse`. Subsequent reads from it will return its default value.
+  mutating func clearPromptResponse() {self._promptResponse = nil}
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
+
+  fileprivate var _promptResponse: String? = nil
 }
 
 struct StoryUserDataProto {
@@ -89,29 +98,33 @@ extension CardUserDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.cardID) }()
       case 2: try { try decoder.decodeSingularBoolField(value: &self.liked) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.promptResponse) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self._promptResponse) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.cardID.isEmpty {
       try visitor.visitSingularStringField(value: self.cardID, fieldNumber: 1)
     }
     if self.liked != false {
       try visitor.visitSingularBoolField(value: self.liked, fieldNumber: 2)
     }
-    if !self.promptResponse.isEmpty {
-      try visitor.visitSingularStringField(value: self.promptResponse, fieldNumber: 3)
-    }
+    try { if let v = self._promptResponse {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 3)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: CardUserDataProto, rhs: CardUserDataProto) -> Bool {
     if lhs.cardID != rhs.cardID {return false}
     if lhs.liked != rhs.liked {return false}
-    if lhs.promptResponse != rhs.promptResponse {return false}
+    if lhs._promptResponse != rhs._promptResponse {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

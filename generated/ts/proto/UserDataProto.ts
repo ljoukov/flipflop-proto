@@ -29,9 +29,9 @@ export interface CardUserDataProto {
     /**
      * For cards with "prompt" block.
      *
-     * @generated from protobuf field: string prompt_response = 3;
+     * @generated from protobuf field: optional string prompt_response = 3;
      */
-    promptResponse: string;
+    promptResponse?: string;
 }
 /**
  * @generated from protobuf message StoryUserDataProto
@@ -64,11 +64,11 @@ class CardUserDataProto$Type extends MessageType<CardUserDataProto> {
         super("CardUserDataProto", [
             { no: 1, name: "card_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "liked", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 3, name: "prompt_response", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 3, name: "prompt_response", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<CardUserDataProto>): CardUserDataProto {
-        const message = { cardId: "", liked: false, promptResponse: "" };
+        const message = { cardId: "", liked: false };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<CardUserDataProto>(this, message, value);
@@ -85,7 +85,7 @@ class CardUserDataProto$Type extends MessageType<CardUserDataProto> {
                 case /* bool liked */ 2:
                     message.liked = reader.bool();
                     break;
-                case /* string prompt_response */ 3:
+                case /* optional string prompt_response */ 3:
                     message.promptResponse = reader.string();
                     break;
                 default:
@@ -106,8 +106,8 @@ class CardUserDataProto$Type extends MessageType<CardUserDataProto> {
         /* bool liked = 2; */
         if (message.liked !== false)
             writer.tag(2, WireType.Varint).bool(message.liked);
-        /* string prompt_response = 3; */
-        if (message.promptResponse !== "")
+        /* optional string prompt_response = 3; */
+        if (message.promptResponse !== undefined)
             writer.tag(3, WireType.LengthDelimited).string(message.promptResponse);
         let u = options.writeUnknownFields;
         if (u !== false)

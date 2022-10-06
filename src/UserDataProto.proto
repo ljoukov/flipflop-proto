@@ -7,7 +7,7 @@ message CardUserDataProto {
   bool liked = 2;
 
   // For cards with "prompt" block.
-  string prompt_response = 3;
+  optional string prompt_response = 3;
 }
 
 message StoryUserDataProto {
