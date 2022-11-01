@@ -1,5 +1,11 @@
 syntax = "proto3";
 
+import "google/protobuf/timestamp.proto";
+
 message UserAuthProto {
   string user_id = 1;
+ 
+  string access_token = 2;
+  google.protobuf.Timestamp expires_at = 3;
+  string refresh_token = 4;
 }

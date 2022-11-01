@@ -27,9 +27,24 @@ struct UserAuthProto {
 
   var userID: String = String()
 
+  var accessToken: String = String()
+
+  var expiresAt: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _expiresAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_expiresAt = newValue}
+  }
+  /// Returns true if `expiresAt` has been explicitly set.
+  var hasExpiresAt: Bool {return self._expiresAt != nil}
+  /// Clears the value of `expiresAt`. Subsequent reads from it will return its default value.
+  mutating func clearExpiresAt() {self._expiresAt = nil}
+
+  var refreshToken: String = String()
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
+
+  fileprivate var _expiresAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
 #if swift(>=5.5) && canImport(_Concurrency)
@@ -42,6 +57,9 @@ extension UserAuthProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
   static let protoMessageName: String = "UserAuthProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "user_id"),
+    2: .standard(proto: "access_token"),
+    3: .standard(proto: "expires_at"),
+    4: .standard(proto: "refresh_token"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -51,20 +69,39 @@ extension UserAuthProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.userID) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.accessToken) }()
+      case 3: try { try decoder.decodeSingularMessageField(value: &self._expiresAt) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.refreshToken) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.userID.isEmpty {
       try visitor.visitSingularStringField(value: self.userID, fieldNumber: 1)
+    }
+    if !self.accessToken.isEmpty {
+      try visitor.visitSingularStringField(value: self.accessToken, fieldNumber: 2)
+    }
+    try { if let v = self._expiresAt {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+    } }()
+    if !self.refreshToken.isEmpty {
+      try visitor.visitSingularStringField(value: self.refreshToken, fieldNumber: 4)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: UserAuthProto, rhs: UserAuthProto) -> Bool {
     if lhs.userID != rhs.userID {return false}
+    if lhs.accessToken != rhs.accessToken {return false}
+    if lhs._expiresAt != rhs._expiresAt {return false}
+    if lhs.refreshToken != rhs.refreshToken {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
