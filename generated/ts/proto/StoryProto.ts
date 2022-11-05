@@ -85,11 +85,20 @@ export interface CardProto {
      */
     id: string;
     /**
-     * @generated from protobuf field: repeated CardBlockProto blocks = 2;
+     * @generated from protobuf field: CardFaceProto front_face = 2;
+     */
+    frontFace?: CardFaceProto;
+}
+/**
+ * @generated from protobuf message CardFaceProto
+ */
+export interface CardFaceProto {
+    /**
+     * @generated from protobuf field: repeated CardBlockProto blocks = 1;
      */
     blocks: CardBlockProto[];
     /**
-     * @generated from protobuf field: repeated string hash_tags = 3;
+     * @generated from protobuf field: repeated string hash_tags = 2;
      */
     hashTags: string[];
 }
@@ -130,6 +139,24 @@ export interface CardBlockProto {
          * @generated from protobuf field: CoffeeBlockProto coffee = 5;
          */
         coffee: CoffeeBlockProto;
+    } | {
+        oneofKind: "reveal";
+        /**
+         * @generated from protobuf field: RevealBlockProto reveal = 6;
+         */
+        reveal: RevealBlockProto;
+    } | {
+        oneofKind: "choice";
+        /**
+         * @generated from protobuf field: ChoiceBlockProto choice = 7;
+         */
+        choice: ChoiceBlockProto;
+    } | {
+        oneofKind: "question";
+        /**
+         * @generated from protobuf field: QuestionBlockProto question = 8;
+         */
+        question: QuestionBlockProto;
     } | {
         oneofKind: undefined;
     };
@@ -263,6 +290,99 @@ export interface CoffeeBlockProto {
      * @generated from protobuf field: ImageRefProto image_ref = 3;
      */
     imageRef?: ImageRefProto;
+}
+/**
+ * @generated from protobuf message RevealBlockProto
+ */
+export interface RevealBlockProto {
+    /**
+     * @generated from protobuf field: float scale = 1;
+     */
+    scale: number;
+    /**
+     * @generated from protobuf field: string label = 2;
+     */
+    label: string;
+    /**
+     * @generated from protobuf field: StyledTextProto text = 3;
+     */
+    text?: StyledTextProto;
+}
+/**
+ * @generated from protobuf message ChoiceBlockOptionProto
+ */
+export interface ChoiceBlockOptionProto {
+    /**
+     * @generated from protobuf field: StyledTextProto text = 1;
+     */
+    text?: StyledTextProto;
+    /**
+     * @generated from protobuf field: float fraction = 2;
+     */
+    fraction: number;
+}
+/**
+ * @generated from protobuf message ChoiceBlockProto
+ */
+export interface ChoiceBlockProto {
+    /**
+     * @generated from protobuf field: optional float scale = 1;
+     */
+    scale?: number;
+    /**
+     * @generated from protobuf field: repeated ChoiceBlockOptionProto options = 2;
+     */
+    options: ChoiceBlockOptionProto[];
+    /**
+     * @generated from protobuf field: int32 correct_index = 3;
+     */
+    correctIndex: number;
+    /**
+     * @generated from protobuf field: CardFaceProto correct_answer_face = 4;
+     */
+    correctAnswerFace?: CardFaceProto;
+    /**
+     * @generated from protobuf field: CardFaceProto wrong_answer_face = 5;
+     */
+    wrongAnswerFace?: CardFaceProto;
+}
+/**
+ * @generated from protobuf message QuestionBlockOptionProto
+ */
+export interface QuestionBlockOptionProto {
+    /**
+     * @generated from protobuf field: string label = 1;
+     */
+    label: string;
+    /**
+     * @generated from protobuf field: float fraction = 2;
+     */
+    fraction: number;
+}
+/**
+ * @generated from protobuf message QuestionBlockProto
+ */
+export interface QuestionBlockProto {
+    /**
+     * @generated from protobuf field: optional float scale = 1;
+     */
+    scale?: number;
+    /**
+     * @generated from protobuf field: repeated QuestionBlockOptionProto options = 2;
+     */
+    options: QuestionBlockOptionProto[];
+    /**
+     * @generated from protobuf field: int32 correct_index = 3;
+     */
+    correctIndex: number;
+    /**
+     * @generated from protobuf field: CardFaceProto correct_answer_face = 4;
+     */
+    correctAnswerFace?: CardFaceProto;
+    /**
+     * @generated from protobuf field: CardFaceProto wrong_answer_face = 5;
+     */
+    wrongAnswerFace?: CardFaceProto;
 }
 /**
  * @generated from protobuf enum FontNameProto
@@ -593,12 +713,11 @@ class CardProto$Type extends MessageType<CardProto> {
     constructor() {
         super("CardProto", [
             { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "blocks", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => CardBlockProto },
-            { no: 3, name: "hash_tags", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "front_face", kind: "message", T: () => CardFaceProto }
         ]);
     }
     create(value?: PartialMessage<CardProto>): CardProto {
-        const message = { id: "", blocks: [], hashTags: [] };
+        const message = { id: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<CardProto>(this, message, value);
@@ -612,11 +731,8 @@ class CardProto$Type extends MessageType<CardProto> {
                 case /* string id */ 1:
                     message.id = reader.string();
                     break;
-                case /* repeated CardBlockProto blocks */ 2:
-                    message.blocks.push(CardBlockProto.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                case /* repeated string hash_tags */ 3:
-                    message.hashTags.push(reader.string());
+                case /* CardFaceProto front_face */ 2:
+                    message.frontFace = CardFaceProto.internalBinaryRead(reader, reader.uint32(), options, message.frontFace);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -633,12 +749,9 @@ class CardProto$Type extends MessageType<CardProto> {
         /* string id = 1; */
         if (message.id !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.id);
-        /* repeated CardBlockProto blocks = 2; */
-        for (let i = 0; i < message.blocks.length; i++)
-            CardBlockProto.internalBinaryWrite(message.blocks[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* repeated string hash_tags = 3; */
-        for (let i = 0; i < message.hashTags.length; i++)
-            writer.tag(3, WireType.LengthDelimited).string(message.hashTags[i]);
+        /* CardFaceProto front_face = 2; */
+        if (message.frontFace)
+            CardFaceProto.internalBinaryWrite(message.frontFace, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -650,6 +763,60 @@ class CardProto$Type extends MessageType<CardProto> {
  */
 export const CardProto = new CardProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class CardFaceProto$Type extends MessageType<CardFaceProto> {
+    constructor() {
+        super("CardFaceProto", [
+            { no: 1, name: "blocks", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => CardBlockProto },
+            { no: 2, name: "hash_tags", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<CardFaceProto>): CardFaceProto {
+        const message = { blocks: [], hashTags: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<CardFaceProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CardFaceProto): CardFaceProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated CardBlockProto blocks */ 1:
+                    message.blocks.push(CardBlockProto.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* repeated string hash_tags */ 2:
+                    message.hashTags.push(reader.string());
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: CardFaceProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated CardBlockProto blocks = 1; */
+        for (let i = 0; i < message.blocks.length; i++)
+            CardBlockProto.internalBinaryWrite(message.blocks[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* repeated string hash_tags = 2; */
+        for (let i = 0; i < message.hashTags.length; i++)
+            writer.tag(2, WireType.LengthDelimited).string(message.hashTags[i]);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message CardFaceProto
+ */
+export const CardFaceProto = new CardFaceProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class CardBlockProto$Type extends MessageType<CardBlockProto> {
     constructor() {
         super("CardBlockProto", [
@@ -657,7 +824,10 @@ class CardBlockProto$Type extends MessageType<CardBlockProto> {
             { no: 2, name: "image", kind: "message", oneof: "type", T: () => ImageBlockProto },
             { no: 3, name: "text", kind: "message", oneof: "type", T: () => TextBlockProto },
             { no: 4, name: "flip", kind: "message", oneof: "type", T: () => FlipBlockProto },
-            { no: 5, name: "coffee", kind: "message", oneof: "type", T: () => CoffeeBlockProto }
+            { no: 5, name: "coffee", kind: "message", oneof: "type", T: () => CoffeeBlockProto },
+            { no: 6, name: "reveal", kind: "message", oneof: "type", T: () => RevealBlockProto },
+            { no: 7, name: "choice", kind: "message", oneof: "type", T: () => ChoiceBlockProto },
+            { no: 8, name: "question", kind: "message", oneof: "type", T: () => QuestionBlockProto }
         ]);
     }
     create(value?: PartialMessage<CardBlockProto>): CardBlockProto {
@@ -702,6 +872,24 @@ class CardBlockProto$Type extends MessageType<CardBlockProto> {
                         coffee: CoffeeBlockProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).coffee)
                     };
                     break;
+                case /* RevealBlockProto reveal */ 6:
+                    message.type = {
+                        oneofKind: "reveal",
+                        reveal: RevealBlockProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).reveal)
+                    };
+                    break;
+                case /* ChoiceBlockProto choice */ 7:
+                    message.type = {
+                        oneofKind: "choice",
+                        choice: ChoiceBlockProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).choice)
+                    };
+                    break;
+                case /* QuestionBlockProto question */ 8:
+                    message.type = {
+                        oneofKind: "question",
+                        question: QuestionBlockProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).question)
+                    };
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -729,6 +917,15 @@ class CardBlockProto$Type extends MessageType<CardBlockProto> {
         /* CoffeeBlockProto coffee = 5; */
         if (message.type.oneofKind === "coffee")
             CoffeeBlockProto.internalBinaryWrite(message.type.coffee, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        /* RevealBlockProto reveal = 6; */
+        if (message.type.oneofKind === "reveal")
+            RevealBlockProto.internalBinaryWrite(message.type.reveal, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+        /* ChoiceBlockProto choice = 7; */
+        if (message.type.oneofKind === "choice")
+            ChoiceBlockProto.internalBinaryWrite(message.type.choice, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+        /* QuestionBlockProto question = 8; */
+        if (message.type.oneofKind === "question")
+            QuestionBlockProto.internalBinaryWrite(message.type.question, writer.tag(8, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1213,3 +1410,322 @@ class CoffeeBlockProto$Type extends MessageType<CoffeeBlockProto> {
  * @generated MessageType for protobuf message CoffeeBlockProto
  */
 export const CoffeeBlockProto = new CoffeeBlockProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class RevealBlockProto$Type extends MessageType<RevealBlockProto> {
+    constructor() {
+        super("RevealBlockProto", [
+            { no: 1, name: "scale", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
+            { no: 2, name: "label", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "text", kind: "message", T: () => StyledTextProto }
+        ]);
+    }
+    create(value?: PartialMessage<RevealBlockProto>): RevealBlockProto {
+        const message = { scale: 0, label: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<RevealBlockProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: RevealBlockProto): RevealBlockProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* float scale */ 1:
+                    message.scale = reader.float();
+                    break;
+                case /* string label */ 2:
+                    message.label = reader.string();
+                    break;
+                case /* StyledTextProto text */ 3:
+                    message.text = StyledTextProto.internalBinaryRead(reader, reader.uint32(), options, message.text);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: RevealBlockProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* float scale = 1; */
+        if (message.scale !== 0)
+            writer.tag(1, WireType.Bit32).float(message.scale);
+        /* string label = 2; */
+        if (message.label !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.label);
+        /* StyledTextProto text = 3; */
+        if (message.text)
+            StyledTextProto.internalBinaryWrite(message.text, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message RevealBlockProto
+ */
+export const RevealBlockProto = new RevealBlockProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ChoiceBlockOptionProto$Type extends MessageType<ChoiceBlockOptionProto> {
+    constructor() {
+        super("ChoiceBlockOptionProto", [
+            { no: 1, name: "text", kind: "message", T: () => StyledTextProto },
+            { no: 2, name: "fraction", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ }
+        ]);
+    }
+    create(value?: PartialMessage<ChoiceBlockOptionProto>): ChoiceBlockOptionProto {
+        const message = { fraction: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<ChoiceBlockOptionProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ChoiceBlockOptionProto): ChoiceBlockOptionProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* StyledTextProto text */ 1:
+                    message.text = StyledTextProto.internalBinaryRead(reader, reader.uint32(), options, message.text);
+                    break;
+                case /* float fraction */ 2:
+                    message.fraction = reader.float();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: ChoiceBlockOptionProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* StyledTextProto text = 1; */
+        if (message.text)
+            StyledTextProto.internalBinaryWrite(message.text, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* float fraction = 2; */
+        if (message.fraction !== 0)
+            writer.tag(2, WireType.Bit32).float(message.fraction);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message ChoiceBlockOptionProto
+ */
+export const ChoiceBlockOptionProto = new ChoiceBlockOptionProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ChoiceBlockProto$Type extends MessageType<ChoiceBlockProto> {
+    constructor() {
+        super("ChoiceBlockProto", [
+            { no: 1, name: "scale", kind: "scalar", opt: true, T: 2 /*ScalarType.FLOAT*/ },
+            { no: 2, name: "options", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ChoiceBlockOptionProto },
+            { no: 3, name: "correct_index", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 4, name: "correct_answer_face", kind: "message", T: () => CardFaceProto },
+            { no: 5, name: "wrong_answer_face", kind: "message", T: () => CardFaceProto }
+        ]);
+    }
+    create(value?: PartialMessage<ChoiceBlockProto>): ChoiceBlockProto {
+        const message = { options: [], correctIndex: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<ChoiceBlockProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ChoiceBlockProto): ChoiceBlockProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* optional float scale */ 1:
+                    message.scale = reader.float();
+                    break;
+                case /* repeated ChoiceBlockOptionProto options */ 2:
+                    message.options.push(ChoiceBlockOptionProto.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* int32 correct_index */ 3:
+                    message.correctIndex = reader.int32();
+                    break;
+                case /* CardFaceProto correct_answer_face */ 4:
+                    message.correctAnswerFace = CardFaceProto.internalBinaryRead(reader, reader.uint32(), options, message.correctAnswerFace);
+                    break;
+                case /* CardFaceProto wrong_answer_face */ 5:
+                    message.wrongAnswerFace = CardFaceProto.internalBinaryRead(reader, reader.uint32(), options, message.wrongAnswerFace);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: ChoiceBlockProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* optional float scale = 1; */
+        if (message.scale !== undefined)
+            writer.tag(1, WireType.Bit32).float(message.scale);
+        /* repeated ChoiceBlockOptionProto options = 2; */
+        for (let i = 0; i < message.options.length; i++)
+            ChoiceBlockOptionProto.internalBinaryWrite(message.options[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* int32 correct_index = 3; */
+        if (message.correctIndex !== 0)
+            writer.tag(3, WireType.Varint).int32(message.correctIndex);
+        /* CardFaceProto correct_answer_face = 4; */
+        if (message.correctAnswerFace)
+            CardFaceProto.internalBinaryWrite(message.correctAnswerFace, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* CardFaceProto wrong_answer_face = 5; */
+        if (message.wrongAnswerFace)
+            CardFaceProto.internalBinaryWrite(message.wrongAnswerFace, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message ChoiceBlockProto
+ */
+export const ChoiceBlockProto = new ChoiceBlockProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class QuestionBlockOptionProto$Type extends MessageType<QuestionBlockOptionProto> {
+    constructor() {
+        super("QuestionBlockOptionProto", [
+            { no: 1, name: "label", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "fraction", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ }
+        ]);
+    }
+    create(value?: PartialMessage<QuestionBlockOptionProto>): QuestionBlockOptionProto {
+        const message = { label: "", fraction: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<QuestionBlockOptionProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: QuestionBlockOptionProto): QuestionBlockOptionProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string label */ 1:
+                    message.label = reader.string();
+                    break;
+                case /* float fraction */ 2:
+                    message.fraction = reader.float();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: QuestionBlockOptionProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string label = 1; */
+        if (message.label !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.label);
+        /* float fraction = 2; */
+        if (message.fraction !== 0)
+            writer.tag(2, WireType.Bit32).float(message.fraction);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message QuestionBlockOptionProto
+ */
+export const QuestionBlockOptionProto = new QuestionBlockOptionProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class QuestionBlockProto$Type extends MessageType<QuestionBlockProto> {
+    constructor() {
+        super("QuestionBlockProto", [
+            { no: 1, name: "scale", kind: "scalar", opt: true, T: 2 /*ScalarType.FLOAT*/ },
+            { no: 2, name: "options", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => QuestionBlockOptionProto },
+            { no: 3, name: "correct_index", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 4, name: "correct_answer_face", kind: "message", T: () => CardFaceProto },
+            { no: 5, name: "wrong_answer_face", kind: "message", T: () => CardFaceProto }
+        ]);
+    }
+    create(value?: PartialMessage<QuestionBlockProto>): QuestionBlockProto {
+        const message = { options: [], correctIndex: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<QuestionBlockProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: QuestionBlockProto): QuestionBlockProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* optional float scale */ 1:
+                    message.scale = reader.float();
+                    break;
+                case /* repeated QuestionBlockOptionProto options */ 2:
+                    message.options.push(QuestionBlockOptionProto.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* int32 correct_index */ 3:
+                    message.correctIndex = reader.int32();
+                    break;
+                case /* CardFaceProto correct_answer_face */ 4:
+                    message.correctAnswerFace = CardFaceProto.internalBinaryRead(reader, reader.uint32(), options, message.correctAnswerFace);
+                    break;
+                case /* CardFaceProto wrong_answer_face */ 5:
+                    message.wrongAnswerFace = CardFaceProto.internalBinaryRead(reader, reader.uint32(), options, message.wrongAnswerFace);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: QuestionBlockProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* optional float scale = 1; */
+        if (message.scale !== undefined)
+            writer.tag(1, WireType.Bit32).float(message.scale);
+        /* repeated QuestionBlockOptionProto options = 2; */
+        for (let i = 0; i < message.options.length; i++)
+            QuestionBlockOptionProto.internalBinaryWrite(message.options[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* int32 correct_index = 3; */
+        if (message.correctIndex !== 0)
+            writer.tag(3, WireType.Varint).int32(message.correctIndex);
+        /* CardFaceProto correct_answer_face = 4; */
+        if (message.correctAnswerFace)
+            CardFaceProto.internalBinaryWrite(message.correctAnswerFace, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* CardFaceProto wrong_answer_face = 5; */
+        if (message.wrongAnswerFace)
+            CardFaceProto.internalBinaryWrite(message.wrongAnswerFace, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message QuestionBlockProto
+ */
+export const QuestionBlockProto = new QuestionBlockProto$Type();

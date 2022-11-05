@@ -27,8 +27,12 @@ message StoryProto {
 
 message CardProto {
   string id = 1;
-  repeated CardBlockProto blocks = 2;
-  repeated string hash_tags = 3;
+  CardFaceProto front_face = 2;
+}
+
+message CardFaceProto {
+  repeated CardBlockProto blocks = 1;
+  repeated string hash_tags = 2;
 }
 
 message CardBlockProto {
@@ -38,6 +42,9 @@ message CardBlockProto {
     TextBlockProto text = 3;
     FlipBlockProto flip = 4;
     CoffeeBlockProto coffee = 5;
+    RevealBlockProto reveal = 6;
+    ChoiceBlockProto choice = 7;
+    QuestionBlockProto question = 8;
   }
 }
 
@@ -126,3 +133,35 @@ message CoffeeBlockProto {
   float start_offset = 2;  // moves the label along the circle
   ImageRefProto image_ref = 3;
 }
+
+message RevealBlockProto {
+  float scale = 1;
+  string label = 2;
+  StyledTextProto text = 3;
+}
+
+message ChoiceBlockOptionProto {
+  StyledTextProto text = 1;
+  float fraction = 2;
+}
+
+message ChoiceBlockProto {
+  optional float scale = 1;
+  repeated ChoiceBlockOptionProto options = 2;
+  int32 correct_index = 3;
+  CardFaceProto correct_answer_face = 4;
+  CardFaceProto wrong_answer_face = 5;
+}
+
+message QuestionBlockOptionProto {
+  string label = 1;
+  float fraction = 2;
+}
+
+message QuestionBlockProto {
+  optional float scale = 1;
+  repeated QuestionBlockOptionProto options = 2;
+  int32 correct_index = 3;
+  CardFaceProto correct_answer_face = 4;
+  CardFaceProto wrong_answer_face = 5;
+};

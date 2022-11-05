@@ -410,6 +410,27 @@ struct CardProto {
 
   var id: String = String()
 
+  var frontFace: CardFaceProto {
+    get {return _frontFace ?? CardFaceProto()}
+    set {_frontFace = newValue}
+  }
+  /// Returns true if `frontFace` has been explicitly set.
+  var hasFrontFace: Bool {return self._frontFace != nil}
+  /// Clears the value of `frontFace`. Subsequent reads from it will return its default value.
+  mutating func clearFrontFace() {self._frontFace = nil}
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+
+  fileprivate var _frontFace: CardFaceProto? = nil
+}
+
+struct CardFaceProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
   var blocks: [CardBlockProto] = []
 
   var hashTags: [String] = []
@@ -466,6 +487,30 @@ struct CardBlockProto {
     set {type = .coffee(newValue)}
   }
 
+  var reveal: RevealBlockProto {
+    get {
+      if case .reveal(let v)? = type {return v}
+      return RevealBlockProto()
+    }
+    set {type = .reveal(newValue)}
+  }
+
+  var choice: ChoiceBlockProto {
+    get {
+      if case .choice(let v)? = type {return v}
+      return ChoiceBlockProto()
+    }
+    set {type = .choice(newValue)}
+  }
+
+  var question: QuestionBlockProto {
+    get {
+      if case .question(let v)? = type {return v}
+      return QuestionBlockProto()
+    }
+    set {type = .question(newValue)}
+  }
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_Type: Equatable {
@@ -474,6 +519,9 @@ struct CardBlockProto {
     case text(TextBlockProto)
     case flip(FlipBlockProto)
     case coffee(CoffeeBlockProto)
+    case reveal(RevealBlockProto)
+    case choice(ChoiceBlockProto)
+    case question(QuestionBlockProto)
 
   #if !swift(>=4.1)
     static func ==(lhs: CardBlockProto.OneOf_Type, rhs: CardBlockProto.OneOf_Type) -> Bool {
@@ -499,6 +547,18 @@ struct CardBlockProto {
       }()
       case (.coffee, .coffee): return {
         guard case .coffee(let l) = lhs, case .coffee(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.reveal, .reveal): return {
+        guard case .reveal(let l) = lhs, case .reveal(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.choice, .choice): return {
+        guard case .choice(let l) = lhs, case .choice(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.question, .question): return {
+        guard case .question(let l) = lhs, case .question(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       default: return false
@@ -663,6 +723,158 @@ struct CoffeeBlockProto {
   fileprivate var _imageRef: ImageRefProto? = nil
 }
 
+struct RevealBlockProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var scale: Float = 0
+
+  var label: String = String()
+
+  var text: StyledTextProto {
+    get {return _text ?? StyledTextProto()}
+    set {_text = newValue}
+  }
+  /// Returns true if `text` has been explicitly set.
+  var hasText: Bool {return self._text != nil}
+  /// Clears the value of `text`. Subsequent reads from it will return its default value.
+  mutating func clearText() {self._text = nil}
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+
+  fileprivate var _text: StyledTextProto? = nil
+}
+
+struct ChoiceBlockOptionProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var text: StyledTextProto {
+    get {return _text ?? StyledTextProto()}
+    set {_text = newValue}
+  }
+  /// Returns true if `text` has been explicitly set.
+  var hasText: Bool {return self._text != nil}
+  /// Clears the value of `text`. Subsequent reads from it will return its default value.
+  mutating func clearText() {self._text = nil}
+
+  var fraction: Float = 0
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+
+  fileprivate var _text: StyledTextProto? = nil
+}
+
+struct ChoiceBlockProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var scale: Float {
+    get {return _scale ?? 0}
+    set {_scale = newValue}
+  }
+  /// Returns true if `scale` has been explicitly set.
+  var hasScale: Bool {return self._scale != nil}
+  /// Clears the value of `scale`. Subsequent reads from it will return its default value.
+  mutating func clearScale() {self._scale = nil}
+
+  var options: [ChoiceBlockOptionProto] = []
+
+  var correctIndex: Int32 = 0
+
+  var correctAnswerFace: CardFaceProto {
+    get {return _correctAnswerFace ?? CardFaceProto()}
+    set {_correctAnswerFace = newValue}
+  }
+  /// Returns true if `correctAnswerFace` has been explicitly set.
+  var hasCorrectAnswerFace: Bool {return self._correctAnswerFace != nil}
+  /// Clears the value of `correctAnswerFace`. Subsequent reads from it will return its default value.
+  mutating func clearCorrectAnswerFace() {self._correctAnswerFace = nil}
+
+  var wrongAnswerFace: CardFaceProto {
+    get {return _wrongAnswerFace ?? CardFaceProto()}
+    set {_wrongAnswerFace = newValue}
+  }
+  /// Returns true if `wrongAnswerFace` has been explicitly set.
+  var hasWrongAnswerFace: Bool {return self._wrongAnswerFace != nil}
+  /// Clears the value of `wrongAnswerFace`. Subsequent reads from it will return its default value.
+  mutating func clearWrongAnswerFace() {self._wrongAnswerFace = nil}
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+
+  fileprivate var _scale: Float? = nil
+  fileprivate var _correctAnswerFace: CardFaceProto? = nil
+  fileprivate var _wrongAnswerFace: CardFaceProto? = nil
+}
+
+struct QuestionBlockOptionProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var label: String = String()
+
+  var fraction: Float = 0
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct QuestionBlockProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var scale: Float {
+    get {return _scale ?? 0}
+    set {_scale = newValue}
+  }
+  /// Returns true if `scale` has been explicitly set.
+  var hasScale: Bool {return self._scale != nil}
+  /// Clears the value of `scale`. Subsequent reads from it will return its default value.
+  mutating func clearScale() {self._scale = nil}
+
+  var options: [QuestionBlockOptionProto] = []
+
+  var correctIndex: Int32 = 0
+
+  var correctAnswerFace: CardFaceProto {
+    get {return _correctAnswerFace ?? CardFaceProto()}
+    set {_correctAnswerFace = newValue}
+  }
+  /// Returns true if `correctAnswerFace` has been explicitly set.
+  var hasCorrectAnswerFace: Bool {return self._correctAnswerFace != nil}
+  /// Clears the value of `correctAnswerFace`. Subsequent reads from it will return its default value.
+  mutating func clearCorrectAnswerFace() {self._correctAnswerFace = nil}
+
+  var wrongAnswerFace: CardFaceProto {
+    get {return _wrongAnswerFace ?? CardFaceProto()}
+    set {_wrongAnswerFace = newValue}
+  }
+  /// Returns true if `wrongAnswerFace` has been explicitly set.
+  var hasWrongAnswerFace: Bool {return self._wrongAnswerFace != nil}
+  /// Clears the value of `wrongAnswerFace`. Subsequent reads from it will return its default value.
+  mutating func clearWrongAnswerFace() {self._wrongAnswerFace = nil}
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+
+  fileprivate var _scale: Float? = nil
+  fileprivate var _correctAnswerFace: CardFaceProto? = nil
+  fileprivate var _wrongAnswerFace: CardFaceProto? = nil
+}
+
 #if swift(>=5.5) && canImport(_Concurrency)
 extension FontNameProto: @unchecked Sendable {}
 extension FontWeightProto: @unchecked Sendable {}
@@ -675,6 +887,7 @@ extension GetStoriesResponseProto: @unchecked Sendable {}
 extension StoriesProto: @unchecked Sendable {}
 extension StoryProto: @unchecked Sendable {}
 extension CardProto: @unchecked Sendable {}
+extension CardFaceProto: @unchecked Sendable {}
 extension CardBlockProto: @unchecked Sendable {}
 extension CardBlockProto.OneOf_Type: @unchecked Sendable {}
 extension SpaceBlockProto: @unchecked Sendable {}
@@ -685,6 +898,11 @@ extension StyledTextProto: @unchecked Sendable {}
 extension TextBlockProto: @unchecked Sendable {}
 extension FlipBlockProto: @unchecked Sendable {}
 extension CoffeeBlockProto: @unchecked Sendable {}
+extension RevealBlockProto: @unchecked Sendable {}
+extension ChoiceBlockOptionProto: @unchecked Sendable {}
+extension ChoiceBlockProto: @unchecked Sendable {}
+extension QuestionBlockOptionProto: @unchecked Sendable {}
+extension QuestionBlockProto: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
@@ -902,8 +1120,7 @@ extension CardProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementation
   static let protoMessageName: String = "CardProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "id"),
-    2: .same(proto: "blocks"),
-    3: .standard(proto: "hash_tags"),
+    2: .standard(proto: "front_face"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -913,28 +1130,65 @@ extension CardProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementation
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.id) }()
-      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.blocks) }()
-      case 3: try { try decoder.decodeRepeatedStringField(value: &self.hashTags) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._frontFace) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.id.isEmpty {
       try visitor.visitSingularStringField(value: self.id, fieldNumber: 1)
     }
-    if !self.blocks.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.blocks, fieldNumber: 2)
-    }
-    if !self.hashTags.isEmpty {
-      try visitor.visitRepeatedStringField(value: self.hashTags, fieldNumber: 3)
-    }
+    try { if let v = self._frontFace {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: CardProto, rhs: CardProto) -> Bool {
     if lhs.id != rhs.id {return false}
+    if lhs._frontFace != rhs._frontFace {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension CardFaceProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "CardFaceProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "blocks"),
+    2: .standard(proto: "hash_tags"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.blocks) }()
+      case 2: try { try decoder.decodeRepeatedStringField(value: &self.hashTags) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.blocks.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.blocks, fieldNumber: 1)
+    }
+    if !self.hashTags.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.hashTags, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: CardFaceProto, rhs: CardFaceProto) -> Bool {
     if lhs.blocks != rhs.blocks {return false}
     if lhs.hashTags != rhs.hashTags {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
@@ -950,6 +1204,9 @@ extension CardBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
     3: .same(proto: "text"),
     4: .same(proto: "flip"),
     5: .same(proto: "coffee"),
+    6: .same(proto: "reveal"),
+    7: .same(proto: "choice"),
+    8: .same(proto: "question"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1023,6 +1280,45 @@ extension CardBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
           self.type = .coffee(v)
         }
       }()
+      case 6: try {
+        var v: RevealBlockProto?
+        var hadOneofValue = false
+        if let current = self.type {
+          hadOneofValue = true
+          if case .reveal(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.type = .reveal(v)
+        }
+      }()
+      case 7: try {
+        var v: ChoiceBlockProto?
+        var hadOneofValue = false
+        if let current = self.type {
+          hadOneofValue = true
+          if case .choice(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.type = .choice(v)
+        }
+      }()
+      case 8: try {
+        var v: QuestionBlockProto?
+        var hadOneofValue = false
+        if let current = self.type {
+          hadOneofValue = true
+          if case .question(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.type = .question(v)
+        }
+      }()
       default: break
       }
     }
@@ -1053,6 +1349,18 @@ extension CardBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
     case .coffee?: try {
       guard case .coffee(let v)? = self.type else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
+    }()
+    case .reveal?: try {
+      guard case .reveal(let v)? = self.type else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
+    }()
+    case .choice?: try {
+      guard case .choice(let v)? = self.type else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
+    }()
+    case .question?: try {
+      guard case .question(let v)? = self.type else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
     }()
     case nil: break
     }
@@ -1413,6 +1721,254 @@ extension CoffeeBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     if lhs.label != rhs.label {return false}
     if lhs.startOffset != rhs.startOffset {return false}
     if lhs._imageRef != rhs._imageRef {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension RevealBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "RevealBlockProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "scale"),
+    2: .same(proto: "label"),
+    3: .same(proto: "text"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularFloatField(value: &self.scale) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.label) }()
+      case 3: try { try decoder.decodeSingularMessageField(value: &self._text) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if self.scale != 0 {
+      try visitor.visitSingularFloatField(value: self.scale, fieldNumber: 1)
+    }
+    if !self.label.isEmpty {
+      try visitor.visitSingularStringField(value: self.label, fieldNumber: 2)
+    }
+    try { if let v = self._text {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: RevealBlockProto, rhs: RevealBlockProto) -> Bool {
+    if lhs.scale != rhs.scale {return false}
+    if lhs.label != rhs.label {return false}
+    if lhs._text != rhs._text {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension ChoiceBlockOptionProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "ChoiceBlockOptionProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "text"),
+    2: .same(proto: "fraction"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._text) }()
+      case 2: try { try decoder.decodeSingularFloatField(value: &self.fraction) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._text {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    if self.fraction != 0 {
+      try visitor.visitSingularFloatField(value: self.fraction, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: ChoiceBlockOptionProto, rhs: ChoiceBlockOptionProto) -> Bool {
+    if lhs._text != rhs._text {return false}
+    if lhs.fraction != rhs.fraction {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension ChoiceBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "ChoiceBlockProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "scale"),
+    2: .same(proto: "options"),
+    3: .standard(proto: "correct_index"),
+    4: .standard(proto: "correct_answer_face"),
+    5: .standard(proto: "wrong_answer_face"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularFloatField(value: &self._scale) }()
+      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.options) }()
+      case 3: try { try decoder.decodeSingularInt32Field(value: &self.correctIndex) }()
+      case 4: try { try decoder.decodeSingularMessageField(value: &self._correctAnswerFace) }()
+      case 5: try { try decoder.decodeSingularMessageField(value: &self._wrongAnswerFace) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._scale {
+      try visitor.visitSingularFloatField(value: v, fieldNumber: 1)
+    } }()
+    if !self.options.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.options, fieldNumber: 2)
+    }
+    if self.correctIndex != 0 {
+      try visitor.visitSingularInt32Field(value: self.correctIndex, fieldNumber: 3)
+    }
+    try { if let v = self._correctAnswerFace {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+    } }()
+    try { if let v = self._wrongAnswerFace {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: ChoiceBlockProto, rhs: ChoiceBlockProto) -> Bool {
+    if lhs._scale != rhs._scale {return false}
+    if lhs.options != rhs.options {return false}
+    if lhs.correctIndex != rhs.correctIndex {return false}
+    if lhs._correctAnswerFace != rhs._correctAnswerFace {return false}
+    if lhs._wrongAnswerFace != rhs._wrongAnswerFace {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension QuestionBlockOptionProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "QuestionBlockOptionProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "label"),
+    2: .same(proto: "fraction"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.label) }()
+      case 2: try { try decoder.decodeSingularFloatField(value: &self.fraction) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.label.isEmpty {
+      try visitor.visitSingularStringField(value: self.label, fieldNumber: 1)
+    }
+    if self.fraction != 0 {
+      try visitor.visitSingularFloatField(value: self.fraction, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: QuestionBlockOptionProto, rhs: QuestionBlockOptionProto) -> Bool {
+    if lhs.label != rhs.label {return false}
+    if lhs.fraction != rhs.fraction {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension QuestionBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "QuestionBlockProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "scale"),
+    2: .same(proto: "options"),
+    3: .standard(proto: "correct_index"),
+    4: .standard(proto: "correct_answer_face"),
+    5: .standard(proto: "wrong_answer_face"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularFloatField(value: &self._scale) }()
+      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.options) }()
+      case 3: try { try decoder.decodeSingularInt32Field(value: &self.correctIndex) }()
+      case 4: try { try decoder.decodeSingularMessageField(value: &self._correctAnswerFace) }()
+      case 5: try { try decoder.decodeSingularMessageField(value: &self._wrongAnswerFace) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._scale {
+      try visitor.visitSingularFloatField(value: v, fieldNumber: 1)
+    } }()
+    if !self.options.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.options, fieldNumber: 2)
+    }
+    if self.correctIndex != 0 {
+      try visitor.visitSingularInt32Field(value: self.correctIndex, fieldNumber: 3)
+    }
+    try { if let v = self._correctAnswerFace {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+    } }()
+    try { if let v = self._wrongAnswerFace {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: QuestionBlockProto, rhs: QuestionBlockProto) -> Bool {
+    if lhs._scale != rhs._scale {return false}
+    if lhs.options != rhs.options {return false}
+    if lhs.correctIndex != rhs.correctIndex {return false}
+    if lhs._correctAnswerFace != rhs._correctAnswerFace {return false}
+    if lhs._wrongAnswerFace != rhs._wrongAnswerFace {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
