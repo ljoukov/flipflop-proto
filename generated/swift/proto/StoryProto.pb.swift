@@ -511,6 +511,14 @@ struct CardBlockProto {
     set {type = .question(newValue)}
   }
 
+  var prompt: PromptBlockProto {
+    get {
+      if case .prompt(let v)? = type {return v}
+      return PromptBlockProto()
+    }
+    set {type = .prompt(newValue)}
+  }
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_Type: Equatable {
@@ -522,6 +530,7 @@ struct CardBlockProto {
     case reveal(RevealBlockProto)
     case choice(ChoiceBlockProto)
     case question(QuestionBlockProto)
+    case prompt(PromptBlockProto)
 
   #if !swift(>=4.1)
     static func ==(lhs: CardBlockProto.OneOf_Type, rhs: CardBlockProto.OneOf_Type) -> Bool {
@@ -559,6 +568,10 @@ struct CardBlockProto {
       }()
       case (.question, .question): return {
         guard case .question(let l) = lhs, case .question(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.prompt, .prompt): return {
+        guard case .prompt(let l) = lhs, case .prompt(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       default: return false
@@ -859,6 +872,18 @@ struct QuestionBlockProto {
   fileprivate var _wrongAnswerFace: CardFaceProto? = nil
 }
 
+struct PromptBlockProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var label: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 #if swift(>=5.5) && canImport(_Concurrency)
 extension FontNameProto: @unchecked Sendable {}
 extension FontWeightProto: @unchecked Sendable {}
@@ -887,6 +912,7 @@ extension ChoiceBlockOptionProto: @unchecked Sendable {}
 extension ChoiceBlockProto: @unchecked Sendable {}
 extension QuestionBlockOptionProto: @unchecked Sendable {}
 extension QuestionBlockProto: @unchecked Sendable {}
+extension PromptBlockProto: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
@@ -1191,6 +1217,7 @@ extension CardBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
     6: .same(proto: "reveal"),
     7: .same(proto: "choice"),
     8: .same(proto: "question"),
+    9: .same(proto: "prompt"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1303,6 +1330,19 @@ extension CardBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
           self.type = .question(v)
         }
       }()
+      case 9: try {
+        var v: PromptBlockProto?
+        var hadOneofValue = false
+        if let current = self.type {
+          hadOneofValue = true
+          if case .prompt(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.type = .prompt(v)
+        }
+      }()
       default: break
       }
     }
@@ -1345,6 +1385,10 @@ extension CardBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
     case .question?: try {
       guard case .question(let v)? = self.type else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
+    }()
+    case .prompt?: try {
+      guard case .prompt(let v)? = self.type else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 9)
     }()
     case nil: break
     }
@@ -1953,6 +1997,38 @@ extension QuestionBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     if lhs.correctIndex != rhs.correctIndex {return false}
     if lhs._correctAnswerFace != rhs._correctAnswerFace {return false}
     if lhs._wrongAnswerFace != rhs._wrongAnswerFace {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension PromptBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PromptBlockProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "label"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.label) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.label.isEmpty {
+      try visitor.visitSingularStringField(value: self.label, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PromptBlockProto, rhs: PromptBlockProto) -> Bool {
+    if lhs.label != rhs.label {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

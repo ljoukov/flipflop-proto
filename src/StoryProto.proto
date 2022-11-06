@@ -45,6 +45,7 @@ message CardBlockProto {
     RevealBlockProto reveal = 6;
     ChoiceBlockProto choice = 7;
     QuestionBlockProto question = 8;
+    PromptBlockProto prompt = 9;
   }
 }
 
@@ -164,4 +165,8 @@ message QuestionBlockProto {
   int32 correct_index = 3;
   CardFaceProto correct_answer_face = 4;
   CardFaceProto wrong_answer_face = 5;
+};
+
+message PromptBlockProto {
+  string label = 1;
 };

@@ -158,6 +158,12 @@ export interface CardBlockProto {
          */
         question: QuestionBlockProto;
     } | {
+        oneofKind: "prompt";
+        /**
+         * @generated from protobuf field: PromptBlockProto prompt = 9;
+         */
+        prompt: PromptBlockProto;
+    } | {
         oneofKind: undefined;
     };
 }
@@ -383,6 +389,15 @@ export interface QuestionBlockProto {
      * @generated from protobuf field: CardFaceProto wrong_answer_face = 5;
      */
     wrongAnswerFace?: CardFaceProto;
+}
+/**
+ * @generated from protobuf message PromptBlockProto
+ */
+export interface PromptBlockProto {
+    /**
+     * @generated from protobuf field: string label = 1;
+     */
+    label: string;
 }
 /**
  * @generated from protobuf enum FontNameProto
@@ -827,7 +842,8 @@ class CardBlockProto$Type extends MessageType<CardBlockProto> {
             { no: 5, name: "coffee", kind: "message", oneof: "type", T: () => CoffeeBlockProto },
             { no: 6, name: "reveal", kind: "message", oneof: "type", T: () => RevealBlockProto },
             { no: 7, name: "choice", kind: "message", oneof: "type", T: () => ChoiceBlockProto },
-            { no: 8, name: "question", kind: "message", oneof: "type", T: () => QuestionBlockProto }
+            { no: 8, name: "question", kind: "message", oneof: "type", T: () => QuestionBlockProto },
+            { no: 9, name: "prompt", kind: "message", oneof: "type", T: () => PromptBlockProto }
         ]);
     }
     create(value?: PartialMessage<CardBlockProto>): CardBlockProto {
@@ -890,6 +906,12 @@ class CardBlockProto$Type extends MessageType<CardBlockProto> {
                         question: QuestionBlockProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).question)
                     };
                     break;
+                case /* PromptBlockProto prompt */ 9:
+                    message.type = {
+                        oneofKind: "prompt",
+                        prompt: PromptBlockProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).prompt)
+                    };
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -926,6 +948,9 @@ class CardBlockProto$Type extends MessageType<CardBlockProto> {
         /* QuestionBlockProto question = 8; */
         if (message.type.oneofKind === "question")
             QuestionBlockProto.internalBinaryWrite(message.type.question, writer.tag(8, WireType.LengthDelimited).fork(), options).join();
+        /* PromptBlockProto prompt = 9; */
+        if (message.type.oneofKind === "prompt")
+            PromptBlockProto.internalBinaryWrite(message.type.prompt, writer.tag(9, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1729,3 +1754,50 @@ class QuestionBlockProto$Type extends MessageType<QuestionBlockProto> {
  * @generated MessageType for protobuf message QuestionBlockProto
  */
 export const QuestionBlockProto = new QuestionBlockProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PromptBlockProto$Type extends MessageType<PromptBlockProto> {
+    constructor() {
+        super("PromptBlockProto", [
+            { no: 1, name: "label", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PromptBlockProto>): PromptBlockProto {
+        const message = { label: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<PromptBlockProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PromptBlockProto): PromptBlockProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string label */ 1:
+                    message.label = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PromptBlockProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string label = 1; */
+        if (message.label !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.label);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message PromptBlockProto
+ */
+export const PromptBlockProto = new PromptBlockProto$Type();
