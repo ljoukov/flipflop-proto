@@ -776,14 +776,7 @@ struct ChoiceBlockProto {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var scale: Float {
-    get {return _scale ?? 0}
-    set {_scale = newValue}
-  }
-  /// Returns true if `scale` has been explicitly set.
-  var hasScale: Bool {return self._scale != nil}
-  /// Clears the value of `scale`. Subsequent reads from it will return its default value.
-  mutating func clearScale() {self._scale = nil}
+  var scale: Float = 0
 
   var options: [ChoiceBlockOptionProto] = []
 
@@ -811,7 +804,6 @@ struct ChoiceBlockProto {
 
   init() {}
 
-  fileprivate var _scale: Float? = nil
   fileprivate var _correctAnswerFace: CardFaceProto? = nil
   fileprivate var _wrongAnswerFace: CardFaceProto? = nil
 }
@@ -835,14 +827,7 @@ struct QuestionBlockProto {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var scale: Float {
-    get {return _scale ?? 0}
-    set {_scale = newValue}
-  }
-  /// Returns true if `scale` has been explicitly set.
-  var hasScale: Bool {return self._scale != nil}
-  /// Clears the value of `scale`. Subsequent reads from it will return its default value.
-  mutating func clearScale() {self._scale = nil}
+  var scale: Float = 0
 
   var options: [QuestionBlockOptionProto] = []
 
@@ -870,7 +855,6 @@ struct QuestionBlockProto {
 
   init() {}
 
-  fileprivate var _scale: Float? = nil
   fileprivate var _correctAnswerFace: CardFaceProto? = nil
   fileprivate var _wrongAnswerFace: CardFaceProto? = nil
 }
@@ -1832,7 +1816,7 @@ extension ChoiceBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularFloatField(value: &self._scale) }()
+      case 1: try { try decoder.decodeSingularFloatField(value: &self.scale) }()
       case 2: try { try decoder.decodeRepeatedMessageField(value: &self.options) }()
       case 3: try { try decoder.decodeSingularInt32Field(value: &self.correctIndex) }()
       case 4: try { try decoder.decodeSingularMessageField(value: &self._correctAnswerFace) }()
@@ -1847,9 +1831,9 @@ extension ChoiceBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    try { if let v = self._scale {
-      try visitor.visitSingularFloatField(value: v, fieldNumber: 1)
-    } }()
+    if self.scale != 0 {
+      try visitor.visitSingularFloatField(value: self.scale, fieldNumber: 1)
+    }
     if !self.options.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.options, fieldNumber: 2)
     }
@@ -1866,7 +1850,7 @@ extension ChoiceBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
   }
 
   static func ==(lhs: ChoiceBlockProto, rhs: ChoiceBlockProto) -> Bool {
-    if lhs._scale != rhs._scale {return false}
+    if lhs.scale != rhs.scale {return false}
     if lhs.options != rhs.options {return false}
     if lhs.correctIndex != rhs.correctIndex {return false}
     if lhs._correctAnswerFace != rhs._correctAnswerFace {return false}
@@ -1930,7 +1914,7 @@ extension QuestionBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularFloatField(value: &self._scale) }()
+      case 1: try { try decoder.decodeSingularFloatField(value: &self.scale) }()
       case 2: try { try decoder.decodeRepeatedMessageField(value: &self.options) }()
       case 3: try { try decoder.decodeSingularInt32Field(value: &self.correctIndex) }()
       case 4: try { try decoder.decodeSingularMessageField(value: &self._correctAnswerFace) }()
@@ -1945,9 +1929,9 @@ extension QuestionBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    try { if let v = self._scale {
-      try visitor.visitSingularFloatField(value: v, fieldNumber: 1)
-    } }()
+    if self.scale != 0 {
+      try visitor.visitSingularFloatField(value: self.scale, fieldNumber: 1)
+    }
     if !self.options.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.options, fieldNumber: 2)
     }
@@ -1964,7 +1948,7 @@ extension QuestionBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
   }
 
   static func ==(lhs: QuestionBlockProto, rhs: QuestionBlockProto) -> Bool {
-    if lhs._scale != rhs._scale {return false}
+    if lhs.scale != rhs.scale {return false}
     if lhs.options != rhs.options {return false}
     if lhs.correctIndex != rhs.correctIndex {return false}
     if lhs._correctAnswerFace != rhs._correctAnswerFace {return false}

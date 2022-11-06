@@ -326,9 +326,9 @@ export interface ChoiceBlockOptionProto {
  */
 export interface ChoiceBlockProto {
     /**
-     * @generated from protobuf field: optional float scale = 1;
+     * @generated from protobuf field: float scale = 1;
      */
-    scale?: number;
+    scale: number;
     /**
      * @generated from protobuf field: repeated ChoiceBlockOptionProto options = 2;
      */
@@ -364,9 +364,9 @@ export interface QuestionBlockOptionProto {
  */
 export interface QuestionBlockProto {
     /**
-     * @generated from protobuf field: optional float scale = 1;
+     * @generated from protobuf field: float scale = 1;
      */
-    scale?: number;
+    scale: number;
     /**
      * @generated from protobuf field: repeated QuestionBlockOptionProto options = 2;
      */
@@ -1529,7 +1529,7 @@ export const ChoiceBlockOptionProto = new ChoiceBlockOptionProto$Type();
 class ChoiceBlockProto$Type extends MessageType<ChoiceBlockProto> {
     constructor() {
         super("ChoiceBlockProto", [
-            { no: 1, name: "scale", kind: "scalar", opt: true, T: 2 /*ScalarType.FLOAT*/ },
+            { no: 1, name: "scale", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
             { no: 2, name: "options", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ChoiceBlockOptionProto },
             { no: 3, name: "correct_index", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 4, name: "correct_answer_face", kind: "message", T: () => CardFaceProto },
@@ -1537,7 +1537,7 @@ class ChoiceBlockProto$Type extends MessageType<ChoiceBlockProto> {
         ]);
     }
     create(value?: PartialMessage<ChoiceBlockProto>): ChoiceBlockProto {
-        const message = { options: [], correctIndex: 0 };
+        const message = { scale: 0, options: [], correctIndex: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<ChoiceBlockProto>(this, message, value);
@@ -1548,7 +1548,7 @@ class ChoiceBlockProto$Type extends MessageType<ChoiceBlockProto> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* optional float scale */ 1:
+                case /* float scale */ 1:
                     message.scale = reader.float();
                     break;
                 case /* repeated ChoiceBlockOptionProto options */ 2:
@@ -1575,8 +1575,8 @@ class ChoiceBlockProto$Type extends MessageType<ChoiceBlockProto> {
         return message;
     }
     internalBinaryWrite(message: ChoiceBlockProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* optional float scale = 1; */
-        if (message.scale !== undefined)
+        /* float scale = 1; */
+        if (message.scale !== 0)
             writer.tag(1, WireType.Bit32).float(message.scale);
         /* repeated ChoiceBlockOptionProto options = 2; */
         for (let i = 0; i < message.options.length; i++)
@@ -1658,7 +1658,7 @@ export const QuestionBlockOptionProto = new QuestionBlockOptionProto$Type();
 class QuestionBlockProto$Type extends MessageType<QuestionBlockProto> {
     constructor() {
         super("QuestionBlockProto", [
-            { no: 1, name: "scale", kind: "scalar", opt: true, T: 2 /*ScalarType.FLOAT*/ },
+            { no: 1, name: "scale", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
             { no: 2, name: "options", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => QuestionBlockOptionProto },
             { no: 3, name: "correct_index", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 4, name: "correct_answer_face", kind: "message", T: () => CardFaceProto },
@@ -1666,7 +1666,7 @@ class QuestionBlockProto$Type extends MessageType<QuestionBlockProto> {
         ]);
     }
     create(value?: PartialMessage<QuestionBlockProto>): QuestionBlockProto {
-        const message = { options: [], correctIndex: 0 };
+        const message = { scale: 0, options: [], correctIndex: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<QuestionBlockProto>(this, message, value);
@@ -1677,7 +1677,7 @@ class QuestionBlockProto$Type extends MessageType<QuestionBlockProto> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* optional float scale */ 1:
+                case /* float scale */ 1:
                     message.scale = reader.float();
                     break;
                 case /* repeated QuestionBlockOptionProto options */ 2:
@@ -1704,8 +1704,8 @@ class QuestionBlockProto$Type extends MessageType<QuestionBlockProto> {
         return message;
     }
     internalBinaryWrite(message: QuestionBlockProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* optional float scale = 1; */
-        if (message.scale !== undefined)
+        /* float scale = 1; */
+        if (message.scale !== 0)
             writer.tag(1, WireType.Bit32).float(message.scale);
         /* repeated QuestionBlockOptionProto options = 2; */
         for (let i = 0; i < message.options.length; i++)
