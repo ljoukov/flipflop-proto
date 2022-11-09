@@ -253,6 +253,23 @@ export interface LatLng {
      */
     longitude: number;
 }
+/**
+ * @generated from protobuf message google.firestore.v1.ListDocumentsResponse
+ */
+export interface ListDocumentsResponse {
+    /**
+     * The Documents found.
+     *
+     * @generated from protobuf field: repeated google.firestore.v1.Document documents = 1;
+     */
+    documents: Document[];
+    /**
+     * The next page token.
+     *
+     * @generated from protobuf field: string next_page_token = 2;
+     */
+    nextPageToken: string;
+}
 // @generated message type with reflection information, may provide speed optimized methods
 class Document$Type extends MessageType<Document> {
     constructor() {
@@ -659,3 +676,57 @@ class LatLng$Type extends MessageType<LatLng> {
  * @generated MessageType for protobuf message google.firestore.v1.LatLng
  */
 export const LatLng = new LatLng$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ListDocumentsResponse$Type extends MessageType<ListDocumentsResponse> {
+    constructor() {
+        super("google.firestore.v1.ListDocumentsResponse", [
+            { no: 1, name: "documents", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Document },
+            { no: 2, name: "next_page_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<ListDocumentsResponse>): ListDocumentsResponse {
+        const message = { documents: [], nextPageToken: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<ListDocumentsResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ListDocumentsResponse): ListDocumentsResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated google.firestore.v1.Document documents */ 1:
+                    message.documents.push(Document.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* string next_page_token */ 2:
+                    message.nextPageToken = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: ListDocumentsResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated google.firestore.v1.Document documents = 1; */
+        for (let i = 0; i < message.documents.length; i++)
+            Document.internalBinaryWrite(message.documents[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* string next_page_token = 2; */
+        if (message.nextPageToken !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.nextPageToken);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message google.firestore.v1.ListDocumentsResponse
+ */
+export const ListDocumentsResponse = new ListDocumentsResponse$Type();

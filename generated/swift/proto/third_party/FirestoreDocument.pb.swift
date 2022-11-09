@@ -370,6 +370,22 @@ struct Google_Firestore_V1_LatLng {
   init() {}
 }
 
+struct Google_Firestore_V1_ListDocumentsResponse {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// The Documents found.
+  var documents: [Google_Firestore_V1_Document] = []
+
+  /// The next page token.
+  var nextPageToken: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 #if swift(>=5.5) && canImport(_Concurrency)
 extension Google_Firestore_V1_Document: @unchecked Sendable {}
 extension Google_Firestore_V1_Value: @unchecked Sendable {}
@@ -377,6 +393,7 @@ extension Google_Firestore_V1_Value.OneOf_ValueType: @unchecked Sendable {}
 extension Google_Firestore_V1_ArrayValue: @unchecked Sendable {}
 extension Google_Firestore_V1_MapValue: @unchecked Sendable {}
 extension Google_Firestore_V1_LatLng: @unchecked Sendable {}
+extension Google_Firestore_V1_ListDocumentsResponse: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
@@ -731,6 +748,44 @@ extension Google_Firestore_V1_LatLng: SwiftProtobuf.Message, SwiftProtobuf._Mess
   static func ==(lhs: Google_Firestore_V1_LatLng, rhs: Google_Firestore_V1_LatLng) -> Bool {
     if lhs.latitude != rhs.latitude {return false}
     if lhs.longitude != rhs.longitude {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Google_Firestore_V1_ListDocumentsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".ListDocumentsResponse"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "documents"),
+    2: .standard(proto: "next_page_token"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.documents) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.nextPageToken) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.documents.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.documents, fieldNumber: 1)
+    }
+    if !self.nextPageToken.isEmpty {
+      try visitor.visitSingularStringField(value: self.nextPageToken, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Google_Firestore_V1_ListDocumentsResponse, rhs: Google_Firestore_V1_ListDocumentsResponse) -> Bool {
+    if lhs.documents != rhs.documents {return false}
+    if lhs.nextPageToken != rhs.nextPageToken {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

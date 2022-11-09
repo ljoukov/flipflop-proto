@@ -136,3 +136,11 @@ message LatLng {
   // The longitude in degrees. It must be in the range [-180.0, +180.0].
   double longitude = 2;
 }
+
+message ListDocumentsResponse {
+  // The Documents found.
+  repeated Document documents = 1;
+
+  // The next page token.
+  string next_page_token = 2;
+}
