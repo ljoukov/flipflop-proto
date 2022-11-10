@@ -404,7 +404,14 @@ struct Google_Firestore_V1_WriteRequest {
   /// The ID of the write stream to resume.
   /// This may only be set in the first message. When left empty, a new write
   /// stream will be created.
-  var streamID: String = String()
+  var streamID: String {
+    get {return _streamID ?? String()}
+    set {_streamID = newValue}
+  }
+  /// Returns true if `streamID` has been explicitly set.
+  var hasStreamID: Bool {return self._streamID != nil}
+  /// Clears the value of `streamID`. Subsequent reads from it will return its default value.
+  mutating func clearStreamID() {self._streamID = nil}
 
   /// The writes to apply.
   ///
@@ -428,7 +435,14 @@ struct Google_Firestore_V1_WriteRequest {
   /// a specific point, set this field and the `stream_id` field.
   ///
   /// Leave this field unset when creating a new stream.
-  var streamToken: Data = Data()
+  var streamToken: Data {
+    get {return _streamToken ?? Data()}
+    set {_streamToken = newValue}
+  }
+  /// Returns true if `streamToken` has been explicitly set.
+  var hasStreamToken: Bool {return self._streamToken != nil}
+  /// Clears the value of `streamToken`. Subsequent reads from it will return its default value.
+  mutating func clearStreamToken() {self._streamToken = nil}
 
   /// Labels associated with this write request.
   var labels: Dictionary<String,String> = [:]
@@ -436,6 +450,9 @@ struct Google_Firestore_V1_WriteRequest {
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
+
+  fileprivate var _streamID: String? = nil
+  fileprivate var _streamToken: Data? = nil
 }
 
 /// The response for [Firestore.Write][google.firestore.v1.Firestore.Write].
@@ -995,9 +1012,9 @@ extension Google_Firestore_V1_WriteRequest: SwiftProtobuf.Message, SwiftProtobuf
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 2: try { try decoder.decodeSingularStringField(value: &self.streamID) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self._streamID) }()
       case 3: try { try decoder.decodeRepeatedMessageField(value: &self.writes) }()
-      case 4: try { try decoder.decodeSingularBytesField(value: &self.streamToken) }()
+      case 4: try { try decoder.decodeSingularBytesField(value: &self._streamToken) }()
       case 5: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: &self.labels) }()
       default: break
       }
@@ -1005,15 +1022,19 @@ extension Google_Firestore_V1_WriteRequest: SwiftProtobuf.Message, SwiftProtobuf
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.streamID.isEmpty {
-      try visitor.visitSingularStringField(value: self.streamID, fieldNumber: 2)
-    }
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._streamID {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 2)
+    } }()
     if !self.writes.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.writes, fieldNumber: 3)
     }
-    if !self.streamToken.isEmpty {
-      try visitor.visitSingularBytesField(value: self.streamToken, fieldNumber: 4)
-    }
+    try { if let v = self._streamToken {
+      try visitor.visitSingularBytesField(value: v, fieldNumber: 4)
+    } }()
     if !self.labels.isEmpty {
       try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: self.labels, fieldNumber: 5)
     }
@@ -1021,9 +1042,9 @@ extension Google_Firestore_V1_WriteRequest: SwiftProtobuf.Message, SwiftProtobuf
   }
 
   static func ==(lhs: Google_Firestore_V1_WriteRequest, rhs: Google_Firestore_V1_WriteRequest) -> Bool {
-    if lhs.streamID != rhs.streamID {return false}
+    if lhs._streamID != rhs._streamID {return false}
     if lhs.writes != rhs.writes {return false}
-    if lhs.streamToken != rhs.streamToken {return false}
+    if lhs._streamToken != rhs._streamToken {return false}
     if lhs.labels != rhs.labels {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

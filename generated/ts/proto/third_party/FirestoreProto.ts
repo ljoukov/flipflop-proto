@@ -295,9 +295,9 @@ export interface WriteRequest {
      * This may only be set in the first message. When left empty, a new write
      * stream will be created.
      *
-     * @generated from protobuf field: string stream_id = 2;
+     * @generated from protobuf field: optional string stream_id = 2;
      */
-    streamId: string;
+    streamId?: string;
     /**
      * The writes to apply.
      *
@@ -325,9 +325,9 @@ export interface WriteRequest {
      *
      * Leave this field unset when creating a new stream.
      *
-     * @generated from protobuf field: bytes stream_token = 4;
+     * @generated from protobuf field: optional bytes stream_token = 4;
      */
-    streamToken: Uint8Array;
+    streamToken?: Uint8Array;
     /**
      * Labels associated with this write request.
      *
@@ -894,14 +894,14 @@ export const ListDocumentsResponse = new ListDocumentsResponse$Type();
 class WriteRequest$Type extends MessageType<WriteRequest> {
     constructor() {
         super("google.firestore.v1.WriteRequest", [
-            { no: 2, name: "stream_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "stream_id", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "writes", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Write },
-            { no: 4, name: "stream_token", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
+            { no: 4, name: "stream_token", kind: "scalar", opt: true, T: 12 /*ScalarType.BYTES*/ },
             { no: 5, name: "labels", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } }
         ]);
     }
     create(value?: PartialMessage<WriteRequest>): WriteRequest {
-        const message = { streamId: "", writes: [], streamToken: new Uint8Array(0), labels: {} };
+        const message = { writes: [], labels: {} };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<WriteRequest>(this, message, value);
@@ -912,13 +912,13 @@ class WriteRequest$Type extends MessageType<WriteRequest> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string stream_id */ 2:
+                case /* optional string stream_id */ 2:
                     message.streamId = reader.string();
                     break;
                 case /* repeated google.firestore.v1.Write writes */ 3:
                     message.writes.push(Write.internalBinaryRead(reader, reader.uint32(), options));
                     break;
-                case /* bytes stream_token */ 4:
+                case /* optional bytes stream_token */ 4:
                     message.streamToken = reader.bytes();
                     break;
                 case /* map<string, string> labels */ 5:
@@ -952,14 +952,14 @@ class WriteRequest$Type extends MessageType<WriteRequest> {
         map[key ?? ""] = val ?? "";
     }
     internalBinaryWrite(message: WriteRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string stream_id = 2; */
-        if (message.streamId !== "")
+        /* optional string stream_id = 2; */
+        if (message.streamId !== undefined)
             writer.tag(2, WireType.LengthDelimited).string(message.streamId);
         /* repeated google.firestore.v1.Write writes = 3; */
         for (let i = 0; i < message.writes.length; i++)
             Write.internalBinaryWrite(message.writes[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* bytes stream_token = 4; */
-        if (message.streamToken.length)
+        /* optional bytes stream_token = 4; */
+        if (message.streamToken !== undefined)
             writer.tag(4, WireType.LengthDelimited).bytes(message.streamToken);
         /* map<string, string> labels = 5; */
         for (let k of Object.keys(message.labels))

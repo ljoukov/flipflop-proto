@@ -164,7 +164,7 @@ message WriteRequest {
   // The ID of the write stream to resume.
   // This may only be set in the first message. When left empty, a new write
   // stream will be created.
-  string stream_id = 2;
+  optional string stream_id = 2;
 
   // The writes to apply.
   //
@@ -188,7 +188,7 @@ message WriteRequest {
   // a specific point, set this field and the `stream_id` field.
   //
   // Leave this field unset when creating a new stream.
-  bytes stream_token = 4;
+  optional bytes stream_token = 4;
 
   // Labels associated with this write request.
   map<string, string> labels = 5;
