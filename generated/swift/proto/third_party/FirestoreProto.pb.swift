@@ -30,14 +30,7 @@ struct Google_Firestore_V1_Document {
 
   /// The resource name of the document, for example
   /// `projects/{project_id}/databases/{database_id}/documents/{document_path}`.
-  var name: String {
-    get {return _name ?? String()}
-    set {_name = newValue}
-  }
-  /// Returns true if `name` has been explicitly set.
-  var hasName: Bool {return self._name != nil}
-  /// Clears the value of `name`. Subsequent reads from it will return its default value.
-  mutating func clearName() {self._name = nil}
+  var name: String = String()
 
   /// The document's fields.
   ///
@@ -97,7 +90,6 @@ struct Google_Firestore_V1_Document {
 
   init() {}
 
-  fileprivate var _name: String? = nil
   fileprivate var _createTime: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
   fileprivate var _updateTime: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
@@ -629,7 +621,7 @@ extension Google_Firestore_V1_Document: SwiftProtobuf.Message, SwiftProtobuf._Me
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self._name) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self.name) }()
       case 2: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,Google_Firestore_V1_Value>.self, value: &self.fields) }()
       case 3: try { try decoder.decodeSingularMessageField(value: &self._createTime) }()
       case 4: try { try decoder.decodeSingularMessageField(value: &self._updateTime) }()
@@ -643,9 +635,9 @@ extension Google_Firestore_V1_Document: SwiftProtobuf.Message, SwiftProtobuf._Me
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    try { if let v = self._name {
-      try visitor.visitSingularStringField(value: v, fieldNumber: 1)
-    } }()
+    if !self.name.isEmpty {
+      try visitor.visitSingularStringField(value: self.name, fieldNumber: 1)
+    }
     if !self.fields.isEmpty {
       try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,Google_Firestore_V1_Value>.self, value: self.fields, fieldNumber: 2)
     }
@@ -659,7 +651,7 @@ extension Google_Firestore_V1_Document: SwiftProtobuf.Message, SwiftProtobuf._Me
   }
 
   static func ==(lhs: Google_Firestore_V1_Document, rhs: Google_Firestore_V1_Document) -> Bool {
-    if lhs._name != rhs._name {return false}
+    if lhs.name != rhs.name {return false}
     if lhs.fields != rhs.fields {return false}
     if lhs._createTime != rhs._createTime {return false}
     if lhs._updateTime != rhs._updateTime {return false}

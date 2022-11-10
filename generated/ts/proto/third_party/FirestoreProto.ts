@@ -27,9 +27,9 @@ export interface Document {
      * The resource name of the document, for example
      * `projects/{project_id}/databases/{database_id}/documents/{document_path}`.
      *
-     * @generated from protobuf field: optional string name = 1;
+     * @generated from protobuf field: string name = 1;
      */
-    name?: string;
+    name: string;
     /**
      * The document's fields.
      *
@@ -434,14 +434,14 @@ export interface Write {
 class Document$Type extends MessageType<Document> {
     constructor() {
         super("google.firestore.v1.Document", [
-            { no: 1, name: "name", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
+            { no: 1, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "fields", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => Value } },
             { no: 3, name: "create_time", kind: "message", T: () => Timestamp },
             { no: 4, name: "update_time", kind: "message", T: () => Timestamp }
         ]);
     }
     create(value?: PartialMessage<Document>): Document {
-        const message = { fields: {} };
+        const message = { name: "", fields: {} };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<Document>(this, message, value);
@@ -452,7 +452,7 @@ class Document$Type extends MessageType<Document> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* optional string name */ 1:
+                case /* string name */ 1:
                     message.name = reader.string();
                     break;
                 case /* map<string, google.firestore.v1.Value> fields */ 2:
@@ -492,8 +492,8 @@ class Document$Type extends MessageType<Document> {
         map[key ?? ""] = val ?? Value.create();
     }
     internalBinaryWrite(message: Document, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* optional string name = 1; */
-        if (message.name !== undefined)
+        /* string name = 1; */
+        if (message.name !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.name);
         /* map<string, google.firestore.v1.Value> fields = 2; */
         for (let k of Object.keys(message.fields)) {
