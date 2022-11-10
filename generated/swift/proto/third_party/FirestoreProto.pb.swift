@@ -401,11 +401,6 @@ struct Google_Firestore_V1_WriteRequest {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  /// Required. The database name. In the format:
-  /// `projects/{project_id}/databases/{database_id}`.
-  /// This is only required in the first message.
-  var database: String = String()
-
   /// The ID of the write stream to resume.
   /// This may only be set in the first message. When left empty, a new write
   /// stream will be created.
@@ -988,7 +983,6 @@ extension Google_Firestore_V1_ListDocumentsResponse: SwiftProtobuf.Message, Swif
 extension Google_Firestore_V1_WriteRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".WriteRequest"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "database"),
     2: .standard(proto: "stream_id"),
     3: .same(proto: "writes"),
     4: .standard(proto: "stream_token"),
@@ -1001,7 +995,6 @@ extension Google_Firestore_V1_WriteRequest: SwiftProtobuf.Message, SwiftProtobuf
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.database) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.streamID) }()
       case 3: try { try decoder.decodeRepeatedMessageField(value: &self.writes) }()
       case 4: try { try decoder.decodeSingularBytesField(value: &self.streamToken) }()
@@ -1012,9 +1005,6 @@ extension Google_Firestore_V1_WriteRequest: SwiftProtobuf.Message, SwiftProtobuf
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.database.isEmpty {
-      try visitor.visitSingularStringField(value: self.database, fieldNumber: 1)
-    }
     if !self.streamID.isEmpty {
       try visitor.visitSingularStringField(value: self.streamID, fieldNumber: 2)
     }
@@ -1031,7 +1021,6 @@ extension Google_Firestore_V1_WriteRequest: SwiftProtobuf.Message, SwiftProtobuf
   }
 
   static func ==(lhs: Google_Firestore_V1_WriteRequest, rhs: Google_Firestore_V1_WriteRequest) -> Bool {
-    if lhs.database != rhs.database {return false}
     if lhs.streamID != rhs.streamID {return false}
     if lhs.writes != rhs.writes {return false}
     if lhs.streamToken != rhs.streamToken {return false}

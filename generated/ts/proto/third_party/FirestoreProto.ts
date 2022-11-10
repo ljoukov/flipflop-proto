@@ -282,17 +282,14 @@ export interface ListDocumentsResponse {
  * given token, then a response containing only an up-to-date token, to use in
  * the next request.
  *
+ * Required. The database name. In the format:
+ * `projects/{project_id}/databases/{database_id}`.
+ * This is only required in the first message.
+ * [SUPPLIED VIA URL PATH] string database = 1; // [(google.api.field_behavior) = REQUIRED];
+ *
  * @generated from protobuf message google.firestore.v1.WriteRequest
  */
 export interface WriteRequest {
-    /**
-     * Required. The database name. In the format:
-     * `projects/{project_id}/databases/{database_id}`.
-     * This is only required in the first message.
-     *
-     * @generated from protobuf field: string database = 1;
-     */
-    database: string; // [(google.api.field_behavior) = REQUIRED];
     /**
      * The ID of the write stream to resume.
      * This may only be set in the first message. When left empty, a new write
@@ -897,7 +894,6 @@ export const ListDocumentsResponse = new ListDocumentsResponse$Type();
 class WriteRequest$Type extends MessageType<WriteRequest> {
     constructor() {
         super("google.firestore.v1.WriteRequest", [
-            { no: 1, name: "database", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "stream_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "writes", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Write },
             { no: 4, name: "stream_token", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
@@ -905,7 +901,7 @@ class WriteRequest$Type extends MessageType<WriteRequest> {
         ]);
     }
     create(value?: PartialMessage<WriteRequest>): WriteRequest {
-        const message = { database: "", streamId: "", writes: [], streamToken: new Uint8Array(0), labels: {} };
+        const message = { streamId: "", writes: [], streamToken: new Uint8Array(0), labels: {} };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<WriteRequest>(this, message, value);
@@ -916,9 +912,6 @@ class WriteRequest$Type extends MessageType<WriteRequest> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string database */ 1:
-                    message.database = reader.string();
-                    break;
                 case /* string stream_id */ 2:
                     message.streamId = reader.string();
                     break;
@@ -959,9 +952,6 @@ class WriteRequest$Type extends MessageType<WriteRequest> {
         map[key ?? ""] = val ?? "";
     }
     internalBinaryWrite(message: WriteRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string database = 1; */
-        if (message.database !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.database);
         /* string stream_id = 2; */
         if (message.streamId !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.streamId);

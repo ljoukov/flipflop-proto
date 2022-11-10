@@ -159,7 +159,7 @@ message WriteRequest {
   // Required. The database name. In the format:
   // `projects/{project_id}/databases/{database_id}`.
   // This is only required in the first message.
-  string database = 1; // [(google.api.field_behavior) = REQUIRED];
+  // [SUPPLIED VIA URL PATH] string database = 1; // [(google.api.field_behavior) = REQUIRED];
 
   // The ID of the write stream to resume.
   // This may only be set in the first message. When left empty, a new write
