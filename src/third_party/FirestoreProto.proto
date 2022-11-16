@@ -231,6 +231,33 @@ message WriteResult {
   repeated Value transform_results = 2;
 }
 
+message CommitRequest {
+  // Required. The database name. In the format:
+  // `projects/{project_id}/databases/{database_id}`.
+  // [SUPPLIED VIA URL PATH] string database = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The writes to apply.
+  //
+  // Always executed atomically and in order.
+  repeated Write writes = 2;
+
+  // If set, applies all writes in this transaction, and commits it.
+  bytes transaction = 3;
+}
+
+// The response for [Firestore.Commit][google.firestore.v1.Firestore.Commit].
+message CommitResponse {
+  // The result of applying the writes.
+  //
+  // This i-th write result corresponds to the i-th write in the
+  // request.
+  repeated WriteResult write_results = 1;
+
+  // The time at which the commit occurred. Any read with an equal or greater
+  // `read_time` is guaranteed to see the effects of the commit.
+  google.protobuf.Timestamp commit_time = 2;
+}
+
 // A write on a document.
 message Write {
   // The operation to execute.

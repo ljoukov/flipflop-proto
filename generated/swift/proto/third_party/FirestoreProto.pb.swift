@@ -526,6 +526,57 @@ struct Google_Firestore_V1_WriteResult {
   fileprivate var _updateTime: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
+/// Required. The database name. In the format:
+/// `projects/{project_id}/databases/{database_id}`.
+/// [SUPPLIED VIA URL PATH] string database = 1 [(google.api.field_behavior) = REQUIRED];
+struct Google_Firestore_V1_CommitRequest {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// The writes to apply.
+  ///
+  /// Always executed atomically and in order.
+  var writes: [Google_Firestore_V1_Write] = []
+
+  /// If set, applies all writes in this transaction, and commits it.
+  var transaction: Data = Data()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+/// The response for [Firestore.Commit][google.firestore.v1.Firestore.Commit].
+struct Google_Firestore_V1_CommitResponse {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// The result of applying the writes.
+  ///
+  /// This i-th write result corresponds to the i-th write in the
+  /// request.
+  var writeResults: [Google_Firestore_V1_WriteResult] = []
+
+  /// The time at which the commit occurred. Any read with an equal or greater
+  /// `read_time` is guaranteed to see the effects of the commit.
+  var commitTime: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _commitTime ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_commitTime = newValue}
+  }
+  /// Returns true if `commitTime` has been explicitly set.
+  var hasCommitTime: Bool {return self._commitTime != nil}
+  /// Clears the value of `commitTime`. Subsequent reads from it will return its default value.
+  mutating func clearCommitTime() {self._commitTime = nil}
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+
+  fileprivate var _commitTime: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+}
+
 /// A write on a document.
 struct Google_Firestore_V1_Write {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
@@ -598,6 +649,8 @@ extension Google_Firestore_V1_ListDocumentsResponse: @unchecked Sendable {}
 extension Google_Firestore_V1_WriteRequest: @unchecked Sendable {}
 extension Google_Firestore_V1_WriteResponse: @unchecked Sendable {}
 extension Google_Firestore_V1_WriteResult: @unchecked Sendable {}
+extension Google_Firestore_V1_CommitRequest: @unchecked Sendable {}
+extension Google_Firestore_V1_CommitResponse: @unchecked Sendable {}
 extension Google_Firestore_V1_Write: @unchecked Sendable {}
 extension Google_Firestore_V1_Write.OneOf_Operation: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
@@ -1142,6 +1195,86 @@ extension Google_Firestore_V1_WriteResult: SwiftProtobuf.Message, SwiftProtobuf.
   static func ==(lhs: Google_Firestore_V1_WriteResult, rhs: Google_Firestore_V1_WriteResult) -> Bool {
     if lhs._updateTime != rhs._updateTime {return false}
     if lhs.transformResults != rhs.transformResults {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Google_Firestore_V1_CommitRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".CommitRequest"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    2: .same(proto: "writes"),
+    3: .same(proto: "transaction"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.writes) }()
+      case 3: try { try decoder.decodeSingularBytesField(value: &self.transaction) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.writes.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.writes, fieldNumber: 2)
+    }
+    if !self.transaction.isEmpty {
+      try visitor.visitSingularBytesField(value: self.transaction, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Google_Firestore_V1_CommitRequest, rhs: Google_Firestore_V1_CommitRequest) -> Bool {
+    if lhs.writes != rhs.writes {return false}
+    if lhs.transaction != rhs.transaction {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Google_Firestore_V1_CommitResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".CommitResponse"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "write_results"),
+    2: .standard(proto: "commit_time"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.writeResults) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._commitTime) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.writeResults.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.writeResults, fieldNumber: 1)
+    }
+    try { if let v = self._commitTime {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Google_Firestore_V1_CommitResponse, rhs: Google_Firestore_V1_CommitResponse) -> Bool {
+    if lhs.writeResults != rhs.writeResults {return false}
+    if lhs._commitTime != rhs._commitTime {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

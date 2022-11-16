@@ -401,6 +401,52 @@ export interface WriteResult {
     transformResults: Value[];
 }
 /**
+ * Required. The database name. In the format:
+ * `projects/{project_id}/databases/{database_id}`.
+ * [SUPPLIED VIA URL PATH] string database = 1 [(google.api.field_behavior) = REQUIRED];
+ *
+ * @generated from protobuf message google.firestore.v1.CommitRequest
+ */
+export interface CommitRequest {
+    /**
+     * The writes to apply.
+     *
+     * Always executed atomically and in order.
+     *
+     * @generated from protobuf field: repeated google.firestore.v1.Write writes = 2;
+     */
+    writes: Write[];
+    /**
+     * If set, applies all writes in this transaction, and commits it.
+     *
+     * @generated from protobuf field: bytes transaction = 3;
+     */
+    transaction: Uint8Array;
+}
+/**
+ * The response for [Firestore.Commit][google.firestore.v1.Firestore.Commit].
+ *
+ * @generated from protobuf message google.firestore.v1.CommitResponse
+ */
+export interface CommitResponse {
+    /**
+     * The result of applying the writes.
+     *
+     * This i-th write result corresponds to the i-th write in the
+     * request.
+     *
+     * @generated from protobuf field: repeated google.firestore.v1.WriteResult write_results = 1;
+     */
+    writeResults: WriteResult[];
+    /**
+     * The time at which the commit occurred. Any read with an equal or greater
+     * `read_time` is guaranteed to see the effects of the commit.
+     *
+     * @generated from protobuf field: google.protobuf.Timestamp commit_time = 2;
+     */
+    commitTime?: Timestamp;
+}
+/**
  * A write on a document.
  *
  * @generated from protobuf message google.firestore.v1.Write
@@ -1096,6 +1142,114 @@ class WriteResult$Type extends MessageType<WriteResult> {
  * @generated MessageType for protobuf message google.firestore.v1.WriteResult
  */
 export const WriteResult = new WriteResult$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class CommitRequest$Type extends MessageType<CommitRequest> {
+    constructor() {
+        super("google.firestore.v1.CommitRequest", [
+            { no: 2, name: "writes", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Write },
+            { no: 3, name: "transaction", kind: "scalar", T: 12 /*ScalarType.BYTES*/ }
+        ]);
+    }
+    create(value?: PartialMessage<CommitRequest>): CommitRequest {
+        const message = { writes: [], transaction: new Uint8Array(0) };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<CommitRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CommitRequest): CommitRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated google.firestore.v1.Write writes */ 2:
+                    message.writes.push(Write.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* bytes transaction */ 3:
+                    message.transaction = reader.bytes();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: CommitRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated google.firestore.v1.Write writes = 2; */
+        for (let i = 0; i < message.writes.length; i++)
+            Write.internalBinaryWrite(message.writes[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* bytes transaction = 3; */
+        if (message.transaction.length)
+            writer.tag(3, WireType.LengthDelimited).bytes(message.transaction);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message google.firestore.v1.CommitRequest
+ */
+export const CommitRequest = new CommitRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class CommitResponse$Type extends MessageType<CommitResponse> {
+    constructor() {
+        super("google.firestore.v1.CommitResponse", [
+            { no: 1, name: "write_results", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => WriteResult },
+            { no: 2, name: "commit_time", kind: "message", T: () => Timestamp }
+        ]);
+    }
+    create(value?: PartialMessage<CommitResponse>): CommitResponse {
+        const message = { writeResults: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<CommitResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CommitResponse): CommitResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated google.firestore.v1.WriteResult write_results */ 1:
+                    message.writeResults.push(WriteResult.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* google.protobuf.Timestamp commit_time */ 2:
+                    message.commitTime = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.commitTime);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: CommitResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated google.firestore.v1.WriteResult write_results = 1; */
+        for (let i = 0; i < message.writeResults.length; i++)
+            WriteResult.internalBinaryWrite(message.writeResults[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.Timestamp commit_time = 2; */
+        if (message.commitTime)
+            Timestamp.internalBinaryWrite(message.commitTime, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message google.firestore.v1.CommitResponse
+ */
+export const CommitResponse = new CommitResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class Write$Type extends MessageType<Write> {
     constructor() {
