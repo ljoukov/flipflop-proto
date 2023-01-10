@@ -164,6 +164,12 @@ export interface CardBlockProto {
          */
         prompt: PromptBlockProto;
     } | {
+        oneofKind: "revealBack";
+        /**
+         * @generated from protobuf field: RevealBackBlockProto reveal_back = 10;
+         */
+        revealBack: RevealBackBlockProto;
+    } | {
         oneofKind: undefined;
     };
 }
@@ -398,6 +404,19 @@ export interface PromptBlockProto {
      * @generated from protobuf field: string label = 1;
      */
     label: string;
+}
+/**
+ * @generated from protobuf message RevealBackBlockProto
+ */
+export interface RevealBackBlockProto {
+    /**
+     * @generated from protobuf field: string label = 1;
+     */
+    label: string;
+    /**
+     * @generated from protobuf field: CardFaceProto back_face = 2;
+     */
+    backFace?: CardFaceProto;
 }
 /**
  * @generated from protobuf enum FontNameProto
@@ -843,7 +862,8 @@ class CardBlockProto$Type extends MessageType<CardBlockProto> {
             { no: 6, name: "reveal", kind: "message", oneof: "type", T: () => RevealBlockProto },
             { no: 7, name: "choice", kind: "message", oneof: "type", T: () => ChoiceBlockProto },
             { no: 8, name: "question", kind: "message", oneof: "type", T: () => QuestionBlockProto },
-            { no: 9, name: "prompt", kind: "message", oneof: "type", T: () => PromptBlockProto }
+            { no: 9, name: "prompt", kind: "message", oneof: "type", T: () => PromptBlockProto },
+            { no: 10, name: "reveal_back", kind: "message", oneof: "type", T: () => RevealBackBlockProto }
         ]);
     }
     create(value?: PartialMessage<CardBlockProto>): CardBlockProto {
@@ -912,6 +932,12 @@ class CardBlockProto$Type extends MessageType<CardBlockProto> {
                         prompt: PromptBlockProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).prompt)
                     };
                     break;
+                case /* RevealBackBlockProto reveal_back */ 10:
+                    message.type = {
+                        oneofKind: "revealBack",
+                        revealBack: RevealBackBlockProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).revealBack)
+                    };
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -951,6 +977,9 @@ class CardBlockProto$Type extends MessageType<CardBlockProto> {
         /* PromptBlockProto prompt = 9; */
         if (message.type.oneofKind === "prompt")
             PromptBlockProto.internalBinaryWrite(message.type.prompt, writer.tag(9, WireType.LengthDelimited).fork(), options).join();
+        /* RevealBackBlockProto reveal_back = 10; */
+        if (message.type.oneofKind === "revealBack")
+            RevealBackBlockProto.internalBinaryWrite(message.type.revealBack, writer.tag(10, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1801,3 +1830,57 @@ class PromptBlockProto$Type extends MessageType<PromptBlockProto> {
  * @generated MessageType for protobuf message PromptBlockProto
  */
 export const PromptBlockProto = new PromptBlockProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class RevealBackBlockProto$Type extends MessageType<RevealBackBlockProto> {
+    constructor() {
+        super("RevealBackBlockProto", [
+            { no: 1, name: "label", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "back_face", kind: "message", T: () => CardFaceProto }
+        ]);
+    }
+    create(value?: PartialMessage<RevealBackBlockProto>): RevealBackBlockProto {
+        const message = { label: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<RevealBackBlockProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: RevealBackBlockProto): RevealBackBlockProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string label */ 1:
+                    message.label = reader.string();
+                    break;
+                case /* CardFaceProto back_face */ 2:
+                    message.backFace = CardFaceProto.internalBinaryRead(reader, reader.uint32(), options, message.backFace);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: RevealBackBlockProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string label = 1; */
+        if (message.label !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.label);
+        /* CardFaceProto back_face = 2; */
+        if (message.backFace)
+            CardFaceProto.internalBinaryWrite(message.backFace, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message RevealBackBlockProto
+ */
+export const RevealBackBlockProto = new RevealBackBlockProto$Type();
