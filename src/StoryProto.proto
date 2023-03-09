@@ -8,6 +8,14 @@ message GetStoriesResponseProto {
   map<string, google.protobuf.Duration> latencies = 2;
 }
 
+message CreateStoryRequestProto {
+  repeated CardProto cards = 1;
+}
+
+message CreateStoryResponseProto {
+  string story_id = 1;
+}
+
 message StoriesProto {
   google.protobuf.Timestamp timestamp = 1;
   repeated StoryProto stories = 2;

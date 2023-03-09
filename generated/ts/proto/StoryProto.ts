@@ -31,6 +31,24 @@ export interface GetStoriesResponseProto {
     };
 }
 /**
+ * @generated from protobuf message CreateStoryRequestProto
+ */
+export interface CreateStoryRequestProto {
+    /**
+     * @generated from protobuf field: repeated CardProto cards = 1;
+     */
+    cards: CardProto[];
+}
+/**
+ * @generated from protobuf message CreateStoryResponseProto
+ */
+export interface CreateStoryResponseProto {
+    /**
+     * @generated from protobuf field: string story_id = 1;
+     */
+    storyId: string;
+}
+/**
  * @generated from protobuf message StoriesProto
  */
 export interface StoriesProto {
@@ -599,6 +617,100 @@ class GetStoriesResponseProto$Type extends MessageType<GetStoriesResponseProto> 
  * @generated MessageType for protobuf message GetStoriesResponseProto
  */
 export const GetStoriesResponseProto = new GetStoriesResponseProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class CreateStoryRequestProto$Type extends MessageType<CreateStoryRequestProto> {
+    constructor() {
+        super("CreateStoryRequestProto", [
+            { no: 1, name: "cards", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => CardProto }
+        ]);
+    }
+    create(value?: PartialMessage<CreateStoryRequestProto>): CreateStoryRequestProto {
+        const message = { cards: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<CreateStoryRequestProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CreateStoryRequestProto): CreateStoryRequestProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated CardProto cards */ 1:
+                    message.cards.push(CardProto.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: CreateStoryRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated CardProto cards = 1; */
+        for (let i = 0; i < message.cards.length; i++)
+            CardProto.internalBinaryWrite(message.cards[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message CreateStoryRequestProto
+ */
+export const CreateStoryRequestProto = new CreateStoryRequestProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class CreateStoryResponseProto$Type extends MessageType<CreateStoryResponseProto> {
+    constructor() {
+        super("CreateStoryResponseProto", [
+            { no: 1, name: "story_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<CreateStoryResponseProto>): CreateStoryResponseProto {
+        const message = { storyId: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<CreateStoryResponseProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CreateStoryResponseProto): CreateStoryResponseProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string story_id */ 1:
+                    message.storyId = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: CreateStoryResponseProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string story_id = 1; */
+        if (message.storyId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.storyId);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message CreateStoryResponseProto
+ */
+export const CreateStoryResponseProto = new CreateStoryResponseProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class StoriesProto$Type extends MessageType<StoriesProto> {
     constructor() {
