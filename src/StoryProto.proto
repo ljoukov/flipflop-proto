@@ -16,6 +16,21 @@ message CreateStoryResponseProto {
   string story_id = 1;
 }
 
+message UpdateStoryRequestProto {
+  string story_id = 1;
+  repeated CardProto cards = 2;
+}
+
+message UpdateStoryResponseProto {
+}
+
+message DeleteStoryRequestProto {
+  string story_id = 1;
+}
+
+message DeleteStoryResponseProto {
+}
+
 message StoriesProto {
   google.protobuf.Timestamp timestamp = 1;
   repeated StoryProto stories = 2;
