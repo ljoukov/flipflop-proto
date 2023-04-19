@@ -851,6 +851,8 @@ struct ImageRefProto {
 
   var storagePath: String = String()
 
+  var localID: String = String()
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -2143,6 +2145,7 @@ extension ImageRefProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
   static let protoMessageName: String = "ImageRefProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "storage_path"),
+    2: .standard(proto: "local_id"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2152,6 +2155,7 @@ extension ImageRefProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.storagePath) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.localID) }()
       default: break
       }
     }
@@ -2161,11 +2165,15 @@ extension ImageRefProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
     if !self.storagePath.isEmpty {
       try visitor.visitSingularStringField(value: self.storagePath, fieldNumber: 1)
     }
+    if !self.localID.isEmpty {
+      try visitor.visitSingularStringField(value: self.localID, fieldNumber: 2)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: ImageRefProto, rhs: ImageRefProto) -> Bool {
     if lhs.storagePath != rhs.storagePath {return false}
+    if lhs.localID != rhs.localID {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

@@ -315,6 +315,10 @@ export interface ImageRefProto {
      * @generated from protobuf field: string storage_path = 1;
      */
     storagePath: string;
+    /**
+     * @generated from protobuf field: string local_id = 2;
+     */
+    localId: string;
 }
 /**
  * @generated from protobuf message ImageBlockProto
@@ -1599,11 +1603,12 @@ export const SpaceBlockProto = new SpaceBlockProto$Type();
 class ImageRefProto$Type extends MessageType<ImageRefProto> {
     constructor() {
         super("ImageRefProto", [
-            { no: 1, name: "storage_path", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "storage_path", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "local_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<ImageRefProto>): ImageRefProto {
-        const message = { storagePath: "" };
+        const message = { storagePath: "", localId: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<ImageRefProto>(this, message, value);
@@ -1616,6 +1621,9 @@ class ImageRefProto$Type extends MessageType<ImageRefProto> {
             switch (fieldNo) {
                 case /* string storage_path */ 1:
                     message.storagePath = reader.string();
+                    break;
+                case /* string local_id */ 2:
+                    message.localId = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1632,6 +1640,9 @@ class ImageRefProto$Type extends MessageType<ImageRefProto> {
         /* string storage_path = 1; */
         if (message.storagePath !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.storagePath);
+        /* string local_id = 2; */
+        if (message.localId !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.localId);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
