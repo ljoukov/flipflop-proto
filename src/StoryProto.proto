@@ -3,6 +3,9 @@ syntax = "proto3";
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 
+message GetStoriesRequestProto {
+}
+
 message GetStoriesResponseProto {
   StoriesProto stories = 1;
   map<string, google.protobuf.Duration> latencies = 2;
@@ -29,6 +32,26 @@ message DeleteStoryRequestProto {
 }
 
 message DeleteStoryResponseProto {
+}
+
+message StoryApiRequestProto {
+  oneof request {
+    GetStoriesRequestProto get_stories = 1;
+
+    CreateStoryRequestProto create_story = 2;
+    UpdateStoryRequestProto update_story = 3;
+    DeleteStoryRequestProto delete_story = 4;
+  }
+}
+
+message StoryApiResponseProto {
+  oneof request {
+    GetStoriesResponseProto get_stories = 1;
+
+    CreateStoryResponseProto create_story = 2;
+    UpdateStoryResponseProto update_story = 3;
+    DeleteStoryResponseProto delete_story = 4;
+  }
 }
 
 message StoriesProto {

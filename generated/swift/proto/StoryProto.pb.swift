@@ -316,6 +316,16 @@ extension TextHyphensProto: CaseIterable {
 
 #endif  // swift(>=4.2)
 
+struct GetStoriesRequestProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 struct GetStoriesResponseProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -405,6 +415,162 @@ struct DeleteStoryResponseProto {
   // methods supported on all messages.
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct StoryApiRequestProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var request: StoryApiRequestProto.OneOf_Request? = nil
+
+  var getStories: GetStoriesRequestProto {
+    get {
+      if case .getStories(let v)? = request {return v}
+      return GetStoriesRequestProto()
+    }
+    set {request = .getStories(newValue)}
+  }
+
+  var createStory: CreateStoryRequestProto {
+    get {
+      if case .createStory(let v)? = request {return v}
+      return CreateStoryRequestProto()
+    }
+    set {request = .createStory(newValue)}
+  }
+
+  var updateStory: UpdateStoryRequestProto {
+    get {
+      if case .updateStory(let v)? = request {return v}
+      return UpdateStoryRequestProto()
+    }
+    set {request = .updateStory(newValue)}
+  }
+
+  var deleteStory: DeleteStoryRequestProto {
+    get {
+      if case .deleteStory(let v)? = request {return v}
+      return DeleteStoryRequestProto()
+    }
+    set {request = .deleteStory(newValue)}
+  }
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  enum OneOf_Request: Equatable {
+    case getStories(GetStoriesRequestProto)
+    case createStory(CreateStoryRequestProto)
+    case updateStory(UpdateStoryRequestProto)
+    case deleteStory(DeleteStoryRequestProto)
+
+  #if !swift(>=4.1)
+    static func ==(lhs: StoryApiRequestProto.OneOf_Request, rhs: StoryApiRequestProto.OneOf_Request) -> Bool {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch (lhs, rhs) {
+      case (.getStories, .getStories): return {
+        guard case .getStories(let l) = lhs, case .getStories(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.createStory, .createStory): return {
+        guard case .createStory(let l) = lhs, case .createStory(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.updateStory, .updateStory): return {
+        guard case .updateStory(let l) = lhs, case .updateStory(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.deleteStory, .deleteStory): return {
+        guard case .deleteStory(let l) = lhs, case .deleteStory(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      default: return false
+      }
+    }
+  #endif
+  }
+
+  init() {}
+}
+
+struct StoryApiResponseProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var request: StoryApiResponseProto.OneOf_Request? = nil
+
+  var getStories: GetStoriesResponseProto {
+    get {
+      if case .getStories(let v)? = request {return v}
+      return GetStoriesResponseProto()
+    }
+    set {request = .getStories(newValue)}
+  }
+
+  var createStory: CreateStoryResponseProto {
+    get {
+      if case .createStory(let v)? = request {return v}
+      return CreateStoryResponseProto()
+    }
+    set {request = .createStory(newValue)}
+  }
+
+  var updateStory: UpdateStoryResponseProto {
+    get {
+      if case .updateStory(let v)? = request {return v}
+      return UpdateStoryResponseProto()
+    }
+    set {request = .updateStory(newValue)}
+  }
+
+  var deleteStory: DeleteStoryResponseProto {
+    get {
+      if case .deleteStory(let v)? = request {return v}
+      return DeleteStoryResponseProto()
+    }
+    set {request = .deleteStory(newValue)}
+  }
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  enum OneOf_Request: Equatable {
+    case getStories(GetStoriesResponseProto)
+    case createStory(CreateStoryResponseProto)
+    case updateStory(UpdateStoryResponseProto)
+    case deleteStory(DeleteStoryResponseProto)
+
+  #if !swift(>=4.1)
+    static func ==(lhs: StoryApiResponseProto.OneOf_Request, rhs: StoryApiResponseProto.OneOf_Request) -> Bool {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch (lhs, rhs) {
+      case (.getStories, .getStories): return {
+        guard case .getStories(let l) = lhs, case .getStories(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.createStory, .createStory): return {
+        guard case .createStory(let l) = lhs, case .createStory(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.updateStory, .updateStory): return {
+        guard case .updateStory(let l) = lhs, case .updateStory(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.deleteStory, .deleteStory): return {
+        guard case .deleteStory(let l) = lhs, case .deleteStory(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      default: return false
+      }
+    }
+  #endif
+  }
 
   init() {}
 }
@@ -998,6 +1164,7 @@ extension TextDecorationProto: @unchecked Sendable {}
 extension TextAlignmentProto: @unchecked Sendable {}
 extension TextWhitespaceProto: @unchecked Sendable {}
 extension TextHyphensProto: @unchecked Sendable {}
+extension GetStoriesRequestProto: @unchecked Sendable {}
 extension GetStoriesResponseProto: @unchecked Sendable {}
 extension CreateStoryRequestProto: @unchecked Sendable {}
 extension CreateStoryResponseProto: @unchecked Sendable {}
@@ -1005,6 +1172,10 @@ extension UpdateStoryRequestProto: @unchecked Sendable {}
 extension UpdateStoryResponseProto: @unchecked Sendable {}
 extension DeleteStoryRequestProto: @unchecked Sendable {}
 extension DeleteStoryResponseProto: @unchecked Sendable {}
+extension StoryApiRequestProto: @unchecked Sendable {}
+extension StoryApiRequestProto.OneOf_Request: @unchecked Sendable {}
+extension StoryApiResponseProto: @unchecked Sendable {}
+extension StoryApiResponseProto.OneOf_Request: @unchecked Sendable {}
 extension StoriesProto: @unchecked Sendable {}
 extension StoryProto: @unchecked Sendable {}
 extension CardProto: @unchecked Sendable {}
@@ -1081,6 +1252,25 @@ extension TextHyphensProto: SwiftProtobuf._ProtoNameProviding {
     1: .same(proto: "TEXT_HYPHENS_PROTO_MANUAL"),
     2: .same(proto: "TEXT_HYPHENS_PROTO_AUTO"),
   ]
+}
+
+extension GetStoriesRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "GetStoriesRequestProto"
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let _ = try decoder.nextFieldNumber() {
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: GetStoriesRequestProto, rhs: GetStoriesRequestProto) -> Bool {
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
 }
 
 extension GetStoriesResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
@@ -1292,6 +1482,218 @@ extension DeleteStoryResponseProto: SwiftProtobuf.Message, SwiftProtobuf._Messag
   }
 
   static func ==(lhs: DeleteStoryResponseProto, rhs: DeleteStoryResponseProto) -> Bool {
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension StoryApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoryApiRequestProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "get_stories"),
+    2: .standard(proto: "create_story"),
+    3: .standard(proto: "update_story"),
+    4: .standard(proto: "delete_story"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try {
+        var v: GetStoriesRequestProto?
+        var hadOneofValue = false
+        if let current = self.request {
+          hadOneofValue = true
+          if case .getStories(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.request = .getStories(v)
+        }
+      }()
+      case 2: try {
+        var v: CreateStoryRequestProto?
+        var hadOneofValue = false
+        if let current = self.request {
+          hadOneofValue = true
+          if case .createStory(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.request = .createStory(v)
+        }
+      }()
+      case 3: try {
+        var v: UpdateStoryRequestProto?
+        var hadOneofValue = false
+        if let current = self.request {
+          hadOneofValue = true
+          if case .updateStory(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.request = .updateStory(v)
+        }
+      }()
+      case 4: try {
+        var v: DeleteStoryRequestProto?
+        var hadOneofValue = false
+        if let current = self.request {
+          hadOneofValue = true
+          if case .deleteStory(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.request = .deleteStory(v)
+        }
+      }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    switch self.request {
+    case .getStories?: try {
+      guard case .getStories(let v)? = self.request else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    }()
+    case .createStory?: try {
+      guard case .createStory(let v)? = self.request else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    }()
+    case .updateStory?: try {
+      guard case .updateStory(let v)? = self.request else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+    }()
+    case .deleteStory?: try {
+      guard case .deleteStory(let v)? = self.request else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+    }()
+    case nil: break
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: StoryApiRequestProto, rhs: StoryApiRequestProto) -> Bool {
+    if lhs.request != rhs.request {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension StoryApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoryApiResponseProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "get_stories"),
+    2: .standard(proto: "create_story"),
+    3: .standard(proto: "update_story"),
+    4: .standard(proto: "delete_story"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try {
+        var v: GetStoriesResponseProto?
+        var hadOneofValue = false
+        if let current = self.request {
+          hadOneofValue = true
+          if case .getStories(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.request = .getStories(v)
+        }
+      }()
+      case 2: try {
+        var v: CreateStoryResponseProto?
+        var hadOneofValue = false
+        if let current = self.request {
+          hadOneofValue = true
+          if case .createStory(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.request = .createStory(v)
+        }
+      }()
+      case 3: try {
+        var v: UpdateStoryResponseProto?
+        var hadOneofValue = false
+        if let current = self.request {
+          hadOneofValue = true
+          if case .updateStory(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.request = .updateStory(v)
+        }
+      }()
+      case 4: try {
+        var v: DeleteStoryResponseProto?
+        var hadOneofValue = false
+        if let current = self.request {
+          hadOneofValue = true
+          if case .deleteStory(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.request = .deleteStory(v)
+        }
+      }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    switch self.request {
+    case .getStories?: try {
+      guard case .getStories(let v)? = self.request else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    }()
+    case .createStory?: try {
+      guard case .createStory(let v)? = self.request else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    }()
+    case .updateStory?: try {
+      guard case .updateStory(let v)? = self.request else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+    }()
+    case .deleteStory?: try {
+      guard case .deleteStory(let v)? = self.request else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+    }()
+    case nil: break
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: StoryApiResponseProto, rhs: StoryApiResponseProto) -> Bool {
+    if lhs.request != rhs.request {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
