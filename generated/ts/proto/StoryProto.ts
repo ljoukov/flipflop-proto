@@ -316,9 +316,9 @@ export interface ImageRefProto {
      */
     storagePath: string;
     /**
-     * @generated from protobuf field: string local_id = 2;
+     * @generated from protobuf field: bytes image_data = 2;
      */
-    localId: string;
+    imageData: Uint8Array;
 }
 /**
  * @generated from protobuf message ImageBlockProto
@@ -1604,11 +1604,11 @@ class ImageRefProto$Type extends MessageType<ImageRefProto> {
     constructor() {
         super("ImageRefProto", [
             { no: 1, name: "storage_path", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "local_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "image_data", kind: "scalar", T: 12 /*ScalarType.BYTES*/ }
         ]);
     }
     create(value?: PartialMessage<ImageRefProto>): ImageRefProto {
-        const message = { storagePath: "", localId: "" };
+        const message = { storagePath: "", imageData: new Uint8Array(0) };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<ImageRefProto>(this, message, value);
@@ -1622,8 +1622,8 @@ class ImageRefProto$Type extends MessageType<ImageRefProto> {
                 case /* string storage_path */ 1:
                     message.storagePath = reader.string();
                     break;
-                case /* string local_id */ 2:
-                    message.localId = reader.string();
+                case /* bytes image_data */ 2:
+                    message.imageData = reader.bytes();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1640,9 +1640,9 @@ class ImageRefProto$Type extends MessageType<ImageRefProto> {
         /* string storage_path = 1; */
         if (message.storagePath !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.storagePath);
-        /* string local_id = 2; */
-        if (message.localId !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.localId);
+        /* bytes image_data = 2; */
+        if (message.imageData.length)
+            writer.tag(2, WireType.LengthDelimited).bytes(message.imageData);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

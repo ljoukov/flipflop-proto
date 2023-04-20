@@ -102,7 +102,7 @@ message SpaceBlockProto {
 
 message ImageRefProto {
   string storage_path = 1;
-  string local_id = 2;
+  bytes image_data = 2;
 }
 
 message ImageBlockProto {
