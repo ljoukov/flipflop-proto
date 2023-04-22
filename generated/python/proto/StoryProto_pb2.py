@@ -15,7 +15,7 @@ from google.protobuf import duration_pb2 as google_dot_protobuf_dot_duration__pb
 from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x10StoryProto.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\x18\n\x16GetStoriesRequestProto\"9\n\x17GetStoriesResponseProto\x12\x1e\n\x07stories\x18\x01 \x01(\x0b\x32\r.StoriesProto\"4\n\x17\x43reateStoryRequestProto\x12\x19\n\x05\x63\x61rds\x18\x01 \x03(\x0b\x32\n.CardProto\",\n\x18\x43reateStoryResponseProto\x12\x10\n\x08story_id\x18\x01 \x01(\t\"F\n\x17UpdateStoryRequestProto\x12\x10\n\x08story_id\x18\x01 \x01(\t\x12\x19\n\x05\x63\x61rds\x18\x02 \x03(\x0b\x32\n.CardProto\"\x1a\n\x18UpdateStoryResponseProto\"+\n\x17\x44\x65leteStoryRequestProto\x12\x10\n\x08story_id\x18\x01 \x01(\t\"\x1a\n\x18\x44\x65leteStoryResponseProto\"\xe7\x01\n\x14StoryApiRequestProto\x12.\n\x0bget_stories\x18\x01 \x01(\x0b\x32\x17.GetStoriesRequestProtoH\x00\x12\x30\n\x0c\x63reate_story\x18\x02 \x01(\x0b\x32\x18.CreateStoryRequestProtoH\x00\x12\x30\n\x0cupdate_story\x18\x03 \x01(\x0b\x32\x18.UpdateStoryRequestProtoH\x00\x12\x30\n\x0c\x64\x65lete_story\x18\x04 \x01(\x0b\x32\x18.DeleteStoryRequestProtoH\x00\x42\t\n\x07request\"\xf4\x02\n\x15StoryApiResponseProto\x12/\n\x0bget_stories\x18\x01 \x01(\x0b\x32\x18.GetStoriesResponseProtoH\x00\x12\x31\n\x0c\x63reate_story\x18\x02 \x01(\x0b\x32\x19.CreateStoryResponseProtoH\x00\x12\x31\n\x0cupdate_story\x18\x03 \x01(\x0b\x32\x19.UpdateStoryResponseProtoH\x00\x12\x31\n\x0c\x64\x65lete_story\x18\x04 \x01(\x0b\x32\x19.DeleteStoryResponseProtoH\x00\x12\x38\n\tlatencies\x18\x05 \x03(\x0b\x32%.StoryApiResponseProto.LatenciesEntry\x1aK\n\x0eLatenciesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12(\n\x05value\x18\x02 \x01(\x0b\x32\x19.google.protobuf.Duration:\x02\x38\x01\x42\n\n\x08response\"[\n\x0cStoriesProto\x12-\n\ttimestamp\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x1c\n\x07stories\x18\x02 \x03(\x0b\x32\x0b.StoryProto\"\xd6\x01\n\nStoryProto\x12\n\n\x02id\x18\x01 \x01(\t\x12\x12\n\ncreated_by\x18\x02 \x01(\t\x12.\n\ncreated_at\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x18\n\x10last_modified_by\x18\x04 \x01(\t\x12\x34\n\x10last_modified_at\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\r\n\x05title\x18\x06 \x01(\t\x12\x19\n\x05\x63\x61rds\x18\x07 \x03(\x0b\x32\n.CardProto\";\n\tCardProto\x12\n\n\x02id\x18\x01 \x01(\t\x12\"\n\nfront_face\x18\x02 \x01(\x0b\x32\x0e.CardFaceProto\"C\n\rCardFaceProto\x12\x1f\n\x06\x62locks\x18\x01 \x03(\x0b\x32\x0f.CardBlockProto\x12\x11\n\thash_tags\x18\x02 \x03(\t\"\x8b\x03\n\x0e\x43\x61rdBlockProto\x12!\n\x05space\x18\x01 \x01(\x0b\x32\x10.SpaceBlockProtoH\x00\x12!\n\x05image\x18\x02 \x01(\x0b\x32\x10.ImageBlockProtoH\x00\x12\x1f\n\x04text\x18\x03 \x01(\x0b\x32\x0f.TextBlockProtoH\x00\x12\x1f\n\x04\x66lip\x18\x04 \x01(\x0b\x32\x0f.FlipBlockProtoH\x00\x12#\n\x06\x63offee\x18\x05 \x01(\x0b\x32\x11.CoffeeBlockProtoH\x00\x12#\n\x06reveal\x18\x06 \x01(\x0b\x32\x11.RevealBlockProtoH\x00\x12#\n\x06\x63hoice\x18\x07 \x01(\x0b\x32\x11.ChoiceBlockProtoH\x00\x12\'\n\x08question\x18\x08 \x01(\x0b\x32\x13.QuestionBlockProtoH\x00\x12#\n\x06prompt\x18\t \x01(\x0b\x32\x11.PromptBlockProtoH\x00\x12,\n\x0breveal_back\x18\n \x01(\x0b\x32\x15.RevealBackBlockProtoH\x00\x42\x06\n\x04type\" \n\x0fSpaceBlockProto\x12\r\n\x05scale\x18\x01 \x01(\x02\"9\n\rImageRefProto\x12\x14\n\x0cstorage_path\x18\x01 \x01(\t\x12\x12\n\nimage_data\x18\x02 \x01(\x0c\"Z\n\x0fImageBlockProto\x12!\n\timage_ref\x18\x01 \x01(\x0b\x32\x0e.ImageRefProto\x12\r\n\x05scale\x18\x02 \x01(\x02\x12\x15\n\rborder_radius\x18\x03 \x01(\x02\"\x93\x01\n\rTextSpanProto\x12\x0c\n\x04text\x18\x01 \x01(\t\x12%\n\x0b\x66ont_weight\x18\x02 \x01(\x0e\x32\x10.FontWeightProto\x12#\n\nfont_style\x18\x03 \x01(\x0e\x32\x0f.FontStyleProto\x12(\n\ndecoration\x18\x04 \x01(\x0e\x32\x14.TextDecorationProto\"\x84\x02\n\x0fStyledTextProto\x12\x1d\n\x05spans\x18\x01 \x03(\x0b\x32\x0e.TextSpanProto\x12!\n\tfont_name\x18\x02 \x01(\x0e\x32\x0e.FontNameProto\x12\x11\n\tfont_size\x18\x03 \x01(\x02\x12\x15\n\rpadding_start\x18\x04 \x01(\x02\x12\x13\n\x0bpadding_end\x18\x05 \x01(\x02\x12\"\n\x05\x61lign\x18\x06 \x01(\x0e\x32\x13.TextAlignmentProto\x12(\n\nwhitespace\x18\x07 \x01(\x0e\x32\x14.TextWhitespaceProto\x12\"\n\x07hyphens\x18\x08 \x01(\x0e\x32\x11.TextHyphensProto\"7\n\x0eTextBlockProto\x12%\n\x0bstyled_text\x18\x01 \x01(\x0b\x32\x10.StyledTextProto\"\x1f\n\x0e\x46lipBlockProto\x12\r\n\x05label\x18\x01 \x01(\t\"Z\n\x10\x43offeeBlockProto\x12\r\n\x05label\x18\x01 \x01(\t\x12\x14\n\x0cstart_offset\x18\x02 \x01(\x02\x12!\n\timage_ref\x18\x03 \x01(\x0b\x32\x0e.ImageRefProto\"P\n\x10RevealBlockProto\x12\r\n\x05scale\x18\x01 \x01(\x02\x12\r\n\x05label\x18\x02 \x01(\t\x12\x1e\n\x04text\x18\x03 \x01(\x0b\x32\x10.StyledTextProto\"J\n\x16\x43hoiceBlockOptionProto\x12\x1e\n\x04text\x18\x01 \x01(\x0b\x32\x10.StyledTextProto\x12\x10\n\x08\x66raction\x18\x02 \x01(\x02\"\xba\x01\n\x10\x43hoiceBlockProto\x12\r\n\x05scale\x18\x01 \x01(\x02\x12(\n\x07options\x18\x02 \x03(\x0b\x32\x17.ChoiceBlockOptionProto\x12\x15\n\rcorrect_index\x18\x03 \x01(\x05\x12+\n\x13\x63orrect_answer_face\x18\x04 \x01(\x0b\x32\x0e.CardFaceProto\x12)\n\x11wrong_answer_face\x18\x05 \x01(\x0b\x32\x0e.CardFaceProto\";\n\x18QuestionBlockOptionProto\x12\r\n\x05label\x18\x01 \x01(\t\x12\x10\n\x08\x66raction\x18\x02 \x01(\x02\"\xbe\x01\n\x12QuestionBlockProto\x12\r\n\x05scale\x18\x01 \x01(\x02\x12*\n\x07options\x18\x02 \x03(\x0b\x32\x19.QuestionBlockOptionProto\x12\x15\n\rcorrect_index\x18\x03 \x01(\x05\x12+\n\x13\x63orrect_answer_face\x18\x04 \x01(\x0b\x32\x0e.CardFaceProto\x12)\n\x11wrong_answer_face\x18\x05 \x01(\x0b\x32\x0e.CardFaceProto\"!\n\x10PromptBlockProto\x12\r\n\x05label\x18\x01 \x01(\t\"H\n\x14RevealBackBlockProto\x12\r\n\x05label\x18\x01 \x01(\t\x12!\n\tback_face\x18\x02 \x01(\x0b\x32\x0e.CardFaceProto*F\n\rFontNameProto\x12\x18\n\x14\x46ONT_NAME_PROTO_TEXT\x10\x00\x12\x1b\n\x17\x46ONT_NAME_PROTO_DISPLAY\x10\x01*K\n\x0f\x46ontWeightProto\x12\x1c\n\x18\x46ONT_WEIGHT_PROTO_NORMAL\x10\x00\x12\x1a\n\x16\x46ONT_WEIGHT_PROTO_BOLD\x10\x01*J\n\x0e\x46ontStyleProto\x12\x1b\n\x17\x46ONT_STYLE_PROTO_NORMAL\x10\x00\x12\x1b\n\x17\x46ONT_STYLE_PROTO_ITALIC\x10\x01*\x82\x01\n\x13TextDecorationProto\x12\x1e\n\x1aTEXT_DECORATION_PROTO_NONE\x10\x00\x12#\n\x1fTEXT_DECORATION_PROTO_UNDERLINE\x10\x01\x12&\n\"TEXT_DECORATION_PROTO_LINE_THROUGH\x10\x02*\x96\x01\n\x12TextAlignmentProto\x12\x1d\n\x19TEXT_ALIGNMENT_PROTO_LEFT\x10\x00\x12\x1f\n\x1bTEXT_ALIGNMENT_PROTO_CENTER\x10\x01\x12\x1e\n\x1aTEXT_ALIGNMENT_PROTO_RIGHT\x10\x02\x12 \n\x1cTEXT_ALIGNMENT_PROTO_JUSTIFY\x10\x03*[\n\x13TextWhitespaceProto\x12 \n\x1cTEXT_WHITESPACE_PROTO_NORMAL\x10\x00\x12\"\n\x1eTEXT_WHITESPACE_PROTO_PRE_WRAP\x10\x01*k\n\x10TextHyphensProto\x12\x1b\n\x17TEXT_HYPHENS_PROTO_NONE\x10\x00\x12\x1d\n\x19TEXT_HYPHENS_PROTO_MANUAL\x10\x01\x12\x1b\n\x17TEXT_HYPHENS_PROTO_AUTO\x10\x02\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x10StoryProto.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\x18\n\x16GetStoriesRequestProto\"9\n\x17GetStoriesResponseProto\x12\x1e\n\x07stories\x18\x01 \x01(\x0b\x32\r.StoriesProto\"4\n\x17\x43reateStoryRequestProto\x12\x19\n\x05\x63\x61rds\x18\x01 \x03(\x0b\x32\n.CardProto\",\n\x18\x43reateStoryResponseProto\x12\x10\n\x08story_id\x18\x01 \x01(\t\"F\n\x17UpdateStoryRequestProto\x12\x10\n\x08story_id\x18\x01 \x01(\t\x12\x19\n\x05\x63\x61rds\x18\x02 \x03(\x0b\x32\n.CardProto\"\x1a\n\x18UpdateStoryResponseProto\"+\n\x17\x44\x65leteStoryRequestProto\x12\x10\n\x08story_id\x18\x01 \x01(\t\"\x1a\n\x18\x44\x65leteStoryResponseProto\"\xe7\x01\n\x14StoryApiRequestProto\x12.\n\x0bget_stories\x18\x01 \x01(\x0b\x32\x17.GetStoriesRequestProtoH\x00\x12\x30\n\x0c\x63reate_story\x18\x02 \x01(\x0b\x32\x18.CreateStoryRequestProtoH\x00\x12\x30\n\x0cupdate_story\x18\x03 \x01(\x0b\x32\x18.UpdateStoryRequestProtoH\x00\x12\x30\n\x0c\x64\x65lete_story\x18\x04 \x01(\x0b\x32\x18.DeleteStoryRequestProtoH\x00\x42\t\n\x07request\"\xf4\x02\n\x15StoryApiResponseProto\x12/\n\x0bget_stories\x18\x01 \x01(\x0b\x32\x18.GetStoriesResponseProtoH\x00\x12\x31\n\x0c\x63reate_story\x18\x02 \x01(\x0b\x32\x19.CreateStoryResponseProtoH\x00\x12\x31\n\x0cupdate_story\x18\x03 \x01(\x0b\x32\x19.UpdateStoryResponseProtoH\x00\x12\x31\n\x0c\x64\x65lete_story\x18\x04 \x01(\x0b\x32\x19.DeleteStoryResponseProtoH\x00\x12\x38\n\tlatencies\x18\x05 \x03(\x0b\x32%.StoryApiResponseProto.LatenciesEntry\x1aK\n\x0eLatenciesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12(\n\x05value\x18\x02 \x01(\x0b\x32\x19.google.protobuf.Duration:\x02\x38\x01\x42\n\n\x08response\"[\n\x0cStoriesProto\x12-\n\ttimestamp\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x1c\n\x07stories\x18\x02 \x03(\x0b\x32\x0b.StoryProto\"\xd6\x01\n\nStoryProto\x12\n\n\x02id\x18\x01 \x01(\t\x12\x12\n\ncreated_by\x18\x02 \x01(\t\x12.\n\ncreated_at\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x18\n\x10last_modified_by\x18\x04 \x01(\t\x12\x34\n\x10last_modified_at\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\r\n\x05title\x18\x06 \x01(\t\x12\x19\n\x05\x63\x61rds\x18\x07 \x03(\x0b\x32\n.CardProto\";\n\tCardProto\x12\n\n\x02id\x18\x01 \x01(\t\x12\"\n\nfront_face\x18\x02 \x01(\x0b\x32\x0e.CardFaceProto\"C\n\rCardFaceProto\x12\x1f\n\x06\x62locks\x18\x01 \x03(\x0b\x32\x0f.CardBlockProto\x12\x11\n\thash_tags\x18\x02 \x03(\t\"\x8b\x03\n\x0e\x43\x61rdBlockProto\x12!\n\x05space\x18\x01 \x01(\x0b\x32\x10.SpaceBlockProtoH\x00\x12!\n\x05image\x18\x02 \x01(\x0b\x32\x10.ImageBlockProtoH\x00\x12\x1f\n\x04text\x18\x03 \x01(\x0b\x32\x0f.TextBlockProtoH\x00\x12\x1f\n\x04\x66lip\x18\x04 \x01(\x0b\x32\x0f.FlipBlockProtoH\x00\x12#\n\x06\x63offee\x18\x05 \x01(\x0b\x32\x11.CoffeeBlockProtoH\x00\x12#\n\x06reveal\x18\x06 \x01(\x0b\x32\x11.RevealBlockProtoH\x00\x12#\n\x06\x63hoice\x18\x07 \x01(\x0b\x32\x11.ChoiceBlockProtoH\x00\x12\'\n\x08question\x18\x08 \x01(\x0b\x32\x13.QuestionBlockProtoH\x00\x12#\n\x06prompt\x18\t \x01(\x0b\x32\x11.PromptBlockProtoH\x00\x12,\n\x0breveal_back\x18\n \x01(\x0b\x32\x15.RevealBackBlockProtoH\x00\x42\x06\n\x04type\" \n\x0fSpaceBlockProto\x12\r\n\x05scale\x18\x01 \x01(\x02\"%\n\rImageRefProto\x12\x14\n\x0cstorage_path\x18\x01 \x01(\t\"Z\n\x0fImageBlockProto\x12!\n\timage_ref\x18\x01 \x01(\x0b\x32\x0e.ImageRefProto\x12\r\n\x05scale\x18\x02 \x01(\x02\x12\x15\n\rborder_radius\x18\x03 \x01(\x02\"\x93\x01\n\rTextSpanProto\x12\x0c\n\x04text\x18\x01 \x01(\t\x12%\n\x0b\x66ont_weight\x18\x02 \x01(\x0e\x32\x10.FontWeightProto\x12#\n\nfont_style\x18\x03 \x01(\x0e\x32\x0f.FontStyleProto\x12(\n\ndecoration\x18\x04 \x01(\x0e\x32\x14.TextDecorationProto\"\x84\x02\n\x0fStyledTextProto\x12\x1d\n\x05spans\x18\x01 \x03(\x0b\x32\x0e.TextSpanProto\x12!\n\tfont_name\x18\x02 \x01(\x0e\x32\x0e.FontNameProto\x12\x11\n\tfont_size\x18\x03 \x01(\x02\x12\x15\n\rpadding_start\x18\x04 \x01(\x02\x12\x13\n\x0bpadding_end\x18\x05 \x01(\x02\x12\"\n\x05\x61lign\x18\x06 \x01(\x0e\x32\x13.TextAlignmentProto\x12(\n\nwhitespace\x18\x07 \x01(\x0e\x32\x14.TextWhitespaceProto\x12\"\n\x07hyphens\x18\x08 \x01(\x0e\x32\x11.TextHyphensProto\"7\n\x0eTextBlockProto\x12%\n\x0bstyled_text\x18\x01 \x01(\x0b\x32\x10.StyledTextProto\"\x1f\n\x0e\x46lipBlockProto\x12\r\n\x05label\x18\x01 \x01(\t\"Z\n\x10\x43offeeBlockProto\x12\r\n\x05label\x18\x01 \x01(\t\x12\x14\n\x0cstart_offset\x18\x02 \x01(\x02\x12!\n\timage_ref\x18\x03 \x01(\x0b\x32\x0e.ImageRefProto\"P\n\x10RevealBlockProto\x12\r\n\x05scale\x18\x01 \x01(\x02\x12\r\n\x05label\x18\x02 \x01(\t\x12\x1e\n\x04text\x18\x03 \x01(\x0b\x32\x10.StyledTextProto\"J\n\x16\x43hoiceBlockOptionProto\x12\x1e\n\x04text\x18\x01 \x01(\x0b\x32\x10.StyledTextProto\x12\x10\n\x08\x66raction\x18\x02 \x01(\x02\"\xba\x01\n\x10\x43hoiceBlockProto\x12\r\n\x05scale\x18\x01 \x01(\x02\x12(\n\x07options\x18\x02 \x03(\x0b\x32\x17.ChoiceBlockOptionProto\x12\x15\n\rcorrect_index\x18\x03 \x01(\x05\x12+\n\x13\x63orrect_answer_face\x18\x04 \x01(\x0b\x32\x0e.CardFaceProto\x12)\n\x11wrong_answer_face\x18\x05 \x01(\x0b\x32\x0e.CardFaceProto\";\n\x18QuestionBlockOptionProto\x12\r\n\x05label\x18\x01 \x01(\t\x12\x10\n\x08\x66raction\x18\x02 \x01(\x02\"\xbe\x01\n\x12QuestionBlockProto\x12\r\n\x05scale\x18\x01 \x01(\x02\x12*\n\x07options\x18\x02 \x03(\x0b\x32\x19.QuestionBlockOptionProto\x12\x15\n\rcorrect_index\x18\x03 \x01(\x05\x12+\n\x13\x63orrect_answer_face\x18\x04 \x01(\x0b\x32\x0e.CardFaceProto\x12)\n\x11wrong_answer_face\x18\x05 \x01(\x0b\x32\x0e.CardFaceProto\"!\n\x10PromptBlockProto\x12\r\n\x05label\x18\x01 \x01(\t\"H\n\x14RevealBackBlockProto\x12\r\n\x05label\x18\x01 \x01(\t\x12!\n\tback_face\x18\x02 \x01(\x0b\x32\x0e.CardFaceProto*F\n\rFontNameProto\x12\x18\n\x14\x46ONT_NAME_PROTO_TEXT\x10\x00\x12\x1b\n\x17\x46ONT_NAME_PROTO_DISPLAY\x10\x01*K\n\x0f\x46ontWeightProto\x12\x1c\n\x18\x46ONT_WEIGHT_PROTO_NORMAL\x10\x00\x12\x1a\n\x16\x46ONT_WEIGHT_PROTO_BOLD\x10\x01*J\n\x0e\x46ontStyleProto\x12\x1b\n\x17\x46ONT_STYLE_PROTO_NORMAL\x10\x00\x12\x1b\n\x17\x46ONT_STYLE_PROTO_ITALIC\x10\x01*\x82\x01\n\x13TextDecorationProto\x12\x1e\n\x1aTEXT_DECORATION_PROTO_NONE\x10\x00\x12#\n\x1fTEXT_DECORATION_PROTO_UNDERLINE\x10\x01\x12&\n\"TEXT_DECORATION_PROTO_LINE_THROUGH\x10\x02*\x96\x01\n\x12TextAlignmentProto\x12\x1d\n\x19TEXT_ALIGNMENT_PROTO_LEFT\x10\x00\x12\x1f\n\x1bTEXT_ALIGNMENT_PROTO_CENTER\x10\x01\x12\x1e\n\x1aTEXT_ALIGNMENT_PROTO_RIGHT\x10\x02\x12 \n\x1cTEXT_ALIGNMENT_PROTO_JUSTIFY\x10\x03*[\n\x13TextWhitespaceProto\x12 \n\x1cTEXT_WHITESPACE_PROTO_NORMAL\x10\x00\x12\"\n\x1eTEXT_WHITESPACE_PROTO_PRE_WRAP\x10\x01*k\n\x10TextHyphensProto\x12\x1b\n\x17TEXT_HYPHENS_PROTO_NONE\x10\x00\x12\x1d\n\x19TEXT_HYPHENS_PROTO_MANUAL\x10\x01\x12\x1b\n\x17TEXT_HYPHENS_PROTO_AUTO\x10\x02\x62\x06proto3')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'StoryProto_pb2', globals())
@@ -24,20 +24,20 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   DESCRIPTOR._options = None
   _STORYAPIRESPONSEPROTO_LATENCIESENTRY._options = None
   _STORYAPIRESPONSEPROTO_LATENCIESENTRY._serialized_options = b'8\001'
-  _FONTNAMEPROTO._serialized_start=3380
-  _FONTNAMEPROTO._serialized_end=3450
-  _FONTWEIGHTPROTO._serialized_start=3452
-  _FONTWEIGHTPROTO._serialized_end=3527
-  _FONTSTYLEPROTO._serialized_start=3529
-  _FONTSTYLEPROTO._serialized_end=3603
-  _TEXTDECORATIONPROTO._serialized_start=3606
-  _TEXTDECORATIONPROTO._serialized_end=3736
-  _TEXTALIGNMENTPROTO._serialized_start=3739
-  _TEXTALIGNMENTPROTO._serialized_end=3889
-  _TEXTWHITESPACEPROTO._serialized_start=3891
-  _TEXTWHITESPACEPROTO._serialized_end=3982
-  _TEXTHYPHENSPROTO._serialized_start=3984
-  _TEXTHYPHENSPROTO._serialized_end=4091
+  _FONTNAMEPROTO._serialized_start=3360
+  _FONTNAMEPROTO._serialized_end=3430
+  _FONTWEIGHTPROTO._serialized_start=3432
+  _FONTWEIGHTPROTO._serialized_end=3507
+  _FONTSTYLEPROTO._serialized_start=3509
+  _FONTSTYLEPROTO._serialized_end=3583
+  _TEXTDECORATIONPROTO._serialized_start=3586
+  _TEXTDECORATIONPROTO._serialized_end=3716
+  _TEXTALIGNMENTPROTO._serialized_start=3719
+  _TEXTALIGNMENTPROTO._serialized_end=3869
+  _TEXTWHITESPACEPROTO._serialized_start=3871
+  _TEXTWHITESPACEPROTO._serialized_end=3962
+  _TEXTHYPHENSPROTO._serialized_start=3964
+  _TEXTHYPHENSPROTO._serialized_end=4071
   _GETSTORIESREQUESTPROTO._serialized_start=85
   _GETSTORIESREQUESTPROTO._serialized_end=109
   _GETSTORIESRESPONSEPROTO._serialized_start=111
@@ -73,31 +73,31 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _SPACEBLOCKPROTO._serialized_start=1890
   _SPACEBLOCKPROTO._serialized_end=1922
   _IMAGEREFPROTO._serialized_start=1924
-  _IMAGEREFPROTO._serialized_end=1981
-  _IMAGEBLOCKPROTO._serialized_start=1983
-  _IMAGEBLOCKPROTO._serialized_end=2073
-  _TEXTSPANPROTO._serialized_start=2076
-  _TEXTSPANPROTO._serialized_end=2223
-  _STYLEDTEXTPROTO._serialized_start=2226
-  _STYLEDTEXTPROTO._serialized_end=2486
-  _TEXTBLOCKPROTO._serialized_start=2488
-  _TEXTBLOCKPROTO._serialized_end=2543
-  _FLIPBLOCKPROTO._serialized_start=2545
-  _FLIPBLOCKPROTO._serialized_end=2576
-  _COFFEEBLOCKPROTO._serialized_start=2578
-  _COFFEEBLOCKPROTO._serialized_end=2668
-  _REVEALBLOCKPROTO._serialized_start=2670
-  _REVEALBLOCKPROTO._serialized_end=2750
-  _CHOICEBLOCKOPTIONPROTO._serialized_start=2752
-  _CHOICEBLOCKOPTIONPROTO._serialized_end=2826
-  _CHOICEBLOCKPROTO._serialized_start=2829
-  _CHOICEBLOCKPROTO._serialized_end=3015
-  _QUESTIONBLOCKOPTIONPROTO._serialized_start=3017
-  _QUESTIONBLOCKOPTIONPROTO._serialized_end=3076
-  _QUESTIONBLOCKPROTO._serialized_start=3079
-  _QUESTIONBLOCKPROTO._serialized_end=3269
-  _PROMPTBLOCKPROTO._serialized_start=3271
-  _PROMPTBLOCKPROTO._serialized_end=3304
-  _REVEALBACKBLOCKPROTO._serialized_start=3306
-  _REVEALBACKBLOCKPROTO._serialized_end=3378
+  _IMAGEREFPROTO._serialized_end=1961
+  _IMAGEBLOCKPROTO._serialized_start=1963
+  _IMAGEBLOCKPROTO._serialized_end=2053
+  _TEXTSPANPROTO._serialized_start=2056
+  _TEXTSPANPROTO._serialized_end=2203
+  _STYLEDTEXTPROTO._serialized_start=2206
+  _STYLEDTEXTPROTO._serialized_end=2466
+  _TEXTBLOCKPROTO._serialized_start=2468
+  _TEXTBLOCKPROTO._serialized_end=2523
+  _FLIPBLOCKPROTO._serialized_start=2525
+  _FLIPBLOCKPROTO._serialized_end=2556
+  _COFFEEBLOCKPROTO._serialized_start=2558
+  _COFFEEBLOCKPROTO._serialized_end=2648
+  _REVEALBLOCKPROTO._serialized_start=2650
+  _REVEALBLOCKPROTO._serialized_end=2730
+  _CHOICEBLOCKOPTIONPROTO._serialized_start=2732
+  _CHOICEBLOCKOPTIONPROTO._serialized_end=2806
+  _CHOICEBLOCKPROTO._serialized_start=2809
+  _CHOICEBLOCKPROTO._serialized_end=2995
+  _QUESTIONBLOCKOPTIONPROTO._serialized_start=2997
+  _QUESTIONBLOCKOPTIONPROTO._serialized_end=3056
+  _QUESTIONBLOCKPROTO._serialized_start=3059
+  _QUESTIONBLOCKPROTO._serialized_end=3249
+  _PROMPTBLOCKPROTO._serialized_start=3251
+  _PROMPTBLOCKPROTO._serialized_end=3284
+  _REVEALBACKBLOCKPROTO._serialized_start=3286
+  _REVEALBACKBLOCKPROTO._serialized_end=3358
 # @@protoc_insertion_point(module_scope)
