@@ -99,8 +99,10 @@ message SpaceBlockProto {
 }
 
 message ImageRefProto {
-  string storage_path = 1;
-  bytes image_data = 2;
+  oneof type {
+    string storage_path = 1;
+    bytes image_data = 2;
+  }
 }
 
 message ImageBlockProto {

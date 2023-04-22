@@ -312,13 +312,23 @@ export interface SpaceBlockProto {
  */
 export interface ImageRefProto {
     /**
-     * @generated from protobuf field: string storage_path = 1;
+     * @generated from protobuf oneof: type
      */
-    storagePath: string;
-    /**
-     * @generated from protobuf field: bytes image_data = 2;
-     */
-    imageData: Uint8Array;
+    type: {
+        oneofKind: "storagePath";
+        /**
+         * @generated from protobuf field: string storage_path = 1;
+         */
+        storagePath: string;
+    } | {
+        oneofKind: "imageData";
+        /**
+         * @generated from protobuf field: bytes image_data = 2;
+         */
+        imageData: Uint8Array;
+    } | {
+        oneofKind: undefined;
+    };
 }
 /**
  * @generated from protobuf message ImageBlockProto
@@ -1603,12 +1613,12 @@ export const SpaceBlockProto = new SpaceBlockProto$Type();
 class ImageRefProto$Type extends MessageType<ImageRefProto> {
     constructor() {
         super("ImageRefProto", [
-            { no: 1, name: "storage_path", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "image_data", kind: "scalar", T: 12 /*ScalarType.BYTES*/ }
+            { no: 1, name: "storage_path", kind: "scalar", oneof: "type", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "image_data", kind: "scalar", oneof: "type", T: 12 /*ScalarType.BYTES*/ }
         ]);
     }
     create(value?: PartialMessage<ImageRefProto>): ImageRefProto {
-        const message = { storagePath: "", imageData: new Uint8Array(0) };
+        const message = { type: { oneofKind: undefined } };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<ImageRefProto>(this, message, value);
@@ -1620,10 +1630,16 @@ class ImageRefProto$Type extends MessageType<ImageRefProto> {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
                 case /* string storage_path */ 1:
-                    message.storagePath = reader.string();
+                    message.type = {
+                        oneofKind: "storagePath",
+                        storagePath: reader.string()
+                    };
                     break;
                 case /* bytes image_data */ 2:
-                    message.imageData = reader.bytes();
+                    message.type = {
+                        oneofKind: "imageData",
+                        imageData: reader.bytes()
+                    };
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1638,11 +1654,11 @@ class ImageRefProto$Type extends MessageType<ImageRefProto> {
     }
     internalBinaryWrite(message: ImageRefProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string storage_path = 1; */
-        if (message.storagePath !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.storagePath);
+        if (message.type.oneofKind === "storagePath")
+            writer.tag(1, WireType.LengthDelimited).string(message.type.storagePath);
         /* bytes image_data = 2; */
-        if (message.imageData.length)
-            writer.tag(2, WireType.LengthDelimited).bytes(message.imageData);
+        if (message.type.oneofKind === "imageData")
+            writer.tag(2, WireType.LengthDelimited).bytes(message.type.imageData);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
