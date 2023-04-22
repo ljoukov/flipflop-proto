@@ -849,9 +849,49 @@ struct ImageRefProto {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var storagePath: String = String()
+  var type: ImageRefProto.OneOf_Type? = nil
+
+  var storagePath: String {
+    get {
+      if case .storagePath(let v)? = type {return v}
+      return String()
+    }
+    set {type = .storagePath(newValue)}
+  }
+
+  var imageData: Data {
+    get {
+      if case .imageData(let v)? = type {return v}
+      return Data()
+    }
+    set {type = .imageData(newValue)}
+  }
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  enum OneOf_Type: Equatable {
+    case storagePath(String)
+    case imageData(Data)
+
+  #if !swift(>=4.1)
+    static func ==(lhs: ImageRefProto.OneOf_Type, rhs: ImageRefProto.OneOf_Type) -> Bool {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch (lhs, rhs) {
+      case (.storagePath, .storagePath): return {
+        guard case .storagePath(let l) = lhs, case .storagePath(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.imageData, .imageData): return {
+        guard case .imageData(let l) = lhs, case .imageData(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      default: return false
+      }
+    }
+  #endif
+  }
 
   init() {}
 }
@@ -1184,6 +1224,7 @@ extension CardBlockProto: @unchecked Sendable {}
 extension CardBlockProto.OneOf_Type: @unchecked Sendable {}
 extension SpaceBlockProto: @unchecked Sendable {}
 extension ImageRefProto: @unchecked Sendable {}
+extension ImageRefProto.OneOf_Type: @unchecked Sendable {}
 extension ImageBlockProto: @unchecked Sendable {}
 extension TextSpanProto: @unchecked Sendable {}
 extension StyledTextProto: @unchecked Sendable {}
@@ -2143,6 +2184,7 @@ extension ImageRefProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
   static let protoMessageName: String = "ImageRefProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "storage_path"),
+    2: .standard(proto: "image_data"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2151,21 +2193,48 @@ extension ImageRefProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.storagePath) }()
+      case 1: try {
+        var v: String?
+        try decoder.decodeSingularStringField(value: &v)
+        if let v = v {
+          if self.type != nil {try decoder.handleConflictingOneOf()}
+          self.type = .storagePath(v)
+        }
+      }()
+      case 2: try {
+        var v: Data?
+        try decoder.decodeSingularBytesField(value: &v)
+        if let v = v {
+          if self.type != nil {try decoder.handleConflictingOneOf()}
+          self.type = .imageData(v)
+        }
+      }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.storagePath.isEmpty {
-      try visitor.visitSingularStringField(value: self.storagePath, fieldNumber: 1)
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    switch self.type {
+    case .storagePath?: try {
+      guard case .storagePath(let v)? = self.type else { preconditionFailure() }
+      try visitor.visitSingularStringField(value: v, fieldNumber: 1)
+    }()
+    case .imageData?: try {
+      guard case .imageData(let v)? = self.type else { preconditionFailure() }
+      try visitor.visitSingularBytesField(value: v, fieldNumber: 2)
+    }()
+    case nil: break
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: ImageRefProto, rhs: ImageRefProto) -> Bool {
-    if lhs.storagePath != rhs.storagePath {return false}
+    if lhs.type != rhs.type {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
