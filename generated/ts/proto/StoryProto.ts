@@ -28,12 +28,6 @@ export interface GetStoriesResponseProto {
      * @generated from protobuf field: StoriesProto stories = 1;
      */
     stories?: StoriesProto;
-    /**
-     * @generated from protobuf field: map<string, google.protobuf.Duration> latencies = 2;
-     */
-    latencies: {
-        [key: string]: Duration;
-    };
 }
 /**
  * @generated from protobuf message CreateStoryRequestProto
@@ -153,6 +147,12 @@ export interface StoryApiResponseProto {
         deleteStory: DeleteStoryResponseProto;
     } | {
         oneofKind: undefined;
+    };
+    /**
+     * @generated from protobuf field: map<string, google.protobuf.Duration> latencies = 5;
+     */
+    latencies: {
+        [key: string]: Duration;
     };
 }
 /**
@@ -684,12 +684,11 @@ export const GetStoriesRequestProto = new GetStoriesRequestProto$Type();
 class GetStoriesResponseProto$Type extends MessageType<GetStoriesResponseProto> {
     constructor() {
         super("GetStoriesResponseProto", [
-            { no: 1, name: "stories", kind: "message", T: () => StoriesProto },
-            { no: 2, name: "latencies", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => Duration } }
+            { no: 1, name: "stories", kind: "message", T: () => StoriesProto }
         ]);
     }
     create(value?: PartialMessage<GetStoriesResponseProto>): GetStoriesResponseProto {
-        const message = { latencies: {} };
+        const message = {};
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<GetStoriesResponseProto>(this, message, value);
@@ -703,9 +702,6 @@ class GetStoriesResponseProto$Type extends MessageType<GetStoriesResponseProto> 
                 case /* StoriesProto stories */ 1:
                     message.stories = StoriesProto.internalBinaryRead(reader, reader.uint32(), options, message.stories);
                     break;
-                case /* map<string, google.protobuf.Duration> latencies */ 2:
-                    this.binaryReadMap2(message.latencies, reader, options);
-                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -717,33 +713,10 @@ class GetStoriesResponseProto$Type extends MessageType<GetStoriesResponseProto> 
         }
         return message;
     }
-    private binaryReadMap2(map: GetStoriesResponseProto["latencies"], reader: IBinaryReader, options: BinaryReadOptions): void {
-        let len = reader.uint32(), end = reader.pos + len, key: keyof GetStoriesResponseProto["latencies"] | undefined, val: GetStoriesResponseProto["latencies"][any] | undefined;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case 1:
-                    key = reader.string();
-                    break;
-                case 2:
-                    val = Duration.internalBinaryRead(reader, reader.uint32(), options);
-                    break;
-                default: throw new globalThis.Error("unknown map entry field for field GetStoriesResponseProto.latencies");
-            }
-        }
-        map[key ?? ""] = val ?? Duration.create();
-    }
     internalBinaryWrite(message: GetStoriesResponseProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* StoriesProto stories = 1; */
         if (message.stories)
             StoriesProto.internalBinaryWrite(message.stories, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* map<string, google.protobuf.Duration> latencies = 2; */
-        for (let k of Object.keys(message.latencies)) {
-            writer.tag(2, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k);
-            writer.tag(2, WireType.LengthDelimited).fork();
-            Duration.internalBinaryWrite(message.latencies[k], writer, options);
-            writer.join().join();
-        }
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1088,11 +1061,12 @@ class StoryApiResponseProto$Type extends MessageType<StoryApiResponseProto> {
             { no: 1, name: "get_stories", kind: "message", oneof: "response", T: () => GetStoriesResponseProto },
             { no: 2, name: "create_story", kind: "message", oneof: "response", T: () => CreateStoryResponseProto },
             { no: 3, name: "update_story", kind: "message", oneof: "response", T: () => UpdateStoryResponseProto },
-            { no: 4, name: "delete_story", kind: "message", oneof: "response", T: () => DeleteStoryResponseProto }
+            { no: 4, name: "delete_story", kind: "message", oneof: "response", T: () => DeleteStoryResponseProto },
+            { no: 5, name: "latencies", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => Duration } }
         ]);
     }
     create(value?: PartialMessage<StoryApiResponseProto>): StoryApiResponseProto {
-        const message = { response: { oneofKind: undefined } };
+        const message = { response: { oneofKind: undefined }, latencies: {} };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StoryApiResponseProto>(this, message, value);
@@ -1127,6 +1101,9 @@ class StoryApiResponseProto$Type extends MessageType<StoryApiResponseProto> {
                         deleteStory: DeleteStoryResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).deleteStory)
                     };
                     break;
+                case /* map<string, google.protobuf.Duration> latencies */ 5:
+                    this.binaryReadMap5(message.latencies, reader, options);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -1137,6 +1114,22 @@ class StoryApiResponseProto$Type extends MessageType<StoryApiResponseProto> {
             }
         }
         return message;
+    }
+    private binaryReadMap5(map: StoryApiResponseProto["latencies"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof StoryApiResponseProto["latencies"] | undefined, val: StoryApiResponseProto["latencies"][any] | undefined;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case 1:
+                    key = reader.string();
+                    break;
+                case 2:
+                    val = Duration.internalBinaryRead(reader, reader.uint32(), options);
+                    break;
+                default: throw new globalThis.Error("unknown map entry field for field StoryApiResponseProto.latencies");
+            }
+        }
+        map[key ?? ""] = val ?? Duration.create();
     }
     internalBinaryWrite(message: StoryApiResponseProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* GetStoriesResponseProto get_stories = 1; */
@@ -1151,6 +1144,13 @@ class StoryApiResponseProto$Type extends MessageType<StoryApiResponseProto> {
         /* DeleteStoryResponseProto delete_story = 4; */
         if (message.response.oneofKind === "deleteStory")
             DeleteStoryResponseProto.internalBinaryWrite(message.response.deleteStory, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* map<string, google.protobuf.Duration> latencies = 5; */
+        for (let k of Object.keys(message.latencies)) {
+            writer.tag(5, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k);
+            writer.tag(2, WireType.LengthDelimited).fork();
+            Duration.internalBinaryWrite(message.latencies[k], writer, options);
+            writer.join().join();
+        }
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

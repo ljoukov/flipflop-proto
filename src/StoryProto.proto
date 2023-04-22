@@ -8,7 +8,6 @@ message GetStoriesRequestProto {
 
 message GetStoriesResponseProto {
   StoriesProto stories = 1;
-  map<string, google.protobuf.Duration> latencies = 2;
 }
 
 message CreateStoryRequestProto {
@@ -37,7 +36,6 @@ message DeleteStoryResponseProto {
 message StoryApiRequestProto {
   oneof request {
     GetStoriesRequestProto get_stories = 1;
-
     CreateStoryRequestProto create_story = 2;
     UpdateStoryRequestProto update_story = 3;
     DeleteStoryRequestProto delete_story = 4;
@@ -47,11 +45,11 @@ message StoryApiRequestProto {
 message StoryApiResponseProto {
   oneof response {
     GetStoriesResponseProto get_stories = 1;
-
     CreateStoryResponseProto create_story = 2;
     UpdateStoryResponseProto update_story = 3;
     DeleteStoryResponseProto delete_story = 4;
   }
+  map<string, google.protobuf.Duration> latencies = 5;
 }
 
 message StoriesProto {
