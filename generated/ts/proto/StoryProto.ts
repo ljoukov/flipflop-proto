@@ -125,9 +125,9 @@ export interface StoryApiRequestProto {
  */
 export interface StoryApiResponseProto {
     /**
-     * @generated from protobuf oneof: request
+     * @generated from protobuf oneof: response
      */
-    request: {
+    response: {
         oneofKind: "getStories";
         /**
          * @generated from protobuf field: GetStoriesResponseProto get_stories = 1;
@@ -1085,14 +1085,14 @@ export const StoryApiRequestProto = new StoryApiRequestProto$Type();
 class StoryApiResponseProto$Type extends MessageType<StoryApiResponseProto> {
     constructor() {
         super("StoryApiResponseProto", [
-            { no: 1, name: "get_stories", kind: "message", oneof: "request", T: () => GetStoriesResponseProto },
-            { no: 2, name: "create_story", kind: "message", oneof: "request", T: () => CreateStoryResponseProto },
-            { no: 3, name: "update_story", kind: "message", oneof: "request", T: () => UpdateStoryResponseProto },
-            { no: 4, name: "delete_story", kind: "message", oneof: "request", T: () => DeleteStoryResponseProto }
+            { no: 1, name: "get_stories", kind: "message", oneof: "response", T: () => GetStoriesResponseProto },
+            { no: 2, name: "create_story", kind: "message", oneof: "response", T: () => CreateStoryResponseProto },
+            { no: 3, name: "update_story", kind: "message", oneof: "response", T: () => UpdateStoryResponseProto },
+            { no: 4, name: "delete_story", kind: "message", oneof: "response", T: () => DeleteStoryResponseProto }
         ]);
     }
     create(value?: PartialMessage<StoryApiResponseProto>): StoryApiResponseProto {
-        const message = { request: { oneofKind: undefined } };
+        const message = { response: { oneofKind: undefined } };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StoryApiResponseProto>(this, message, value);
@@ -1104,27 +1104,27 @@ class StoryApiResponseProto$Type extends MessageType<StoryApiResponseProto> {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
                 case /* GetStoriesResponseProto get_stories */ 1:
-                    message.request = {
+                    message.response = {
                         oneofKind: "getStories",
-                        getStories: GetStoriesResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).getStories)
+                        getStories: GetStoriesResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).getStories)
                     };
                     break;
                 case /* CreateStoryResponseProto create_story */ 2:
-                    message.request = {
+                    message.response = {
                         oneofKind: "createStory",
-                        createStory: CreateStoryResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).createStory)
+                        createStory: CreateStoryResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).createStory)
                     };
                     break;
                 case /* UpdateStoryResponseProto update_story */ 3:
-                    message.request = {
+                    message.response = {
                         oneofKind: "updateStory",
-                        updateStory: UpdateStoryResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).updateStory)
+                        updateStory: UpdateStoryResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).updateStory)
                     };
                     break;
                 case /* DeleteStoryResponseProto delete_story */ 4:
-                    message.request = {
+                    message.response = {
                         oneofKind: "deleteStory",
-                        deleteStory: DeleteStoryResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).deleteStory)
+                        deleteStory: DeleteStoryResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).deleteStory)
                     };
                     break;
                 default:
@@ -1140,17 +1140,17 @@ class StoryApiResponseProto$Type extends MessageType<StoryApiResponseProto> {
     }
     internalBinaryWrite(message: StoryApiResponseProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* GetStoriesResponseProto get_stories = 1; */
-        if (message.request.oneofKind === "getStories")
-            GetStoriesResponseProto.internalBinaryWrite(message.request.getStories, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        if (message.response.oneofKind === "getStories")
+            GetStoriesResponseProto.internalBinaryWrite(message.response.getStories, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         /* CreateStoryResponseProto create_story = 2; */
-        if (message.request.oneofKind === "createStory")
-            CreateStoryResponseProto.internalBinaryWrite(message.request.createStory, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        if (message.response.oneofKind === "createStory")
+            CreateStoryResponseProto.internalBinaryWrite(message.response.createStory, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         /* UpdateStoryResponseProto update_story = 3; */
-        if (message.request.oneofKind === "updateStory")
-            UpdateStoryResponseProto.internalBinaryWrite(message.request.updateStory, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        if (message.response.oneofKind === "updateStory")
+            UpdateStoryResponseProto.internalBinaryWrite(message.response.updateStory, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
         /* DeleteStoryResponseProto delete_story = 4; */
-        if (message.request.oneofKind === "deleteStory")
-            DeleteStoryResponseProto.internalBinaryWrite(message.request.deleteStory, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        if (message.response.oneofKind === "deleteStory")
+            DeleteStoryResponseProto.internalBinaryWrite(message.response.deleteStory, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

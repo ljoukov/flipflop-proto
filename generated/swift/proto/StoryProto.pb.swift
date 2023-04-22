@@ -502,50 +502,50 @@ struct StoryApiResponseProto {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var request: StoryApiResponseProto.OneOf_Request? = nil
+  var response: StoryApiResponseProto.OneOf_Response? = nil
 
   var getStories: GetStoriesResponseProto {
     get {
-      if case .getStories(let v)? = request {return v}
+      if case .getStories(let v)? = response {return v}
       return GetStoriesResponseProto()
     }
-    set {request = .getStories(newValue)}
+    set {response = .getStories(newValue)}
   }
 
   var createStory: CreateStoryResponseProto {
     get {
-      if case .createStory(let v)? = request {return v}
+      if case .createStory(let v)? = response {return v}
       return CreateStoryResponseProto()
     }
-    set {request = .createStory(newValue)}
+    set {response = .createStory(newValue)}
   }
 
   var updateStory: UpdateStoryResponseProto {
     get {
-      if case .updateStory(let v)? = request {return v}
+      if case .updateStory(let v)? = response {return v}
       return UpdateStoryResponseProto()
     }
-    set {request = .updateStory(newValue)}
+    set {response = .updateStory(newValue)}
   }
 
   var deleteStory: DeleteStoryResponseProto {
     get {
-      if case .deleteStory(let v)? = request {return v}
+      if case .deleteStory(let v)? = response {return v}
       return DeleteStoryResponseProto()
     }
-    set {request = .deleteStory(newValue)}
+    set {response = .deleteStory(newValue)}
   }
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  enum OneOf_Request: Equatable {
+  enum OneOf_Response: Equatable {
     case getStories(GetStoriesResponseProto)
     case createStory(CreateStoryResponseProto)
     case updateStory(UpdateStoryResponseProto)
     case deleteStory(DeleteStoryResponseProto)
 
   #if !swift(>=4.1)
-    static func ==(lhs: StoryApiResponseProto.OneOf_Request, rhs: StoryApiResponseProto.OneOf_Request) -> Bool {
+    static func ==(lhs: StoryApiResponseProto.OneOf_Response, rhs: StoryApiResponseProto.OneOf_Response) -> Bool {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
@@ -1177,7 +1177,7 @@ extension DeleteStoryResponseProto: @unchecked Sendable {}
 extension StoryApiRequestProto: @unchecked Sendable {}
 extension StoryApiRequestProto.OneOf_Request: @unchecked Sendable {}
 extension StoryApiResponseProto: @unchecked Sendable {}
-extension StoryApiResponseProto.OneOf_Request: @unchecked Sendable {}
+extension StoryApiResponseProto.OneOf_Response: @unchecked Sendable {}
 extension StoriesProto: @unchecked Sendable {}
 extension StoryProto: @unchecked Sendable {}
 extension CardProto: @unchecked Sendable {}
@@ -1613,53 +1613,53 @@ extension StoryApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
       case 1: try {
         var v: GetStoriesResponseProto?
         var hadOneofValue = false
-        if let current = self.request {
+        if let current = self.response {
           hadOneofValue = true
           if case .getStories(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.request = .getStories(v)
+          self.response = .getStories(v)
         }
       }()
       case 2: try {
         var v: CreateStoryResponseProto?
         var hadOneofValue = false
-        if let current = self.request {
+        if let current = self.response {
           hadOneofValue = true
           if case .createStory(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.request = .createStory(v)
+          self.response = .createStory(v)
         }
       }()
       case 3: try {
         var v: UpdateStoryResponseProto?
         var hadOneofValue = false
-        if let current = self.request {
+        if let current = self.response {
           hadOneofValue = true
           if case .updateStory(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.request = .updateStory(v)
+          self.response = .updateStory(v)
         }
       }()
       case 4: try {
         var v: DeleteStoryResponseProto?
         var hadOneofValue = false
-        if let current = self.request {
+        if let current = self.response {
           hadOneofValue = true
           if case .deleteStory(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.request = .deleteStory(v)
+          self.response = .deleteStory(v)
         }
       }()
       default: break
@@ -1672,21 +1672,21 @@ extension StoryApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    switch self.request {
+    switch self.response {
     case .getStories?: try {
-      guard case .getStories(let v)? = self.request else { preconditionFailure() }
+      guard case .getStories(let v)? = self.response else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
     }()
     case .createStory?: try {
-      guard case .createStory(let v)? = self.request else { preconditionFailure() }
+      guard case .createStory(let v)? = self.response else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     }()
     case .updateStory?: try {
-      guard case .updateStory(let v)? = self.request else { preconditionFailure() }
+      guard case .updateStory(let v)? = self.response else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
     }()
     case .deleteStory?: try {
-      guard case .deleteStory(let v)? = self.request else { preconditionFailure() }
+      guard case .deleteStory(let v)? = self.response else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
     }()
     case nil: break
@@ -1695,7 +1695,7 @@ extension StoryApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
   }
 
   static func ==(lhs: StoryApiResponseProto, rhs: StoryApiResponseProto) -> Bool {
-    if lhs.request != rhs.request {return false}
+    if lhs.response != rhs.response {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

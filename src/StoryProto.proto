@@ -45,7 +45,7 @@ message StoryApiRequestProto {
 }
 
 message StoryApiResponseProto {
-  oneof request {
+  oneof response {
     GetStoriesResponseProto get_stories = 1;
 
     CreateStoryResponseProto create_story = 2;
