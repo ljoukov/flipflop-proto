@@ -52,6 +52,30 @@ message StoryApiResponseProto {
   map<string, google.protobuf.Duration> latencies = 5;
 }
 
+enum CardTypeProto {
+  CARD_TYPE_UNKNOWN = 0;
+  CARD_TYPE_STATIC = 2;
+  CARD_TYPE_TRUE_FALSE = 3;
+  CARD_TYPE_ABC = 4;
+}
+
+message CardDataProto {
+  CardTypeProto card_type = 1;
+ 
+  string title = 2;
+  string body = 3;
+
+  bool is_true = 4;
+
+  repeated string options = 5;
+  int32 correct_option_index = 6;
+
+  string explanation = 7;
+
+  ImageRefProto image_ref = 8;
+  repeated string hash_tags = 9;
+}
+
 message StoriesProto {
   google.protobuf.Timestamp timestamp = 1;
   repeated StoryProto stories = 2;

@@ -156,6 +156,47 @@ export interface StoryApiResponseProto {
     };
 }
 /**
+ * @generated from protobuf message CardDataProto
+ */
+export interface CardDataProto {
+    /**
+     * @generated from protobuf field: CardTypeProto card_type = 1;
+     */
+    cardType: CardTypeProto;
+    /**
+     * @generated from protobuf field: string title = 2;
+     */
+    title: string;
+    /**
+     * @generated from protobuf field: string body = 3;
+     */
+    body: string;
+    /**
+     * @generated from protobuf field: bool is_true = 4;
+     */
+    isTrue: boolean;
+    /**
+     * @generated from protobuf field: repeated string options = 5;
+     */
+    options: string[];
+    /**
+     * @generated from protobuf field: int32 correct_option_index = 6;
+     */
+    correctOptionIndex: number;
+    /**
+     * @generated from protobuf field: string explanation = 7;
+     */
+    explanation: string;
+    /**
+     * @generated from protobuf field: ImageRefProto image_ref = 8;
+     */
+    imageRef?: ImageRefProto;
+    /**
+     * @generated from protobuf field: repeated string hash_tags = 9;
+     */
+    hashTags: string[];
+}
+/**
  * @generated from protobuf message StoriesProto
  */
 export interface StoriesProto {
@@ -556,6 +597,27 @@ export interface RevealBackBlockProto {
      * @generated from protobuf field: CardFaceProto back_face = 2;
      */
     backFace?: CardFaceProto;
+}
+/**
+ * @generated from protobuf enum CardTypeProto
+ */
+export enum CardTypeProto {
+    /**
+     * @generated from protobuf enum value: CARD_TYPE_UNKNOWN = 0;
+     */
+    CARD_TYPE_UNKNOWN = 0,
+    /**
+     * @generated from protobuf enum value: CARD_TYPE_STATIC = 2;
+     */
+    CARD_TYPE_STATIC = 2,
+    /**
+     * @generated from protobuf enum value: CARD_TYPE_TRUE_FALSE = 3;
+     */
+    CARD_TYPE_TRUE_FALSE = 3,
+    /**
+     * @generated from protobuf enum value: CARD_TYPE_ABC = 4;
+     */
+    CARD_TYPE_ABC = 4
 }
 /**
  * @generated from protobuf enum FontNameProto
@@ -1171,6 +1233,109 @@ class StoryApiResponseProto$Type extends MessageType<StoryApiResponseProto> {
  * @generated MessageType for protobuf message StoryApiResponseProto
  */
 export const StoryApiResponseProto = new StoryApiResponseProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class CardDataProto$Type extends MessageType<CardDataProto> {
+    constructor() {
+        super("CardDataProto", [
+            { no: 1, name: "card_type", kind: "enum", T: () => ["CardTypeProto", CardTypeProto] },
+            { no: 2, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "body", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "is_true", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 5, name: "options", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "correct_option_index", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 7, name: "explanation", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 8, name: "image_ref", kind: "message", T: () => ImageRefProto },
+            { no: 9, name: "hash_tags", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<CardDataProto>): CardDataProto {
+        const message = { cardType: 0, title: "", body: "", isTrue: false, options: [], correctOptionIndex: 0, explanation: "", hashTags: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<CardDataProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CardDataProto): CardDataProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* CardTypeProto card_type */ 1:
+                    message.cardType = reader.int32();
+                    break;
+                case /* string title */ 2:
+                    message.title = reader.string();
+                    break;
+                case /* string body */ 3:
+                    message.body = reader.string();
+                    break;
+                case /* bool is_true */ 4:
+                    message.isTrue = reader.bool();
+                    break;
+                case /* repeated string options */ 5:
+                    message.options.push(reader.string());
+                    break;
+                case /* int32 correct_option_index */ 6:
+                    message.correctOptionIndex = reader.int32();
+                    break;
+                case /* string explanation */ 7:
+                    message.explanation = reader.string();
+                    break;
+                case /* ImageRefProto image_ref */ 8:
+                    message.imageRef = ImageRefProto.internalBinaryRead(reader, reader.uint32(), options, message.imageRef);
+                    break;
+                case /* repeated string hash_tags */ 9:
+                    message.hashTags.push(reader.string());
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: CardDataProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* CardTypeProto card_type = 1; */
+        if (message.cardType !== 0)
+            writer.tag(1, WireType.Varint).int32(message.cardType);
+        /* string title = 2; */
+        if (message.title !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.title);
+        /* string body = 3; */
+        if (message.body !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.body);
+        /* bool is_true = 4; */
+        if (message.isTrue !== false)
+            writer.tag(4, WireType.Varint).bool(message.isTrue);
+        /* repeated string options = 5; */
+        for (let i = 0; i < message.options.length; i++)
+            writer.tag(5, WireType.LengthDelimited).string(message.options[i]);
+        /* int32 correct_option_index = 6; */
+        if (message.correctOptionIndex !== 0)
+            writer.tag(6, WireType.Varint).int32(message.correctOptionIndex);
+        /* string explanation = 7; */
+        if (message.explanation !== "")
+            writer.tag(7, WireType.LengthDelimited).string(message.explanation);
+        /* ImageRefProto image_ref = 8; */
+        if (message.imageRef)
+            ImageRefProto.internalBinaryWrite(message.imageRef, writer.tag(8, WireType.LengthDelimited).fork(), options).join();
+        /* repeated string hash_tags = 9; */
+        for (let i = 0; i < message.hashTags.length; i++)
+            writer.tag(9, WireType.LengthDelimited).string(message.hashTags[i]);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message CardDataProto
+ */
+export const CardDataProto = new CardDataProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class StoriesProto$Type extends MessageType<StoriesProto> {
     constructor() {
