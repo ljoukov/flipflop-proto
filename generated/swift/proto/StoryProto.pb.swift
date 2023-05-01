@@ -22,32 +22,32 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
 
 enum CardTypeProto: SwiftProtobuf.Enum {
   typealias RawValue = Int
-  case cardTypeUnknown // = 0
-  case cardTypeStatic // = 2
-  case cardTypeTrueFalse // = 3
-  case cardTypeAbc // = 4
+  case unknown // = 0
+  case `static` // = 2
+  case trueFalse // = 3
+  case abc // = 4
   case UNRECOGNIZED(Int)
 
   init() {
-    self = .cardTypeUnknown
+    self = .unknown
   }
 
   init?(rawValue: Int) {
     switch rawValue {
-    case 0: self = .cardTypeUnknown
-    case 2: self = .cardTypeStatic
-    case 3: self = .cardTypeTrueFalse
-    case 4: self = .cardTypeAbc
+    case 0: self = .unknown
+    case 2: self = .static
+    case 3: self = .trueFalse
+    case 4: self = .abc
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
 
   var rawValue: Int {
     switch self {
-    case .cardTypeUnknown: return 0
-    case .cardTypeStatic: return 2
-    case .cardTypeTrueFalse: return 3
-    case .cardTypeAbc: return 4
+    case .unknown: return 0
+    case .static: return 2
+    case .trueFalse: return 3
+    case .abc: return 4
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -59,10 +59,10 @@ enum CardTypeProto: SwiftProtobuf.Enum {
 extension CardTypeProto: CaseIterable {
   // The compiler won't synthesize support with the UNRECOGNIZED case.
   static var allCases: [CardTypeProto] = [
-    .cardTypeUnknown,
-    .cardTypeStatic,
-    .cardTypeTrueFalse,
-    .cardTypeAbc,
+    .unknown,
+    .static,
+    .trueFalse,
+    .abc,
   ]
 }
 
@@ -628,7 +628,7 @@ struct CardDataProto {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var cardType: CardTypeProto = .cardTypeUnknown
+  var cardType: CardTypeProto = .unknown
 
   var title: String = String()
 
@@ -1331,10 +1331,10 @@ extension RevealBackBlockProto: @unchecked Sendable {}
 
 extension CardTypeProto: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    0: .same(proto: "CARD_TYPE_UNKNOWN"),
-    2: .same(proto: "CARD_TYPE_STATIC"),
-    3: .same(proto: "CARD_TYPE_TRUE_FALSE"),
-    4: .same(proto: "CARD_TYPE_ABC"),
+    0: .same(proto: "UNKNOWN"),
+    2: .same(proto: "STATIC"),
+    3: .same(proto: "TRUE_FALSE"),
+    4: .same(proto: "ABC"),
   ]
 }
 
@@ -1875,7 +1875,7 @@ extension CardDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    if self.cardType != .cardTypeUnknown {
+    if self.cardType != .unknown {
       try visitor.visitSingularEnumField(value: self.cardType, fieldNumber: 1)
     }
     if !self.title.isEmpty {

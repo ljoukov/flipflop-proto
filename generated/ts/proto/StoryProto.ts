@@ -603,21 +603,21 @@ export interface RevealBackBlockProto {
  */
 export enum CardTypeProto {
     /**
-     * @generated from protobuf enum value: CARD_TYPE_UNKNOWN = 0;
+     * @generated from protobuf enum value: UNKNOWN = 0;
      */
-    CARD_TYPE_UNKNOWN = 0,
+    UNKNOWN = 0,
     /**
-     * @generated from protobuf enum value: CARD_TYPE_STATIC = 2;
+     * @generated from protobuf enum value: STATIC = 2;
      */
-    CARD_TYPE_STATIC = 2,
+    STATIC = 2,
     /**
-     * @generated from protobuf enum value: CARD_TYPE_TRUE_FALSE = 3;
+     * @generated from protobuf enum value: TRUE_FALSE = 3;
      */
-    CARD_TYPE_TRUE_FALSE = 3,
+    TRUE_FALSE = 3,
     /**
-     * @generated from protobuf enum value: CARD_TYPE_ABC = 4;
+     * @generated from protobuf enum value: ABC = 4;
      */
-    CARD_TYPE_ABC = 4
+    ABC = 4
 }
 /**
  * @generated from protobuf enum FontNameProto

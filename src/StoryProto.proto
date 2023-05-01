@@ -53,10 +53,10 @@ message StoryApiResponseProto {
 }
 
 enum CardTypeProto {
-  CARD_TYPE_UNKNOWN = 0;
-  CARD_TYPE_STATIC = 2;
-  CARD_TYPE_TRUE_FALSE = 3;
-  CARD_TYPE_ABC = 4;
+  UNKNOWN = 0;
+  STATIC = 2;
+  TRUE_FALSE = 3;
+  ABC = 4;
 }
 
 message CardDataProto {
