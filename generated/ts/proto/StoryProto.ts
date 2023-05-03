@@ -3,31 +3,35 @@
 // @generated from protobuf file "StoryProto.proto" (syntax proto3)
 // tslint:disable
 // @ts-nocheck
-import { WireType } from "@protobuf-ts/runtime";
 import type { BinaryWriteOptions } from "@protobuf-ts/runtime";
 import type { IBinaryWriter } from "@protobuf-ts/runtime";
-import { UnknownFieldHandler } from "@protobuf-ts/runtime";
+import { WireType } from "@protobuf-ts/runtime";
 import type { BinaryReadOptions } from "@protobuf-ts/runtime";
 import type { IBinaryReader } from "@protobuf-ts/runtime";
+import { UnknownFieldHandler } from "@protobuf-ts/runtime";
 import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
-import { Timestamp } from "./google/protobuf/timestamp";
 import { Duration } from "./google/protobuf/duration";
+import { Timestamp } from "./google/protobuf/timestamp";
 /**
  * @generated from protobuf message GetStoriesRequestProto
  */
 export interface GetStoriesRequestProto {
+    /**
+     * @generated from protobuf field: google.protobuf.Timestamp last_modified_after = 1;
+     */
+    lastModifiedAfter?: Timestamp;
 }
 /**
  * @generated from protobuf message GetStoriesResponseProto
  */
 export interface GetStoriesResponseProto {
     /**
-     * @generated from protobuf field: StoriesProto stories = 1;
+     * @generated from protobuf field: repeated StoryProto stories = 1;
      */
-    stories?: StoriesProto;
+    stories: StoryProto[];
 }
 /**
  * @generated from protobuf message CreateStoryRequestProto
@@ -729,7 +733,9 @@ export enum TextHyphensProto {
 // @generated message type with reflection information, may provide speed optimized methods
 class GetStoriesRequestProto$Type extends MessageType<GetStoriesRequestProto> {
     constructor() {
-        super("GetStoriesRequestProto", []);
+        super("GetStoriesRequestProto", [
+            { no: 1, name: "last_modified_after", kind: "message", T: () => Timestamp }
+        ]);
     }
     create(value?: PartialMessage<GetStoriesRequestProto>): GetStoriesRequestProto {
         const message = {};
@@ -739,9 +745,28 @@ class GetStoriesRequestProto$Type extends MessageType<GetStoriesRequestProto> {
         return message;
     }
     internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetStoriesRequestProto): GetStoriesRequestProto {
-        return target ?? this.create();
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* google.protobuf.Timestamp last_modified_after */ 1:
+                    message.lastModifiedAfter = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.lastModifiedAfter);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
     }
     internalBinaryWrite(message: GetStoriesRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* google.protobuf.Timestamp last_modified_after = 1; */
+        if (message.lastModifiedAfter)
+            Timestamp.internalBinaryWrite(message.lastModifiedAfter, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -756,11 +781,11 @@ export const GetStoriesRequestProto = new GetStoriesRequestProto$Type();
 class GetStoriesResponseProto$Type extends MessageType<GetStoriesResponseProto> {
     constructor() {
         super("GetStoriesResponseProto", [
-            { no: 1, name: "stories", kind: "message", T: () => StoriesProto }
+            { no: 1, name: "stories", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoryProto }
         ]);
     }
     create(value?: PartialMessage<GetStoriesResponseProto>): GetStoriesResponseProto {
-        const message = {};
+        const message = { stories: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<GetStoriesResponseProto>(this, message, value);
@@ -771,8 +796,8 @@ class GetStoriesResponseProto$Type extends MessageType<GetStoriesResponseProto> 
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* StoriesProto stories */ 1:
-                    message.stories = StoriesProto.internalBinaryRead(reader, reader.uint32(), options, message.stories);
+                case /* repeated StoryProto stories */ 1:
+                    message.stories.push(StoryProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -786,9 +811,9 @@ class GetStoriesResponseProto$Type extends MessageType<GetStoriesResponseProto> 
         return message;
     }
     internalBinaryWrite(message: GetStoriesResponseProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* StoriesProto stories = 1; */
-        if (message.stories)
-            StoriesProto.internalBinaryWrite(message.stories, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* repeated StoryProto stories = 1; */
+        for (let i = 0; i < message.stories.length; i++)
+            StoryProto.internalBinaryWrite(message.stories[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

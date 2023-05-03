@@ -4,10 +4,11 @@ import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 
 message GetStoriesRequestProto {
+  google.protobuf.Timestamp last_modified_after = 1;
 }
 
 message GetStoriesResponseProto {
-  StoriesProto stories = 1;
+  repeated StoryProto stories = 1;
 }
 
 message CreateStoryRequestProto {
