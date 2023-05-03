@@ -9,6 +9,8 @@ message GetStoriesRequestProto {
 
 message GetStoriesResponseProto {
   repeated StoryProto stories = 1;
+  repeated string deleted_story_id = 2;
+  google.protobuf.Timestamp last_modified_at = 3;
 }
 
 message CreateStoryRequestProto {
