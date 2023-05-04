@@ -3,6 +3,36 @@ syntax = "proto3";
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 
+message GetUserDataRequestProto {
+}
+
+message GetUserDataResponseProto {
+  UserDataProto user_data = 1;
+}
+
+message UpdateUserDataRequestProto {
+  UserDataProto user_data = 1;
+}
+
+message UpdateUserDataResponseProto {
+  UserDataProto user_data = 1;
+}
+
+message UserApiRequestProto {
+  oneof request {
+    GetUserDataRequestProto get_user_data = 1;
+    UpdateUserDataRequestProto update_user_data = 2;
+  }
+}
+
+message UserApiResponseProto {
+  oneof response {
+    GetUserDataResponseProto get_user_data = 1;
+    UpdateUserDataResponseProto update_user_data = 2;
+  }
+  map<string, google.protobuf.Duration> latencies = 100;
+}
+
 message StoryUserDataProto {
   string story_id = 1;
   google.protobuf.Timestamp last_modified_at = 2;
@@ -12,24 +42,4 @@ message StoryUserDataProto {
 
 message UserDataProto {
   repeated StoryUserDataProto stories_data = 1;
-}
-
-message GetUserDataRequestProto {
-}
-
-message GetUserDataResponseProto {
-  UserDataProto user_data = 1;
-}
-
-message UserApiRequestProto {
-  oneof request {
-    GetUserDataRequestProto get_user_data = 1;
-  }
-}
-
-message UserApiResponseProto {
-  oneof response {
-    GetUserDataResponseProto get_user_data = 1;
-  }
-  map<string, google.protobuf.Duration> latencies = 5;
 }
