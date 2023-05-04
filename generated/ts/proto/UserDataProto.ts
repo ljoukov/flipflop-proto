@@ -13,6 +13,7 @@ import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
+import { Duration } from "./google/protobuf/duration";
 import { Timestamp } from "./google/protobuf/timestamp";
 /**
  * @generated from protobuf message StoryUserDataProto
@@ -30,6 +31,60 @@ export interface StoryUserDataProto {
      * @generated from protobuf field: bool liked = 3;
      */
     liked: boolean;
+}
+/**
+ * @generated from protobuf message GetUserDataRequestProto
+ */
+export interface GetUserDataRequestProto {
+}
+/**
+ * @generated from protobuf message GetUserDataResponseProto
+ */
+export interface GetUserDataResponseProto {
+    /**
+     * @generated from protobuf field: repeated StoryUserDataProto stories_data = 1;
+     */
+    storiesData: StoryUserDataProto[];
+}
+/**
+ * @generated from protobuf message UserApiRequestProto
+ */
+export interface UserApiRequestProto {
+    /**
+     * @generated from protobuf oneof: request
+     */
+    request: {
+        oneofKind: "getUserData";
+        /**
+         * @generated from protobuf field: GetUserDataRequestProto get_user_data = 1;
+         */
+        getUserData: GetUserDataRequestProto;
+    } | {
+        oneofKind: undefined;
+    };
+}
+/**
+ * @generated from protobuf message UserApiResponseProto
+ */
+export interface UserApiResponseProto {
+    /**
+     * @generated from protobuf oneof: response
+     */
+    response: {
+        oneofKind: "getUserData";
+        /**
+         * @generated from protobuf field: GetUserDataResponseProto get_user_data = 1;
+         */
+        getUserData: GetUserDataResponseProto;
+    } | {
+        oneofKind: undefined;
+    };
+    /**
+     * @generated from protobuf field: map<string, google.protobuf.Duration> latencies = 5;
+     */
+    latencies: {
+        [key: string]: Duration;
+    };
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class StoryUserDataProto$Type extends MessageType<StoryUserDataProto> {
@@ -92,3 +147,203 @@ class StoryUserDataProto$Type extends MessageType<StoryUserDataProto> {
  * @generated MessageType for protobuf message StoryUserDataProto
  */
 export const StoryUserDataProto = new StoryUserDataProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class GetUserDataRequestProto$Type extends MessageType<GetUserDataRequestProto> {
+    constructor() {
+        super("GetUserDataRequestProto", []);
+    }
+    create(value?: PartialMessage<GetUserDataRequestProto>): GetUserDataRequestProto {
+        const message = {};
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<GetUserDataRequestProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetUserDataRequestProto): GetUserDataRequestProto {
+        return target ?? this.create();
+    }
+    internalBinaryWrite(message: GetUserDataRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message GetUserDataRequestProto
+ */
+export const GetUserDataRequestProto = new GetUserDataRequestProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class GetUserDataResponseProto$Type extends MessageType<GetUserDataResponseProto> {
+    constructor() {
+        super("GetUserDataResponseProto", [
+            { no: 1, name: "stories_data", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoryUserDataProto }
+        ]);
+    }
+    create(value?: PartialMessage<GetUserDataResponseProto>): GetUserDataResponseProto {
+        const message = { storiesData: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<GetUserDataResponseProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetUserDataResponseProto): GetUserDataResponseProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated StoryUserDataProto stories_data */ 1:
+                    message.storiesData.push(StoryUserDataProto.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: GetUserDataResponseProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated StoryUserDataProto stories_data = 1; */
+        for (let i = 0; i < message.storiesData.length; i++)
+            StoryUserDataProto.internalBinaryWrite(message.storiesData[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message GetUserDataResponseProto
+ */
+export const GetUserDataResponseProto = new GetUserDataResponseProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class UserApiRequestProto$Type extends MessageType<UserApiRequestProto> {
+    constructor() {
+        super("UserApiRequestProto", [
+            { no: 1, name: "get_user_data", kind: "message", oneof: "request", T: () => GetUserDataRequestProto }
+        ]);
+    }
+    create(value?: PartialMessage<UserApiRequestProto>): UserApiRequestProto {
+        const message = { request: { oneofKind: undefined } };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<UserApiRequestProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: UserApiRequestProto): UserApiRequestProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* GetUserDataRequestProto get_user_data */ 1:
+                    message.request = {
+                        oneofKind: "getUserData",
+                        getUserData: GetUserDataRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).getUserData)
+                    };
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: UserApiRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* GetUserDataRequestProto get_user_data = 1; */
+        if (message.request.oneofKind === "getUserData")
+            GetUserDataRequestProto.internalBinaryWrite(message.request.getUserData, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message UserApiRequestProto
+ */
+export const UserApiRequestProto = new UserApiRequestProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class UserApiResponseProto$Type extends MessageType<UserApiResponseProto> {
+    constructor() {
+        super("UserApiResponseProto", [
+            { no: 1, name: "get_user_data", kind: "message", oneof: "response", T: () => GetUserDataResponseProto },
+            { no: 5, name: "latencies", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => Duration } }
+        ]);
+    }
+    create(value?: PartialMessage<UserApiResponseProto>): UserApiResponseProto {
+        const message = { response: { oneofKind: undefined }, latencies: {} };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<UserApiResponseProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: UserApiResponseProto): UserApiResponseProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* GetUserDataResponseProto get_user_data */ 1:
+                    message.response = {
+                        oneofKind: "getUserData",
+                        getUserData: GetUserDataResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).getUserData)
+                    };
+                    break;
+                case /* map<string, google.protobuf.Duration> latencies */ 5:
+                    this.binaryReadMap5(message.latencies, reader, options);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    private binaryReadMap5(map: UserApiResponseProto["latencies"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof UserApiResponseProto["latencies"] | undefined, val: UserApiResponseProto["latencies"][any] | undefined;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case 1:
+                    key = reader.string();
+                    break;
+                case 2:
+                    val = Duration.internalBinaryRead(reader, reader.uint32(), options);
+                    break;
+                default: throw new globalThis.Error("unknown map entry field for field UserApiResponseProto.latencies");
+            }
+        }
+        map[key ?? ""] = val ?? Duration.create();
+    }
+    internalBinaryWrite(message: UserApiResponseProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* GetUserDataResponseProto get_user_data = 1; */
+        if (message.response.oneofKind === "getUserData")
+            GetUserDataResponseProto.internalBinaryWrite(message.response.getUserData, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* map<string, google.protobuf.Duration> latencies = 5; */
+        for (let k of Object.keys(message.latencies)) {
+            writer.tag(5, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k);
+            writer.tag(2, WireType.LengthDelimited).fork();
+            Duration.internalBinaryWrite(message.latencies[k], writer, options);
+            writer.join().join();
+        }
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message UserApiResponseProto
+ */
+export const UserApiResponseProto = new UserApiResponseProto$Type();
