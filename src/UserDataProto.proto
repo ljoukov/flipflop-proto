@@ -8,3 +8,23 @@ message StoryUserDataProto {
 
   bool liked = 3;
 }
+
+message GetUserDataRequestProto {
+}
+
+message GetUserDataResponseProto {
+  repeated StoryUserDataProto stories_data = 1;
+}
+
+message UserApiRequestProto {
+  oneof request {
+    GetUserDataRequestProto get_user_data = 1;
+  }
+}
+
+message UserApiResponseProto {
+  oneof response {
+    GetUserDataResponseProto get_user_data = 1;
+  }
+  map<string, google.protobuf.Duration> latencies = 5;
+}
