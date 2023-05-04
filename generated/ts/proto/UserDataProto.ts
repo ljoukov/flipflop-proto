@@ -124,6 +124,10 @@ export interface UserDataProto {
      * @generated from protobuf field: repeated StoryUserDataProto stories_data = 1;
      */
     storiesData: StoryUserDataProto[];
+    /**
+     * @generated from protobuf field: google.protobuf.Timestamp last_modified_at = 2;
+     */
+    lastModifiedAt?: Timestamp;
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class GetUserDataRequestProto$Type extends MessageType<GetUserDataRequestProto> {
@@ -504,7 +508,8 @@ export const StoryUserDataProto = new StoryUserDataProto$Type();
 class UserDataProto$Type extends MessageType<UserDataProto> {
     constructor() {
         super("UserDataProto", [
-            { no: 1, name: "stories_data", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoryUserDataProto }
+            { no: 1, name: "stories_data", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoryUserDataProto },
+            { no: 2, name: "last_modified_at", kind: "message", T: () => Timestamp }
         ]);
     }
     create(value?: PartialMessage<UserDataProto>): UserDataProto {
@@ -522,6 +527,9 @@ class UserDataProto$Type extends MessageType<UserDataProto> {
                 case /* repeated StoryUserDataProto stories_data */ 1:
                     message.storiesData.push(StoryUserDataProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
+                case /* google.protobuf.Timestamp last_modified_at */ 2:
+                    message.lastModifiedAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.lastModifiedAt);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -537,6 +545,9 @@ class UserDataProto$Type extends MessageType<UserDataProto> {
         /* repeated StoryUserDataProto stories_data = 1; */
         for (let i = 0; i < message.storiesData.length; i++)
             StoryUserDataProto.internalBinaryWrite(message.storiesData[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.Timestamp last_modified_at = 2; */
+        if (message.lastModifiedAt)
+            Timestamp.internalBinaryWrite(message.lastModifiedAt, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
