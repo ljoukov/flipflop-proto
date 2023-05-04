@@ -10,11 +10,15 @@ message StoryUserDataProto {
   bool liked = 3;
 }
 
+message UserDataProto {
+  repeated StoryUserDataProto stories_data = 1;
+}
+
 message GetUserDataRequestProto {
 }
 
 message GetUserDataResponseProto {
-  repeated StoryUserDataProto stories_data = 1;
+  UserDataProto user_data = 1;
 }
 
 message UserApiRequestProto {

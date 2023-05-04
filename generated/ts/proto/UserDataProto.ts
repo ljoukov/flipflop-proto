@@ -33,6 +33,15 @@ export interface StoryUserDataProto {
     liked: boolean;
 }
 /**
+ * @generated from protobuf message UserDataProto
+ */
+export interface UserDataProto {
+    /**
+     * @generated from protobuf field: repeated StoryUserDataProto stories_data = 1;
+     */
+    storiesData: StoryUserDataProto[];
+}
+/**
  * @generated from protobuf message GetUserDataRequestProto
  */
 export interface GetUserDataRequestProto {
@@ -42,9 +51,9 @@ export interface GetUserDataRequestProto {
  */
 export interface GetUserDataResponseProto {
     /**
-     * @generated from protobuf field: repeated StoryUserDataProto stories_data = 1;
+     * @generated from protobuf field: UserDataProto user_data = 1;
      */
-    storiesData: StoryUserDataProto[];
+    userData?: UserDataProto;
 }
 /**
  * @generated from protobuf message UserApiRequestProto
@@ -148,6 +157,53 @@ class StoryUserDataProto$Type extends MessageType<StoryUserDataProto> {
  */
 export const StoryUserDataProto = new StoryUserDataProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class UserDataProto$Type extends MessageType<UserDataProto> {
+    constructor() {
+        super("UserDataProto", [
+            { no: 1, name: "stories_data", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoryUserDataProto }
+        ]);
+    }
+    create(value?: PartialMessage<UserDataProto>): UserDataProto {
+        const message = { storiesData: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<UserDataProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: UserDataProto): UserDataProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated StoryUserDataProto stories_data */ 1:
+                    message.storiesData.push(StoryUserDataProto.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: UserDataProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated StoryUserDataProto stories_data = 1; */
+        for (let i = 0; i < message.storiesData.length; i++)
+            StoryUserDataProto.internalBinaryWrite(message.storiesData[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message UserDataProto
+ */
+export const UserDataProto = new UserDataProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class GetUserDataRequestProto$Type extends MessageType<GetUserDataRequestProto> {
     constructor() {
         super("GetUserDataRequestProto", []);
@@ -177,11 +233,11 @@ export const GetUserDataRequestProto = new GetUserDataRequestProto$Type();
 class GetUserDataResponseProto$Type extends MessageType<GetUserDataResponseProto> {
     constructor() {
         super("GetUserDataResponseProto", [
-            { no: 1, name: "stories_data", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoryUserDataProto }
+            { no: 1, name: "user_data", kind: "message", T: () => UserDataProto }
         ]);
     }
     create(value?: PartialMessage<GetUserDataResponseProto>): GetUserDataResponseProto {
-        const message = { storiesData: [] };
+        const message = {};
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<GetUserDataResponseProto>(this, message, value);
@@ -192,8 +248,8 @@ class GetUserDataResponseProto$Type extends MessageType<GetUserDataResponseProto
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* repeated StoryUserDataProto stories_data */ 1:
-                    message.storiesData.push(StoryUserDataProto.internalBinaryRead(reader, reader.uint32(), options));
+                case /* UserDataProto user_data */ 1:
+                    message.userData = UserDataProto.internalBinaryRead(reader, reader.uint32(), options, message.userData);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -207,9 +263,9 @@ class GetUserDataResponseProto$Type extends MessageType<GetUserDataResponseProto
         return message;
     }
     internalBinaryWrite(message: GetUserDataResponseProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated StoryUserDataProto stories_data = 1; */
-        for (let i = 0; i < message.storiesData.length; i++)
-            StoryUserDataProto.internalBinaryWrite(message.storiesData[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* UserDataProto user_data = 1; */
+        if (message.userData)
+            UserDataProto.internalBinaryWrite(message.userData, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

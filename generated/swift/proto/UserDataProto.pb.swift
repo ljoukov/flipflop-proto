@@ -45,6 +45,18 @@ struct StoryUserDataProto {
   fileprivate var _lastModifiedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
+struct UserDataProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var storiesData: [StoryUserDataProto] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 struct GetUserDataRequestProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -60,11 +72,20 @@ struct GetUserDataResponseProto {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var storiesData: [StoryUserDataProto] = []
+  var userData: UserDataProto {
+    get {return _userData ?? UserDataProto()}
+    set {_userData = newValue}
+  }
+  /// Returns true if `userData` has been explicitly set.
+  var hasUserData: Bool {return self._userData != nil}
+  /// Clears the value of `userData`. Subsequent reads from it will return its default value.
+  mutating func clearUserData() {self._userData = nil}
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
+
+  fileprivate var _userData: UserDataProto? = nil
 }
 
 struct UserApiRequestProto {
@@ -147,6 +168,7 @@ struct UserApiResponseProto {
 
 #if swift(>=5.5) && canImport(_Concurrency)
 extension StoryUserDataProto: @unchecked Sendable {}
+extension UserDataProto: @unchecked Sendable {}
 extension GetUserDataRequestProto: @unchecked Sendable {}
 extension GetUserDataResponseProto: @unchecked Sendable {}
 extension UserApiRequestProto: @unchecked Sendable {}
@@ -205,27 +227,8 @@ extension StoryUserDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
   }
 }
 
-extension GetUserDataRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "GetUserDataRequestProto"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
-
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let _ = try decoder.nextFieldNumber() {
-    }
-  }
-
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  static func ==(lhs: GetUserDataRequestProto, rhs: GetUserDataRequestProto) -> Bool {
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension GetUserDataResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "GetUserDataResponseProto"
+extension UserDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "UserDataProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "stories_data"),
   ]
@@ -249,8 +252,63 @@ extension GetUserDataResponseProto: SwiftProtobuf.Message, SwiftProtobuf._Messag
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: GetUserDataResponseProto, rhs: GetUserDataResponseProto) -> Bool {
+  static func ==(lhs: UserDataProto, rhs: UserDataProto) -> Bool {
     if lhs.storiesData != rhs.storiesData {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension GetUserDataRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "GetUserDataRequestProto"
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let _ = try decoder.nextFieldNumber() {
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: GetUserDataRequestProto, rhs: GetUserDataRequestProto) -> Bool {
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension GetUserDataResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "GetUserDataResponseProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_data"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._userData) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._userData {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: GetUserDataResponseProto, rhs: GetUserDataResponseProto) -> Bool {
+    if lhs._userData != rhs._userData {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
