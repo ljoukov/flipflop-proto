@@ -20,124 +20,43 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
-struct CardUserDataProto {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  var cardID: String = String()
-
-  var liked: Bool = false
-
-  /// For cards with "prompt" block.
-  var promptResponse: String {
-    get {return _promptResponse ?? String()}
-    set {_promptResponse = newValue}
-  }
-  /// Returns true if `promptResponse` has been explicitly set.
-  var hasPromptResponse: Bool {return self._promptResponse != nil}
-  /// Clears the value of `promptResponse`. Subsequent reads from it will return its default value.
-  mutating func clearPromptResponse() {self._promptResponse = nil}
-
-  var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  init() {}
-
-  fileprivate var _promptResponse: String? = nil
-}
-
 struct StoryUserDataProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var userID: String = String()
-
-  var timestamp: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {return _timestamp ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
-    set {_timestamp = newValue}
-  }
-  /// Returns true if `timestamp` has been explicitly set.
-  var hasTimestamp: Bool {return self._timestamp != nil}
-  /// Clears the value of `timestamp`. Subsequent reads from it will return its default value.
-  mutating func clearTimestamp() {self._timestamp = nil}
-
   var storyID: String = String()
 
-  var liked: Bool = false
+  var lastModifiedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _lastModifiedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_lastModifiedAt = newValue}
+  }
+  /// Returns true if `lastModifiedAt` has been explicitly set.
+  var hasLastModifiedAt: Bool {return self._lastModifiedAt != nil}
+  /// Clears the value of `lastModifiedAt`. Subsequent reads from it will return its default value.
+  mutating func clearLastModifiedAt() {self._lastModifiedAt = nil}
 
-  var cardsUserData: [CardUserDataProto] = []
+  var liked: Bool = false
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 
-  fileprivate var _timestamp: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+  fileprivate var _lastModifiedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
 #if swift(>=5.5) && canImport(_Concurrency)
-extension CardUserDataProto: @unchecked Sendable {}
 extension StoryUserDataProto: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-extension CardUserDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "CardUserDataProto"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "card_id"),
-    2: .same(proto: "liked"),
-    3: .standard(proto: "prompt_response"),
-  ]
-
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.cardID) }()
-      case 2: try { try decoder.decodeSingularBoolField(value: &self.liked) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self._promptResponse) }()
-      default: break
-      }
-    }
-  }
-
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every if/case branch local when no optimizations
-    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-    // https://github.com/apple/swift-protobuf/issues/1182
-    if !self.cardID.isEmpty {
-      try visitor.visitSingularStringField(value: self.cardID, fieldNumber: 1)
-    }
-    if self.liked != false {
-      try visitor.visitSingularBoolField(value: self.liked, fieldNumber: 2)
-    }
-    try { if let v = self._promptResponse {
-      try visitor.visitSingularStringField(value: v, fieldNumber: 3)
-    } }()
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  static func ==(lhs: CardUserDataProto, rhs: CardUserDataProto) -> Bool {
-    if lhs.cardID != rhs.cardID {return false}
-    if lhs.liked != rhs.liked {return false}
-    if lhs._promptResponse != rhs._promptResponse {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
 extension StoryUserDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "StoryUserDataProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "user_id"),
-    2: .same(proto: "timestamp"),
-    3: .standard(proto: "story_id"),
-    4: .same(proto: "liked"),
-    5: .standard(proto: "cards_user_data"),
+    1: .standard(proto: "story_id"),
+    2: .standard(proto: "last_modified_at"),
+    3: .same(proto: "liked"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -146,11 +65,9 @@ extension StoryUserDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.userID) }()
-      case 2: try { try decoder.decodeSingularMessageField(value: &self._timestamp) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.storyID) }()
-      case 4: try { try decoder.decodeSingularBoolField(value: &self.liked) }()
-      case 5: try { try decoder.decodeRepeatedMessageField(value: &self.cardsUserData) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self.storyID) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._lastModifiedAt) }()
+      case 3: try { try decoder.decodeSingularBoolField(value: &self.liked) }()
       default: break
       }
     }
@@ -161,30 +78,22 @@ extension StoryUserDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    if !self.userID.isEmpty {
-      try visitor.visitSingularStringField(value: self.userID, fieldNumber: 1)
+    if !self.storyID.isEmpty {
+      try visitor.visitSingularStringField(value: self.storyID, fieldNumber: 1)
     }
-    try { if let v = self._timestamp {
+    try { if let v = self._lastModifiedAt {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     } }()
-    if !self.storyID.isEmpty {
-      try visitor.visitSingularStringField(value: self.storyID, fieldNumber: 3)
-    }
     if self.liked != false {
-      try visitor.visitSingularBoolField(value: self.liked, fieldNumber: 4)
-    }
-    if !self.cardsUserData.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.cardsUserData, fieldNumber: 5)
+      try visitor.visitSingularBoolField(value: self.liked, fieldNumber: 3)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: StoryUserDataProto, rhs: StoryUserDataProto) -> Bool {
-    if lhs.userID != rhs.userID {return false}
-    if lhs._timestamp != rhs._timestamp {return false}
     if lhs.storyID != rhs.storyID {return false}
+    if lhs._lastModifiedAt != rhs._lastModifiedAt {return false}
     if lhs.liked != rhs.liked {return false}
-    if lhs.cardsUserData != rhs.cardsUserData {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

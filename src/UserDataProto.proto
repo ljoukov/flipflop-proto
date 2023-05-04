@@ -2,20 +2,9 @@ syntax = "proto3";
 
 import "google/protobuf/timestamp.proto";
 
-message CardUserDataProto {
-  string card_id = 1;
-  bool liked = 2;
-
-  // For cards with "prompt" block.
-  optional string prompt_response = 3;
-}
-
 message StoryUserDataProto {
-  string user_id = 1;
-  google.protobuf.Timestamp timestamp = 2;
+  string story_id = 1;
+  google.protobuf.Timestamp last_modified_at = 2;
 
-  string story_id = 3;
-  
-  bool liked = 4;
-  repeated CardUserDataProto cards_user_data = 5;
+  bool liked = 3;
 }
