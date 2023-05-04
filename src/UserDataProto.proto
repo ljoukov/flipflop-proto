@@ -33,6 +33,13 @@ message UserApiResponseProto {
   map<string, google.protobuf.Duration> latencies = 100;
 }
 
+message CardUserDataProto {
+  string card_id = 1;
+
+  // For cards with "prompt" block.
+  optional string prompt_response = 3;
+}
+
 message StoryUserDataProto {
   string story_id = 1;
   google.protobuf.Timestamp last_modified_at = 2;

@@ -199,6 +199,30 @@ struct UserApiResponseProto {
   init() {}
 }
 
+struct CardUserDataProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var cardID: String = String()
+
+  /// For cards with "prompt" block.
+  var promptResponse: String {
+    get {return _promptResponse ?? String()}
+    set {_promptResponse = newValue}
+  }
+  /// Returns true if `promptResponse` has been explicitly set.
+  var hasPromptResponse: Bool {return self._promptResponse != nil}
+  /// Clears the value of `promptResponse`. Subsequent reads from it will return its default value.
+  mutating func clearPromptResponse() {self._promptResponse = nil}
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+
+  fileprivate var _promptResponse: String? = nil
+}
+
 struct StoryUserDataProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -256,6 +280,7 @@ extension UserApiRequestProto: @unchecked Sendable {}
 extension UserApiRequestProto.OneOf_Request: @unchecked Sendable {}
 extension UserApiResponseProto: @unchecked Sendable {}
 extension UserApiResponseProto.OneOf_Response: @unchecked Sendable {}
+extension CardUserDataProto: @unchecked Sendable {}
 extension StoryUserDataProto: @unchecked Sendable {}
 extension UserDataProto: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
@@ -530,6 +555,48 @@ extension UserApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
   static func ==(lhs: UserApiResponseProto, rhs: UserApiResponseProto) -> Bool {
     if lhs.response != rhs.response {return false}
     if lhs.latencies != rhs.latencies {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension CardUserDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "CardUserDataProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "card_id"),
+    3: .standard(proto: "prompt_response"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.cardID) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self._promptResponse) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.cardID.isEmpty {
+      try visitor.visitSingularStringField(value: self.cardID, fieldNumber: 1)
+    }
+    try { if let v = self._promptResponse {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 3)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: CardUserDataProto, rhs: CardUserDataProto) -> Bool {
+    if lhs.cardID != rhs.cardID {return false}
+    if lhs._promptResponse != rhs._promptResponse {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

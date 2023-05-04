@@ -100,6 +100,21 @@ export interface UserApiResponseProto {
     };
 }
 /**
+ * @generated from protobuf message CardUserDataProto
+ */
+export interface CardUserDataProto {
+    /**
+     * @generated from protobuf field: string card_id = 1;
+     */
+    cardId: string;
+    /**
+     * For cards with "prompt" block.
+     *
+     * @generated from protobuf field: optional string prompt_response = 3;
+     */
+    promptResponse?: string;
+}
+/**
  * @generated from protobuf message StoryUserDataProto
  */
 export interface StoryUserDataProto {
@@ -443,6 +458,60 @@ class UserApiResponseProto$Type extends MessageType<UserApiResponseProto> {
  * @generated MessageType for protobuf message UserApiResponseProto
  */
 export const UserApiResponseProto = new UserApiResponseProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class CardUserDataProto$Type extends MessageType<CardUserDataProto> {
+    constructor() {
+        super("CardUserDataProto", [
+            { no: 1, name: "card_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "prompt_response", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<CardUserDataProto>): CardUserDataProto {
+        const message = { cardId: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<CardUserDataProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CardUserDataProto): CardUserDataProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string card_id */ 1:
+                    message.cardId = reader.string();
+                    break;
+                case /* optional string prompt_response */ 3:
+                    message.promptResponse = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: CardUserDataProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string card_id = 1; */
+        if (message.cardId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.cardId);
+        /* optional string prompt_response = 3; */
+        if (message.promptResponse !== undefined)
+            writer.tag(3, WireType.LengthDelimited).string(message.promptResponse);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message CardUserDataProto
+ */
+export const CardUserDataProto = new CardUserDataProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class StoryUserDataProto$Type extends MessageType<StoryUserDataProto> {
     constructor() {
