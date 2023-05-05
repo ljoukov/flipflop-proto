@@ -140,6 +140,10 @@ export interface UserDataProto {
      */
     userId: string;
     /**
+     * @generated from protobuf field: google.protobuf.Timestamp created_at = 4;
+     */
+    createdAt?: Timestamp;
+    /**
      * @generated from protobuf field: google.protobuf.Timestamp last_modified_at = 2;
      */
     lastModifiedAt?: Timestamp;
@@ -582,6 +586,7 @@ class UserDataProto$Type extends MessageType<UserDataProto> {
     constructor() {
         super("UserDataProto", [
             { no: 3, name: "user_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "created_at", kind: "message", T: () => Timestamp },
             { no: 2, name: "last_modified_at", kind: "message", T: () => Timestamp },
             { no: 1, name: "stories_data", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoryUserDataProto }
         ]);
@@ -600,6 +605,9 @@ class UserDataProto$Type extends MessageType<UserDataProto> {
             switch (fieldNo) {
                 case /* string user_id */ 3:
                     message.userId = reader.string();
+                    break;
+                case /* google.protobuf.Timestamp created_at */ 4:
+                    message.createdAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.createdAt);
                     break;
                 case /* google.protobuf.Timestamp last_modified_at */ 2:
                     message.lastModifiedAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.lastModifiedAt);
@@ -622,6 +630,9 @@ class UserDataProto$Type extends MessageType<UserDataProto> {
         /* string user_id = 3; */
         if (message.userId !== "")
             writer.tag(3, WireType.LengthDelimited).string(message.userId);
+        /* google.protobuf.Timestamp created_at = 4; */
+        if (message.createdAt)
+            Timestamp.internalBinaryWrite(message.createdAt, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         /* google.protobuf.Timestamp last_modified_at = 2; */
         if (message.lastModifiedAt)
             Timestamp.internalBinaryWrite(message.lastModifiedAt, writer.tag(2, WireType.LengthDelimited).fork(), options).join();

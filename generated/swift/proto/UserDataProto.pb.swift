@@ -255,6 +255,15 @@ struct UserDataProto {
 
   var userID: String = String()
 
+  var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_createdAt = newValue}
+  }
+  /// Returns true if `createdAt` has been explicitly set.
+  var hasCreatedAt: Bool {return self._createdAt != nil}
+  /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
+  mutating func clearCreatedAt() {self._createdAt = nil}
+
   var lastModifiedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
     get {return _lastModifiedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_lastModifiedAt = newValue}
@@ -270,6 +279,7 @@ struct UserDataProto {
 
   init() {}
 
+  fileprivate var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
   fileprivate var _lastModifiedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
@@ -656,6 +666,7 @@ extension UserDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
   static let protoMessageName: String = "UserDataProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     3: .standard(proto: "user_id"),
+    4: .standard(proto: "created_at"),
     2: .standard(proto: "last_modified_at"),
     1: .standard(proto: "stories_data"),
   ]
@@ -669,6 +680,7 @@ extension UserDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
       case 1: try { try decoder.decodeRepeatedMessageField(value: &self.storiesData) }()
       case 2: try { try decoder.decodeSingularMessageField(value: &self._lastModifiedAt) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.userID) }()
+      case 4: try { try decoder.decodeSingularMessageField(value: &self._createdAt) }()
       default: break
       }
     }
@@ -688,11 +700,15 @@ extension UserDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
     if !self.userID.isEmpty {
       try visitor.visitSingularStringField(value: self.userID, fieldNumber: 3)
     }
+    try { if let v = self._createdAt {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: UserDataProto, rhs: UserDataProto) -> Bool {
     if lhs.userID != rhs.userID {return false}
+    if lhs._createdAt != rhs._createdAt {return false}
     if lhs._lastModifiedAt != rhs._lastModifiedAt {return false}
     if lhs.storiesData != rhs.storiesData {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
