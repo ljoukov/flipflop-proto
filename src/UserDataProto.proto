@@ -48,6 +48,8 @@ message StoryUserDataProto {
 }
 
 message UserDataProto {
-  repeated StoryUserDataProto stories_data = 1;
+  string user_id = 3;
   google.protobuf.Timestamp last_modified_at = 2;
+
+  repeated StoryUserDataProto stories_data = 1;
 }

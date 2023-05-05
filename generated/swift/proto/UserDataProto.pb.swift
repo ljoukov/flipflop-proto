@@ -253,7 +253,7 @@ struct UserDataProto {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var storiesData: [StoryUserDataProto] = []
+  var userID: String = String()
 
   var lastModifiedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
     get {return _lastModifiedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
@@ -263,6 +263,8 @@ struct UserDataProto {
   var hasLastModifiedAt: Bool {return self._lastModifiedAt != nil}
   /// Clears the value of `lastModifiedAt`. Subsequent reads from it will return its default value.
   mutating func clearLastModifiedAt() {self._lastModifiedAt = nil}
+
+  var storiesData: [StoryUserDataProto] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -653,8 +655,9 @@ extension StoryUserDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
 extension UserDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "UserDataProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "stories_data"),
+    3: .standard(proto: "user_id"),
     2: .standard(proto: "last_modified_at"),
+    1: .standard(proto: "stories_data"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -665,6 +668,7 @@ extension UserDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
       switch fieldNumber {
       case 1: try { try decoder.decodeRepeatedMessageField(value: &self.storiesData) }()
       case 2: try { try decoder.decodeSingularMessageField(value: &self._lastModifiedAt) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.userID) }()
       default: break
       }
     }
@@ -681,12 +685,16 @@ extension UserDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
     try { if let v = self._lastModifiedAt {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     } }()
+    if !self.userID.isEmpty {
+      try visitor.visitSingularStringField(value: self.userID, fieldNumber: 3)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: UserDataProto, rhs: UserDataProto) -> Bool {
-    if lhs.storiesData != rhs.storiesData {return false}
+    if lhs.userID != rhs.userID {return false}
     if lhs._lastModifiedAt != rhs._lastModifiedAt {return false}
+    if lhs.storiesData != rhs.storiesData {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

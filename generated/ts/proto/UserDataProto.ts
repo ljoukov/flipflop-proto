@@ -136,13 +136,17 @@ export interface StoryUserDataProto {
  */
 export interface UserDataProto {
     /**
-     * @generated from protobuf field: repeated StoryUserDataProto stories_data = 1;
+     * @generated from protobuf field: string user_id = 3;
      */
-    storiesData: StoryUserDataProto[];
+    userId: string;
     /**
      * @generated from protobuf field: google.protobuf.Timestamp last_modified_at = 2;
      */
     lastModifiedAt?: Timestamp;
+    /**
+     * @generated from protobuf field: repeated StoryUserDataProto stories_data = 1;
+     */
+    storiesData: StoryUserDataProto[];
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class GetUserDataRequestProto$Type extends MessageType<GetUserDataRequestProto> {
@@ -577,12 +581,13 @@ export const StoryUserDataProto = new StoryUserDataProto$Type();
 class UserDataProto$Type extends MessageType<UserDataProto> {
     constructor() {
         super("UserDataProto", [
-            { no: 1, name: "stories_data", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoryUserDataProto },
-            { no: 2, name: "last_modified_at", kind: "message", T: () => Timestamp }
+            { no: 3, name: "user_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "last_modified_at", kind: "message", T: () => Timestamp },
+            { no: 1, name: "stories_data", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoryUserDataProto }
         ]);
     }
     create(value?: PartialMessage<UserDataProto>): UserDataProto {
-        const message = { storiesData: [] };
+        const message = { userId: "", storiesData: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<UserDataProto>(this, message, value);
@@ -593,11 +598,14 @@ class UserDataProto$Type extends MessageType<UserDataProto> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* repeated StoryUserDataProto stories_data */ 1:
-                    message.storiesData.push(StoryUserDataProto.internalBinaryRead(reader, reader.uint32(), options));
+                case /* string user_id */ 3:
+                    message.userId = reader.string();
                     break;
                 case /* google.protobuf.Timestamp last_modified_at */ 2:
                     message.lastModifiedAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.lastModifiedAt);
+                    break;
+                case /* repeated StoryUserDataProto stories_data */ 1:
+                    message.storiesData.push(StoryUserDataProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -611,12 +619,15 @@ class UserDataProto$Type extends MessageType<UserDataProto> {
         return message;
     }
     internalBinaryWrite(message: UserDataProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated StoryUserDataProto stories_data = 1; */
-        for (let i = 0; i < message.storiesData.length; i++)
-            StoryUserDataProto.internalBinaryWrite(message.storiesData[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* string user_id = 3; */
+        if (message.userId !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.userId);
         /* google.protobuf.Timestamp last_modified_at = 2; */
         if (message.lastModifiedAt)
             Timestamp.internalBinaryWrite(message.lastModifiedAt, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* repeated StoryUserDataProto stories_data = 1; */
+        for (let i = 0; i < message.storiesData.length; i++)
+            StoryUserDataProto.internalBinaryWrite(message.storiesData[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
