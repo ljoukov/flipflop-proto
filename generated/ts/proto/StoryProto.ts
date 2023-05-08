@@ -172,39 +172,43 @@ export interface StoryApiResponseProto {
  */
 export interface CardDataProto {
     /**
-     * @generated from protobuf field: CardTypeProto card_type = 1;
+     * @generated from protobuf field: string id = 1;
+     */
+    id: string;
+    /**
+     * @generated from protobuf field: CardTypeProto card_type = 2;
      */
     cardType: CardTypeProto;
     /**
-     * @generated from protobuf field: string title = 2;
+     * @generated from protobuf field: string title = 3;
      */
     title: string;
     /**
-     * @generated from protobuf field: string body = 3;
+     * @generated from protobuf field: string body = 4;
      */
     body: string;
     /**
-     * @generated from protobuf field: bool is_true = 4;
+     * @generated from protobuf field: bool is_true = 5;
      */
     isTrue: boolean;
     /**
-     * @generated from protobuf field: repeated string options = 5;
+     * @generated from protobuf field: repeated string options = 6;
      */
     options: string[];
     /**
-     * @generated from protobuf field: int32 correct_option_index = 6;
+     * @generated from protobuf field: int32 correct_option_index = 7;
      */
     correctOptionIndex: number;
     /**
-     * @generated from protobuf field: string explanation = 7;
+     * @generated from protobuf field: string explanation = 8;
      */
     explanation: string;
     /**
-     * @generated from protobuf field: ImageRefProto image_ref = 8;
+     * @generated from protobuf field: ImageRefProto image_ref = 9;
      */
     imageRef?: ImageRefProto;
     /**
-     * @generated from protobuf field: repeated string hash_tags = 9;
+     * @generated from protobuf field: repeated string hash_tags = 10;
      */
     hashTags: string[];
 }
@@ -1284,19 +1288,20 @@ export const StoryApiResponseProto = new StoryApiResponseProto$Type();
 class CardDataProto$Type extends MessageType<CardDataProto> {
     constructor() {
         super("CardDataProto", [
-            { no: 1, name: "card_type", kind: "enum", T: () => ["CardTypeProto", CardTypeProto] },
-            { no: 2, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "body", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "is_true", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 5, name: "options", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
-            { no: 6, name: "correct_option_index", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 7, name: "explanation", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 8, name: "image_ref", kind: "message", T: () => ImageRefProto },
-            { no: 9, name: "hash_tags", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "card_type", kind: "enum", T: () => ["CardTypeProto", CardTypeProto] },
+            { no: 3, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "body", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "is_true", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 6, name: "options", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
+            { no: 7, name: "correct_option_index", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 8, name: "explanation", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 9, name: "image_ref", kind: "message", T: () => ImageRefProto },
+            { no: 10, name: "hash_tags", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<CardDataProto>): CardDataProto {
-        const message = { cardType: 0, title: "", body: "", isTrue: false, options: [], correctOptionIndex: 0, explanation: "", hashTags: [] };
+        const message = { id: "", cardType: 0, title: "", body: "", isTrue: false, options: [], correctOptionIndex: 0, explanation: "", hashTags: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<CardDataProto>(this, message, value);
@@ -1307,31 +1312,34 @@ class CardDataProto$Type extends MessageType<CardDataProto> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* CardTypeProto card_type */ 1:
+                case /* string id */ 1:
+                    message.id = reader.string();
+                    break;
+                case /* CardTypeProto card_type */ 2:
                     message.cardType = reader.int32();
                     break;
-                case /* string title */ 2:
+                case /* string title */ 3:
                     message.title = reader.string();
                     break;
-                case /* string body */ 3:
+                case /* string body */ 4:
                     message.body = reader.string();
                     break;
-                case /* bool is_true */ 4:
+                case /* bool is_true */ 5:
                     message.isTrue = reader.bool();
                     break;
-                case /* repeated string options */ 5:
+                case /* repeated string options */ 6:
                     message.options.push(reader.string());
                     break;
-                case /* int32 correct_option_index */ 6:
+                case /* int32 correct_option_index */ 7:
                     message.correctOptionIndex = reader.int32();
                     break;
-                case /* string explanation */ 7:
+                case /* string explanation */ 8:
                     message.explanation = reader.string();
                     break;
-                case /* ImageRefProto image_ref */ 8:
+                case /* ImageRefProto image_ref */ 9:
                     message.imageRef = ImageRefProto.internalBinaryRead(reader, reader.uint32(), options, message.imageRef);
                     break;
-                case /* repeated string hash_tags */ 9:
+                case /* repeated string hash_tags */ 10:
                     message.hashTags.push(reader.string());
                     break;
                 default:
@@ -1346,33 +1354,36 @@ class CardDataProto$Type extends MessageType<CardDataProto> {
         return message;
     }
     internalBinaryWrite(message: CardDataProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* CardTypeProto card_type = 1; */
+        /* string id = 1; */
+        if (message.id !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.id);
+        /* CardTypeProto card_type = 2; */
         if (message.cardType !== 0)
-            writer.tag(1, WireType.Varint).int32(message.cardType);
-        /* string title = 2; */
+            writer.tag(2, WireType.Varint).int32(message.cardType);
+        /* string title = 3; */
         if (message.title !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.title);
-        /* string body = 3; */
+            writer.tag(3, WireType.LengthDelimited).string(message.title);
+        /* string body = 4; */
         if (message.body !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.body);
-        /* bool is_true = 4; */
+            writer.tag(4, WireType.LengthDelimited).string(message.body);
+        /* bool is_true = 5; */
         if (message.isTrue !== false)
-            writer.tag(4, WireType.Varint).bool(message.isTrue);
-        /* repeated string options = 5; */
+            writer.tag(5, WireType.Varint).bool(message.isTrue);
+        /* repeated string options = 6; */
         for (let i = 0; i < message.options.length; i++)
-            writer.tag(5, WireType.LengthDelimited).string(message.options[i]);
-        /* int32 correct_option_index = 6; */
+            writer.tag(6, WireType.LengthDelimited).string(message.options[i]);
+        /* int32 correct_option_index = 7; */
         if (message.correctOptionIndex !== 0)
-            writer.tag(6, WireType.Varint).int32(message.correctOptionIndex);
-        /* string explanation = 7; */
+            writer.tag(7, WireType.Varint).int32(message.correctOptionIndex);
+        /* string explanation = 8; */
         if (message.explanation !== "")
-            writer.tag(7, WireType.LengthDelimited).string(message.explanation);
-        /* ImageRefProto image_ref = 8; */
+            writer.tag(8, WireType.LengthDelimited).string(message.explanation);
+        /* ImageRefProto image_ref = 9; */
         if (message.imageRef)
-            ImageRefProto.internalBinaryWrite(message.imageRef, writer.tag(8, WireType.LengthDelimited).fork(), options).join();
-        /* repeated string hash_tags = 9; */
+            ImageRefProto.internalBinaryWrite(message.imageRef, writer.tag(9, WireType.LengthDelimited).fork(), options).join();
+        /* repeated string hash_tags = 10; */
         for (let i = 0; i < message.hashTags.length; i++)
-            writer.tag(9, WireType.LengthDelimited).string(message.hashTags[i]);
+            writer.tag(10, WireType.LengthDelimited).string(message.hashTags[i]);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

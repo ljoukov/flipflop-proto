@@ -63,20 +63,22 @@ enum CardTypeProto {
 }
 
 message CardDataProto {
-  CardTypeProto card_type = 1;
+  string id = 1;
+
+  CardTypeProto card_type = 2;
  
-  string title = 2;
-  string body = 3;
+  string title = 3;
+  string body = 4;
 
-  bool is_true = 4;
+  bool is_true = 5;
 
-  repeated string options = 5;
-  int32 correct_option_index = 6;
+  repeated string options = 6;
+  int32 correct_option_index = 7;
 
-  string explanation = 7;
+  string explanation = 8;
 
-  ImageRefProto image_ref = 8;
-  repeated string hash_tags = 9;
+  ImageRefProto image_ref = 9;
+  repeated string hash_tags = 10;
 }
 
 message StoriesProto {

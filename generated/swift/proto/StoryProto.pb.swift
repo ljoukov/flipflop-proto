@@ -643,6 +643,8 @@ struct CardDataProto {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  var id: String = String()
+
   var cardType: CardTypeProto = .unknown
 
   var title: String = String()
@@ -1883,15 +1885,16 @@ extension StoryApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
 extension CardDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "CardDataProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "card_type"),
-    2: .same(proto: "title"),
-    3: .same(proto: "body"),
-    4: .standard(proto: "is_true"),
-    5: .same(proto: "options"),
-    6: .standard(proto: "correct_option_index"),
-    7: .same(proto: "explanation"),
-    8: .standard(proto: "image_ref"),
-    9: .standard(proto: "hash_tags"),
+    1: .same(proto: "id"),
+    2: .standard(proto: "card_type"),
+    3: .same(proto: "title"),
+    4: .same(proto: "body"),
+    5: .standard(proto: "is_true"),
+    6: .same(proto: "options"),
+    7: .standard(proto: "correct_option_index"),
+    8: .same(proto: "explanation"),
+    9: .standard(proto: "image_ref"),
+    10: .standard(proto: "hash_tags"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1900,15 +1903,16 @@ extension CardDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularEnumField(value: &self.cardType) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.title) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.body) }()
-      case 4: try { try decoder.decodeSingularBoolField(value: &self.isTrue) }()
-      case 5: try { try decoder.decodeRepeatedStringField(value: &self.options) }()
-      case 6: try { try decoder.decodeSingularInt32Field(value: &self.correctOptionIndex) }()
-      case 7: try { try decoder.decodeSingularStringField(value: &self.explanation) }()
-      case 8: try { try decoder.decodeSingularMessageField(value: &self._imageRef) }()
-      case 9: try { try decoder.decodeRepeatedStringField(value: &self.hashTags) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self.id) }()
+      case 2: try { try decoder.decodeSingularEnumField(value: &self.cardType) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.title) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.body) }()
+      case 5: try { try decoder.decodeSingularBoolField(value: &self.isTrue) }()
+      case 6: try { try decoder.decodeRepeatedStringField(value: &self.options) }()
+      case 7: try { try decoder.decodeSingularInt32Field(value: &self.correctOptionIndex) }()
+      case 8: try { try decoder.decodeSingularStringField(value: &self.explanation) }()
+      case 9: try { try decoder.decodeSingularMessageField(value: &self._imageRef) }()
+      case 10: try { try decoder.decodeRepeatedStringField(value: &self.hashTags) }()
       default: break
       }
     }
@@ -1919,37 +1923,41 @@ extension CardDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.id.isEmpty {
+      try visitor.visitSingularStringField(value: self.id, fieldNumber: 1)
+    }
     if self.cardType != .unknown {
-      try visitor.visitSingularEnumField(value: self.cardType, fieldNumber: 1)
+      try visitor.visitSingularEnumField(value: self.cardType, fieldNumber: 2)
     }
     if !self.title.isEmpty {
-      try visitor.visitSingularStringField(value: self.title, fieldNumber: 2)
+      try visitor.visitSingularStringField(value: self.title, fieldNumber: 3)
     }
     if !self.body.isEmpty {
-      try visitor.visitSingularStringField(value: self.body, fieldNumber: 3)
+      try visitor.visitSingularStringField(value: self.body, fieldNumber: 4)
     }
     if self.isTrue != false {
-      try visitor.visitSingularBoolField(value: self.isTrue, fieldNumber: 4)
+      try visitor.visitSingularBoolField(value: self.isTrue, fieldNumber: 5)
     }
     if !self.options.isEmpty {
-      try visitor.visitRepeatedStringField(value: self.options, fieldNumber: 5)
+      try visitor.visitRepeatedStringField(value: self.options, fieldNumber: 6)
     }
     if self.correctOptionIndex != 0 {
-      try visitor.visitSingularInt32Field(value: self.correctOptionIndex, fieldNumber: 6)
+      try visitor.visitSingularInt32Field(value: self.correctOptionIndex, fieldNumber: 7)
     }
     if !self.explanation.isEmpty {
-      try visitor.visitSingularStringField(value: self.explanation, fieldNumber: 7)
+      try visitor.visitSingularStringField(value: self.explanation, fieldNumber: 8)
     }
     try { if let v = self._imageRef {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 9)
     } }()
     if !self.hashTags.isEmpty {
-      try visitor.visitRepeatedStringField(value: self.hashTags, fieldNumber: 9)
+      try visitor.visitRepeatedStringField(value: self.hashTags, fieldNumber: 10)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: CardDataProto, rhs: CardDataProto) -> Bool {
+    if lhs.id != rhs.id {return false}
     if lhs.cardType != rhs.cardType {return false}
     if lhs.title != rhs.title {return false}
     if lhs.body != rhs.body {return false}
