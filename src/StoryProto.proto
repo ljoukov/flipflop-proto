@@ -62,6 +62,15 @@ enum CardTypeProto {
   ABC = 4;
 }
 
+message StoryDataProto {
+  string id = 1;
+
+  string author_id = 2;
+  int64 timestamp_millis = 3;
+
+  repeated CardDataProto card_data = 4;
+}
+
 message CardDataProto {
   string id = 1;
 

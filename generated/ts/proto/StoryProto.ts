@@ -168,6 +168,27 @@ export interface StoryApiResponseProto {
     };
 }
 /**
+ * @generated from protobuf message StoryDataProto
+ */
+export interface StoryDataProto {
+    /**
+     * @generated from protobuf field: string id = 1;
+     */
+    id: string;
+    /**
+     * @generated from protobuf field: string author_id = 2;
+     */
+    authorId: string;
+    /**
+     * @generated from protobuf field: int64 timestamp_millis = 3;
+     */
+    timestampMillis: string;
+    /**
+     * @generated from protobuf field: repeated CardDataProto card_data = 4;
+     */
+    cardData: CardDataProto[];
+}
+/**
  * @generated from protobuf message CardDataProto
  */
 export interface CardDataProto {
@@ -1284,6 +1305,74 @@ class StoryApiResponseProto$Type extends MessageType<StoryApiResponseProto> {
  * @generated MessageType for protobuf message StoryApiResponseProto
  */
 export const StoryApiResponseProto = new StoryApiResponseProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class StoryDataProto$Type extends MessageType<StoryDataProto> {
+    constructor() {
+        super("StoryDataProto", [
+            { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "author_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "timestamp_millis", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
+            { no: 4, name: "card_data", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => CardDataProto }
+        ]);
+    }
+    create(value?: PartialMessage<StoryDataProto>): StoryDataProto {
+        const message = { id: "", authorId: "", timestampMillis: "0", cardData: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<StoryDataProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoryDataProto): StoryDataProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string id */ 1:
+                    message.id = reader.string();
+                    break;
+                case /* string author_id */ 2:
+                    message.authorId = reader.string();
+                    break;
+                case /* int64 timestamp_millis */ 3:
+                    message.timestampMillis = reader.int64().toString();
+                    break;
+                case /* repeated CardDataProto card_data */ 4:
+                    message.cardData.push(CardDataProto.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: StoryDataProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string id = 1; */
+        if (message.id !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.id);
+        /* string author_id = 2; */
+        if (message.authorId !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.authorId);
+        /* int64 timestamp_millis = 3; */
+        if (message.timestampMillis !== "0")
+            writer.tag(3, WireType.Varint).int64(message.timestampMillis);
+        /* repeated CardDataProto card_data = 4; */
+        for (let i = 0; i < message.cardData.length; i++)
+            CardDataProto.internalBinaryWrite(message.cardData[i], writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message StoryDataProto
+ */
+export const StoryDataProto = new StoryDataProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class CardDataProto$Type extends MessageType<CardDataProto> {
     constructor() {
