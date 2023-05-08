@@ -184,9 +184,9 @@ export interface StoryDataProto {
      */
     timestampMillis: string;
     /**
-     * @generated from protobuf field: repeated CardDataProto card_data = 4;
+     * @generated from protobuf field: repeated CardDataProto cards_data = 4;
      */
-    cardData: CardDataProto[];
+    cardsData: CardDataProto[];
 }
 /**
  * @generated from protobuf message CardDataProto
@@ -1312,11 +1312,11 @@ class StoryDataProto$Type extends MessageType<StoryDataProto> {
             { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "author_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "timestamp_millis", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
-            { no: 4, name: "card_data", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => CardDataProto }
+            { no: 4, name: "cards_data", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => CardDataProto }
         ]);
     }
     create(value?: PartialMessage<StoryDataProto>): StoryDataProto {
-        const message = { id: "", authorId: "", timestampMillis: "0", cardData: [] };
+        const message = { id: "", authorId: "", timestampMillis: "0", cardsData: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StoryDataProto>(this, message, value);
@@ -1336,8 +1336,8 @@ class StoryDataProto$Type extends MessageType<StoryDataProto> {
                 case /* int64 timestamp_millis */ 3:
                     message.timestampMillis = reader.int64().toString();
                     break;
-                case /* repeated CardDataProto card_data */ 4:
-                    message.cardData.push(CardDataProto.internalBinaryRead(reader, reader.uint32(), options));
+                case /* repeated CardDataProto cards_data */ 4:
+                    message.cardsData.push(CardDataProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1360,9 +1360,9 @@ class StoryDataProto$Type extends MessageType<StoryDataProto> {
         /* int64 timestamp_millis = 3; */
         if (message.timestampMillis !== "0")
             writer.tag(3, WireType.Varint).int64(message.timestampMillis);
-        /* repeated CardDataProto card_data = 4; */
-        for (let i = 0; i < message.cardData.length; i++)
-            CardDataProto.internalBinaryWrite(message.cardData[i], writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* repeated CardDataProto cards_data = 4; */
+        for (let i = 0; i < message.cardsData.length; i++)
+            CardDataProto.internalBinaryWrite(message.cardsData[i], writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

@@ -649,7 +649,7 @@ struct StoryDataProto {
 
   var timestampMillis: Int64 = 0
 
-  var cardData: [CardDataProto] = []
+  var cardsData: [CardDataProto] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -1907,7 +1907,7 @@ extension StoryDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
     1: .same(proto: "id"),
     2: .standard(proto: "author_id"),
     3: .standard(proto: "timestamp_millis"),
-    4: .standard(proto: "card_data"),
+    4: .standard(proto: "cards_data"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1919,7 +1919,7 @@ extension StoryDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
       case 1: try { try decoder.decodeSingularStringField(value: &self.id) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.authorID) }()
       case 3: try { try decoder.decodeSingularInt64Field(value: &self.timestampMillis) }()
-      case 4: try { try decoder.decodeRepeatedMessageField(value: &self.cardData) }()
+      case 4: try { try decoder.decodeRepeatedMessageField(value: &self.cardsData) }()
       default: break
       }
     }
@@ -1935,8 +1935,8 @@ extension StoryDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
     if self.timestampMillis != 0 {
       try visitor.visitSingularInt64Field(value: self.timestampMillis, fieldNumber: 3)
     }
-    if !self.cardData.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.cardData, fieldNumber: 4)
+    if !self.cardsData.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.cardsData, fieldNumber: 4)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -1945,7 +1945,7 @@ extension StoryDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
     if lhs.id != rhs.id {return false}
     if lhs.authorID != rhs.authorID {return false}
     if lhs.timestampMillis != rhs.timestampMillis {return false}
-    if lhs.cardData != rhs.cardData {return false}
+    if lhs.cardsData != rhs.cardsData {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

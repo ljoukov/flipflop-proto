@@ -68,7 +68,7 @@ message StoryDataProto {
   string author_id = 2;
   int64 timestamp_millis = 3;
 
-  repeated CardDataProto card_data = 4;
+  repeated CardDataProto cards_data = 4;
 }
 
 message CardDataProto {
