@@ -1288,9 +1288,20 @@ struct PromptBlockProto {
 
   var label: String = String()
 
+  var backFace: CardFaceProto {
+    get {return _backFace ?? CardFaceProto()}
+    set {_backFace = newValue}
+  }
+  /// Returns true if `backFace` has been explicitly set.
+  var hasBackFace: Bool {return self._backFace != nil}
+  /// Clears the value of `backFace`. Subsequent reads from it will return its default value.
+  mutating func clearBackFace() {self._backFace = nil}
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
+
+  fileprivate var _backFace: CardFaceProto? = nil
 }
 
 struct RevealBackBlockProto {
@@ -3081,6 +3092,7 @@ extension PromptBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
   static let protoMessageName: String = "PromptBlockProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "label"),
+    2: .standard(proto: "back_face"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3090,20 +3102,29 @@ extension PromptBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.label) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._backFace) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.label.isEmpty {
       try visitor.visitSingularStringField(value: self.label, fieldNumber: 1)
     }
+    try { if let v = self._backFace {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: PromptBlockProto, rhs: PromptBlockProto) -> Bool {
     if lhs.label != rhs.label {return false}
+    if lhs._backFace != rhs._backFace {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

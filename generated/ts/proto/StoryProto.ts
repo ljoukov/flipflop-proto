@@ -621,6 +621,10 @@ export interface PromptBlockProto {
      * @generated from protobuf field: string label = 1;
      */
     label: string;
+    /**
+     * @generated from protobuf field: CardFaceProto back_face = 2;
+     */
+    backFace?: CardFaceProto;
 }
 /**
  * @generated from protobuf message RevealBackBlockProto
@@ -2684,7 +2688,8 @@ export const QuestionBlockProto = new QuestionBlockProto$Type();
 class PromptBlockProto$Type extends MessageType<PromptBlockProto> {
     constructor() {
         super("PromptBlockProto", [
-            { no: 1, name: "label", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "label", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "back_face", kind: "message", T: () => CardFaceProto }
         ]);
     }
     create(value?: PartialMessage<PromptBlockProto>): PromptBlockProto {
@@ -2702,6 +2707,9 @@ class PromptBlockProto$Type extends MessageType<PromptBlockProto> {
                 case /* string label */ 1:
                     message.label = reader.string();
                     break;
+                case /* CardFaceProto back_face */ 2:
+                    message.backFace = CardFaceProto.internalBinaryRead(reader, reader.uint32(), options, message.backFace);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -2717,6 +2725,9 @@ class PromptBlockProto$Type extends MessageType<PromptBlockProto> {
         /* string label = 1; */
         if (message.label !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.label);
+        /* CardFaceProto back_face = 2; */
+        if (message.backFace)
+            CardFaceProto.internalBinaryWrite(message.backFace, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

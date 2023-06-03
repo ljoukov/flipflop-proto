@@ -255,6 +255,7 @@ message QuestionBlockProto {
 
 message PromptBlockProto {
   string label = 1;
+  CardFaceProto back_face = 2;
 }
 
 message RevealBackBlockProto {
