@@ -82,7 +82,7 @@ struct ChatUserMessageProto {
   init() {}
 }
 
-struct ChatMessage {
+struct ChatMessageProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -96,7 +96,7 @@ struct ChatMessage {
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
   mutating func clearCreatedAt() {self._createdAt = nil}
 
-  var type: ChatMessage.OneOf_Type? = nil
+  var type: ChatMessageProto.OneOf_Type? = nil
 
   var system: ChatSystemMessageProto {
     get {
@@ -130,7 +130,7 @@ struct ChatMessage {
     case user(ChatUserMessageProto)
 
   #if !swift(>=4.1)
-    static func ==(lhs: ChatMessage.OneOf_Type, rhs: ChatMessage.OneOf_Type) -> Bool {
+    static func ==(lhs: ChatMessageProto.OneOf_Type, rhs: ChatMessageProto.OneOf_Type) -> Bool {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
@@ -163,8 +163,8 @@ extension ChatActivityProto: @unchecked Sendable {}
 extension ChatSystemMessageProto: @unchecked Sendable {}
 extension ChatAssistantMessageProto: @unchecked Sendable {}
 extension ChatUserMessageProto: @unchecked Sendable {}
-extension ChatMessage: @unchecked Sendable {}
-extension ChatMessage.OneOf_Type: @unchecked Sendable {}
+extension ChatMessageProto: @unchecked Sendable {}
+extension ChatMessageProto.OneOf_Type: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
@@ -327,8 +327,8 @@ extension ChatUserMessageProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
   }
 }
 
-extension ChatMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "ChatMessage"
+extension ChatMessageProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "ChatMessageProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "created_at"),
     2: .same(proto: "system"),
@@ -413,7 +413,7 @@ extension ChatMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementati
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: ChatMessage, rhs: ChatMessage) -> Bool {
+  static func ==(lhs: ChatMessageProto, rhs: ChatMessageProto) -> Bool {
     if lhs._createdAt != rhs._createdAt {return false}
     if lhs.type != rhs.type {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}

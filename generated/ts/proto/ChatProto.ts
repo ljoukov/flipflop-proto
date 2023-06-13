@@ -79,9 +79,9 @@ export interface ChatUserMessageProto {
     actionName: string;
 }
 /**
- * @generated from protobuf message ChatMessage
+ * @generated from protobuf message ChatMessageProto
  */
-export interface ChatMessage {
+export interface ChatMessageProto {
     /**
      * @generated from protobuf field: google.protobuf.Timestamp created_at = 1;
      */
@@ -335,23 +335,23 @@ class ChatUserMessageProto$Type extends MessageType<ChatUserMessageProto> {
  */
 export const ChatUserMessageProto = new ChatUserMessageProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class ChatMessage$Type extends MessageType<ChatMessage> {
+class ChatMessageProto$Type extends MessageType<ChatMessageProto> {
     constructor() {
-        super("ChatMessage", [
+        super("ChatMessageProto", [
             { no: 1, name: "created_at", kind: "message", T: () => Timestamp },
             { no: 2, name: "system", kind: "message", oneof: "type", T: () => ChatSystemMessageProto },
             { no: 3, name: "assistant", kind: "message", oneof: "type", T: () => ChatAssistantMessageProto },
             { no: 4, name: "user", kind: "message", oneof: "type", T: () => ChatUserMessageProto }
         ]);
     }
-    create(value?: PartialMessage<ChatMessage>): ChatMessage {
+    create(value?: PartialMessage<ChatMessageProto>): ChatMessageProto {
         const message = { type: { oneofKind: undefined } };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<ChatMessage>(this, message, value);
+            reflectionMergePartial<ChatMessageProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ChatMessage): ChatMessage {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ChatMessageProto): ChatMessageProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -388,7 +388,7 @@ class ChatMessage$Type extends MessageType<ChatMessage> {
         }
         return message;
     }
-    internalBinaryWrite(message: ChatMessage, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: ChatMessageProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* google.protobuf.Timestamp created_at = 1; */
         if (message.createdAt)
             Timestamp.internalBinaryWrite(message.createdAt, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
@@ -408,6 +408,6 @@ class ChatMessage$Type extends MessageType<ChatMessage> {
     }
 }
 /**
- * @generated MessageType for protobuf message ChatMessage
+ * @generated MessageType for protobuf message ChatMessageProto
  */
-export const ChatMessage = new ChatMessage$Type();
+export const ChatMessageProto = new ChatMessageProto$Type();
