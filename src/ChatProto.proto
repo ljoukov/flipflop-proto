@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+message ChatActivity {
+  // Machine identifier, LLM-readable, e.g. "compare-and-contrast", "writing-challenge"
+  string name =  1;
+  // How it should be diplayed to the user
+  string display_name = 2;
+  string description_prompt = 3;
+  string action_prompt = 4;
+}
+
+message ChatSystemMessage {
+  string text = 1;  
+}
+
+message ChatAssistantMessage {
+  string text = 1;
+  repeated string activity_name = 2;
+}
+
+message ChatUserMessage {
+  // Explicitly entered by the user
+  string text = 1;
+
+  // User selected one of the activities
+  string action_name = 2;
+}
+
+message ChatMessage {
+  google.protobuf.Timestamp created_at = 1;
+  oneof type {
+    ChatSystemMessage system = 2;
+    ChatAssistantMessage assistant = 3;
+    ChatUserMessage user = 4;
+  }
+}
