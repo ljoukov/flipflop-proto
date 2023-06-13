@@ -28,7 +28,7 @@ message ChatUserMessageProto {
   string action_name = 2;
 }
 
-message ChatMessage {
+message ChatMessageProto {
   google.protobuf.Timestamp created_at = 1;
   oneof type {
     ChatSystemMessageProto system = 2;
