@@ -2,7 +2,7 @@ syntax = "proto3";
 
 import "google/protobuf/timestamp.proto";
 
-message ChatActivity {
+message ChatActivityProto {
   // Machine identifier, LLM-readable, e.g. "compare-and-contrast", "writing-challenge"
   string name =  1;
   // How it should be diplayed to the user
@@ -11,16 +11,16 @@ message ChatActivity {
   string action_prompt = 4;
 }
 
-message ChatSystemMessage {
+message ChatSystemMessageProto {
   string text = 1;  
 }
 
-message ChatAssistantMessage {
+message ChatAssistantMessageProto {
   string text = 1;
   repeated string activity_name = 2;
 }
 
-message ChatUserMessage {
+message ChatUserMessageProto {
   // Explicitly entered by the user
   string text = 1;
 
@@ -31,8 +31,8 @@ message ChatUserMessage {
 message ChatMessage {
   google.protobuf.Timestamp created_at = 1;
   oneof type {
-    ChatSystemMessage system = 2;
-    ChatAssistantMessage assistant = 3;
-    ChatUserMessage user = 4;
+    ChatSystemMessageProto system = 2;
+    ChatAssistantMessageProto assistant = 3;
+    ChatUserMessageProto user = 4;
   }
 }

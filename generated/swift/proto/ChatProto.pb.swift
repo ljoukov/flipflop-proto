@@ -20,7 +20,7 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
-struct ChatActivity {
+struct ChatActivityProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -40,7 +40,7 @@ struct ChatActivity {
   init() {}
 }
 
-struct ChatSystemMessage {
+struct ChatSystemMessageProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -52,7 +52,7 @@ struct ChatSystemMessage {
   init() {}
 }
 
-struct ChatAssistantMessage {
+struct ChatAssistantMessageProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -66,7 +66,7 @@ struct ChatAssistantMessage {
   init() {}
 }
 
-struct ChatUserMessage {
+struct ChatUserMessageProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -98,26 +98,26 @@ struct ChatMessage {
 
   var type: ChatMessage.OneOf_Type? = nil
 
-  var system: ChatSystemMessage {
+  var system: ChatSystemMessageProto {
     get {
       if case .system(let v)? = type {return v}
-      return ChatSystemMessage()
+      return ChatSystemMessageProto()
     }
     set {type = .system(newValue)}
   }
 
-  var assistant: ChatAssistantMessage {
+  var assistant: ChatAssistantMessageProto {
     get {
       if case .assistant(let v)? = type {return v}
-      return ChatAssistantMessage()
+      return ChatAssistantMessageProto()
     }
     set {type = .assistant(newValue)}
   }
 
-  var user: ChatUserMessage {
+  var user: ChatUserMessageProto {
     get {
       if case .user(let v)? = type {return v}
-      return ChatUserMessage()
+      return ChatUserMessageProto()
     }
     set {type = .user(newValue)}
   }
@@ -125,9 +125,9 @@ struct ChatMessage {
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_Type: Equatable {
-    case system(ChatSystemMessage)
-    case assistant(ChatAssistantMessage)
-    case user(ChatUserMessage)
+    case system(ChatSystemMessageProto)
+    case assistant(ChatAssistantMessageProto)
+    case user(ChatUserMessageProto)
 
   #if !swift(>=4.1)
     static func ==(lhs: ChatMessage.OneOf_Type, rhs: ChatMessage.OneOf_Type) -> Bool {
@@ -159,18 +159,18 @@ struct ChatMessage {
 }
 
 #if swift(>=5.5) && canImport(_Concurrency)
-extension ChatActivity: @unchecked Sendable {}
-extension ChatSystemMessage: @unchecked Sendable {}
-extension ChatAssistantMessage: @unchecked Sendable {}
-extension ChatUserMessage: @unchecked Sendable {}
+extension ChatActivityProto: @unchecked Sendable {}
+extension ChatSystemMessageProto: @unchecked Sendable {}
+extension ChatAssistantMessageProto: @unchecked Sendable {}
+extension ChatUserMessageProto: @unchecked Sendable {}
 extension ChatMessage: @unchecked Sendable {}
 extension ChatMessage.OneOf_Type: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-extension ChatActivity: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "ChatActivity"
+extension ChatActivityProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "ChatActivityProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "name"),
     2: .standard(proto: "display_name"),
@@ -209,7 +209,7 @@ extension ChatActivity: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: ChatActivity, rhs: ChatActivity) -> Bool {
+  static func ==(lhs: ChatActivityProto, rhs: ChatActivityProto) -> Bool {
     if lhs.name != rhs.name {return false}
     if lhs.displayName != rhs.displayName {return false}
     if lhs.descriptionPrompt != rhs.descriptionPrompt {return false}
@@ -219,8 +219,8 @@ extension ChatActivity: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
   }
 }
 
-extension ChatSystemMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "ChatSystemMessage"
+extension ChatSystemMessageProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "ChatSystemMessageProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "text"),
   ]
@@ -244,15 +244,15 @@ extension ChatSystemMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: ChatSystemMessage, rhs: ChatSystemMessage) -> Bool {
+  static func ==(lhs: ChatSystemMessageProto, rhs: ChatSystemMessageProto) -> Bool {
     if lhs.text != rhs.text {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
-extension ChatAssistantMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "ChatAssistantMessage"
+extension ChatAssistantMessageProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "ChatAssistantMessageProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "text"),
     2: .standard(proto: "activity_name"),
@@ -281,7 +281,7 @@ extension ChatAssistantMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: ChatAssistantMessage, rhs: ChatAssistantMessage) -> Bool {
+  static func ==(lhs: ChatAssistantMessageProto, rhs: ChatAssistantMessageProto) -> Bool {
     if lhs.text != rhs.text {return false}
     if lhs.activityName != rhs.activityName {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
@@ -289,8 +289,8 @@ extension ChatAssistantMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
   }
 }
 
-extension ChatUserMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "ChatUserMessage"
+extension ChatUserMessageProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "ChatUserMessageProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "text"),
     2: .standard(proto: "action_name"),
@@ -319,7 +319,7 @@ extension ChatUserMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplemen
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: ChatUserMessage, rhs: ChatUserMessage) -> Bool {
+  static func ==(lhs: ChatUserMessageProto, rhs: ChatUserMessageProto) -> Bool {
     if lhs.text != rhs.text {return false}
     if lhs.actionName != rhs.actionName {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
@@ -344,7 +344,7 @@ extension ChatMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementati
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularMessageField(value: &self._createdAt) }()
       case 2: try {
-        var v: ChatSystemMessage?
+        var v: ChatSystemMessageProto?
         var hadOneofValue = false
         if let current = self.type {
           hadOneofValue = true
@@ -357,7 +357,7 @@ extension ChatMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementati
         }
       }()
       case 3: try {
-        var v: ChatAssistantMessage?
+        var v: ChatAssistantMessageProto?
         var hadOneofValue = false
         if let current = self.type {
           hadOneofValue = true
@@ -370,7 +370,7 @@ extension ChatMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementati
         }
       }()
       case 4: try {
-        var v: ChatUserMessage?
+        var v: ChatUserMessageProto?
         var hadOneofValue = false
         if let current = self.type {
           hadOneofValue = true
