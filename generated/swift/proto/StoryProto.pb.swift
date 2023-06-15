@@ -776,14 +776,14 @@ struct StoryProto {
   /// Clears the value of `storyData`. Subsequent reads from it will return its default value.
   mutating func clearStoryData() {self._storyData = nil}
 
-  var recsData: StoryRecsProto {
-    get {return _recsData ?? StoryRecsProto()}
-    set {_recsData = newValue}
+  var storyRecs: StoryRecsProto {
+    get {return _storyRecs ?? StoryRecsProto()}
+    set {_storyRecs = newValue}
   }
-  /// Returns true if `recsData` has been explicitly set.
-  var hasRecsData: Bool {return self._recsData != nil}
-  /// Clears the value of `recsData`. Subsequent reads from it will return its default value.
-  mutating func clearRecsData() {self._recsData = nil}
+  /// Returns true if `storyRecs` has been explicitly set.
+  var hasStoryRecs: Bool {return self._storyRecs != nil}
+  /// Clears the value of `storyRecs`. Subsequent reads from it will return its default value.
+  mutating func clearStoryRecs() {self._storyRecs = nil}
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -792,7 +792,7 @@ struct StoryProto {
   fileprivate var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
   fileprivate var _lastModifiedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
   fileprivate var _storyData: StoryDataProto? = nil
-  fileprivate var _recsData: StoryRecsProto? = nil
+  fileprivate var _storyRecs: StoryRecsProto? = nil
 }
 
 struct CardProto {
@@ -2186,7 +2186,7 @@ extension StoryProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementatio
     6: .same(proto: "title"),
     7: .same(proto: "cards"),
     8: .standard(proto: "story_data"),
-    9: .standard(proto: "recs_data"),
+    9: .standard(proto: "story_recs"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2203,7 +2203,7 @@ extension StoryProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementatio
       case 6: try { try decoder.decodeSingularStringField(value: &self.title) }()
       case 7: try { try decoder.decodeRepeatedMessageField(value: &self.cards) }()
       case 8: try { try decoder.decodeSingularMessageField(value: &self._storyData) }()
-      case 9: try { try decoder.decodeSingularMessageField(value: &self._recsData) }()
+      case 9: try { try decoder.decodeSingularMessageField(value: &self._storyRecs) }()
       default: break
       }
     }
@@ -2238,7 +2238,7 @@ extension StoryProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementatio
     try { if let v = self._storyData {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
     } }()
-    try { if let v = self._recsData {
+    try { if let v = self._storyRecs {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 9)
     } }()
     try unknownFields.traverse(visitor: &visitor)
@@ -2253,7 +2253,7 @@ extension StoryProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementatio
     if lhs.title != rhs.title {return false}
     if lhs.cards != rhs.cards {return false}
     if lhs._storyData != rhs._storyData {return false}
-    if lhs._recsData != rhs._recsData {return false}
+    if lhs._storyRecs != rhs._storyRecs {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

@@ -300,9 +300,9 @@ export interface StoryProto {
      */
     storyData?: StoryDataProto;
     /**
-     * @generated from protobuf field: StoryRecsProto recs_data = 9;
+     * @generated from protobuf field: StoryRecsProto story_recs = 9;
      */
-    recsData?: StoryRecsProto;
+    storyRecs?: StoryRecsProto;
 }
 /**
  * @generated from protobuf message CardProto
@@ -1639,7 +1639,7 @@ class StoryProto$Type extends MessageType<StoryProto> {
             { no: 6, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 7, name: "cards", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => CardProto },
             { no: 8, name: "story_data", kind: "message", T: () => StoryDataProto },
-            { no: 9, name: "recs_data", kind: "message", T: () => StoryRecsProto }
+            { no: 9, name: "story_recs", kind: "message", T: () => StoryRecsProto }
         ]);
     }
     create(value?: PartialMessage<StoryProto>): StoryProto {
@@ -1678,8 +1678,8 @@ class StoryProto$Type extends MessageType<StoryProto> {
                 case /* StoryDataProto story_data */ 8:
                     message.storyData = StoryDataProto.internalBinaryRead(reader, reader.uint32(), options, message.storyData);
                     break;
-                case /* StoryRecsProto recs_data */ 9:
-                    message.recsData = StoryRecsProto.internalBinaryRead(reader, reader.uint32(), options, message.recsData);
+                case /* StoryRecsProto story_recs */ 9:
+                    message.storyRecs = StoryRecsProto.internalBinaryRead(reader, reader.uint32(), options, message.storyRecs);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1717,9 +1717,9 @@ class StoryProto$Type extends MessageType<StoryProto> {
         /* StoryDataProto story_data = 8; */
         if (message.storyData)
             StoryDataProto.internalBinaryWrite(message.storyData, writer.tag(8, WireType.LengthDelimited).fork(), options).join();
-        /* StoryRecsProto recs_data = 9; */
-        if (message.recsData)
-            StoryRecsProto.internalBinaryWrite(message.recsData, writer.tag(9, WireType.LengthDelimited).fork(), options).join();
+        /* StoryRecsProto story_recs = 9; */
+        if (message.storyRecs)
+            StoryRecsProto.internalBinaryWrite(message.storyRecs, writer.tag(9, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

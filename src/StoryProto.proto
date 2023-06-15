@@ -113,7 +113,7 @@ message StoryProto {
   repeated CardProto cards = 7;
 
   StoryDataProto story_data = 8;
-  StoryRecsProto recs_data = 9;
+  StoryRecsProto story_recs = 9;
 }
 
 message CardProto {
