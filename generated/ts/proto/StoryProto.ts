@@ -234,9 +234,9 @@ export interface CardDataProto {
     hashTags: string[];
 }
 /**
- * @generated from protobuf message StoryRecsData
+ * @generated from protobuf message StoryRecsProto
  */
-export interface StoryRecsData {
+export interface StoryRecsProto {
     /**
      * @generated from protobuf field: string story_id = 1;
      */
@@ -295,6 +295,14 @@ export interface StoryProto {
      * @generated from protobuf field: repeated CardProto cards = 7;
      */
     cards: CardProto[];
+    /**
+     * @generated from protobuf field: StoryDataProto story_data = 8;
+     */
+    storyData?: StoryDataProto;
+    /**
+     * @generated from protobuf field: StoryRecsProto recs_data = 9;
+     */
+    recsData?: StoryRecsProto;
 }
 /**
  * @generated from protobuf message CardProto
@@ -1505,22 +1513,22 @@ class CardDataProto$Type extends MessageType<CardDataProto> {
  */
 export const CardDataProto = new CardDataProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class StoryRecsData$Type extends MessageType<StoryRecsData> {
+class StoryRecsProto$Type extends MessageType<StoryRecsProto> {
     constructor() {
-        super("StoryRecsData", [
+        super("StoryRecsProto", [
             { no: 1, name: "story_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "general_topics", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "topics", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<StoryRecsData>): StoryRecsData {
+    create(value?: PartialMessage<StoryRecsProto>): StoryRecsProto {
         const message = { storyId: "", generalTopics: [], topics: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<StoryRecsData>(this, message, value);
+            reflectionMergePartial<StoryRecsProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoryRecsData): StoryRecsData {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoryRecsProto): StoryRecsProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -1545,7 +1553,7 @@ class StoryRecsData$Type extends MessageType<StoryRecsData> {
         }
         return message;
     }
-    internalBinaryWrite(message: StoryRecsData, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: StoryRecsProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string story_id = 1; */
         if (message.storyId !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.storyId);
@@ -1562,9 +1570,9 @@ class StoryRecsData$Type extends MessageType<StoryRecsData> {
     }
 }
 /**
- * @generated MessageType for protobuf message StoryRecsData
+ * @generated MessageType for protobuf message StoryRecsProto
  */
-export const StoryRecsData = new StoryRecsData$Type();
+export const StoryRecsProto = new StoryRecsProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class StoriesProto$Type extends MessageType<StoriesProto> {
     constructor() {
@@ -1629,7 +1637,9 @@ class StoryProto$Type extends MessageType<StoryProto> {
             { no: 4, name: "last_modified_by", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "last_modified_at", kind: "message", T: () => Timestamp },
             { no: 6, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 7, name: "cards", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => CardProto }
+            { no: 7, name: "cards", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => CardProto },
+            { no: 8, name: "story_data", kind: "message", T: () => StoryDataProto },
+            { no: 9, name: "recs_data", kind: "message", T: () => StoryRecsProto }
         ]);
     }
     create(value?: PartialMessage<StoryProto>): StoryProto {
@@ -1665,6 +1675,12 @@ class StoryProto$Type extends MessageType<StoryProto> {
                 case /* repeated CardProto cards */ 7:
                     message.cards.push(CardProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
+                case /* StoryDataProto story_data */ 8:
+                    message.storyData = StoryDataProto.internalBinaryRead(reader, reader.uint32(), options, message.storyData);
+                    break;
+                case /* StoryRecsProto recs_data */ 9:
+                    message.recsData = StoryRecsProto.internalBinaryRead(reader, reader.uint32(), options, message.recsData);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -1698,6 +1714,12 @@ class StoryProto$Type extends MessageType<StoryProto> {
         /* repeated CardProto cards = 7; */
         for (let i = 0; i < message.cards.length; i++)
             CardProto.internalBinaryWrite(message.cards[i], writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+        /* StoryDataProto story_data = 8; */
+        if (message.storyData)
+            StoryDataProto.internalBinaryWrite(message.storyData, writer.tag(8, WireType.LengthDelimited).fork(), options).join();
+        /* StoryRecsProto recs_data = 9; */
+        if (message.recsData)
+            StoryRecsProto.internalBinaryWrite(message.recsData, writer.tag(9, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

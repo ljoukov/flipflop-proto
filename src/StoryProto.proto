@@ -90,7 +90,7 @@ message CardDataProto {
   repeated string hash_tags = 10;
 }
 
-message StoryRecsData {
+message StoryRecsProto {
   string story_id = 1;
   repeated string general_topics = 2;
   repeated string topics = 3;
@@ -111,6 +111,9 @@ message StoryProto {
 
   string title = 6;
   repeated CardProto cards = 7;
+
+  StoryDataProto story_data = 8;
+  StoryRecsProto recs_data = 9;
 }
 
 message CardProto {

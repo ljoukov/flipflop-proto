@@ -695,7 +695,7 @@ struct CardDataProto {
   fileprivate var _imageRef: ImageRefProto? = nil
 }
 
-struct StoryRecsData {
+struct StoryRecsProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -767,12 +767,32 @@ struct StoryProto {
 
   var cards: [CardProto] = []
 
+  var storyData: StoryDataProto {
+    get {return _storyData ?? StoryDataProto()}
+    set {_storyData = newValue}
+  }
+  /// Returns true if `storyData` has been explicitly set.
+  var hasStoryData: Bool {return self._storyData != nil}
+  /// Clears the value of `storyData`. Subsequent reads from it will return its default value.
+  mutating func clearStoryData() {self._storyData = nil}
+
+  var recsData: StoryRecsProto {
+    get {return _recsData ?? StoryRecsProto()}
+    set {_recsData = newValue}
+  }
+  /// Returns true if `recsData` has been explicitly set.
+  var hasRecsData: Bool {return self._recsData != nil}
+  /// Clears the value of `recsData`. Subsequent reads from it will return its default value.
+  mutating func clearRecsData() {self._recsData = nil}
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 
   fileprivate var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
   fileprivate var _lastModifiedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+  fileprivate var _storyData: StoryDataProto? = nil
+  fileprivate var _recsData: StoryRecsProto? = nil
 }
 
 struct CardProto {
@@ -1366,7 +1386,7 @@ extension StoryApiResponseProto: @unchecked Sendable {}
 extension StoryApiResponseProto.OneOf_Response: @unchecked Sendable {}
 extension StoryDataProto: @unchecked Sendable {}
 extension CardDataProto: @unchecked Sendable {}
-extension StoryRecsData: @unchecked Sendable {}
+extension StoryRecsProto: @unchecked Sendable {}
 extension StoriesProto: @unchecked Sendable {}
 extension StoryProto: @unchecked Sendable {}
 extension CardProto: @unchecked Sendable {}
@@ -2069,8 +2089,8 @@ extension CardDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
   }
 }
 
-extension StoryRecsData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "StoryRecsData"
+extension StoryRecsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoryRecsProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "story_id"),
     2: .standard(proto: "general_topics"),
@@ -2104,7 +2124,7 @@ extension StoryRecsData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: StoryRecsData, rhs: StoryRecsData) -> Bool {
+  static func ==(lhs: StoryRecsProto, rhs: StoryRecsProto) -> Bool {
     if lhs.storyID != rhs.storyID {return false}
     if lhs.generalTopics != rhs.generalTopics {return false}
     if lhs.topics != rhs.topics {return false}
@@ -2165,6 +2185,8 @@ extension StoryProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementatio
     5: .standard(proto: "last_modified_at"),
     6: .same(proto: "title"),
     7: .same(proto: "cards"),
+    8: .standard(proto: "story_data"),
+    9: .standard(proto: "recs_data"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2180,6 +2202,8 @@ extension StoryProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementatio
       case 5: try { try decoder.decodeSingularMessageField(value: &self._lastModifiedAt) }()
       case 6: try { try decoder.decodeSingularStringField(value: &self.title) }()
       case 7: try { try decoder.decodeRepeatedMessageField(value: &self.cards) }()
+      case 8: try { try decoder.decodeSingularMessageField(value: &self._storyData) }()
+      case 9: try { try decoder.decodeSingularMessageField(value: &self._recsData) }()
       default: break
       }
     }
@@ -2211,6 +2235,12 @@ extension StoryProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementatio
     if !self.cards.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.cards, fieldNumber: 7)
     }
+    try { if let v = self._storyData {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
+    } }()
+    try { if let v = self._recsData {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 9)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -2222,6 +2252,8 @@ extension StoryProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementatio
     if lhs._lastModifiedAt != rhs._lastModifiedAt {return false}
     if lhs.title != rhs.title {return false}
     if lhs.cards != rhs.cards {return false}
+    if lhs._storyData != rhs._storyData {return false}
+    if lhs._recsData != rhs._recsData {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
