@@ -234,6 +234,23 @@ export interface CardDataProto {
     hashTags: string[];
 }
 /**
+ * @generated from protobuf message StoryRecsData
+ */
+export interface StoryRecsData {
+    /**
+     * @generated from protobuf field: string story_id = 1;
+     */
+    storyId: string;
+    /**
+     * @generated from protobuf field: repeated string general_topics = 2;
+     */
+    generalTopics: string[];
+    /**
+     * @generated from protobuf field: repeated string topics = 3;
+     */
+    topics: string[];
+}
+/**
  * @generated from protobuf message StoriesProto
  */
 export interface StoriesProto {
@@ -1487,6 +1504,67 @@ class CardDataProto$Type extends MessageType<CardDataProto> {
  * @generated MessageType for protobuf message CardDataProto
  */
 export const CardDataProto = new CardDataProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class StoryRecsData$Type extends MessageType<StoryRecsData> {
+    constructor() {
+        super("StoryRecsData", [
+            { no: 1, name: "story_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "general_topics", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "topics", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<StoryRecsData>): StoryRecsData {
+        const message = { storyId: "", generalTopics: [], topics: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<StoryRecsData>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoryRecsData): StoryRecsData {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string story_id */ 1:
+                    message.storyId = reader.string();
+                    break;
+                case /* repeated string general_topics */ 2:
+                    message.generalTopics.push(reader.string());
+                    break;
+                case /* repeated string topics */ 3:
+                    message.topics.push(reader.string());
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: StoryRecsData, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string story_id = 1; */
+        if (message.storyId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.storyId);
+        /* repeated string general_topics = 2; */
+        for (let i = 0; i < message.generalTopics.length; i++)
+            writer.tag(2, WireType.LengthDelimited).string(message.generalTopics[i]);
+        /* repeated string topics = 3; */
+        for (let i = 0; i < message.topics.length; i++)
+            writer.tag(3, WireType.LengthDelimited).string(message.topics[i]);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message StoryRecsData
+ */
+export const StoryRecsData = new StoryRecsData$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class StoriesProto$Type extends MessageType<StoriesProto> {
     constructor() {

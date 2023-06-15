@@ -90,6 +90,12 @@ message CardDataProto {
   repeated string hash_tags = 10;
 }
 
+message StoryRecsData {
+  string story_id = 1;
+  repeated string general_topics = 2;
+  repeated string topics = 3;
+}
+
 message StoriesProto {
   google.protobuf.Timestamp timestamp = 1;
   repeated StoryProto stories = 2;

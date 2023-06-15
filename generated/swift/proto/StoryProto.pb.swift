@@ -695,6 +695,22 @@ struct CardDataProto {
   fileprivate var _imageRef: ImageRefProto? = nil
 }
 
+struct StoryRecsData {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var storyID: String = String()
+
+  var generalTopics: [String] = []
+
+  var topics: [String] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 struct StoriesProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -1350,6 +1366,7 @@ extension StoryApiResponseProto: @unchecked Sendable {}
 extension StoryApiResponseProto.OneOf_Response: @unchecked Sendable {}
 extension StoryDataProto: @unchecked Sendable {}
 extension CardDataProto: @unchecked Sendable {}
+extension StoryRecsData: @unchecked Sendable {}
 extension StoriesProto: @unchecked Sendable {}
 extension StoryProto: @unchecked Sendable {}
 extension CardProto: @unchecked Sendable {}
@@ -2047,6 +2064,50 @@ extension CardDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
     if lhs.explanation != rhs.explanation {return false}
     if lhs._imageRef != rhs._imageRef {return false}
     if lhs.hashTags != rhs.hashTags {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension StoryRecsData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoryRecsData"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "story_id"),
+    2: .standard(proto: "general_topics"),
+    3: .same(proto: "topics"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.storyID) }()
+      case 2: try { try decoder.decodeRepeatedStringField(value: &self.generalTopics) }()
+      case 3: try { try decoder.decodeRepeatedStringField(value: &self.topics) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.storyID.isEmpty {
+      try visitor.visitSingularStringField(value: self.storyID, fieldNumber: 1)
+    }
+    if !self.generalTopics.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.generalTopics, fieldNumber: 2)
+    }
+    if !self.topics.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.topics, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: StoryRecsData, rhs: StoryRecsData) -> Bool {
+    if lhs.storyID != rhs.storyID {return false}
+    if lhs.generalTopics != rhs.generalTopics {return false}
+    if lhs.topics != rhs.topics {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
