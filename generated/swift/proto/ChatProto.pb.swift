@@ -26,7 +26,7 @@ struct ChatActivityProto {
   // methods supported on all messages.
 
   /// Machine identifier, LLM-readable, e.g. "compare-and-contrast", "writing-challenge"
-  var name: String = String()
+  var activityID: String = String()
 
   /// How it should be diplayed to the user
   var displayName: String = String()
@@ -59,7 +59,8 @@ struct ChatAssistantMessageProto {
 
   var text: String = String()
 
-  var activityName: [String] = []
+  /// Available activities
+  var activityID: [String] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -75,7 +76,7 @@ struct ChatUserMessageProto {
   var text: String = String()
 
   /// User selected one of the activities
-  var actionName: String = String()
+  var activityID: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -86,6 +87,8 @@ struct ChatMessageProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
+
+  var messageID: String = String()
 
   var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
     get {return _createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
@@ -172,7 +175,7 @@ extension ChatMessageProto.OneOf_Type: @unchecked Sendable {}
 extension ChatActivityProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "ChatActivityProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "name"),
+    1: .standard(proto: "activity_id"),
     2: .standard(proto: "display_name"),
     3: .standard(proto: "description_prompt"),
     4: .standard(proto: "action_prompt"),
@@ -184,7 +187,7 @@ extension ChatActivityProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.name) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self.activityID) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.displayName) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.descriptionPrompt) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self.actionPrompt) }()
@@ -194,8 +197,8 @@ extension ChatActivityProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.name.isEmpty {
-      try visitor.visitSingularStringField(value: self.name, fieldNumber: 1)
+    if !self.activityID.isEmpty {
+      try visitor.visitSingularStringField(value: self.activityID, fieldNumber: 1)
     }
     if !self.displayName.isEmpty {
       try visitor.visitSingularStringField(value: self.displayName, fieldNumber: 2)
@@ -210,7 +213,7 @@ extension ChatActivityProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
   }
 
   static func ==(lhs: ChatActivityProto, rhs: ChatActivityProto) -> Bool {
-    if lhs.name != rhs.name {return false}
+    if lhs.activityID != rhs.activityID {return false}
     if lhs.displayName != rhs.displayName {return false}
     if lhs.descriptionPrompt != rhs.descriptionPrompt {return false}
     if lhs.actionPrompt != rhs.actionPrompt {return false}
@@ -255,7 +258,7 @@ extension ChatAssistantMessageProto: SwiftProtobuf.Message, SwiftProtobuf._Messa
   static let protoMessageName: String = "ChatAssistantMessageProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "text"),
-    2: .standard(proto: "activity_name"),
+    2: .standard(proto: "activity_id"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -265,7 +268,7 @@ extension ChatAssistantMessageProto: SwiftProtobuf.Message, SwiftProtobuf._Messa
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.text) }()
-      case 2: try { try decoder.decodeRepeatedStringField(value: &self.activityName) }()
+      case 2: try { try decoder.decodeRepeatedStringField(value: &self.activityID) }()
       default: break
       }
     }
@@ -275,15 +278,15 @@ extension ChatAssistantMessageProto: SwiftProtobuf.Message, SwiftProtobuf._Messa
     if !self.text.isEmpty {
       try visitor.visitSingularStringField(value: self.text, fieldNumber: 1)
     }
-    if !self.activityName.isEmpty {
-      try visitor.visitRepeatedStringField(value: self.activityName, fieldNumber: 2)
+    if !self.activityID.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.activityID, fieldNumber: 2)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: ChatAssistantMessageProto, rhs: ChatAssistantMessageProto) -> Bool {
     if lhs.text != rhs.text {return false}
-    if lhs.activityName != rhs.activityName {return false}
+    if lhs.activityID != rhs.activityID {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -293,7 +296,7 @@ extension ChatUserMessageProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
   static let protoMessageName: String = "ChatUserMessageProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "text"),
-    2: .standard(proto: "action_name"),
+    2: .standard(proto: "activity_id"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -303,7 +306,7 @@ extension ChatUserMessageProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.text) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.actionName) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.activityID) }()
       default: break
       }
     }
@@ -313,15 +316,15 @@ extension ChatUserMessageProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     if !self.text.isEmpty {
       try visitor.visitSingularStringField(value: self.text, fieldNumber: 1)
     }
-    if !self.actionName.isEmpty {
-      try visitor.visitSingularStringField(value: self.actionName, fieldNumber: 2)
+    if !self.activityID.isEmpty {
+      try visitor.visitSingularStringField(value: self.activityID, fieldNumber: 2)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: ChatUserMessageProto, rhs: ChatUserMessageProto) -> Bool {
     if lhs.text != rhs.text {return false}
-    if lhs.actionName != rhs.actionName {return false}
+    if lhs.activityID != rhs.activityID {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -330,10 +333,11 @@ extension ChatUserMessageProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
 extension ChatMessageProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "ChatMessageProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "created_at"),
-    2: .same(proto: "system"),
-    3: .same(proto: "assistant"),
-    4: .same(proto: "user"),
+    1: .standard(proto: "message_id"),
+    2: .standard(proto: "created_at"),
+    3: .same(proto: "system"),
+    4: .same(proto: "assistant"),
+    5: .same(proto: "user"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -342,8 +346,9 @@ extension ChatMessageProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularMessageField(value: &self._createdAt) }()
-      case 2: try {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.messageID) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._createdAt) }()
+      case 3: try {
         var v: ChatSystemMessageProto?
         var hadOneofValue = false
         if let current = self.type {
@@ -356,7 +361,7 @@ extension ChatMessageProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
           self.type = .system(v)
         }
       }()
-      case 3: try {
+      case 4: try {
         var v: ChatAssistantMessageProto?
         var hadOneofValue = false
         if let current = self.type {
@@ -369,7 +374,7 @@ extension ChatMessageProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
           self.type = .assistant(v)
         }
       }()
-      case 4: try {
+      case 5: try {
         var v: ChatUserMessageProto?
         var hadOneofValue = false
         if let current = self.type {
@@ -392,21 +397,24 @@ extension ChatMessageProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.messageID.isEmpty {
+      try visitor.visitSingularStringField(value: self.messageID, fieldNumber: 1)
+    }
     try { if let v = self._createdAt {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     } }()
     switch self.type {
     case .system?: try {
       guard case .system(let v)? = self.type else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
     }()
     case .assistant?: try {
       guard case .assistant(let v)? = self.type else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
     }()
     case .user?: try {
       guard case .user(let v)? = self.type else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
     }()
     case nil: break
     }
@@ -414,6 +422,7 @@ extension ChatMessageProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
   }
 
   static func ==(lhs: ChatMessageProto, rhs: ChatMessageProto) -> Bool {
+    if lhs.messageID != rhs.messageID {return false}
     if lhs._createdAt != rhs._createdAt {return false}
     if lhs.type != rhs.type {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
