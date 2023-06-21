@@ -60,10 +60,6 @@ message ChatActivityProto {
   string action_prompt = 4;
 }
 
-message ChatSystemMessageProto {
-  string text = 1;
-}
-
 message ChatAssistantMessageBlockProto {
   string text = 2;
   repeated string activity_ids = 3;
@@ -85,9 +81,8 @@ message ChatMessageProto {
   string message_id = 1;
   google.protobuf.Timestamp created_at = 2;
   oneof type {
-    ChatSystemMessageProto system = 3;
-    ChatAssistantMessageProto assistant = 4;
-    ChatUserMessageProto user = 5;
+    ChatAssistantMessageProto assistant = 3;
+    ChatUserMessageProto user = 4;
   }
 }
 
