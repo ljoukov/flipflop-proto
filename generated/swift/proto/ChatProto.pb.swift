@@ -461,46 +461,7 @@ struct ChatSessionProto {
 
   var messages: [ChatMessageProto] = []
 
-  var status: ChatSessionProto.Status = .undefined
-
   var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  enum Status: SwiftProtobuf.Enum {
-    typealias RawValue = Int
-    case undefined // = 0
-    case complete // = 1
-    case streamed // = 2
-    case interrupted // = 3
-    case failed // = 4
-    case UNRECOGNIZED(Int)
-
-    init() {
-      self = .undefined
-    }
-
-    init?(rawValue: Int) {
-      switch rawValue {
-      case 0: self = .undefined
-      case 1: self = .complete
-      case 2: self = .streamed
-      case 3: self = .interrupted
-      case 4: self = .failed
-      default: self = .UNRECOGNIZED(rawValue)
-      }
-    }
-
-    var rawValue: Int {
-      switch self {
-      case .undefined: return 0
-      case .complete: return 1
-      case .streamed: return 2
-      case .interrupted: return 3
-      case .failed: return 4
-      case .UNRECOGNIZED(let i): return i
-      }
-    }
-
-  }
 
   init() {}
 
@@ -508,21 +469,6 @@ struct ChatSessionProto {
   fileprivate var _lastModifiedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
   fileprivate var _context: ChatContextProto? = nil
 }
-
-#if swift(>=4.2)
-
-extension ChatSessionProto.Status: CaseIterable {
-  // The compiler won't synthesize support with the UNRECOGNIZED case.
-  static var allCases: [ChatSessionProto.Status] = [
-    .undefined,
-    .complete,
-    .streamed,
-    .interrupted,
-    .failed,
-  ]
-}
-
-#endif  // swift(>=4.2)
 
 #if swift(>=5.5) && canImport(_Concurrency)
 extension ChatApiRequestProto: @unchecked Sendable {}
@@ -545,7 +491,6 @@ extension ChatMessageProto: @unchecked Sendable {}
 extension ChatMessageProto.OneOf_Type: @unchecked Sendable {}
 extension ChatContextProto: @unchecked Sendable {}
 extension ChatSessionProto: @unchecked Sendable {}
-extension ChatSessionProto.Status: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
@@ -1273,7 +1218,6 @@ extension ChatSessionProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     3: .standard(proto: "last_modified_at"),
     4: .same(proto: "context"),
     5: .same(proto: "messages"),
-    6: .same(proto: "status"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1287,7 +1231,6 @@ extension ChatSessionProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
       case 3: try { try decoder.decodeSingularMessageField(value: &self._lastModifiedAt) }()
       case 4: try { try decoder.decodeSingularMessageField(value: &self._context) }()
       case 5: try { try decoder.decodeRepeatedMessageField(value: &self.messages) }()
-      case 6: try { try decoder.decodeSingularEnumField(value: &self.status) }()
       default: break
       }
     }
@@ -1313,9 +1256,6 @@ extension ChatSessionProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     if !self.messages.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.messages, fieldNumber: 5)
     }
-    if self.status != .undefined {
-      try visitor.visitSingularEnumField(value: self.status, fieldNumber: 6)
-    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1325,18 +1265,7 @@ extension ChatSessionProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     if lhs._lastModifiedAt != rhs._lastModifiedAt {return false}
     if lhs._context != rhs._context {return false}
     if lhs.messages != rhs.messages {return false}
-    if lhs.status != rhs.status {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
-}
-
-extension ChatSessionProto.Status: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    0: .same(proto: "STATUS_UNDEFINED"),
-    1: .same(proto: "STATUS_COMPLETE"),
-    2: .same(proto: "STATUS_STREAMED"),
-    3: .same(proto: "STATUS_INTERRUPTED"),
-    4: .same(proto: "STATUS_FAILED"),
-  ]
 }

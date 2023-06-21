@@ -279,35 +279,6 @@ export interface ChatSessionProto {
      * @generated from protobuf field: repeated ChatMessageProto messages = 5;
      */
     messages: ChatMessageProto[];
-    /**
-     * @generated from protobuf field: ChatSessionProto.Status status = 6;
-     */
-    status: ChatSessionProto_Status;
-}
-/**
- * @generated from protobuf enum ChatSessionProto.Status
- */
-export enum ChatSessionProto_Status {
-    /**
-     * @generated from protobuf enum value: STATUS_UNDEFINED = 0;
-     */
-    UNDEFINED = 0,
-    /**
-     * @generated from protobuf enum value: STATUS_COMPLETE = 1;
-     */
-    COMPLETE = 1,
-    /**
-     * @generated from protobuf enum value: STATUS_STREAMED = 2;
-     */
-    STREAMED = 2,
-    /**
-     * @generated from protobuf enum value: STATUS_INTERRUPTED = 3;
-     */
-    INTERRUPTED = 3,
-    /**
-     * @generated from protobuf enum value: STATUS_FAILED = 4;
-     */
-    FAILED = 4
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class ChatApiRequestProto$Type extends MessageType<ChatApiRequestProto> {
@@ -1161,12 +1132,11 @@ class ChatSessionProto$Type extends MessageType<ChatSessionProto> {
             { no: 2, name: "created_at", kind: "message", T: () => Timestamp },
             { no: 3, name: "last_modified_at", kind: "message", T: () => Timestamp },
             { no: 4, name: "context", kind: "message", T: () => ChatContextProto },
-            { no: 5, name: "messages", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ChatMessageProto },
-            { no: 6, name: "status", kind: "enum", T: () => ["ChatSessionProto.Status", ChatSessionProto_Status, "STATUS_"] }
+            { no: 5, name: "messages", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ChatMessageProto }
         ]);
     }
     create(value?: PartialMessage<ChatSessionProto>): ChatSessionProto {
-        const message = { chatSessionId: "", messages: [], status: 0 };
+        const message = { chatSessionId: "", messages: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<ChatSessionProto>(this, message, value);
@@ -1191,9 +1161,6 @@ class ChatSessionProto$Type extends MessageType<ChatSessionProto> {
                     break;
                 case /* repeated ChatMessageProto messages */ 5:
                     message.messages.push(ChatMessageProto.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                case /* ChatSessionProto.Status status */ 6:
-                    message.status = reader.int32();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1222,9 +1189,6 @@ class ChatSessionProto$Type extends MessageType<ChatSessionProto> {
         /* repeated ChatMessageProto messages = 5; */
         for (let i = 0; i < message.messages.length; i++)
             ChatMessageProto.internalBinaryWrite(message.messages[i], writer.tag(5, WireType.LengthDelimited).fork(), options).join();
-        /* ChatSessionProto.Status status = 6; */
-        if (message.status !== 0)
-            writer.tag(6, WireType.Varint).int32(message.status);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
