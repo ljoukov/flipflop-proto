@@ -64,6 +64,11 @@ message ChatSystemMessageProto {
   string text = 1;
 }
 
+message ChatAssistantMessageBlockProto {
+  string text = 2;
+  repeated string activity_ids = 3;
+}
+
 message ChatAssistantMessageProto {
   enum Status {
     STATUS_UNDEFINED = 0;
@@ -73,8 +78,7 @@ message ChatAssistantMessageProto {
     STATUS_FAILED = 4;
   }
   Status status = 1;  
-  string text = 2;
-  repeated string activity_ids = 3;
+  repeated ChatAssistantMessageBlockProto blocks = 2;
 }
 
 message ChatUserMessageProto {

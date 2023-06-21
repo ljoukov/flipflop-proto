@@ -186,13 +186,9 @@ export interface ChatSystemMessageProto {
     text: string;
 }
 /**
- * @generated from protobuf message ChatAssistantMessageProto
+ * @generated from protobuf message ChatAssistantMessageBlockProto
  */
-export interface ChatAssistantMessageProto {
-    /**
-     * @generated from protobuf field: ChatAssistantMessageProto.Status status = 1;
-     */
-    status: ChatAssistantMessageProto_Status;
+export interface ChatAssistantMessageBlockProto {
     /**
      * @generated from protobuf field: string text = 2;
      */
@@ -201,6 +197,19 @@ export interface ChatAssistantMessageProto {
      * @generated from protobuf field: repeated string activity_ids = 3;
      */
     activityIds: string[];
+}
+/**
+ * @generated from protobuf message ChatAssistantMessageProto
+ */
+export interface ChatAssistantMessageProto {
+    /**
+     * @generated from protobuf field: ChatAssistantMessageProto.Status status = 1;
+     */
+    status: ChatAssistantMessageProto_Status;
+    /**
+     * @generated from protobuf field: repeated ChatAssistantMessageBlockProto blocks = 2;
+     */
+    blocks: ChatAssistantMessageBlockProto[];
 }
 /**
  * @generated from protobuf enum ChatAssistantMessageProto.Status
@@ -931,29 +940,25 @@ class ChatSystemMessageProto$Type extends MessageType<ChatSystemMessageProto> {
  */
 export const ChatSystemMessageProto = new ChatSystemMessageProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class ChatAssistantMessageProto$Type extends MessageType<ChatAssistantMessageProto> {
+class ChatAssistantMessageBlockProto$Type extends MessageType<ChatAssistantMessageBlockProto> {
     constructor() {
-        super("ChatAssistantMessageProto", [
-            { no: 1, name: "status", kind: "enum", T: () => ["ChatAssistantMessageProto.Status", ChatAssistantMessageProto_Status, "STATUS_"] },
+        super("ChatAssistantMessageBlockProto", [
             { no: 2, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "activity_ids", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<ChatAssistantMessageProto>): ChatAssistantMessageProto {
-        const message = { status: 0, text: "", activityIds: [] };
+    create(value?: PartialMessage<ChatAssistantMessageBlockProto>): ChatAssistantMessageBlockProto {
+        const message = { text: "", activityIds: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<ChatAssistantMessageProto>(this, message, value);
+            reflectionMergePartial<ChatAssistantMessageBlockProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ChatAssistantMessageProto): ChatAssistantMessageProto {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ChatAssistantMessageBlockProto): ChatAssistantMessageBlockProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* ChatAssistantMessageProto.Status status */ 1:
-                    message.status = reader.int32();
-                    break;
                 case /* string text */ 2:
                     message.text = reader.string();
                     break;
@@ -971,16 +976,67 @@ class ChatAssistantMessageProto$Type extends MessageType<ChatAssistantMessagePro
         }
         return message;
     }
-    internalBinaryWrite(message: ChatAssistantMessageProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* ChatAssistantMessageProto.Status status = 1; */
-        if (message.status !== 0)
-            writer.tag(1, WireType.Varint).int32(message.status);
+    internalBinaryWrite(message: ChatAssistantMessageBlockProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string text = 2; */
         if (message.text !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.text);
         /* repeated string activity_ids = 3; */
         for (let i = 0; i < message.activityIds.length; i++)
             writer.tag(3, WireType.LengthDelimited).string(message.activityIds[i]);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message ChatAssistantMessageBlockProto
+ */
+export const ChatAssistantMessageBlockProto = new ChatAssistantMessageBlockProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ChatAssistantMessageProto$Type extends MessageType<ChatAssistantMessageProto> {
+    constructor() {
+        super("ChatAssistantMessageProto", [
+            { no: 1, name: "status", kind: "enum", T: () => ["ChatAssistantMessageProto.Status", ChatAssistantMessageProto_Status, "STATUS_"] },
+            { no: 2, name: "blocks", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ChatAssistantMessageBlockProto }
+        ]);
+    }
+    create(value?: PartialMessage<ChatAssistantMessageProto>): ChatAssistantMessageProto {
+        const message = { status: 0, blocks: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<ChatAssistantMessageProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ChatAssistantMessageProto): ChatAssistantMessageProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* ChatAssistantMessageProto.Status status */ 1:
+                    message.status = reader.int32();
+                    break;
+                case /* repeated ChatAssistantMessageBlockProto blocks */ 2:
+                    message.blocks.push(ChatAssistantMessageBlockProto.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: ChatAssistantMessageProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* ChatAssistantMessageProto.Status status = 1; */
+        if (message.status !== 0)
+            writer.tag(1, WireType.Varint).int32(message.status);
+        /* repeated ChatAssistantMessageBlockProto blocks = 2; */
+        for (let i = 0; i < message.blocks.length; i++)
+            ChatAssistantMessageBlockProto.internalBinaryWrite(message.blocks[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
