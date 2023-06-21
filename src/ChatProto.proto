@@ -1,6 +1,55 @@
 syntax = "proto3";
 
+import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
+
+message ChatApiRequestProto {
+  oneof request {
+    GetChatActivitiesRequestProto get_chat_activities = 1;
+    GetChatSessionRequestProto get_chat_session = 2;
+    UpdateChatSessionRequestProto update_chat_session = 3;
+    DeleteChatSessionRequestProto delete_chat_session = 4;
+  }
+}
+
+message ChatApiResponseProto {
+  oneof response {
+    GetChatActivitiesResponseProto get_chat_activities = 1;
+    GetChatSessionResponseProto get_chat_session = 2;
+    UpdateChatSessionResponseProto update_chat_session = 3;
+    DeleteChatSessionResponseProto delete_chat_session = 4;
+  }
+  map<string, google.protobuf.Duration> latencies = 100;
+}
+
+message GetChatActivitiesRequestProto {
+}
+
+message GetChatActivitiesResponseProto {
+  repeated ChatActivityProto activities = 1;
+}
+
+message GetChatSessionRequestProto {
+  string story_id = 1;
+}
+
+message GetChatSessionResponseProto {
+  ChatSessionProto chat_session = 1;
+}
+
+message UpdateChatSessionRequestProto {
+  ChatSessionProto chat_session = 1;
+}
+
+message UpdateChatSessionResponseProto {
+}
+
+message DeleteChatSessionRequestProto {
+  string chat_session_id = 1;
+}
+
+message DeleteChatSessionResponseProto {
+}
 
 message ChatActivityProto {
   // Machine identifier, LLM-readable, e.g. "compare-and-contrast", "writing-challenge"
@@ -46,9 +95,14 @@ message ChatMessageProto {
   }
 }
 
+message ChatContextProto {
+  string story_id = 1;
+}
+
 message ChatSessionProto {
-  string session_id = 1;
+  string chat_session_id = 1;
   google.protobuf.Timestamp created_at = 2;
   google.protobuf.Timestamp last_modified_at = 3;
-  repeated ChatMessageProto messages = 4;
+  ChatContextProto context = 4;
+  repeated ChatMessageProto messages = 5;
 }
