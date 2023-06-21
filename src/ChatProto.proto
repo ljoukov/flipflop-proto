@@ -70,15 +70,7 @@ message ChatAssistantMessageBlockProto {
 }
 
 message ChatAssistantMessageProto {
-  enum Status {
-    STATUS_UNDEFINED = 0;
-    STATUS_COMPLETE = 1;
-    STATUS_STREAMED = 2;
-    STATUS_INTERRUPTED = 3;
-    STATUS_FAILED = 4;
-  }
-  Status status = 1;  
-  repeated ChatAssistantMessageBlockProto blocks = 2;
+  repeated ChatAssistantMessageBlockProto blocks = 1;
 }
 
 message ChatUserMessageProto {
@@ -104,9 +96,18 @@ message ChatContextProto {
 }
 
 message ChatSessionProto {
+  enum Status {
+    STATUS_UNDEFINED = 0;
+    STATUS_COMPLETE = 1;
+    STATUS_STREAMED = 2;
+    STATUS_INTERRUPTED = 3;
+    STATUS_FAILED = 4;
+  }
+
   string chat_session_id = 1;
   google.protobuf.Timestamp created_at = 2;
   google.protobuf.Timestamp last_modified_at = 3;
   ChatContextProto context = 4;
   repeated ChatMessageProto messages = 5;
+  Status status = 6;
 }
