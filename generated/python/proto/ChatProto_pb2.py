@@ -14,7 +14,7 @@ _sym_db = _symbol_database.Default()
 from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0f\x43hatProto.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"q\n\x11\x43hatActivityProto\x12\x13\n\x0b\x61\x63tivity_id\x18\x01 \x01(\t\x12\x14\n\x0c\x64isplay_name\x18\x02 \x01(\t\x12\x1a\n\x12\x64\x65scription_prompt\x18\x03 \x01(\t\x12\x15\n\raction_prompt\x18\x04 \x01(\t\"&\n\x16\x43hatSystemMessageProto\x12\x0c\n\x04text\x18\x01 \x01(\t\">\n\x19\x43hatAssistantMessageProto\x12\x0c\n\x04text\x18\x01 \x01(\t\x12\x13\n\x0b\x61\x63tivity_id\x18\x02 \x03(\t\"9\n\x14\x43hatUserMessageProto\x12\x0c\n\x04text\x18\x01 \x01(\t\x12\x13\n\x0b\x61\x63tivity_id\x18\x02 \x01(\t\"\xe1\x01\n\x10\x43hatMessageProto\x12\x12\n\nmessage_id\x18\x01 \x01(\t\x12.\n\ncreated_at\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12)\n\x06system\x18\x03 \x01(\x0b\x32\x17.ChatSystemMessageProtoH\x00\x12/\n\tassistant\x18\x04 \x01(\x0b\x32\x1a.ChatAssistantMessageProtoH\x00\x12%\n\x04user\x18\x05 \x01(\x0b\x32\x15.ChatUserMessageProtoH\x00\x42\x06\n\x04typeb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0f\x43hatProto.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"q\n\x11\x43hatActivityProto\x12\x13\n\x0b\x61\x63tivity_id\x18\x01 \x01(\t\x12\x14\n\x0c\x64isplay_name\x18\x02 \x01(\t\x12\x1a\n\x12\x64\x65scription_prompt\x18\x03 \x01(\t\x12\x15\n\raction_prompt\x18\x04 \x01(\t\"&\n\x16\x43hatSystemMessageProto\x12\x0c\n\x04text\x18\x01 \x01(\t\"\xe7\x01\n\x19\x43hatAssistantMessageProto\x12\x31\n\x06status\x18\x01 \x01(\x0e\x32!.ChatAssistantMessageProto.Status\x12\x0c\n\x04text\x18\x02 \x01(\t\x12\x14\n\x0c\x61\x63tivity_ids\x18\x03 \x03(\t\"s\n\x06Status\x12\x14\n\x10STATUS_UNDEFINED\x10\x00\x12\x13\n\x0fSTATUS_COMPLETE\x10\x01\x12\x13\n\x0fSTATUS_STREAMED\x10\x02\x12\x16\n\x12STATUS_INTERRUPTED\x10\x03\x12\x11\n\rSTATUS_FAILED\x10\x04\"9\n\x14\x43hatUserMessageProto\x12\x0c\n\x04text\x18\x01 \x01(\t\x12\x13\n\x0b\x61\x63tivity_id\x18\x02 \x01(\t\"\xe1\x01\n\x10\x43hatMessageProto\x12\x12\n\nmessage_id\x18\x01 \x01(\t\x12.\n\ncreated_at\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12)\n\x06system\x18\x03 \x01(\x0b\x32\x17.ChatSystemMessageProtoH\x00\x12/\n\tassistant\x18\x04 \x01(\x0b\x32\x1a.ChatAssistantMessageProtoH\x00\x12%\n\x04user\x18\x05 \x01(\x0b\x32\x15.ChatUserMessageProtoH\x00\x42\x06\n\x04type\"\xb1\x01\n\x10\x43hatSessionProto\x12\x12\n\nsession_id\x18\x01 \x01(\t\x12.\n\ncreated_at\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x34\n\x10last_modified_at\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12#\n\x08messages\x18\x04 \x03(\x0b\x32\x11.ChatMessageProtob\x06proto3')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'ChatProto_pb2', globals())
@@ -25,10 +25,14 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _CHATACTIVITYPROTO._serialized_end=165
   _CHATSYSTEMMESSAGEPROTO._serialized_start=167
   _CHATSYSTEMMESSAGEPROTO._serialized_end=205
-  _CHATASSISTANTMESSAGEPROTO._serialized_start=207
-  _CHATASSISTANTMESSAGEPROTO._serialized_end=269
-  _CHATUSERMESSAGEPROTO._serialized_start=271
-  _CHATUSERMESSAGEPROTO._serialized_end=328
-  _CHATMESSAGEPROTO._serialized_start=331
-  _CHATMESSAGEPROTO._serialized_end=556
+  _CHATASSISTANTMESSAGEPROTO._serialized_start=208
+  _CHATASSISTANTMESSAGEPROTO._serialized_end=439
+  _CHATASSISTANTMESSAGEPROTO_STATUS._serialized_start=324
+  _CHATASSISTANTMESSAGEPROTO_STATUS._serialized_end=439
+  _CHATUSERMESSAGEPROTO._serialized_start=441
+  _CHATUSERMESSAGEPROTO._serialized_end=498
+  _CHATMESSAGEPROTO._serialized_start=501
+  _CHATMESSAGEPROTO._serialized_end=726
+  _CHATSESSIONPROTO._serialized_start=729
+  _CHATSESSIONPROTO._serialized_end=906
 # @@protoc_insertion_point(module_scope)
