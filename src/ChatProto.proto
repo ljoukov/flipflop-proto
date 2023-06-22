@@ -5,7 +5,7 @@ import "google/protobuf/timestamp.proto";
 
 message ChatApiRequestProto {
   oneof request {
-    GetChatActivitiesRequestProto get_chat_activities = 1;
+    GetChatBotsRequestProto get_chat_bots = 1;
     GetChatSessionRequestProto get_chat_session = 2;
     UpdateChatSessionRequestProto update_chat_session = 3;
     DeleteChatSessionRequestProto delete_chat_session = 4;
@@ -14,7 +14,7 @@ message ChatApiRequestProto {
 
 message ChatApiResponseProto {
   oneof response {
-    GetChatActivitiesResponseProto get_chat_activities = 1;
+    GetChatBotsResponseProto get_chat_bots = 1;
     GetChatSessionResponseProto get_chat_session = 2;
     UpdateChatSessionResponseProto update_chat_session = 3;
     DeleteChatSessionResponseProto delete_chat_session = 4;
@@ -22,11 +22,11 @@ message ChatApiResponseProto {
   map<string, google.protobuf.Duration> latencies = 100;
 }
 
-message GetChatActivitiesRequestProto {
+message GetChatBotsRequestProto {
 }
 
-message GetChatActivitiesResponseProto {
-  repeated ChatActivityProto activities = 1;
+message GetChatBotsResponseProto {
+  repeated ChatBotProto bots = 1;
 }
 
 message GetChatSessionRequestProto {
@@ -49,6 +49,18 @@ message DeleteChatSessionRequestProto {
 }
 
 message DeleteChatSessionResponseProto {
+}
+
+message ChatBotProto {
+  string bot_id = 1;
+  string name = 2;
+  string description_prompt = 3;
+  ChatActivitiesProto activities = 4;
+}
+
+message ChatActivitiesProto {
+  string description_prompt = 1;
+  repeated ChatActivityProto activities = 2;
 }
 
 message ChatActivityProto {
@@ -86,14 +98,12 @@ message ChatMessageProto {
   }
 }
 
-message ChatContextProto {
-  string story_id = 1;
-}
-
 message ChatSessionProto {
   string chat_session_id = 1;
   google.protobuf.Timestamp created_at = 2;
   google.protobuf.Timestamp last_modified_at = 3;
-  ChatContextProto context = 4;
-  repeated ChatMessageProto messages = 5;
+  string story_id = 4;
+  string bot_id = 5;
+  reserved 6;
+  repeated ChatMessageProto messages = 7;
 }
