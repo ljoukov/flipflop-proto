@@ -160,6 +160,14 @@ export interface ChatBotProto {
      */
     botId: string;
     /**
+     * @generated from protobuf field: google.protobuf.Timestamp created_at = 5;
+     */
+    createdAt?: Timestamp;
+    /**
+     * @generated from protobuf field: google.protobuf.Timestamp last_modified_at = 6;
+     */
+    lastModifiedAt?: Timestamp;
+    /**
      * @generated from protobuf field: string display_name = 2;
      */
     displayName: string;
@@ -814,6 +822,8 @@ class ChatBotProto$Type extends MessageType<ChatBotProto> {
     constructor() {
         super("ChatBotProto", [
             { no: 1, name: "bot_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "created_at", kind: "message", T: () => Timestamp },
+            { no: 6, name: "last_modified_at", kind: "message", T: () => Timestamp },
             { no: 2, name: "display_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "description_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "activities", kind: "message", T: () => ChatActivitiesProto }
@@ -833,6 +843,12 @@ class ChatBotProto$Type extends MessageType<ChatBotProto> {
             switch (fieldNo) {
                 case /* string bot_id */ 1:
                     message.botId = reader.string();
+                    break;
+                case /* google.protobuf.Timestamp created_at */ 5:
+                    message.createdAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.createdAt);
+                    break;
+                case /* google.protobuf.Timestamp last_modified_at */ 6:
+                    message.lastModifiedAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.lastModifiedAt);
                     break;
                 case /* string display_name */ 2:
                     message.displayName = reader.string();
@@ -858,6 +874,12 @@ class ChatBotProto$Type extends MessageType<ChatBotProto> {
         /* string bot_id = 1; */
         if (message.botId !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.botId);
+        /* google.protobuf.Timestamp created_at = 5; */
+        if (message.createdAt)
+            Timestamp.internalBinaryWrite(message.createdAt, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.Timestamp last_modified_at = 6; */
+        if (message.lastModifiedAt)
+            Timestamp.internalBinaryWrite(message.lastModifiedAt, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
         /* string display_name = 2; */
         if (message.displayName !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.displayName);

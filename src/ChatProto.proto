@@ -53,6 +53,8 @@ message DeleteChatSessionResponseProto {
 
 message ChatBotProto {
   string bot_id = 1;
+  google.protobuf.Timestamp created_at = 5;
+  google.protobuf.Timestamp last_modified_at = 6;
   string display_name = 2;
   string description_prompt = 3;
   ChatActivitiesProto activities = 4;

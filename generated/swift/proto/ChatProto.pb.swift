@@ -293,6 +293,24 @@ struct ChatBotProto {
 
   var botID: String = String()
 
+  var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_createdAt = newValue}
+  }
+  /// Returns true if `createdAt` has been explicitly set.
+  var hasCreatedAt: Bool {return self._createdAt != nil}
+  /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
+  mutating func clearCreatedAt() {self._createdAt = nil}
+
+  var lastModifiedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _lastModifiedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_lastModifiedAt = newValue}
+  }
+  /// Returns true if `lastModifiedAt` has been explicitly set.
+  var hasLastModifiedAt: Bool {return self._lastModifiedAt != nil}
+  /// Clears the value of `lastModifiedAt`. Subsequent reads from it will return its default value.
+  mutating func clearLastModifiedAt() {self._lastModifiedAt = nil}
+
   var displayName: String = String()
 
   var descriptionPrompt: String = String()
@@ -310,6 +328,8 @@ struct ChatBotProto {
 
   init() {}
 
+  fileprivate var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+  fileprivate var _lastModifiedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
   fileprivate var _activities: ChatActivitiesProto? = nil
 }
 
@@ -966,6 +986,8 @@ extension ChatBotProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
   static let protoMessageName: String = "ChatBotProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "bot_id"),
+    5: .standard(proto: "created_at"),
+    6: .standard(proto: "last_modified_at"),
     2: .standard(proto: "display_name"),
     3: .standard(proto: "description_prompt"),
     4: .same(proto: "activities"),
@@ -981,6 +1003,8 @@ extension ChatBotProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
       case 2: try { try decoder.decodeSingularStringField(value: &self.displayName) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.descriptionPrompt) }()
       case 4: try { try decoder.decodeSingularMessageField(value: &self._activities) }()
+      case 5: try { try decoder.decodeSingularMessageField(value: &self._createdAt) }()
+      case 6: try { try decoder.decodeSingularMessageField(value: &self._lastModifiedAt) }()
       default: break
       }
     }
@@ -1003,11 +1027,19 @@ extension ChatBotProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     try { if let v = self._activities {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
     } }()
+    try { if let v = self._createdAt {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
+    } }()
+    try { if let v = self._lastModifiedAt {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: ChatBotProto, rhs: ChatBotProto) -> Bool {
     if lhs.botID != rhs.botID {return false}
+    if lhs._createdAt != rhs._createdAt {return false}
+    if lhs._lastModifiedAt != rhs._lastModifiedAt {return false}
     if lhs.displayName != rhs.displayName {return false}
     if lhs.descriptionPrompt != rhs.descriptionPrompt {return false}
     if lhs._activities != rhs._activities {return false}
