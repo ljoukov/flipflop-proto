@@ -160,9 +160,9 @@ export interface ChatBotProto {
      */
     botId: string;
     /**
-     * @generated from protobuf field: string name = 2;
+     * @generated from protobuf field: string display_name = 2;
      */
-    name: string;
+    displayName: string;
     /**
      * @generated from protobuf field: string description_prompt = 3;
      */
@@ -814,13 +814,13 @@ class ChatBotProto$Type extends MessageType<ChatBotProto> {
     constructor() {
         super("ChatBotProto", [
             { no: 1, name: "bot_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "display_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "description_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "activities", kind: "message", T: () => ChatActivitiesProto }
         ]);
     }
     create(value?: PartialMessage<ChatBotProto>): ChatBotProto {
-        const message = { botId: "", name: "", descriptionPrompt: "" };
+        const message = { botId: "", displayName: "", descriptionPrompt: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<ChatBotProto>(this, message, value);
@@ -834,8 +834,8 @@ class ChatBotProto$Type extends MessageType<ChatBotProto> {
                 case /* string bot_id */ 1:
                     message.botId = reader.string();
                     break;
-                case /* string name */ 2:
-                    message.name = reader.string();
+                case /* string display_name */ 2:
+                    message.displayName = reader.string();
                     break;
                 case /* string description_prompt */ 3:
                     message.descriptionPrompt = reader.string();
@@ -858,9 +858,9 @@ class ChatBotProto$Type extends MessageType<ChatBotProto> {
         /* string bot_id = 1; */
         if (message.botId !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.botId);
-        /* string name = 2; */
-        if (message.name !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.name);
+        /* string display_name = 2; */
+        if (message.displayName !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.displayName);
         /* string description_prompt = 3; */
         if (message.descriptionPrompt !== "")
             writer.tag(3, WireType.LengthDelimited).string(message.descriptionPrompt);

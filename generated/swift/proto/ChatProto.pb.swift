@@ -293,7 +293,7 @@ struct ChatBotProto {
 
   var botID: String = String()
 
-  var name: String = String()
+  var displayName: String = String()
 
   var descriptionPrompt: String = String()
 
@@ -966,7 +966,7 @@ extension ChatBotProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
   static let protoMessageName: String = "ChatBotProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "bot_id"),
-    2: .same(proto: "name"),
+    2: .standard(proto: "display_name"),
     3: .standard(proto: "description_prompt"),
     4: .same(proto: "activities"),
   ]
@@ -978,7 +978,7 @@ extension ChatBotProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.botID) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.name) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.displayName) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.descriptionPrompt) }()
       case 4: try { try decoder.decodeSingularMessageField(value: &self._activities) }()
       default: break
@@ -994,8 +994,8 @@ extension ChatBotProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     if !self.botID.isEmpty {
       try visitor.visitSingularStringField(value: self.botID, fieldNumber: 1)
     }
-    if !self.name.isEmpty {
-      try visitor.visitSingularStringField(value: self.name, fieldNumber: 2)
+    if !self.displayName.isEmpty {
+      try visitor.visitSingularStringField(value: self.displayName, fieldNumber: 2)
     }
     if !self.descriptionPrompt.isEmpty {
       try visitor.visitSingularStringField(value: self.descriptionPrompt, fieldNumber: 3)
@@ -1008,7 +1008,7 @@ extension ChatBotProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
 
   static func ==(lhs: ChatBotProto, rhs: ChatBotProto) -> Bool {
     if lhs.botID != rhs.botID {return false}
-    if lhs.name != rhs.name {return false}
+    if lhs.displayName != rhs.displayName {return false}
     if lhs.descriptionPrompt != rhs.descriptionPrompt {return false}
     if lhs._activities != rhs._activities {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
