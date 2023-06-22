@@ -23,6 +23,7 @@ message ChatApiResponseProto {
 }
 
 message GetChatBotsRequestProto {
+  ChatBotProto.Type type = 1;
 }
 
 message GetChatBotsResponseProto {
@@ -52,9 +53,15 @@ message DeleteChatSessionResponseProto {
 }
 
 message ChatBotProto {
+  enum Type {
+    UNDEFINED = 0;
+    STORY_BOT = 1;
+    GLOBAL_BOT = 2;
+  }
   string bot_id = 1;
   google.protobuf.Timestamp created_at = 5;
   google.protobuf.Timestamp last_modified_at = 6;
+  Type type = 7;
   string display_name = 2;
   string description_prompt = 3;
   ChatActivitiesProto activities = 4;

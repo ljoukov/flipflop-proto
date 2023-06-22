@@ -95,6 +95,10 @@ export interface ChatApiResponseProto {
  * @generated from protobuf message GetChatBotsRequestProto
  */
 export interface GetChatBotsRequestProto {
+    /**
+     * @generated from protobuf field: ChatBotProto.Type type = 1;
+     */
+    type: ChatBotProto_Type;
 }
 /**
  * @generated from protobuf message GetChatBotsResponseProto
@@ -168,6 +172,10 @@ export interface ChatBotProto {
      */
     lastModifiedAt?: Timestamp;
     /**
+     * @generated from protobuf field: ChatBotProto.Type type = 7;
+     */
+    type: ChatBotProto_Type;
+    /**
      * @generated from protobuf field: string display_name = 2;
      */
     displayName: string;
@@ -179,6 +187,23 @@ export interface ChatBotProto {
      * @generated from protobuf field: ChatActivitiesProto activities = 4;
      */
     activities?: ChatActivitiesProto;
+}
+/**
+ * @generated from protobuf enum ChatBotProto.Type
+ */
+export enum ChatBotProto_Type {
+    /**
+     * @generated from protobuf enum value: UNDEFINED = 0;
+     */
+    UNDEFINED = 0,
+    /**
+     * @generated from protobuf enum value: STORY_BOT = 1;
+     */
+    STORY_BOT = 1,
+    /**
+     * @generated from protobuf enum value: GLOBAL_BOT = 2;
+     */
+    GLOBAL_BOT = 2
 }
 /**
  * @generated from protobuf message ChatActivitiesProto
@@ -507,19 +532,40 @@ export const ChatApiResponseProto = new ChatApiResponseProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class GetChatBotsRequestProto$Type extends MessageType<GetChatBotsRequestProto> {
     constructor() {
-        super("GetChatBotsRequestProto", []);
+        super("GetChatBotsRequestProto", [
+            { no: 1, name: "type", kind: "enum", T: () => ["ChatBotProto.Type", ChatBotProto_Type] }
+        ]);
     }
     create(value?: PartialMessage<GetChatBotsRequestProto>): GetChatBotsRequestProto {
-        const message = {};
+        const message = { type: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<GetChatBotsRequestProto>(this, message, value);
         return message;
     }
     internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetChatBotsRequestProto): GetChatBotsRequestProto {
-        return target ?? this.create();
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* ChatBotProto.Type type */ 1:
+                    message.type = reader.int32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
     }
     internalBinaryWrite(message: GetChatBotsRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* ChatBotProto.Type type = 1; */
+        if (message.type !== 0)
+            writer.tag(1, WireType.Varint).int32(message.type);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -824,13 +870,14 @@ class ChatBotProto$Type extends MessageType<ChatBotProto> {
             { no: 1, name: "bot_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "created_at", kind: "message", T: () => Timestamp },
             { no: 6, name: "last_modified_at", kind: "message", T: () => Timestamp },
+            { no: 7, name: "type", kind: "enum", T: () => ["ChatBotProto.Type", ChatBotProto_Type] },
             { no: 2, name: "display_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "description_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "activities", kind: "message", T: () => ChatActivitiesProto }
         ]);
     }
     create(value?: PartialMessage<ChatBotProto>): ChatBotProto {
-        const message = { botId: "", displayName: "", descriptionPrompt: "" };
+        const message = { botId: "", type: 0, displayName: "", descriptionPrompt: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<ChatBotProto>(this, message, value);
@@ -849,6 +896,9 @@ class ChatBotProto$Type extends MessageType<ChatBotProto> {
                     break;
                 case /* google.protobuf.Timestamp last_modified_at */ 6:
                     message.lastModifiedAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.lastModifiedAt);
+                    break;
+                case /* ChatBotProto.Type type */ 7:
+                    message.type = reader.int32();
                     break;
                 case /* string display_name */ 2:
                     message.displayName = reader.string();
@@ -880,6 +930,9 @@ class ChatBotProto$Type extends MessageType<ChatBotProto> {
         /* google.protobuf.Timestamp last_modified_at = 6; */
         if (message.lastModifiedAt)
             Timestamp.internalBinaryWrite(message.lastModifiedAt, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+        /* ChatBotProto.Type type = 7; */
+        if (message.type !== 0)
+            writer.tag(7, WireType.Varint).int32(message.type);
         /* string display_name = 2; */
         if (message.displayName !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.displayName);

@@ -183,6 +183,8 @@ struct GetChatBotsRequestProto {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  var type: ChatBotProto.TypeEnum = .undefined
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -311,6 +313,8 @@ struct ChatBotProto {
   /// Clears the value of `lastModifiedAt`. Subsequent reads from it will return its default value.
   mutating func clearLastModifiedAt() {self._lastModifiedAt = nil}
 
+  var type: ChatBotProto.TypeEnum = .undefined
+
   var displayName: String = String()
 
   var descriptionPrompt: String = String()
@@ -326,12 +330,56 @@ struct ChatBotProto {
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
+  enum TypeEnum: SwiftProtobuf.Enum {
+    typealias RawValue = Int
+    case undefined // = 0
+    case storyBot // = 1
+    case globalBot // = 2
+    case UNRECOGNIZED(Int)
+
+    init() {
+      self = .undefined
+    }
+
+    init?(rawValue: Int) {
+      switch rawValue {
+      case 0: self = .undefined
+      case 1: self = .storyBot
+      case 2: self = .globalBot
+      default: self = .UNRECOGNIZED(rawValue)
+      }
+    }
+
+    var rawValue: Int {
+      switch self {
+      case .undefined: return 0
+      case .storyBot: return 1
+      case .globalBot: return 2
+      case .UNRECOGNIZED(let i): return i
+      }
+    }
+
+  }
+
   init() {}
 
   fileprivate var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
   fileprivate var _lastModifiedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
   fileprivate var _activities: ChatActivitiesProto? = nil
 }
+
+#if swift(>=4.2)
+
+extension ChatBotProto.TypeEnum: CaseIterable {
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static var allCases: [ChatBotProto.TypeEnum] = [
+    .undefined,
+    .storyBot,
+    .globalBot,
+  ]
+}
+
+#endif  // swift(>=4.2)
 
 struct ChatActivitiesProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
@@ -527,6 +575,7 @@ extension UpdateChatSessionResponseProto: @unchecked Sendable {}
 extension DeleteChatSessionRequestProto: @unchecked Sendable {}
 extension DeleteChatSessionResponseProto: @unchecked Sendable {}
 extension ChatBotProto: @unchecked Sendable {}
+extension ChatBotProto.TypeEnum: @unchecked Sendable {}
 extension ChatActivitiesProto: @unchecked Sendable {}
 extension ChatActivityProto: @unchecked Sendable {}
 extension ChatAssistantMessageBlockProto: @unchecked Sendable {}
@@ -759,18 +808,31 @@ extension ChatApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
 
 extension GetChatBotsRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "GetChatBotsRequestProto"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "type"),
+  ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let _ = try decoder.nextFieldNumber() {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularEnumField(value: &self.type) }()
+      default: break
+      }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.type != .undefined {
+      try visitor.visitSingularEnumField(value: self.type, fieldNumber: 1)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: GetChatBotsRequestProto, rhs: GetChatBotsRequestProto) -> Bool {
+    if lhs.type != rhs.type {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -988,6 +1050,7 @@ extension ChatBotProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     1: .standard(proto: "bot_id"),
     5: .standard(proto: "created_at"),
     6: .standard(proto: "last_modified_at"),
+    7: .same(proto: "type"),
     2: .standard(proto: "display_name"),
     3: .standard(proto: "description_prompt"),
     4: .same(proto: "activities"),
@@ -1005,6 +1068,7 @@ extension ChatBotProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
       case 4: try { try decoder.decodeSingularMessageField(value: &self._activities) }()
       case 5: try { try decoder.decodeSingularMessageField(value: &self._createdAt) }()
       case 6: try { try decoder.decodeSingularMessageField(value: &self._lastModifiedAt) }()
+      case 7: try { try decoder.decodeSingularEnumField(value: &self.type) }()
       default: break
       }
     }
@@ -1033,6 +1097,9 @@ extension ChatBotProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     try { if let v = self._lastModifiedAt {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
     } }()
+    if self.type != .undefined {
+      try visitor.visitSingularEnumField(value: self.type, fieldNumber: 7)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1040,12 +1107,21 @@ extension ChatBotProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     if lhs.botID != rhs.botID {return false}
     if lhs._createdAt != rhs._createdAt {return false}
     if lhs._lastModifiedAt != rhs._lastModifiedAt {return false}
+    if lhs.type != rhs.type {return false}
     if lhs.displayName != rhs.displayName {return false}
     if lhs.descriptionPrompt != rhs.descriptionPrompt {return false}
     if lhs._activities != rhs._activities {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
+}
+
+extension ChatBotProto.TypeEnum: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "UNDEFINED"),
+    1: .same(proto: "STORY_BOT"),
+    2: .same(proto: "GLOBAL_BOT"),
+  ]
 }
 
 extension ChatActivitiesProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
