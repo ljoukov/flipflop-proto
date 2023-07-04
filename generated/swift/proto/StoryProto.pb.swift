@@ -919,6 +919,14 @@ struct CardBlockProto {
     set {type = .revealBack(newValue)}
   }
 
+  var chatBot: ChatbotBlockProto {
+    get {
+      if case .chatBot(let v)? = type {return v}
+      return ChatbotBlockProto()
+    }
+    set {type = .chatBot(newValue)}
+  }
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_Type: Equatable {
@@ -932,6 +940,7 @@ struct CardBlockProto {
     case question(QuestionBlockProto)
     case prompt(PromptBlockProto)
     case revealBack(RevealBackBlockProto)
+    case chatBot(ChatbotBlockProto)
 
   #if !swift(>=4.1)
     static func ==(lhs: CardBlockProto.OneOf_Type, rhs: CardBlockProto.OneOf_Type) -> Bool {
@@ -977,6 +986,10 @@ struct CardBlockProto {
       }()
       case (.revealBack, .revealBack): return {
         guard case .revealBack(let l) = lhs, case .revealBack(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.chatBot, .chatBot): return {
+        guard case .chatBot(let l) = lhs, case .chatBot(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       default: return false
@@ -1363,6 +1376,18 @@ struct RevealBackBlockProto {
   fileprivate var _backFace: CardFaceProto? = nil
 }
 
+struct ChatbotBlockProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var botID: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 #if swift(>=5.5) && canImport(_Concurrency)
 extension CardTypeProto: @unchecked Sendable {}
 extension FontNameProto: @unchecked Sendable {}
@@ -1409,6 +1434,7 @@ extension QuestionBlockOptionProto: @unchecked Sendable {}
 extension QuestionBlockProto: @unchecked Sendable {}
 extension PromptBlockProto: @unchecked Sendable {}
 extension RevealBackBlockProto: @unchecked Sendable {}
+extension ChatbotBlockProto: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
@@ -2352,6 +2378,7 @@ extension CardBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
     8: .same(proto: "question"),
     9: .same(proto: "prompt"),
     10: .standard(proto: "reveal_back"),
+    11: .standard(proto: "chat_bot"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2490,6 +2517,19 @@ extension CardBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
           self.type = .revealBack(v)
         }
       }()
+      case 11: try {
+        var v: ChatbotBlockProto?
+        var hadOneofValue = false
+        if let current = self.type {
+          hadOneofValue = true
+          if case .chatBot(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.type = .chatBot(v)
+        }
+      }()
       default: break
       }
     }
@@ -2540,6 +2580,10 @@ extension CardBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
     case .revealBack?: try {
       guard case .revealBack(let v)? = self.type else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
+    }()
+    case .chatBot?: try {
+      guard case .chatBot(let v)? = self.type else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 11)
     }()
     case nil: break
     }
@@ -3260,6 +3304,38 @@ extension RevealBackBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
   static func ==(lhs: RevealBackBlockProto, rhs: RevealBackBlockProto) -> Bool {
     if lhs.label != rhs.label {return false}
     if lhs._backFace != rhs._backFace {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension ChatbotBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "ChatbotBlockProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "bot_id"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.botID) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.botID.isEmpty {
+      try visitor.visitSingularStringField(value: self.botID, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: ChatbotBlockProto, rhs: ChatbotBlockProto) -> Bool {
+    if lhs.botID != rhs.botID {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

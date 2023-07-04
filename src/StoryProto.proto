@@ -138,6 +138,7 @@ message CardBlockProto {
     QuestionBlockProto question = 8;
     PromptBlockProto prompt = 9;
     RevealBackBlockProto reveal_back = 10;
+    ChatbotBlockProto chat_bot = 11;
   }
 }
 
@@ -270,4 +271,8 @@ message PromptBlockProto {
 message RevealBackBlockProto {
   string label = 1;
   CardFaceProto back_face = 2;
+}
+
+message ChatbotBlockProto {
+  string bot_id = 1;
 }

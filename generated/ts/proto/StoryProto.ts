@@ -398,6 +398,12 @@ export interface CardBlockProto {
          */
         revealBack: RevealBackBlockProto;
     } | {
+        oneofKind: "chatBot";
+        /**
+         * @generated from protobuf field: ChatbotBlockProto chat_bot = 11;
+         */
+        chatBot: ChatbotBlockProto;
+    } | {
         oneofKind: undefined;
     };
 }
@@ -663,6 +669,15 @@ export interface RevealBackBlockProto {
      * @generated from protobuf field: CardFaceProto back_face = 2;
      */
     backFace?: CardFaceProto;
+}
+/**
+ * @generated from protobuf message ChatbotBlockProto
+ */
+export interface ChatbotBlockProto {
+    /**
+     * @generated from protobuf field: string bot_id = 1;
+     */
+    botId: string;
 }
 /**
  * @generated from protobuf enum CardTypeProto
@@ -1851,7 +1866,8 @@ class CardBlockProto$Type extends MessageType<CardBlockProto> {
             { no: 7, name: "choice", kind: "message", oneof: "type", T: () => ChoiceBlockProto },
             { no: 8, name: "question", kind: "message", oneof: "type", T: () => QuestionBlockProto },
             { no: 9, name: "prompt", kind: "message", oneof: "type", T: () => PromptBlockProto },
-            { no: 10, name: "reveal_back", kind: "message", oneof: "type", T: () => RevealBackBlockProto }
+            { no: 10, name: "reveal_back", kind: "message", oneof: "type", T: () => RevealBackBlockProto },
+            { no: 11, name: "chat_bot", kind: "message", oneof: "type", T: () => ChatbotBlockProto }
         ]);
     }
     create(value?: PartialMessage<CardBlockProto>): CardBlockProto {
@@ -1926,6 +1942,12 @@ class CardBlockProto$Type extends MessageType<CardBlockProto> {
                         revealBack: RevealBackBlockProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).revealBack)
                     };
                     break;
+                case /* ChatbotBlockProto chat_bot */ 11:
+                    message.type = {
+                        oneofKind: "chatBot",
+                        chatBot: ChatbotBlockProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).chatBot)
+                    };
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -1968,6 +1990,9 @@ class CardBlockProto$Type extends MessageType<CardBlockProto> {
         /* RevealBackBlockProto reveal_back = 10; */
         if (message.type.oneofKind === "revealBack")
             RevealBackBlockProto.internalBinaryWrite(message.type.revealBack, writer.tag(10, WireType.LengthDelimited).fork(), options).join();
+        /* ChatbotBlockProto chat_bot = 11; */
+        if (message.type.oneofKind === "chatBot")
+            ChatbotBlockProto.internalBinaryWrite(message.type.chatBot, writer.tag(11, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2892,3 +2917,50 @@ class RevealBackBlockProto$Type extends MessageType<RevealBackBlockProto> {
  * @generated MessageType for protobuf message RevealBackBlockProto
  */
 export const RevealBackBlockProto = new RevealBackBlockProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ChatbotBlockProto$Type extends MessageType<ChatbotBlockProto> {
+    constructor() {
+        super("ChatbotBlockProto", [
+            { no: 1, name: "bot_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<ChatbotBlockProto>): ChatbotBlockProto {
+        const message = { botId: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<ChatbotBlockProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ChatbotBlockProto): ChatbotBlockProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string bot_id */ 1:
+                    message.botId = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: ChatbotBlockProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string bot_id = 1; */
+        if (message.botId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.botId);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message ChatbotBlockProto
+ */
+export const ChatbotBlockProto = new ChatbotBlockProto$Type();
