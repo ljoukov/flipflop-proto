@@ -404,6 +404,12 @@ export interface CardBlockProto {
          */
         chatBot: ChatbotBlockProto;
     } | {
+        oneofKind: "vote";
+        /**
+         * @generated from protobuf field: VoteBlockProto vote = 12;
+         */
+        vote: VoteBlockProto;
+    } | {
         oneofKind: undefined;
     };
 }
@@ -605,6 +611,32 @@ export interface ChoiceBlockProto {
      * @generated from protobuf field: CardFaceProto wrong_answer_face = 5;
      */
     wrongAnswerFace?: CardFaceProto;
+}
+/**
+ * @generated from protobuf message VoteBlockOptionProto
+ */
+export interface VoteBlockOptionProto {
+    /**
+     * @generated from protobuf field: StyledTextProto text = 1;
+     */
+    text?: StyledTextProto;
+    /**
+     * @generated from protobuf field: int32 num_votes = 2;
+     */
+    numVotes: number;
+}
+/**
+ * @generated from protobuf message VoteBlockProto
+ */
+export interface VoteBlockProto {
+    /**
+     * @generated from protobuf field: repeated VoteBlockOptionProto options = 1;
+     */
+    options: VoteBlockOptionProto[];
+    /**
+     * @generated from protobuf field: int32 total_votes = 2;
+     */
+    totalVotes: number;
 }
 /**
  * @generated from protobuf message QuestionBlockOptionProto
@@ -1867,7 +1899,8 @@ class CardBlockProto$Type extends MessageType<CardBlockProto> {
             { no: 8, name: "question", kind: "message", oneof: "type", T: () => QuestionBlockProto },
             { no: 9, name: "prompt", kind: "message", oneof: "type", T: () => PromptBlockProto },
             { no: 10, name: "reveal_back", kind: "message", oneof: "type", T: () => RevealBackBlockProto },
-            { no: 11, name: "chat_bot", kind: "message", oneof: "type", T: () => ChatbotBlockProto }
+            { no: 11, name: "chat_bot", kind: "message", oneof: "type", T: () => ChatbotBlockProto },
+            { no: 12, name: "vote", kind: "message", oneof: "type", T: () => VoteBlockProto }
         ]);
     }
     create(value?: PartialMessage<CardBlockProto>): CardBlockProto {
@@ -1948,6 +1981,12 @@ class CardBlockProto$Type extends MessageType<CardBlockProto> {
                         chatBot: ChatbotBlockProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).chatBot)
                     };
                     break;
+                case /* VoteBlockProto vote */ 12:
+                    message.type = {
+                        oneofKind: "vote",
+                        vote: VoteBlockProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).vote)
+                    };
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -1993,6 +2032,9 @@ class CardBlockProto$Type extends MessageType<CardBlockProto> {
         /* ChatbotBlockProto chat_bot = 11; */
         if (message.type.oneofKind === "chatBot")
             ChatbotBlockProto.internalBinaryWrite(message.type.chatBot, writer.tag(11, WireType.LengthDelimited).fork(), options).join();
+        /* VoteBlockProto vote = 12; */
+        if (message.type.oneofKind === "vote")
+            VoteBlockProto.internalBinaryWrite(message.type.vote, writer.tag(12, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2680,6 +2722,114 @@ class ChoiceBlockProto$Type extends MessageType<ChoiceBlockProto> {
  * @generated MessageType for protobuf message ChoiceBlockProto
  */
 export const ChoiceBlockProto = new ChoiceBlockProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class VoteBlockOptionProto$Type extends MessageType<VoteBlockOptionProto> {
+    constructor() {
+        super("VoteBlockOptionProto", [
+            { no: 1, name: "text", kind: "message", T: () => StyledTextProto },
+            { no: 2, name: "num_votes", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
+        ]);
+    }
+    create(value?: PartialMessage<VoteBlockOptionProto>): VoteBlockOptionProto {
+        const message = { numVotes: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<VoteBlockOptionProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: VoteBlockOptionProto): VoteBlockOptionProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* StyledTextProto text */ 1:
+                    message.text = StyledTextProto.internalBinaryRead(reader, reader.uint32(), options, message.text);
+                    break;
+                case /* int32 num_votes */ 2:
+                    message.numVotes = reader.int32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: VoteBlockOptionProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* StyledTextProto text = 1; */
+        if (message.text)
+            StyledTextProto.internalBinaryWrite(message.text, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* int32 num_votes = 2; */
+        if (message.numVotes !== 0)
+            writer.tag(2, WireType.Varint).int32(message.numVotes);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message VoteBlockOptionProto
+ */
+export const VoteBlockOptionProto = new VoteBlockOptionProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class VoteBlockProto$Type extends MessageType<VoteBlockProto> {
+    constructor() {
+        super("VoteBlockProto", [
+            { no: 1, name: "options", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => VoteBlockOptionProto },
+            { no: 2, name: "total_votes", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
+        ]);
+    }
+    create(value?: PartialMessage<VoteBlockProto>): VoteBlockProto {
+        const message = { options: [], totalVotes: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<VoteBlockProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: VoteBlockProto): VoteBlockProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated VoteBlockOptionProto options */ 1:
+                    message.options.push(VoteBlockOptionProto.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* int32 total_votes */ 2:
+                    message.totalVotes = reader.int32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: VoteBlockProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated VoteBlockOptionProto options = 1; */
+        for (let i = 0; i < message.options.length; i++)
+            VoteBlockOptionProto.internalBinaryWrite(message.options[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* int32 total_votes = 2; */
+        if (message.totalVotes !== 0)
+            writer.tag(2, WireType.Varint).int32(message.totalVotes);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message VoteBlockProto
+ */
+export const VoteBlockProto = new VoteBlockProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class QuestionBlockOptionProto$Type extends MessageType<QuestionBlockOptionProto> {
     constructor() {

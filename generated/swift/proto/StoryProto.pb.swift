@@ -927,6 +927,14 @@ struct CardBlockProto {
     set {type = .chatBot(newValue)}
   }
 
+  var vote: VoteBlockProto {
+    get {
+      if case .vote(let v)? = type {return v}
+      return VoteBlockProto()
+    }
+    set {type = .vote(newValue)}
+  }
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_Type: Equatable {
@@ -941,6 +949,7 @@ struct CardBlockProto {
     case prompt(PromptBlockProto)
     case revealBack(RevealBackBlockProto)
     case chatBot(ChatbotBlockProto)
+    case vote(VoteBlockProto)
 
   #if !swift(>=4.1)
     static func ==(lhs: CardBlockProto.OneOf_Type, rhs: CardBlockProto.OneOf_Type) -> Bool {
@@ -990,6 +999,10 @@ struct CardBlockProto {
       }()
       case (.chatBot, .chatBot): return {
         guard case .chatBot(let l) = lhs, case .chatBot(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.vote, .vote): return {
+        guard case .vote(let l) = lhs, case .vote(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       default: return false
@@ -1279,6 +1292,43 @@ struct ChoiceBlockProto {
   fileprivate var _wrongAnswerFace: CardFaceProto? = nil
 }
 
+struct VoteBlockOptionProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var text: StyledTextProto {
+    get {return _text ?? StyledTextProto()}
+    set {_text = newValue}
+  }
+  /// Returns true if `text` has been explicitly set.
+  var hasText: Bool {return self._text != nil}
+  /// Clears the value of `text`. Subsequent reads from it will return its default value.
+  mutating func clearText() {self._text = nil}
+
+  var numVotes: Int32 = 0
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+
+  fileprivate var _text: StyledTextProto? = nil
+}
+
+struct VoteBlockProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var options: [VoteBlockOptionProto] = []
+
+  var totalVotes: Int32 = 0
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 struct QuestionBlockOptionProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -1430,6 +1480,8 @@ extension CoffeeBlockProto: @unchecked Sendable {}
 extension RevealBlockProto: @unchecked Sendable {}
 extension ChoiceBlockOptionProto: @unchecked Sendable {}
 extension ChoiceBlockProto: @unchecked Sendable {}
+extension VoteBlockOptionProto: @unchecked Sendable {}
+extension VoteBlockProto: @unchecked Sendable {}
 extension QuestionBlockOptionProto: @unchecked Sendable {}
 extension QuestionBlockProto: @unchecked Sendable {}
 extension PromptBlockProto: @unchecked Sendable {}
@@ -2379,6 +2431,7 @@ extension CardBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
     9: .same(proto: "prompt"),
     10: .standard(proto: "reveal_back"),
     11: .standard(proto: "chat_bot"),
+    12: .same(proto: "vote"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2530,6 +2583,19 @@ extension CardBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
           self.type = .chatBot(v)
         }
       }()
+      case 12: try {
+        var v: VoteBlockProto?
+        var hadOneofValue = false
+        if let current = self.type {
+          hadOneofValue = true
+          if case .vote(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.type = .vote(v)
+        }
+      }()
       default: break
       }
     }
@@ -2584,6 +2650,10 @@ extension CardBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
     case .chatBot?: try {
       guard case .chatBot(let v)? = self.type else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 11)
+    }()
+    case .vote?: try {
+      guard case .vote(let v)? = self.type else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 12)
     }()
     case nil: break
     }
@@ -3122,6 +3192,86 @@ extension ChoiceBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     if lhs.correctIndex != rhs.correctIndex {return false}
     if lhs._correctAnswerFace != rhs._correctAnswerFace {return false}
     if lhs._wrongAnswerFace != rhs._wrongAnswerFace {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension VoteBlockOptionProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "VoteBlockOptionProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "text"),
+    2: .standard(proto: "num_votes"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._text) }()
+      case 2: try { try decoder.decodeSingularInt32Field(value: &self.numVotes) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._text {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    if self.numVotes != 0 {
+      try visitor.visitSingularInt32Field(value: self.numVotes, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: VoteBlockOptionProto, rhs: VoteBlockOptionProto) -> Bool {
+    if lhs._text != rhs._text {return false}
+    if lhs.numVotes != rhs.numVotes {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension VoteBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "VoteBlockProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "options"),
+    2: .standard(proto: "total_votes"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.options) }()
+      case 2: try { try decoder.decodeSingularInt32Field(value: &self.totalVotes) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.options.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.options, fieldNumber: 1)
+    }
+    if self.totalVotes != 0 {
+      try visitor.visitSingularInt32Field(value: self.totalVotes, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: VoteBlockProto, rhs: VoteBlockProto) -> Bool {
+    if lhs.options != rhs.options {return false}
+    if lhs.totalVotes != rhs.totalVotes {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
