@@ -1322,8 +1322,6 @@ struct VoteBlockProto {
 
   var options: [VoteBlockOptionProto] = []
 
-  var totalVotes: Int32 = 0
-
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -3243,7 +3241,6 @@ extension VoteBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
   static let protoMessageName: String = "VoteBlockProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "options"),
-    2: .standard(proto: "total_votes"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3253,7 +3250,6 @@ extension VoteBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeRepeatedMessageField(value: &self.options) }()
-      case 2: try { try decoder.decodeSingularInt32Field(value: &self.totalVotes) }()
       default: break
       }
     }
@@ -3263,15 +3259,11 @@ extension VoteBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
     if !self.options.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.options, fieldNumber: 1)
     }
-    if self.totalVotes != 0 {
-      try visitor.visitSingularInt32Field(value: self.totalVotes, fieldNumber: 2)
-    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: VoteBlockProto, rhs: VoteBlockProto) -> Bool {
     if lhs.options != rhs.options {return false}
-    if lhs.totalVotes != rhs.totalVotes {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

@@ -258,7 +258,6 @@ message VoteBlockOptionProto {
 
 message VoteBlockProto {
   repeated VoteBlockOptionProto options = 1;
-  int32 total_votes = 2;
 }
 
 message QuestionBlockOptionProto {

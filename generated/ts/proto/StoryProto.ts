@@ -633,10 +633,6 @@ export interface VoteBlockProto {
      * @generated from protobuf field: repeated VoteBlockOptionProto options = 1;
      */
     options: VoteBlockOptionProto[];
-    /**
-     * @generated from protobuf field: int32 total_votes = 2;
-     */
-    totalVotes: number;
 }
 /**
  * @generated from protobuf message QuestionBlockOptionProto
@@ -2780,12 +2776,11 @@ export const VoteBlockOptionProto = new VoteBlockOptionProto$Type();
 class VoteBlockProto$Type extends MessageType<VoteBlockProto> {
     constructor() {
         super("VoteBlockProto", [
-            { no: 1, name: "options", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => VoteBlockOptionProto },
-            { no: 2, name: "total_votes", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
+            { no: 1, name: "options", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => VoteBlockOptionProto }
         ]);
     }
     create(value?: PartialMessage<VoteBlockProto>): VoteBlockProto {
-        const message = { options: [], totalVotes: 0 };
+        const message = { options: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<VoteBlockProto>(this, message, value);
@@ -2798,9 +2793,6 @@ class VoteBlockProto$Type extends MessageType<VoteBlockProto> {
             switch (fieldNo) {
                 case /* repeated VoteBlockOptionProto options */ 1:
                     message.options.push(VoteBlockOptionProto.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                case /* int32 total_votes */ 2:
-                    message.totalVotes = reader.int32();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2817,9 +2809,6 @@ class VoteBlockProto$Type extends MessageType<VoteBlockProto> {
         /* repeated VoteBlockOptionProto options = 1; */
         for (let i = 0; i < message.options.length; i++)
             VoteBlockOptionProto.internalBinaryWrite(message.options[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* int32 total_votes = 2; */
-        if (message.totalVotes !== 0)
-            writer.tag(2, WireType.Varint).int32(message.totalVotes);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
