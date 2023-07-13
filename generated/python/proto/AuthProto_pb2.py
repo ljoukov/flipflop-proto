@@ -11,16 +11,29 @@ from google.protobuf import symbol_database as _symbol_database
 _sym_db = _symbol_database.Default()
 
 
+from google.protobuf import duration_pb2 as google_dot_protobuf_dot_duration__pb2
 from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0f\x41uthProto.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"}\n\rUserAuthProto\x12\x0f\n\x07user_id\x18\x01 \x01(\t\x12\x14\n\x0c\x61\x63\x63\x65ss_token\x18\x02 \x01(\t\x12.\n\nexpires_at\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x15\n\rrefresh_token\x18\x04 \x01(\tb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0f\x41uthProto.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"}\n\rUserAuthProto\x12\x0f\n\x07user_id\x18\x01 \x01(\t\x12\x14\n\x0c\x61\x63\x63\x65ss_token\x18\x02 \x01(\t\x12.\n\nexpires_at\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x15\n\rrefresh_token\x18\x04 \x01(\t\"S\n\x13\x41uthApiRequestProto\x12\x31\n\rget_user_auth\x18\x01 \x01(\x0b\x32\x18.GetUserAuthRequestProtoH\x00\x42\t\n\x07request\"\xdc\x01\n\x14\x41uthApiResponseProto\x12\x32\n\rget_user_auth\x18\x01 \x01(\x0b\x32\x19.GetUserAuthResponseProtoH\x00\x12\x37\n\tlatencies\x18\x05 \x03(\x0b\x32$.AuthApiResponseProto.LatenciesEntry\x1aK\n\x0eLatenciesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12(\n\x05value\x18\x02 \x01(\x0b\x32\x19.google.protobuf.Duration:\x02\x38\x01\x42\n\n\x08response\"S\n\x17GetUserAuthRequestProto\x12\x10\n\x08id_token\x18\x01 \x01(\t\x12\x13\n\x0bprovider_id\x18\x02 \x01(\t\x12\x11\n\traw_nonce\x18\x03 \x01(\t\"5\n\x18GetUserAuthResponseProto\x12\x19\n\x11\x65ncoded_user_auth\x18\x01 \x01(\tb\x06proto3')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'AuthProto_pb2', globals())
 if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
-  _USERAUTHPROTO._serialized_start=52
-  _USERAUTHPROTO._serialized_end=177
+  _AUTHAPIRESPONSEPROTO_LATENCIESENTRY._options = None
+  _AUTHAPIRESPONSEPROTO_LATENCIESENTRY._serialized_options = b'8\001'
+  _USERAUTHPROTO._serialized_start=84
+  _USERAUTHPROTO._serialized_end=209
+  _AUTHAPIREQUESTPROTO._serialized_start=211
+  _AUTHAPIREQUESTPROTO._serialized_end=294
+  _AUTHAPIRESPONSEPROTO._serialized_start=297
+  _AUTHAPIRESPONSEPROTO._serialized_end=517
+  _AUTHAPIRESPONSEPROTO_LATENCIESENTRY._serialized_start=430
+  _AUTHAPIRESPONSEPROTO_LATENCIESENTRY._serialized_end=505
+  _GETUSERAUTHREQUESTPROTO._serialized_start=519
+  _GETUSERAUTHREQUESTPROTO._serialized_end=602
+  _GETUSERAUTHRESPONSEPROTO._serialized_start=604
+  _GETUSERAUTHRESPONSEPROTO._serialized_end=657
 # @@protoc_insertion_point(module_scope)

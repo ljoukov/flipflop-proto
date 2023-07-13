@@ -1,5 +1,6 @@
 syntax = "proto3";
 
+import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 
 message UserAuthProto {
@@ -8,4 +9,27 @@ message UserAuthProto {
   string access_token = 2;
   google.protobuf.Timestamp expires_at = 3;
   string refresh_token = 4;
+}
+
+message AuthApiRequestProto {
+  oneof request {
+    GetUserAuthRequestProto get_user_auth = 1;
+  }
+}
+
+message AuthApiResponseProto {
+  oneof response {
+    GetUserAuthResponseProto get_user_auth = 1;
+  }
+  map<string, google.protobuf.Duration> latencies = 5;
+}
+
+message GetUserAuthRequestProto {
+  string id_token = 1;
+  string provider_id = 2;
+  string raw_nonce = 3;
+}
+
+message GetUserAuthResponseProto {
+  string encoded_user_auth = 1;
 }
