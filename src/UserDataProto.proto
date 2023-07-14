@@ -19,16 +19,19 @@ message UpdateUserDataResponseProto {
 }
 
 message UserApiRequestProto {
+  string encoded_user_auth = 1;
   oneof request {
-    GetUserDataRequestProto get_user_data = 1;
-    UpdateUserDataRequestProto update_user_data = 2;
+    GetUserDataRequestProto get_user_data = 2;
+    UpdateUserDataRequestProto update_user_data = 3;
   }
 }
 
 message UserApiResponseProto {
+  // If present the token was refreshed and the client should use this new one from now onwards.
+  string refreshed_encoded_user_auth = 1;
   oneof response {
-    GetUserDataResponseProto get_user_data = 1;
-    UpdateUserDataResponseProto update_user_data = 2;
+    GetUserDataResponseProto get_user_data = 2;
+    UpdateUserDataResponseProto update_user_data = 3;
   }
   map<string, google.protobuf.Duration> latencies = 100;
 }

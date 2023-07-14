@@ -96,30 +96,34 @@ export interface DeleteStoryResponseProto {
  */
 export interface StoryApiRequestProto {
     /**
+     * @generated from protobuf field: string encoded_user_auth = 1;
+     */
+    encodedUserAuth: string;
+    /**
      * @generated from protobuf oneof: request
      */
     request: {
         oneofKind: "getStories";
         /**
-         * @generated from protobuf field: GetStoriesRequestProto get_stories = 1;
+         * @generated from protobuf field: GetStoriesRequestProto get_stories = 2;
          */
         getStories: GetStoriesRequestProto;
     } | {
         oneofKind: "createStory";
         /**
-         * @generated from protobuf field: CreateStoryRequestProto create_story = 2;
+         * @generated from protobuf field: CreateStoryRequestProto create_story = 3;
          */
         createStory: CreateStoryRequestProto;
     } | {
         oneofKind: "updateStory";
         /**
-         * @generated from protobuf field: UpdateStoryRequestProto update_story = 3;
+         * @generated from protobuf field: UpdateStoryRequestProto update_story = 4;
          */
         updateStory: UpdateStoryRequestProto;
     } | {
         oneofKind: "deleteStory";
         /**
-         * @generated from protobuf field: DeleteStoryRequestProto delete_story = 4;
+         * @generated from protobuf field: DeleteStoryRequestProto delete_story = 5;
          */
         deleteStory: DeleteStoryRequestProto;
     } | {
@@ -131,37 +135,43 @@ export interface StoryApiRequestProto {
  */
 export interface StoryApiResponseProto {
     /**
+     * If present the token was refreshed and the client should use this new one from now onwards.
+     *
+     * @generated from protobuf field: string refreshed_encoded_user_auth = 1;
+     */
+    refreshedEncodedUserAuth: string;
+    /**
      * @generated from protobuf oneof: response
      */
     response: {
         oneofKind: "getStories";
         /**
-         * @generated from protobuf field: GetStoriesResponseProto get_stories = 1;
+         * @generated from protobuf field: GetStoriesResponseProto get_stories = 2;
          */
         getStories: GetStoriesResponseProto;
     } | {
         oneofKind: "createStory";
         /**
-         * @generated from protobuf field: CreateStoryResponseProto create_story = 2;
+         * @generated from protobuf field: CreateStoryResponseProto create_story = 3;
          */
         createStory: CreateStoryResponseProto;
     } | {
         oneofKind: "updateStory";
         /**
-         * @generated from protobuf field: UpdateStoryResponseProto update_story = 3;
+         * @generated from protobuf field: UpdateStoryResponseProto update_story = 4;
          */
         updateStory: UpdateStoryResponseProto;
     } | {
         oneofKind: "deleteStory";
         /**
-         * @generated from protobuf field: DeleteStoryResponseProto delete_story = 4;
+         * @generated from protobuf field: DeleteStoryResponseProto delete_story = 5;
          */
         deleteStory: DeleteStoryResponseProto;
     } | {
         oneofKind: undefined;
     };
     /**
-     * @generated from protobuf field: map<string, google.protobuf.Duration> latencies = 5;
+     * @generated from protobuf field: map<string, google.protobuf.Duration> latencies = 100;
      */
     latencies: {
         [key: string]: Duration;
@@ -1194,14 +1204,15 @@ export const DeleteStoryResponseProto = new DeleteStoryResponseProto$Type();
 class StoryApiRequestProto$Type extends MessageType<StoryApiRequestProto> {
     constructor() {
         super("StoryApiRequestProto", [
-            { no: 1, name: "get_stories", kind: "message", oneof: "request", T: () => GetStoriesRequestProto },
-            { no: 2, name: "create_story", kind: "message", oneof: "request", T: () => CreateStoryRequestProto },
-            { no: 3, name: "update_story", kind: "message", oneof: "request", T: () => UpdateStoryRequestProto },
-            { no: 4, name: "delete_story", kind: "message", oneof: "request", T: () => DeleteStoryRequestProto }
+            { no: 1, name: "encoded_user_auth", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "get_stories", kind: "message", oneof: "request", T: () => GetStoriesRequestProto },
+            { no: 3, name: "create_story", kind: "message", oneof: "request", T: () => CreateStoryRequestProto },
+            { no: 4, name: "update_story", kind: "message", oneof: "request", T: () => UpdateStoryRequestProto },
+            { no: 5, name: "delete_story", kind: "message", oneof: "request", T: () => DeleteStoryRequestProto }
         ]);
     }
     create(value?: PartialMessage<StoryApiRequestProto>): StoryApiRequestProto {
-        const message = { request: { oneofKind: undefined } };
+        const message = { encodedUserAuth: "", request: { oneofKind: undefined } };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StoryApiRequestProto>(this, message, value);
@@ -1212,25 +1223,28 @@ class StoryApiRequestProto$Type extends MessageType<StoryApiRequestProto> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* GetStoriesRequestProto get_stories */ 1:
+                case /* string encoded_user_auth */ 1:
+                    message.encodedUserAuth = reader.string();
+                    break;
+                case /* GetStoriesRequestProto get_stories */ 2:
                     message.request = {
                         oneofKind: "getStories",
                         getStories: GetStoriesRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).getStories)
                     };
                     break;
-                case /* CreateStoryRequestProto create_story */ 2:
+                case /* CreateStoryRequestProto create_story */ 3:
                     message.request = {
                         oneofKind: "createStory",
                         createStory: CreateStoryRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).createStory)
                     };
                     break;
-                case /* UpdateStoryRequestProto update_story */ 3:
+                case /* UpdateStoryRequestProto update_story */ 4:
                     message.request = {
                         oneofKind: "updateStory",
                         updateStory: UpdateStoryRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).updateStory)
                     };
                     break;
-                case /* DeleteStoryRequestProto delete_story */ 4:
+                case /* DeleteStoryRequestProto delete_story */ 5:
                     message.request = {
                         oneofKind: "deleteStory",
                         deleteStory: DeleteStoryRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).deleteStory)
@@ -1248,18 +1262,21 @@ class StoryApiRequestProto$Type extends MessageType<StoryApiRequestProto> {
         return message;
     }
     internalBinaryWrite(message: StoryApiRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* GetStoriesRequestProto get_stories = 1; */
+        /* string encoded_user_auth = 1; */
+        if (message.encodedUserAuth !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.encodedUserAuth);
+        /* GetStoriesRequestProto get_stories = 2; */
         if (message.request.oneofKind === "getStories")
-            GetStoriesRequestProto.internalBinaryWrite(message.request.getStories, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* CreateStoryRequestProto create_story = 2; */
+            GetStoriesRequestProto.internalBinaryWrite(message.request.getStories, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* CreateStoryRequestProto create_story = 3; */
         if (message.request.oneofKind === "createStory")
-            CreateStoryRequestProto.internalBinaryWrite(message.request.createStory, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* UpdateStoryRequestProto update_story = 3; */
+            CreateStoryRequestProto.internalBinaryWrite(message.request.createStory, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* UpdateStoryRequestProto update_story = 4; */
         if (message.request.oneofKind === "updateStory")
-            UpdateStoryRequestProto.internalBinaryWrite(message.request.updateStory, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* DeleteStoryRequestProto delete_story = 4; */
+            UpdateStoryRequestProto.internalBinaryWrite(message.request.updateStory, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* DeleteStoryRequestProto delete_story = 5; */
         if (message.request.oneofKind === "deleteStory")
-            DeleteStoryRequestProto.internalBinaryWrite(message.request.deleteStory, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+            DeleteStoryRequestProto.internalBinaryWrite(message.request.deleteStory, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1274,15 +1291,16 @@ export const StoryApiRequestProto = new StoryApiRequestProto$Type();
 class StoryApiResponseProto$Type extends MessageType<StoryApiResponseProto> {
     constructor() {
         super("StoryApiResponseProto", [
-            { no: 1, name: "get_stories", kind: "message", oneof: "response", T: () => GetStoriesResponseProto },
-            { no: 2, name: "create_story", kind: "message", oneof: "response", T: () => CreateStoryResponseProto },
-            { no: 3, name: "update_story", kind: "message", oneof: "response", T: () => UpdateStoryResponseProto },
-            { no: 4, name: "delete_story", kind: "message", oneof: "response", T: () => DeleteStoryResponseProto },
-            { no: 5, name: "latencies", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => Duration } }
+            { no: 1, name: "refreshed_encoded_user_auth", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "get_stories", kind: "message", oneof: "response", T: () => GetStoriesResponseProto },
+            { no: 3, name: "create_story", kind: "message", oneof: "response", T: () => CreateStoryResponseProto },
+            { no: 4, name: "update_story", kind: "message", oneof: "response", T: () => UpdateStoryResponseProto },
+            { no: 5, name: "delete_story", kind: "message", oneof: "response", T: () => DeleteStoryResponseProto },
+            { no: 100, name: "latencies", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => Duration } }
         ]);
     }
     create(value?: PartialMessage<StoryApiResponseProto>): StoryApiResponseProto {
-        const message = { response: { oneofKind: undefined }, latencies: {} };
+        const message = { refreshedEncodedUserAuth: "", response: { oneofKind: undefined }, latencies: {} };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StoryApiResponseProto>(this, message, value);
@@ -1293,32 +1311,35 @@ class StoryApiResponseProto$Type extends MessageType<StoryApiResponseProto> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* GetStoriesResponseProto get_stories */ 1:
+                case /* string refreshed_encoded_user_auth */ 1:
+                    message.refreshedEncodedUserAuth = reader.string();
+                    break;
+                case /* GetStoriesResponseProto get_stories */ 2:
                     message.response = {
                         oneofKind: "getStories",
                         getStories: GetStoriesResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).getStories)
                     };
                     break;
-                case /* CreateStoryResponseProto create_story */ 2:
+                case /* CreateStoryResponseProto create_story */ 3:
                     message.response = {
                         oneofKind: "createStory",
                         createStory: CreateStoryResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).createStory)
                     };
                     break;
-                case /* UpdateStoryResponseProto update_story */ 3:
+                case /* UpdateStoryResponseProto update_story */ 4:
                     message.response = {
                         oneofKind: "updateStory",
                         updateStory: UpdateStoryResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).updateStory)
                     };
                     break;
-                case /* DeleteStoryResponseProto delete_story */ 4:
+                case /* DeleteStoryResponseProto delete_story */ 5:
                     message.response = {
                         oneofKind: "deleteStory",
                         deleteStory: DeleteStoryResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).deleteStory)
                     };
                     break;
-                case /* map<string, google.protobuf.Duration> latencies */ 5:
-                    this.binaryReadMap5(message.latencies, reader, options);
+                case /* map<string, google.protobuf.Duration> latencies */ 100:
+                    this.binaryReadMap100(message.latencies, reader, options);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1331,7 +1352,7 @@ class StoryApiResponseProto$Type extends MessageType<StoryApiResponseProto> {
         }
         return message;
     }
-    private binaryReadMap5(map: StoryApiResponseProto["latencies"], reader: IBinaryReader, options: BinaryReadOptions): void {
+    private binaryReadMap100(map: StoryApiResponseProto["latencies"], reader: IBinaryReader, options: BinaryReadOptions): void {
         let len = reader.uint32(), end = reader.pos + len, key: keyof StoryApiResponseProto["latencies"] | undefined, val: StoryApiResponseProto["latencies"][any] | undefined;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -1348,21 +1369,24 @@ class StoryApiResponseProto$Type extends MessageType<StoryApiResponseProto> {
         map[key ?? ""] = val ?? Duration.create();
     }
     internalBinaryWrite(message: StoryApiResponseProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* GetStoriesResponseProto get_stories = 1; */
+        /* string refreshed_encoded_user_auth = 1; */
+        if (message.refreshedEncodedUserAuth !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.refreshedEncodedUserAuth);
+        /* GetStoriesResponseProto get_stories = 2; */
         if (message.response.oneofKind === "getStories")
-            GetStoriesResponseProto.internalBinaryWrite(message.response.getStories, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* CreateStoryResponseProto create_story = 2; */
+            GetStoriesResponseProto.internalBinaryWrite(message.response.getStories, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* CreateStoryResponseProto create_story = 3; */
         if (message.response.oneofKind === "createStory")
-            CreateStoryResponseProto.internalBinaryWrite(message.response.createStory, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* UpdateStoryResponseProto update_story = 3; */
+            CreateStoryResponseProto.internalBinaryWrite(message.response.createStory, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* UpdateStoryResponseProto update_story = 4; */
         if (message.response.oneofKind === "updateStory")
-            UpdateStoryResponseProto.internalBinaryWrite(message.response.updateStory, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* DeleteStoryResponseProto delete_story = 4; */
+            UpdateStoryResponseProto.internalBinaryWrite(message.response.updateStory, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* DeleteStoryResponseProto delete_story = 5; */
         if (message.response.oneofKind === "deleteStory")
-            DeleteStoryResponseProto.internalBinaryWrite(message.response.deleteStory, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
-        /* map<string, google.protobuf.Duration> latencies = 5; */
+            DeleteStoryResponseProto.internalBinaryWrite(message.response.deleteStory, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        /* map<string, google.protobuf.Duration> latencies = 100; */
         for (let k of Object.keys(message.latencies)) {
-            writer.tag(5, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k);
+            writer.tag(100, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k);
             writer.tag(2, WireType.LengthDelimited).fork();
             Duration.internalBinaryWrite(message.latencies[k], writer, options);
             writer.join().join();

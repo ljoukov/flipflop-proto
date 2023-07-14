@@ -485,6 +485,8 @@ struct StoryApiRequestProto {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  var encodedUserAuth: String = String()
+
   var request: StoryApiRequestProto.OneOf_Request? = nil
 
   var getStories: GetStoriesRequestProto {
@@ -562,6 +564,9 @@ struct StoryApiResponseProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
+
+  /// If present the token was refreshed and the client should use this new one from now onwards.
+  var refreshedEncodedUserAuth: String = String()
 
   var response: StoryApiResponseProto.OneOf_Response? = nil
 
@@ -1810,10 +1815,11 @@ extension DeleteStoryResponseProto: SwiftProtobuf.Message, SwiftProtobuf._Messag
 extension StoryApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "StoryApiRequestProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "get_stories"),
-    2: .standard(proto: "create_story"),
-    3: .standard(proto: "update_story"),
-    4: .standard(proto: "delete_story"),
+    1: .standard(proto: "encoded_user_auth"),
+    2: .standard(proto: "get_stories"),
+    3: .standard(proto: "create_story"),
+    4: .standard(proto: "update_story"),
+    5: .standard(proto: "delete_story"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1822,7 +1828,8 @@ extension StoryApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.encodedUserAuth) }()
+      case 2: try {
         var v: GetStoriesRequestProto?
         var hadOneofValue = false
         if let current = self.request {
@@ -1835,7 +1842,7 @@ extension StoryApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
           self.request = .getStories(v)
         }
       }()
-      case 2: try {
+      case 3: try {
         var v: CreateStoryRequestProto?
         var hadOneofValue = false
         if let current = self.request {
@@ -1848,7 +1855,7 @@ extension StoryApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
           self.request = .createStory(v)
         }
       }()
-      case 3: try {
+      case 4: try {
         var v: UpdateStoryRequestProto?
         var hadOneofValue = false
         if let current = self.request {
@@ -1861,7 +1868,7 @@ extension StoryApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
           self.request = .updateStory(v)
         }
       }()
-      case 4: try {
+      case 5: try {
         var v: DeleteStoryRequestProto?
         var hadOneofValue = false
         if let current = self.request {
@@ -1884,22 +1891,25 @@ extension StoryApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.encodedUserAuth.isEmpty {
+      try visitor.visitSingularStringField(value: self.encodedUserAuth, fieldNumber: 1)
+    }
     switch self.request {
     case .getStories?: try {
       guard case .getStories(let v)? = self.request else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     }()
     case .createStory?: try {
       guard case .createStory(let v)? = self.request else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
     }()
     case .updateStory?: try {
       guard case .updateStory(let v)? = self.request else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
     }()
     case .deleteStory?: try {
       guard case .deleteStory(let v)? = self.request else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
     }()
     case nil: break
     }
@@ -1907,6 +1917,7 @@ extension StoryApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
   }
 
   static func ==(lhs: StoryApiRequestProto, rhs: StoryApiRequestProto) -> Bool {
+    if lhs.encodedUserAuth != rhs.encodedUserAuth {return false}
     if lhs.request != rhs.request {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
@@ -1916,11 +1927,12 @@ extension StoryApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
 extension StoryApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "StoryApiResponseProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "get_stories"),
-    2: .standard(proto: "create_story"),
-    3: .standard(proto: "update_story"),
-    4: .standard(proto: "delete_story"),
-    5: .same(proto: "latencies"),
+    1: .standard(proto: "refreshed_encoded_user_auth"),
+    2: .standard(proto: "get_stories"),
+    3: .standard(proto: "create_story"),
+    4: .standard(proto: "update_story"),
+    5: .standard(proto: "delete_story"),
+    100: .same(proto: "latencies"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1929,7 +1941,8 @@ extension StoryApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.refreshedEncodedUserAuth) }()
+      case 2: try {
         var v: GetStoriesResponseProto?
         var hadOneofValue = false
         if let current = self.response {
@@ -1942,7 +1955,7 @@ extension StoryApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
           self.response = .getStories(v)
         }
       }()
-      case 2: try {
+      case 3: try {
         var v: CreateStoryResponseProto?
         var hadOneofValue = false
         if let current = self.response {
@@ -1955,7 +1968,7 @@ extension StoryApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
           self.response = .createStory(v)
         }
       }()
-      case 3: try {
+      case 4: try {
         var v: UpdateStoryResponseProto?
         var hadOneofValue = false
         if let current = self.response {
@@ -1968,7 +1981,7 @@ extension StoryApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
           self.response = .updateStory(v)
         }
       }()
-      case 4: try {
+      case 5: try {
         var v: DeleteStoryResponseProto?
         var hadOneofValue = false
         if let current = self.response {
@@ -1981,7 +1994,7 @@ extension StoryApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
           self.response = .deleteStory(v)
         }
       }()
-      case 5: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.Google_Protobuf_Duration>.self, value: &self.latencies) }()
+      case 100: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.Google_Protobuf_Duration>.self, value: &self.latencies) }()
       default: break
       }
     }
@@ -1992,32 +2005,36 @@ extension StoryApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.refreshedEncodedUserAuth.isEmpty {
+      try visitor.visitSingularStringField(value: self.refreshedEncodedUserAuth, fieldNumber: 1)
+    }
     switch self.response {
     case .getStories?: try {
       guard case .getStories(let v)? = self.response else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     }()
     case .createStory?: try {
       guard case .createStory(let v)? = self.response else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
     }()
     case .updateStory?: try {
       guard case .updateStory(let v)? = self.response else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
     }()
     case .deleteStory?: try {
       guard case .deleteStory(let v)? = self.response else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
     }()
     case nil: break
     }
     if !self.latencies.isEmpty {
-      try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.Google_Protobuf_Duration>.self, value: self.latencies, fieldNumber: 5)
+      try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.Google_Protobuf_Duration>.self, value: self.latencies, fieldNumber: 100)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: StoryApiResponseProto, rhs: StoryApiResponseProto) -> Bool {
+    if lhs.refreshedEncodedUserAuth != rhs.refreshedEncodedUserAuth {return false}
     if lhs.response != rhs.response {return false}
     if lhs.latencies != rhs.latencies {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}

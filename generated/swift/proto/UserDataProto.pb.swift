@@ -98,6 +98,8 @@ struct UserApiRequestProto {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  var encodedUserAuth: String = String()
+
   var request: UserApiRequestProto.OneOf_Request? = nil
 
   var getUserData: GetUserDataRequestProto {
@@ -149,6 +151,9 @@ struct UserApiResponseProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
+
+  /// If present the token was refreshed and the client should use this new one from now onwards.
+  var refreshedEncodedUserAuth: String = String()
 
   var response: UserApiResponseProto.OneOf_Response? = nil
 
@@ -429,8 +434,9 @@ extension UpdateUserDataResponseProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
 extension UserApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "UserApiRequestProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "get_user_data"),
-    2: .standard(proto: "update_user_data"),
+    1: .standard(proto: "encoded_user_auth"),
+    2: .standard(proto: "get_user_data"),
+    3: .standard(proto: "update_user_data"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -439,7 +445,8 @@ extension UserApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.encodedUserAuth) }()
+      case 2: try {
         var v: GetUserDataRequestProto?
         var hadOneofValue = false
         if let current = self.request {
@@ -452,7 +459,7 @@ extension UserApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
           self.request = .getUserData(v)
         }
       }()
-      case 2: try {
+      case 3: try {
         var v: UpdateUserDataRequestProto?
         var hadOneofValue = false
         if let current = self.request {
@@ -475,14 +482,17 @@ extension UserApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.encodedUserAuth.isEmpty {
+      try visitor.visitSingularStringField(value: self.encodedUserAuth, fieldNumber: 1)
+    }
     switch self.request {
     case .getUserData?: try {
       guard case .getUserData(let v)? = self.request else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     }()
     case .updateUserData?: try {
       guard case .updateUserData(let v)? = self.request else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
     }()
     case nil: break
     }
@@ -490,6 +500,7 @@ extension UserApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
   }
 
   static func ==(lhs: UserApiRequestProto, rhs: UserApiRequestProto) -> Bool {
+    if lhs.encodedUserAuth != rhs.encodedUserAuth {return false}
     if lhs.request != rhs.request {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
@@ -499,8 +510,9 @@ extension UserApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
 extension UserApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "UserApiResponseProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "get_user_data"),
-    2: .standard(proto: "update_user_data"),
+    1: .standard(proto: "refreshed_encoded_user_auth"),
+    2: .standard(proto: "get_user_data"),
+    3: .standard(proto: "update_user_data"),
     100: .same(proto: "latencies"),
   ]
 
@@ -510,7 +522,8 @@ extension UserApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.refreshedEncodedUserAuth) }()
+      case 2: try {
         var v: GetUserDataResponseProto?
         var hadOneofValue = false
         if let current = self.response {
@@ -523,7 +536,7 @@ extension UserApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
           self.response = .getUserData(v)
         }
       }()
-      case 2: try {
+      case 3: try {
         var v: UpdateUserDataResponseProto?
         var hadOneofValue = false
         if let current = self.response {
@@ -547,14 +560,17 @@ extension UserApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.refreshedEncodedUserAuth.isEmpty {
+      try visitor.visitSingularStringField(value: self.refreshedEncodedUserAuth, fieldNumber: 1)
+    }
     switch self.response {
     case .getUserData?: try {
       guard case .getUserData(let v)? = self.response else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     }()
     case .updateUserData?: try {
       guard case .updateUserData(let v)? = self.response else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
     }()
     case nil: break
     }
@@ -565,6 +581,7 @@ extension UserApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
   }
 
   static func ==(lhs: UserApiResponseProto, rhs: UserApiResponseProto) -> Bool {
+    if lhs.refreshedEncodedUserAuth != rhs.refreshedEncodedUserAuth {return false}
     if lhs.response != rhs.response {return false}
     if lhs.latencies != rhs.latencies {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}

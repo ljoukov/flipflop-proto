@@ -37,22 +37,25 @@ message DeleteStoryResponseProto {
 }
 
 message StoryApiRequestProto {
+  string encoded_user_auth = 1;
   oneof request {
-    GetStoriesRequestProto get_stories = 1;
-    CreateStoryRequestProto create_story = 2;
-    UpdateStoryRequestProto update_story = 3;
-    DeleteStoryRequestProto delete_story = 4;
+    GetStoriesRequestProto get_stories = 2;
+    CreateStoryRequestProto create_story = 3;
+    UpdateStoryRequestProto update_story = 4;
+    DeleteStoryRequestProto delete_story = 5;
   }
 }
 
 message StoryApiResponseProto {
+  // If present the token was refreshed and the client should use this new one from now onwards.
+  string refreshed_encoded_user_auth = 1;
   oneof response {
-    GetStoriesResponseProto get_stories = 1;
-    CreateStoryResponseProto create_story = 2;
-    UpdateStoryResponseProto update_story = 3;
-    DeleteStoryResponseProto delete_story = 4;
+    GetStoriesResponseProto get_stories = 2;
+    CreateStoryResponseProto create_story = 3;
+    UpdateStoryResponseProto update_story = 4;
+    DeleteStoryResponseProto delete_story = 5;
   }
-  map<string, google.protobuf.Duration> latencies = 5;
+  map<string, google.protobuf.Duration> latencies = 100;
 }
 
 enum CardTypeProto {

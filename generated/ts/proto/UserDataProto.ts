@@ -52,18 +52,22 @@ export interface UpdateUserDataResponseProto {
  */
 export interface UserApiRequestProto {
     /**
+     * @generated from protobuf field: string encoded_user_auth = 1;
+     */
+    encodedUserAuth: string;
+    /**
      * @generated from protobuf oneof: request
      */
     request: {
         oneofKind: "getUserData";
         /**
-         * @generated from protobuf field: GetUserDataRequestProto get_user_data = 1;
+         * @generated from protobuf field: GetUserDataRequestProto get_user_data = 2;
          */
         getUserData: GetUserDataRequestProto;
     } | {
         oneofKind: "updateUserData";
         /**
-         * @generated from protobuf field: UpdateUserDataRequestProto update_user_data = 2;
+         * @generated from protobuf field: UpdateUserDataRequestProto update_user_data = 3;
          */
         updateUserData: UpdateUserDataRequestProto;
     } | {
@@ -75,18 +79,24 @@ export interface UserApiRequestProto {
  */
 export interface UserApiResponseProto {
     /**
+     * If present the token was refreshed and the client should use this new one from now onwards.
+     *
+     * @generated from protobuf field: string refreshed_encoded_user_auth = 1;
+     */
+    refreshedEncodedUserAuth: string;
+    /**
      * @generated from protobuf oneof: response
      */
     response: {
         oneofKind: "getUserData";
         /**
-         * @generated from protobuf field: GetUserDataResponseProto get_user_data = 1;
+         * @generated from protobuf field: GetUserDataResponseProto get_user_data = 2;
          */
         getUserData: GetUserDataResponseProto;
     } | {
         oneofKind: "updateUserData";
         /**
-         * @generated from protobuf field: UpdateUserDataResponseProto update_user_data = 2;
+         * @generated from protobuf field: UpdateUserDataResponseProto update_user_data = 3;
          */
         updateUserData: UpdateUserDataResponseProto;
     } | {
@@ -323,12 +333,13 @@ export const UpdateUserDataResponseProto = new UpdateUserDataResponseProto$Type(
 class UserApiRequestProto$Type extends MessageType<UserApiRequestProto> {
     constructor() {
         super("UserApiRequestProto", [
-            { no: 1, name: "get_user_data", kind: "message", oneof: "request", T: () => GetUserDataRequestProto },
-            { no: 2, name: "update_user_data", kind: "message", oneof: "request", T: () => UpdateUserDataRequestProto }
+            { no: 1, name: "encoded_user_auth", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "get_user_data", kind: "message", oneof: "request", T: () => GetUserDataRequestProto },
+            { no: 3, name: "update_user_data", kind: "message", oneof: "request", T: () => UpdateUserDataRequestProto }
         ]);
     }
     create(value?: PartialMessage<UserApiRequestProto>): UserApiRequestProto {
-        const message = { request: { oneofKind: undefined } };
+        const message = { encodedUserAuth: "", request: { oneofKind: undefined } };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<UserApiRequestProto>(this, message, value);
@@ -339,13 +350,16 @@ class UserApiRequestProto$Type extends MessageType<UserApiRequestProto> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* GetUserDataRequestProto get_user_data */ 1:
+                case /* string encoded_user_auth */ 1:
+                    message.encodedUserAuth = reader.string();
+                    break;
+                case /* GetUserDataRequestProto get_user_data */ 2:
                     message.request = {
                         oneofKind: "getUserData",
                         getUserData: GetUserDataRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).getUserData)
                     };
                     break;
-                case /* UpdateUserDataRequestProto update_user_data */ 2:
+                case /* UpdateUserDataRequestProto update_user_data */ 3:
                     message.request = {
                         oneofKind: "updateUserData",
                         updateUserData: UpdateUserDataRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).updateUserData)
@@ -363,12 +377,15 @@ class UserApiRequestProto$Type extends MessageType<UserApiRequestProto> {
         return message;
     }
     internalBinaryWrite(message: UserApiRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* GetUserDataRequestProto get_user_data = 1; */
+        /* string encoded_user_auth = 1; */
+        if (message.encodedUserAuth !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.encodedUserAuth);
+        /* GetUserDataRequestProto get_user_data = 2; */
         if (message.request.oneofKind === "getUserData")
-            GetUserDataRequestProto.internalBinaryWrite(message.request.getUserData, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* UpdateUserDataRequestProto update_user_data = 2; */
+            GetUserDataRequestProto.internalBinaryWrite(message.request.getUserData, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* UpdateUserDataRequestProto update_user_data = 3; */
         if (message.request.oneofKind === "updateUserData")
-            UpdateUserDataRequestProto.internalBinaryWrite(message.request.updateUserData, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+            UpdateUserDataRequestProto.internalBinaryWrite(message.request.updateUserData, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -383,13 +400,14 @@ export const UserApiRequestProto = new UserApiRequestProto$Type();
 class UserApiResponseProto$Type extends MessageType<UserApiResponseProto> {
     constructor() {
         super("UserApiResponseProto", [
-            { no: 1, name: "get_user_data", kind: "message", oneof: "response", T: () => GetUserDataResponseProto },
-            { no: 2, name: "update_user_data", kind: "message", oneof: "response", T: () => UpdateUserDataResponseProto },
+            { no: 1, name: "refreshed_encoded_user_auth", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "get_user_data", kind: "message", oneof: "response", T: () => GetUserDataResponseProto },
+            { no: 3, name: "update_user_data", kind: "message", oneof: "response", T: () => UpdateUserDataResponseProto },
             { no: 100, name: "latencies", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => Duration } }
         ]);
     }
     create(value?: PartialMessage<UserApiResponseProto>): UserApiResponseProto {
-        const message = { response: { oneofKind: undefined }, latencies: {} };
+        const message = { refreshedEncodedUserAuth: "", response: { oneofKind: undefined }, latencies: {} };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<UserApiResponseProto>(this, message, value);
@@ -400,13 +418,16 @@ class UserApiResponseProto$Type extends MessageType<UserApiResponseProto> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* GetUserDataResponseProto get_user_data */ 1:
+                case /* string refreshed_encoded_user_auth */ 1:
+                    message.refreshedEncodedUserAuth = reader.string();
+                    break;
+                case /* GetUserDataResponseProto get_user_data */ 2:
                     message.response = {
                         oneofKind: "getUserData",
                         getUserData: GetUserDataResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).getUserData)
                     };
                     break;
-                case /* UpdateUserDataResponseProto update_user_data */ 2:
+                case /* UpdateUserDataResponseProto update_user_data */ 3:
                     message.response = {
                         oneofKind: "updateUserData",
                         updateUserData: UpdateUserDataResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).updateUserData)
@@ -443,12 +464,15 @@ class UserApiResponseProto$Type extends MessageType<UserApiResponseProto> {
         map[key ?? ""] = val ?? Duration.create();
     }
     internalBinaryWrite(message: UserApiResponseProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* GetUserDataResponseProto get_user_data = 1; */
+        /* string refreshed_encoded_user_auth = 1; */
+        if (message.refreshedEncodedUserAuth !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.refreshedEncodedUserAuth);
+        /* GetUserDataResponseProto get_user_data = 2; */
         if (message.response.oneofKind === "getUserData")
-            GetUserDataResponseProto.internalBinaryWrite(message.response.getUserData, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* UpdateUserDataResponseProto update_user_data = 2; */
+            GetUserDataResponseProto.internalBinaryWrite(message.response.getUserData, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* UpdateUserDataResponseProto update_user_data = 3; */
         if (message.response.oneofKind === "updateUserData")
-            UpdateUserDataResponseProto.internalBinaryWrite(message.response.updateUserData, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+            UpdateUserDataResponseProto.internalBinaryWrite(message.response.updateUserData, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
         /* map<string, google.protobuf.Duration> latencies = 100; */
         for (let k of Object.keys(message.latencies)) {
             writer.tag(100, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k);
