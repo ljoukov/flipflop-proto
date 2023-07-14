@@ -20,30 +20,34 @@ import { Duration } from "./google/protobuf/duration";
  */
 export interface ChatApiRequestProto {
     /**
+     * @generated from protobuf field: string encoded_user_auth = 1;
+     */
+    encodedUserAuth: string;
+    /**
      * @generated from protobuf oneof: request
      */
     request: {
         oneofKind: "getChatBots";
         /**
-         * @generated from protobuf field: GetChatBotsRequestProto get_chat_bots = 1;
+         * @generated from protobuf field: GetChatBotsRequestProto get_chat_bots = 2;
          */
         getChatBots: GetChatBotsRequestProto;
     } | {
         oneofKind: "getChatSession";
         /**
-         * @generated from protobuf field: GetChatSessionRequestProto get_chat_session = 2;
+         * @generated from protobuf field: GetChatSessionRequestProto get_chat_session = 3;
          */
         getChatSession: GetChatSessionRequestProto;
     } | {
         oneofKind: "updateChatSession";
         /**
-         * @generated from protobuf field: UpdateChatSessionRequestProto update_chat_session = 3;
+         * @generated from protobuf field: UpdateChatSessionRequestProto update_chat_session = 4;
          */
         updateChatSession: UpdateChatSessionRequestProto;
     } | {
         oneofKind: "deleteChatSession";
         /**
-         * @generated from protobuf field: DeleteChatSessionRequestProto delete_chat_session = 4;
+         * @generated from protobuf field: DeleteChatSessionRequestProto delete_chat_session = 5;
          */
         deleteChatSession: DeleteChatSessionRequestProto;
     } | {
@@ -55,30 +59,36 @@ export interface ChatApiRequestProto {
  */
 export interface ChatApiResponseProto {
     /**
+     * If present the token was refreshed and the client should use this new one from now onwards.
+     *
+     * @generated from protobuf field: string refreshed_encoded_user_auth = 1;
+     */
+    refreshedEncodedUserAuth: string;
+    /**
      * @generated from protobuf oneof: response
      */
     response: {
         oneofKind: "getChatBots";
         /**
-         * @generated from protobuf field: GetChatBotsResponseProto get_chat_bots = 1;
+         * @generated from protobuf field: GetChatBotsResponseProto get_chat_bots = 2;
          */
         getChatBots: GetChatBotsResponseProto;
     } | {
         oneofKind: "getChatSession";
         /**
-         * @generated from protobuf field: GetChatSessionResponseProto get_chat_session = 2;
+         * @generated from protobuf field: GetChatSessionResponseProto get_chat_session = 3;
          */
         getChatSession: GetChatSessionResponseProto;
     } | {
         oneofKind: "updateChatSession";
         /**
-         * @generated from protobuf field: UpdateChatSessionResponseProto update_chat_session = 3;
+         * @generated from protobuf field: UpdateChatSessionResponseProto update_chat_session = 4;
          */
         updateChatSession: UpdateChatSessionResponseProto;
     } | {
         oneofKind: "deleteChatSession";
         /**
-         * @generated from protobuf field: DeleteChatSessionResponseProto delete_chat_session = 4;
+         * @generated from protobuf field: DeleteChatSessionResponseProto delete_chat_session = 5;
          */
         deleteChatSession: DeleteChatSessionResponseProto;
     } | {
@@ -346,14 +356,15 @@ export interface ChatSessionProto {
 class ChatApiRequestProto$Type extends MessageType<ChatApiRequestProto> {
     constructor() {
         super("ChatApiRequestProto", [
-            { no: 1, name: "get_chat_bots", kind: "message", oneof: "request", T: () => GetChatBotsRequestProto },
-            { no: 2, name: "get_chat_session", kind: "message", oneof: "request", T: () => GetChatSessionRequestProto },
-            { no: 3, name: "update_chat_session", kind: "message", oneof: "request", T: () => UpdateChatSessionRequestProto },
-            { no: 4, name: "delete_chat_session", kind: "message", oneof: "request", T: () => DeleteChatSessionRequestProto }
+            { no: 1, name: "encoded_user_auth", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "get_chat_bots", kind: "message", oneof: "request", T: () => GetChatBotsRequestProto },
+            { no: 3, name: "get_chat_session", kind: "message", oneof: "request", T: () => GetChatSessionRequestProto },
+            { no: 4, name: "update_chat_session", kind: "message", oneof: "request", T: () => UpdateChatSessionRequestProto },
+            { no: 5, name: "delete_chat_session", kind: "message", oneof: "request", T: () => DeleteChatSessionRequestProto }
         ]);
     }
     create(value?: PartialMessage<ChatApiRequestProto>): ChatApiRequestProto {
-        const message = { request: { oneofKind: undefined } };
+        const message = { encodedUserAuth: "", request: { oneofKind: undefined } };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<ChatApiRequestProto>(this, message, value);
@@ -364,25 +375,28 @@ class ChatApiRequestProto$Type extends MessageType<ChatApiRequestProto> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* GetChatBotsRequestProto get_chat_bots */ 1:
+                case /* string encoded_user_auth */ 1:
+                    message.encodedUserAuth = reader.string();
+                    break;
+                case /* GetChatBotsRequestProto get_chat_bots */ 2:
                     message.request = {
                         oneofKind: "getChatBots",
                         getChatBots: GetChatBotsRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).getChatBots)
                     };
                     break;
-                case /* GetChatSessionRequestProto get_chat_session */ 2:
+                case /* GetChatSessionRequestProto get_chat_session */ 3:
                     message.request = {
                         oneofKind: "getChatSession",
                         getChatSession: GetChatSessionRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).getChatSession)
                     };
                     break;
-                case /* UpdateChatSessionRequestProto update_chat_session */ 3:
+                case /* UpdateChatSessionRequestProto update_chat_session */ 4:
                     message.request = {
                         oneofKind: "updateChatSession",
                         updateChatSession: UpdateChatSessionRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).updateChatSession)
                     };
                     break;
-                case /* DeleteChatSessionRequestProto delete_chat_session */ 4:
+                case /* DeleteChatSessionRequestProto delete_chat_session */ 5:
                     message.request = {
                         oneofKind: "deleteChatSession",
                         deleteChatSession: DeleteChatSessionRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).deleteChatSession)
@@ -400,18 +414,21 @@ class ChatApiRequestProto$Type extends MessageType<ChatApiRequestProto> {
         return message;
     }
     internalBinaryWrite(message: ChatApiRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* GetChatBotsRequestProto get_chat_bots = 1; */
+        /* string encoded_user_auth = 1; */
+        if (message.encodedUserAuth !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.encodedUserAuth);
+        /* GetChatBotsRequestProto get_chat_bots = 2; */
         if (message.request.oneofKind === "getChatBots")
-            GetChatBotsRequestProto.internalBinaryWrite(message.request.getChatBots, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* GetChatSessionRequestProto get_chat_session = 2; */
+            GetChatBotsRequestProto.internalBinaryWrite(message.request.getChatBots, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* GetChatSessionRequestProto get_chat_session = 3; */
         if (message.request.oneofKind === "getChatSession")
-            GetChatSessionRequestProto.internalBinaryWrite(message.request.getChatSession, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* UpdateChatSessionRequestProto update_chat_session = 3; */
+            GetChatSessionRequestProto.internalBinaryWrite(message.request.getChatSession, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* UpdateChatSessionRequestProto update_chat_session = 4; */
         if (message.request.oneofKind === "updateChatSession")
-            UpdateChatSessionRequestProto.internalBinaryWrite(message.request.updateChatSession, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* DeleteChatSessionRequestProto delete_chat_session = 4; */
+            UpdateChatSessionRequestProto.internalBinaryWrite(message.request.updateChatSession, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* DeleteChatSessionRequestProto delete_chat_session = 5; */
         if (message.request.oneofKind === "deleteChatSession")
-            DeleteChatSessionRequestProto.internalBinaryWrite(message.request.deleteChatSession, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+            DeleteChatSessionRequestProto.internalBinaryWrite(message.request.deleteChatSession, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -426,15 +443,16 @@ export const ChatApiRequestProto = new ChatApiRequestProto$Type();
 class ChatApiResponseProto$Type extends MessageType<ChatApiResponseProto> {
     constructor() {
         super("ChatApiResponseProto", [
-            { no: 1, name: "get_chat_bots", kind: "message", oneof: "response", T: () => GetChatBotsResponseProto },
-            { no: 2, name: "get_chat_session", kind: "message", oneof: "response", T: () => GetChatSessionResponseProto },
-            { no: 3, name: "update_chat_session", kind: "message", oneof: "response", T: () => UpdateChatSessionResponseProto },
-            { no: 4, name: "delete_chat_session", kind: "message", oneof: "response", T: () => DeleteChatSessionResponseProto },
+            { no: 1, name: "refreshed_encoded_user_auth", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "get_chat_bots", kind: "message", oneof: "response", T: () => GetChatBotsResponseProto },
+            { no: 3, name: "get_chat_session", kind: "message", oneof: "response", T: () => GetChatSessionResponseProto },
+            { no: 4, name: "update_chat_session", kind: "message", oneof: "response", T: () => UpdateChatSessionResponseProto },
+            { no: 5, name: "delete_chat_session", kind: "message", oneof: "response", T: () => DeleteChatSessionResponseProto },
             { no: 100, name: "latencies", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => Duration } }
         ]);
     }
     create(value?: PartialMessage<ChatApiResponseProto>): ChatApiResponseProto {
-        const message = { response: { oneofKind: undefined }, latencies: {} };
+        const message = { refreshedEncodedUserAuth: "", response: { oneofKind: undefined }, latencies: {} };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<ChatApiResponseProto>(this, message, value);
@@ -445,25 +463,28 @@ class ChatApiResponseProto$Type extends MessageType<ChatApiResponseProto> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* GetChatBotsResponseProto get_chat_bots */ 1:
+                case /* string refreshed_encoded_user_auth */ 1:
+                    message.refreshedEncodedUserAuth = reader.string();
+                    break;
+                case /* GetChatBotsResponseProto get_chat_bots */ 2:
                     message.response = {
                         oneofKind: "getChatBots",
                         getChatBots: GetChatBotsResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).getChatBots)
                     };
                     break;
-                case /* GetChatSessionResponseProto get_chat_session */ 2:
+                case /* GetChatSessionResponseProto get_chat_session */ 3:
                     message.response = {
                         oneofKind: "getChatSession",
                         getChatSession: GetChatSessionResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).getChatSession)
                     };
                     break;
-                case /* UpdateChatSessionResponseProto update_chat_session */ 3:
+                case /* UpdateChatSessionResponseProto update_chat_session */ 4:
                     message.response = {
                         oneofKind: "updateChatSession",
                         updateChatSession: UpdateChatSessionResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).updateChatSession)
                     };
                     break;
-                case /* DeleteChatSessionResponseProto delete_chat_session */ 4:
+                case /* DeleteChatSessionResponseProto delete_chat_session */ 5:
                     message.response = {
                         oneofKind: "deleteChatSession",
                         deleteChatSession: DeleteChatSessionResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).deleteChatSession)
@@ -500,18 +521,21 @@ class ChatApiResponseProto$Type extends MessageType<ChatApiResponseProto> {
         map[key ?? ""] = val ?? Duration.create();
     }
     internalBinaryWrite(message: ChatApiResponseProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* GetChatBotsResponseProto get_chat_bots = 1; */
+        /* string refreshed_encoded_user_auth = 1; */
+        if (message.refreshedEncodedUserAuth !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.refreshedEncodedUserAuth);
+        /* GetChatBotsResponseProto get_chat_bots = 2; */
         if (message.response.oneofKind === "getChatBots")
-            GetChatBotsResponseProto.internalBinaryWrite(message.response.getChatBots, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* GetChatSessionResponseProto get_chat_session = 2; */
+            GetChatBotsResponseProto.internalBinaryWrite(message.response.getChatBots, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* GetChatSessionResponseProto get_chat_session = 3; */
         if (message.response.oneofKind === "getChatSession")
-            GetChatSessionResponseProto.internalBinaryWrite(message.response.getChatSession, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* UpdateChatSessionResponseProto update_chat_session = 3; */
+            GetChatSessionResponseProto.internalBinaryWrite(message.response.getChatSession, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* UpdateChatSessionResponseProto update_chat_session = 4; */
         if (message.response.oneofKind === "updateChatSession")
-            UpdateChatSessionResponseProto.internalBinaryWrite(message.response.updateChatSession, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* DeleteChatSessionResponseProto delete_chat_session = 4; */
+            UpdateChatSessionResponseProto.internalBinaryWrite(message.response.updateChatSession, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* DeleteChatSessionResponseProto delete_chat_session = 5; */
         if (message.response.oneofKind === "deleteChatSession")
-            DeleteChatSessionResponseProto.internalBinaryWrite(message.response.deleteChatSession, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+            DeleteChatSessionResponseProto.internalBinaryWrite(message.response.deleteChatSession, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
         /* map<string, google.protobuf.Duration> latencies = 100; */
         for (let k of Object.keys(message.latencies)) {
             writer.tag(100, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k);

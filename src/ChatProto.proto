@@ -4,20 +4,23 @@ import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 
 message ChatApiRequestProto {
+  string encoded_user_auth = 1;
   oneof request {
-    GetChatBotsRequestProto get_chat_bots = 1;
-    GetChatSessionRequestProto get_chat_session = 2;
-    UpdateChatSessionRequestProto update_chat_session = 3;
-    DeleteChatSessionRequestProto delete_chat_session = 4;
+    GetChatBotsRequestProto get_chat_bots = 2;
+    GetChatSessionRequestProto get_chat_session = 3;
+    UpdateChatSessionRequestProto update_chat_session = 4;
+    DeleteChatSessionRequestProto delete_chat_session = 5;
   }
 }
 
 message ChatApiResponseProto {
+  // If present the token was refreshed and the client should use this new one from now onwards.
+  string refreshed_encoded_user_auth = 1;
   oneof response {
-    GetChatBotsResponseProto get_chat_bots = 1;
-    GetChatSessionResponseProto get_chat_session = 2;
-    UpdateChatSessionResponseProto update_chat_session = 3;
-    DeleteChatSessionResponseProto delete_chat_session = 4;
+    GetChatBotsResponseProto get_chat_bots = 2;
+    GetChatSessionResponseProto get_chat_session = 3;
+    UpdateChatSessionResponseProto update_chat_session = 4;
+    DeleteChatSessionResponseProto delete_chat_session = 5;
   }
   map<string, google.protobuf.Duration> latencies = 100;
 }

@@ -25,6 +25,8 @@ struct ChatApiRequestProto {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  var encodedUserAuth: String = String()
+
   var request: ChatApiRequestProto.OneOf_Request? = nil
 
   var getChatBots: GetChatBotsRequestProto {
@@ -102,6 +104,9 @@ struct ChatApiResponseProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
+
+  /// If present the token was refreshed and the client should use this new one from now onwards.
+  var refreshedEncodedUserAuth: String = String()
 
   var response: ChatApiResponseProto.OneOf_Response? = nil
 
@@ -591,10 +596,11 @@ extension ChatSessionProto: @unchecked Sendable {}
 extension ChatApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "ChatApiRequestProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "get_chat_bots"),
-    2: .standard(proto: "get_chat_session"),
-    3: .standard(proto: "update_chat_session"),
-    4: .standard(proto: "delete_chat_session"),
+    1: .standard(proto: "encoded_user_auth"),
+    2: .standard(proto: "get_chat_bots"),
+    3: .standard(proto: "get_chat_session"),
+    4: .standard(proto: "update_chat_session"),
+    5: .standard(proto: "delete_chat_session"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -603,7 +609,8 @@ extension ChatApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.encodedUserAuth) }()
+      case 2: try {
         var v: GetChatBotsRequestProto?
         var hadOneofValue = false
         if let current = self.request {
@@ -616,7 +623,7 @@ extension ChatApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
           self.request = .getChatBots(v)
         }
       }()
-      case 2: try {
+      case 3: try {
         var v: GetChatSessionRequestProto?
         var hadOneofValue = false
         if let current = self.request {
@@ -629,7 +636,7 @@ extension ChatApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
           self.request = .getChatSession(v)
         }
       }()
-      case 3: try {
+      case 4: try {
         var v: UpdateChatSessionRequestProto?
         var hadOneofValue = false
         if let current = self.request {
@@ -642,7 +649,7 @@ extension ChatApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
           self.request = .updateChatSession(v)
         }
       }()
-      case 4: try {
+      case 5: try {
         var v: DeleteChatSessionRequestProto?
         var hadOneofValue = false
         if let current = self.request {
@@ -665,22 +672,25 @@ extension ChatApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.encodedUserAuth.isEmpty {
+      try visitor.visitSingularStringField(value: self.encodedUserAuth, fieldNumber: 1)
+    }
     switch self.request {
     case .getChatBots?: try {
       guard case .getChatBots(let v)? = self.request else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     }()
     case .getChatSession?: try {
       guard case .getChatSession(let v)? = self.request else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
     }()
     case .updateChatSession?: try {
       guard case .updateChatSession(let v)? = self.request else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
     }()
     case .deleteChatSession?: try {
       guard case .deleteChatSession(let v)? = self.request else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
     }()
     case nil: break
     }
@@ -688,6 +698,7 @@ extension ChatApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
   }
 
   static func ==(lhs: ChatApiRequestProto, rhs: ChatApiRequestProto) -> Bool {
+    if lhs.encodedUserAuth != rhs.encodedUserAuth {return false}
     if lhs.request != rhs.request {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
@@ -697,10 +708,11 @@ extension ChatApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
 extension ChatApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "ChatApiResponseProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "get_chat_bots"),
-    2: .standard(proto: "get_chat_session"),
-    3: .standard(proto: "update_chat_session"),
-    4: .standard(proto: "delete_chat_session"),
+    1: .standard(proto: "refreshed_encoded_user_auth"),
+    2: .standard(proto: "get_chat_bots"),
+    3: .standard(proto: "get_chat_session"),
+    4: .standard(proto: "update_chat_session"),
+    5: .standard(proto: "delete_chat_session"),
     100: .same(proto: "latencies"),
   ]
 
@@ -710,7 +722,8 @@ extension ChatApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.refreshedEncodedUserAuth) }()
+      case 2: try {
         var v: GetChatBotsResponseProto?
         var hadOneofValue = false
         if let current = self.response {
@@ -723,7 +736,7 @@ extension ChatApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
           self.response = .getChatBots(v)
         }
       }()
-      case 2: try {
+      case 3: try {
         var v: GetChatSessionResponseProto?
         var hadOneofValue = false
         if let current = self.response {
@@ -736,7 +749,7 @@ extension ChatApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
           self.response = .getChatSession(v)
         }
       }()
-      case 3: try {
+      case 4: try {
         var v: UpdateChatSessionResponseProto?
         var hadOneofValue = false
         if let current = self.response {
@@ -749,7 +762,7 @@ extension ChatApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
           self.response = .updateChatSession(v)
         }
       }()
-      case 4: try {
+      case 5: try {
         var v: DeleteChatSessionResponseProto?
         var hadOneofValue = false
         if let current = self.response {
@@ -773,22 +786,25 @@ extension ChatApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.refreshedEncodedUserAuth.isEmpty {
+      try visitor.visitSingularStringField(value: self.refreshedEncodedUserAuth, fieldNumber: 1)
+    }
     switch self.response {
     case .getChatBots?: try {
       guard case .getChatBots(let v)? = self.response else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     }()
     case .getChatSession?: try {
       guard case .getChatSession(let v)? = self.response else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
     }()
     case .updateChatSession?: try {
       guard case .updateChatSession(let v)? = self.response else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
     }()
     case .deleteChatSession?: try {
       guard case .deleteChatSession(let v)? = self.response else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
     }()
     case nil: break
     }
@@ -799,6 +815,7 @@ extension ChatApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
   }
 
   static func ==(lhs: ChatApiResponseProto, rhs: ChatApiResponseProto) -> Bool {
+    if lhs.refreshedEncodedUserAuth != rhs.refreshedEncodedUserAuth {return false}
     if lhs.response != rhs.response {return false}
     if lhs.latencies != rhs.latencies {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
