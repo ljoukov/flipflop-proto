@@ -135,6 +135,23 @@ export interface SignInWithPasswordResponseProto {
      * @generated from protobuf field: string encoded_user_auth = 1;
      */
     encodedUserAuth: string;
+    /**
+     * @generated from protobuf field: SignInWithPasswordResponseProto.Error error = 2;
+     */
+    error: SignInWithPasswordResponseProto_Error;
+}
+/**
+ * @generated from protobuf enum SignInWithPasswordResponseProto.Error
+ */
+export enum SignInWithPasswordResponseProto_Error {
+    /**
+     * @generated from protobuf enum value: NO_ERROR = 0;
+     */
+    NO_ERROR = 0,
+    /**
+     * @generated from protobuf enum value: INVALID_PASSWORD = 1;
+     */
+    INVALID_PASSWORD = 1
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class UserAuthProto$Type extends MessageType<UserAuthProto> {
@@ -517,11 +534,12 @@ export const SignInWithPasswordRequestProto = new SignInWithPasswordRequestProto
 class SignInWithPasswordResponseProto$Type extends MessageType<SignInWithPasswordResponseProto> {
     constructor() {
         super("SignInWithPasswordResponseProto", [
-            { no: 1, name: "encoded_user_auth", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "encoded_user_auth", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "error", kind: "enum", T: () => ["SignInWithPasswordResponseProto.Error", SignInWithPasswordResponseProto_Error] }
         ]);
     }
     create(value?: PartialMessage<SignInWithPasswordResponseProto>): SignInWithPasswordResponseProto {
-        const message = { encodedUserAuth: "" };
+        const message = { encodedUserAuth: "", error: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<SignInWithPasswordResponseProto>(this, message, value);
@@ -534,6 +552,9 @@ class SignInWithPasswordResponseProto$Type extends MessageType<SignInWithPasswor
             switch (fieldNo) {
                 case /* string encoded_user_auth */ 1:
                     message.encodedUserAuth = reader.string();
+                    break;
+                case /* SignInWithPasswordResponseProto.Error error */ 2:
+                    message.error = reader.int32();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -550,6 +571,9 @@ class SignInWithPasswordResponseProto$Type extends MessageType<SignInWithPasswor
         /* string encoded_user_auth = 1; */
         if (message.encodedUserAuth !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.encodedUserAuth);
+        /* SignInWithPasswordResponseProto.Error error = 2; */
+        if (message.error !== 0)
+            writer.tag(2, WireType.Varint).int32(message.error);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

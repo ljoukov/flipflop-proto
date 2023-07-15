@@ -43,4 +43,11 @@ message SignInWithPasswordRequestProto {
 
 message SignInWithPasswordResponseProto {
   string encoded_user_auth = 1;
+
+  enum Error {
+    NO_ERROR = 0;
+    INVALID_PASSWORD = 1;
+  }
+
+  Error error = 2;
 }

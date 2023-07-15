@@ -202,10 +202,52 @@ struct SignInWithPasswordResponseProto {
 
   var encodedUserAuth: String = String()
 
+  var error: SignInWithPasswordResponseProto.Error = .noError
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  enum Error: SwiftProtobuf.Enum {
+    typealias RawValue = Int
+    case noError // = 0
+    case invalidPassword // = 1
+    case UNRECOGNIZED(Int)
+
+    init() {
+      self = .noError
+    }
+
+    init?(rawValue: Int) {
+      switch rawValue {
+      case 0: self = .noError
+      case 1: self = .invalidPassword
+      default: self = .UNRECOGNIZED(rawValue)
+      }
+    }
+
+    var rawValue: Int {
+      switch self {
+      case .noError: return 0
+      case .invalidPassword: return 1
+      case .UNRECOGNIZED(let i): return i
+      }
+    }
+
+  }
 
   init() {}
 }
+
+#if swift(>=4.2)
+
+extension SignInWithPasswordResponseProto.Error: CaseIterable {
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static var allCases: [SignInWithPasswordResponseProto.Error] = [
+    .noError,
+    .invalidPassword,
+  ]
+}
+
+#endif  // swift(>=4.2)
 
 #if swift(>=5.5) && canImport(_Concurrency)
 extension UserAuthProto: @unchecked Sendable {}
@@ -217,6 +259,7 @@ extension SignInWithIdpRequestProto: @unchecked Sendable {}
 extension SignInWithIdpResponseProto: @unchecked Sendable {}
 extension SignInWithPasswordRequestProto: @unchecked Sendable {}
 extension SignInWithPasswordResponseProto: @unchecked Sendable {}
+extension SignInWithPasswordResponseProto.Error: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
@@ -539,6 +582,7 @@ extension SignInWithPasswordResponseProto: SwiftProtobuf.Message, SwiftProtobuf.
   static let protoMessageName: String = "SignInWithPasswordResponseProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "encoded_user_auth"),
+    2: .same(proto: "error"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -548,6 +592,7 @@ extension SignInWithPasswordResponseProto: SwiftProtobuf.Message, SwiftProtobuf.
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.encodedUserAuth) }()
+      case 2: try { try decoder.decodeSingularEnumField(value: &self.error) }()
       default: break
       }
     }
@@ -557,12 +602,23 @@ extension SignInWithPasswordResponseProto: SwiftProtobuf.Message, SwiftProtobuf.
     if !self.encodedUserAuth.isEmpty {
       try visitor.visitSingularStringField(value: self.encodedUserAuth, fieldNumber: 1)
     }
+    if self.error != .noError {
+      try visitor.visitSingularEnumField(value: self.error, fieldNumber: 2)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: SignInWithPasswordResponseProto, rhs: SignInWithPasswordResponseProto) -> Bool {
     if lhs.encodedUserAuth != rhs.encodedUserAuth {return false}
+    if lhs.error != rhs.error {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
+}
+
+extension SignInWithPasswordResponseProto.Error: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "NO_ERROR"),
+    1: .same(proto: "INVALID_PASSWORD"),
+  ]
 }
