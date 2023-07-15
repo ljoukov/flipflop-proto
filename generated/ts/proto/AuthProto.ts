@@ -44,11 +44,17 @@ export interface AuthApiRequestProto {
      * @generated from protobuf oneof: request
      */
     request: {
-        oneofKind: "getUserAuth";
+        oneofKind: "signInWithIdp";
         /**
-         * @generated from protobuf field: GetUserAuthRequestProto get_user_auth = 1;
+         * @generated from protobuf field: SignInWithIdpRequestProto sign_in_with_idp = 1;
          */
-        getUserAuth: GetUserAuthRequestProto;
+        signInWithIdp: SignInWithIdpRequestProto;
+    } | {
+        oneofKind: "signInWithEmailAndPassword";
+        /**
+         * @generated from protobuf field: SignInWithEmailAndPasswordRequestProto sign_in_with_email_and_password = 2;
+         */
+        signInWithEmailAndPassword: SignInWithEmailAndPasswordRequestProto;
     } | {
         oneofKind: undefined;
     };
@@ -61,11 +67,17 @@ export interface AuthApiResponseProto {
      * @generated from protobuf oneof: response
      */
     response: {
-        oneofKind: "getUserAuth";
+        oneofKind: "signInWithIdp";
         /**
-         * @generated from protobuf field: GetUserAuthResponseProto get_user_auth = 1;
+         * @generated from protobuf field: SignInWithIdpResponseProto sign_in_with_idp = 1;
          */
-        getUserAuth: GetUserAuthResponseProto;
+        signInWithIdp: SignInWithIdpResponseProto;
+    } | {
+        oneofKind: "signInWithEmailAndPassword";
+        /**
+         * @generated from protobuf field: SignInWithEmailAndPasswordResponseProto sign_in_with_email_and_password = 2;
+         */
+        signInWithEmailAndPassword: SignInWithEmailAndPasswordResponseProto;
     } | {
         oneofKind: undefined;
     };
@@ -77,9 +89,9 @@ export interface AuthApiResponseProto {
     };
 }
 /**
- * @generated from protobuf message GetUserAuthRequestProto
+ * @generated from protobuf message SignInWithIdpRequestProto
  */
-export interface GetUserAuthRequestProto {
+export interface SignInWithIdpRequestProto {
     /**
      * @generated from protobuf field: string id_token = 1;
      */
@@ -94,9 +106,31 @@ export interface GetUserAuthRequestProto {
     rawNonce: string;
 }
 /**
- * @generated from protobuf message GetUserAuthResponseProto
+ * @generated from protobuf message SignInWithIdpResponseProto
  */
-export interface GetUserAuthResponseProto {
+export interface SignInWithIdpResponseProto {
+    /**
+     * @generated from protobuf field: string encoded_user_auth = 1;
+     */
+    encodedUserAuth: string;
+}
+/**
+ * @generated from protobuf message SignInWithEmailAndPasswordRequestProto
+ */
+export interface SignInWithEmailAndPasswordRequestProto {
+    /**
+     * @generated from protobuf field: string email = 1;
+     */
+    email: string;
+    /**
+     * @generated from protobuf field: string password = 2;
+     */
+    password: string;
+}
+/**
+ * @generated from protobuf message SignInWithEmailAndPasswordResponseProto
+ */
+export interface SignInWithEmailAndPasswordResponseProto {
     /**
      * @generated from protobuf field: string encoded_user_auth = 1;
      */
@@ -174,7 +208,8 @@ export const UserAuthProto = new UserAuthProto$Type();
 class AuthApiRequestProto$Type extends MessageType<AuthApiRequestProto> {
     constructor() {
         super("AuthApiRequestProto", [
-            { no: 1, name: "get_user_auth", kind: "message", oneof: "request", T: () => GetUserAuthRequestProto }
+            { no: 1, name: "sign_in_with_idp", kind: "message", oneof: "request", T: () => SignInWithIdpRequestProto },
+            { no: 2, name: "sign_in_with_email_and_password", kind: "message", oneof: "request", T: () => SignInWithEmailAndPasswordRequestProto }
         ]);
     }
     create(value?: PartialMessage<AuthApiRequestProto>): AuthApiRequestProto {
@@ -189,10 +224,16 @@ class AuthApiRequestProto$Type extends MessageType<AuthApiRequestProto> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* GetUserAuthRequestProto get_user_auth */ 1:
+                case /* SignInWithIdpRequestProto sign_in_with_idp */ 1:
                     message.request = {
-                        oneofKind: "getUserAuth",
-                        getUserAuth: GetUserAuthRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).getUserAuth)
+                        oneofKind: "signInWithIdp",
+                        signInWithIdp: SignInWithIdpRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).signInWithIdp)
+                    };
+                    break;
+                case /* SignInWithEmailAndPasswordRequestProto sign_in_with_email_and_password */ 2:
+                    message.request = {
+                        oneofKind: "signInWithEmailAndPassword",
+                        signInWithEmailAndPassword: SignInWithEmailAndPasswordRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).signInWithEmailAndPassword)
                     };
                     break;
                 default:
@@ -207,9 +248,12 @@ class AuthApiRequestProto$Type extends MessageType<AuthApiRequestProto> {
         return message;
     }
     internalBinaryWrite(message: AuthApiRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* GetUserAuthRequestProto get_user_auth = 1; */
-        if (message.request.oneofKind === "getUserAuth")
-            GetUserAuthRequestProto.internalBinaryWrite(message.request.getUserAuth, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* SignInWithIdpRequestProto sign_in_with_idp = 1; */
+        if (message.request.oneofKind === "signInWithIdp")
+            SignInWithIdpRequestProto.internalBinaryWrite(message.request.signInWithIdp, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* SignInWithEmailAndPasswordRequestProto sign_in_with_email_and_password = 2; */
+        if (message.request.oneofKind === "signInWithEmailAndPassword")
+            SignInWithEmailAndPasswordRequestProto.internalBinaryWrite(message.request.signInWithEmailAndPassword, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -224,7 +268,8 @@ export const AuthApiRequestProto = new AuthApiRequestProto$Type();
 class AuthApiResponseProto$Type extends MessageType<AuthApiResponseProto> {
     constructor() {
         super("AuthApiResponseProto", [
-            { no: 1, name: "get_user_auth", kind: "message", oneof: "response", T: () => GetUserAuthResponseProto },
+            { no: 1, name: "sign_in_with_idp", kind: "message", oneof: "response", T: () => SignInWithIdpResponseProto },
+            { no: 2, name: "sign_in_with_email_and_password", kind: "message", oneof: "response", T: () => SignInWithEmailAndPasswordResponseProto },
             { no: 5, name: "latencies", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => Duration } }
         ]);
     }
@@ -240,10 +285,16 @@ class AuthApiResponseProto$Type extends MessageType<AuthApiResponseProto> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* GetUserAuthResponseProto get_user_auth */ 1:
+                case /* SignInWithIdpResponseProto sign_in_with_idp */ 1:
                     message.response = {
-                        oneofKind: "getUserAuth",
-                        getUserAuth: GetUserAuthResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).getUserAuth)
+                        oneofKind: "signInWithIdp",
+                        signInWithIdp: SignInWithIdpResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).signInWithIdp)
+                    };
+                    break;
+                case /* SignInWithEmailAndPasswordResponseProto sign_in_with_email_and_password */ 2:
+                    message.response = {
+                        oneofKind: "signInWithEmailAndPassword",
+                        signInWithEmailAndPassword: SignInWithEmailAndPasswordResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).signInWithEmailAndPassword)
                     };
                     break;
                 case /* map<string, google.protobuf.Duration> latencies */ 5:
@@ -277,9 +328,12 @@ class AuthApiResponseProto$Type extends MessageType<AuthApiResponseProto> {
         map[key ?? ""] = val ?? Duration.create();
     }
     internalBinaryWrite(message: AuthApiResponseProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* GetUserAuthResponseProto get_user_auth = 1; */
-        if (message.response.oneofKind === "getUserAuth")
-            GetUserAuthResponseProto.internalBinaryWrite(message.response.getUserAuth, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* SignInWithIdpResponseProto sign_in_with_idp = 1; */
+        if (message.response.oneofKind === "signInWithIdp")
+            SignInWithIdpResponseProto.internalBinaryWrite(message.response.signInWithIdp, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* SignInWithEmailAndPasswordResponseProto sign_in_with_email_and_password = 2; */
+        if (message.response.oneofKind === "signInWithEmailAndPassword")
+            SignInWithEmailAndPasswordResponseProto.internalBinaryWrite(message.response.signInWithEmailAndPassword, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         /* map<string, google.protobuf.Duration> latencies = 5; */
         for (let k of Object.keys(message.latencies)) {
             writer.tag(5, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k);
@@ -298,22 +352,22 @@ class AuthApiResponseProto$Type extends MessageType<AuthApiResponseProto> {
  */
 export const AuthApiResponseProto = new AuthApiResponseProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class GetUserAuthRequestProto$Type extends MessageType<GetUserAuthRequestProto> {
+class SignInWithIdpRequestProto$Type extends MessageType<SignInWithIdpRequestProto> {
     constructor() {
-        super("GetUserAuthRequestProto", [
+        super("SignInWithIdpRequestProto", [
             { no: 1, name: "id_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "provider_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "raw_nonce", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<GetUserAuthRequestProto>): GetUserAuthRequestProto {
+    create(value?: PartialMessage<SignInWithIdpRequestProto>): SignInWithIdpRequestProto {
         const message = { idToken: "", providerId: "", rawNonce: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<GetUserAuthRequestProto>(this, message, value);
+            reflectionMergePartial<SignInWithIdpRequestProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetUserAuthRequestProto): GetUserAuthRequestProto {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SignInWithIdpRequestProto): SignInWithIdpRequestProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -338,7 +392,7 @@ class GetUserAuthRequestProto$Type extends MessageType<GetUserAuthRequestProto> 
         }
         return message;
     }
-    internalBinaryWrite(message: GetUserAuthRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: SignInWithIdpRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string id_token = 1; */
         if (message.idToken !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.idToken);
@@ -355,24 +409,24 @@ class GetUserAuthRequestProto$Type extends MessageType<GetUserAuthRequestProto> 
     }
 }
 /**
- * @generated MessageType for protobuf message GetUserAuthRequestProto
+ * @generated MessageType for protobuf message SignInWithIdpRequestProto
  */
-export const GetUserAuthRequestProto = new GetUserAuthRequestProto$Type();
+export const SignInWithIdpRequestProto = new SignInWithIdpRequestProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class GetUserAuthResponseProto$Type extends MessageType<GetUserAuthResponseProto> {
+class SignInWithIdpResponseProto$Type extends MessageType<SignInWithIdpResponseProto> {
     constructor() {
-        super("GetUserAuthResponseProto", [
+        super("SignInWithIdpResponseProto", [
             { no: 1, name: "encoded_user_auth", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<GetUserAuthResponseProto>): GetUserAuthResponseProto {
+    create(value?: PartialMessage<SignInWithIdpResponseProto>): SignInWithIdpResponseProto {
         const message = { encodedUserAuth: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<GetUserAuthResponseProto>(this, message, value);
+            reflectionMergePartial<SignInWithIdpResponseProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetUserAuthResponseProto): GetUserAuthResponseProto {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SignInWithIdpResponseProto): SignInWithIdpResponseProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -391,7 +445,7 @@ class GetUserAuthResponseProto$Type extends MessageType<GetUserAuthResponseProto
         }
         return message;
     }
-    internalBinaryWrite(message: GetUserAuthResponseProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: SignInWithIdpResponseProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string encoded_user_auth = 1; */
         if (message.encodedUserAuth !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.encodedUserAuth);
@@ -402,6 +456,107 @@ class GetUserAuthResponseProto$Type extends MessageType<GetUserAuthResponseProto
     }
 }
 /**
- * @generated MessageType for protobuf message GetUserAuthResponseProto
+ * @generated MessageType for protobuf message SignInWithIdpResponseProto
  */
-export const GetUserAuthResponseProto = new GetUserAuthResponseProto$Type();
+export const SignInWithIdpResponseProto = new SignInWithIdpResponseProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class SignInWithEmailAndPasswordRequestProto$Type extends MessageType<SignInWithEmailAndPasswordRequestProto> {
+    constructor() {
+        super("SignInWithEmailAndPasswordRequestProto", [
+            { no: 1, name: "email", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "password", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<SignInWithEmailAndPasswordRequestProto>): SignInWithEmailAndPasswordRequestProto {
+        const message = { email: "", password: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<SignInWithEmailAndPasswordRequestProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SignInWithEmailAndPasswordRequestProto): SignInWithEmailAndPasswordRequestProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string email */ 1:
+                    message.email = reader.string();
+                    break;
+                case /* string password */ 2:
+                    message.password = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: SignInWithEmailAndPasswordRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string email = 1; */
+        if (message.email !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.email);
+        /* string password = 2; */
+        if (message.password !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.password);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message SignInWithEmailAndPasswordRequestProto
+ */
+export const SignInWithEmailAndPasswordRequestProto = new SignInWithEmailAndPasswordRequestProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class SignInWithEmailAndPasswordResponseProto$Type extends MessageType<SignInWithEmailAndPasswordResponseProto> {
+    constructor() {
+        super("SignInWithEmailAndPasswordResponseProto", [
+            { no: 1, name: "encoded_user_auth", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<SignInWithEmailAndPasswordResponseProto>): SignInWithEmailAndPasswordResponseProto {
+        const message = { encodedUserAuth: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<SignInWithEmailAndPasswordResponseProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SignInWithEmailAndPasswordResponseProto): SignInWithEmailAndPasswordResponseProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string encoded_user_auth */ 1:
+                    message.encodedUserAuth = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: SignInWithEmailAndPasswordResponseProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string encoded_user_auth = 1; */
+        if (message.encodedUserAuth !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.encodedUserAuth);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message SignInWithEmailAndPasswordResponseProto
+ */
+export const SignInWithEmailAndPasswordResponseProto = new SignInWithEmailAndPasswordResponseProto$Type();

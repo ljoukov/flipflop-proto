@@ -54,18 +54,27 @@ struct AuthApiRequestProto {
 
   var request: AuthApiRequestProto.OneOf_Request? = nil
 
-  var getUserAuth: GetUserAuthRequestProto {
+  var signInWithIdp: SignInWithIdpRequestProto {
     get {
-      if case .getUserAuth(let v)? = request {return v}
-      return GetUserAuthRequestProto()
+      if case .signInWithIdp(let v)? = request {return v}
+      return SignInWithIdpRequestProto()
     }
-    set {request = .getUserAuth(newValue)}
+    set {request = .signInWithIdp(newValue)}
+  }
+
+  var signInWithEmailAndPassword: SignInWithEmailAndPasswordRequestProto {
+    get {
+      if case .signInWithEmailAndPassword(let v)? = request {return v}
+      return SignInWithEmailAndPasswordRequestProto()
+    }
+    set {request = .signInWithEmailAndPassword(newValue)}
   }
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_Request: Equatable {
-    case getUserAuth(GetUserAuthRequestProto)
+    case signInWithIdp(SignInWithIdpRequestProto)
+    case signInWithEmailAndPassword(SignInWithEmailAndPasswordRequestProto)
 
   #if !swift(>=4.1)
     static func ==(lhs: AuthApiRequestProto.OneOf_Request, rhs: AuthApiRequestProto.OneOf_Request) -> Bool {
@@ -73,10 +82,15 @@ struct AuthApiRequestProto {
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch (lhs, rhs) {
-      case (.getUserAuth, .getUserAuth): return {
-        guard case .getUserAuth(let l) = lhs, case .getUserAuth(let r) = rhs else { preconditionFailure() }
+      case (.signInWithIdp, .signInWithIdp): return {
+        guard case .signInWithIdp(let l) = lhs, case .signInWithIdp(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
+      case (.signInWithEmailAndPassword, .signInWithEmailAndPassword): return {
+        guard case .signInWithEmailAndPassword(let l) = lhs, case .signInWithEmailAndPassword(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      default: return false
       }
     }
   #endif
@@ -92,12 +106,20 @@ struct AuthApiResponseProto {
 
   var response: AuthApiResponseProto.OneOf_Response? = nil
 
-  var getUserAuth: GetUserAuthResponseProto {
+  var signInWithIdp: SignInWithIdpResponseProto {
     get {
-      if case .getUserAuth(let v)? = response {return v}
-      return GetUserAuthResponseProto()
+      if case .signInWithIdp(let v)? = response {return v}
+      return SignInWithIdpResponseProto()
     }
-    set {response = .getUserAuth(newValue)}
+    set {response = .signInWithIdp(newValue)}
+  }
+
+  var signInWithEmailAndPassword: SignInWithEmailAndPasswordResponseProto {
+    get {
+      if case .signInWithEmailAndPassword(let v)? = response {return v}
+      return SignInWithEmailAndPasswordResponseProto()
+    }
+    set {response = .signInWithEmailAndPassword(newValue)}
   }
 
   var latencies: Dictionary<String,SwiftProtobuf.Google_Protobuf_Duration> = [:]
@@ -105,7 +127,8 @@ struct AuthApiResponseProto {
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_Response: Equatable {
-    case getUserAuth(GetUserAuthResponseProto)
+    case signInWithIdp(SignInWithIdpResponseProto)
+    case signInWithEmailAndPassword(SignInWithEmailAndPasswordResponseProto)
 
   #if !swift(>=4.1)
     static func ==(lhs: AuthApiResponseProto.OneOf_Response, rhs: AuthApiResponseProto.OneOf_Response) -> Bool {
@@ -113,10 +136,15 @@ struct AuthApiResponseProto {
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch (lhs, rhs) {
-      case (.getUserAuth, .getUserAuth): return {
-        guard case .getUserAuth(let l) = lhs, case .getUserAuth(let r) = rhs else { preconditionFailure() }
+      case (.signInWithIdp, .signInWithIdp): return {
+        guard case .signInWithIdp(let l) = lhs, case .signInWithIdp(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
+      case (.signInWithEmailAndPassword, .signInWithEmailAndPassword): return {
+        guard case .signInWithEmailAndPassword(let l) = lhs, case .signInWithEmailAndPassword(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      default: return false
       }
     }
   #endif
@@ -125,7 +153,7 @@ struct AuthApiResponseProto {
   init() {}
 }
 
-struct GetUserAuthRequestProto {
+struct SignInWithIdpRequestProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -141,7 +169,33 @@ struct GetUserAuthRequestProto {
   init() {}
 }
 
-struct GetUserAuthResponseProto {
+struct SignInWithIdpResponseProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var encodedUserAuth: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct SignInWithEmailAndPasswordRequestProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var email: String = String()
+
+  var password: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct SignInWithEmailAndPasswordResponseProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -159,8 +213,10 @@ extension AuthApiRequestProto: @unchecked Sendable {}
 extension AuthApiRequestProto.OneOf_Request: @unchecked Sendable {}
 extension AuthApiResponseProto: @unchecked Sendable {}
 extension AuthApiResponseProto.OneOf_Response: @unchecked Sendable {}
-extension GetUserAuthRequestProto: @unchecked Sendable {}
-extension GetUserAuthResponseProto: @unchecked Sendable {}
+extension SignInWithIdpRequestProto: @unchecked Sendable {}
+extension SignInWithIdpResponseProto: @unchecked Sendable {}
+extension SignInWithEmailAndPasswordRequestProto: @unchecked Sendable {}
+extension SignInWithEmailAndPasswordResponseProto: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
@@ -222,7 +278,8 @@ extension UserAuthProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
 extension AuthApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "AuthApiRequestProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "get_user_auth"),
+    1: .standard(proto: "sign_in_with_idp"),
+    2: .standard(proto: "sign_in_with_email_and_password"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -232,16 +289,29 @@ extension AuthApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try {
-        var v: GetUserAuthRequestProto?
+        var v: SignInWithIdpRequestProto?
         var hadOneofValue = false
         if let current = self.request {
           hadOneofValue = true
-          if case .getUserAuth(let m) = current {v = m}
+          if case .signInWithIdp(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.request = .getUserAuth(v)
+          self.request = .signInWithIdp(v)
+        }
+      }()
+      case 2: try {
+        var v: SignInWithEmailAndPasswordRequestProto?
+        var hadOneofValue = false
+        if let current = self.request {
+          hadOneofValue = true
+          if case .signInWithEmailAndPassword(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.request = .signInWithEmailAndPassword(v)
         }
       }()
       default: break
@@ -254,9 +324,17 @@ extension AuthApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    try { if case .getUserAuth(let v)? = self.request {
+    switch self.request {
+    case .signInWithIdp?: try {
+      guard case .signInWithIdp(let v)? = self.request else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    } }()
+    }()
+    case .signInWithEmailAndPassword?: try {
+      guard case .signInWithEmailAndPassword(let v)? = self.request else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    }()
+    case nil: break
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -270,7 +348,8 @@ extension AuthApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
 extension AuthApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "AuthApiResponseProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "get_user_auth"),
+    1: .standard(proto: "sign_in_with_idp"),
+    2: .standard(proto: "sign_in_with_email_and_password"),
     5: .same(proto: "latencies"),
   ]
 
@@ -281,16 +360,29 @@ extension AuthApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try {
-        var v: GetUserAuthResponseProto?
+        var v: SignInWithIdpResponseProto?
         var hadOneofValue = false
         if let current = self.response {
           hadOneofValue = true
-          if case .getUserAuth(let m) = current {v = m}
+          if case .signInWithIdp(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.response = .getUserAuth(v)
+          self.response = .signInWithIdp(v)
+        }
+      }()
+      case 2: try {
+        var v: SignInWithEmailAndPasswordResponseProto?
+        var hadOneofValue = false
+        if let current = self.response {
+          hadOneofValue = true
+          if case .signInWithEmailAndPassword(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.response = .signInWithEmailAndPassword(v)
         }
       }()
       case 5: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.Google_Protobuf_Duration>.self, value: &self.latencies) }()
@@ -304,9 +396,17 @@ extension AuthApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    try { if case .getUserAuth(let v)? = self.response {
+    switch self.response {
+    case .signInWithIdp?: try {
+      guard case .signInWithIdp(let v)? = self.response else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    } }()
+    }()
+    case .signInWithEmailAndPassword?: try {
+      guard case .signInWithEmailAndPassword(let v)? = self.response else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    }()
+    case nil: break
+    }
     if !self.latencies.isEmpty {
       try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.Google_Protobuf_Duration>.self, value: self.latencies, fieldNumber: 5)
     }
@@ -321,8 +421,8 @@ extension AuthApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
   }
 }
 
-extension GetUserAuthRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "GetUserAuthRequestProto"
+extension SignInWithIdpRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "SignInWithIdpRequestProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "id_token"),
     2: .standard(proto: "provider_id"),
@@ -356,7 +456,7 @@ extension GetUserAuthRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Message
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: GetUserAuthRequestProto, rhs: GetUserAuthRequestProto) -> Bool {
+  static func ==(lhs: SignInWithIdpRequestProto, rhs: SignInWithIdpRequestProto) -> Bool {
     if lhs.idToken != rhs.idToken {return false}
     if lhs.providerID != rhs.providerID {return false}
     if lhs.rawNonce != rhs.rawNonce {return false}
@@ -365,8 +465,8 @@ extension GetUserAuthRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Message
   }
 }
 
-extension GetUserAuthResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "GetUserAuthResponseProto"
+extension SignInWithIdpResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "SignInWithIdpResponseProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "encoded_user_auth"),
   ]
@@ -390,7 +490,77 @@ extension GetUserAuthResponseProto: SwiftProtobuf.Message, SwiftProtobuf._Messag
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: GetUserAuthResponseProto, rhs: GetUserAuthResponseProto) -> Bool {
+  static func ==(lhs: SignInWithIdpResponseProto, rhs: SignInWithIdpResponseProto) -> Bool {
+    if lhs.encodedUserAuth != rhs.encodedUserAuth {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension SignInWithEmailAndPasswordRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "SignInWithEmailAndPasswordRequestProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "email"),
+    2: .same(proto: "password"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.email) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.password) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.email.isEmpty {
+      try visitor.visitSingularStringField(value: self.email, fieldNumber: 1)
+    }
+    if !self.password.isEmpty {
+      try visitor.visitSingularStringField(value: self.password, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: SignInWithEmailAndPasswordRequestProto, rhs: SignInWithEmailAndPasswordRequestProto) -> Bool {
+    if lhs.email != rhs.email {return false}
+    if lhs.password != rhs.password {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension SignInWithEmailAndPasswordResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "SignInWithEmailAndPasswordResponseProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "encoded_user_auth"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.encodedUserAuth) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.encodedUserAuth.isEmpty {
+      try visitor.visitSingularStringField(value: self.encodedUserAuth, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: SignInWithEmailAndPasswordResponseProto, rhs: SignInWithEmailAndPasswordResponseProto) -> Bool {
     if lhs.encodedUserAuth != rhs.encodedUserAuth {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
