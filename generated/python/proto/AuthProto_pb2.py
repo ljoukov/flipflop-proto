@@ -15,7 +15,7 @@ from google.protobuf import duration_pb2 as google_dot_protobuf_dot_duration__pb
 from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0f\x41uthProto.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"}\n\rUserAuthProto\x12\x0f\n\x07user_id\x18\x01 \x01(\t\x12\x14\n\x0c\x61\x63\x63\x65ss_token\x18\x02 \x01(\t\x12.\n\nexpires_at\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x15\n\rrefresh_token\x18\x04 \x01(\t\"\xac\x01\n\x13\x41uthApiRequestProto\x12\x36\n\x10sign_in_with_idp\x18\x01 \x01(\x0b\x32\x1a.SignInWithIdpRequestProtoH\x00\x12R\n\x1fsign_in_with_email_and_password\x18\x02 \x01(\x0b\x32\'.SignInWithEmailAndPasswordRequestProtoH\x00\x42\t\n\x07request\"\xb6\x02\n\x14\x41uthApiResponseProto\x12\x37\n\x10sign_in_with_idp\x18\x01 \x01(\x0b\x32\x1b.SignInWithIdpResponseProtoH\x00\x12S\n\x1fsign_in_with_email_and_password\x18\x02 \x01(\x0b\x32(.SignInWithEmailAndPasswordResponseProtoH\x00\x12\x37\n\tlatencies\x18\x05 \x03(\x0b\x32$.AuthApiResponseProto.LatenciesEntry\x1aK\n\x0eLatenciesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12(\n\x05value\x18\x02 \x01(\x0b\x32\x19.google.protobuf.Duration:\x02\x38\x01\x42\n\n\x08response\"U\n\x19SignInWithIdpRequestProto\x12\x10\n\x08id_token\x18\x01 \x01(\t\x12\x13\n\x0bprovider_id\x18\x02 \x01(\t\x12\x11\n\traw_nonce\x18\x03 \x01(\t\"7\n\x1aSignInWithIdpResponseProto\x12\x19\n\x11\x65ncoded_user_auth\x18\x01 \x01(\t\"I\n&SignInWithEmailAndPasswordRequestProto\x12\r\n\x05\x65mail\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\"D\n\'SignInWithEmailAndPasswordResponseProto\x12\x19\n\x11\x65ncoded_user_auth\x18\x01 \x01(\tb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0f\x41uthProto.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"}\n\rUserAuthProto\x12\x0f\n\x07user_id\x18\x01 \x01(\t\x12\x14\n\x0c\x61\x63\x63\x65ss_token\x18\x02 \x01(\t\x12.\n\nexpires_at\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x15\n\rrefresh_token\x18\x04 \x01(\t\"\x9a\x01\n\x13\x41uthApiRequestProto\x12\x36\n\x10sign_in_with_idp\x18\x01 \x01(\x0b\x32\x1a.SignInWithIdpRequestProtoH\x00\x12@\n\x15sign_in_with_password\x18\x02 \x01(\x0b\x32\x1f.SignInWithPasswordRequestProtoH\x00\x42\t\n\x07request\"\xa4\x02\n\x14\x41uthApiResponseProto\x12\x37\n\x10sign_in_with_idp\x18\x01 \x01(\x0b\x32\x1b.SignInWithIdpResponseProtoH\x00\x12\x41\n\x15sign_in_with_password\x18\x02 \x01(\x0b\x32 .SignInWithPasswordResponseProtoH\x00\x12\x37\n\tlatencies\x18\x05 \x03(\x0b\x32$.AuthApiResponseProto.LatenciesEntry\x1aK\n\x0eLatenciesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12(\n\x05value\x18\x02 \x01(\x0b\x32\x19.google.protobuf.Duration:\x02\x38\x01\x42\n\n\x08response\"U\n\x19SignInWithIdpRequestProto\x12\x10\n\x08id_token\x18\x01 \x01(\t\x12\x13\n\x0bprovider_id\x18\x02 \x01(\t\x12\x11\n\traw_nonce\x18\x03 \x01(\t\"7\n\x1aSignInWithIdpResponseProto\x12\x19\n\x11\x65ncoded_user_auth\x18\x01 \x01(\t\"A\n\x1eSignInWithPasswordRequestProto\x12\r\n\x05\x65mail\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\"<\n\x1fSignInWithPasswordResponseProto\x12\x19\n\x11\x65ncoded_user_auth\x18\x01 \x01(\tb\x06proto3')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'AuthProto_pb2', globals())
@@ -27,17 +27,17 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _USERAUTHPROTO._serialized_start=84
   _USERAUTHPROTO._serialized_end=209
   _AUTHAPIREQUESTPROTO._serialized_start=212
-  _AUTHAPIREQUESTPROTO._serialized_end=384
-  _AUTHAPIRESPONSEPROTO._serialized_start=387
-  _AUTHAPIRESPONSEPROTO._serialized_end=697
-  _AUTHAPIRESPONSEPROTO_LATENCIESENTRY._serialized_start=610
-  _AUTHAPIRESPONSEPROTO_LATENCIESENTRY._serialized_end=685
-  _SIGNINWITHIDPREQUESTPROTO._serialized_start=699
-  _SIGNINWITHIDPREQUESTPROTO._serialized_end=784
-  _SIGNINWITHIDPRESPONSEPROTO._serialized_start=786
-  _SIGNINWITHIDPRESPONSEPROTO._serialized_end=841
-  _SIGNINWITHEMAILANDPASSWORDREQUESTPROTO._serialized_start=843
-  _SIGNINWITHEMAILANDPASSWORDREQUESTPROTO._serialized_end=916
-  _SIGNINWITHEMAILANDPASSWORDRESPONSEPROTO._serialized_start=918
-  _SIGNINWITHEMAILANDPASSWORDRESPONSEPROTO._serialized_end=986
+  _AUTHAPIREQUESTPROTO._serialized_end=366
+  _AUTHAPIRESPONSEPROTO._serialized_start=369
+  _AUTHAPIRESPONSEPROTO._serialized_end=661
+  _AUTHAPIRESPONSEPROTO_LATENCIESENTRY._serialized_start=574
+  _AUTHAPIRESPONSEPROTO_LATENCIESENTRY._serialized_end=649
+  _SIGNINWITHIDPREQUESTPROTO._serialized_start=663
+  _SIGNINWITHIDPREQUESTPROTO._serialized_end=748
+  _SIGNINWITHIDPRESPONSEPROTO._serialized_start=750
+  _SIGNINWITHIDPRESPONSEPROTO._serialized_end=805
+  _SIGNINWITHPASSWORDREQUESTPROTO._serialized_start=807
+  _SIGNINWITHPASSWORDREQUESTPROTO._serialized_end=872
+  _SIGNINWITHPASSWORDRESPONSEPROTO._serialized_start=874
+  _SIGNINWITHPASSWORDRESPONSEPROTO._serialized_end=934
 # @@protoc_insertion_point(module_scope)

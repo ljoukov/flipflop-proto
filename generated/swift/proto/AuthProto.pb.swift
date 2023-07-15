@@ -62,19 +62,19 @@ struct AuthApiRequestProto {
     set {request = .signInWithIdp(newValue)}
   }
 
-  var signInWithEmailAndPassword: SignInWithEmailAndPasswordRequestProto {
+  var signInWithPassword: SignInWithPasswordRequestProto {
     get {
-      if case .signInWithEmailAndPassword(let v)? = request {return v}
-      return SignInWithEmailAndPasswordRequestProto()
+      if case .signInWithPassword(let v)? = request {return v}
+      return SignInWithPasswordRequestProto()
     }
-    set {request = .signInWithEmailAndPassword(newValue)}
+    set {request = .signInWithPassword(newValue)}
   }
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_Request: Equatable {
     case signInWithIdp(SignInWithIdpRequestProto)
-    case signInWithEmailAndPassword(SignInWithEmailAndPasswordRequestProto)
+    case signInWithPassword(SignInWithPasswordRequestProto)
 
   #if !swift(>=4.1)
     static func ==(lhs: AuthApiRequestProto.OneOf_Request, rhs: AuthApiRequestProto.OneOf_Request) -> Bool {
@@ -86,8 +86,8 @@ struct AuthApiRequestProto {
         guard case .signInWithIdp(let l) = lhs, case .signInWithIdp(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
-      case (.signInWithEmailAndPassword, .signInWithEmailAndPassword): return {
-        guard case .signInWithEmailAndPassword(let l) = lhs, case .signInWithEmailAndPassword(let r) = rhs else { preconditionFailure() }
+      case (.signInWithPassword, .signInWithPassword): return {
+        guard case .signInWithPassword(let l) = lhs, case .signInWithPassword(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       default: return false
@@ -114,12 +114,12 @@ struct AuthApiResponseProto {
     set {response = .signInWithIdp(newValue)}
   }
 
-  var signInWithEmailAndPassword: SignInWithEmailAndPasswordResponseProto {
+  var signInWithPassword: SignInWithPasswordResponseProto {
     get {
-      if case .signInWithEmailAndPassword(let v)? = response {return v}
-      return SignInWithEmailAndPasswordResponseProto()
+      if case .signInWithPassword(let v)? = response {return v}
+      return SignInWithPasswordResponseProto()
     }
-    set {response = .signInWithEmailAndPassword(newValue)}
+    set {response = .signInWithPassword(newValue)}
   }
 
   var latencies: Dictionary<String,SwiftProtobuf.Google_Protobuf_Duration> = [:]
@@ -128,7 +128,7 @@ struct AuthApiResponseProto {
 
   enum OneOf_Response: Equatable {
     case signInWithIdp(SignInWithIdpResponseProto)
-    case signInWithEmailAndPassword(SignInWithEmailAndPasswordResponseProto)
+    case signInWithPassword(SignInWithPasswordResponseProto)
 
   #if !swift(>=4.1)
     static func ==(lhs: AuthApiResponseProto.OneOf_Response, rhs: AuthApiResponseProto.OneOf_Response) -> Bool {
@@ -140,8 +140,8 @@ struct AuthApiResponseProto {
         guard case .signInWithIdp(let l) = lhs, case .signInWithIdp(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
-      case (.signInWithEmailAndPassword, .signInWithEmailAndPassword): return {
-        guard case .signInWithEmailAndPassword(let l) = lhs, case .signInWithEmailAndPassword(let r) = rhs else { preconditionFailure() }
+      case (.signInWithPassword, .signInWithPassword): return {
+        guard case .signInWithPassword(let l) = lhs, case .signInWithPassword(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       default: return false
@@ -181,7 +181,7 @@ struct SignInWithIdpResponseProto {
   init() {}
 }
 
-struct SignInWithEmailAndPasswordRequestProto {
+struct SignInWithPasswordRequestProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -195,7 +195,7 @@ struct SignInWithEmailAndPasswordRequestProto {
   init() {}
 }
 
-struct SignInWithEmailAndPasswordResponseProto {
+struct SignInWithPasswordResponseProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -215,8 +215,8 @@ extension AuthApiResponseProto: @unchecked Sendable {}
 extension AuthApiResponseProto.OneOf_Response: @unchecked Sendable {}
 extension SignInWithIdpRequestProto: @unchecked Sendable {}
 extension SignInWithIdpResponseProto: @unchecked Sendable {}
-extension SignInWithEmailAndPasswordRequestProto: @unchecked Sendable {}
-extension SignInWithEmailAndPasswordResponseProto: @unchecked Sendable {}
+extension SignInWithPasswordRequestProto: @unchecked Sendable {}
+extension SignInWithPasswordResponseProto: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
@@ -279,7 +279,7 @@ extension AuthApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
   static let protoMessageName: String = "AuthApiRequestProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "sign_in_with_idp"),
-    2: .standard(proto: "sign_in_with_email_and_password"),
+    2: .standard(proto: "sign_in_with_password"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -302,16 +302,16 @@ extension AuthApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
         }
       }()
       case 2: try {
-        var v: SignInWithEmailAndPasswordRequestProto?
+        var v: SignInWithPasswordRequestProto?
         var hadOneofValue = false
         if let current = self.request {
           hadOneofValue = true
-          if case .signInWithEmailAndPassword(let m) = current {v = m}
+          if case .signInWithPassword(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.request = .signInWithEmailAndPassword(v)
+          self.request = .signInWithPassword(v)
         }
       }()
       default: break
@@ -329,8 +329,8 @@ extension AuthApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
       guard case .signInWithIdp(let v)? = self.request else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
     }()
-    case .signInWithEmailAndPassword?: try {
-      guard case .signInWithEmailAndPassword(let v)? = self.request else { preconditionFailure() }
+    case .signInWithPassword?: try {
+      guard case .signInWithPassword(let v)? = self.request else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     }()
     case nil: break
@@ -349,7 +349,7 @@ extension AuthApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
   static let protoMessageName: String = "AuthApiResponseProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "sign_in_with_idp"),
-    2: .standard(proto: "sign_in_with_email_and_password"),
+    2: .standard(proto: "sign_in_with_password"),
     5: .same(proto: "latencies"),
   ]
 
@@ -373,16 +373,16 @@ extension AuthApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
         }
       }()
       case 2: try {
-        var v: SignInWithEmailAndPasswordResponseProto?
+        var v: SignInWithPasswordResponseProto?
         var hadOneofValue = false
         if let current = self.response {
           hadOneofValue = true
-          if case .signInWithEmailAndPassword(let m) = current {v = m}
+          if case .signInWithPassword(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.response = .signInWithEmailAndPassword(v)
+          self.response = .signInWithPassword(v)
         }
       }()
       case 5: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.Google_Protobuf_Duration>.self, value: &self.latencies) }()
@@ -401,8 +401,8 @@ extension AuthApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
       guard case .signInWithIdp(let v)? = self.response else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
     }()
-    case .signInWithEmailAndPassword?: try {
-      guard case .signInWithEmailAndPassword(let v)? = self.response else { preconditionFailure() }
+    case .signInWithPassword?: try {
+      guard case .signInWithPassword(let v)? = self.response else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     }()
     case nil: break
@@ -497,8 +497,8 @@ extension SignInWithIdpResponseProto: SwiftProtobuf.Message, SwiftProtobuf._Mess
   }
 }
 
-extension SignInWithEmailAndPasswordRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "SignInWithEmailAndPasswordRequestProto"
+extension SignInWithPasswordRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "SignInWithPasswordRequestProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "email"),
     2: .same(proto: "password"),
@@ -527,7 +527,7 @@ extension SignInWithEmailAndPasswordRequestProto: SwiftProtobuf.Message, SwiftPr
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: SignInWithEmailAndPasswordRequestProto, rhs: SignInWithEmailAndPasswordRequestProto) -> Bool {
+  static func ==(lhs: SignInWithPasswordRequestProto, rhs: SignInWithPasswordRequestProto) -> Bool {
     if lhs.email != rhs.email {return false}
     if lhs.password != rhs.password {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
@@ -535,8 +535,8 @@ extension SignInWithEmailAndPasswordRequestProto: SwiftProtobuf.Message, SwiftPr
   }
 }
 
-extension SignInWithEmailAndPasswordResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "SignInWithEmailAndPasswordResponseProto"
+extension SignInWithPasswordResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "SignInWithPasswordResponseProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "encoded_user_auth"),
   ]
@@ -560,7 +560,7 @@ extension SignInWithEmailAndPasswordResponseProto: SwiftProtobuf.Message, SwiftP
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: SignInWithEmailAndPasswordResponseProto, rhs: SignInWithEmailAndPasswordResponseProto) -> Bool {
+  static func ==(lhs: SignInWithPasswordResponseProto, rhs: SignInWithPasswordResponseProto) -> Bool {
     if lhs.encodedUserAuth != rhs.encodedUserAuth {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

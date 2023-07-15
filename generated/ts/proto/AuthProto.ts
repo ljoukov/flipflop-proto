@@ -50,11 +50,11 @@ export interface AuthApiRequestProto {
          */
         signInWithIdp: SignInWithIdpRequestProto;
     } | {
-        oneofKind: "signInWithEmailAndPassword";
+        oneofKind: "signInWithPassword";
         /**
-         * @generated from protobuf field: SignInWithEmailAndPasswordRequestProto sign_in_with_email_and_password = 2;
+         * @generated from protobuf field: SignInWithPasswordRequestProto sign_in_with_password = 2;
          */
-        signInWithEmailAndPassword: SignInWithEmailAndPasswordRequestProto;
+        signInWithPassword: SignInWithPasswordRequestProto;
     } | {
         oneofKind: undefined;
     };
@@ -73,11 +73,11 @@ export interface AuthApiResponseProto {
          */
         signInWithIdp: SignInWithIdpResponseProto;
     } | {
-        oneofKind: "signInWithEmailAndPassword";
+        oneofKind: "signInWithPassword";
         /**
-         * @generated from protobuf field: SignInWithEmailAndPasswordResponseProto sign_in_with_email_and_password = 2;
+         * @generated from protobuf field: SignInWithPasswordResponseProto sign_in_with_password = 2;
          */
-        signInWithEmailAndPassword: SignInWithEmailAndPasswordResponseProto;
+        signInWithPassword: SignInWithPasswordResponseProto;
     } | {
         oneofKind: undefined;
     };
@@ -115,9 +115,9 @@ export interface SignInWithIdpResponseProto {
     encodedUserAuth: string;
 }
 /**
- * @generated from protobuf message SignInWithEmailAndPasswordRequestProto
+ * @generated from protobuf message SignInWithPasswordRequestProto
  */
-export interface SignInWithEmailAndPasswordRequestProto {
+export interface SignInWithPasswordRequestProto {
     /**
      * @generated from protobuf field: string email = 1;
      */
@@ -128,9 +128,9 @@ export interface SignInWithEmailAndPasswordRequestProto {
     password: string;
 }
 /**
- * @generated from protobuf message SignInWithEmailAndPasswordResponseProto
+ * @generated from protobuf message SignInWithPasswordResponseProto
  */
-export interface SignInWithEmailAndPasswordResponseProto {
+export interface SignInWithPasswordResponseProto {
     /**
      * @generated from protobuf field: string encoded_user_auth = 1;
      */
@@ -209,7 +209,7 @@ class AuthApiRequestProto$Type extends MessageType<AuthApiRequestProto> {
     constructor() {
         super("AuthApiRequestProto", [
             { no: 1, name: "sign_in_with_idp", kind: "message", oneof: "request", T: () => SignInWithIdpRequestProto },
-            { no: 2, name: "sign_in_with_email_and_password", kind: "message", oneof: "request", T: () => SignInWithEmailAndPasswordRequestProto }
+            { no: 2, name: "sign_in_with_password", kind: "message", oneof: "request", T: () => SignInWithPasswordRequestProto }
         ]);
     }
     create(value?: PartialMessage<AuthApiRequestProto>): AuthApiRequestProto {
@@ -230,10 +230,10 @@ class AuthApiRequestProto$Type extends MessageType<AuthApiRequestProto> {
                         signInWithIdp: SignInWithIdpRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).signInWithIdp)
                     };
                     break;
-                case /* SignInWithEmailAndPasswordRequestProto sign_in_with_email_and_password */ 2:
+                case /* SignInWithPasswordRequestProto sign_in_with_password */ 2:
                     message.request = {
-                        oneofKind: "signInWithEmailAndPassword",
-                        signInWithEmailAndPassword: SignInWithEmailAndPasswordRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).signInWithEmailAndPassword)
+                        oneofKind: "signInWithPassword",
+                        signInWithPassword: SignInWithPasswordRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).signInWithPassword)
                     };
                     break;
                 default:
@@ -251,9 +251,9 @@ class AuthApiRequestProto$Type extends MessageType<AuthApiRequestProto> {
         /* SignInWithIdpRequestProto sign_in_with_idp = 1; */
         if (message.request.oneofKind === "signInWithIdp")
             SignInWithIdpRequestProto.internalBinaryWrite(message.request.signInWithIdp, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* SignInWithEmailAndPasswordRequestProto sign_in_with_email_and_password = 2; */
-        if (message.request.oneofKind === "signInWithEmailAndPassword")
-            SignInWithEmailAndPasswordRequestProto.internalBinaryWrite(message.request.signInWithEmailAndPassword, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* SignInWithPasswordRequestProto sign_in_with_password = 2; */
+        if (message.request.oneofKind === "signInWithPassword")
+            SignInWithPasswordRequestProto.internalBinaryWrite(message.request.signInWithPassword, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -269,7 +269,7 @@ class AuthApiResponseProto$Type extends MessageType<AuthApiResponseProto> {
     constructor() {
         super("AuthApiResponseProto", [
             { no: 1, name: "sign_in_with_idp", kind: "message", oneof: "response", T: () => SignInWithIdpResponseProto },
-            { no: 2, name: "sign_in_with_email_and_password", kind: "message", oneof: "response", T: () => SignInWithEmailAndPasswordResponseProto },
+            { no: 2, name: "sign_in_with_password", kind: "message", oneof: "response", T: () => SignInWithPasswordResponseProto },
             { no: 5, name: "latencies", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => Duration } }
         ]);
     }
@@ -291,10 +291,10 @@ class AuthApiResponseProto$Type extends MessageType<AuthApiResponseProto> {
                         signInWithIdp: SignInWithIdpResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).signInWithIdp)
                     };
                     break;
-                case /* SignInWithEmailAndPasswordResponseProto sign_in_with_email_and_password */ 2:
+                case /* SignInWithPasswordResponseProto sign_in_with_password */ 2:
                     message.response = {
-                        oneofKind: "signInWithEmailAndPassword",
-                        signInWithEmailAndPassword: SignInWithEmailAndPasswordResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).signInWithEmailAndPassword)
+                        oneofKind: "signInWithPassword",
+                        signInWithPassword: SignInWithPasswordResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).signInWithPassword)
                     };
                     break;
                 case /* map<string, google.protobuf.Duration> latencies */ 5:
@@ -331,9 +331,9 @@ class AuthApiResponseProto$Type extends MessageType<AuthApiResponseProto> {
         /* SignInWithIdpResponseProto sign_in_with_idp = 1; */
         if (message.response.oneofKind === "signInWithIdp")
             SignInWithIdpResponseProto.internalBinaryWrite(message.response.signInWithIdp, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* SignInWithEmailAndPasswordResponseProto sign_in_with_email_and_password = 2; */
-        if (message.response.oneofKind === "signInWithEmailAndPassword")
-            SignInWithEmailAndPasswordResponseProto.internalBinaryWrite(message.response.signInWithEmailAndPassword, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* SignInWithPasswordResponseProto sign_in_with_password = 2; */
+        if (message.response.oneofKind === "signInWithPassword")
+            SignInWithPasswordResponseProto.internalBinaryWrite(message.response.signInWithPassword, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         /* map<string, google.protobuf.Duration> latencies = 5; */
         for (let k of Object.keys(message.latencies)) {
             writer.tag(5, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k);
@@ -460,21 +460,21 @@ class SignInWithIdpResponseProto$Type extends MessageType<SignInWithIdpResponseP
  */
 export const SignInWithIdpResponseProto = new SignInWithIdpResponseProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class SignInWithEmailAndPasswordRequestProto$Type extends MessageType<SignInWithEmailAndPasswordRequestProto> {
+class SignInWithPasswordRequestProto$Type extends MessageType<SignInWithPasswordRequestProto> {
     constructor() {
-        super("SignInWithEmailAndPasswordRequestProto", [
+        super("SignInWithPasswordRequestProto", [
             { no: 1, name: "email", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "password", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<SignInWithEmailAndPasswordRequestProto>): SignInWithEmailAndPasswordRequestProto {
+    create(value?: PartialMessage<SignInWithPasswordRequestProto>): SignInWithPasswordRequestProto {
         const message = { email: "", password: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<SignInWithEmailAndPasswordRequestProto>(this, message, value);
+            reflectionMergePartial<SignInWithPasswordRequestProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SignInWithEmailAndPasswordRequestProto): SignInWithEmailAndPasswordRequestProto {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SignInWithPasswordRequestProto): SignInWithPasswordRequestProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -496,7 +496,7 @@ class SignInWithEmailAndPasswordRequestProto$Type extends MessageType<SignInWith
         }
         return message;
     }
-    internalBinaryWrite(message: SignInWithEmailAndPasswordRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: SignInWithPasswordRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string email = 1; */
         if (message.email !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.email);
@@ -510,24 +510,24 @@ class SignInWithEmailAndPasswordRequestProto$Type extends MessageType<SignInWith
     }
 }
 /**
- * @generated MessageType for protobuf message SignInWithEmailAndPasswordRequestProto
+ * @generated MessageType for protobuf message SignInWithPasswordRequestProto
  */
-export const SignInWithEmailAndPasswordRequestProto = new SignInWithEmailAndPasswordRequestProto$Type();
+export const SignInWithPasswordRequestProto = new SignInWithPasswordRequestProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class SignInWithEmailAndPasswordResponseProto$Type extends MessageType<SignInWithEmailAndPasswordResponseProto> {
+class SignInWithPasswordResponseProto$Type extends MessageType<SignInWithPasswordResponseProto> {
     constructor() {
-        super("SignInWithEmailAndPasswordResponseProto", [
+        super("SignInWithPasswordResponseProto", [
             { no: 1, name: "encoded_user_auth", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<SignInWithEmailAndPasswordResponseProto>): SignInWithEmailAndPasswordResponseProto {
+    create(value?: PartialMessage<SignInWithPasswordResponseProto>): SignInWithPasswordResponseProto {
         const message = { encodedUserAuth: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<SignInWithEmailAndPasswordResponseProto>(this, message, value);
+            reflectionMergePartial<SignInWithPasswordResponseProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SignInWithEmailAndPasswordResponseProto): SignInWithEmailAndPasswordResponseProto {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SignInWithPasswordResponseProto): SignInWithPasswordResponseProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -546,7 +546,7 @@ class SignInWithEmailAndPasswordResponseProto$Type extends MessageType<SignInWit
         }
         return message;
     }
-    internalBinaryWrite(message: SignInWithEmailAndPasswordResponseProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: SignInWithPasswordResponseProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string encoded_user_auth = 1; */
         if (message.encodedUserAuth !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.encodedUserAuth);
@@ -557,6 +557,6 @@ class SignInWithEmailAndPasswordResponseProto$Type extends MessageType<SignInWit
     }
 }
 /**
- * @generated MessageType for protobuf message SignInWithEmailAndPasswordResponseProto
+ * @generated MessageType for protobuf message SignInWithPasswordResponseProto
  */
-export const SignInWithEmailAndPasswordResponseProto = new SignInWithEmailAndPasswordResponseProto$Type();
+export const SignInWithPasswordResponseProto = new SignInWithPasswordResponseProto$Type();
