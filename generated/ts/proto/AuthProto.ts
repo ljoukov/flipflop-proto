@@ -50,9 +50,15 @@ export interface AuthApiRequestProto {
          */
         signInWithIdp: SignInWithIdpRequestProto;
     } | {
+        oneofKind: "signUpWithPassword";
+        /**
+         * @generated from protobuf field: SignUpWithPasswordRequestProto sign_up_with_password = 2;
+         */
+        signUpWithPassword: SignUpWithPasswordRequestProto;
+    } | {
         oneofKind: "signInWithPassword";
         /**
-         * @generated from protobuf field: SignInWithPasswordRequestProto sign_in_with_password = 2;
+         * @generated from protobuf field: SignInWithPasswordRequestProto sign_in_with_password = 3;
          */
         signInWithPassword: SignInWithPasswordRequestProto;
     } | {
@@ -73,9 +79,15 @@ export interface AuthApiResponseProto {
          */
         signInWithIdp: SignInWithIdpResponseProto;
     } | {
+        oneofKind: "signUpWithPassword";
+        /**
+         * @generated from protobuf field: SignUpWithPasswordResponseProto sign_up_with_password = 2;
+         */
+        signUpWithPassword: SignUpWithPasswordResponseProto;
+    } | {
         oneofKind: "signInWithPassword";
         /**
-         * @generated from protobuf field: SignInWithPasswordResponseProto sign_in_with_password = 2;
+         * @generated from protobuf field: SignInWithPasswordResponseProto sign_in_with_password = 3;
          */
         signInWithPassword: SignInWithPasswordResponseProto;
     } | {
@@ -109,6 +121,28 @@ export interface SignInWithIdpRequestProto {
  * @generated from protobuf message SignInWithIdpResponseProto
  */
 export interface SignInWithIdpResponseProto {
+    /**
+     * @generated from protobuf field: string encoded_user_auth = 1;
+     */
+    encodedUserAuth: string;
+}
+/**
+ * @generated from protobuf message SignUpWithPasswordRequestProto
+ */
+export interface SignUpWithPasswordRequestProto {
+    /**
+     * @generated from protobuf field: string email = 1;
+     */
+    email: string;
+    /**
+     * @generated from protobuf field: string password = 2;
+     */
+    password: string;
+}
+/**
+ * @generated from protobuf message SignUpWithPasswordResponseProto
+ */
+export interface SignUpWithPasswordResponseProto {
     /**
      * @generated from protobuf field: string encoded_user_auth = 1;
      */
@@ -209,7 +243,8 @@ class AuthApiRequestProto$Type extends MessageType<AuthApiRequestProto> {
     constructor() {
         super("AuthApiRequestProto", [
             { no: 1, name: "sign_in_with_idp", kind: "message", oneof: "request", T: () => SignInWithIdpRequestProto },
-            { no: 2, name: "sign_in_with_password", kind: "message", oneof: "request", T: () => SignInWithPasswordRequestProto }
+            { no: 2, name: "sign_up_with_password", kind: "message", oneof: "request", T: () => SignUpWithPasswordRequestProto },
+            { no: 3, name: "sign_in_with_password", kind: "message", oneof: "request", T: () => SignInWithPasswordRequestProto }
         ]);
     }
     create(value?: PartialMessage<AuthApiRequestProto>): AuthApiRequestProto {
@@ -230,7 +265,13 @@ class AuthApiRequestProto$Type extends MessageType<AuthApiRequestProto> {
                         signInWithIdp: SignInWithIdpRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).signInWithIdp)
                     };
                     break;
-                case /* SignInWithPasswordRequestProto sign_in_with_password */ 2:
+                case /* SignUpWithPasswordRequestProto sign_up_with_password */ 2:
+                    message.request = {
+                        oneofKind: "signUpWithPassword",
+                        signUpWithPassword: SignUpWithPasswordRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).signUpWithPassword)
+                    };
+                    break;
+                case /* SignInWithPasswordRequestProto sign_in_with_password */ 3:
                     message.request = {
                         oneofKind: "signInWithPassword",
                         signInWithPassword: SignInWithPasswordRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).signInWithPassword)
@@ -251,9 +292,12 @@ class AuthApiRequestProto$Type extends MessageType<AuthApiRequestProto> {
         /* SignInWithIdpRequestProto sign_in_with_idp = 1; */
         if (message.request.oneofKind === "signInWithIdp")
             SignInWithIdpRequestProto.internalBinaryWrite(message.request.signInWithIdp, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* SignInWithPasswordRequestProto sign_in_with_password = 2; */
+        /* SignUpWithPasswordRequestProto sign_up_with_password = 2; */
+        if (message.request.oneofKind === "signUpWithPassword")
+            SignUpWithPasswordRequestProto.internalBinaryWrite(message.request.signUpWithPassword, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* SignInWithPasswordRequestProto sign_in_with_password = 3; */
         if (message.request.oneofKind === "signInWithPassword")
-            SignInWithPasswordRequestProto.internalBinaryWrite(message.request.signInWithPassword, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+            SignInWithPasswordRequestProto.internalBinaryWrite(message.request.signInWithPassword, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -269,7 +313,8 @@ class AuthApiResponseProto$Type extends MessageType<AuthApiResponseProto> {
     constructor() {
         super("AuthApiResponseProto", [
             { no: 1, name: "sign_in_with_idp", kind: "message", oneof: "response", T: () => SignInWithIdpResponseProto },
-            { no: 2, name: "sign_in_with_password", kind: "message", oneof: "response", T: () => SignInWithPasswordResponseProto },
+            { no: 2, name: "sign_up_with_password", kind: "message", oneof: "response", T: () => SignUpWithPasswordResponseProto },
+            { no: 3, name: "sign_in_with_password", kind: "message", oneof: "response", T: () => SignInWithPasswordResponseProto },
             { no: 5, name: "latencies", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => Duration } }
         ]);
     }
@@ -291,7 +336,13 @@ class AuthApiResponseProto$Type extends MessageType<AuthApiResponseProto> {
                         signInWithIdp: SignInWithIdpResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).signInWithIdp)
                     };
                     break;
-                case /* SignInWithPasswordResponseProto sign_in_with_password */ 2:
+                case /* SignUpWithPasswordResponseProto sign_up_with_password */ 2:
+                    message.response = {
+                        oneofKind: "signUpWithPassword",
+                        signUpWithPassword: SignUpWithPasswordResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).signUpWithPassword)
+                    };
+                    break;
+                case /* SignInWithPasswordResponseProto sign_in_with_password */ 3:
                     message.response = {
                         oneofKind: "signInWithPassword",
                         signInWithPassword: SignInWithPasswordResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).signInWithPassword)
@@ -331,9 +382,12 @@ class AuthApiResponseProto$Type extends MessageType<AuthApiResponseProto> {
         /* SignInWithIdpResponseProto sign_in_with_idp = 1; */
         if (message.response.oneofKind === "signInWithIdp")
             SignInWithIdpResponseProto.internalBinaryWrite(message.response.signInWithIdp, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* SignInWithPasswordResponseProto sign_in_with_password = 2; */
+        /* SignUpWithPasswordResponseProto sign_up_with_password = 2; */
+        if (message.response.oneofKind === "signUpWithPassword")
+            SignUpWithPasswordResponseProto.internalBinaryWrite(message.response.signUpWithPassword, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* SignInWithPasswordResponseProto sign_in_with_password = 3; */
         if (message.response.oneofKind === "signInWithPassword")
-            SignInWithPasswordResponseProto.internalBinaryWrite(message.response.signInWithPassword, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+            SignInWithPasswordResponseProto.internalBinaryWrite(message.response.signInWithPassword, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
         /* map<string, google.protobuf.Duration> latencies = 5; */
         for (let k of Object.keys(message.latencies)) {
             writer.tag(5, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k);
@@ -459,6 +513,107 @@ class SignInWithIdpResponseProto$Type extends MessageType<SignInWithIdpResponseP
  * @generated MessageType for protobuf message SignInWithIdpResponseProto
  */
 export const SignInWithIdpResponseProto = new SignInWithIdpResponseProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class SignUpWithPasswordRequestProto$Type extends MessageType<SignUpWithPasswordRequestProto> {
+    constructor() {
+        super("SignUpWithPasswordRequestProto", [
+            { no: 1, name: "email", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "password", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<SignUpWithPasswordRequestProto>): SignUpWithPasswordRequestProto {
+        const message = { email: "", password: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<SignUpWithPasswordRequestProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SignUpWithPasswordRequestProto): SignUpWithPasswordRequestProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string email */ 1:
+                    message.email = reader.string();
+                    break;
+                case /* string password */ 2:
+                    message.password = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: SignUpWithPasswordRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string email = 1; */
+        if (message.email !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.email);
+        /* string password = 2; */
+        if (message.password !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.password);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message SignUpWithPasswordRequestProto
+ */
+export const SignUpWithPasswordRequestProto = new SignUpWithPasswordRequestProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class SignUpWithPasswordResponseProto$Type extends MessageType<SignUpWithPasswordResponseProto> {
+    constructor() {
+        super("SignUpWithPasswordResponseProto", [
+            { no: 1, name: "encoded_user_auth", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<SignUpWithPasswordResponseProto>): SignUpWithPasswordResponseProto {
+        const message = { encodedUserAuth: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<SignUpWithPasswordResponseProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SignUpWithPasswordResponseProto): SignUpWithPasswordResponseProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string encoded_user_auth */ 1:
+                    message.encodedUserAuth = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: SignUpWithPasswordResponseProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string encoded_user_auth = 1; */
+        if (message.encodedUserAuth !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.encodedUserAuth);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message SignUpWithPasswordResponseProto
+ */
+export const SignUpWithPasswordResponseProto = new SignUpWithPasswordResponseProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class SignInWithPasswordRequestProto$Type extends MessageType<SignInWithPasswordRequestProto> {
     constructor() {
