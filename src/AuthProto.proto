@@ -14,16 +14,14 @@ message UserAuthProto {
 message AuthApiRequestProto {
   oneof request {
     SignInWithIdpRequestProto sign_in_with_idp = 1;
-    SignUpWithPasswordRequestProto sign_up_with_password = 2;
-    SignInWithPasswordRequestProto sign_in_with_password = 3;
+    SignInWithPasswordRequestProto sign_in_with_password = 2;
   }
 }
 
 message AuthApiResponseProto {
   oneof response {
     SignInWithIdpResponseProto sign_in_with_idp = 1;
-    SignUpWithPasswordResponseProto sign_up_with_password = 2;
-    SignInWithPasswordResponseProto sign_in_with_password = 3;
+    SignInWithPasswordResponseProto sign_in_with_password = 2;
   }
   map<string, google.protobuf.Duration> latencies = 5;
 }
@@ -35,15 +33,6 @@ message SignInWithIdpRequestProto {
 }
 
 message SignInWithIdpResponseProto {
-  string encoded_user_auth = 1;
-}
-
-message SignUpWithPasswordRequestProto {
-  string email = 1;
-  string password = 2;
-}
-
-message SignUpWithPasswordResponseProto {
   string encoded_user_auth = 1;
 }
 
