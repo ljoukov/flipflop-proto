@@ -7,9 +7,6 @@ message ChatApiRequestProto {
   string encoded_user_auth = 1;
   oneof request {
     GetChatBotsRequestProto get_chat_bots = 2;
-    GetChatSessionRequestProto get_chat_session = 3;
-    UpdateChatSessionRequestProto update_chat_session = 4;
-    DeleteChatSessionRequestProto delete_chat_session = 5;
   }
 }
 
@@ -17,10 +14,7 @@ message ChatApiResponseProto {
   // If present the token was refreshed and the client should use this new one from now onwards.
   string refreshed_encoded_user_auth = 1;
   oneof response {
-    GetChatBotsResponseProto get_chat_bots = 2;
-    GetChatSessionResponseProto get_chat_session = 3;
-    UpdateChatSessionResponseProto update_chat_session = 4;
-    DeleteChatSessionResponseProto delete_chat_session = 5;
+    GetChatBotsResponseProto get_chat_bots = 2;  // uses clien-side LLM APIs, remove this
   }
   map<string, google.protobuf.Duration> latencies = 100;
 }
@@ -31,28 +25,6 @@ message GetChatBotsRequestProto {
 
 message GetChatBotsResponseProto {
   repeated ChatBotProto bots = 1;
-}
-
-message GetChatSessionRequestProto {
-  string story_id = 1;
-}
-
-message GetChatSessionResponseProto {
-  ChatSessionProto chat_session = 1;
-}
-
-message UpdateChatSessionRequestProto {
-  ChatSessionProto chat_session = 1;
-}
-
-message UpdateChatSessionResponseProto {
-}
-
-message DeleteChatSessionRequestProto {
-  string chat_session_id = 1;
-}
-
-message DeleteChatSessionResponseProto {
 }
 
 message ChatBotProto {
