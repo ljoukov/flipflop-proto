@@ -37,37 +37,10 @@ struct ChatApiRequestProto {
     set {request = .getChatBots(newValue)}
   }
 
-  var getChatSession: GetChatSessionRequestProto {
-    get {
-      if case .getChatSession(let v)? = request {return v}
-      return GetChatSessionRequestProto()
-    }
-    set {request = .getChatSession(newValue)}
-  }
-
-  var updateChatSession: UpdateChatSessionRequestProto {
-    get {
-      if case .updateChatSession(let v)? = request {return v}
-      return UpdateChatSessionRequestProto()
-    }
-    set {request = .updateChatSession(newValue)}
-  }
-
-  var deleteChatSession: DeleteChatSessionRequestProto {
-    get {
-      if case .deleteChatSession(let v)? = request {return v}
-      return DeleteChatSessionRequestProto()
-    }
-    set {request = .deleteChatSession(newValue)}
-  }
-
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_Request: Equatable {
     case getChatBots(GetChatBotsRequestProto)
-    case getChatSession(GetChatSessionRequestProto)
-    case updateChatSession(UpdateChatSessionRequestProto)
-    case deleteChatSession(DeleteChatSessionRequestProto)
 
   #if !swift(>=4.1)
     static func ==(lhs: ChatApiRequestProto.OneOf_Request, rhs: ChatApiRequestProto.OneOf_Request) -> Bool {
@@ -79,19 +52,6 @@ struct ChatApiRequestProto {
         guard case .getChatBots(let l) = lhs, case .getChatBots(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
-      case (.getChatSession, .getChatSession): return {
-        guard case .getChatSession(let l) = lhs, case .getChatSession(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.updateChatSession, .updateChatSession): return {
-        guard case .updateChatSession(let l) = lhs, case .updateChatSession(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.deleteChatSession, .deleteChatSession): return {
-        guard case .deleteChatSession(let l) = lhs, case .deleteChatSession(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      default: return false
       }
     }
   #endif
@@ -110,6 +70,7 @@ struct ChatApiResponseProto {
 
   var response: ChatApiResponseProto.OneOf_Response? = nil
 
+  /// uses clien-side LLM APIs, remove this
   var getChatBots: GetChatBotsResponseProto {
     get {
       if case .getChatBots(let v)? = response {return v}
@@ -118,39 +79,13 @@ struct ChatApiResponseProto {
     set {response = .getChatBots(newValue)}
   }
 
-  var getChatSession: GetChatSessionResponseProto {
-    get {
-      if case .getChatSession(let v)? = response {return v}
-      return GetChatSessionResponseProto()
-    }
-    set {response = .getChatSession(newValue)}
-  }
-
-  var updateChatSession: UpdateChatSessionResponseProto {
-    get {
-      if case .updateChatSession(let v)? = response {return v}
-      return UpdateChatSessionResponseProto()
-    }
-    set {response = .updateChatSession(newValue)}
-  }
-
-  var deleteChatSession: DeleteChatSessionResponseProto {
-    get {
-      if case .deleteChatSession(let v)? = response {return v}
-      return DeleteChatSessionResponseProto()
-    }
-    set {response = .deleteChatSession(newValue)}
-  }
-
   var latencies: Dictionary<String,SwiftProtobuf.Google_Protobuf_Duration> = [:]
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_Response: Equatable {
+    /// uses clien-side LLM APIs, remove this
     case getChatBots(GetChatBotsResponseProto)
-    case getChatSession(GetChatSessionResponseProto)
-    case updateChatSession(UpdateChatSessionResponseProto)
-    case deleteChatSession(DeleteChatSessionResponseProto)
 
   #if !swift(>=4.1)
     static func ==(lhs: ChatApiResponseProto.OneOf_Response, rhs: ChatApiResponseProto.OneOf_Response) -> Bool {
@@ -162,19 +97,6 @@ struct ChatApiResponseProto {
         guard case .getChatBots(let l) = lhs, case .getChatBots(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
-      case (.getChatSession, .getChatSession): return {
-        guard case .getChatSession(let l) = lhs, case .getChatSession(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.updateChatSession, .updateChatSession): return {
-        guard case .updateChatSession(let l) = lhs, case .updateChatSession(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.deleteChatSession, .deleteChatSession): return {
-        guard case .deleteChatSession(let l) = lhs, case .deleteChatSession(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      default: return false
       }
     }
   #endif
@@ -201,92 +123,6 @@ struct GetChatBotsResponseProto {
   // methods supported on all messages.
 
   var bots: [ChatBotProto] = []
-
-  var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  init() {}
-}
-
-struct GetChatSessionRequestProto {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  var storyID: String = String()
-
-  var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  init() {}
-}
-
-struct GetChatSessionResponseProto {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  var chatSession: ChatSessionProto {
-    get {return _chatSession ?? ChatSessionProto()}
-    set {_chatSession = newValue}
-  }
-  /// Returns true if `chatSession` has been explicitly set.
-  var hasChatSession: Bool {return self._chatSession != nil}
-  /// Clears the value of `chatSession`. Subsequent reads from it will return its default value.
-  mutating func clearChatSession() {self._chatSession = nil}
-
-  var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  init() {}
-
-  fileprivate var _chatSession: ChatSessionProto? = nil
-}
-
-struct UpdateChatSessionRequestProto {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  var chatSession: ChatSessionProto {
-    get {return _chatSession ?? ChatSessionProto()}
-    set {_chatSession = newValue}
-  }
-  /// Returns true if `chatSession` has been explicitly set.
-  var hasChatSession: Bool {return self._chatSession != nil}
-  /// Clears the value of `chatSession`. Subsequent reads from it will return its default value.
-  mutating func clearChatSession() {self._chatSession = nil}
-
-  var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  init() {}
-
-  fileprivate var _chatSession: ChatSessionProto? = nil
-}
-
-struct UpdateChatSessionResponseProto {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  init() {}
-}
-
-struct DeleteChatSessionRequestProto {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  var chatSessionID: String = String()
-
-  var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  init() {}
-}
-
-struct DeleteChatSessionResponseProto {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -573,12 +409,6 @@ extension ChatApiResponseProto: @unchecked Sendable {}
 extension ChatApiResponseProto.OneOf_Response: @unchecked Sendable {}
 extension GetChatBotsRequestProto: @unchecked Sendable {}
 extension GetChatBotsResponseProto: @unchecked Sendable {}
-extension GetChatSessionRequestProto: @unchecked Sendable {}
-extension GetChatSessionResponseProto: @unchecked Sendable {}
-extension UpdateChatSessionRequestProto: @unchecked Sendable {}
-extension UpdateChatSessionResponseProto: @unchecked Sendable {}
-extension DeleteChatSessionRequestProto: @unchecked Sendable {}
-extension DeleteChatSessionResponseProto: @unchecked Sendable {}
 extension ChatBotProto: @unchecked Sendable {}
 extension ChatBotProto.TypeEnum: @unchecked Sendable {}
 extension ChatActivitiesProto: @unchecked Sendable {}
@@ -598,9 +428,6 @@ extension ChatApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "encoded_user_auth"),
     2: .standard(proto: "get_chat_bots"),
-    3: .standard(proto: "get_chat_session"),
-    4: .standard(proto: "update_chat_session"),
-    5: .standard(proto: "delete_chat_session"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -623,45 +450,6 @@ extension ChatApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
           self.request = .getChatBots(v)
         }
       }()
-      case 3: try {
-        var v: GetChatSessionRequestProto?
-        var hadOneofValue = false
-        if let current = self.request {
-          hadOneofValue = true
-          if case .getChatSession(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {
-          if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.request = .getChatSession(v)
-        }
-      }()
-      case 4: try {
-        var v: UpdateChatSessionRequestProto?
-        var hadOneofValue = false
-        if let current = self.request {
-          hadOneofValue = true
-          if case .updateChatSession(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {
-          if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.request = .updateChatSession(v)
-        }
-      }()
-      case 5: try {
-        var v: DeleteChatSessionRequestProto?
-        var hadOneofValue = false
-        if let current = self.request {
-          hadOneofValue = true
-          if case .deleteChatSession(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {
-          if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.request = .deleteChatSession(v)
-        }
-      }()
       default: break
       }
     }
@@ -675,25 +463,9 @@ extension ChatApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     if !self.encodedUserAuth.isEmpty {
       try visitor.visitSingularStringField(value: self.encodedUserAuth, fieldNumber: 1)
     }
-    switch self.request {
-    case .getChatBots?: try {
-      guard case .getChatBots(let v)? = self.request else { preconditionFailure() }
+    try { if case .getChatBots(let v)? = self.request {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
-    }()
-    case .getChatSession?: try {
-      guard case .getChatSession(let v)? = self.request else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
-    }()
-    case .updateChatSession?: try {
-      guard case .updateChatSession(let v)? = self.request else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
-    }()
-    case .deleteChatSession?: try {
-      guard case .deleteChatSession(let v)? = self.request else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
-    }()
-    case nil: break
-    }
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -710,9 +482,6 @@ extension ChatApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "refreshed_encoded_user_auth"),
     2: .standard(proto: "get_chat_bots"),
-    3: .standard(proto: "get_chat_session"),
-    4: .standard(proto: "update_chat_session"),
-    5: .standard(proto: "delete_chat_session"),
     100: .same(proto: "latencies"),
   ]
 
@@ -736,45 +505,6 @@ extension ChatApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
           self.response = .getChatBots(v)
         }
       }()
-      case 3: try {
-        var v: GetChatSessionResponseProto?
-        var hadOneofValue = false
-        if let current = self.response {
-          hadOneofValue = true
-          if case .getChatSession(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {
-          if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.response = .getChatSession(v)
-        }
-      }()
-      case 4: try {
-        var v: UpdateChatSessionResponseProto?
-        var hadOneofValue = false
-        if let current = self.response {
-          hadOneofValue = true
-          if case .updateChatSession(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {
-          if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.response = .updateChatSession(v)
-        }
-      }()
-      case 5: try {
-        var v: DeleteChatSessionResponseProto?
-        var hadOneofValue = false
-        if let current = self.response {
-          hadOneofValue = true
-          if case .deleteChatSession(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {
-          if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.response = .deleteChatSession(v)
-        }
-      }()
       case 100: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.Google_Protobuf_Duration>.self, value: &self.latencies) }()
       default: break
       }
@@ -789,25 +519,9 @@ extension ChatApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     if !self.refreshedEncodedUserAuth.isEmpty {
       try visitor.visitSingularStringField(value: self.refreshedEncodedUserAuth, fieldNumber: 1)
     }
-    switch self.response {
-    case .getChatBots?: try {
-      guard case .getChatBots(let v)? = self.response else { preconditionFailure() }
+    try { if case .getChatBots(let v)? = self.response {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
-    }()
-    case .getChatSession?: try {
-      guard case .getChatSession(let v)? = self.response else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
-    }()
-    case .updateChatSession?: try {
-      guard case .updateChatSession(let v)? = self.response else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
-    }()
-    case .deleteChatSession?: try {
-      guard case .deleteChatSession(let v)? = self.response else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
-    }()
-    case nil: break
-    }
+    } }()
     if !self.latencies.isEmpty {
       try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.Google_Protobuf_Duration>.self, value: self.latencies, fieldNumber: 100)
     }
@@ -882,180 +596,6 @@ extension GetChatBotsResponseProto: SwiftProtobuf.Message, SwiftProtobuf._Messag
 
   static func ==(lhs: GetChatBotsResponseProto, rhs: GetChatBotsResponseProto) -> Bool {
     if lhs.bots != rhs.bots {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension GetChatSessionRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "GetChatSessionRequestProto"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "story_id"),
-  ]
-
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.storyID) }()
-      default: break
-      }
-    }
-  }
-
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.storyID.isEmpty {
-      try visitor.visitSingularStringField(value: self.storyID, fieldNumber: 1)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  static func ==(lhs: GetChatSessionRequestProto, rhs: GetChatSessionRequestProto) -> Bool {
-    if lhs.storyID != rhs.storyID {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension GetChatSessionResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "GetChatSessionResponseProto"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "chat_session"),
-  ]
-
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularMessageField(value: &self._chatSession) }()
-      default: break
-      }
-    }
-  }
-
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every if/case branch local when no optimizations
-    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-    // https://github.com/apple/swift-protobuf/issues/1182
-    try { if let v = self._chatSession {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    } }()
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  static func ==(lhs: GetChatSessionResponseProto, rhs: GetChatSessionResponseProto) -> Bool {
-    if lhs._chatSession != rhs._chatSession {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension UpdateChatSessionRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "UpdateChatSessionRequestProto"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "chat_session"),
-  ]
-
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularMessageField(value: &self._chatSession) }()
-      default: break
-      }
-    }
-  }
-
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every if/case branch local when no optimizations
-    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-    // https://github.com/apple/swift-protobuf/issues/1182
-    try { if let v = self._chatSession {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    } }()
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  static func ==(lhs: UpdateChatSessionRequestProto, rhs: UpdateChatSessionRequestProto) -> Bool {
-    if lhs._chatSession != rhs._chatSession {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension UpdateChatSessionResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "UpdateChatSessionResponseProto"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
-
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let _ = try decoder.nextFieldNumber() {
-    }
-  }
-
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  static func ==(lhs: UpdateChatSessionResponseProto, rhs: UpdateChatSessionResponseProto) -> Bool {
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension DeleteChatSessionRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "DeleteChatSessionRequestProto"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "chat_session_id"),
-  ]
-
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.chatSessionID) }()
-      default: break
-      }
-    }
-  }
-
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.chatSessionID.isEmpty {
-      try visitor.visitSingularStringField(value: self.chatSessionID, fieldNumber: 1)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  static func ==(lhs: DeleteChatSessionRequestProto, rhs: DeleteChatSessionRequestProto) -> Bool {
-    if lhs.chatSessionID != rhs.chatSessionID {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension DeleteChatSessionResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "DeleteChatSessionResponseProto"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
-
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let _ = try decoder.nextFieldNumber() {
-    }
-  }
-
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  static func ==(lhs: DeleteChatSessionResponseProto, rhs: DeleteChatSessionResponseProto) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

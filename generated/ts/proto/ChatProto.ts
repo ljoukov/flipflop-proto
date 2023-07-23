@@ -33,24 +33,6 @@ export interface ChatApiRequestProto {
          */
         getChatBots: GetChatBotsRequestProto;
     } | {
-        oneofKind: "getChatSession";
-        /**
-         * @generated from protobuf field: GetChatSessionRequestProto get_chat_session = 3;
-         */
-        getChatSession: GetChatSessionRequestProto;
-    } | {
-        oneofKind: "updateChatSession";
-        /**
-         * @generated from protobuf field: UpdateChatSessionRequestProto update_chat_session = 4;
-         */
-        updateChatSession: UpdateChatSessionRequestProto;
-    } | {
-        oneofKind: "deleteChatSession";
-        /**
-         * @generated from protobuf field: DeleteChatSessionRequestProto delete_chat_session = 5;
-         */
-        deleteChatSession: DeleteChatSessionRequestProto;
-    } | {
         oneofKind: undefined;
     };
 }
@@ -72,25 +54,7 @@ export interface ChatApiResponseProto {
         /**
          * @generated from protobuf field: GetChatBotsResponseProto get_chat_bots = 2;
          */
-        getChatBots: GetChatBotsResponseProto;
-    } | {
-        oneofKind: "getChatSession";
-        /**
-         * @generated from protobuf field: GetChatSessionResponseProto get_chat_session = 3;
-         */
-        getChatSession: GetChatSessionResponseProto;
-    } | {
-        oneofKind: "updateChatSession";
-        /**
-         * @generated from protobuf field: UpdateChatSessionResponseProto update_chat_session = 4;
-         */
-        updateChatSession: UpdateChatSessionResponseProto;
-    } | {
-        oneofKind: "deleteChatSession";
-        /**
-         * @generated from protobuf field: DeleteChatSessionResponseProto delete_chat_session = 5;
-         */
-        deleteChatSession: DeleteChatSessionResponseProto;
+        getChatBots: GetChatBotsResponseProto; // uses clien-side LLM APIs, remove this
     } | {
         oneofKind: undefined;
     };
@@ -118,52 +82,6 @@ export interface GetChatBotsResponseProto {
      * @generated from protobuf field: repeated ChatBotProto bots = 1;
      */
     bots: ChatBotProto[];
-}
-/**
- * @generated from protobuf message GetChatSessionRequestProto
- */
-export interface GetChatSessionRequestProto {
-    /**
-     * @generated from protobuf field: string story_id = 1;
-     */
-    storyId: string;
-}
-/**
- * @generated from protobuf message GetChatSessionResponseProto
- */
-export interface GetChatSessionResponseProto {
-    /**
-     * @generated from protobuf field: ChatSessionProto chat_session = 1;
-     */
-    chatSession?: ChatSessionProto;
-}
-/**
- * @generated from protobuf message UpdateChatSessionRequestProto
- */
-export interface UpdateChatSessionRequestProto {
-    /**
-     * @generated from protobuf field: ChatSessionProto chat_session = 1;
-     */
-    chatSession?: ChatSessionProto;
-}
-/**
- * @generated from protobuf message UpdateChatSessionResponseProto
- */
-export interface UpdateChatSessionResponseProto {
-}
-/**
- * @generated from protobuf message DeleteChatSessionRequestProto
- */
-export interface DeleteChatSessionRequestProto {
-    /**
-     * @generated from protobuf field: string chat_session_id = 1;
-     */
-    chatSessionId: string;
-}
-/**
- * @generated from protobuf message DeleteChatSessionResponseProto
- */
-export interface DeleteChatSessionResponseProto {
 }
 /**
  * @generated from protobuf message ChatBotProto
@@ -357,10 +275,7 @@ class ChatApiRequestProto$Type extends MessageType<ChatApiRequestProto> {
     constructor() {
         super("ChatApiRequestProto", [
             { no: 1, name: "encoded_user_auth", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "get_chat_bots", kind: "message", oneof: "request", T: () => GetChatBotsRequestProto },
-            { no: 3, name: "get_chat_session", kind: "message", oneof: "request", T: () => GetChatSessionRequestProto },
-            { no: 4, name: "update_chat_session", kind: "message", oneof: "request", T: () => UpdateChatSessionRequestProto },
-            { no: 5, name: "delete_chat_session", kind: "message", oneof: "request", T: () => DeleteChatSessionRequestProto }
+            { no: 2, name: "get_chat_bots", kind: "message", oneof: "request", T: () => GetChatBotsRequestProto }
         ]);
     }
     create(value?: PartialMessage<ChatApiRequestProto>): ChatApiRequestProto {
@@ -384,24 +299,6 @@ class ChatApiRequestProto$Type extends MessageType<ChatApiRequestProto> {
                         getChatBots: GetChatBotsRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).getChatBots)
                     };
                     break;
-                case /* GetChatSessionRequestProto get_chat_session */ 3:
-                    message.request = {
-                        oneofKind: "getChatSession",
-                        getChatSession: GetChatSessionRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).getChatSession)
-                    };
-                    break;
-                case /* UpdateChatSessionRequestProto update_chat_session */ 4:
-                    message.request = {
-                        oneofKind: "updateChatSession",
-                        updateChatSession: UpdateChatSessionRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).updateChatSession)
-                    };
-                    break;
-                case /* DeleteChatSessionRequestProto delete_chat_session */ 5:
-                    message.request = {
-                        oneofKind: "deleteChatSession",
-                        deleteChatSession: DeleteChatSessionRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).deleteChatSession)
-                    };
-                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -420,15 +317,6 @@ class ChatApiRequestProto$Type extends MessageType<ChatApiRequestProto> {
         /* GetChatBotsRequestProto get_chat_bots = 2; */
         if (message.request.oneofKind === "getChatBots")
             GetChatBotsRequestProto.internalBinaryWrite(message.request.getChatBots, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* GetChatSessionRequestProto get_chat_session = 3; */
-        if (message.request.oneofKind === "getChatSession")
-            GetChatSessionRequestProto.internalBinaryWrite(message.request.getChatSession, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* UpdateChatSessionRequestProto update_chat_session = 4; */
-        if (message.request.oneofKind === "updateChatSession")
-            UpdateChatSessionRequestProto.internalBinaryWrite(message.request.updateChatSession, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
-        /* DeleteChatSessionRequestProto delete_chat_session = 5; */
-        if (message.request.oneofKind === "deleteChatSession")
-            DeleteChatSessionRequestProto.internalBinaryWrite(message.request.deleteChatSession, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -445,9 +333,6 @@ class ChatApiResponseProto$Type extends MessageType<ChatApiResponseProto> {
         super("ChatApiResponseProto", [
             { no: 1, name: "refreshed_encoded_user_auth", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "get_chat_bots", kind: "message", oneof: "response", T: () => GetChatBotsResponseProto },
-            { no: 3, name: "get_chat_session", kind: "message", oneof: "response", T: () => GetChatSessionResponseProto },
-            { no: 4, name: "update_chat_session", kind: "message", oneof: "response", T: () => UpdateChatSessionResponseProto },
-            { no: 5, name: "delete_chat_session", kind: "message", oneof: "response", T: () => DeleteChatSessionResponseProto },
             { no: 100, name: "latencies", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => Duration } }
         ]);
     }
@@ -470,24 +355,6 @@ class ChatApiResponseProto$Type extends MessageType<ChatApiResponseProto> {
                     message.response = {
                         oneofKind: "getChatBots",
                         getChatBots: GetChatBotsResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).getChatBots)
-                    };
-                    break;
-                case /* GetChatSessionResponseProto get_chat_session */ 3:
-                    message.response = {
-                        oneofKind: "getChatSession",
-                        getChatSession: GetChatSessionResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).getChatSession)
-                    };
-                    break;
-                case /* UpdateChatSessionResponseProto update_chat_session */ 4:
-                    message.response = {
-                        oneofKind: "updateChatSession",
-                        updateChatSession: UpdateChatSessionResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).updateChatSession)
-                    };
-                    break;
-                case /* DeleteChatSessionResponseProto delete_chat_session */ 5:
-                    message.response = {
-                        oneofKind: "deleteChatSession",
-                        deleteChatSession: DeleteChatSessionResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).deleteChatSession)
                     };
                     break;
                 case /* map<string, google.protobuf.Duration> latencies */ 100:
@@ -527,15 +394,6 @@ class ChatApiResponseProto$Type extends MessageType<ChatApiResponseProto> {
         /* GetChatBotsResponseProto get_chat_bots = 2; */
         if (message.response.oneofKind === "getChatBots")
             GetChatBotsResponseProto.internalBinaryWrite(message.response.getChatBots, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* GetChatSessionResponseProto get_chat_session = 3; */
-        if (message.response.oneofKind === "getChatSession")
-            GetChatSessionResponseProto.internalBinaryWrite(message.response.getChatSession, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* UpdateChatSessionResponseProto update_chat_session = 4; */
-        if (message.response.oneofKind === "updateChatSession")
-            UpdateChatSessionResponseProto.internalBinaryWrite(message.response.updateChatSession, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
-        /* DeleteChatSessionResponseProto delete_chat_session = 5; */
-        if (message.response.oneofKind === "deleteChatSession")
-            DeleteChatSessionResponseProto.internalBinaryWrite(message.response.deleteChatSession, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
         /* map<string, google.protobuf.Duration> latencies = 100; */
         for (let k of Object.keys(message.latencies)) {
             writer.tag(100, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k);
@@ -647,246 +505,6 @@ class GetChatBotsResponseProto$Type extends MessageType<GetChatBotsResponseProto
  * @generated MessageType for protobuf message GetChatBotsResponseProto
  */
 export const GetChatBotsResponseProto = new GetChatBotsResponseProto$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class GetChatSessionRequestProto$Type extends MessageType<GetChatSessionRequestProto> {
-    constructor() {
-        super("GetChatSessionRequestProto", [
-            { no: 1, name: "story_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
-        ]);
-    }
-    create(value?: PartialMessage<GetChatSessionRequestProto>): GetChatSessionRequestProto {
-        const message = { storyId: "" };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<GetChatSessionRequestProto>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetChatSessionRequestProto): GetChatSessionRequestProto {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string story_id */ 1:
-                    message.storyId = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: GetChatSessionRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string story_id = 1; */
-        if (message.storyId !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.storyId);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message GetChatSessionRequestProto
- */
-export const GetChatSessionRequestProto = new GetChatSessionRequestProto$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class GetChatSessionResponseProto$Type extends MessageType<GetChatSessionResponseProto> {
-    constructor() {
-        super("GetChatSessionResponseProto", [
-            { no: 1, name: "chat_session", kind: "message", T: () => ChatSessionProto }
-        ]);
-    }
-    create(value?: PartialMessage<GetChatSessionResponseProto>): GetChatSessionResponseProto {
-        const message = {};
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<GetChatSessionResponseProto>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetChatSessionResponseProto): GetChatSessionResponseProto {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* ChatSessionProto chat_session */ 1:
-                    message.chatSession = ChatSessionProto.internalBinaryRead(reader, reader.uint32(), options, message.chatSession);
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: GetChatSessionResponseProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* ChatSessionProto chat_session = 1; */
-        if (message.chatSession)
-            ChatSessionProto.internalBinaryWrite(message.chatSession, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message GetChatSessionResponseProto
- */
-export const GetChatSessionResponseProto = new GetChatSessionResponseProto$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class UpdateChatSessionRequestProto$Type extends MessageType<UpdateChatSessionRequestProto> {
-    constructor() {
-        super("UpdateChatSessionRequestProto", [
-            { no: 1, name: "chat_session", kind: "message", T: () => ChatSessionProto }
-        ]);
-    }
-    create(value?: PartialMessage<UpdateChatSessionRequestProto>): UpdateChatSessionRequestProto {
-        const message = {};
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<UpdateChatSessionRequestProto>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: UpdateChatSessionRequestProto): UpdateChatSessionRequestProto {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* ChatSessionProto chat_session */ 1:
-                    message.chatSession = ChatSessionProto.internalBinaryRead(reader, reader.uint32(), options, message.chatSession);
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: UpdateChatSessionRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* ChatSessionProto chat_session = 1; */
-        if (message.chatSession)
-            ChatSessionProto.internalBinaryWrite(message.chatSession, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message UpdateChatSessionRequestProto
- */
-export const UpdateChatSessionRequestProto = new UpdateChatSessionRequestProto$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class UpdateChatSessionResponseProto$Type extends MessageType<UpdateChatSessionResponseProto> {
-    constructor() {
-        super("UpdateChatSessionResponseProto", []);
-    }
-    create(value?: PartialMessage<UpdateChatSessionResponseProto>): UpdateChatSessionResponseProto {
-        const message = {};
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<UpdateChatSessionResponseProto>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: UpdateChatSessionResponseProto): UpdateChatSessionResponseProto {
-        return target ?? this.create();
-    }
-    internalBinaryWrite(message: UpdateChatSessionResponseProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message UpdateChatSessionResponseProto
- */
-export const UpdateChatSessionResponseProto = new UpdateChatSessionResponseProto$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class DeleteChatSessionRequestProto$Type extends MessageType<DeleteChatSessionRequestProto> {
-    constructor() {
-        super("DeleteChatSessionRequestProto", [
-            { no: 1, name: "chat_session_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
-        ]);
-    }
-    create(value?: PartialMessage<DeleteChatSessionRequestProto>): DeleteChatSessionRequestProto {
-        const message = { chatSessionId: "" };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<DeleteChatSessionRequestProto>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: DeleteChatSessionRequestProto): DeleteChatSessionRequestProto {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string chat_session_id */ 1:
-                    message.chatSessionId = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: DeleteChatSessionRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string chat_session_id = 1; */
-        if (message.chatSessionId !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.chatSessionId);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message DeleteChatSessionRequestProto
- */
-export const DeleteChatSessionRequestProto = new DeleteChatSessionRequestProto$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class DeleteChatSessionResponseProto$Type extends MessageType<DeleteChatSessionResponseProto> {
-    constructor() {
-        super("DeleteChatSessionResponseProto", []);
-    }
-    create(value?: PartialMessage<DeleteChatSessionResponseProto>): DeleteChatSessionResponseProto {
-        const message = {};
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<DeleteChatSessionResponseProto>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: DeleteChatSessionResponseProto): DeleteChatSessionResponseProto {
-        return target ?? this.create();
-    }
-    internalBinaryWrite(message: DeleteChatSessionResponseProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message DeleteChatSessionResponseProto
- */
-export const DeleteChatSessionResponseProto = new DeleteChatSessionResponseProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class ChatBotProto$Type extends MessageType<ChatBotProto> {
     constructor() {
