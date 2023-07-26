@@ -209,6 +209,117 @@ struct ChatApiResponseProto {
   init() {}
 }
 
+struct ChatStreamApiRequestProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var encodedUserAuth: String = String()
+
+  var request: ChatStreamApiRequestProto.OneOf_Request? = nil
+
+  var postChatMessage: PostChatMessageRequestProto {
+    get {
+      if case .postChatMessage(let v)? = request {return v}
+      return PostChatMessageRequestProto()
+    }
+    set {request = .postChatMessage(newValue)}
+  }
+
+  var openChat: OpenChatRequestProto {
+    get {
+      if case .openChat(let v)? = request {return v}
+      return OpenChatRequestProto()
+    }
+    set {request = .openChat(newValue)}
+  }
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  enum OneOf_Request: Equatable {
+    case postChatMessage(PostChatMessageRequestProto)
+    case openChat(OpenChatRequestProto)
+
+  #if !swift(>=4.1)
+    static func ==(lhs: ChatStreamApiRequestProto.OneOf_Request, rhs: ChatStreamApiRequestProto.OneOf_Request) -> Bool {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch (lhs, rhs) {
+      case (.postChatMessage, .postChatMessage): return {
+        guard case .postChatMessage(let l) = lhs, case .postChatMessage(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.openChat, .openChat): return {
+        guard case .openChat(let l) = lhs, case .openChat(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      default: return false
+      }
+    }
+  #endif
+  }
+
+  init() {}
+}
+
+struct ChatStreamApiResponseProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// If present the token was refreshed and the client should use this new one from now onwards.
+  var refreshedEncodedUserAuth: String = String()
+
+  var response: ChatStreamApiResponseProto.OneOf_Response? = nil
+
+  var postChatMessageHeader: PostChatMessageResponseHeaderProto {
+    get {
+      if case .postChatMessageHeader(let v)? = response {return v}
+      return PostChatMessageResponseHeaderProto()
+    }
+    set {response = .postChatMessageHeader(newValue)}
+  }
+
+  var openChatHeader: OpenChatResponseHeaderProto {
+    get {
+      if case .openChatHeader(let v)? = response {return v}
+      return OpenChatResponseHeaderProto()
+    }
+    set {response = .openChatHeader(newValue)}
+  }
+
+  var latencies: Dictionary<String,SwiftProtobuf.Google_Protobuf_Duration> = [:]
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  enum OneOf_Response: Equatable {
+    case postChatMessageHeader(PostChatMessageResponseHeaderProto)
+    case openChatHeader(OpenChatResponseHeaderProto)
+
+  #if !swift(>=4.1)
+    static func ==(lhs: ChatStreamApiResponseProto.OneOf_Response, rhs: ChatStreamApiResponseProto.OneOf_Response) -> Bool {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch (lhs, rhs) {
+      case (.postChatMessageHeader, .postChatMessageHeader): return {
+        guard case .postChatMessageHeader(let l) = lhs, case .postChatMessageHeader(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.openChatHeader, .openChatHeader): return {
+        guard case .openChatHeader(let l) = lhs, case .openChatHeader(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      default: return false
+      }
+    }
+  #endif
+  }
+
+  init() {}
+}
+
 struct GetChatBotsRequestProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -681,6 +792,10 @@ extension ChatApiRequestProto: @unchecked Sendable {}
 extension ChatApiRequestProto.OneOf_Request: @unchecked Sendable {}
 extension ChatApiResponseProto: @unchecked Sendable {}
 extension ChatApiResponseProto.OneOf_Response: @unchecked Sendable {}
+extension ChatStreamApiRequestProto: @unchecked Sendable {}
+extension ChatStreamApiRequestProto.OneOf_Request: @unchecked Sendable {}
+extension ChatStreamApiResponseProto: @unchecked Sendable {}
+extension ChatStreamApiResponseProto.OneOf_Response: @unchecked Sendable {}
 extension GetChatBotsRequestProto: @unchecked Sendable {}
 extension GetChatBotsResponseProto: @unchecked Sendable {}
 extension ListChatsRequestProto: @unchecked Sendable {}
@@ -966,6 +1081,164 @@ extension ChatApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
   }
 
   static func ==(lhs: ChatApiResponseProto, rhs: ChatApiResponseProto) -> Bool {
+    if lhs.refreshedEncodedUserAuth != rhs.refreshedEncodedUserAuth {return false}
+    if lhs.response != rhs.response {return false}
+    if lhs.latencies != rhs.latencies {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension ChatStreamApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "ChatStreamApiRequestProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "encoded_user_auth"),
+    2: .standard(proto: "post_chat_message"),
+    3: .standard(proto: "open_chat"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.encodedUserAuth) }()
+      case 2: try {
+        var v: PostChatMessageRequestProto?
+        var hadOneofValue = false
+        if let current = self.request {
+          hadOneofValue = true
+          if case .postChatMessage(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.request = .postChatMessage(v)
+        }
+      }()
+      case 3: try {
+        var v: OpenChatRequestProto?
+        var hadOneofValue = false
+        if let current = self.request {
+          hadOneofValue = true
+          if case .openChat(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.request = .openChat(v)
+        }
+      }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.encodedUserAuth.isEmpty {
+      try visitor.visitSingularStringField(value: self.encodedUserAuth, fieldNumber: 1)
+    }
+    switch self.request {
+    case .postChatMessage?: try {
+      guard case .postChatMessage(let v)? = self.request else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    }()
+    case .openChat?: try {
+      guard case .openChat(let v)? = self.request else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+    }()
+    case nil: break
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: ChatStreamApiRequestProto, rhs: ChatStreamApiRequestProto) -> Bool {
+    if lhs.encodedUserAuth != rhs.encodedUserAuth {return false}
+    if lhs.request != rhs.request {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension ChatStreamApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "ChatStreamApiResponseProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "refreshed_encoded_user_auth"),
+    2: .standard(proto: "post_chat_message_header"),
+    3: .standard(proto: "open_chat_header"),
+    100: .same(proto: "latencies"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.refreshedEncodedUserAuth) }()
+      case 2: try {
+        var v: PostChatMessageResponseHeaderProto?
+        var hadOneofValue = false
+        if let current = self.response {
+          hadOneofValue = true
+          if case .postChatMessageHeader(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.response = .postChatMessageHeader(v)
+        }
+      }()
+      case 3: try {
+        var v: OpenChatResponseHeaderProto?
+        var hadOneofValue = false
+        if let current = self.response {
+          hadOneofValue = true
+          if case .openChatHeader(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.response = .openChatHeader(v)
+        }
+      }()
+      case 100: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.Google_Protobuf_Duration>.self, value: &self.latencies) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.refreshedEncodedUserAuth.isEmpty {
+      try visitor.visitSingularStringField(value: self.refreshedEncodedUserAuth, fieldNumber: 1)
+    }
+    switch self.response {
+    case .postChatMessageHeader?: try {
+      guard case .postChatMessageHeader(let v)? = self.response else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    }()
+    case .openChatHeader?: try {
+      guard case .openChatHeader(let v)? = self.response else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+    }()
+    case nil: break
+    }
+    if !self.latencies.isEmpty {
+      try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.Google_Protobuf_Duration>.self, value: self.latencies, fieldNumber: 100)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: ChatStreamApiResponseProto, rhs: ChatStreamApiResponseProto) -> Bool {
     if lhs.refreshedEncodedUserAuth != rhs.refreshedEncodedUserAuth {return false}
     if lhs.response != rhs.response {return false}
     if lhs.latencies != rhs.latencies {return false}

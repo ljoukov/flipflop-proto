@@ -114,6 +114,68 @@ export interface ChatApiResponseProto {
     };
 }
 /**
+ * @generated from protobuf message ChatStreamApiRequestProto
+ */
+export interface ChatStreamApiRequestProto {
+    /**
+     * @generated from protobuf field: string encoded_user_auth = 1;
+     */
+    encodedUserAuth: string;
+    /**
+     * @generated from protobuf oneof: request
+     */
+    request: {
+        oneofKind: "postChatMessage";
+        /**
+         * @generated from protobuf field: PostChatMessageRequestProto post_chat_message = 2;
+         */
+        postChatMessage: PostChatMessageRequestProto;
+    } | {
+        oneofKind: "openChat";
+        /**
+         * @generated from protobuf field: OpenChatRequestProto open_chat = 3;
+         */
+        openChat: OpenChatRequestProto;
+    } | {
+        oneofKind: undefined;
+    };
+}
+/**
+ * @generated from protobuf message ChatStreamApiResponseProto
+ */
+export interface ChatStreamApiResponseProto {
+    /**
+     * If present the token was refreshed and the client should use this new one from now onwards.
+     *
+     * @generated from protobuf field: string refreshed_encoded_user_auth = 1;
+     */
+    refreshedEncodedUserAuth: string;
+    /**
+     * @generated from protobuf oneof: response
+     */
+    response: {
+        oneofKind: "postChatMessageHeader";
+        /**
+         * @generated from protobuf field: PostChatMessageResponseHeaderProto post_chat_message_header = 2;
+         */
+        postChatMessageHeader: PostChatMessageResponseHeaderProto;
+    } | {
+        oneofKind: "openChatHeader";
+        /**
+         * @generated from protobuf field: OpenChatResponseHeaderProto open_chat_header = 3;
+         */
+        openChatHeader: OpenChatResponseHeaderProto;
+    } | {
+        oneofKind: undefined;
+    };
+    /**
+     * @generated from protobuf field: map<string, google.protobuf.Duration> latencies = 100;
+     */
+    latencies: {
+        [key: string]: Duration;
+    };
+}
+/**
  * @generated from protobuf message GetChatBotsRequestProto
  */
 export interface GetChatBotsRequestProto {
@@ -654,6 +716,167 @@ class ChatApiResponseProto$Type extends MessageType<ChatApiResponseProto> {
  * @generated MessageType for protobuf message ChatApiResponseProto
  */
 export const ChatApiResponseProto = new ChatApiResponseProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ChatStreamApiRequestProto$Type extends MessageType<ChatStreamApiRequestProto> {
+    constructor() {
+        super("ChatStreamApiRequestProto", [
+            { no: 1, name: "encoded_user_auth", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "post_chat_message", kind: "message", oneof: "request", T: () => PostChatMessageRequestProto },
+            { no: 3, name: "open_chat", kind: "message", oneof: "request", T: () => OpenChatRequestProto }
+        ]);
+    }
+    create(value?: PartialMessage<ChatStreamApiRequestProto>): ChatStreamApiRequestProto {
+        const message = { encodedUserAuth: "", request: { oneofKind: undefined } };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<ChatStreamApiRequestProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ChatStreamApiRequestProto): ChatStreamApiRequestProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string encoded_user_auth */ 1:
+                    message.encodedUserAuth = reader.string();
+                    break;
+                case /* PostChatMessageRequestProto post_chat_message */ 2:
+                    message.request = {
+                        oneofKind: "postChatMessage",
+                        postChatMessage: PostChatMessageRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).postChatMessage)
+                    };
+                    break;
+                case /* OpenChatRequestProto open_chat */ 3:
+                    message.request = {
+                        oneofKind: "openChat",
+                        openChat: OpenChatRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).openChat)
+                    };
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: ChatStreamApiRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string encoded_user_auth = 1; */
+        if (message.encodedUserAuth !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.encodedUserAuth);
+        /* PostChatMessageRequestProto post_chat_message = 2; */
+        if (message.request.oneofKind === "postChatMessage")
+            PostChatMessageRequestProto.internalBinaryWrite(message.request.postChatMessage, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* OpenChatRequestProto open_chat = 3; */
+        if (message.request.oneofKind === "openChat")
+            OpenChatRequestProto.internalBinaryWrite(message.request.openChat, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message ChatStreamApiRequestProto
+ */
+export const ChatStreamApiRequestProto = new ChatStreamApiRequestProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ChatStreamApiResponseProto$Type extends MessageType<ChatStreamApiResponseProto> {
+    constructor() {
+        super("ChatStreamApiResponseProto", [
+            { no: 1, name: "refreshed_encoded_user_auth", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "post_chat_message_header", kind: "message", oneof: "response", T: () => PostChatMessageResponseHeaderProto },
+            { no: 3, name: "open_chat_header", kind: "message", oneof: "response", T: () => OpenChatResponseHeaderProto },
+            { no: 100, name: "latencies", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => Duration } }
+        ]);
+    }
+    create(value?: PartialMessage<ChatStreamApiResponseProto>): ChatStreamApiResponseProto {
+        const message = { refreshedEncodedUserAuth: "", response: { oneofKind: undefined }, latencies: {} };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<ChatStreamApiResponseProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ChatStreamApiResponseProto): ChatStreamApiResponseProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string refreshed_encoded_user_auth */ 1:
+                    message.refreshedEncodedUserAuth = reader.string();
+                    break;
+                case /* PostChatMessageResponseHeaderProto post_chat_message_header */ 2:
+                    message.response = {
+                        oneofKind: "postChatMessageHeader",
+                        postChatMessageHeader: PostChatMessageResponseHeaderProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).postChatMessageHeader)
+                    };
+                    break;
+                case /* OpenChatResponseHeaderProto open_chat_header */ 3:
+                    message.response = {
+                        oneofKind: "openChatHeader",
+                        openChatHeader: OpenChatResponseHeaderProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).openChatHeader)
+                    };
+                    break;
+                case /* map<string, google.protobuf.Duration> latencies */ 100:
+                    this.binaryReadMap100(message.latencies, reader, options);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    private binaryReadMap100(map: ChatStreamApiResponseProto["latencies"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof ChatStreamApiResponseProto["latencies"] | undefined, val: ChatStreamApiResponseProto["latencies"][any] | undefined;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case 1:
+                    key = reader.string();
+                    break;
+                case 2:
+                    val = Duration.internalBinaryRead(reader, reader.uint32(), options);
+                    break;
+                default: throw new globalThis.Error("unknown map entry field for field ChatStreamApiResponseProto.latencies");
+            }
+        }
+        map[key ?? ""] = val ?? Duration.create();
+    }
+    internalBinaryWrite(message: ChatStreamApiResponseProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string refreshed_encoded_user_auth = 1; */
+        if (message.refreshedEncodedUserAuth !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.refreshedEncodedUserAuth);
+        /* PostChatMessageResponseHeaderProto post_chat_message_header = 2; */
+        if (message.response.oneofKind === "postChatMessageHeader")
+            PostChatMessageResponseHeaderProto.internalBinaryWrite(message.response.postChatMessageHeader, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* OpenChatResponseHeaderProto open_chat_header = 3; */
+        if (message.response.oneofKind === "openChatHeader")
+            OpenChatResponseHeaderProto.internalBinaryWrite(message.response.openChatHeader, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* map<string, google.protobuf.Duration> latencies = 100; */
+        for (let k of Object.keys(message.latencies)) {
+            writer.tag(100, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k);
+            writer.tag(2, WireType.LengthDelimited).fork();
+            Duration.internalBinaryWrite(message.latencies[k], writer, options);
+            writer.join().join();
+        }
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message ChatStreamApiResponseProto
+ */
+export const ChatStreamApiResponseProto = new ChatStreamApiResponseProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class GetChatBotsRequestProto$Type extends MessageType<GetChatBotsRequestProto> {
     constructor() {

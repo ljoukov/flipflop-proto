@@ -27,6 +27,24 @@ message ChatApiResponseProto {
   map<string, google.protobuf.Duration> latencies = 100;
 }
 
+message ChatStreamApiRequestProto {
+  string encoded_user_auth = 1;
+  oneof request {
+    PostChatMessageRequestProto post_chat_message = 2;
+    OpenChatRequestProto open_chat = 3;
+  }
+}
+
+message ChatStreamApiResponseProto {
+  // If present the token was refreshed and the client should use this new one from now onwards.
+  string refreshed_encoded_user_auth = 1;
+  oneof response {
+    PostChatMessageResponseHeaderProto post_chat_message_header = 2;
+    OpenChatResponseHeaderProto open_chat_header = 3;
+  }
+  map<string, google.protobuf.Duration> latencies = 100;
+}
+
 message GetChatBotsRequestProto {
   ChatBotProto.Type type = 1;
 }
