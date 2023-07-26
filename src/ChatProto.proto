@@ -34,7 +34,7 @@ message ChatStreamApiRequestProto {
 message ChatStreamApiResponseHeaderProto {
   // If present the token was refreshed and the client should use this new one from now onwards.
   string refreshed_encoded_user_auth = 1;
-  oneof response {
+  oneof header {
     PostChatMessageResponseHeaderProto post_chat_message_header = 2;
     OpenChatResponseHeaderProto open_chat_header = 3;
   }

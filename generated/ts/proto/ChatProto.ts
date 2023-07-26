@@ -127,9 +127,9 @@ export interface ChatStreamApiResponseHeaderProto {
      */
     refreshedEncodedUserAuth: string;
     /**
-     * @generated from protobuf oneof: response
+     * @generated from protobuf oneof: header
      */
-    response: {
+    header: {
         oneofKind: "postChatMessageHeader";
         /**
          * @generated from protobuf field: PostChatMessageResponseHeaderProto post_chat_message_header = 2;
@@ -724,13 +724,13 @@ class ChatStreamApiResponseHeaderProto$Type extends MessageType<ChatStreamApiRes
     constructor() {
         super("ChatStreamApiResponseHeaderProto", [
             { no: 1, name: "refreshed_encoded_user_auth", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "post_chat_message_header", kind: "message", oneof: "response", T: () => PostChatMessageResponseHeaderProto },
-            { no: 3, name: "open_chat_header", kind: "message", oneof: "response", T: () => OpenChatResponseHeaderProto },
+            { no: 2, name: "post_chat_message_header", kind: "message", oneof: "header", T: () => PostChatMessageResponseHeaderProto },
+            { no: 3, name: "open_chat_header", kind: "message", oneof: "header", T: () => OpenChatResponseHeaderProto },
             { no: 100, name: "latencies", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => Duration } }
         ]);
     }
     create(value?: PartialMessage<ChatStreamApiResponseHeaderProto>): ChatStreamApiResponseHeaderProto {
-        const message = { refreshedEncodedUserAuth: "", response: { oneofKind: undefined }, latencies: {} };
+        const message = { refreshedEncodedUserAuth: "", header: { oneofKind: undefined }, latencies: {} };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<ChatStreamApiResponseHeaderProto>(this, message, value);
@@ -745,15 +745,15 @@ class ChatStreamApiResponseHeaderProto$Type extends MessageType<ChatStreamApiRes
                     message.refreshedEncodedUserAuth = reader.string();
                     break;
                 case /* PostChatMessageResponseHeaderProto post_chat_message_header */ 2:
-                    message.response = {
+                    message.header = {
                         oneofKind: "postChatMessageHeader",
-                        postChatMessageHeader: PostChatMessageResponseHeaderProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).postChatMessageHeader)
+                        postChatMessageHeader: PostChatMessageResponseHeaderProto.internalBinaryRead(reader, reader.uint32(), options, (message.header as any).postChatMessageHeader)
                     };
                     break;
                 case /* OpenChatResponseHeaderProto open_chat_header */ 3:
-                    message.response = {
+                    message.header = {
                         oneofKind: "openChatHeader",
-                        openChatHeader: OpenChatResponseHeaderProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).openChatHeader)
+                        openChatHeader: OpenChatResponseHeaderProto.internalBinaryRead(reader, reader.uint32(), options, (message.header as any).openChatHeader)
                     };
                     break;
                 case /* map<string, google.protobuf.Duration> latencies */ 100:
@@ -791,11 +791,11 @@ class ChatStreamApiResponseHeaderProto$Type extends MessageType<ChatStreamApiRes
         if (message.refreshedEncodedUserAuth !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.refreshedEncodedUserAuth);
         /* PostChatMessageResponseHeaderProto post_chat_message_header = 2; */
-        if (message.response.oneofKind === "postChatMessageHeader")
-            PostChatMessageResponseHeaderProto.internalBinaryWrite(message.response.postChatMessageHeader, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        if (message.header.oneofKind === "postChatMessageHeader")
+            PostChatMessageResponseHeaderProto.internalBinaryWrite(message.header.postChatMessageHeader, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         /* OpenChatResponseHeaderProto open_chat_header = 3; */
-        if (message.response.oneofKind === "openChatHeader")
-            OpenChatResponseHeaderProto.internalBinaryWrite(message.response.openChatHeader, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        if (message.header.oneofKind === "openChatHeader")
+            OpenChatResponseHeaderProto.internalBinaryWrite(message.header.openChatHeader, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
         /* map<string, google.protobuf.Duration> latencies = 100; */
         for (let k of Object.keys(message.latencies)) {
             writer.tag(100, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k);

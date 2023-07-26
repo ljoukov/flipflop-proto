@@ -219,34 +219,34 @@ struct ChatStreamApiResponseHeaderProto {
   /// If present the token was refreshed and the client should use this new one from now onwards.
   var refreshedEncodedUserAuth: String = String()
 
-  var response: ChatStreamApiResponseHeaderProto.OneOf_Response? = nil
+  var header: ChatStreamApiResponseHeaderProto.OneOf_Header? = nil
 
   var postChatMessageHeader: PostChatMessageResponseHeaderProto {
     get {
-      if case .postChatMessageHeader(let v)? = response {return v}
+      if case .postChatMessageHeader(let v)? = header {return v}
       return PostChatMessageResponseHeaderProto()
     }
-    set {response = .postChatMessageHeader(newValue)}
+    set {header = .postChatMessageHeader(newValue)}
   }
 
   var openChatHeader: OpenChatResponseHeaderProto {
     get {
-      if case .openChatHeader(let v)? = response {return v}
+      if case .openChatHeader(let v)? = header {return v}
       return OpenChatResponseHeaderProto()
     }
-    set {response = .openChatHeader(newValue)}
+    set {header = .openChatHeader(newValue)}
   }
 
   var latencies: Dictionary<String,SwiftProtobuf.Google_Protobuf_Duration> = [:]
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  enum OneOf_Response: Equatable {
+  enum OneOf_Header: Equatable {
     case postChatMessageHeader(PostChatMessageResponseHeaderProto)
     case openChatHeader(OpenChatResponseHeaderProto)
 
   #if !swift(>=4.1)
-    static func ==(lhs: ChatStreamApiResponseHeaderProto.OneOf_Response, rhs: ChatStreamApiResponseHeaderProto.OneOf_Response) -> Bool {
+    static func ==(lhs: ChatStreamApiResponseHeaderProto.OneOf_Header, rhs: ChatStreamApiResponseHeaderProto.OneOf_Header) -> Bool {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
@@ -743,7 +743,7 @@ extension ChatApiResponseProto.OneOf_Response: @unchecked Sendable {}
 extension ChatStreamApiRequestProto: @unchecked Sendable {}
 extension ChatStreamApiRequestProto.OneOf_Request: @unchecked Sendable {}
 extension ChatStreamApiResponseHeaderProto: @unchecked Sendable {}
-extension ChatStreamApiResponseHeaderProto.OneOf_Response: @unchecked Sendable {}
+extension ChatStreamApiResponseHeaderProto.OneOf_Header: @unchecked Sendable {}
 extension GetChatBotsRequestProto: @unchecked Sendable {}
 extension GetChatBotsResponseProto: @unchecked Sendable {}
 extension ListChatsRequestProto: @unchecked Sendable {}
@@ -1060,27 +1060,27 @@ extension ChatStreamApiResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobuf
       case 2: try {
         var v: PostChatMessageResponseHeaderProto?
         var hadOneofValue = false
-        if let current = self.response {
+        if let current = self.header {
           hadOneofValue = true
           if case .postChatMessageHeader(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.response = .postChatMessageHeader(v)
+          self.header = .postChatMessageHeader(v)
         }
       }()
       case 3: try {
         var v: OpenChatResponseHeaderProto?
         var hadOneofValue = false
-        if let current = self.response {
+        if let current = self.header {
           hadOneofValue = true
           if case .openChatHeader(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.response = .openChatHeader(v)
+          self.header = .openChatHeader(v)
         }
       }()
       case 100: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.Google_Protobuf_Duration>.self, value: &self.latencies) }()
@@ -1097,13 +1097,13 @@ extension ChatStreamApiResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobuf
     if !self.refreshedEncodedUserAuth.isEmpty {
       try visitor.visitSingularStringField(value: self.refreshedEncodedUserAuth, fieldNumber: 1)
     }
-    switch self.response {
+    switch self.header {
     case .postChatMessageHeader?: try {
-      guard case .postChatMessageHeader(let v)? = self.response else { preconditionFailure() }
+      guard case .postChatMessageHeader(let v)? = self.header else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     }()
     case .openChatHeader?: try {
-      guard case .openChatHeader(let v)? = self.response else { preconditionFailure() }
+      guard case .openChatHeader(let v)? = self.header else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
     }()
     case nil: break
@@ -1116,7 +1116,7 @@ extension ChatStreamApiResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobuf
 
   static func ==(lhs: ChatStreamApiResponseHeaderProto, rhs: ChatStreamApiResponseHeaderProto) -> Bool {
     if lhs.refreshedEncodedUserAuth != rhs.refreshedEncodedUserAuth {return false}
-    if lhs.response != rhs.response {return false}
+    if lhs.header != rhs.header {return false}
     if lhs.latencies != rhs.latencies {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
