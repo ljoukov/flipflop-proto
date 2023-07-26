@@ -15,7 +15,7 @@ from google.protobuf import duration_pb2 as google_dot_protobuf_dot_duration__pb
 from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0f\x43hatProto.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xd7\x01\n\x13\x43hatApiRequestProto\x12\x19\n\x11\x65ncoded_user_auth\x18\x01 \x01(\t\x12\x31\n\rget_chat_bots\x18\x02 \x01(\x0b\x32\x18.GetChatBotsRequestProtoH\x00\x12,\n\nlist_chats\x18\x03 \x01(\x0b\x32\x16.ListChatsRequestProtoH\x00\x12\x39\n\x11get_chat_messages\x18\x04 \x01(\x0b\x32\x1c.GetChatMessagesRequestProtoH\x00\x42\t\n\x07request\"\xec\x02\n\x14\x43hatApiResponseProto\x12#\n\x1brefreshed_encoded_user_auth\x18\x01 \x01(\t\x12\x32\n\rget_chat_bots\x18\x02 \x01(\x0b\x32\x19.GetChatBotsResponseProtoH\x00\x12-\n\nlist_chats\x18\x03 \x01(\x0b\x32\x17.ListChatsResponseProtoH\x00\x12:\n\x11get_chat_messages\x18\x04 \x01(\x0b\x32\x1d.GetChatMessagesResponseProtoH\x00\x12\x37\n\tlatencies\x18\x64 \x03(\x0b\x32$.ChatApiResponseProto.LatenciesEntry\x1aK\n\x0eLatenciesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12(\n\x05value\x18\x02 \x01(\x0b\x32\x19.google.protobuf.Duration:\x02\x38\x01\x42\n\n\x08response\"\xa8\x01\n\x19\x43hatStreamApiRequestProto\x12\x19\n\x11\x65ncoded_user_auth\x18\x01 \x01(\t\x12\x39\n\x11post_chat_message\x18\x02 \x01(\x0b\x32\x1c.PostChatMessageRequestProtoH\x00\x12*\n\topen_chat\x18\x03 \x01(\x0b\x32\x15.OpenChatRequestProtoH\x00\x42\t\n\x07request\"\xdc\x02\n\x1a\x43hatStreamApiResponseProto\x12#\n\x1brefreshed_encoded_user_auth\x18\x01 \x01(\t\x12G\n\x18post_chat_message_header\x18\x02 \x01(\x0b\x32#.PostChatMessageResponseHeaderProtoH\x00\x12\x38\n\x10open_chat_header\x18\x03 \x01(\x0b\x32\x1c.OpenChatResponseHeaderProtoH\x00\x12=\n\tlatencies\x18\x64 \x03(\x0b\x32*.ChatStreamApiResponseProto.LatenciesEntry\x1aK\n\x0eLatenciesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12(\n\x05value\x18\x02 \x01(\x0b\x32\x19.google.protobuf.Duration:\x02\x38\x01\x42\n\n\x08response\";\n\x17GetChatBotsRequestProto\x12 \n\x04type\x18\x01 \x01(\x0e\x32\x12.ChatBotProto.Type\"7\n\x18GetChatBotsResponseProto\x12\x1b\n\x04\x62ots\x18\x01 \x03(\x0b\x32\r.ChatBotProto\"\x17\n\x15ListChatsRequestProto\"1\n\x10\x43hatSnippetProto\x12\x0f\n\x07\x63hat_id\x18\x01 \x01(\t\x12\x0c\n\x04text\x18\x02 \x01(\t\"=\n\x16ListChatsResponseProto\x12#\n\x08snippets\x18\x01 \x03(\x0b\x32\x11.ChatSnippetProto\".\n\x1bGetChatMessagesRequestProto\x12\x0f\n\x07\x63hat_id\x18\x01 \x01(\t\"C\n\x1cGetChatMessagesResponseProto\x12#\n\x08messages\x18\x01 \x03(\x0b\x32\x11.ChatMessageProto\".\n\x1bPostChatMessageRequestProto\x12\x0f\n\x07\x63hat_id\x18\x01 \x01(\t\"$\n\"PostChatMessageResponseHeaderProto\"7\n\x14OpenChatRequestProto\x12\x0e\n\x06\x62ot_id\x18\x01 \x01(\t\x12\x0f\n\x07restart\x18\x02 \x01(\x08\"^\n\x1bOpenChatResponseHeaderProto\x12#\n\x08messages\x18\x01 \x03(\x0b\x32\x11.ChatMessageProto\x12\x1a\n\x12response_streasmed\x18\x02 \x01(\x08\"[\n#ChatAssistantMessageBlockDeltaProto\x12\x14\n\ntext_delta\x18\x01 \x01(\tH\x00\x12\x15\n\x0b\x61\x63tivity_id\x18\x02 \x01(\tH\x00\x42\x07\n\x05\x64\x65lta\"\xb8\x02\n\x0c\x43hatBotProto\x12\x0e\n\x06\x62ot_id\x18\x01 \x01(\t\x12.\n\ncreated_at\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x34\n\x10last_modified_at\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12 \n\x04type\x18\x07 \x01(\x0e\x32\x12.ChatBotProto.Type\x12\x14\n\x0c\x64isplay_name\x18\x02 \x01(\t\x12\x1a\n\x12\x64\x65scription_prompt\x18\x03 \x01(\t\x12(\n\nactivities\x18\x04 \x01(\x0b\x32\x14.ChatActivitiesProto\"4\n\x04Type\x12\r\n\tUNDEFINED\x10\x00\x12\r\n\tSTORY_BOT\x10\x01\x12\x0e\n\nGLOBAL_BOT\x10\x02\"Y\n\x13\x43hatActivitiesProto\x12\x1a\n\x12\x64\x65scription_prompt\x18\x01 \x01(\t\x12&\n\nactivities\x18\x02 \x03(\x0b\x32\x12.ChatActivityProto\"q\n\x11\x43hatActivityProto\x12\x13\n\x0b\x61\x63tivity_id\x18\x01 \x01(\t\x12\x14\n\x0c\x64isplay_name\x18\x02 \x01(\t\x12\x1a\n\x12\x64\x65scription_prompt\x18\x03 \x01(\t\x12\x15\n\raction_prompt\x18\x04 \x01(\t\"D\n\x1e\x43hatAssistantMessageBlockProto\x12\x0c\n\x04text\x18\x02 \x01(\t\x12\x14\n\x0c\x61\x63tivity_ids\x18\x03 \x03(\t\"L\n\x19\x43hatAssistantMessageProto\x12/\n\x06\x62locks\x18\x01 \x03(\x0b\x32\x1f.ChatAssistantMessageBlockProto\"9\n\x14\x43hatUserMessageProto\x12\x0c\n\x04text\x18\x01 \x01(\t\x12\x13\n\x0b\x61\x63tivity_id\x18\x02 \x01(\t\"\xb6\x01\n\x10\x43hatMessageProto\x12\x12\n\nmessage_id\x18\x01 \x01(\t\x12.\n\ncreated_at\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12/\n\tassistant\x18\x03 \x01(\x0b\x32\x1a.ChatAssistantMessageProtoH\x00\x12%\n\x04user\x18\x04 \x01(\x0b\x32\x15.ChatUserMessageProtoH\x00\x42\x06\n\x04type\"\xde\x01\n\x10\x43hatSessionProto\x12\x17\n\x0f\x63hat_session_id\x18\x01 \x01(\t\x12.\n\ncreated_at\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x34\n\x10last_modified_at\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x10\n\x08story_id\x18\x04 \x01(\t\x12\x0e\n\x06\x62ot_id\x18\x05 \x01(\t\x12#\n\x08messages\x18\x07 \x03(\x0b\x32\x11.ChatMessageProtoJ\x04\x08\x06\x10\x07\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0f\x43hatProto.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xd7\x01\n\x13\x43hatApiRequestProto\x12\x19\n\x11\x65ncoded_user_auth\x18\x01 \x01(\t\x12\x31\n\rget_chat_bots\x18\x02 \x01(\x0b\x32\x18.GetChatBotsRequestProtoH\x00\x12,\n\nlist_chats\x18\x03 \x01(\x0b\x32\x16.ListChatsRequestProtoH\x00\x12\x39\n\x11get_chat_messages\x18\x04 \x01(\x0b\x32\x1c.GetChatMessagesRequestProtoH\x00\x42\t\n\x07request\"\xec\x02\n\x14\x43hatApiResponseProto\x12#\n\x1brefreshed_encoded_user_auth\x18\x01 \x01(\t\x12\x32\n\rget_chat_bots\x18\x02 \x01(\x0b\x32\x19.GetChatBotsResponseProtoH\x00\x12-\n\nlist_chats\x18\x03 \x01(\x0b\x32\x17.ListChatsResponseProtoH\x00\x12:\n\x11get_chat_messages\x18\x04 \x01(\x0b\x32\x1d.GetChatMessagesResponseProtoH\x00\x12\x37\n\tlatencies\x18\x64 \x03(\x0b\x32$.ChatApiResponseProto.LatenciesEntry\x1aK\n\x0eLatenciesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12(\n\x05value\x18\x02 \x01(\x0b\x32\x19.google.protobuf.Duration:\x02\x38\x01\x42\n\n\x08response\"\xa8\x01\n\x19\x43hatStreamApiRequestProto\x12\x19\n\x11\x65ncoded_user_auth\x18\x01 \x01(\t\x12\x39\n\x11post_chat_message\x18\x02 \x01(\x0b\x32\x1c.PostChatMessageRequestProtoH\x00\x12*\n\topen_chat\x18\x03 \x01(\x0b\x32\x15.OpenChatRequestProtoH\x00\x42\t\n\x07request\"\xe8\x02\n ChatStreamApiResponseHeaderProto\x12#\n\x1brefreshed_encoded_user_auth\x18\x01 \x01(\t\x12G\n\x18post_chat_message_header\x18\x02 \x01(\x0b\x32#.PostChatMessageResponseHeaderProtoH\x00\x12\x38\n\x10open_chat_header\x18\x03 \x01(\x0b\x32\x1c.OpenChatResponseHeaderProtoH\x00\x12\x43\n\tlatencies\x18\x64 \x03(\x0b\x32\x30.ChatStreamApiResponseHeaderProto.LatenciesEntry\x1aK\n\x0eLatenciesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12(\n\x05value\x18\x02 \x01(\x0b\x32\x19.google.protobuf.Duration:\x02\x38\x01\x42\n\n\x08response\";\n\x17GetChatBotsRequestProto\x12 \n\x04type\x18\x01 \x01(\x0e\x32\x12.ChatBotProto.Type\"7\n\x18GetChatBotsResponseProto\x12\x1b\n\x04\x62ots\x18\x01 \x03(\x0b\x32\r.ChatBotProto\"\x17\n\x15ListChatsRequestProto\"1\n\x10\x43hatSnippetProto\x12\x0f\n\x07\x63hat_id\x18\x01 \x01(\t\x12\x0c\n\x04text\x18\x02 \x01(\t\"=\n\x16ListChatsResponseProto\x12#\n\x08snippets\x18\x01 \x03(\x0b\x32\x11.ChatSnippetProto\".\n\x1bGetChatMessagesRequestProto\x12\x0f\n\x07\x63hat_id\x18\x01 \x01(\t\"C\n\x1cGetChatMessagesResponseProto\x12#\n\x08messages\x18\x01 \x03(\x0b\x32\x11.ChatMessageProto\".\n\x1bPostChatMessageRequestProto\x12\x0f\n\x07\x63hat_id\x18\x01 \x01(\t\"$\n\"PostChatMessageResponseHeaderProto\"7\n\x14OpenChatRequestProto\x12\x0e\n\x06\x62ot_id\x18\x01 \x01(\t\x12\x0f\n\x07restart\x18\x02 \x01(\x08\"^\n\x1bOpenChatResponseHeaderProto\x12#\n\x08messages\x18\x01 \x03(\x0b\x32\x11.ChatMessageProto\x12\x1a\n\x12response_streasmed\x18\x02 \x01(\x08\"[\n#ChatAssistantMessageBlockDeltaProto\x12\x14\n\ntext_delta\x18\x01 \x01(\tH\x00\x12\x15\n\x0b\x61\x63tivity_id\x18\x02 \x01(\tH\x00\x42\x07\n\x05\x64\x65lta\"\xb8\x02\n\x0c\x43hatBotProto\x12\x0e\n\x06\x62ot_id\x18\x01 \x01(\t\x12.\n\ncreated_at\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x34\n\x10last_modified_at\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12 \n\x04type\x18\x07 \x01(\x0e\x32\x12.ChatBotProto.Type\x12\x14\n\x0c\x64isplay_name\x18\x02 \x01(\t\x12\x1a\n\x12\x64\x65scription_prompt\x18\x03 \x01(\t\x12(\n\nactivities\x18\x04 \x01(\x0b\x32\x14.ChatActivitiesProto\"4\n\x04Type\x12\r\n\tUNDEFINED\x10\x00\x12\r\n\tSTORY_BOT\x10\x01\x12\x0e\n\nGLOBAL_BOT\x10\x02\"Y\n\x13\x43hatActivitiesProto\x12\x1a\n\x12\x64\x65scription_prompt\x18\x01 \x01(\t\x12&\n\nactivities\x18\x02 \x03(\x0b\x32\x12.ChatActivityProto\"q\n\x11\x43hatActivityProto\x12\x13\n\x0b\x61\x63tivity_id\x18\x01 \x01(\t\x12\x14\n\x0c\x64isplay_name\x18\x02 \x01(\t\x12\x1a\n\x12\x64\x65scription_prompt\x18\x03 \x01(\t\x12\x15\n\raction_prompt\x18\x04 \x01(\t\"D\n\x1e\x43hatAssistantMessageBlockProto\x12\x0c\n\x04text\x18\x02 \x01(\t\x12\x14\n\x0c\x61\x63tivity_ids\x18\x03 \x03(\t\"L\n\x19\x43hatAssistantMessageProto\x12/\n\x06\x62locks\x18\x01 \x03(\x0b\x32\x1f.ChatAssistantMessageBlockProto\"9\n\x14\x43hatUserMessageProto\x12\x0c\n\x04text\x18\x01 \x01(\t\x12\x13\n\x0b\x61\x63tivity_id\x18\x02 \x01(\t\"\xb6\x01\n\x10\x43hatMessageProto\x12\x12\n\nmessage_id\x18\x01 \x01(\t\x12.\n\ncreated_at\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12/\n\tassistant\x18\x03 \x01(\x0b\x32\x1a.ChatAssistantMessageProtoH\x00\x12%\n\x04user\x18\x04 \x01(\x0b\x32\x15.ChatUserMessageProtoH\x00\x42\x06\n\x04type\"\xde\x01\n\x10\x43hatSessionProto\x12\x17\n\x0f\x63hat_session_id\x18\x01 \x01(\t\x12.\n\ncreated_at\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x34\n\x10last_modified_at\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x10\n\x08story_id\x18\x04 \x01(\t\x12\x0e\n\x06\x62ot_id\x18\x05 \x01(\t\x12#\n\x08messages\x18\x07 \x03(\x0b\x32\x11.ChatMessageProtoJ\x04\x08\x06\x10\x07\x62\x06proto3')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'ChatProto_pb2', globals())
@@ -24,8 +24,8 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   DESCRIPTOR._options = None
   _CHATAPIRESPONSEPROTO_LATENCIESENTRY._options = None
   _CHATAPIRESPONSEPROTO_LATENCIESENTRY._serialized_options = b'8\001'
-  _CHATSTREAMAPIRESPONSEPROTO_LATENCIESENTRY._options = None
-  _CHATSTREAMAPIRESPONSEPROTO_LATENCIESENTRY._serialized_options = b'8\001'
+  _CHATSTREAMAPIRESPONSEHEADERPROTO_LATENCIESENTRY._options = None
+  _CHATSTREAMAPIRESPONSEHEADERPROTO_LATENCIESENTRY._serialized_options = b'8\001'
   _CHATAPIREQUESTPROTO._serialized_start=85
   _CHATAPIREQUESTPROTO._serialized_end=300
   _CHATAPIRESPONSEPROTO._serialized_start=303
@@ -34,50 +34,50 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _CHATAPIRESPONSEPROTO_LATENCIESENTRY._serialized_end=655
   _CHATSTREAMAPIREQUESTPROTO._serialized_start=670
   _CHATSTREAMAPIREQUESTPROTO._serialized_end=838
-  _CHATSTREAMAPIRESPONSEPROTO._serialized_start=841
-  _CHATSTREAMAPIRESPONSEPROTO._serialized_end=1189
-  _CHATSTREAMAPIRESPONSEPROTO_LATENCIESENTRY._serialized_start=580
-  _CHATSTREAMAPIRESPONSEPROTO_LATENCIESENTRY._serialized_end=655
-  _GETCHATBOTSREQUESTPROTO._serialized_start=1191
-  _GETCHATBOTSREQUESTPROTO._serialized_end=1250
-  _GETCHATBOTSRESPONSEPROTO._serialized_start=1252
-  _GETCHATBOTSRESPONSEPROTO._serialized_end=1307
-  _LISTCHATSREQUESTPROTO._serialized_start=1309
-  _LISTCHATSREQUESTPROTO._serialized_end=1332
-  _CHATSNIPPETPROTO._serialized_start=1334
-  _CHATSNIPPETPROTO._serialized_end=1383
-  _LISTCHATSRESPONSEPROTO._serialized_start=1385
-  _LISTCHATSRESPONSEPROTO._serialized_end=1446
-  _GETCHATMESSAGESREQUESTPROTO._serialized_start=1448
-  _GETCHATMESSAGESREQUESTPROTO._serialized_end=1494
-  _GETCHATMESSAGESRESPONSEPROTO._serialized_start=1496
-  _GETCHATMESSAGESRESPONSEPROTO._serialized_end=1563
-  _POSTCHATMESSAGEREQUESTPROTO._serialized_start=1565
-  _POSTCHATMESSAGEREQUESTPROTO._serialized_end=1611
-  _POSTCHATMESSAGERESPONSEHEADERPROTO._serialized_start=1613
-  _POSTCHATMESSAGERESPONSEHEADERPROTO._serialized_end=1649
-  _OPENCHATREQUESTPROTO._serialized_start=1651
-  _OPENCHATREQUESTPROTO._serialized_end=1706
-  _OPENCHATRESPONSEHEADERPROTO._serialized_start=1708
-  _OPENCHATRESPONSEHEADERPROTO._serialized_end=1802
-  _CHATASSISTANTMESSAGEBLOCKDELTAPROTO._serialized_start=1804
-  _CHATASSISTANTMESSAGEBLOCKDELTAPROTO._serialized_end=1895
-  _CHATBOTPROTO._serialized_start=1898
-  _CHATBOTPROTO._serialized_end=2210
-  _CHATBOTPROTO_TYPE._serialized_start=2158
-  _CHATBOTPROTO_TYPE._serialized_end=2210
-  _CHATACTIVITIESPROTO._serialized_start=2212
-  _CHATACTIVITIESPROTO._serialized_end=2301
-  _CHATACTIVITYPROTO._serialized_start=2303
-  _CHATACTIVITYPROTO._serialized_end=2416
-  _CHATASSISTANTMESSAGEBLOCKPROTO._serialized_start=2418
-  _CHATASSISTANTMESSAGEBLOCKPROTO._serialized_end=2486
-  _CHATASSISTANTMESSAGEPROTO._serialized_start=2488
-  _CHATASSISTANTMESSAGEPROTO._serialized_end=2564
-  _CHATUSERMESSAGEPROTO._serialized_start=2566
-  _CHATUSERMESSAGEPROTO._serialized_end=2623
-  _CHATMESSAGEPROTO._serialized_start=2626
-  _CHATMESSAGEPROTO._serialized_end=2808
-  _CHATSESSIONPROTO._serialized_start=2811
-  _CHATSESSIONPROTO._serialized_end=3033
+  _CHATSTREAMAPIRESPONSEHEADERPROTO._serialized_start=841
+  _CHATSTREAMAPIRESPONSEHEADERPROTO._serialized_end=1201
+  _CHATSTREAMAPIRESPONSEHEADERPROTO_LATENCIESENTRY._serialized_start=580
+  _CHATSTREAMAPIRESPONSEHEADERPROTO_LATENCIESENTRY._serialized_end=655
+  _GETCHATBOTSREQUESTPROTO._serialized_start=1203
+  _GETCHATBOTSREQUESTPROTO._serialized_end=1262
+  _GETCHATBOTSRESPONSEPROTO._serialized_start=1264
+  _GETCHATBOTSRESPONSEPROTO._serialized_end=1319
+  _LISTCHATSREQUESTPROTO._serialized_start=1321
+  _LISTCHATSREQUESTPROTO._serialized_end=1344
+  _CHATSNIPPETPROTO._serialized_start=1346
+  _CHATSNIPPETPROTO._serialized_end=1395
+  _LISTCHATSRESPONSEPROTO._serialized_start=1397
+  _LISTCHATSRESPONSEPROTO._serialized_end=1458
+  _GETCHATMESSAGESREQUESTPROTO._serialized_start=1460
+  _GETCHATMESSAGESREQUESTPROTO._serialized_end=1506
+  _GETCHATMESSAGESRESPONSEPROTO._serialized_start=1508
+  _GETCHATMESSAGESRESPONSEPROTO._serialized_end=1575
+  _POSTCHATMESSAGEREQUESTPROTO._serialized_start=1577
+  _POSTCHATMESSAGEREQUESTPROTO._serialized_end=1623
+  _POSTCHATMESSAGERESPONSEHEADERPROTO._serialized_start=1625
+  _POSTCHATMESSAGERESPONSEHEADERPROTO._serialized_end=1661
+  _OPENCHATREQUESTPROTO._serialized_start=1663
+  _OPENCHATREQUESTPROTO._serialized_end=1718
+  _OPENCHATRESPONSEHEADERPROTO._serialized_start=1720
+  _OPENCHATRESPONSEHEADERPROTO._serialized_end=1814
+  _CHATASSISTANTMESSAGEBLOCKDELTAPROTO._serialized_start=1816
+  _CHATASSISTANTMESSAGEBLOCKDELTAPROTO._serialized_end=1907
+  _CHATBOTPROTO._serialized_start=1910
+  _CHATBOTPROTO._serialized_end=2222
+  _CHATBOTPROTO_TYPE._serialized_start=2170
+  _CHATBOTPROTO_TYPE._serialized_end=2222
+  _CHATACTIVITIESPROTO._serialized_start=2224
+  _CHATACTIVITIESPROTO._serialized_end=2313
+  _CHATACTIVITYPROTO._serialized_start=2315
+  _CHATACTIVITYPROTO._serialized_end=2428
+  _CHATASSISTANTMESSAGEBLOCKPROTO._serialized_start=2430
+  _CHATASSISTANTMESSAGEBLOCKPROTO._serialized_end=2498
+  _CHATASSISTANTMESSAGEPROTO._serialized_start=2500
+  _CHATASSISTANTMESSAGEPROTO._serialized_end=2576
+  _CHATUSERMESSAGEPROTO._serialized_start=2578
+  _CHATUSERMESSAGEPROTO._serialized_end=2635
+  _CHATMESSAGEPROTO._serialized_start=2638
+  _CHATMESSAGEPROTO._serialized_end=2820
+  _CHATSESSIONPROTO._serialized_start=2823
+  _CHATSESSIONPROTO._serialized_end=3045
 # @@protoc_insertion_point(module_scope)

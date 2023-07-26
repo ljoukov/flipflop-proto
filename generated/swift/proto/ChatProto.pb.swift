@@ -211,7 +211,7 @@ struct ChatStreamApiRequestProto {
   init() {}
 }
 
-struct ChatStreamApiResponseProto {
+struct ChatStreamApiResponseHeaderProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -219,7 +219,7 @@ struct ChatStreamApiResponseProto {
   /// If present the token was refreshed and the client should use this new one from now onwards.
   var refreshedEncodedUserAuth: String = String()
 
-  var response: ChatStreamApiResponseProto.OneOf_Response? = nil
+  var response: ChatStreamApiResponseHeaderProto.OneOf_Response? = nil
 
   var postChatMessageHeader: PostChatMessageResponseHeaderProto {
     get {
@@ -246,7 +246,7 @@ struct ChatStreamApiResponseProto {
     case openChatHeader(OpenChatResponseHeaderProto)
 
   #if !swift(>=4.1)
-    static func ==(lhs: ChatStreamApiResponseProto.OneOf_Response, rhs: ChatStreamApiResponseProto.OneOf_Response) -> Bool {
+    static func ==(lhs: ChatStreamApiResponseHeaderProto.OneOf_Response, rhs: ChatStreamApiResponseHeaderProto.OneOf_Response) -> Bool {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
@@ -742,8 +742,8 @@ extension ChatApiResponseProto: @unchecked Sendable {}
 extension ChatApiResponseProto.OneOf_Response: @unchecked Sendable {}
 extension ChatStreamApiRequestProto: @unchecked Sendable {}
 extension ChatStreamApiRequestProto.OneOf_Request: @unchecked Sendable {}
-extension ChatStreamApiResponseProto: @unchecked Sendable {}
-extension ChatStreamApiResponseProto.OneOf_Response: @unchecked Sendable {}
+extension ChatStreamApiResponseHeaderProto: @unchecked Sendable {}
+extension ChatStreamApiResponseHeaderProto.OneOf_Response: @unchecked Sendable {}
 extension GetChatBotsRequestProto: @unchecked Sendable {}
 extension GetChatBotsResponseProto: @unchecked Sendable {}
 extension ListChatsRequestProto: @unchecked Sendable {}
@@ -1041,8 +1041,8 @@ extension ChatStreamApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Messa
   }
 }
 
-extension ChatStreamApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "ChatStreamApiResponseProto"
+extension ChatStreamApiResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "ChatStreamApiResponseHeaderProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "refreshed_encoded_user_auth"),
     2: .standard(proto: "post_chat_message_header"),
@@ -1114,7 +1114,7 @@ extension ChatStreamApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._Mess
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: ChatStreamApiResponseProto, rhs: ChatStreamApiResponseProto) -> Bool {
+  static func ==(lhs: ChatStreamApiResponseHeaderProto, rhs: ChatStreamApiResponseHeaderProto) -> Bool {
     if lhs.refreshedEncodedUserAuth != rhs.refreshedEncodedUserAuth {return false}
     if lhs.response != rhs.response {return false}
     if lhs.latencies != rhs.latencies {return false}

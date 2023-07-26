@@ -117,9 +117,9 @@ export interface ChatStreamApiRequestProto {
     };
 }
 /**
- * @generated from protobuf message ChatStreamApiResponseProto
+ * @generated from protobuf message ChatStreamApiResponseHeaderProto
  */
-export interface ChatStreamApiResponseProto {
+export interface ChatStreamApiResponseHeaderProto {
     /**
      * If present the token was refreshed and the client should use this new one from now onwards.
      *
@@ -720,23 +720,23 @@ class ChatStreamApiRequestProto$Type extends MessageType<ChatStreamApiRequestPro
  */
 export const ChatStreamApiRequestProto = new ChatStreamApiRequestProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class ChatStreamApiResponseProto$Type extends MessageType<ChatStreamApiResponseProto> {
+class ChatStreamApiResponseHeaderProto$Type extends MessageType<ChatStreamApiResponseHeaderProto> {
     constructor() {
-        super("ChatStreamApiResponseProto", [
+        super("ChatStreamApiResponseHeaderProto", [
             { no: 1, name: "refreshed_encoded_user_auth", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "post_chat_message_header", kind: "message", oneof: "response", T: () => PostChatMessageResponseHeaderProto },
             { no: 3, name: "open_chat_header", kind: "message", oneof: "response", T: () => OpenChatResponseHeaderProto },
             { no: 100, name: "latencies", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => Duration } }
         ]);
     }
-    create(value?: PartialMessage<ChatStreamApiResponseProto>): ChatStreamApiResponseProto {
+    create(value?: PartialMessage<ChatStreamApiResponseHeaderProto>): ChatStreamApiResponseHeaderProto {
         const message = { refreshedEncodedUserAuth: "", response: { oneofKind: undefined }, latencies: {} };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<ChatStreamApiResponseProto>(this, message, value);
+            reflectionMergePartial<ChatStreamApiResponseHeaderProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ChatStreamApiResponseProto): ChatStreamApiResponseProto {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ChatStreamApiResponseHeaderProto): ChatStreamApiResponseHeaderProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -770,8 +770,8 @@ class ChatStreamApiResponseProto$Type extends MessageType<ChatStreamApiResponseP
         }
         return message;
     }
-    private binaryReadMap100(map: ChatStreamApiResponseProto["latencies"], reader: IBinaryReader, options: BinaryReadOptions): void {
-        let len = reader.uint32(), end = reader.pos + len, key: keyof ChatStreamApiResponseProto["latencies"] | undefined, val: ChatStreamApiResponseProto["latencies"][any] | undefined;
+    private binaryReadMap100(map: ChatStreamApiResponseHeaderProto["latencies"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof ChatStreamApiResponseHeaderProto["latencies"] | undefined, val: ChatStreamApiResponseHeaderProto["latencies"][any] | undefined;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
@@ -781,12 +781,12 @@ class ChatStreamApiResponseProto$Type extends MessageType<ChatStreamApiResponseP
                 case 2:
                     val = Duration.internalBinaryRead(reader, reader.uint32(), options);
                     break;
-                default: throw new globalThis.Error("unknown map entry field for field ChatStreamApiResponseProto.latencies");
+                default: throw new globalThis.Error("unknown map entry field for field ChatStreamApiResponseHeaderProto.latencies");
             }
         }
         map[key ?? ""] = val ?? Duration.create();
     }
-    internalBinaryWrite(message: ChatStreamApiResponseProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: ChatStreamApiResponseHeaderProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string refreshed_encoded_user_auth = 1; */
         if (message.refreshedEncodedUserAuth !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.refreshedEncodedUserAuth);
@@ -810,9 +810,9 @@ class ChatStreamApiResponseProto$Type extends MessageType<ChatStreamApiResponseP
     }
 }
 /**
- * @generated MessageType for protobuf message ChatStreamApiResponseProto
+ * @generated MessageType for protobuf message ChatStreamApiResponseHeaderProto
  */
-export const ChatStreamApiResponseProto = new ChatStreamApiResponseProto$Type();
+export const ChatStreamApiResponseHeaderProto = new ChatStreamApiResponseHeaderProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class GetChatBotsRequestProto$Type extends MessageType<GetChatBotsRequestProto> {
     constructor() {
