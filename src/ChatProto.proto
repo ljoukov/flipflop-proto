@@ -9,8 +9,6 @@ message ChatApiRequestProto {
     GetChatBotsRequestProto get_chat_bots = 2;
     ListChatsRequestProto list_chats = 3;
     GetChatMessagesRequestProto get_chat_messages = 4;
-    PostChatMessageRequestProto post_chat_message = 5;
-    OpenChatRequestProto open_chat = 6;
   }
 }
 
@@ -21,8 +19,6 @@ message ChatApiResponseProto {
     GetChatBotsResponseProto get_chat_bots = 2;
     ListChatsResponseProto list_chats = 3;
     GetChatMessagesResponseProto get_chat_messages = 4;
-    PostChatMessageResponseHeaderProto post_chat_message_header = 5;
-    OpenChatResponseHeaderProto open_chat_header = 6;
   }
   map<string, google.protobuf.Duration> latencies = 100;
 }

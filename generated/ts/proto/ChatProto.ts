@@ -45,18 +45,6 @@ export interface ChatApiRequestProto {
          */
         getChatMessages: GetChatMessagesRequestProto;
     } | {
-        oneofKind: "postChatMessage";
-        /**
-         * @generated from protobuf field: PostChatMessageRequestProto post_chat_message = 5;
-         */
-        postChatMessage: PostChatMessageRequestProto;
-    } | {
-        oneofKind: "openChat";
-        /**
-         * @generated from protobuf field: OpenChatRequestProto open_chat = 6;
-         */
-        openChat: OpenChatRequestProto;
-    } | {
         oneofKind: undefined;
     };
 }
@@ -91,18 +79,6 @@ export interface ChatApiResponseProto {
          * @generated from protobuf field: GetChatMessagesResponseProto get_chat_messages = 4;
          */
         getChatMessages: GetChatMessagesResponseProto;
-    } | {
-        oneofKind: "postChatMessageHeader";
-        /**
-         * @generated from protobuf field: PostChatMessageResponseHeaderProto post_chat_message_header = 5;
-         */
-        postChatMessageHeader: PostChatMessageResponseHeaderProto;
-    } | {
-        oneofKind: "openChatHeader";
-        /**
-         * @generated from protobuf field: OpenChatResponseHeaderProto open_chat_header = 6;
-         */
-        openChatHeader: OpenChatResponseHeaderProto;
     } | {
         oneofKind: undefined;
     };
@@ -502,9 +478,7 @@ class ChatApiRequestProto$Type extends MessageType<ChatApiRequestProto> {
             { no: 1, name: "encoded_user_auth", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "get_chat_bots", kind: "message", oneof: "request", T: () => GetChatBotsRequestProto },
             { no: 3, name: "list_chats", kind: "message", oneof: "request", T: () => ListChatsRequestProto },
-            { no: 4, name: "get_chat_messages", kind: "message", oneof: "request", T: () => GetChatMessagesRequestProto },
-            { no: 5, name: "post_chat_message", kind: "message", oneof: "request", T: () => PostChatMessageRequestProto },
-            { no: 6, name: "open_chat", kind: "message", oneof: "request", T: () => OpenChatRequestProto }
+            { no: 4, name: "get_chat_messages", kind: "message", oneof: "request", T: () => GetChatMessagesRequestProto }
         ]);
     }
     create(value?: PartialMessage<ChatApiRequestProto>): ChatApiRequestProto {
@@ -540,18 +514,6 @@ class ChatApiRequestProto$Type extends MessageType<ChatApiRequestProto> {
                         getChatMessages: GetChatMessagesRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).getChatMessages)
                     };
                     break;
-                case /* PostChatMessageRequestProto post_chat_message */ 5:
-                    message.request = {
-                        oneofKind: "postChatMessage",
-                        postChatMessage: PostChatMessageRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).postChatMessage)
-                    };
-                    break;
-                case /* OpenChatRequestProto open_chat */ 6:
-                    message.request = {
-                        oneofKind: "openChat",
-                        openChat: OpenChatRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).openChat)
-                    };
-                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -576,12 +538,6 @@ class ChatApiRequestProto$Type extends MessageType<ChatApiRequestProto> {
         /* GetChatMessagesRequestProto get_chat_messages = 4; */
         if (message.request.oneofKind === "getChatMessages")
             GetChatMessagesRequestProto.internalBinaryWrite(message.request.getChatMessages, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
-        /* PostChatMessageRequestProto post_chat_message = 5; */
-        if (message.request.oneofKind === "postChatMessage")
-            PostChatMessageRequestProto.internalBinaryWrite(message.request.postChatMessage, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
-        /* OpenChatRequestProto open_chat = 6; */
-        if (message.request.oneofKind === "openChat")
-            OpenChatRequestProto.internalBinaryWrite(message.request.openChat, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -600,8 +556,6 @@ class ChatApiResponseProto$Type extends MessageType<ChatApiResponseProto> {
             { no: 2, name: "get_chat_bots", kind: "message", oneof: "response", T: () => GetChatBotsResponseProto },
             { no: 3, name: "list_chats", kind: "message", oneof: "response", T: () => ListChatsResponseProto },
             { no: 4, name: "get_chat_messages", kind: "message", oneof: "response", T: () => GetChatMessagesResponseProto },
-            { no: 5, name: "post_chat_message_header", kind: "message", oneof: "response", T: () => PostChatMessageResponseHeaderProto },
-            { no: 6, name: "open_chat_header", kind: "message", oneof: "response", T: () => OpenChatResponseHeaderProto },
             { no: 100, name: "latencies", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => Duration } }
         ]);
     }
@@ -636,18 +590,6 @@ class ChatApiResponseProto$Type extends MessageType<ChatApiResponseProto> {
                     message.response = {
                         oneofKind: "getChatMessages",
                         getChatMessages: GetChatMessagesResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).getChatMessages)
-                    };
-                    break;
-                case /* PostChatMessageResponseHeaderProto post_chat_message_header */ 5:
-                    message.response = {
-                        oneofKind: "postChatMessageHeader",
-                        postChatMessageHeader: PostChatMessageResponseHeaderProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).postChatMessageHeader)
-                    };
-                    break;
-                case /* OpenChatResponseHeaderProto open_chat_header */ 6:
-                    message.response = {
-                        oneofKind: "openChatHeader",
-                        openChatHeader: OpenChatResponseHeaderProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).openChatHeader)
                     };
                     break;
                 case /* map<string, google.protobuf.Duration> latencies */ 100:
@@ -693,12 +635,6 @@ class ChatApiResponseProto$Type extends MessageType<ChatApiResponseProto> {
         /* GetChatMessagesResponseProto get_chat_messages = 4; */
         if (message.response.oneofKind === "getChatMessages")
             GetChatMessagesResponseProto.internalBinaryWrite(message.response.getChatMessages, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
-        /* PostChatMessageResponseHeaderProto post_chat_message_header = 5; */
-        if (message.response.oneofKind === "postChatMessageHeader")
-            PostChatMessageResponseHeaderProto.internalBinaryWrite(message.response.postChatMessageHeader, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
-        /* OpenChatResponseHeaderProto open_chat_header = 6; */
-        if (message.response.oneofKind === "openChatHeader")
-            OpenChatResponseHeaderProto.internalBinaryWrite(message.response.openChatHeader, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
         /* map<string, google.protobuf.Duration> latencies = 100; */
         for (let k of Object.keys(message.latencies)) {
             writer.tag(100, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k);

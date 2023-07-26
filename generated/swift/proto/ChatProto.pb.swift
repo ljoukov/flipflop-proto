@@ -53,30 +53,12 @@ struct ChatApiRequestProto {
     set {request = .getChatMessages(newValue)}
   }
 
-  var postChatMessage: PostChatMessageRequestProto {
-    get {
-      if case .postChatMessage(let v)? = request {return v}
-      return PostChatMessageRequestProto()
-    }
-    set {request = .postChatMessage(newValue)}
-  }
-
-  var openChat: OpenChatRequestProto {
-    get {
-      if case .openChat(let v)? = request {return v}
-      return OpenChatRequestProto()
-    }
-    set {request = .openChat(newValue)}
-  }
-
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_Request: Equatable {
     case getChatBots(GetChatBotsRequestProto)
     case listChats(ListChatsRequestProto)
     case getChatMessages(GetChatMessagesRequestProto)
-    case postChatMessage(PostChatMessageRequestProto)
-    case openChat(OpenChatRequestProto)
 
   #if !swift(>=4.1)
     static func ==(lhs: ChatApiRequestProto.OneOf_Request, rhs: ChatApiRequestProto.OneOf_Request) -> Bool {
@@ -94,14 +76,6 @@ struct ChatApiRequestProto {
       }()
       case (.getChatMessages, .getChatMessages): return {
         guard case .getChatMessages(let l) = lhs, case .getChatMessages(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.postChatMessage, .postChatMessage): return {
-        guard case .postChatMessage(let l) = lhs, case .postChatMessage(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.openChat, .openChat): return {
-        guard case .openChat(let l) = lhs, case .openChat(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       default: return false
@@ -147,22 +121,6 @@ struct ChatApiResponseProto {
     set {response = .getChatMessages(newValue)}
   }
 
-  var postChatMessageHeader: PostChatMessageResponseHeaderProto {
-    get {
-      if case .postChatMessageHeader(let v)? = response {return v}
-      return PostChatMessageResponseHeaderProto()
-    }
-    set {response = .postChatMessageHeader(newValue)}
-  }
-
-  var openChatHeader: OpenChatResponseHeaderProto {
-    get {
-      if case .openChatHeader(let v)? = response {return v}
-      return OpenChatResponseHeaderProto()
-    }
-    set {response = .openChatHeader(newValue)}
-  }
-
   var latencies: Dictionary<String,SwiftProtobuf.Google_Protobuf_Duration> = [:]
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -171,8 +129,6 @@ struct ChatApiResponseProto {
     case getChatBots(GetChatBotsResponseProto)
     case listChats(ListChatsResponseProto)
     case getChatMessages(GetChatMessagesResponseProto)
-    case postChatMessageHeader(PostChatMessageResponseHeaderProto)
-    case openChatHeader(OpenChatResponseHeaderProto)
 
   #if !swift(>=4.1)
     static func ==(lhs: ChatApiResponseProto.OneOf_Response, rhs: ChatApiResponseProto.OneOf_Response) -> Bool {
@@ -190,14 +146,6 @@ struct ChatApiResponseProto {
       }()
       case (.getChatMessages, .getChatMessages): return {
         guard case .getChatMessages(let l) = lhs, case .getChatMessages(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.postChatMessageHeader, .postChatMessageHeader): return {
-        guard case .postChatMessageHeader(let l) = lhs, case .postChatMessageHeader(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.openChatHeader, .openChatHeader): return {
-        guard case .openChatHeader(let l) = lhs, case .openChatHeader(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       default: return false
@@ -830,8 +778,6 @@ extension ChatApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     2: .standard(proto: "get_chat_bots"),
     3: .standard(proto: "list_chats"),
     4: .standard(proto: "get_chat_messages"),
-    5: .standard(proto: "post_chat_message"),
-    6: .standard(proto: "open_chat"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -880,32 +826,6 @@ extension ChatApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
           self.request = .getChatMessages(v)
         }
       }()
-      case 5: try {
-        var v: PostChatMessageRequestProto?
-        var hadOneofValue = false
-        if let current = self.request {
-          hadOneofValue = true
-          if case .postChatMessage(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {
-          if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.request = .postChatMessage(v)
-        }
-      }()
-      case 6: try {
-        var v: OpenChatRequestProto?
-        var hadOneofValue = false
-        if let current = self.request {
-          hadOneofValue = true
-          if case .openChat(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {
-          if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.request = .openChat(v)
-        }
-      }()
       default: break
       }
     }
@@ -932,14 +852,6 @@ extension ChatApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
       guard case .getChatMessages(let v)? = self.request else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
     }()
-    case .postChatMessage?: try {
-      guard case .postChatMessage(let v)? = self.request else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
-    }()
-    case .openChat?: try {
-      guard case .openChat(let v)? = self.request else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
-    }()
     case nil: break
     }
     try unknownFields.traverse(visitor: &visitor)
@@ -960,8 +872,6 @@ extension ChatApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     2: .standard(proto: "get_chat_bots"),
     3: .standard(proto: "list_chats"),
     4: .standard(proto: "get_chat_messages"),
-    5: .standard(proto: "post_chat_message_header"),
-    6: .standard(proto: "open_chat_header"),
     100: .same(proto: "latencies"),
   ]
 
@@ -1011,32 +921,6 @@ extension ChatApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
           self.response = .getChatMessages(v)
         }
       }()
-      case 5: try {
-        var v: PostChatMessageResponseHeaderProto?
-        var hadOneofValue = false
-        if let current = self.response {
-          hadOneofValue = true
-          if case .postChatMessageHeader(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {
-          if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.response = .postChatMessageHeader(v)
-        }
-      }()
-      case 6: try {
-        var v: OpenChatResponseHeaderProto?
-        var hadOneofValue = false
-        if let current = self.response {
-          hadOneofValue = true
-          if case .openChatHeader(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {
-          if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.response = .openChatHeader(v)
-        }
-      }()
       case 100: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.Google_Protobuf_Duration>.self, value: &self.latencies) }()
       default: break
       }
@@ -1063,14 +947,6 @@ extension ChatApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     case .getChatMessages?: try {
       guard case .getChatMessages(let v)? = self.response else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
-    }()
-    case .postChatMessageHeader?: try {
-      guard case .postChatMessageHeader(let v)? = self.response else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
-    }()
-    case .openChatHeader?: try {
-      guard case .openChatHeader(let v)? = self.response else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
     }()
     case nil: break
     }
