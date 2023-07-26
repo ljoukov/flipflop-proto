@@ -7,6 +7,10 @@ message ChatApiRequestProto {
   string encoded_user_auth = 1;
   oneof request {
     GetChatBotsRequestProto get_chat_bots = 2;
+    ListChatsRequestProto list_chats = 3;
+    GetChatMessagesRequestProto get_chat_messages = 4;
+    PostChatMessageRequestProto post_chat_message = 5;
+    OpenChatRequestProto open_chat = 6;
   }
 }
 
@@ -14,7 +18,11 @@ message ChatApiResponseProto {
   // If present the token was refreshed and the client should use this new one from now onwards.
   string refreshed_encoded_user_auth = 1;
   oneof response {
-    GetChatBotsResponseProto get_chat_bots = 2;  // uses clien-side LLM APIs, remove this
+    GetChatBotsResponseProto get_chat_bots = 2;
+    ListChatsResponseProto list_chats = 3;
+    GetChatMessagesResponseProto get_chat_messages = 4;
+    PostChatMessageResponseHeaderProto post_chat_message_header = 5;
+    OpenChatResponseHeaderProto open_chat_header = 6;
   }
   map<string, google.protobuf.Duration> latencies = 100;
 }
@@ -25,6 +33,54 @@ message GetChatBotsRequestProto {
 
 message GetChatBotsResponseProto {
   repeated ChatBotProto bots = 1;
+}
+
+message ListChatsRequestProto {
+}
+
+message ChatSnippetProto {
+  string chat_id = 1;
+  string text = 2;
+}
+
+message ListChatsResponseProto {
+  repeated ChatSnippetProto snippets = 1;
+}
+
+message GetChatMessagesRequestProto {
+  string chat_id = 1;
+}
+
+message GetChatMessagesResponseProto {
+  repeated ChatMessageProto messages = 1;
+}
+
+message PostChatMessageRequestProto {
+  string chat_id = 1;
+}
+
+message PostChatMessageResponseHeaderProto {
+  // ChatAssistantMessageBlockDeltaProto(s) are always streamed
+}
+
+message OpenChatRequestProto {
+  string bot_id = 1;
+  bool restart = 2;
+}
+
+message OpenChatResponseHeaderProto {
+  repeated ChatMessageProto messages = 1;
+  bool response_streasmed = 2;  // if true ChatAssistantMessageBlockDeltaProto(s) are streamed
+}
+
+message ChatAssistantMessageBlockDeltaProto {
+  oneof delta {
+    // Append current text block.
+    string text_delta = 1;
+    // Append activity ID to the current block.
+    // Start a new block on next text_delta.
+    string activity_id = 2;
+  }
 }
 
 message ChatBotProto {
