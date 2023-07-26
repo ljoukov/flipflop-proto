@@ -252,9 +252,9 @@ export interface OpenChatResponseHeaderProto {
      */
     messages: ChatMessageProto[];
     /**
-     * @generated from protobuf field: bool response_streasmed = 2;
+     * @generated from protobuf field: bool response_streamed = 2;
      */
-    responseStreasmed: boolean; // if true ChatAssistantMessageBlockDeltaProto(s) are streamed
+    responseStreamed: boolean; // if true ChatAssistantMessageBlockDeltaProto(s) are streamed
 }
 /**
  * @generated from protobuf message ChatAssistantMessageBlockDeltaProto
@@ -1260,11 +1260,11 @@ class OpenChatResponseHeaderProto$Type extends MessageType<OpenChatResponseHeade
     constructor() {
         super("OpenChatResponseHeaderProto", [
             { no: 1, name: "messages", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ChatMessageProto },
-            { no: 2, name: "response_streasmed", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+            { no: 2, name: "response_streamed", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
     create(value?: PartialMessage<OpenChatResponseHeaderProto>): OpenChatResponseHeaderProto {
-        const message = { messages: [], responseStreasmed: false };
+        const message = { messages: [], responseStreamed: false };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<OpenChatResponseHeaderProto>(this, message, value);
@@ -1278,8 +1278,8 @@ class OpenChatResponseHeaderProto$Type extends MessageType<OpenChatResponseHeade
                 case /* repeated ChatMessageProto messages */ 1:
                     message.messages.push(ChatMessageProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
-                case /* bool response_streasmed */ 2:
-                    message.responseStreasmed = reader.bool();
+                case /* bool response_streamed */ 2:
+                    message.responseStreamed = reader.bool();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1296,9 +1296,9 @@ class OpenChatResponseHeaderProto$Type extends MessageType<OpenChatResponseHeade
         /* repeated ChatMessageProto messages = 1; */
         for (let i = 0; i < message.messages.length; i++)
             ChatMessageProto.internalBinaryWrite(message.messages[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* bool response_streasmed = 2; */
-        if (message.responseStreasmed !== false)
-            writer.tag(2, WireType.Varint).bool(message.responseStreasmed);
+        /* bool response_streamed = 2; */
+        if (message.responseStreamed !== false)
+            writer.tag(2, WireType.Varint).bool(message.responseStreamed);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

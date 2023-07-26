@@ -84,7 +84,7 @@ message OpenChatRequestProto {
 
 message OpenChatResponseHeaderProto {
   repeated ChatMessageProto messages = 1;
-  bool response_streasmed = 2;  // if true ChatAssistantMessageBlockDeltaProto(s) are streamed
+  bool response_streamed = 2;  // if true ChatAssistantMessageBlockDeltaProto(s) are streamed
 }
 
 message ChatAssistantMessageBlockDeltaProto {

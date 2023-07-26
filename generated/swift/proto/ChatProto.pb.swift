@@ -397,7 +397,7 @@ struct OpenChatResponseHeaderProto {
   var messages: [ChatMessageProto] = []
 
   /// if true ChatAssistantMessageBlockDeltaProto(s) are streamed
-  var responseStreasmed: Bool = false
+  var responseStreamed: Bool = false
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -1433,7 +1433,7 @@ extension OpenChatResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
   static let protoMessageName: String = "OpenChatResponseHeaderProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "messages"),
-    2: .standard(proto: "response_streasmed"),
+    2: .standard(proto: "response_streamed"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1443,7 +1443,7 @@ extension OpenChatResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeRepeatedMessageField(value: &self.messages) }()
-      case 2: try { try decoder.decodeSingularBoolField(value: &self.responseStreasmed) }()
+      case 2: try { try decoder.decodeSingularBoolField(value: &self.responseStreamed) }()
       default: break
       }
     }
@@ -1453,15 +1453,15 @@ extension OpenChatResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
     if !self.messages.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.messages, fieldNumber: 1)
     }
-    if self.responseStreasmed != false {
-      try visitor.visitSingularBoolField(value: self.responseStreasmed, fieldNumber: 2)
+    if self.responseStreamed != false {
+      try visitor.visitSingularBoolField(value: self.responseStreamed, fieldNumber: 2)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: OpenChatResponseHeaderProto, rhs: OpenChatResponseHeaderProto) -> Bool {
     if lhs.messages != rhs.messages {return false}
-    if lhs.responseStreasmed != rhs.responseStreasmed {return false}
+    if lhs.responseStreamed != rhs.responseStreamed {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
