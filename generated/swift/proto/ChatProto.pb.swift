@@ -407,6 +407,8 @@ struct PostChatMessageResponseHeaderProto {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  var streamedMessageID: String = String()
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -434,6 +436,8 @@ struct OpenChatResponseHeaderProto {
   var chatID: String = String()
 
   var messages: [ChatMessageProto] = []
+
+  var streamedMessageID: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -1460,18 +1464,31 @@ extension PostChatMessageRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
 
 extension PostChatMessageResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "PostChatMessageResponseHeaderProto"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "streamed_message_id"),
+  ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let _ = try decoder.nextFieldNumber() {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.streamedMessageID) }()
+      default: break
+      }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.streamedMessageID.isEmpty {
+      try visitor.visitSingularStringField(value: self.streamedMessageID, fieldNumber: 1)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: PostChatMessageResponseHeaderProto, rhs: PostChatMessageResponseHeaderProto) -> Bool {
+    if lhs.streamedMessageID != rhs.streamedMessageID {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -1520,6 +1537,7 @@ extension OpenChatResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "chat_id"),
     2: .same(proto: "messages"),
+    3: .standard(proto: "streamed_message_id"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1530,6 +1548,7 @@ extension OpenChatResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.chatID) }()
       case 2: try { try decoder.decodeRepeatedMessageField(value: &self.messages) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.streamedMessageID) }()
       default: break
       }
     }
@@ -1542,12 +1561,16 @@ extension OpenChatResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
     if !self.messages.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.messages, fieldNumber: 2)
     }
+    if !self.streamedMessageID.isEmpty {
+      try visitor.visitSingularStringField(value: self.streamedMessageID, fieldNumber: 3)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: OpenChatResponseHeaderProto, rhs: OpenChatResponseHeaderProto) -> Bool {
     if lhs.chatID != rhs.chatID {return false}
     if lhs.messages != rhs.messages {return false}
+    if lhs.streamedMessageID != rhs.streamedMessageID {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

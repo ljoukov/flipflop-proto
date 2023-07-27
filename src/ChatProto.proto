@@ -80,6 +80,7 @@ message PostChatMessageRequestProto {
 }
 
 message PostChatMessageResponseHeaderProto {
+  string streamed_message_id = 1; 
 }
 
 message OpenChatRequestProto {
@@ -90,6 +91,7 @@ message OpenChatRequestProto {
 message OpenChatResponseHeaderProto {
   string chat_id = 1;
   repeated ChatMessageProto messages = 2;
+  string streamed_message_id = 3; 
 }
 
 message ChatAssistantMessageDeltaProto {
