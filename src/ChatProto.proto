@@ -77,10 +77,12 @@ message GetChatMessagesResponseProto {
 
 message PostChatMessageRequestProto {
   string chat_id = 1;
+  ChatUserMessageProto user_message = 2;
 }
 
 message PostChatMessageResponseHeaderProto {
-  string streamed_message_id = 1; 
+  string posted_message_id = 1;
+  string streamed_message_id = 2; 
 }
 
 message OpenChatRequestProto {

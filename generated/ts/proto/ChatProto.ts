@@ -239,13 +239,21 @@ export interface PostChatMessageRequestProto {
      * @generated from protobuf field: string chat_id = 1;
      */
     chatId: string;
+    /**
+     * @generated from protobuf field: ChatUserMessageProto user_message = 2;
+     */
+    userMessage?: ChatUserMessageProto;
 }
 /**
  * @generated from protobuf message PostChatMessageResponseHeaderProto
  */
 export interface PostChatMessageResponseHeaderProto {
     /**
-     * @generated from protobuf field: string streamed_message_id = 1;
+     * @generated from protobuf field: string posted_message_id = 1;
+     */
+    postedMessageId: string;
+    /**
+     * @generated from protobuf field: string streamed_message_id = 2;
      */
     streamedMessageId: string;
 }
@@ -1205,7 +1213,8 @@ export const GetChatMessagesResponseProto = new GetChatMessagesResponseProto$Typ
 class PostChatMessageRequestProto$Type extends MessageType<PostChatMessageRequestProto> {
     constructor() {
         super("PostChatMessageRequestProto", [
-            { no: 1, name: "chat_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "chat_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "user_message", kind: "message", T: () => ChatUserMessageProto }
         ]);
     }
     create(value?: PartialMessage<PostChatMessageRequestProto>): PostChatMessageRequestProto {
@@ -1223,6 +1232,9 @@ class PostChatMessageRequestProto$Type extends MessageType<PostChatMessageReques
                 case /* string chat_id */ 1:
                     message.chatId = reader.string();
                     break;
+                case /* ChatUserMessageProto user_message */ 2:
+                    message.userMessage = ChatUserMessageProto.internalBinaryRead(reader, reader.uint32(), options, message.userMessage);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -1238,6 +1250,9 @@ class PostChatMessageRequestProto$Type extends MessageType<PostChatMessageReques
         /* string chat_id = 1; */
         if (message.chatId !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.chatId);
+        /* ChatUserMessageProto user_message = 2; */
+        if (message.userMessage)
+            ChatUserMessageProto.internalBinaryWrite(message.userMessage, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1252,11 +1267,12 @@ export const PostChatMessageRequestProto = new PostChatMessageRequestProto$Type(
 class PostChatMessageResponseHeaderProto$Type extends MessageType<PostChatMessageResponseHeaderProto> {
     constructor() {
         super("PostChatMessageResponseHeaderProto", [
-            { no: 1, name: "streamed_message_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "posted_message_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "streamed_message_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PostChatMessageResponseHeaderProto>): PostChatMessageResponseHeaderProto {
-        const message = { streamedMessageId: "" };
+        const message = { postedMessageId: "", streamedMessageId: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PostChatMessageResponseHeaderProto>(this, message, value);
@@ -1267,7 +1283,10 @@ class PostChatMessageResponseHeaderProto$Type extends MessageType<PostChatMessag
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string streamed_message_id */ 1:
+                case /* string posted_message_id */ 1:
+                    message.postedMessageId = reader.string();
+                    break;
+                case /* string streamed_message_id */ 2:
                     message.streamedMessageId = reader.string();
                     break;
                 default:
@@ -1282,9 +1301,12 @@ class PostChatMessageResponseHeaderProto$Type extends MessageType<PostChatMessag
         return message;
     }
     internalBinaryWrite(message: PostChatMessageResponseHeaderProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string streamed_message_id = 1; */
+        /* string posted_message_id = 1; */
+        if (message.postedMessageId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.postedMessageId);
+        /* string streamed_message_id = 2; */
         if (message.streamedMessageId !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.streamedMessageId);
+            writer.tag(2, WireType.LengthDelimited).string(message.streamedMessageId);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

@@ -397,15 +397,28 @@ struct PostChatMessageRequestProto {
 
   var chatID: String = String()
 
+  var userMessage: ChatUserMessageProto {
+    get {return _userMessage ?? ChatUserMessageProto()}
+    set {_userMessage = newValue}
+  }
+  /// Returns true if `userMessage` has been explicitly set.
+  var hasUserMessage: Bool {return self._userMessage != nil}
+  /// Clears the value of `userMessage`. Subsequent reads from it will return its default value.
+  mutating func clearUserMessage() {self._userMessage = nil}
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
+
+  fileprivate var _userMessage: ChatUserMessageProto? = nil
 }
 
 struct PostChatMessageResponseHeaderProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
+
+  var postedMessageID: String = String()
 
   var streamedMessageID: String = String()
 
@@ -1434,6 +1447,7 @@ extension PostChatMessageRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
   static let protoMessageName: String = "PostChatMessageRequestProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "chat_id"),
+    2: .standard(proto: "user_message"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1443,20 +1457,29 @@ extension PostChatMessageRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.chatID) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._userMessage) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.chatID.isEmpty {
       try visitor.visitSingularStringField(value: self.chatID, fieldNumber: 1)
     }
+    try { if let v = self._userMessage {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: PostChatMessageRequestProto, rhs: PostChatMessageRequestProto) -> Bool {
     if lhs.chatID != rhs.chatID {return false}
+    if lhs._userMessage != rhs._userMessage {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -1465,7 +1488,8 @@ extension PostChatMessageRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
 extension PostChatMessageResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "PostChatMessageResponseHeaderProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "streamed_message_id"),
+    1: .standard(proto: "posted_message_id"),
+    2: .standard(proto: "streamed_message_id"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1474,20 +1498,25 @@ extension PostChatMessageResponseHeaderProto: SwiftProtobuf.Message, SwiftProtob
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.streamedMessageID) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self.postedMessageID) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.streamedMessageID) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.postedMessageID.isEmpty {
+      try visitor.visitSingularStringField(value: self.postedMessageID, fieldNumber: 1)
+    }
     if !self.streamedMessageID.isEmpty {
-      try visitor.visitSingularStringField(value: self.streamedMessageID, fieldNumber: 1)
+      try visitor.visitSingularStringField(value: self.streamedMessageID, fieldNumber: 2)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: PostChatMessageResponseHeaderProto, rhs: PostChatMessageResponseHeaderProto) -> Bool {
+    if lhs.postedMessageID != rhs.postedMessageID {return false}
     if lhs.streamedMessageID != rhs.streamedMessageID {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
