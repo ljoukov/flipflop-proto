@@ -263,7 +263,11 @@ export interface OpenChatRequestProto {
  */
 export interface OpenChatResponseHeaderProto {
     /**
-     * @generated from protobuf field: repeated ChatMessageProto messages = 1;
+     * @generated from protobuf field: string chat_id = 1;
+     */
+    chatId: string;
+    /**
+     * @generated from protobuf field: repeated ChatMessageProto messages = 2;
      */
     messages: ChatMessageProto[];
 }
@@ -1320,11 +1324,12 @@ export const OpenChatRequestProto = new OpenChatRequestProto$Type();
 class OpenChatResponseHeaderProto$Type extends MessageType<OpenChatResponseHeaderProto> {
     constructor() {
         super("OpenChatResponseHeaderProto", [
-            { no: 1, name: "messages", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ChatMessageProto }
+            { no: 1, name: "chat_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "messages", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ChatMessageProto }
         ]);
     }
     create(value?: PartialMessage<OpenChatResponseHeaderProto>): OpenChatResponseHeaderProto {
-        const message = { messages: [] };
+        const message = { chatId: "", messages: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<OpenChatResponseHeaderProto>(this, message, value);
@@ -1335,7 +1340,10 @@ class OpenChatResponseHeaderProto$Type extends MessageType<OpenChatResponseHeade
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* repeated ChatMessageProto messages */ 1:
+                case /* string chat_id */ 1:
+                    message.chatId = reader.string();
+                    break;
+                case /* repeated ChatMessageProto messages */ 2:
                     message.messages.push(ChatMessageProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
@@ -1350,9 +1358,12 @@ class OpenChatResponseHeaderProto$Type extends MessageType<OpenChatResponseHeade
         return message;
     }
     internalBinaryWrite(message: OpenChatResponseHeaderProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated ChatMessageProto messages = 1; */
+        /* string chat_id = 1; */
+        if (message.chatId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.chatId);
+        /* repeated ChatMessageProto messages = 2; */
         for (let i = 0; i < message.messages.length; i++)
-            ChatMessageProto.internalBinaryWrite(message.messages[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+            ChatMessageProto.internalBinaryWrite(message.messages[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

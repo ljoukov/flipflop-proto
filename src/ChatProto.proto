@@ -88,7 +88,8 @@ message OpenChatRequestProto {
 }
 
 message OpenChatResponseHeaderProto {
-  repeated ChatMessageProto messages = 1;
+  string chat_id = 1;
+  repeated ChatMessageProto messages = 2;
 }
 
 message ChatAssistantMessageDeltaProto {
