@@ -268,6 +268,44 @@ struct ChatStreamApiResponseHeaderProto {
   init() {}
 }
 
+struct ChatStreamApiResponseDeltaProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var responseDelta: ChatStreamApiResponseDeltaProto.OneOf_ResponseDelta? = nil
+
+  var assistant: ChatAssistantMessageDeltaProto {
+    get {
+      if case .assistant(let v)? = responseDelta {return v}
+      return ChatAssistantMessageDeltaProto()
+    }
+    set {responseDelta = .assistant(newValue)}
+  }
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  enum OneOf_ResponseDelta: Equatable {
+    case assistant(ChatAssistantMessageDeltaProto)
+
+  #if !swift(>=4.1)
+    static func ==(lhs: ChatStreamApiResponseDeltaProto.OneOf_ResponseDelta, rhs: ChatStreamApiResponseDeltaProto.OneOf_ResponseDelta) -> Bool {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch (lhs, rhs) {
+      case (.assistant, .assistant): return {
+        guard case .assistant(let l) = lhs, case .assistant(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      }
+    }
+  #endif
+  }
+
+  init() {}
+}
+
 struct GetChatBotsRequestProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -364,7 +402,6 @@ struct PostChatMessageRequestProto {
   init() {}
 }
 
-/// ChatAssistantMessageBlockDeltaProto(s) are always streamed
 struct PostChatMessageResponseHeaderProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -396,20 +433,17 @@ struct OpenChatResponseHeaderProto {
 
   var messages: [ChatMessageProto] = []
 
-  /// if true ChatAssistantMessageBlockDeltaProto(s) are streamed
-  var responseStreamed: Bool = false
-
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 }
 
-struct ChatAssistantMessageBlockDeltaProto {
+struct ChatAssistantMessageDeltaProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var delta: ChatAssistantMessageBlockDeltaProto.OneOf_Delta? = nil
+  var delta: ChatAssistantMessageDeltaProto.OneOf_Delta? = nil
 
   /// Append current text block.
   var textDelta: String {
@@ -440,7 +474,7 @@ struct ChatAssistantMessageBlockDeltaProto {
     case activityID(String)
 
   #if !swift(>=4.1)
-    static func ==(lhs: ChatAssistantMessageBlockDeltaProto.OneOf_Delta, rhs: ChatAssistantMessageBlockDeltaProto.OneOf_Delta) -> Bool {
+    static func ==(lhs: ChatAssistantMessageDeltaProto.OneOf_Delta, rhs: ChatAssistantMessageDeltaProto.OneOf_Delta) -> Bool {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
@@ -744,6 +778,8 @@ extension ChatStreamApiRequestProto: @unchecked Sendable {}
 extension ChatStreamApiRequestProto.OneOf_Request: @unchecked Sendable {}
 extension ChatStreamApiResponseHeaderProto: @unchecked Sendable {}
 extension ChatStreamApiResponseHeaderProto.OneOf_Header: @unchecked Sendable {}
+extension ChatStreamApiResponseDeltaProto: @unchecked Sendable {}
+extension ChatStreamApiResponseDeltaProto.OneOf_ResponseDelta: @unchecked Sendable {}
 extension GetChatBotsRequestProto: @unchecked Sendable {}
 extension GetChatBotsResponseProto: @unchecked Sendable {}
 extension ListChatsRequestProto: @unchecked Sendable {}
@@ -755,8 +791,8 @@ extension PostChatMessageRequestProto: @unchecked Sendable {}
 extension PostChatMessageResponseHeaderProto: @unchecked Sendable {}
 extension OpenChatRequestProto: @unchecked Sendable {}
 extension OpenChatResponseHeaderProto: @unchecked Sendable {}
-extension ChatAssistantMessageBlockDeltaProto: @unchecked Sendable {}
-extension ChatAssistantMessageBlockDeltaProto.OneOf_Delta: @unchecked Sendable {}
+extension ChatAssistantMessageDeltaProto: @unchecked Sendable {}
+extension ChatAssistantMessageDeltaProto.OneOf_Delta: @unchecked Sendable {}
 extension ChatBotProto: @unchecked Sendable {}
 extension ChatBotProto.TypeEnum: @unchecked Sendable {}
 extension ChatActivitiesProto: @unchecked Sendable {}
@@ -1123,6 +1159,54 @@ extension ChatStreamApiResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobuf
   }
 }
 
+extension ChatStreamApiResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "ChatStreamApiResponseDeltaProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "assistant"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try {
+        var v: ChatAssistantMessageDeltaProto?
+        var hadOneofValue = false
+        if let current = self.responseDelta {
+          hadOneofValue = true
+          if case .assistant(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.responseDelta = .assistant(v)
+        }
+      }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if case .assistant(let v)? = self.responseDelta {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: ChatStreamApiResponseDeltaProto, rhs: ChatStreamApiResponseDeltaProto) -> Bool {
+    if lhs.responseDelta != rhs.responseDelta {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
 extension GetChatBotsRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "GetChatBotsRequestProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -1433,7 +1517,6 @@ extension OpenChatResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
   static let protoMessageName: String = "OpenChatResponseHeaderProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "messages"),
-    2: .standard(proto: "response_streamed"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1443,7 +1526,6 @@ extension OpenChatResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeRepeatedMessageField(value: &self.messages) }()
-      case 2: try { try decoder.decodeSingularBoolField(value: &self.responseStreamed) }()
       default: break
       }
     }
@@ -1453,22 +1535,18 @@ extension OpenChatResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
     if !self.messages.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.messages, fieldNumber: 1)
     }
-    if self.responseStreamed != false {
-      try visitor.visitSingularBoolField(value: self.responseStreamed, fieldNumber: 2)
-    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: OpenChatResponseHeaderProto, rhs: OpenChatResponseHeaderProto) -> Bool {
     if lhs.messages != rhs.messages {return false}
-    if lhs.responseStreamed != rhs.responseStreamed {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
-extension ChatAssistantMessageBlockDeltaProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "ChatAssistantMessageBlockDeltaProto"
+extension ChatAssistantMessageDeltaProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "ChatAssistantMessageDeltaProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "text_delta"),
     2: .standard(proto: "activity_id"),
@@ -1520,7 +1598,7 @@ extension ChatAssistantMessageBlockDeltaProto: SwiftProtobuf.Message, SwiftProto
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: ChatAssistantMessageBlockDeltaProto, rhs: ChatAssistantMessageBlockDeltaProto) -> Bool {
+  static func ==(lhs: ChatAssistantMessageDeltaProto, rhs: ChatAssistantMessageDeltaProto) -> Bool {
     if lhs.delta != rhs.delta {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

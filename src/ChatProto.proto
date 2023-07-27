@@ -41,6 +41,12 @@ message ChatStreamApiResponseHeaderProto {
   map<string, google.protobuf.Duration> latencies = 100;
 }
 
+message ChatStreamApiResponseDeltaProto {
+  oneof response_delta {
+    ChatAssistantMessageDeltaProto assistant = 1;
+  }
+}
+
 message GetChatBotsRequestProto {
   ChatBotProto.Type type = 1;
 }
@@ -74,7 +80,6 @@ message PostChatMessageRequestProto {
 }
 
 message PostChatMessageResponseHeaderProto {
-  // ChatAssistantMessageBlockDeltaProto(s) are always streamed
 }
 
 message OpenChatRequestProto {
@@ -84,10 +89,9 @@ message OpenChatRequestProto {
 
 message OpenChatResponseHeaderProto {
   repeated ChatMessageProto messages = 1;
-  bool response_streamed = 2;  // if true ChatAssistantMessageBlockDeltaProto(s) are streamed
 }
 
-message ChatAssistantMessageBlockDeltaProto {
+message ChatAssistantMessageDeltaProto {
   oneof delta {
     // Append current text block.
     string text_delta = 1;

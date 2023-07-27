@@ -152,6 +152,23 @@ export interface ChatStreamApiResponseHeaderProto {
     };
 }
 /**
+ * @generated from protobuf message ChatStreamApiResponseDeltaProto
+ */
+export interface ChatStreamApiResponseDeltaProto {
+    /**
+     * @generated from protobuf oneof: response_delta
+     */
+    responseDelta: {
+        oneofKind: "assistant";
+        /**
+         * @generated from protobuf field: ChatAssistantMessageDeltaProto assistant = 1;
+         */
+        assistant: ChatAssistantMessageDeltaProto;
+    } | {
+        oneofKind: undefined;
+    };
+}
+/**
  * @generated from protobuf message GetChatBotsRequestProto
  */
 export interface GetChatBotsRequestProto {
@@ -224,8 +241,6 @@ export interface PostChatMessageRequestProto {
     chatId: string;
 }
 /**
- * ChatAssistantMessageBlockDeltaProto(s) are always streamed
- *
  * @generated from protobuf message PostChatMessageResponseHeaderProto
  */
 export interface PostChatMessageResponseHeaderProto {
@@ -251,15 +266,11 @@ export interface OpenChatResponseHeaderProto {
      * @generated from protobuf field: repeated ChatMessageProto messages = 1;
      */
     messages: ChatMessageProto[];
-    /**
-     * @generated from protobuf field: bool response_streamed = 2;
-     */
-    responseStreamed: boolean; // if true ChatAssistantMessageBlockDeltaProto(s) are streamed
 }
 /**
- * @generated from protobuf message ChatAssistantMessageBlockDeltaProto
+ * @generated from protobuf message ChatAssistantMessageDeltaProto
  */
-export interface ChatAssistantMessageBlockDeltaProto {
+export interface ChatAssistantMessageDeltaProto {
     /**
      * @generated from protobuf oneof: delta
      */
@@ -814,6 +825,56 @@ class ChatStreamApiResponseHeaderProto$Type extends MessageType<ChatStreamApiRes
  */
 export const ChatStreamApiResponseHeaderProto = new ChatStreamApiResponseHeaderProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class ChatStreamApiResponseDeltaProto$Type extends MessageType<ChatStreamApiResponseDeltaProto> {
+    constructor() {
+        super("ChatStreamApiResponseDeltaProto", [
+            { no: 1, name: "assistant", kind: "message", oneof: "responseDelta", T: () => ChatAssistantMessageDeltaProto }
+        ]);
+    }
+    create(value?: PartialMessage<ChatStreamApiResponseDeltaProto>): ChatStreamApiResponseDeltaProto {
+        const message = { responseDelta: { oneofKind: undefined } };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<ChatStreamApiResponseDeltaProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ChatStreamApiResponseDeltaProto): ChatStreamApiResponseDeltaProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* ChatAssistantMessageDeltaProto assistant */ 1:
+                    message.responseDelta = {
+                        oneofKind: "assistant",
+                        assistant: ChatAssistantMessageDeltaProto.internalBinaryRead(reader, reader.uint32(), options, (message.responseDelta as any).assistant)
+                    };
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: ChatStreamApiResponseDeltaProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* ChatAssistantMessageDeltaProto assistant = 1; */
+        if (message.responseDelta.oneofKind === "assistant")
+            ChatAssistantMessageDeltaProto.internalBinaryWrite(message.responseDelta.assistant, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message ChatStreamApiResponseDeltaProto
+ */
+export const ChatStreamApiResponseDeltaProto = new ChatStreamApiResponseDeltaProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class GetChatBotsRequestProto$Type extends MessageType<GetChatBotsRequestProto> {
     constructor() {
         super("GetChatBotsRequestProto", [
@@ -1259,12 +1320,11 @@ export const OpenChatRequestProto = new OpenChatRequestProto$Type();
 class OpenChatResponseHeaderProto$Type extends MessageType<OpenChatResponseHeaderProto> {
     constructor() {
         super("OpenChatResponseHeaderProto", [
-            { no: 1, name: "messages", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ChatMessageProto },
-            { no: 2, name: "response_streamed", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+            { no: 1, name: "messages", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ChatMessageProto }
         ]);
     }
     create(value?: PartialMessage<OpenChatResponseHeaderProto>): OpenChatResponseHeaderProto {
-        const message = { messages: [], responseStreamed: false };
+        const message = { messages: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<OpenChatResponseHeaderProto>(this, message, value);
@@ -1277,9 +1337,6 @@ class OpenChatResponseHeaderProto$Type extends MessageType<OpenChatResponseHeade
             switch (fieldNo) {
                 case /* repeated ChatMessageProto messages */ 1:
                     message.messages.push(ChatMessageProto.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                case /* bool response_streamed */ 2:
-                    message.responseStreamed = reader.bool();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1296,9 +1353,6 @@ class OpenChatResponseHeaderProto$Type extends MessageType<OpenChatResponseHeade
         /* repeated ChatMessageProto messages = 1; */
         for (let i = 0; i < message.messages.length; i++)
             ChatMessageProto.internalBinaryWrite(message.messages[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* bool response_streamed = 2; */
-        if (message.responseStreamed !== false)
-            writer.tag(2, WireType.Varint).bool(message.responseStreamed);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1310,21 +1364,21 @@ class OpenChatResponseHeaderProto$Type extends MessageType<OpenChatResponseHeade
  */
 export const OpenChatResponseHeaderProto = new OpenChatResponseHeaderProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class ChatAssistantMessageBlockDeltaProto$Type extends MessageType<ChatAssistantMessageBlockDeltaProto> {
+class ChatAssistantMessageDeltaProto$Type extends MessageType<ChatAssistantMessageDeltaProto> {
     constructor() {
-        super("ChatAssistantMessageBlockDeltaProto", [
+        super("ChatAssistantMessageDeltaProto", [
             { no: 1, name: "text_delta", kind: "scalar", oneof: "delta", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "activity_id", kind: "scalar", oneof: "delta", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<ChatAssistantMessageBlockDeltaProto>): ChatAssistantMessageBlockDeltaProto {
+    create(value?: PartialMessage<ChatAssistantMessageDeltaProto>): ChatAssistantMessageDeltaProto {
         const message = { delta: { oneofKind: undefined } };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<ChatAssistantMessageBlockDeltaProto>(this, message, value);
+            reflectionMergePartial<ChatAssistantMessageDeltaProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ChatAssistantMessageBlockDeltaProto): ChatAssistantMessageBlockDeltaProto {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ChatAssistantMessageDeltaProto): ChatAssistantMessageDeltaProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -1352,7 +1406,7 @@ class ChatAssistantMessageBlockDeltaProto$Type extends MessageType<ChatAssistant
         }
         return message;
     }
-    internalBinaryWrite(message: ChatAssistantMessageBlockDeltaProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: ChatAssistantMessageDeltaProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string text_delta = 1; */
         if (message.delta.oneofKind === "textDelta")
             writer.tag(1, WireType.LengthDelimited).string(message.delta.textDelta);
@@ -1366,9 +1420,9 @@ class ChatAssistantMessageBlockDeltaProto$Type extends MessageType<ChatAssistant
     }
 }
 /**
- * @generated MessageType for protobuf message ChatAssistantMessageBlockDeltaProto
+ * @generated MessageType for protobuf message ChatAssistantMessageDeltaProto
  */
-export const ChatAssistantMessageBlockDeltaProto = new ChatAssistantMessageBlockDeltaProto$Type();
+export const ChatAssistantMessageDeltaProto = new ChatAssistantMessageDeltaProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class ChatBotProto$Type extends MessageType<ChatBotProto> {
     constructor() {
