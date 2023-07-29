@@ -249,9 +249,9 @@ export interface PostChatMessageRequestProto {
  */
 export interface PostChatMessageResponseHeaderProto {
     /**
-     * @generated from protobuf field: string posted_message_id = 1;
+     * @generated from protobuf field: repeated ChatMessageProto messages = 1;
      */
-    postedMessageId: string;
+    messages: ChatMessageProto[];
     /**
      * @generated from protobuf field: string streamed_message_id = 2;
      */
@@ -1267,12 +1267,12 @@ export const PostChatMessageRequestProto = new PostChatMessageRequestProto$Type(
 class PostChatMessageResponseHeaderProto$Type extends MessageType<PostChatMessageResponseHeaderProto> {
     constructor() {
         super("PostChatMessageResponseHeaderProto", [
-            { no: 1, name: "posted_message_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 1, name: "messages", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ChatMessageProto },
             { no: 2, name: "streamed_message_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PostChatMessageResponseHeaderProto>): PostChatMessageResponseHeaderProto {
-        const message = { postedMessageId: "", streamedMessageId: "" };
+        const message = { messages: [], streamedMessageId: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PostChatMessageResponseHeaderProto>(this, message, value);
@@ -1283,8 +1283,8 @@ class PostChatMessageResponseHeaderProto$Type extends MessageType<PostChatMessag
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string posted_message_id */ 1:
-                    message.postedMessageId = reader.string();
+                case /* repeated ChatMessageProto messages */ 1:
+                    message.messages.push(ChatMessageProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 case /* string streamed_message_id */ 2:
                     message.streamedMessageId = reader.string();
@@ -1301,9 +1301,9 @@ class PostChatMessageResponseHeaderProto$Type extends MessageType<PostChatMessag
         return message;
     }
     internalBinaryWrite(message: PostChatMessageResponseHeaderProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string posted_message_id = 1; */
-        if (message.postedMessageId !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.postedMessageId);
+        /* repeated ChatMessageProto messages = 1; */
+        for (let i = 0; i < message.messages.length; i++)
+            ChatMessageProto.internalBinaryWrite(message.messages[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         /* string streamed_message_id = 2; */
         if (message.streamedMessageId !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.streamedMessageId);

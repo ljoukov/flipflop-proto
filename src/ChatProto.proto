@@ -81,7 +81,7 @@ message PostChatMessageRequestProto {
 }
 
 message PostChatMessageResponseHeaderProto {
-  string posted_message_id = 1;
+  repeated ChatMessageProto messages = 1;
   string streamed_message_id = 2; 
 }
 
