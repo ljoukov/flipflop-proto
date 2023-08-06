@@ -210,6 +210,7 @@ struct SignInWithPasswordResponseProto {
     typealias RawValue = Int
     case noError // = 0
     case invalidPassword // = 1
+    case emailNotFound // = 2
     case UNRECOGNIZED(Int)
 
     init() {
@@ -220,6 +221,7 @@ struct SignInWithPasswordResponseProto {
       switch rawValue {
       case 0: self = .noError
       case 1: self = .invalidPassword
+      case 2: self = .emailNotFound
       default: self = .UNRECOGNIZED(rawValue)
       }
     }
@@ -228,6 +230,7 @@ struct SignInWithPasswordResponseProto {
       switch self {
       case .noError: return 0
       case .invalidPassword: return 1
+      case .emailNotFound: return 2
       case .UNRECOGNIZED(let i): return i
       }
     }
@@ -244,6 +247,7 @@ extension SignInWithPasswordResponseProto.Error: CaseIterable {
   static var allCases: [SignInWithPasswordResponseProto.Error] = [
     .noError,
     .invalidPassword,
+    .emailNotFound,
   ]
 }
 
@@ -620,5 +624,6 @@ extension SignInWithPasswordResponseProto.Error: SwiftProtobuf._ProtoNameProvidi
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     0: .same(proto: "NO_ERROR"),
     1: .same(proto: "INVALID_PASSWORD"),
+    2: .same(proto: "EMAIL_NOT_FOUND"),
   ]
 }

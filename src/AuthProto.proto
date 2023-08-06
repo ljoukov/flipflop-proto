@@ -47,6 +47,7 @@ message SignInWithPasswordResponseProto {
   enum Error {
     NO_ERROR = 0;
     INVALID_PASSWORD = 1;
+    EMAIL_NOT_FOUND = 2;
   }
 
   Error error = 2;
