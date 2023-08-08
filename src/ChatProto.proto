@@ -3,6 +3,8 @@ syntax = "proto3";
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 
+import "StoryProto.proto";
+
 message ChatApiRequestProto {
   string encoded_user_auth = 1;
   oneof request {
@@ -88,6 +90,8 @@ message PostChatMessageResponseHeaderProto {
 message OpenChatRequestProto {
   string bot_id = 1;
   bool restart = 2;
+  string story_id = 3;
+  StoryProto story = 4;
 }
 
 message OpenChatResponseHeaderProto {

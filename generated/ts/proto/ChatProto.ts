@@ -14,6 +14,7 @@ import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
 import { Timestamp } from "./google/protobuf/timestamp";
+import { StoryProto } from "./StoryProto";
 import { Duration } from "./google/protobuf/duration";
 /**
  * @generated from protobuf message ChatApiRequestProto
@@ -269,6 +270,14 @@ export interface OpenChatRequestProto {
      * @generated from protobuf field: bool restart = 2;
      */
     restart: boolean;
+    /**
+     * @generated from protobuf field: string story_id = 3;
+     */
+    storyId: string;
+    /**
+     * @generated from protobuf field: StoryProto story = 4;
+     */
+    story?: StoryProto;
 }
 /**
  * @generated from protobuf message OpenChatResponseHeaderProto
@@ -1322,11 +1331,13 @@ class OpenChatRequestProto$Type extends MessageType<OpenChatRequestProto> {
     constructor() {
         super("OpenChatRequestProto", [
             { no: 1, name: "bot_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "restart", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+            { no: 2, name: "restart", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 3, name: "story_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "story", kind: "message", T: () => StoryProto }
         ]);
     }
     create(value?: PartialMessage<OpenChatRequestProto>): OpenChatRequestProto {
-        const message = { botId: "", restart: false };
+        const message = { botId: "", restart: false, storyId: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<OpenChatRequestProto>(this, message, value);
@@ -1342,6 +1353,12 @@ class OpenChatRequestProto$Type extends MessageType<OpenChatRequestProto> {
                     break;
                 case /* bool restart */ 2:
                     message.restart = reader.bool();
+                    break;
+                case /* string story_id */ 3:
+                    message.storyId = reader.string();
+                    break;
+                case /* StoryProto story */ 4:
+                    message.story = StoryProto.internalBinaryRead(reader, reader.uint32(), options, message.story);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1361,6 +1378,12 @@ class OpenChatRequestProto$Type extends MessageType<OpenChatRequestProto> {
         /* bool restart = 2; */
         if (message.restart !== false)
             writer.tag(2, WireType.Varint).bool(message.restart);
+        /* string story_id = 3; */
+        if (message.storyId !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.storyId);
+        /* StoryProto story = 4; */
+        if (message.story)
+            StoryProto.internalBinaryWrite(message.story, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
