@@ -3,8 +3,6 @@ syntax = "proto3";
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 
-import "StoryProto.proto";
-
 message ChatApiRequestProto {
   string encoded_user_auth = 1;
   oneof request {
@@ -91,7 +89,6 @@ message OpenChatRequestProto {
   string bot_id = 1;
   bool restart = 2;
   string story_id = 3;
-  StoryProto story = 4;
 }
 
 message OpenChatResponseHeaderProto {
@@ -104,9 +101,9 @@ message ChatAssistantMessageDeltaProto {
   oneof delta {
     // Append current text block.
     string text_delta = 1;
-    // Append activity ID to the current block.
+    // Append activity to the current block.
     // Start a new block on next text_delta.
-    string activity_id = 2;
+    ChatActivityRefProto activity = 2;
   }
 }
 
@@ -139,9 +136,15 @@ message ChatActivityProto {
   string action_prompt = 4;
 }
 
+message ChatActivityRefProto {
+  string activity_id = 1;
+  string bot_id = 2;
+  string display_name = 3;
+}
+
 message ChatAssistantMessageBlockProto {
-  string text = 2;
-  repeated string activity_ids = 3;
+  string text = 1;
+  repeated ChatActivityRefProto activities = 2;
 }
 
 message ChatAssistantMessageProto {
