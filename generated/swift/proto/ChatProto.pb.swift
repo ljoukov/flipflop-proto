@@ -450,6 +450,8 @@ struct PostChatMessageRequestProto {
   /// Clears the value of `userMessage`. Subsequent reads from it will return its default value.
   mutating func clearUserMessage() {self._userMessage = nil}
 
+  var chatModel: ChatModelProto = .chatModelUnknown
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -1522,6 +1524,7 @@ extension PostChatMessageRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "chat_id"),
     2: .standard(proto: "user_message"),
+    3: .standard(proto: "chat_model"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1532,6 +1535,7 @@ extension PostChatMessageRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.chatID) }()
       case 2: try { try decoder.decodeSingularMessageField(value: &self._userMessage) }()
+      case 3: try { try decoder.decodeSingularEnumField(value: &self.chatModel) }()
       default: break
       }
     }
@@ -1548,12 +1552,16 @@ extension PostChatMessageRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
     try { if let v = self._userMessage {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     } }()
+    if self.chatModel != .chatModelUnknown {
+      try visitor.visitSingularEnumField(value: self.chatModel, fieldNumber: 3)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: PostChatMessageRequestProto, rhs: PostChatMessageRequestProto) -> Bool {
     if lhs.chatID != rhs.chatID {return false}
     if lhs._userMessage != rhs._userMessage {return false}
+    if lhs.chatModel != rhs.chatModel {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

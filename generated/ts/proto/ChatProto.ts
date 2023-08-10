@@ -243,6 +243,10 @@ export interface PostChatMessageRequestProto {
      * @generated from protobuf field: ChatUserMessageProto user_message = 2;
      */
     userMessage?: ChatUserMessageProto;
+    /**
+     * @generated from protobuf field: ChatModelProto chat_model = 3;
+     */
+    chatModel: ChatModelProto;
 }
 /**
  * @generated from protobuf message PostChatMessageResponseHeaderProto
@@ -1256,11 +1260,12 @@ class PostChatMessageRequestProto$Type extends MessageType<PostChatMessageReques
     constructor() {
         super("PostChatMessageRequestProto", [
             { no: 1, name: "chat_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "user_message", kind: "message", T: () => ChatUserMessageProto }
+            { no: 2, name: "user_message", kind: "message", T: () => ChatUserMessageProto },
+            { no: 3, name: "chat_model", kind: "enum", T: () => ["ChatModelProto", ChatModelProto] }
         ]);
     }
     create(value?: PartialMessage<PostChatMessageRequestProto>): PostChatMessageRequestProto {
-        const message = { chatId: "" };
+        const message = { chatId: "", chatModel: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PostChatMessageRequestProto>(this, message, value);
@@ -1276,6 +1281,9 @@ class PostChatMessageRequestProto$Type extends MessageType<PostChatMessageReques
                     break;
                 case /* ChatUserMessageProto user_message */ 2:
                     message.userMessage = ChatUserMessageProto.internalBinaryRead(reader, reader.uint32(), options, message.userMessage);
+                    break;
+                case /* ChatModelProto chat_model */ 3:
+                    message.chatModel = reader.int32();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1295,6 +1303,9 @@ class PostChatMessageRequestProto$Type extends MessageType<PostChatMessageReques
         /* ChatUserMessageProto user_message = 2; */
         if (message.userMessage)
             ChatUserMessageProto.internalBinaryWrite(message.userMessage, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* ChatModelProto chat_model = 3; */
+        if (message.chatModel !== 0)
+            writer.tag(3, WireType.Varint).int32(message.chatModel);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

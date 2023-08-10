@@ -78,6 +78,7 @@ message GetChatMessagesResponseProto {
 message PostChatMessageRequestProto {
   string chat_id = 1;
   ChatUserMessageProto user_message = 2;
+  ChatModelProto chat_model = 3;
 }
 
 message PostChatMessageResponseHeaderProto {
