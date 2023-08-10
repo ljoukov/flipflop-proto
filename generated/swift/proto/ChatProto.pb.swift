@@ -20,6 +20,50 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
+enum ChatModelProto: SwiftProtobuf.Enum {
+  typealias RawValue = Int
+  case chatModelUnknown // = 0
+  case chatModelGpt35Turbo // = 1
+  case chatModelGpt4 // = 2
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .chatModelUnknown
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .chatModelUnknown
+    case 1: self = .chatModelGpt35Turbo
+    case 2: self = .chatModelGpt4
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .chatModelUnknown: return 0
+    case .chatModelGpt35Turbo: return 1
+    case .chatModelGpt4: return 2
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+}
+
+#if swift(>=4.2)
+
+extension ChatModelProto: CaseIterable {
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static var allCases: [ChatModelProto] = [
+    .chatModelUnknown,
+    .chatModelGpt35Turbo,
+    .chatModelGpt4,
+  ]
+}
+
+#endif  // swift(>=4.2)
+
 struct ChatApiRequestProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -438,6 +482,8 @@ struct OpenChatRequestProto {
 
   var storyID: String = String()
 
+  var chatModel: ChatModelProto = .chatModelUnknown
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -807,6 +853,7 @@ struct ChatSessionProto {
 }
 
 #if swift(>=5.5) && canImport(_Concurrency)
+extension ChatModelProto: @unchecked Sendable {}
 extension ChatApiRequestProto: @unchecked Sendable {}
 extension ChatApiRequestProto.OneOf_Request: @unchecked Sendable {}
 extension ChatApiResponseProto: @unchecked Sendable {}
@@ -844,6 +891,14 @@ extension ChatSessionProto: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
+
+extension ChatModelProto: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "CHAT_MODEL_UNKNOWN"),
+    1: .same(proto: "CHAT_MODEL_GPT_35_TURBO"),
+    2: .same(proto: "CHAT_MODEL_GPT_4"),
+  ]
+}
 
 extension ChatApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "ChatApiRequestProto"
@@ -1548,6 +1603,7 @@ extension OpenChatRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     1: .standard(proto: "bot_id"),
     2: .same(proto: "restart"),
     3: .standard(proto: "story_id"),
+    4: .standard(proto: "chat_model"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1559,6 +1615,7 @@ extension OpenChatRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
       case 1: try { try decoder.decodeSingularStringField(value: &self.botID) }()
       case 2: try { try decoder.decodeSingularBoolField(value: &self.restart) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.storyID) }()
+      case 4: try { try decoder.decodeSingularEnumField(value: &self.chatModel) }()
       default: break
       }
     }
@@ -1574,6 +1631,9 @@ extension OpenChatRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     if !self.storyID.isEmpty {
       try visitor.visitSingularStringField(value: self.storyID, fieldNumber: 3)
     }
+    if self.chatModel != .chatModelUnknown {
+      try visitor.visitSingularEnumField(value: self.chatModel, fieldNumber: 4)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1581,6 +1641,7 @@ extension OpenChatRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     if lhs.botID != rhs.botID {return false}
     if lhs.restart != rhs.restart {return false}
     if lhs.storyID != rhs.storyID {return false}
+    if lhs.chatModel != rhs.chatModel {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

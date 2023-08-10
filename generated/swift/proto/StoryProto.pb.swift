@@ -22,32 +22,32 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
 
 enum CardTypeProto: SwiftProtobuf.Enum {
   typealias RawValue = Int
-  case unknown // = 0
-  case `static` // = 2
-  case trueFalse // = 3
-  case abc // = 4
+  case cardTypeUnknown // = 0
+  case cardTypeStatic // = 1
+  case cardTypeTrueFalse // = 2
+  case cardTypeAbc // = 3
   case UNRECOGNIZED(Int)
 
   init() {
-    self = .unknown
+    self = .cardTypeUnknown
   }
 
   init?(rawValue: Int) {
     switch rawValue {
-    case 0: self = .unknown
-    case 2: self = .static
-    case 3: self = .trueFalse
-    case 4: self = .abc
+    case 0: self = .cardTypeUnknown
+    case 1: self = .cardTypeStatic
+    case 2: self = .cardTypeTrueFalse
+    case 3: self = .cardTypeAbc
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
 
   var rawValue: Int {
     switch self {
-    case .unknown: return 0
-    case .static: return 2
-    case .trueFalse: return 3
-    case .abc: return 4
+    case .cardTypeUnknown: return 0
+    case .cardTypeStatic: return 1
+    case .cardTypeTrueFalse: return 2
+    case .cardTypeAbc: return 3
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -59,10 +59,10 @@ enum CardTypeProto: SwiftProtobuf.Enum {
 extension CardTypeProto: CaseIterable {
   // The compiler won't synthesize support with the UNRECOGNIZED case.
   static var allCases: [CardTypeProto] = [
-    .unknown,
-    .static,
-    .trueFalse,
-    .abc,
+    .cardTypeUnknown,
+    .cardTypeStatic,
+    .cardTypeTrueFalse,
+    .cardTypeAbc,
   ]
 }
 
@@ -668,7 +668,7 @@ struct CardDataProto {
 
   var id: String = String()
 
-  var cardType: CardTypeProto = .unknown
+  var cardType: CardTypeProto = .cardTypeUnknown
 
   var title: String = String()
 
@@ -1496,10 +1496,10 @@ extension ChatbotBlockProto: @unchecked Sendable {}
 
 extension CardTypeProto: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    0: .same(proto: "UNKNOWN"),
-    2: .same(proto: "STATIC"),
-    3: .same(proto: "TRUE_FALSE"),
-    4: .same(proto: "ABC"),
+    0: .same(proto: "CARD_TYPE_UNKNOWN"),
+    1: .same(proto: "CARD_TYPE_STATIC"),
+    2: .same(proto: "CARD_TYPE_TRUE_FALSE"),
+    3: .same(proto: "CARD_TYPE_ABC"),
   ]
 }
 
@@ -2136,7 +2136,7 @@ extension CardDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
     if !self.id.isEmpty {
       try visitor.visitSingularStringField(value: self.id, fieldNumber: 1)
     }
-    if self.cardType != .unknown {
+    if self.cardType != .cardTypeUnknown {
       try visitor.visitSingularEnumField(value: self.cardType, fieldNumber: 2)
     }
     if !self.title.isEmpty {

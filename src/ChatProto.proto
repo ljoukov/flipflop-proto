@@ -85,10 +85,17 @@ message PostChatMessageResponseHeaderProto {
   string streamed_message_id = 2; 
 }
 
+enum ChatModelProto {
+  CHAT_MODEL_UNKNOWN = 0;
+  CHAT_MODEL_GPT_35_TURBO = 1;
+  CHAT_MODEL_GPT_4 = 2;
+}
+
 message OpenChatRequestProto {
   string bot_id = 1;
   bool restart = 2;
   string story_id = 3;
+  ChatModelProto chat_model = 4;
 }
 
 message OpenChatResponseHeaderProto {

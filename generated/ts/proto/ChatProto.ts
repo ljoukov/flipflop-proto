@@ -273,6 +273,10 @@ export interface OpenChatRequestProto {
      * @generated from protobuf field: string story_id = 3;
      */
     storyId: string;
+    /**
+     * @generated from protobuf field: ChatModelProto chat_model = 4;
+     */
+    chatModel: ChatModelProto;
 }
 /**
  * @generated from protobuf message OpenChatResponseHeaderProto
@@ -522,6 +526,23 @@ export interface ChatSessionProto {
      * @generated from protobuf field: repeated ChatMessageProto messages = 7;
      */
     messages: ChatMessageProto[];
+}
+/**
+ * @generated from protobuf enum ChatModelProto
+ */
+export enum ChatModelProto {
+    /**
+     * @generated from protobuf enum value: CHAT_MODEL_UNKNOWN = 0;
+     */
+    CHAT_MODEL_UNKNOWN = 0,
+    /**
+     * @generated from protobuf enum value: CHAT_MODEL_GPT_35_TURBO = 1;
+     */
+    CHAT_MODEL_GPT_35_TURBO = 1,
+    /**
+     * @generated from protobuf enum value: CHAT_MODEL_GPT_4 = 2;
+     */
+    CHAT_MODEL_GPT_4 = 2
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class ChatApiRequestProto$Type extends MessageType<ChatApiRequestProto> {
@@ -1344,11 +1365,12 @@ class OpenChatRequestProto$Type extends MessageType<OpenChatRequestProto> {
         super("OpenChatRequestProto", [
             { no: 1, name: "bot_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "restart", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 3, name: "story_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 3, name: "story_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "chat_model", kind: "enum", T: () => ["ChatModelProto", ChatModelProto] }
         ]);
     }
     create(value?: PartialMessage<OpenChatRequestProto>): OpenChatRequestProto {
-        const message = { botId: "", restart: false, storyId: "" };
+        const message = { botId: "", restart: false, storyId: "", chatModel: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<OpenChatRequestProto>(this, message, value);
@@ -1367,6 +1389,9 @@ class OpenChatRequestProto$Type extends MessageType<OpenChatRequestProto> {
                     break;
                 case /* string story_id */ 3:
                     message.storyId = reader.string();
+                    break;
+                case /* ChatModelProto chat_model */ 4:
+                    message.chatModel = reader.int32();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1389,6 +1414,9 @@ class OpenChatRequestProto$Type extends MessageType<OpenChatRequestProto> {
         /* string story_id = 3; */
         if (message.storyId !== "")
             writer.tag(3, WireType.LengthDelimited).string(message.storyId);
+        /* ChatModelProto chat_model = 4; */
+        if (message.chatModel !== 0)
+            writer.tag(4, WireType.Varint).int32(message.chatModel);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
