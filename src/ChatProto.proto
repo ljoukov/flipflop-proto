@@ -94,6 +94,11 @@ enum ChatModelProto {
   CHAT_MODEL_GPT_4 = 2;
 }
 
+message ChatStoryActivityIdProto {
+  string story_id = 1;
+  string activity_id = 2;
+}
+
 message OpenChatRequestProto {
   bool restart = 1;
 
@@ -101,7 +106,7 @@ message OpenChatRequestProto {
     string chat_id = 2;
     string bot_id = 3;
     string story_id = 4;
-    ChatActivityRefProto activity = 5;
+    ChatStoryActivityIdProto story_activity_id = 5;
   }
 
   // move to settings
@@ -154,9 +159,8 @@ message ChatActivityProto {
 }
 
 message ChatActivityRefProto {
-  string story_id = 1;
-  string activity_id = 2;
-  string display_name = 3;
+  string activity_id = 1;
+  string display_name = 2;
 }
 
 message ChatAssistantMessageBlockProto {
