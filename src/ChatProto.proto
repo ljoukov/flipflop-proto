@@ -78,7 +78,9 @@ message GetChatMessagesResponseProto {
 message PostChatMessageRequestProto {
   string chat_id = 1;
   ChatUserMessageProto user_message = 2;
-  ChatModelProto chat_model = 3;
+
+  // move to settings
+  ChatModelProto chat_model = 50;
 }
 
 message PostChatMessageResponseHeaderProto {
@@ -93,10 +95,16 @@ enum ChatModelProto {
 }
 
 message OpenChatRequestProto {
-  string bot_id = 1;
-  bool restart = 2;
-  string story_id = 3;
-  ChatModelProto chat_model = 4;
+  bool restart = 1;
+
+  oneof type {
+    string chat_id = 2;
+    string story_id = 3;
+    ChatActivityRefProto activity = 4;
+  }
+
+  // move to settings
+  ChatModelProto chat_model = 50;
 }
 
 message OpenChatResponseHeaderProto {
@@ -145,8 +153,8 @@ message ChatActivityProto {
 }
 
 message ChatActivityRefProto {
-  string activity_id = 1;
-  string bot_id = 2;
+  string story_id = 1;
+  string activity_id = 2;
   string display_name = 3;
 }
 
