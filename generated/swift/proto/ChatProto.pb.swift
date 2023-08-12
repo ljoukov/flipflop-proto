@@ -491,6 +491,14 @@ struct OpenChatRequestProto {
     set {type = .chatID(newValue)}
   }
 
+  var botID: String {
+    get {
+      if case .botID(let v)? = type {return v}
+      return String()
+    }
+    set {type = .botID(newValue)}
+  }
+
   var storyID: String {
     get {
       if case .storyID(let v)? = type {return v}
@@ -514,6 +522,7 @@ struct OpenChatRequestProto {
 
   enum OneOf_Type: Equatable {
     case chatID(String)
+    case botID(String)
     case storyID(String)
     case activity(ChatActivityRefProto)
 
@@ -525,6 +534,10 @@ struct OpenChatRequestProto {
       switch (lhs, rhs) {
       case (.chatID, .chatID): return {
         guard case .chatID(let l) = lhs, case .chatID(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.botID, .botID): return {
+        guard case .botID(let l) = lhs, case .botID(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       case (.storyID, .storyID): return {
@@ -1664,8 +1677,9 @@ extension OpenChatRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "restart"),
     2: .standard(proto: "chat_id"),
-    3: .standard(proto: "story_id"),
-    4: .same(proto: "activity"),
+    3: .standard(proto: "bot_id"),
+    4: .standard(proto: "story_id"),
+    5: .same(proto: "activity"),
     50: .standard(proto: "chat_model"),
   ]
 
@@ -1689,10 +1703,18 @@ extension OpenChatRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
         try decoder.decodeSingularStringField(value: &v)
         if let v = v {
           if self.type != nil {try decoder.handleConflictingOneOf()}
-          self.type = .storyID(v)
+          self.type = .botID(v)
         }
       }()
       case 4: try {
+        var v: String?
+        try decoder.decodeSingularStringField(value: &v)
+        if let v = v {
+          if self.type != nil {try decoder.handleConflictingOneOf()}
+          self.type = .storyID(v)
+        }
+      }()
+      case 5: try {
         var v: ChatActivityRefProto?
         var hadOneofValue = false
         if let current = self.type {
@@ -1724,13 +1746,17 @@ extension OpenChatRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
       guard case .chatID(let v)? = self.type else { preconditionFailure() }
       try visitor.visitSingularStringField(value: v, fieldNumber: 2)
     }()
+    case .botID?: try {
+      guard case .botID(let v)? = self.type else { preconditionFailure() }
+      try visitor.visitSingularStringField(value: v, fieldNumber: 3)
+    }()
     case .storyID?: try {
       guard case .storyID(let v)? = self.type else { preconditionFailure() }
-      try visitor.visitSingularStringField(value: v, fieldNumber: 3)
+      try visitor.visitSingularStringField(value: v, fieldNumber: 4)
     }()
     case .activity?: try {
       guard case .activity(let v)? = self.type else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
     }()
     case nil: break
     }

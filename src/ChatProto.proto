@@ -99,8 +99,9 @@ message OpenChatRequestProto {
 
   oneof type {
     string chat_id = 2;
-    string story_id = 3;
-    ChatActivityRefProto activity = 4;
+    string bot_id = 3;
+    string story_id = 4;
+    ChatActivityRefProto activity = 5;
   }
 
   // move to settings
