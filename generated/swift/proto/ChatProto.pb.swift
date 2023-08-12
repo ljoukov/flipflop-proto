@@ -605,10 +605,10 @@ struct ChatAssistantMessageDeltaProto {
 
   /// Append activity to the current block.
   /// Start a new block on next text_delta.
-  var activity: ChatActivityRefProto {
+  var activity: ChatActivityIntroProto {
     get {
       if case .activity(let v)? = delta {return v}
-      return ChatActivityRefProto()
+      return ChatActivityIntroProto()
     }
     set {delta = .activity(newValue)}
   }
@@ -620,7 +620,7 @@ struct ChatAssistantMessageDeltaProto {
     case textDelta(String)
     /// Append activity to the current block.
     /// Start a new block on next text_delta.
-    case activity(ChatActivityRefProto)
+    case activity(ChatActivityIntroProto)
 
   #if !swift(>=4.1)
     static func ==(lhs: ChatAssistantMessageDeltaProto.OneOf_Delta, rhs: ChatAssistantMessageDeltaProto.OneOf_Delta) -> Bool {
@@ -772,7 +772,7 @@ struct ChatActivityProto {
   init() {}
 }
 
-struct ChatActivityRefProto {
+struct ChatActivityIntroProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -793,7 +793,7 @@ struct ChatAssistantMessageBlockProto {
 
   var text: String = String()
 
-  var activities: [ChatActivityRefProto] = []
+  var activities: [ChatActivityIntroProto] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -963,7 +963,7 @@ extension ChatBotProto: @unchecked Sendable {}
 extension ChatBotProto.TypeEnum: @unchecked Sendable {}
 extension ChatActivitiesProto: @unchecked Sendable {}
 extension ChatActivityProto: @unchecked Sendable {}
-extension ChatActivityRefProto: @unchecked Sendable {}
+extension ChatActivityIntroProto: @unchecked Sendable {}
 extension ChatAssistantMessageBlockProto: @unchecked Sendable {}
 extension ChatAssistantMessageProto: @unchecked Sendable {}
 extension ChatUserMessageProto: @unchecked Sendable {}
@@ -1892,7 +1892,7 @@ extension ChatAssistantMessageDeltaProto: SwiftProtobuf.Message, SwiftProtobuf._
         }
       }()
       case 2: try {
-        var v: ChatActivityRefProto?
+        var v: ChatActivityIntroProto?
         var hadOneofValue = false
         if let current = self.delta {
           hadOneofValue = true
@@ -2103,8 +2103,8 @@ extension ChatActivityProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
   }
 }
 
-extension ChatActivityRefProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "ChatActivityRefProto"
+extension ChatActivityIntroProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "ChatActivityIntroProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "activity_id"),
     2: .standard(proto: "display_name"),
@@ -2133,7 +2133,7 @@ extension ChatActivityRefProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: ChatActivityRefProto, rhs: ChatActivityRefProto) -> Bool {
+  static func ==(lhs: ChatActivityIntroProto, rhs: ChatActivityIntroProto) -> Bool {
     if lhs.activityID != rhs.activityID {return false}
     if lhs.displayName != rhs.displayName {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}

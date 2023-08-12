@@ -125,7 +125,7 @@ message ChatAssistantMessageDeltaProto {
     string text_delta = 1;
     // Append activity to the current block.
     // Start a new block on next text_delta.
-    ChatActivityRefProto activity = 2;
+    ChatActivityIntroProto activity = 2;
   }
 }
 
@@ -158,14 +158,14 @@ message ChatActivityProto {
   string action_prompt = 4;
 }
 
-message ChatActivityRefProto {
+message ChatActivityIntroProto {
   string activity_id = 1;
   string display_name = 2;
 }
 
 message ChatAssistantMessageBlockProto {
   string text = 1;
-  repeated ChatActivityRefProto activities = 2;
+  repeated ChatActivityIntroProto activities = 2;
 }
 
 message ChatAssistantMessageProto {
