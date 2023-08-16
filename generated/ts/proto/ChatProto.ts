@@ -290,27 +290,43 @@ export interface OpenChatRequestProto {
     type: {
         oneofKind: "chatId";
         /**
+         * open specific activity
+         *
          * @generated from protobuf field: string chat_id = 2;
          */
         chatId: string;
     } | {
         oneofKind: "botId";
         /**
+         * prompt-less global bot
+         *
          * @generated from protobuf field: string bot_id = 3;
          */
         botId: string;
     } | {
         oneofKind: "storyId";
         /**
+         * activities for a story
+         *
          * @generated from protobuf field: string story_id = 4;
          */
         storyId: string;
     } | {
         oneofKind: "storyActivityId";
         /**
+         * activity for a story
+         *
          * @generated from protobuf field: ChatStoryActivityIdProto story_activity_id = 5;
          */
         storyActivityId: ChatStoryActivityIdProto;
+    } | {
+        oneofKind: "query";
+        /**
+         * global user query
+         *
+         * @generated from protobuf field: string query = 6;
+         */
+        query: string;
     } | {
         oneofKind: undefined;
     };
@@ -1468,6 +1484,7 @@ class OpenChatRequestProto$Type extends MessageType<OpenChatRequestProto> {
             { no: 3, name: "bot_id", kind: "scalar", oneof: "type", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "story_id", kind: "scalar", oneof: "type", T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "story_activity_id", kind: "message", oneof: "type", T: () => ChatStoryActivityIdProto },
+            { no: 6, name: "query", kind: "scalar", oneof: "type", T: 9 /*ScalarType.STRING*/ },
             { no: 50, name: "chat_model", kind: "enum", T: () => ["ChatModelProto", ChatModelProto] }
         ]);
     }
@@ -1510,6 +1527,12 @@ class OpenChatRequestProto$Type extends MessageType<OpenChatRequestProto> {
                         storyActivityId: ChatStoryActivityIdProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).storyActivityId)
                     };
                     break;
+                case /* string query */ 6:
+                    message.type = {
+                        oneofKind: "query",
+                        query: reader.string()
+                    };
+                    break;
                 case /* ChatModelProto chat_model */ 50:
                     message.chatModel = reader.int32();
                     break;
@@ -1540,6 +1563,9 @@ class OpenChatRequestProto$Type extends MessageType<OpenChatRequestProto> {
         /* ChatStoryActivityIdProto story_activity_id = 5; */
         if (message.type.oneofKind === "storyActivityId")
             ChatStoryActivityIdProto.internalBinaryWrite(message.type.storyActivityId, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        /* string query = 6; */
+        if (message.type.oneofKind === "query")
+            writer.tag(6, WireType.LengthDelimited).string(message.type.query);
         /* ChatModelProto chat_model = 50; */
         if (message.chatModel !== 0)
             writer.tag(50, WireType.Varint).int32(message.chatModel);

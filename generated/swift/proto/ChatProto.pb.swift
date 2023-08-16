@@ -497,6 +497,7 @@ struct OpenChatRequestProto {
 
   var type: OpenChatRequestProto.OneOf_Type? = nil
 
+  /// open specific activity
   var chatID: String {
     get {
       if case .chatID(let v)? = type {return v}
@@ -505,6 +506,7 @@ struct OpenChatRequestProto {
     set {type = .chatID(newValue)}
   }
 
+  /// prompt-less global bot
   var botID: String {
     get {
       if case .botID(let v)? = type {return v}
@@ -513,6 +515,7 @@ struct OpenChatRequestProto {
     set {type = .botID(newValue)}
   }
 
+  /// activities for a story
   var storyID: String {
     get {
       if case .storyID(let v)? = type {return v}
@@ -521,6 +524,7 @@ struct OpenChatRequestProto {
     set {type = .storyID(newValue)}
   }
 
+  /// activity for a story
   var storyActivityID: ChatStoryActivityIdProto {
     get {
       if case .storyActivityID(let v)? = type {return v}
@@ -529,16 +533,31 @@ struct OpenChatRequestProto {
     set {type = .storyActivityID(newValue)}
   }
 
+  /// global user query
+  var query: String {
+    get {
+      if case .query(let v)? = type {return v}
+      return String()
+    }
+    set {type = .query(newValue)}
+  }
+
   /// move to settings
   var chatModel: ChatModelProto = .chatModelUnknown
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_Type: Equatable {
+    /// open specific activity
     case chatID(String)
+    /// prompt-less global bot
     case botID(String)
+    /// activities for a story
     case storyID(String)
+    /// activity for a story
     case storyActivityID(ChatStoryActivityIdProto)
+    /// global user query
+    case query(String)
 
   #if !swift(>=4.1)
     static func ==(lhs: OpenChatRequestProto.OneOf_Type, rhs: OpenChatRequestProto.OneOf_Type) -> Bool {
@@ -560,6 +579,10 @@ struct OpenChatRequestProto {
       }()
       case (.storyActivityID, .storyActivityID): return {
         guard case .storyActivityID(let l) = lhs, case .storyActivityID(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.query, .query): return {
+        guard case .query(let l) = lhs, case .query(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       default: return false
@@ -1731,6 +1754,7 @@ extension OpenChatRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     3: .standard(proto: "bot_id"),
     4: .standard(proto: "story_id"),
     5: .standard(proto: "story_activity_id"),
+    6: .same(proto: "query"),
     50: .standard(proto: "chat_model"),
   ]
 
@@ -1778,6 +1802,14 @@ extension OpenChatRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
           self.type = .storyActivityID(v)
         }
       }()
+      case 6: try {
+        var v: String?
+        try decoder.decodeSingularStringField(value: &v)
+        if let v = v {
+          if self.type != nil {try decoder.handleConflictingOneOf()}
+          self.type = .query(v)
+        }
+      }()
       case 50: try { try decoder.decodeSingularEnumField(value: &self.chatModel) }()
       default: break
       }
@@ -1808,6 +1840,10 @@ extension OpenChatRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     case .storyActivityID?: try {
       guard case .storyActivityID(let v)? = self.type else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
+    }()
+    case .query?: try {
+      guard case .query(let v)? = self.type else { preconditionFailure() }
+      try visitor.visitSingularStringField(value: v, fieldNumber: 6)
     }()
     case nil: break
     }
