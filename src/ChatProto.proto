@@ -115,8 +115,8 @@ message OpenChatRequestProto {
     // activity for a story
     ChatStoryActivityIdProto story_activity_id = 5;
 
-    // global user query
-    string query = 6;
+    // start chat with this user message
+    ChatUserMessageProto user_message = 6;
   }
 
   // move to settings
