@@ -190,6 +190,10 @@ export interface GetChatBotsResponseProto {
  * @generated from protobuf message ListChatsRequestProto
  */
 export interface ListChatsRequestProto {
+    /**
+     * @generated from protobuf field: google.protobuf.Timestamp last_modified_after = 1;
+     */
+    lastModifiedAfter?: Timestamp;
 }
 /**
  * @generated from protobuf message ChatSnippetProto
@@ -1088,7 +1092,9 @@ export const GetChatBotsResponseProto = new GetChatBotsResponseProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class ListChatsRequestProto$Type extends MessageType<ListChatsRequestProto> {
     constructor() {
-        super("ListChatsRequestProto", []);
+        super("ListChatsRequestProto", [
+            { no: 1, name: "last_modified_after", kind: "message", T: () => Timestamp }
+        ]);
     }
     create(value?: PartialMessage<ListChatsRequestProto>): ListChatsRequestProto {
         const message = {};
@@ -1098,9 +1104,28 @@ class ListChatsRequestProto$Type extends MessageType<ListChatsRequestProto> {
         return message;
     }
     internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ListChatsRequestProto): ListChatsRequestProto {
-        return target ?? this.create();
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* google.protobuf.Timestamp last_modified_after */ 1:
+                    message.lastModifiedAfter = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.lastModifiedAfter);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
     }
     internalBinaryWrite(message: ListChatsRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* google.protobuf.Timestamp last_modified_after = 1; */
+        if (message.lastModifiedAfter)
+            Timestamp.internalBinaryWrite(message.lastModifiedAfter, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
