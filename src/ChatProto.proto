@@ -8,7 +8,6 @@ message ChatApiRequestProto {
   oneof request {
     GetChatBotsRequestProto get_chat_bots = 2;
     ListChatsRequestProto list_chats = 3;
-    GetChatMessagesRequestProto get_chat_messages = 4;
   }
 }
 
@@ -18,7 +17,6 @@ message ChatApiResponseProto {
   oneof response {
     GetChatBotsResponseProto get_chat_bots = 2;
     ListChatsResponseProto list_chats = 3;
-    GetChatMessagesResponseProto get_chat_messages = 4;
   }
   map<string, google.protobuf.Duration> latencies = 100;
 }
@@ -66,14 +64,6 @@ message ChatSnippetProto {
 
 message ListChatsResponseProto {
   repeated ChatSnippetProto snippets = 1;
-}
-
-message GetChatMessagesRequestProto {
-  string chat_id = 1;
-}
-
-message GetChatMessagesResponseProto {
-  repeated ChatMessageProto messages = 1;
 }
 
 message PostChatMessageRequestProto {
