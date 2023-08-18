@@ -60,6 +60,7 @@ message ListChatsRequestProto {
 message ChatSnippetProto {
   string chat_id = 1;
   string text = 2;
+  google.protobuf.Timestamp last_modified_at = 3;
 }
 
 message ListChatsResponseProto {

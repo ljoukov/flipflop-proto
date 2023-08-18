@@ -195,6 +195,10 @@ export interface ChatSnippetProto {
      * @generated from protobuf field: string text = 2;
      */
     text: string;
+    /**
+     * @generated from protobuf field: google.protobuf.Timestamp last_modified_at = 3;
+     */
+    lastModifiedAt?: Timestamp;
 }
 /**
  * @generated from protobuf message ListChatsResponseProto
@@ -1091,7 +1095,8 @@ class ChatSnippetProto$Type extends MessageType<ChatSnippetProto> {
     constructor() {
         super("ChatSnippetProto", [
             { no: 1, name: "chat_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "last_modified_at", kind: "message", T: () => Timestamp }
         ]);
     }
     create(value?: PartialMessage<ChatSnippetProto>): ChatSnippetProto {
@@ -1112,6 +1117,9 @@ class ChatSnippetProto$Type extends MessageType<ChatSnippetProto> {
                 case /* string text */ 2:
                     message.text = reader.string();
                     break;
+                case /* google.protobuf.Timestamp last_modified_at */ 3:
+                    message.lastModifiedAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.lastModifiedAt);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -1130,6 +1138,9 @@ class ChatSnippetProto$Type extends MessageType<ChatSnippetProto> {
         /* string text = 2; */
         if (message.text !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.text);
+        /* google.protobuf.Timestamp last_modified_at = 3; */
+        if (message.lastModifiedAt)
+            Timestamp.internalBinaryWrite(message.lastModifiedAt, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
