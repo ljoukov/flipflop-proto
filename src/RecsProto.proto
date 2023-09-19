@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+enum EmbedTypeProto {
+  EMBED_TYPE_UNKNOWN = 0;
+  EMBED_TYPE_ADA_002 = 1;
+}
+
+message StoryEmbedProto {
+  string story_id = 1;
+  google.protobuf.Timestamp created_at = 2;
+  EmbedTypeProto embed_type = 3;
+  bytes input_hash = 4;
+  repeated float embedding = 5 [packed=true];
+}
