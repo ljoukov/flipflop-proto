@@ -40,6 +40,19 @@ export interface StoryEmbedProto {
     embedding: number[];
 }
 /**
+ * @generated from protobuf message StoriesEmbedCacheProto
+ */
+export interface StoriesEmbedCacheProto {
+    /**
+     * @generated from protobuf field: google.protobuf.Timestamp created_at = 1;
+     */
+    createdAt?: Timestamp;
+    /**
+     * @generated from protobuf field: repeated StoryEmbedProto embed = 2;
+     */
+    embed: StoryEmbedProto[];
+}
+/**
  * @generated from protobuf enum EmbedTypeProto
  */
 export enum EmbedTypeProto {
@@ -135,3 +148,57 @@ class StoryEmbedProto$Type extends MessageType<StoryEmbedProto> {
  * @generated MessageType for protobuf message StoryEmbedProto
  */
 export const StoryEmbedProto = new StoryEmbedProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class StoriesEmbedCacheProto$Type extends MessageType<StoriesEmbedCacheProto> {
+    constructor() {
+        super("StoriesEmbedCacheProto", [
+            { no: 1, name: "created_at", kind: "message", T: () => Timestamp },
+            { no: 2, name: "embed", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoryEmbedProto }
+        ]);
+    }
+    create(value?: PartialMessage<StoriesEmbedCacheProto>): StoriesEmbedCacheProto {
+        const message = { embed: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<StoriesEmbedCacheProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoriesEmbedCacheProto): StoriesEmbedCacheProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* google.protobuf.Timestamp created_at */ 1:
+                    message.createdAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.createdAt);
+                    break;
+                case /* repeated StoryEmbedProto embed */ 2:
+                    message.embed.push(StoryEmbedProto.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: StoriesEmbedCacheProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* google.protobuf.Timestamp created_at = 1; */
+        if (message.createdAt)
+            Timestamp.internalBinaryWrite(message.createdAt, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* repeated StoryEmbedProto embed = 2; */
+        for (let i = 0; i < message.embed.length; i++)
+            StoryEmbedProto.internalBinaryWrite(message.embed[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message StoriesEmbedCacheProto
+ */
+export const StoriesEmbedCacheProto = new StoriesEmbedCacheProto$Type();

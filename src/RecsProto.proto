@@ -14,3 +14,8 @@ message StoryEmbedProto {
   bytes input_hash = 4;
   repeated float embedding = 5 [packed=true];
 }
+
+message StoriesEmbedCacheProto {
+  google.protobuf.Timestamp created_at = 1;
+  repeated StoryEmbedProto embed = 2;
+}
