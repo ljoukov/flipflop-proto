@@ -104,6 +104,11 @@ message StoriesProto {
   repeated StoryProto stories = 2;
 }
 
+message StoriesCacheProto {
+  google.protobuf.Timestamp created_at = 1;
+  repeated StoryProto stories = 2;
+}
+
 message StoryProto {
   string id = 1;
   

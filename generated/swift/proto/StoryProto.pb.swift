@@ -739,6 +739,29 @@ struct StoriesProto {
   fileprivate var _timestamp: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
+struct StoriesCacheProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_createdAt = newValue}
+  }
+  /// Returns true if `createdAt` has been explicitly set.
+  var hasCreatedAt: Bool {return self._createdAt != nil}
+  /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
+  mutating func clearCreatedAt() {self._createdAt = nil}
+
+  var stories: [StoryProto] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+
+  fileprivate var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+}
+
 struct StoryProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -1466,6 +1489,7 @@ extension StoryDataProto: @unchecked Sendable {}
 extension CardDataProto: @unchecked Sendable {}
 extension StoryRecsProto: @unchecked Sendable {}
 extension StoriesProto: @unchecked Sendable {}
+extension StoriesCacheProto: @unchecked Sendable {}
 extension StoryProto: @unchecked Sendable {}
 extension CardProto: @unchecked Sendable {}
 extension CardFaceProto: @unchecked Sendable {}
@@ -2262,6 +2286,48 @@ extension StoriesProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
 
   static func ==(lhs: StoriesProto, rhs: StoriesProto) -> Bool {
     if lhs._timestamp != rhs._timestamp {return false}
+    if lhs.stories != rhs.stories {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension StoriesCacheProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoriesCacheProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "created_at"),
+    2: .same(proto: "stories"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._createdAt) }()
+      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.stories) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._createdAt {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    if !self.stories.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.stories, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: StoriesCacheProto, rhs: StoriesCacheProto) -> Bool {
+    if lhs._createdAt != rhs._createdAt {return false}
     if lhs.stories != rhs.stories {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
