@@ -762,6 +762,31 @@ struct StoriesCacheProto {
   fileprivate var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
+struct DeletedStoryProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var id: String = String()
+
+  var createdBy: String = String()
+
+  var deletedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _deletedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_deletedAt = newValue}
+  }
+  /// Returns true if `deletedAt` has been explicitly set.
+  var hasDeletedAt: Bool {return self._deletedAt != nil}
+  /// Clears the value of `deletedAt`. Subsequent reads from it will return its default value.
+  mutating func clearDeletedAt() {self._deletedAt = nil}
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+
+  fileprivate var _deletedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+}
+
 struct StoryProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -1490,6 +1515,7 @@ extension CardDataProto: @unchecked Sendable {}
 extension StoryRecsProto: @unchecked Sendable {}
 extension StoriesProto: @unchecked Sendable {}
 extension StoriesCacheProto: @unchecked Sendable {}
+extension DeletedStoryProto: @unchecked Sendable {}
 extension StoryProto: @unchecked Sendable {}
 extension CardProto: @unchecked Sendable {}
 extension CardFaceProto: @unchecked Sendable {}
@@ -2329,6 +2355,54 @@ extension StoriesCacheProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
   static func ==(lhs: StoriesCacheProto, rhs: StoriesCacheProto) -> Bool {
     if lhs._createdAt != rhs._createdAt {return false}
     if lhs.stories != rhs.stories {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension DeletedStoryProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "DeletedStoryProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .standard(proto: "created_by"),
+    3: .standard(proto: "deleted_at"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.id) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.createdBy) }()
+      case 3: try { try decoder.decodeSingularMessageField(value: &self._deletedAt) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.id.isEmpty {
+      try visitor.visitSingularStringField(value: self.id, fieldNumber: 1)
+    }
+    if !self.createdBy.isEmpty {
+      try visitor.visitSingularStringField(value: self.createdBy, fieldNumber: 2)
+    }
+    try { if let v = self._deletedAt {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: DeletedStoryProto, rhs: DeletedStoryProto) -> Bool {
+    if lhs.id != rhs.id {return false}
+    if lhs.createdBy != rhs.createdBy {return false}
+    if lhs._deletedAt != rhs._deletedAt {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
