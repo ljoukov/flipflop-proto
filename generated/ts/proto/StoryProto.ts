@@ -285,6 +285,10 @@ export interface StoriesCacheProto {
      * @generated from protobuf field: repeated StoryProto stories = 2;
      */
     stories: StoryProto[];
+    /**
+     * @generated from protobuf field: repeated DeletedStoryProto deleted_stories = 3;
+     */
+    deletedStories: DeletedStoryProto[];
 }
 /**
  * @generated from protobuf message DeletedStoryProto
@@ -1729,11 +1733,12 @@ class StoriesCacheProto$Type extends MessageType<StoriesCacheProto> {
     constructor() {
         super("StoriesCacheProto", [
             { no: 1, name: "created_at", kind: "message", T: () => Timestamp },
-            { no: 2, name: "stories", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoryProto }
+            { no: 2, name: "stories", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoryProto },
+            { no: 3, name: "deleted_stories", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => DeletedStoryProto }
         ]);
     }
     create(value?: PartialMessage<StoriesCacheProto>): StoriesCacheProto {
-        const message = { stories: [] };
+        const message = { stories: [], deletedStories: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StoriesCacheProto>(this, message, value);
@@ -1749,6 +1754,9 @@ class StoriesCacheProto$Type extends MessageType<StoriesCacheProto> {
                     break;
                 case /* repeated StoryProto stories */ 2:
                     message.stories.push(StoryProto.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* repeated DeletedStoryProto deleted_stories */ 3:
+                    message.deletedStories.push(DeletedStoryProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1768,6 +1776,9 @@ class StoriesCacheProto$Type extends MessageType<StoriesCacheProto> {
         /* repeated StoryProto stories = 2; */
         for (let i = 0; i < message.stories.length; i++)
             StoryProto.internalBinaryWrite(message.stories[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* repeated DeletedStoryProto deleted_stories = 3; */
+        for (let i = 0; i < message.deletedStories.length; i++)
+            DeletedStoryProto.internalBinaryWrite(message.deletedStories[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

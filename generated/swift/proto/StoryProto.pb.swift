@@ -755,6 +755,8 @@ struct StoriesCacheProto {
 
   var stories: [StoryProto] = []
 
+  var deletedStories: [DeletedStoryProto] = []
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -2323,6 +2325,7 @@ extension StoriesCacheProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "created_at"),
     2: .same(proto: "stories"),
+    3: .standard(proto: "deleted_stories"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2333,6 +2336,7 @@ extension StoriesCacheProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularMessageField(value: &self._createdAt) }()
       case 2: try { try decoder.decodeRepeatedMessageField(value: &self.stories) }()
+      case 3: try { try decoder.decodeRepeatedMessageField(value: &self.deletedStories) }()
       default: break
       }
     }
@@ -2349,12 +2353,16 @@ extension StoriesCacheProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
     if !self.stories.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.stories, fieldNumber: 2)
     }
+    if !self.deletedStories.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.deletedStories, fieldNumber: 3)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: StoriesCacheProto, rhs: StoriesCacheProto) -> Bool {
     if lhs._createdAt != rhs._createdAt {return false}
     if lhs.stories != rhs.stories {return false}
+    if lhs.deletedStories != rhs.deletedStories {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

@@ -107,7 +107,7 @@ message StoriesProto {
 message StoriesCacheProto {
   google.protobuf.Timestamp created_at = 1;
   repeated StoryProto stories = 2;
-
+  repeated DeletedStoryProto deleted_stories = 3;
 }
 
 message DeletedStoryProto {
