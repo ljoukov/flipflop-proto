@@ -48,9 +48,9 @@ export interface StoriesEmbedCacheProto {
      */
     createdAt?: Timestamp;
     /**
-     * @generated from protobuf field: repeated StoryEmbedProto embed = 2;
+     * @generated from protobuf field: repeated StoryEmbedProto embeds = 2;
      */
-    embed: StoryEmbedProto[];
+    embeds: StoryEmbedProto[];
 }
 /**
  * @generated from protobuf enum EmbedTypeProto
@@ -153,11 +153,11 @@ class StoriesEmbedCacheProto$Type extends MessageType<StoriesEmbedCacheProto> {
     constructor() {
         super("StoriesEmbedCacheProto", [
             { no: 1, name: "created_at", kind: "message", T: () => Timestamp },
-            { no: 2, name: "embed", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoryEmbedProto }
+            { no: 2, name: "embeds", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoryEmbedProto }
         ]);
     }
     create(value?: PartialMessage<StoriesEmbedCacheProto>): StoriesEmbedCacheProto {
-        const message = { embed: [] };
+        const message = { embeds: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StoriesEmbedCacheProto>(this, message, value);
@@ -171,8 +171,8 @@ class StoriesEmbedCacheProto$Type extends MessageType<StoriesEmbedCacheProto> {
                 case /* google.protobuf.Timestamp created_at */ 1:
                     message.createdAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.createdAt);
                     break;
-                case /* repeated StoryEmbedProto embed */ 2:
-                    message.embed.push(StoryEmbedProto.internalBinaryRead(reader, reader.uint32(), options));
+                case /* repeated StoryEmbedProto embeds */ 2:
+                    message.embeds.push(StoryEmbedProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -189,9 +189,9 @@ class StoriesEmbedCacheProto$Type extends MessageType<StoriesEmbedCacheProto> {
         /* google.protobuf.Timestamp created_at = 1; */
         if (message.createdAt)
             Timestamp.internalBinaryWrite(message.createdAt, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* repeated StoryEmbedProto embed = 2; */
-        for (let i = 0; i < message.embed.length; i++)
-            StoryEmbedProto.internalBinaryWrite(message.embed[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* repeated StoryEmbedProto embeds = 2; */
+        for (let i = 0; i < message.embeds.length; i++)
+            StoryEmbedProto.internalBinaryWrite(message.embeds[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

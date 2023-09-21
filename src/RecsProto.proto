@@ -17,5 +17,5 @@ message StoryEmbedProto {
 
 message StoriesEmbedCacheProto {
   google.protobuf.Timestamp created_at = 1;
-  repeated StoryEmbedProto embed = 2;
+  repeated StoryEmbedProto embeds = 2;
 }

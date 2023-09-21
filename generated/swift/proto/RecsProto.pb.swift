@@ -103,7 +103,7 @@ struct StoriesEmbedCacheProto {
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
   mutating func clearCreatedAt() {self._createdAt = nil}
 
-  var embed: [StoryEmbedProto] = []
+  var embeds: [StoryEmbedProto] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -191,7 +191,7 @@ extension StoriesEmbedCacheProto: SwiftProtobuf.Message, SwiftProtobuf._MessageI
   static let protoMessageName: String = "StoriesEmbedCacheProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "created_at"),
-    2: .same(proto: "embed"),
+    2: .same(proto: "embeds"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -201,7 +201,7 @@ extension StoriesEmbedCacheProto: SwiftProtobuf.Message, SwiftProtobuf._MessageI
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularMessageField(value: &self._createdAt) }()
-      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.embed) }()
+      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.embeds) }()
       default: break
       }
     }
@@ -215,15 +215,15 @@ extension StoriesEmbedCacheProto: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     try { if let v = self._createdAt {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
     } }()
-    if !self.embed.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.embed, fieldNumber: 2)
+    if !self.embeds.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.embeds, fieldNumber: 2)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: StoriesEmbedCacheProto, rhs: StoriesEmbedCacheProto) -> Bool {
     if lhs._createdAt != rhs._createdAt {return false}
-    if lhs.embed != rhs.embed {return false}
+    if lhs.embeds != rhs.embeds {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
