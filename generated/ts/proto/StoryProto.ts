@@ -219,17 +219,25 @@ export interface CardDataProto {
      */
     body: string;
     /**
+     * For True/False card
+     *
      * @generated from protobuf field: bool is_true = 5;
      */
     isTrue: boolean;
     /**
+     * For ABC or voting cards
+     *
      * @generated from protobuf field: repeated string options = 6;
      */
     options: string[];
     /**
      * @generated from protobuf field: int32 correct_option_index = 7;
      */
-    correctOptionIndex: number;
+    correctOptionIndex: number; // for ABC card
+    /**
+     * @generated from protobuf field: repeated int64 options_num_votes = 11;
+     */
+    optionsNumVotes: string[]; // for voting card
     /**
      * @generated from protobuf field: string explanation = 8;
      */
@@ -677,6 +685,10 @@ export interface VoteBlockProto {
      * @generated from protobuf field: repeated VoteBlockOptionProto options = 1;
      */
     options: VoteBlockOptionProto[];
+    /**
+     * @generated from protobuf field: CardFaceProto back_face = 2;
+     */
+    backFace?: CardFaceProto;
 }
 /**
  * @generated from protobuf message QuestionBlockOptionProto
@@ -747,7 +759,11 @@ export interface RevealBackBlockProto {
  */
 export interface ChatbotBlockProto {
     /**
-     * @generated from protobuf field: string bot_id = 1;
+     * @generated from protobuf field: string label = 1;
+     */
+    label: string;
+    /**
+     * @generated from protobuf field: string bot_id = 2;
      */
     botId: string;
 }
@@ -770,7 +786,11 @@ export enum CardTypeProto {
     /**
      * @generated from protobuf enum value: CARD_TYPE_ABC = 3;
      */
-    CARD_TYPE_ABC = 3
+    CARD_TYPE_ABC = 3,
+    /**
+     * @generated from protobuf enum value: CARD_TYPE_VOTING = 4;
+     */
+    CARD_TYPE_VOTING = 4
 }
 /**
  * @generated from protobuf enum FontNameProto
@@ -1514,13 +1534,14 @@ class CardDataProto$Type extends MessageType<CardDataProto> {
             { no: 5, name: "is_true", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
             { no: 6, name: "options", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
             { no: 7, name: "correct_option_index", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 11, name: "options_num_votes", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 3 /*ScalarType.INT64*/ },
             { no: 8, name: "explanation", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 9, name: "image_ref", kind: "message", T: () => ImageRefProto },
             { no: 10, name: "hash_tags", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<CardDataProto>): CardDataProto {
-        const message = { id: "", cardType: 0, title: "", body: "", isTrue: false, options: [], correctOptionIndex: 0, explanation: "", hashTags: [] };
+        const message = { id: "", cardType: 0, title: "", body: "", isTrue: false, options: [], correctOptionIndex: 0, optionsNumVotes: [], explanation: "", hashTags: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<CardDataProto>(this, message, value);
@@ -1551,6 +1572,13 @@ class CardDataProto$Type extends MessageType<CardDataProto> {
                     break;
                 case /* int32 correct_option_index */ 7:
                     message.correctOptionIndex = reader.int32();
+                    break;
+                case /* repeated int64 options_num_votes */ 11:
+                    if (wireType === WireType.LengthDelimited)
+                        for (let e = reader.int32() + reader.pos; reader.pos < e;)
+                            message.optionsNumVotes.push(reader.int64().toString());
+                    else
+                        message.optionsNumVotes.push(reader.int64().toString());
                     break;
                 case /* string explanation */ 8:
                     message.explanation = reader.string();
@@ -1594,6 +1622,13 @@ class CardDataProto$Type extends MessageType<CardDataProto> {
         /* int32 correct_option_index = 7; */
         if (message.correctOptionIndex !== 0)
             writer.tag(7, WireType.Varint).int32(message.correctOptionIndex);
+        /* repeated int64 options_num_votes = 11; */
+        if (message.optionsNumVotes.length) {
+            writer.tag(11, WireType.LengthDelimited).fork();
+            for (let i = 0; i < message.optionsNumVotes.length; i++)
+                writer.int64(message.optionsNumVotes[i]);
+            writer.join();
+        }
         /* string explanation = 8; */
         if (message.explanation !== "")
             writer.tag(8, WireType.LengthDelimited).string(message.explanation);
@@ -2956,7 +2991,8 @@ export const VoteBlockOptionProto = new VoteBlockOptionProto$Type();
 class VoteBlockProto$Type extends MessageType<VoteBlockProto> {
     constructor() {
         super("VoteBlockProto", [
-            { no: 1, name: "options", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => VoteBlockOptionProto }
+            { no: 1, name: "options", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => VoteBlockOptionProto },
+            { no: 2, name: "back_face", kind: "message", T: () => CardFaceProto }
         ]);
     }
     create(value?: PartialMessage<VoteBlockProto>): VoteBlockProto {
@@ -2974,6 +3010,9 @@ class VoteBlockProto$Type extends MessageType<VoteBlockProto> {
                 case /* repeated VoteBlockOptionProto options */ 1:
                     message.options.push(VoteBlockOptionProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
+                case /* CardFaceProto back_face */ 2:
+                    message.backFace = CardFaceProto.internalBinaryRead(reader, reader.uint32(), options, message.backFace);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -2989,6 +3028,9 @@ class VoteBlockProto$Type extends MessageType<VoteBlockProto> {
         /* repeated VoteBlockOptionProto options = 1; */
         for (let i = 0; i < message.options.length; i++)
             VoteBlockOptionProto.internalBinaryWrite(message.options[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* CardFaceProto back_face = 2; */
+        if (message.backFace)
+            CardFaceProto.internalBinaryWrite(message.backFace, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -3240,11 +3282,12 @@ export const RevealBackBlockProto = new RevealBackBlockProto$Type();
 class ChatbotBlockProto$Type extends MessageType<ChatbotBlockProto> {
     constructor() {
         super("ChatbotBlockProto", [
-            { no: 1, name: "bot_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "label", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "bot_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<ChatbotBlockProto>): ChatbotBlockProto {
-        const message = { botId: "" };
+        const message = { label: "", botId: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<ChatbotBlockProto>(this, message, value);
@@ -3255,7 +3298,10 @@ class ChatbotBlockProto$Type extends MessageType<ChatbotBlockProto> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string bot_id */ 1:
+                case /* string label */ 1:
+                    message.label = reader.string();
+                    break;
+                case /* string bot_id */ 2:
                     message.botId = reader.string();
                     break;
                 default:
@@ -3270,9 +3316,12 @@ class ChatbotBlockProto$Type extends MessageType<ChatbotBlockProto> {
         return message;
     }
     internalBinaryWrite(message: ChatbotBlockProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string bot_id = 1; */
+        /* string label = 1; */
+        if (message.label !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.label);
+        /* string bot_id = 2; */
         if (message.botId !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.botId);
+            writer.tag(2, WireType.LengthDelimited).string(message.botId);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

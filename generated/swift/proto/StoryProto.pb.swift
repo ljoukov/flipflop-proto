@@ -26,6 +26,7 @@ enum CardTypeProto: SwiftProtobuf.Enum {
   case cardTypeStatic // = 1
   case cardTypeTrueFalse // = 2
   case cardTypeAbc // = 3
+  case cardTypeVoting // = 4
   case UNRECOGNIZED(Int)
 
   init() {
@@ -38,6 +39,7 @@ enum CardTypeProto: SwiftProtobuf.Enum {
     case 1: self = .cardTypeStatic
     case 2: self = .cardTypeTrueFalse
     case 3: self = .cardTypeAbc
+    case 4: self = .cardTypeVoting
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -48,6 +50,7 @@ enum CardTypeProto: SwiftProtobuf.Enum {
     case .cardTypeStatic: return 1
     case .cardTypeTrueFalse: return 2
     case .cardTypeAbc: return 3
+    case .cardTypeVoting: return 4
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -63,6 +66,7 @@ extension CardTypeProto: CaseIterable {
     .cardTypeStatic,
     .cardTypeTrueFalse,
     .cardTypeAbc,
+    .cardTypeVoting,
   ]
 }
 
@@ -674,11 +678,17 @@ struct CardDataProto {
 
   var body: String = String()
 
+  /// For True/False card
   var isTrue: Bool = false
 
+  /// For ABC or voting cards
   var options: [String] = []
 
+  /// for ABC card
   var correctOptionIndex: Int32 = 0
+
+  /// for voting card
+  var optionsNumVotes: [Int64] = []
 
   var explanation: String = String()
 
@@ -1377,9 +1387,20 @@ struct VoteBlockProto {
 
   var options: [VoteBlockOptionProto] = []
 
+  var backFace: CardFaceProto {
+    get {return _backFace ?? CardFaceProto()}
+    set {_backFace = newValue}
+  }
+  /// Returns true if `backFace` has been explicitly set.
+  var hasBackFace: Bool {return self._backFace != nil}
+  /// Clears the value of `backFace`. Subsequent reads from it will return its default value.
+  mutating func clearBackFace() {self._backFace = nil}
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
+
+  fileprivate var _backFace: CardFaceProto? = nil
 }
 
 struct QuestionBlockOptionProto {
@@ -1484,6 +1505,8 @@ struct ChatbotBlockProto {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  var label: String = String()
+
   var botID: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -1552,6 +1575,7 @@ extension CardTypeProto: SwiftProtobuf._ProtoNameProviding {
     1: .same(proto: "CARD_TYPE_STATIC"),
     2: .same(proto: "CARD_TYPE_TRUE_FALSE"),
     3: .same(proto: "CARD_TYPE_ABC"),
+    4: .same(proto: "CARD_TYPE_VOTING"),
   ]
 }
 
@@ -2154,6 +2178,7 @@ extension CardDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
     5: .standard(proto: "is_true"),
     6: .same(proto: "options"),
     7: .standard(proto: "correct_option_index"),
+    11: .standard(proto: "options_num_votes"),
     8: .same(proto: "explanation"),
     9: .standard(proto: "image_ref"),
     10: .standard(proto: "hash_tags"),
@@ -2175,6 +2200,7 @@ extension CardDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
       case 8: try { try decoder.decodeSingularStringField(value: &self.explanation) }()
       case 9: try { try decoder.decodeSingularMessageField(value: &self._imageRef) }()
       case 10: try { try decoder.decodeRepeatedStringField(value: &self.hashTags) }()
+      case 11: try { try decoder.decodeRepeatedInt64Field(value: &self.optionsNumVotes) }()
       default: break
       }
     }
@@ -2215,6 +2241,9 @@ extension CardDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
     if !self.hashTags.isEmpty {
       try visitor.visitRepeatedStringField(value: self.hashTags, fieldNumber: 10)
     }
+    if !self.optionsNumVotes.isEmpty {
+      try visitor.visitPackedInt64Field(value: self.optionsNumVotes, fieldNumber: 11)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -2226,6 +2255,7 @@ extension CardDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
     if lhs.isTrue != rhs.isTrue {return false}
     if lhs.options != rhs.options {return false}
     if lhs.correctOptionIndex != rhs.correctOptionIndex {return false}
+    if lhs.optionsNumVotes != rhs.optionsNumVotes {return false}
     if lhs.explanation != rhs.explanation {return false}
     if lhs._imageRef != rhs._imageRef {return false}
     if lhs.hashTags != rhs.hashTags {return false}
@@ -3406,6 +3436,7 @@ extension VoteBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
   static let protoMessageName: String = "VoteBlockProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "options"),
+    2: .standard(proto: "back_face"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3415,20 +3446,29 @@ extension VoteBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeRepeatedMessageField(value: &self.options) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._backFace) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.options.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.options, fieldNumber: 1)
     }
+    try { if let v = self._backFace {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: VoteBlockProto, rhs: VoteBlockProto) -> Bool {
     if lhs.options != rhs.options {return false}
+    if lhs._backFace != rhs._backFace {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -3619,7 +3659,8 @@ extension RevealBackBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
 extension ChatbotBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "ChatbotBlockProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "bot_id"),
+    1: .same(proto: "label"),
+    2: .standard(proto: "bot_id"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3628,20 +3669,25 @@ extension ChatbotBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.botID) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self.label) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.botID) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.label.isEmpty {
+      try visitor.visitSingularStringField(value: self.label, fieldNumber: 1)
+    }
     if !self.botID.isEmpty {
-      try visitor.visitSingularStringField(value: self.botID, fieldNumber: 1)
+      try visitor.visitSingularStringField(value: self.botID, fieldNumber: 2)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: ChatbotBlockProto, rhs: ChatbotBlockProto) -> Bool {
+    if lhs.label != rhs.label {return false}
     if lhs.botID != rhs.botID {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

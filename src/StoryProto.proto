@@ -63,6 +63,7 @@ enum CardTypeProto {
   CARD_TYPE_STATIC = 1;
   CARD_TYPE_TRUE_FALSE = 2;
   CARD_TYPE_ABC = 3;
+  CARD_TYPE_VOTING = 4;
 }
 
 message StoryDataProto {
@@ -82,10 +83,13 @@ message CardDataProto {
   string title = 3;
   string body = 4;
 
+  // For True/False card
   bool is_true = 5;
 
+  // For ABC or voting cards
   repeated string options = 6;
-  int32 correct_option_index = 7;
+  int32 correct_option_index = 7; // for ABC card
+  repeated int64 options_num_votes = 11; // for voting card
 
   string explanation = 8;
 
