@@ -211,21 +211,25 @@ struct CardUserDataProto {
 
   var cardID: String = String()
 
-  /// For cards with "prompt" block.
-  var promptResponse: String {
-    get {return _promptResponse ?? String()}
-    set {_promptResponse = newValue}
+  var lastModifiedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _lastModifiedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_lastModifiedAt = newValue}
   }
-  /// Returns true if `promptResponse` has been explicitly set.
-  var hasPromptResponse: Bool {return self._promptResponse != nil}
-  /// Clears the value of `promptResponse`. Subsequent reads from it will return its default value.
-  mutating func clearPromptResponse() {self._promptResponse = nil}
+  /// Returns true if `lastModifiedAt` has been explicitly set.
+  var hasLastModifiedAt: Bool {return self._lastModifiedAt != nil}
+  /// Clears the value of `lastModifiedAt`. Subsequent reads from it will return its default value.
+  mutating func clearLastModifiedAt() {self._lastModifiedAt = nil}
+
+  var liked: Bool = false
+
+  /// For cards with True/False, ABC, voting, starts with 1; 0 means not acted
+  var selectedOptionNumber: Int32 = 0
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 
-  fileprivate var _promptResponse: String? = nil
+  fileprivate var _lastModifiedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
 struct StoryUserDataProto {
@@ -245,6 +249,8 @@ struct StoryUserDataProto {
   mutating func clearLastModifiedAt() {self._lastModifiedAt = nil}
 
   var liked: Bool = false
+
+  var cardsData: [CardUserDataProto] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -593,7 +599,9 @@ extension CardUserDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
   static let protoMessageName: String = "CardUserDataProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "card_id"),
-    3: .standard(proto: "prompt_response"),
+    2: .standard(proto: "last_modified_at"),
+    3: .same(proto: "liked"),
+    4: .standard(proto: "selected_option_number"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -603,7 +611,9 @@ extension CardUserDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.cardID) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self._promptResponse) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._lastModifiedAt) }()
+      case 3: try { try decoder.decodeSingularBoolField(value: &self.liked) }()
+      case 4: try { try decoder.decodeSingularInt32Field(value: &self.selectedOptionNumber) }()
       default: break
       }
     }
@@ -617,15 +627,23 @@ extension CardUserDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
     if !self.cardID.isEmpty {
       try visitor.visitSingularStringField(value: self.cardID, fieldNumber: 1)
     }
-    try { if let v = self._promptResponse {
-      try visitor.visitSingularStringField(value: v, fieldNumber: 3)
+    try { if let v = self._lastModifiedAt {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     } }()
+    if self.liked != false {
+      try visitor.visitSingularBoolField(value: self.liked, fieldNumber: 3)
+    }
+    if self.selectedOptionNumber != 0 {
+      try visitor.visitSingularInt32Field(value: self.selectedOptionNumber, fieldNumber: 4)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: CardUserDataProto, rhs: CardUserDataProto) -> Bool {
     if lhs.cardID != rhs.cardID {return false}
-    if lhs._promptResponse != rhs._promptResponse {return false}
+    if lhs._lastModifiedAt != rhs._lastModifiedAt {return false}
+    if lhs.liked != rhs.liked {return false}
+    if lhs.selectedOptionNumber != rhs.selectedOptionNumber {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -637,6 +655,7 @@ extension StoryUserDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     1: .standard(proto: "story_id"),
     2: .standard(proto: "last_modified_at"),
     3: .same(proto: "liked"),
+    4: .standard(proto: "cards_data"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -648,6 +667,7 @@ extension StoryUserDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       case 1: try { try decoder.decodeSingularStringField(value: &self.storyID) }()
       case 2: try { try decoder.decodeSingularMessageField(value: &self._lastModifiedAt) }()
       case 3: try { try decoder.decodeSingularBoolField(value: &self.liked) }()
+      case 4: try { try decoder.decodeRepeatedMessageField(value: &self.cardsData) }()
       default: break
       }
     }
@@ -667,6 +687,9 @@ extension StoryUserDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     if self.liked != false {
       try visitor.visitSingularBoolField(value: self.liked, fieldNumber: 3)
     }
+    if !self.cardsData.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.cardsData, fieldNumber: 4)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -674,6 +697,7 @@ extension StoryUserDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     if lhs.storyID != rhs.storyID {return false}
     if lhs._lastModifiedAt != rhs._lastModifiedAt {return false}
     if lhs.liked != rhs.liked {return false}
+    if lhs.cardsData != rhs.cardsData {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

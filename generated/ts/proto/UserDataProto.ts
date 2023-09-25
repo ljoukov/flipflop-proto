@@ -118,11 +118,19 @@ export interface CardUserDataProto {
      */
     cardId: string;
     /**
-     * For cards with "prompt" block.
-     *
-     * @generated from protobuf field: optional string prompt_response = 3;
+     * @generated from protobuf field: google.protobuf.Timestamp last_modified_at = 2;
      */
-    promptResponse?: string;
+    lastModifiedAt?: Timestamp;
+    /**
+     * @generated from protobuf field: bool liked = 3;
+     */
+    liked: boolean;
+    /**
+     * For cards with True/False, ABC, voting, starts with 1; 0 means not acted
+     *
+     * @generated from protobuf field: int32 selected_option_number = 4;
+     */
+    selectedOptionNumber: number;
 }
 /**
  * @generated from protobuf message StoryUserDataProto
@@ -140,6 +148,10 @@ export interface StoryUserDataProto {
      * @generated from protobuf field: bool liked = 3;
      */
     liked: boolean;
+    /**
+     * @generated from protobuf field: repeated CardUserDataProto cards_data = 4;
+     */
+    cardsData: CardUserDataProto[];
 }
 /**
  * @generated from protobuf message UserDataProto
@@ -495,11 +507,13 @@ class CardUserDataProto$Type extends MessageType<CardUserDataProto> {
     constructor() {
         super("CardUserDataProto", [
             { no: 1, name: "card_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "prompt_response", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "last_modified_at", kind: "message", T: () => Timestamp },
+            { no: 3, name: "liked", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 4, name: "selected_option_number", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
         ]);
     }
     create(value?: PartialMessage<CardUserDataProto>): CardUserDataProto {
-        const message = { cardId: "" };
+        const message = { cardId: "", liked: false, selectedOptionNumber: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<CardUserDataProto>(this, message, value);
@@ -513,8 +527,14 @@ class CardUserDataProto$Type extends MessageType<CardUserDataProto> {
                 case /* string card_id */ 1:
                     message.cardId = reader.string();
                     break;
-                case /* optional string prompt_response */ 3:
-                    message.promptResponse = reader.string();
+                case /* google.protobuf.Timestamp last_modified_at */ 2:
+                    message.lastModifiedAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.lastModifiedAt);
+                    break;
+                case /* bool liked */ 3:
+                    message.liked = reader.bool();
+                    break;
+                case /* int32 selected_option_number */ 4:
+                    message.selectedOptionNumber = reader.int32();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -531,9 +551,15 @@ class CardUserDataProto$Type extends MessageType<CardUserDataProto> {
         /* string card_id = 1; */
         if (message.cardId !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.cardId);
-        /* optional string prompt_response = 3; */
-        if (message.promptResponse !== undefined)
-            writer.tag(3, WireType.LengthDelimited).string(message.promptResponse);
+        /* google.protobuf.Timestamp last_modified_at = 2; */
+        if (message.lastModifiedAt)
+            Timestamp.internalBinaryWrite(message.lastModifiedAt, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* bool liked = 3; */
+        if (message.liked !== false)
+            writer.tag(3, WireType.Varint).bool(message.liked);
+        /* int32 selected_option_number = 4; */
+        if (message.selectedOptionNumber !== 0)
+            writer.tag(4, WireType.Varint).int32(message.selectedOptionNumber);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -550,11 +576,12 @@ class StoryUserDataProto$Type extends MessageType<StoryUserDataProto> {
         super("StoryUserDataProto", [
             { no: 1, name: "story_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "last_modified_at", kind: "message", T: () => Timestamp },
-            { no: 3, name: "liked", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+            { no: 3, name: "liked", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 4, name: "cards_data", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => CardUserDataProto }
         ]);
     }
     create(value?: PartialMessage<StoryUserDataProto>): StoryUserDataProto {
-        const message = { storyId: "", liked: false };
+        const message = { storyId: "", liked: false, cardsData: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StoryUserDataProto>(this, message, value);
@@ -573,6 +600,9 @@ class StoryUserDataProto$Type extends MessageType<StoryUserDataProto> {
                     break;
                 case /* bool liked */ 3:
                     message.liked = reader.bool();
+                    break;
+                case /* repeated CardUserDataProto cards_data */ 4:
+                    message.cardsData.push(CardUserDataProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -595,6 +625,9 @@ class StoryUserDataProto$Type extends MessageType<StoryUserDataProto> {
         /* bool liked = 3; */
         if (message.liked !== false)
             writer.tag(3, WireType.Varint).bool(message.liked);
+        /* repeated CardUserDataProto cards_data = 4; */
+        for (let i = 0; i < message.cardsData.length; i++)
+            CardUserDataProto.internalBinaryWrite(message.cardsData[i], writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

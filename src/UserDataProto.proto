@@ -38,22 +38,22 @@ message UserApiResponseProto {
 
 message CardUserDataProto {
   string card_id = 1;
-
-  // For cards with "prompt" block.
-  optional string prompt_response = 3;
+  google.protobuf.Timestamp last_modified_at = 2;
+  bool liked = 3;
+  // For cards with True/False, ABC, voting, starts with 1; 0 means not acted
+  int32 selected_option_number = 4;
 }
 
 message StoryUserDataProto {
   string story_id = 1;
   google.protobuf.Timestamp last_modified_at = 2;
-
   bool liked = 3;
+  repeated CardUserDataProto cards_data = 4;
 }
 
 message UserDataProto {
   string user_id = 3;
   google.protobuf.Timestamp created_at = 4;
   google.protobuf.Timestamp last_modified_at = 2;
-
   repeated StoryUserDataProto stories_data = 1;
 }
