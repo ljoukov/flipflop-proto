@@ -273,6 +273,7 @@ message VoteBlockOptionProto {
 
 message VoteBlockProto {
   repeated VoteBlockOptionProto options = 1;
+  CardFaceProto back_face = 2;
 }
 
 message QuestionBlockOptionProto {
@@ -299,5 +300,6 @@ message RevealBackBlockProto {
 }
 
 message ChatbotBlockProto {
-  string bot_id = 1;
+  string label = 1;
+  string bot_id = 2;
 }
