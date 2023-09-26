@@ -235,9 +235,9 @@ export interface CardDataProto {
      */
     correctOptionIndex: number; // for ABC card
     /**
-     * @generated from protobuf field: repeated int64 options_num_votes = 11;
+     * @generated from protobuf field: repeated int32 options_num_votes = 11;
      */
-    optionsNumVotes: string[]; // for voting card
+    optionsNumVotes: number[]; // for voting card
     /**
      * @generated from protobuf field: string explanation = 8;
      */
@@ -1534,7 +1534,7 @@ class CardDataProto$Type extends MessageType<CardDataProto> {
             { no: 5, name: "is_true", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
             { no: 6, name: "options", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
             { no: 7, name: "correct_option_index", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 11, name: "options_num_votes", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 3 /*ScalarType.INT64*/ },
+            { no: 11, name: "options_num_votes", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 5 /*ScalarType.INT32*/ },
             { no: 8, name: "explanation", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 9, name: "image_ref", kind: "message", T: () => ImageRefProto },
             { no: 10, name: "hash_tags", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
@@ -1573,12 +1573,12 @@ class CardDataProto$Type extends MessageType<CardDataProto> {
                 case /* int32 correct_option_index */ 7:
                     message.correctOptionIndex = reader.int32();
                     break;
-                case /* repeated int64 options_num_votes */ 11:
+                case /* repeated int32 options_num_votes */ 11:
                     if (wireType === WireType.LengthDelimited)
                         for (let e = reader.int32() + reader.pos; reader.pos < e;)
-                            message.optionsNumVotes.push(reader.int64().toString());
+                            message.optionsNumVotes.push(reader.int32());
                     else
-                        message.optionsNumVotes.push(reader.int64().toString());
+                        message.optionsNumVotes.push(reader.int32());
                     break;
                 case /* string explanation */ 8:
                     message.explanation = reader.string();
@@ -1622,11 +1622,11 @@ class CardDataProto$Type extends MessageType<CardDataProto> {
         /* int32 correct_option_index = 7; */
         if (message.correctOptionIndex !== 0)
             writer.tag(7, WireType.Varint).int32(message.correctOptionIndex);
-        /* repeated int64 options_num_votes = 11; */
+        /* repeated int32 options_num_votes = 11; */
         if (message.optionsNumVotes.length) {
             writer.tag(11, WireType.LengthDelimited).fork();
             for (let i = 0; i < message.optionsNumVotes.length; i++)
-                writer.int64(message.optionsNumVotes[i]);
+                writer.int32(message.optionsNumVotes[i]);
             writer.join();
         }
         /* string explanation = 8; */
