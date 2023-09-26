@@ -687,9 +687,6 @@ struct CardDataProto {
   /// for ABC card
   var correctOptionIndex: Int32 = 0
 
-  /// for voting card
-  var optionsNumVotes: [Int32] = []
-
   var explanation: String = String()
 
   var imageRef: ImageRefProto {
@@ -2178,7 +2175,6 @@ extension CardDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
     5: .standard(proto: "is_true"),
     6: .same(proto: "options"),
     7: .standard(proto: "correct_option_index"),
-    11: .standard(proto: "options_num_votes"),
     8: .same(proto: "explanation"),
     9: .standard(proto: "image_ref"),
     10: .standard(proto: "hash_tags"),
@@ -2200,7 +2196,6 @@ extension CardDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
       case 8: try { try decoder.decodeSingularStringField(value: &self.explanation) }()
       case 9: try { try decoder.decodeSingularMessageField(value: &self._imageRef) }()
       case 10: try { try decoder.decodeRepeatedStringField(value: &self.hashTags) }()
-      case 11: try { try decoder.decodeRepeatedInt32Field(value: &self.optionsNumVotes) }()
       default: break
       }
     }
@@ -2241,9 +2236,6 @@ extension CardDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
     if !self.hashTags.isEmpty {
       try visitor.visitRepeatedStringField(value: self.hashTags, fieldNumber: 10)
     }
-    if !self.optionsNumVotes.isEmpty {
-      try visitor.visitPackedInt32Field(value: self.optionsNumVotes, fieldNumber: 11)
-    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -2255,7 +2247,6 @@ extension CardDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
     if lhs.isTrue != rhs.isTrue {return false}
     if lhs.options != rhs.options {return false}
     if lhs.correctOptionIndex != rhs.correctOptionIndex {return false}
-    if lhs.optionsNumVotes != rhs.optionsNumVotes {return false}
     if lhs.explanation != rhs.explanation {return false}
     if lhs._imageRef != rhs._imageRef {return false}
     if lhs.hashTags != rhs.hashTags {return false}
