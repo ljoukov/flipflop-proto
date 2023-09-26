@@ -89,7 +89,7 @@ message CardDataProto {
   // For ABC or voting cards
   repeated string options = 6;
   int32 correct_option_index = 7; // for ABC card
-  repeated int64 options_num_votes = 11; // for voting card
+  repeated int32 options_num_votes = 11; // for voting card
 
   string explanation = 8;
 
