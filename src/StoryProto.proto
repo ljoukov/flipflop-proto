@@ -36,6 +36,14 @@ message DeleteStoryRequestProto {
 message DeleteStoryResponseProto {
 }
 
+message TextEditRequestProto {
+  string text = 1;
+}
+
+message TextEditResponseProto {
+  string text = 1;
+}
+
 message StoryApiRequestProto {
   string encoded_user_auth = 1;
   oneof request {
@@ -43,6 +51,7 @@ message StoryApiRequestProto {
     CreateStoryRequestProto create_story = 3;
     UpdateStoryRequestProto update_story = 4;
     DeleteStoryRequestProto delete_story = 5;
+    TextEditRequestProto text_edit = 6;
   }
 }
 
@@ -54,6 +63,7 @@ message StoryApiResponseProto {
     CreateStoryResponseProto create_story = 3;
     UpdateStoryResponseProto update_story = 4;
     DeleteStoryResponseProto delete_story = 5;
+    TextEditResponseProto text_edit = 6;
   }
   map<string, google.protobuf.Duration> latencies = 100;
 }

@@ -70,20 +70,11 @@ message ListChatsResponseProto {
 message PostChatMessageRequestProto {
   string chat_id = 1;
   ChatUserMessageProto user_message = 2;
-
-  // move to settings
-  ChatModelProto chat_model = 50;
 }
 
 message PostChatMessageResponseHeaderProto {
   repeated ChatMessageProto messages = 1;
   string streamed_message_id = 2; 
-}
-
-enum ChatModelProto {
-  CHAT_MODEL_UNKNOWN = 0;
-  CHAT_MODEL_GPT_35_TURBO = 1;
-  CHAT_MODEL_GPT_4 = 2;
 }
 
 message ChatStoryActivityIdProto {
@@ -110,9 +101,6 @@ message OpenChatRequestProto {
     // start chat with this user message
     ChatUserMessageProto user_message = 6;
   }
-
-  // move to settings
-  ChatModelProto chat_model = 50;
 }
 
 message OpenChatResponseHeaderProto {

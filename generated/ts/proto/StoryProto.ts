@@ -92,6 +92,24 @@ export interface DeleteStoryRequestProto {
 export interface DeleteStoryResponseProto {
 }
 /**
+ * @generated from protobuf message TextEditRequestProto
+ */
+export interface TextEditRequestProto {
+    /**
+     * @generated from protobuf field: string text = 1;
+     */
+    text: string;
+}
+/**
+ * @generated from protobuf message TextEditResponseProto
+ */
+export interface TextEditResponseProto {
+    /**
+     * @generated from protobuf field: string text = 1;
+     */
+    text: string;
+}
+/**
  * @generated from protobuf message StoryApiRequestProto
  */
 export interface StoryApiRequestProto {
@@ -126,6 +144,12 @@ export interface StoryApiRequestProto {
          * @generated from protobuf field: DeleteStoryRequestProto delete_story = 5;
          */
         deleteStory: DeleteStoryRequestProto;
+    } | {
+        oneofKind: "textEdit";
+        /**
+         * @generated from protobuf field: TextEditRequestProto text_edit = 6;
+         */
+        textEdit: TextEditRequestProto;
     } | {
         oneofKind: undefined;
     };
@@ -167,6 +191,12 @@ export interface StoryApiResponseProto {
          * @generated from protobuf field: DeleteStoryResponseProto delete_story = 5;
          */
         deleteStory: DeleteStoryResponseProto;
+    } | {
+        oneofKind: "textEdit";
+        /**
+         * @generated from protobuf field: TextEditResponseProto text_edit = 6;
+         */
+        textEdit: TextEditResponseProto;
     } | {
         oneofKind: undefined;
     };
@@ -1251,6 +1281,100 @@ class DeleteStoryResponseProto$Type extends MessageType<DeleteStoryResponseProto
  */
 export const DeleteStoryResponseProto = new DeleteStoryResponseProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class TextEditRequestProto$Type extends MessageType<TextEditRequestProto> {
+    constructor() {
+        super("TextEditRequestProto", [
+            { no: 1, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<TextEditRequestProto>): TextEditRequestProto {
+        const message = { text: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<TextEditRequestProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: TextEditRequestProto): TextEditRequestProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string text */ 1:
+                    message.text = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: TextEditRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string text = 1; */
+        if (message.text !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.text);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message TextEditRequestProto
+ */
+export const TextEditRequestProto = new TextEditRequestProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class TextEditResponseProto$Type extends MessageType<TextEditResponseProto> {
+    constructor() {
+        super("TextEditResponseProto", [
+            { no: 1, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<TextEditResponseProto>): TextEditResponseProto {
+        const message = { text: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<TextEditResponseProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: TextEditResponseProto): TextEditResponseProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string text */ 1:
+                    message.text = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: TextEditResponseProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string text = 1; */
+        if (message.text !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.text);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message TextEditResponseProto
+ */
+export const TextEditResponseProto = new TextEditResponseProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class StoryApiRequestProto$Type extends MessageType<StoryApiRequestProto> {
     constructor() {
         super("StoryApiRequestProto", [
@@ -1258,7 +1382,8 @@ class StoryApiRequestProto$Type extends MessageType<StoryApiRequestProto> {
             { no: 2, name: "get_stories", kind: "message", oneof: "request", T: () => GetStoriesRequestProto },
             { no: 3, name: "create_story", kind: "message", oneof: "request", T: () => CreateStoryRequestProto },
             { no: 4, name: "update_story", kind: "message", oneof: "request", T: () => UpdateStoryRequestProto },
-            { no: 5, name: "delete_story", kind: "message", oneof: "request", T: () => DeleteStoryRequestProto }
+            { no: 5, name: "delete_story", kind: "message", oneof: "request", T: () => DeleteStoryRequestProto },
+            { no: 6, name: "text_edit", kind: "message", oneof: "request", T: () => TextEditRequestProto }
         ]);
     }
     create(value?: PartialMessage<StoryApiRequestProto>): StoryApiRequestProto {
@@ -1300,6 +1425,12 @@ class StoryApiRequestProto$Type extends MessageType<StoryApiRequestProto> {
                         deleteStory: DeleteStoryRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).deleteStory)
                     };
                     break;
+                case /* TextEditRequestProto text_edit */ 6:
+                    message.request = {
+                        oneofKind: "textEdit",
+                        textEdit: TextEditRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).textEdit)
+                    };
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -1327,6 +1458,9 @@ class StoryApiRequestProto$Type extends MessageType<StoryApiRequestProto> {
         /* DeleteStoryRequestProto delete_story = 5; */
         if (message.request.oneofKind === "deleteStory")
             DeleteStoryRequestProto.internalBinaryWrite(message.request.deleteStory, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        /* TextEditRequestProto text_edit = 6; */
+        if (message.request.oneofKind === "textEdit")
+            TextEditRequestProto.internalBinaryWrite(message.request.textEdit, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1346,6 +1480,7 @@ class StoryApiResponseProto$Type extends MessageType<StoryApiResponseProto> {
             { no: 3, name: "create_story", kind: "message", oneof: "response", T: () => CreateStoryResponseProto },
             { no: 4, name: "update_story", kind: "message", oneof: "response", T: () => UpdateStoryResponseProto },
             { no: 5, name: "delete_story", kind: "message", oneof: "response", T: () => DeleteStoryResponseProto },
+            { no: 6, name: "text_edit", kind: "message", oneof: "response", T: () => TextEditResponseProto },
             { no: 100, name: "latencies", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => Duration } }
         ]);
     }
@@ -1386,6 +1521,12 @@ class StoryApiResponseProto$Type extends MessageType<StoryApiResponseProto> {
                     message.response = {
                         oneofKind: "deleteStory",
                         deleteStory: DeleteStoryResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).deleteStory)
+                    };
+                    break;
+                case /* TextEditResponseProto text_edit */ 6:
+                    message.response = {
+                        oneofKind: "textEdit",
+                        textEdit: TextEditResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).textEdit)
                     };
                     break;
                 case /* map<string, google.protobuf.Duration> latencies */ 100:
@@ -1434,6 +1575,9 @@ class StoryApiResponseProto$Type extends MessageType<StoryApiResponseProto> {
         /* DeleteStoryResponseProto delete_story = 5; */
         if (message.response.oneofKind === "deleteStory")
             DeleteStoryResponseProto.internalBinaryWrite(message.response.deleteStory, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        /* TextEditResponseProto text_edit = 6; */
+        if (message.response.oneofKind === "textEdit")
+            TextEditResponseProto.internalBinaryWrite(message.response.textEdit, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
         /* map<string, google.protobuf.Duration> latencies = 100; */
         for (let k of Object.keys(message.latencies)) {
             writer.tag(100, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k);

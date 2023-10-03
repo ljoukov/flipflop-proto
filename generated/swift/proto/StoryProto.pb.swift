@@ -484,6 +484,30 @@ struct DeleteStoryResponseProto {
   init() {}
 }
 
+struct TextEditRequestProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var text: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct TextEditResponseProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var text: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 struct StoryApiRequestProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -525,6 +549,14 @@ struct StoryApiRequestProto {
     set {request = .deleteStory(newValue)}
   }
 
+  var textEdit: TextEditRequestProto {
+    get {
+      if case .textEdit(let v)? = request {return v}
+      return TextEditRequestProto()
+    }
+    set {request = .textEdit(newValue)}
+  }
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_Request: Equatable {
@@ -532,6 +564,7 @@ struct StoryApiRequestProto {
     case createStory(CreateStoryRequestProto)
     case updateStory(UpdateStoryRequestProto)
     case deleteStory(DeleteStoryRequestProto)
+    case textEdit(TextEditRequestProto)
 
   #if !swift(>=4.1)
     static func ==(lhs: StoryApiRequestProto.OneOf_Request, rhs: StoryApiRequestProto.OneOf_Request) -> Bool {
@@ -553,6 +586,10 @@ struct StoryApiRequestProto {
       }()
       case (.deleteStory, .deleteStory): return {
         guard case .deleteStory(let l) = lhs, case .deleteStory(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.textEdit, .textEdit): return {
+        guard case .textEdit(let l) = lhs, case .textEdit(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       default: return false
@@ -606,6 +643,14 @@ struct StoryApiResponseProto {
     set {response = .deleteStory(newValue)}
   }
 
+  var textEdit: TextEditResponseProto {
+    get {
+      if case .textEdit(let v)? = response {return v}
+      return TextEditResponseProto()
+    }
+    set {response = .textEdit(newValue)}
+  }
+
   var latencies: Dictionary<String,SwiftProtobuf.Google_Protobuf_Duration> = [:]
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -615,6 +660,7 @@ struct StoryApiResponseProto {
     case createStory(CreateStoryResponseProto)
     case updateStory(UpdateStoryResponseProto)
     case deleteStory(DeleteStoryResponseProto)
+    case textEdit(TextEditResponseProto)
 
   #if !swift(>=4.1)
     static func ==(lhs: StoryApiResponseProto.OneOf_Response, rhs: StoryApiResponseProto.OneOf_Response) -> Bool {
@@ -636,6 +682,10 @@ struct StoryApiResponseProto {
       }()
       case (.deleteStory, .deleteStory): return {
         guard case .deleteStory(let l) = lhs, case .deleteStory(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.textEdit, .textEdit): return {
+        guard case .textEdit(let l) = lhs, case .textEdit(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       default: return false
@@ -1528,6 +1578,8 @@ extension UpdateStoryRequestProto: @unchecked Sendable {}
 extension UpdateStoryResponseProto: @unchecked Sendable {}
 extension DeleteStoryRequestProto: @unchecked Sendable {}
 extension DeleteStoryResponseProto: @unchecked Sendable {}
+extension TextEditRequestProto: @unchecked Sendable {}
+extension TextEditResponseProto: @unchecked Sendable {}
 extension StoryApiRequestProto: @unchecked Sendable {}
 extension StoryApiRequestProto.OneOf_Request: @unchecked Sendable {}
 extension StoryApiResponseProto: @unchecked Sendable {}
@@ -1885,6 +1937,70 @@ extension DeleteStoryResponseProto: SwiftProtobuf.Message, SwiftProtobuf._Messag
   }
 }
 
+extension TextEditRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "TextEditRequestProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "text"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.text) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.text.isEmpty {
+      try visitor.visitSingularStringField(value: self.text, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: TextEditRequestProto, rhs: TextEditRequestProto) -> Bool {
+    if lhs.text != rhs.text {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension TextEditResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "TextEditResponseProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "text"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.text) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.text.isEmpty {
+      try visitor.visitSingularStringField(value: self.text, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: TextEditResponseProto, rhs: TextEditResponseProto) -> Bool {
+    if lhs.text != rhs.text {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
 extension StoryApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "StoryApiRequestProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -1893,6 +2009,7 @@ extension StoryApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     3: .standard(proto: "create_story"),
     4: .standard(proto: "update_story"),
     5: .standard(proto: "delete_story"),
+    6: .standard(proto: "text_edit"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1954,6 +2071,19 @@ extension StoryApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
           self.request = .deleteStory(v)
         }
       }()
+      case 6: try {
+        var v: TextEditRequestProto?
+        var hadOneofValue = false
+        if let current = self.request {
+          hadOneofValue = true
+          if case .textEdit(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.request = .textEdit(v)
+        }
+      }()
       default: break
       }
     }
@@ -1984,6 +2114,10 @@ extension StoryApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
       guard case .deleteStory(let v)? = self.request else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
     }()
+    case .textEdit?: try {
+      guard case .textEdit(let v)? = self.request else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
+    }()
     case nil: break
     }
     try unknownFields.traverse(visitor: &visitor)
@@ -2005,6 +2139,7 @@ extension StoryApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     3: .standard(proto: "create_story"),
     4: .standard(proto: "update_story"),
     5: .standard(proto: "delete_story"),
+    6: .standard(proto: "text_edit"),
     100: .same(proto: "latencies"),
   ]
 
@@ -2067,6 +2202,19 @@ extension StoryApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
           self.response = .deleteStory(v)
         }
       }()
+      case 6: try {
+        var v: TextEditResponseProto?
+        var hadOneofValue = false
+        if let current = self.response {
+          hadOneofValue = true
+          if case .textEdit(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.response = .textEdit(v)
+        }
+      }()
       case 100: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.Google_Protobuf_Duration>.self, value: &self.latencies) }()
       default: break
       }
@@ -2097,6 +2245,10 @@ extension StoryApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     case .deleteStory?: try {
       guard case .deleteStory(let v)? = self.response else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
+    }()
+    case .textEdit?: try {
+      guard case .textEdit(let v)? = self.response else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
     }()
     case nil: break
     }
