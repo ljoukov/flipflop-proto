@@ -36,12 +36,32 @@ message DeleteStoryRequestProto {
 message DeleteStoryResponseProto {
 }
 
-message TextEditRequestProto {
+message SuggestTextRequestProto {
   string text = 1;
 }
 
-message TextEditResponseProto {
+message SuggestTextResponseProto {
   string text = 1;
+}
+
+message SuggestQuizRequestProto {
+  string title = 1;
+  string body = 2;
+  repeated string options = 3;
+}
+
+message SuggestQuizResponseProto {
+  repeated string options = 1;
+}
+
+message SuggestVotingRequestProto {
+  string title = 1;
+  string body = 2;
+  repeated string options = 3;
+}
+
+message SuggestVotingResponseProto {
+  repeated string options = 1;
 }
 
 message StoryApiRequestProto {
@@ -51,7 +71,9 @@ message StoryApiRequestProto {
     CreateStoryRequestProto create_story = 3;
     UpdateStoryRequestProto update_story = 4;
     DeleteStoryRequestProto delete_story = 5;
-    TextEditRequestProto text_edit = 6;
+    SuggestTextRequestProto suggest_text = 6;
+    SuggestQuizRequestProto suggest_quiz = 7;
+    SuggestVotingRequestProto suggest_voting = 8;
   }
 }
 
@@ -63,7 +85,9 @@ message StoryApiResponseProto {
     CreateStoryResponseProto create_story = 3;
     UpdateStoryResponseProto update_story = 4;
     DeleteStoryResponseProto delete_story = 5;
-    TextEditResponseProto text_edit = 6;
+    SuggestTextResponseProto suggest_text = 6;
+    SuggestQuizResponseProto suggest_quiz = 7;
+    SuggestVotingResponseProto suggest_voting = 8;
   }
   map<string, google.protobuf.Duration> latencies = 100;
 }

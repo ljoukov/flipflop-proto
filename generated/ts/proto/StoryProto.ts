@@ -92,22 +92,74 @@ export interface DeleteStoryRequestProto {
 export interface DeleteStoryResponseProto {
 }
 /**
- * @generated from protobuf message TextEditRequestProto
+ * @generated from protobuf message SuggestTextRequestProto
  */
-export interface TextEditRequestProto {
+export interface SuggestTextRequestProto {
     /**
      * @generated from protobuf field: string text = 1;
      */
     text: string;
 }
 /**
- * @generated from protobuf message TextEditResponseProto
+ * @generated from protobuf message SuggestTextResponseProto
  */
-export interface TextEditResponseProto {
+export interface SuggestTextResponseProto {
     /**
      * @generated from protobuf field: string text = 1;
      */
     text: string;
+}
+/**
+ * @generated from protobuf message SuggestQuizRequestProto
+ */
+export interface SuggestQuizRequestProto {
+    /**
+     * @generated from protobuf field: string title = 1;
+     */
+    title: string;
+    /**
+     * @generated from protobuf field: string body = 2;
+     */
+    body: string;
+    /**
+     * @generated from protobuf field: repeated string options = 3;
+     */
+    options: string[];
+}
+/**
+ * @generated from protobuf message SuggestQuizResponseProto
+ */
+export interface SuggestQuizResponseProto {
+    /**
+     * @generated from protobuf field: repeated string options = 1;
+     */
+    options: string[];
+}
+/**
+ * @generated from protobuf message SuggestVotingRequestProto
+ */
+export interface SuggestVotingRequestProto {
+    /**
+     * @generated from protobuf field: string title = 1;
+     */
+    title: string;
+    /**
+     * @generated from protobuf field: string body = 2;
+     */
+    body: string;
+    /**
+     * @generated from protobuf field: repeated string options = 3;
+     */
+    options: string[];
+}
+/**
+ * @generated from protobuf message SuggestVotingResponseProto
+ */
+export interface SuggestVotingResponseProto {
+    /**
+     * @generated from protobuf field: repeated string options = 1;
+     */
+    options: string[];
 }
 /**
  * @generated from protobuf message StoryApiRequestProto
@@ -145,11 +197,23 @@ export interface StoryApiRequestProto {
          */
         deleteStory: DeleteStoryRequestProto;
     } | {
-        oneofKind: "textEdit";
+        oneofKind: "suggestText";
         /**
-         * @generated from protobuf field: TextEditRequestProto text_edit = 6;
+         * @generated from protobuf field: SuggestTextRequestProto suggest_text = 6;
          */
-        textEdit: TextEditRequestProto;
+        suggestText: SuggestTextRequestProto;
+    } | {
+        oneofKind: "suggestQuiz";
+        /**
+         * @generated from protobuf field: SuggestQuizRequestProto suggest_quiz = 7;
+         */
+        suggestQuiz: SuggestQuizRequestProto;
+    } | {
+        oneofKind: "suggestVoting";
+        /**
+         * @generated from protobuf field: SuggestVotingRequestProto suggest_voting = 8;
+         */
+        suggestVoting: SuggestVotingRequestProto;
     } | {
         oneofKind: undefined;
     };
@@ -192,11 +256,23 @@ export interface StoryApiResponseProto {
          */
         deleteStory: DeleteStoryResponseProto;
     } | {
-        oneofKind: "textEdit";
+        oneofKind: "suggestText";
         /**
-         * @generated from protobuf field: TextEditResponseProto text_edit = 6;
+         * @generated from protobuf field: SuggestTextResponseProto suggest_text = 6;
          */
-        textEdit: TextEditResponseProto;
+        suggestText: SuggestTextResponseProto;
+    } | {
+        oneofKind: "suggestQuiz";
+        /**
+         * @generated from protobuf field: SuggestQuizResponseProto suggest_quiz = 7;
+         */
+        suggestQuiz: SuggestQuizResponseProto;
+    } | {
+        oneofKind: "suggestVoting";
+        /**
+         * @generated from protobuf field: SuggestVotingResponseProto suggest_voting = 8;
+         */
+        suggestVoting: SuggestVotingResponseProto;
     } | {
         oneofKind: undefined;
     };
@@ -1281,20 +1357,20 @@ class DeleteStoryResponseProto$Type extends MessageType<DeleteStoryResponseProto
  */
 export const DeleteStoryResponseProto = new DeleteStoryResponseProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class TextEditRequestProto$Type extends MessageType<TextEditRequestProto> {
+class SuggestTextRequestProto$Type extends MessageType<SuggestTextRequestProto> {
     constructor() {
-        super("TextEditRequestProto", [
+        super("SuggestTextRequestProto", [
             { no: 1, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<TextEditRequestProto>): TextEditRequestProto {
+    create(value?: PartialMessage<SuggestTextRequestProto>): SuggestTextRequestProto {
         const message = { text: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<TextEditRequestProto>(this, message, value);
+            reflectionMergePartial<SuggestTextRequestProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: TextEditRequestProto): TextEditRequestProto {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SuggestTextRequestProto): SuggestTextRequestProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -1313,7 +1389,7 @@ class TextEditRequestProto$Type extends MessageType<TextEditRequestProto> {
         }
         return message;
     }
-    internalBinaryWrite(message: TextEditRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: SuggestTextRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string text = 1; */
         if (message.text !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.text);
@@ -1324,24 +1400,24 @@ class TextEditRequestProto$Type extends MessageType<TextEditRequestProto> {
     }
 }
 /**
- * @generated MessageType for protobuf message TextEditRequestProto
+ * @generated MessageType for protobuf message SuggestTextRequestProto
  */
-export const TextEditRequestProto = new TextEditRequestProto$Type();
+export const SuggestTextRequestProto = new SuggestTextRequestProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class TextEditResponseProto$Type extends MessageType<TextEditResponseProto> {
+class SuggestTextResponseProto$Type extends MessageType<SuggestTextResponseProto> {
     constructor() {
-        super("TextEditResponseProto", [
+        super("SuggestTextResponseProto", [
             { no: 1, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<TextEditResponseProto>): TextEditResponseProto {
+    create(value?: PartialMessage<SuggestTextResponseProto>): SuggestTextResponseProto {
         const message = { text: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<TextEditResponseProto>(this, message, value);
+            reflectionMergePartial<SuggestTextResponseProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: TextEditResponseProto): TextEditResponseProto {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SuggestTextResponseProto): SuggestTextResponseProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -1360,7 +1436,7 @@ class TextEditResponseProto$Type extends MessageType<TextEditResponseProto> {
         }
         return message;
     }
-    internalBinaryWrite(message: TextEditResponseProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: SuggestTextResponseProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string text = 1; */
         if (message.text !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.text);
@@ -1371,9 +1447,225 @@ class TextEditResponseProto$Type extends MessageType<TextEditResponseProto> {
     }
 }
 /**
- * @generated MessageType for protobuf message TextEditResponseProto
+ * @generated MessageType for protobuf message SuggestTextResponseProto
  */
-export const TextEditResponseProto = new TextEditResponseProto$Type();
+export const SuggestTextResponseProto = new SuggestTextResponseProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class SuggestQuizRequestProto$Type extends MessageType<SuggestQuizRequestProto> {
+    constructor() {
+        super("SuggestQuizRequestProto", [
+            { no: 1, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "body", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "options", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<SuggestQuizRequestProto>): SuggestQuizRequestProto {
+        const message = { title: "", body: "", options: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<SuggestQuizRequestProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SuggestQuizRequestProto): SuggestQuizRequestProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string title */ 1:
+                    message.title = reader.string();
+                    break;
+                case /* string body */ 2:
+                    message.body = reader.string();
+                    break;
+                case /* repeated string options */ 3:
+                    message.options.push(reader.string());
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: SuggestQuizRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string title = 1; */
+        if (message.title !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.title);
+        /* string body = 2; */
+        if (message.body !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.body);
+        /* repeated string options = 3; */
+        for (let i = 0; i < message.options.length; i++)
+            writer.tag(3, WireType.LengthDelimited).string(message.options[i]);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message SuggestQuizRequestProto
+ */
+export const SuggestQuizRequestProto = new SuggestQuizRequestProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class SuggestQuizResponseProto$Type extends MessageType<SuggestQuizResponseProto> {
+    constructor() {
+        super("SuggestQuizResponseProto", [
+            { no: 1, name: "options", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<SuggestQuizResponseProto>): SuggestQuizResponseProto {
+        const message = { options: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<SuggestQuizResponseProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SuggestQuizResponseProto): SuggestQuizResponseProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated string options */ 1:
+                    message.options.push(reader.string());
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: SuggestQuizResponseProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated string options = 1; */
+        for (let i = 0; i < message.options.length; i++)
+            writer.tag(1, WireType.LengthDelimited).string(message.options[i]);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message SuggestQuizResponseProto
+ */
+export const SuggestQuizResponseProto = new SuggestQuizResponseProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class SuggestVotingRequestProto$Type extends MessageType<SuggestVotingRequestProto> {
+    constructor() {
+        super("SuggestVotingRequestProto", [
+            { no: 1, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "body", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "options", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<SuggestVotingRequestProto>): SuggestVotingRequestProto {
+        const message = { title: "", body: "", options: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<SuggestVotingRequestProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SuggestVotingRequestProto): SuggestVotingRequestProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string title */ 1:
+                    message.title = reader.string();
+                    break;
+                case /* string body */ 2:
+                    message.body = reader.string();
+                    break;
+                case /* repeated string options */ 3:
+                    message.options.push(reader.string());
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: SuggestVotingRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string title = 1; */
+        if (message.title !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.title);
+        /* string body = 2; */
+        if (message.body !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.body);
+        /* repeated string options = 3; */
+        for (let i = 0; i < message.options.length; i++)
+            writer.tag(3, WireType.LengthDelimited).string(message.options[i]);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message SuggestVotingRequestProto
+ */
+export const SuggestVotingRequestProto = new SuggestVotingRequestProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class SuggestVotingResponseProto$Type extends MessageType<SuggestVotingResponseProto> {
+    constructor() {
+        super("SuggestVotingResponseProto", [
+            { no: 1, name: "options", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<SuggestVotingResponseProto>): SuggestVotingResponseProto {
+        const message = { options: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<SuggestVotingResponseProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SuggestVotingResponseProto): SuggestVotingResponseProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated string options */ 1:
+                    message.options.push(reader.string());
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: SuggestVotingResponseProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated string options = 1; */
+        for (let i = 0; i < message.options.length; i++)
+            writer.tag(1, WireType.LengthDelimited).string(message.options[i]);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message SuggestVotingResponseProto
+ */
+export const SuggestVotingResponseProto = new SuggestVotingResponseProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class StoryApiRequestProto$Type extends MessageType<StoryApiRequestProto> {
     constructor() {
@@ -1383,7 +1675,9 @@ class StoryApiRequestProto$Type extends MessageType<StoryApiRequestProto> {
             { no: 3, name: "create_story", kind: "message", oneof: "request", T: () => CreateStoryRequestProto },
             { no: 4, name: "update_story", kind: "message", oneof: "request", T: () => UpdateStoryRequestProto },
             { no: 5, name: "delete_story", kind: "message", oneof: "request", T: () => DeleteStoryRequestProto },
-            { no: 6, name: "text_edit", kind: "message", oneof: "request", T: () => TextEditRequestProto }
+            { no: 6, name: "suggest_text", kind: "message", oneof: "request", T: () => SuggestTextRequestProto },
+            { no: 7, name: "suggest_quiz", kind: "message", oneof: "request", T: () => SuggestQuizRequestProto },
+            { no: 8, name: "suggest_voting", kind: "message", oneof: "request", T: () => SuggestVotingRequestProto }
         ]);
     }
     create(value?: PartialMessage<StoryApiRequestProto>): StoryApiRequestProto {
@@ -1425,10 +1719,22 @@ class StoryApiRequestProto$Type extends MessageType<StoryApiRequestProto> {
                         deleteStory: DeleteStoryRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).deleteStory)
                     };
                     break;
-                case /* TextEditRequestProto text_edit */ 6:
+                case /* SuggestTextRequestProto suggest_text */ 6:
                     message.request = {
-                        oneofKind: "textEdit",
-                        textEdit: TextEditRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).textEdit)
+                        oneofKind: "suggestText",
+                        suggestText: SuggestTextRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).suggestText)
+                    };
+                    break;
+                case /* SuggestQuizRequestProto suggest_quiz */ 7:
+                    message.request = {
+                        oneofKind: "suggestQuiz",
+                        suggestQuiz: SuggestQuizRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).suggestQuiz)
+                    };
+                    break;
+                case /* SuggestVotingRequestProto suggest_voting */ 8:
+                    message.request = {
+                        oneofKind: "suggestVoting",
+                        suggestVoting: SuggestVotingRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).suggestVoting)
                     };
                     break;
                 default:
@@ -1458,9 +1764,15 @@ class StoryApiRequestProto$Type extends MessageType<StoryApiRequestProto> {
         /* DeleteStoryRequestProto delete_story = 5; */
         if (message.request.oneofKind === "deleteStory")
             DeleteStoryRequestProto.internalBinaryWrite(message.request.deleteStory, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
-        /* TextEditRequestProto text_edit = 6; */
-        if (message.request.oneofKind === "textEdit")
-            TextEditRequestProto.internalBinaryWrite(message.request.textEdit, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+        /* SuggestTextRequestProto suggest_text = 6; */
+        if (message.request.oneofKind === "suggestText")
+            SuggestTextRequestProto.internalBinaryWrite(message.request.suggestText, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+        /* SuggestQuizRequestProto suggest_quiz = 7; */
+        if (message.request.oneofKind === "suggestQuiz")
+            SuggestQuizRequestProto.internalBinaryWrite(message.request.suggestQuiz, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+        /* SuggestVotingRequestProto suggest_voting = 8; */
+        if (message.request.oneofKind === "suggestVoting")
+            SuggestVotingRequestProto.internalBinaryWrite(message.request.suggestVoting, writer.tag(8, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1480,7 +1792,9 @@ class StoryApiResponseProto$Type extends MessageType<StoryApiResponseProto> {
             { no: 3, name: "create_story", kind: "message", oneof: "response", T: () => CreateStoryResponseProto },
             { no: 4, name: "update_story", kind: "message", oneof: "response", T: () => UpdateStoryResponseProto },
             { no: 5, name: "delete_story", kind: "message", oneof: "response", T: () => DeleteStoryResponseProto },
-            { no: 6, name: "text_edit", kind: "message", oneof: "response", T: () => TextEditResponseProto },
+            { no: 6, name: "suggest_text", kind: "message", oneof: "response", T: () => SuggestTextResponseProto },
+            { no: 7, name: "suggest_quiz", kind: "message", oneof: "response", T: () => SuggestQuizResponseProto },
+            { no: 8, name: "suggest_voting", kind: "message", oneof: "response", T: () => SuggestVotingResponseProto },
             { no: 100, name: "latencies", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => Duration } }
         ]);
     }
@@ -1523,10 +1837,22 @@ class StoryApiResponseProto$Type extends MessageType<StoryApiResponseProto> {
                         deleteStory: DeleteStoryResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).deleteStory)
                     };
                     break;
-                case /* TextEditResponseProto text_edit */ 6:
+                case /* SuggestTextResponseProto suggest_text */ 6:
                     message.response = {
-                        oneofKind: "textEdit",
-                        textEdit: TextEditResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).textEdit)
+                        oneofKind: "suggestText",
+                        suggestText: SuggestTextResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).suggestText)
+                    };
+                    break;
+                case /* SuggestQuizResponseProto suggest_quiz */ 7:
+                    message.response = {
+                        oneofKind: "suggestQuiz",
+                        suggestQuiz: SuggestQuizResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).suggestQuiz)
+                    };
+                    break;
+                case /* SuggestVotingResponseProto suggest_voting */ 8:
+                    message.response = {
+                        oneofKind: "suggestVoting",
+                        suggestVoting: SuggestVotingResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).suggestVoting)
                     };
                     break;
                 case /* map<string, google.protobuf.Duration> latencies */ 100:
@@ -1575,9 +1901,15 @@ class StoryApiResponseProto$Type extends MessageType<StoryApiResponseProto> {
         /* DeleteStoryResponseProto delete_story = 5; */
         if (message.response.oneofKind === "deleteStory")
             DeleteStoryResponseProto.internalBinaryWrite(message.response.deleteStory, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
-        /* TextEditResponseProto text_edit = 6; */
-        if (message.response.oneofKind === "textEdit")
-            TextEditResponseProto.internalBinaryWrite(message.response.textEdit, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+        /* SuggestTextResponseProto suggest_text = 6; */
+        if (message.response.oneofKind === "suggestText")
+            SuggestTextResponseProto.internalBinaryWrite(message.response.suggestText, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+        /* SuggestQuizResponseProto suggest_quiz = 7; */
+        if (message.response.oneofKind === "suggestQuiz")
+            SuggestQuizResponseProto.internalBinaryWrite(message.response.suggestQuiz, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+        /* SuggestVotingResponseProto suggest_voting = 8; */
+        if (message.response.oneofKind === "suggestVoting")
+            SuggestVotingResponseProto.internalBinaryWrite(message.response.suggestVoting, writer.tag(8, WireType.LengthDelimited).fork(), options).join();
         /* map<string, google.protobuf.Duration> latencies = 100; */
         for (let k of Object.keys(message.latencies)) {
             writer.tag(100, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k);

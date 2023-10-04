@@ -484,7 +484,7 @@ struct DeleteStoryResponseProto {
   init() {}
 }
 
-struct TextEditRequestProto {
+struct SuggestTextRequestProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -496,12 +496,68 @@ struct TextEditRequestProto {
   init() {}
 }
 
-struct TextEditResponseProto {
+struct SuggestTextResponseProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   var text: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct SuggestQuizRequestProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var title: String = String()
+
+  var body: String = String()
+
+  var options: [String] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct SuggestQuizResponseProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var options: [String] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct SuggestVotingRequestProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var title: String = String()
+
+  var body: String = String()
+
+  var options: [String] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct SuggestVotingResponseProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var options: [String] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -549,12 +605,28 @@ struct StoryApiRequestProto {
     set {request = .deleteStory(newValue)}
   }
 
-  var textEdit: TextEditRequestProto {
+  var suggestText: SuggestTextRequestProto {
     get {
-      if case .textEdit(let v)? = request {return v}
-      return TextEditRequestProto()
+      if case .suggestText(let v)? = request {return v}
+      return SuggestTextRequestProto()
     }
-    set {request = .textEdit(newValue)}
+    set {request = .suggestText(newValue)}
+  }
+
+  var suggestQuiz: SuggestQuizRequestProto {
+    get {
+      if case .suggestQuiz(let v)? = request {return v}
+      return SuggestQuizRequestProto()
+    }
+    set {request = .suggestQuiz(newValue)}
+  }
+
+  var suggestVoting: SuggestVotingRequestProto {
+    get {
+      if case .suggestVoting(let v)? = request {return v}
+      return SuggestVotingRequestProto()
+    }
+    set {request = .suggestVoting(newValue)}
   }
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -564,7 +636,9 @@ struct StoryApiRequestProto {
     case createStory(CreateStoryRequestProto)
     case updateStory(UpdateStoryRequestProto)
     case deleteStory(DeleteStoryRequestProto)
-    case textEdit(TextEditRequestProto)
+    case suggestText(SuggestTextRequestProto)
+    case suggestQuiz(SuggestQuizRequestProto)
+    case suggestVoting(SuggestVotingRequestProto)
 
   #if !swift(>=4.1)
     static func ==(lhs: StoryApiRequestProto.OneOf_Request, rhs: StoryApiRequestProto.OneOf_Request) -> Bool {
@@ -588,8 +662,16 @@ struct StoryApiRequestProto {
         guard case .deleteStory(let l) = lhs, case .deleteStory(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
-      case (.textEdit, .textEdit): return {
-        guard case .textEdit(let l) = lhs, case .textEdit(let r) = rhs else { preconditionFailure() }
+      case (.suggestText, .suggestText): return {
+        guard case .suggestText(let l) = lhs, case .suggestText(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.suggestQuiz, .suggestQuiz): return {
+        guard case .suggestQuiz(let l) = lhs, case .suggestQuiz(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.suggestVoting, .suggestVoting): return {
+        guard case .suggestVoting(let l) = lhs, case .suggestVoting(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       default: return false
@@ -643,12 +725,28 @@ struct StoryApiResponseProto {
     set {response = .deleteStory(newValue)}
   }
 
-  var textEdit: TextEditResponseProto {
+  var suggestText: SuggestTextResponseProto {
     get {
-      if case .textEdit(let v)? = response {return v}
-      return TextEditResponseProto()
+      if case .suggestText(let v)? = response {return v}
+      return SuggestTextResponseProto()
     }
-    set {response = .textEdit(newValue)}
+    set {response = .suggestText(newValue)}
+  }
+
+  var suggestQuiz: SuggestQuizResponseProto {
+    get {
+      if case .suggestQuiz(let v)? = response {return v}
+      return SuggestQuizResponseProto()
+    }
+    set {response = .suggestQuiz(newValue)}
+  }
+
+  var suggestVoting: SuggestVotingResponseProto {
+    get {
+      if case .suggestVoting(let v)? = response {return v}
+      return SuggestVotingResponseProto()
+    }
+    set {response = .suggestVoting(newValue)}
   }
 
   var latencies: Dictionary<String,SwiftProtobuf.Google_Protobuf_Duration> = [:]
@@ -660,7 +758,9 @@ struct StoryApiResponseProto {
     case createStory(CreateStoryResponseProto)
     case updateStory(UpdateStoryResponseProto)
     case deleteStory(DeleteStoryResponseProto)
-    case textEdit(TextEditResponseProto)
+    case suggestText(SuggestTextResponseProto)
+    case suggestQuiz(SuggestQuizResponseProto)
+    case suggestVoting(SuggestVotingResponseProto)
 
   #if !swift(>=4.1)
     static func ==(lhs: StoryApiResponseProto.OneOf_Response, rhs: StoryApiResponseProto.OneOf_Response) -> Bool {
@@ -684,8 +784,16 @@ struct StoryApiResponseProto {
         guard case .deleteStory(let l) = lhs, case .deleteStory(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
-      case (.textEdit, .textEdit): return {
-        guard case .textEdit(let l) = lhs, case .textEdit(let r) = rhs else { preconditionFailure() }
+      case (.suggestText, .suggestText): return {
+        guard case .suggestText(let l) = lhs, case .suggestText(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.suggestQuiz, .suggestQuiz): return {
+        guard case .suggestQuiz(let l) = lhs, case .suggestQuiz(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.suggestVoting, .suggestVoting): return {
+        guard case .suggestVoting(let l) = lhs, case .suggestVoting(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       default: return false
@@ -1578,8 +1686,12 @@ extension UpdateStoryRequestProto: @unchecked Sendable {}
 extension UpdateStoryResponseProto: @unchecked Sendable {}
 extension DeleteStoryRequestProto: @unchecked Sendable {}
 extension DeleteStoryResponseProto: @unchecked Sendable {}
-extension TextEditRequestProto: @unchecked Sendable {}
-extension TextEditResponseProto: @unchecked Sendable {}
+extension SuggestTextRequestProto: @unchecked Sendable {}
+extension SuggestTextResponseProto: @unchecked Sendable {}
+extension SuggestQuizRequestProto: @unchecked Sendable {}
+extension SuggestQuizResponseProto: @unchecked Sendable {}
+extension SuggestVotingRequestProto: @unchecked Sendable {}
+extension SuggestVotingResponseProto: @unchecked Sendable {}
 extension StoryApiRequestProto: @unchecked Sendable {}
 extension StoryApiRequestProto.OneOf_Request: @unchecked Sendable {}
 extension StoryApiResponseProto: @unchecked Sendable {}
@@ -1937,8 +2049,8 @@ extension DeleteStoryResponseProto: SwiftProtobuf.Message, SwiftProtobuf._Messag
   }
 }
 
-extension TextEditRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "TextEditRequestProto"
+extension SuggestTextRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "SuggestTextRequestProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "text"),
   ]
@@ -1962,15 +2074,15 @@ extension TextEditRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: TextEditRequestProto, rhs: TextEditRequestProto) -> Bool {
+  static func ==(lhs: SuggestTextRequestProto, rhs: SuggestTextRequestProto) -> Bool {
     if lhs.text != rhs.text {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
-extension TextEditResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "TextEditResponseProto"
+extension SuggestTextResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "SuggestTextResponseProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "text"),
   ]
@@ -1994,8 +2106,160 @@ extension TextEditResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: TextEditResponseProto, rhs: TextEditResponseProto) -> Bool {
+  static func ==(lhs: SuggestTextResponseProto, rhs: SuggestTextResponseProto) -> Bool {
     if lhs.text != rhs.text {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension SuggestQuizRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "SuggestQuizRequestProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "title"),
+    2: .same(proto: "body"),
+    3: .same(proto: "options"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.title) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.body) }()
+      case 3: try { try decoder.decodeRepeatedStringField(value: &self.options) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.title.isEmpty {
+      try visitor.visitSingularStringField(value: self.title, fieldNumber: 1)
+    }
+    if !self.body.isEmpty {
+      try visitor.visitSingularStringField(value: self.body, fieldNumber: 2)
+    }
+    if !self.options.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.options, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: SuggestQuizRequestProto, rhs: SuggestQuizRequestProto) -> Bool {
+    if lhs.title != rhs.title {return false}
+    if lhs.body != rhs.body {return false}
+    if lhs.options != rhs.options {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension SuggestQuizResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "SuggestQuizResponseProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "options"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedStringField(value: &self.options) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.options.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.options, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: SuggestQuizResponseProto, rhs: SuggestQuizResponseProto) -> Bool {
+    if lhs.options != rhs.options {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension SuggestVotingRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "SuggestVotingRequestProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "title"),
+    2: .same(proto: "body"),
+    3: .same(proto: "options"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.title) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.body) }()
+      case 3: try { try decoder.decodeRepeatedStringField(value: &self.options) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.title.isEmpty {
+      try visitor.visitSingularStringField(value: self.title, fieldNumber: 1)
+    }
+    if !self.body.isEmpty {
+      try visitor.visitSingularStringField(value: self.body, fieldNumber: 2)
+    }
+    if !self.options.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.options, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: SuggestVotingRequestProto, rhs: SuggestVotingRequestProto) -> Bool {
+    if lhs.title != rhs.title {return false}
+    if lhs.body != rhs.body {return false}
+    if lhs.options != rhs.options {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension SuggestVotingResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "SuggestVotingResponseProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "options"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedStringField(value: &self.options) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.options.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.options, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: SuggestVotingResponseProto, rhs: SuggestVotingResponseProto) -> Bool {
+    if lhs.options != rhs.options {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -2009,7 +2273,9 @@ extension StoryApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     3: .standard(proto: "create_story"),
     4: .standard(proto: "update_story"),
     5: .standard(proto: "delete_story"),
-    6: .standard(proto: "text_edit"),
+    6: .standard(proto: "suggest_text"),
+    7: .standard(proto: "suggest_quiz"),
+    8: .standard(proto: "suggest_voting"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2072,16 +2338,42 @@ extension StoryApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
         }
       }()
       case 6: try {
-        var v: TextEditRequestProto?
+        var v: SuggestTextRequestProto?
         var hadOneofValue = false
         if let current = self.request {
           hadOneofValue = true
-          if case .textEdit(let m) = current {v = m}
+          if case .suggestText(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.request = .textEdit(v)
+          self.request = .suggestText(v)
+        }
+      }()
+      case 7: try {
+        var v: SuggestQuizRequestProto?
+        var hadOneofValue = false
+        if let current = self.request {
+          hadOneofValue = true
+          if case .suggestQuiz(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.request = .suggestQuiz(v)
+        }
+      }()
+      case 8: try {
+        var v: SuggestVotingRequestProto?
+        var hadOneofValue = false
+        if let current = self.request {
+          hadOneofValue = true
+          if case .suggestVoting(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.request = .suggestVoting(v)
         }
       }()
       default: break
@@ -2114,9 +2406,17 @@ extension StoryApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
       guard case .deleteStory(let v)? = self.request else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
     }()
-    case .textEdit?: try {
-      guard case .textEdit(let v)? = self.request else { preconditionFailure() }
+    case .suggestText?: try {
+      guard case .suggestText(let v)? = self.request else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
+    }()
+    case .suggestQuiz?: try {
+      guard case .suggestQuiz(let v)? = self.request else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
+    }()
+    case .suggestVoting?: try {
+      guard case .suggestVoting(let v)? = self.request else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
     }()
     case nil: break
     }
@@ -2139,7 +2439,9 @@ extension StoryApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     3: .standard(proto: "create_story"),
     4: .standard(proto: "update_story"),
     5: .standard(proto: "delete_story"),
-    6: .standard(proto: "text_edit"),
+    6: .standard(proto: "suggest_text"),
+    7: .standard(proto: "suggest_quiz"),
+    8: .standard(proto: "suggest_voting"),
     100: .same(proto: "latencies"),
   ]
 
@@ -2203,16 +2505,42 @@ extension StoryApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
         }
       }()
       case 6: try {
-        var v: TextEditResponseProto?
+        var v: SuggestTextResponseProto?
         var hadOneofValue = false
         if let current = self.response {
           hadOneofValue = true
-          if case .textEdit(let m) = current {v = m}
+          if case .suggestText(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.response = .textEdit(v)
+          self.response = .suggestText(v)
+        }
+      }()
+      case 7: try {
+        var v: SuggestQuizResponseProto?
+        var hadOneofValue = false
+        if let current = self.response {
+          hadOneofValue = true
+          if case .suggestQuiz(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.response = .suggestQuiz(v)
+        }
+      }()
+      case 8: try {
+        var v: SuggestVotingResponseProto?
+        var hadOneofValue = false
+        if let current = self.response {
+          hadOneofValue = true
+          if case .suggestVoting(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.response = .suggestVoting(v)
         }
       }()
       case 100: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.Google_Protobuf_Duration>.self, value: &self.latencies) }()
@@ -2246,9 +2574,17 @@ extension StoryApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
       guard case .deleteStory(let v)? = self.response else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
     }()
-    case .textEdit?: try {
-      guard case .textEdit(let v)? = self.response else { preconditionFailure() }
+    case .suggestText?: try {
+      guard case .suggestText(let v)? = self.response else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
+    }()
+    case .suggestQuiz?: try {
+      guard case .suggestQuiz(let v)? = self.response else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
+    }()
+    case .suggestVoting?: try {
+      guard case .suggestVoting(let v)? = self.response else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
     }()
     case nil: break
     }
