@@ -1032,7 +1032,7 @@ struct ActivityBlockProto {
   init() {}
 }
 
-struct CardActivitiesProto {
+struct ActivitiesProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1110,8 +1110,8 @@ struct StoryProto {
   /// Clears the value of `storyRecs`. Subsequent reads from it will return its default value.
   mutating func clearStoryRecs() {_uniqueStorage()._storyRecs = nil}
 
-  var activities: CardActivitiesProto {
-    get {return _storage._activities ?? CardActivitiesProto()}
+  var activities: ActivitiesProto {
+    get {return _storage._activities ?? ActivitiesProto()}
     set {_uniqueStorage()._activities = newValue}
   }
   /// Returns true if `activities` has been explicitly set.
@@ -1817,7 +1817,7 @@ extension ActivityTextBlockProto: @unchecked Sendable {}
 extension ActivityLauncherBlockProto: @unchecked Sendable {}
 extension ActivityBlockProto: @unchecked Sendable {}
 extension ActivityBlockProto.OneOf_Block: @unchecked Sendable {}
-extension CardActivitiesProto: @unchecked Sendable {}
+extension ActivitiesProto: @unchecked Sendable {}
 extension StoryProto: @unchecked Sendable {}
 extension CardProto: @unchecked Sendable {}
 extension CardFaceProto: @unchecked Sendable {}
@@ -3181,8 +3181,8 @@ extension ActivityBlockProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
   }
 }
 
-extension CardActivitiesProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "CardActivitiesProto"
+extension ActivitiesProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "ActivitiesProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "blocks"),
   ]
@@ -3206,7 +3206,7 @@ extension CardActivitiesProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: CardActivitiesProto, rhs: CardActivitiesProto) -> Bool {
+  static func ==(lhs: ActivitiesProto, rhs: ActivitiesProto) -> Bool {
     if lhs.blocks != rhs.blocks {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
@@ -3238,7 +3238,7 @@ extension StoryProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementatio
     var _cards: [CardProto] = []
     var _storyData: StoryDataProto? = nil
     var _storyRecs: StoryRecsProto? = nil
-    var _activities: CardActivitiesProto? = nil
+    var _activities: ActivitiesProto? = nil
 
     static let defaultInstance = _StorageClass()
 

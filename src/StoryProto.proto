@@ -169,7 +169,7 @@ message ActivityBlockProto {
   }
 }
 
-message CardActivitiesProto {
+message ActivitiesProto {
   repeated ActivityBlockProto blocks = 1;
 }
 
@@ -187,7 +187,7 @@ message StoryProto {
   StoryDataProto story_data = 8;
   StoryRecsProto story_recs = 9;
 
-  CardActivitiesProto activities = 10;
+  ActivitiesProto activities = 10;
 }
 
 message CardProto {

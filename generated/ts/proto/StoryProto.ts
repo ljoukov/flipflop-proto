@@ -463,9 +463,9 @@ export interface ActivityBlockProto {
     };
 }
 /**
- * @generated from protobuf message CardActivitiesProto
+ * @generated from protobuf message ActivitiesProto
  */
-export interface CardActivitiesProto {
+export interface ActivitiesProto {
     /**
      * @generated from protobuf field: repeated ActivityBlockProto blocks = 1;
      */
@@ -512,9 +512,9 @@ export interface StoryProto {
      */
     storyRecs?: StoryRecsProto;
     /**
-     * @generated from protobuf field: CardActivitiesProto activities = 10;
+     * @generated from protobuf field: ActivitiesProto activities = 10;
      */
-    activities?: CardActivitiesProto;
+    activities?: ActivitiesProto;
 }
 /**
  * @generated from protobuf message CardProto
@@ -2562,20 +2562,20 @@ class ActivityBlockProto$Type extends MessageType<ActivityBlockProto> {
  */
 export const ActivityBlockProto = new ActivityBlockProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class CardActivitiesProto$Type extends MessageType<CardActivitiesProto> {
+class ActivitiesProto$Type extends MessageType<ActivitiesProto> {
     constructor() {
-        super("CardActivitiesProto", [
+        super("ActivitiesProto", [
             { no: 1, name: "blocks", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ActivityBlockProto }
         ]);
     }
-    create(value?: PartialMessage<CardActivitiesProto>): CardActivitiesProto {
+    create(value?: PartialMessage<ActivitiesProto>): ActivitiesProto {
         const message = { blocks: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<CardActivitiesProto>(this, message, value);
+            reflectionMergePartial<ActivitiesProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CardActivitiesProto): CardActivitiesProto {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ActivitiesProto): ActivitiesProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -2594,7 +2594,7 @@ class CardActivitiesProto$Type extends MessageType<CardActivitiesProto> {
         }
         return message;
     }
-    internalBinaryWrite(message: CardActivitiesProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: ActivitiesProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* repeated ActivityBlockProto blocks = 1; */
         for (let i = 0; i < message.blocks.length; i++)
             ActivityBlockProto.internalBinaryWrite(message.blocks[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
@@ -2605,9 +2605,9 @@ class CardActivitiesProto$Type extends MessageType<CardActivitiesProto> {
     }
 }
 /**
- * @generated MessageType for protobuf message CardActivitiesProto
+ * @generated MessageType for protobuf message ActivitiesProto
  */
-export const CardActivitiesProto = new CardActivitiesProto$Type();
+export const ActivitiesProto = new ActivitiesProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class StoryProto$Type extends MessageType<StoryProto> {
     constructor() {
@@ -2621,7 +2621,7 @@ class StoryProto$Type extends MessageType<StoryProto> {
             { no: 7, name: "cards", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => CardProto },
             { no: 8, name: "story_data", kind: "message", T: () => StoryDataProto },
             { no: 9, name: "story_recs", kind: "message", T: () => StoryRecsProto },
-            { no: 10, name: "activities", kind: "message", T: () => CardActivitiesProto }
+            { no: 10, name: "activities", kind: "message", T: () => ActivitiesProto }
         ]);
     }
     create(value?: PartialMessage<StoryProto>): StoryProto {
@@ -2663,8 +2663,8 @@ class StoryProto$Type extends MessageType<StoryProto> {
                 case /* StoryRecsProto story_recs */ 9:
                     message.storyRecs = StoryRecsProto.internalBinaryRead(reader, reader.uint32(), options, message.storyRecs);
                     break;
-                case /* CardActivitiesProto activities */ 10:
-                    message.activities = CardActivitiesProto.internalBinaryRead(reader, reader.uint32(), options, message.activities);
+                case /* ActivitiesProto activities */ 10:
+                    message.activities = ActivitiesProto.internalBinaryRead(reader, reader.uint32(), options, message.activities);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2705,9 +2705,9 @@ class StoryProto$Type extends MessageType<StoryProto> {
         /* StoryRecsProto story_recs = 9; */
         if (message.storyRecs)
             StoryRecsProto.internalBinaryWrite(message.storyRecs, writer.tag(9, WireType.LengthDelimited).fork(), options).join();
-        /* CardActivitiesProto activities = 10; */
+        /* ActivitiesProto activities = 10; */
         if (message.activities)
-            CardActivitiesProto.internalBinaryWrite(message.activities, writer.tag(10, WireType.LengthDelimited).fork(), options).join();
+            ActivitiesProto.internalBinaryWrite(message.activities, writer.tag(10, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
