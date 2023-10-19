@@ -153,6 +153,26 @@ message DeletedStoryProto {
   google.protobuf.Timestamp deleted_at = 3;
 }
 
+message ActivityTextBlockProto {
+  string markdown = 1;
+}
+
+message ActivityLauncherBlockProto {
+  string activity_id = 1;
+  string display_name = 2;
+}
+
+message ActivityBlockProto {
+  oneof block {
+    ActivityTextBlockProto text = 1;
+    ActivityLauncherBlockProto launcher = 2;
+  }
+}
+
+message CardActivitiesProto {
+  repeated ActivityBlockProto blocks = 1;
+}
+
 message StoryProto {
   string id = 1;
   
@@ -166,6 +186,8 @@ message StoryProto {
 
   StoryDataProto story_data = 8;
   StoryRecsProto story_recs = 9;
+
+  CardActivitiesProto activities = 10;
 }
 
 message CardProto {
