@@ -450,6 +450,7 @@ struct OpenChatRequestProto {
   }
 
   /// start chat with this user message
+  /// Consider adding "global_bot_id" as parameter.
   var userMessage: ChatUserMessageProto {
     get {
       if case .userMessage(let v)? = type {return v}
@@ -468,6 +469,7 @@ struct OpenChatRequestProto {
     /// activity for a story
     case storyActivityID(ChatStoryActivityIdProto)
     /// start chat with this user message
+    /// Consider adding "global_bot_id" as parameter.
     case userMessage(ChatUserMessageProto)
 
   #if !swift(>=4.1)

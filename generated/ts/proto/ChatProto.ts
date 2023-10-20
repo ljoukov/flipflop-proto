@@ -290,6 +290,7 @@ export interface OpenChatRequestProto {
         oneofKind: "userMessage";
         /**
          * start chat with this user message
+         * Consider adding "global_bot_id" as parameter.
          *
          * @generated from protobuf field: ChatUserMessageProto user_message = 6;
          */
