@@ -449,15 +449,6 @@ struct OpenChatRequestProto {
     set {type = .storyActivityID(newValue)}
   }
 
-  /// start chat with this user message
-  var userMessage: ChatUserMessageProto {
-    get {
-      if case .userMessage(let v)? = type {return v}
-      return ChatUserMessageProto()
-    }
-    set {type = .userMessage(newValue)}
-  }
-
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_Type: Equatable {
@@ -467,8 +458,6 @@ struct OpenChatRequestProto {
     case globalBotID(String)
     /// activity for a story
     case storyActivityID(ChatStoryActivityIdProto)
-    /// start chat with this user message
-    case userMessage(ChatUserMessageProto)
 
   #if !swift(>=4.1)
     static func ==(lhs: OpenChatRequestProto.OneOf_Type, rhs: OpenChatRequestProto.OneOf_Type) -> Bool {
@@ -486,10 +475,6 @@ struct OpenChatRequestProto {
       }()
       case (.storyActivityID, .storyActivityID): return {
         guard case .storyActivityID(let l) = lhs, case .storyActivityID(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.userMessage, .userMessage): return {
-        guard case .userMessage(let l) = lhs, case .userMessage(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       default: return false
@@ -1570,7 +1555,6 @@ extension OpenChatRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     2: .standard(proto: "chat_id"),
     3: .standard(proto: "global_bot_id"),
     5: .standard(proto: "story_activity_id"),
-    6: .standard(proto: "user_message"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1609,19 +1593,6 @@ extension OpenChatRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
           self.type = .storyActivityID(v)
         }
       }()
-      case 6: try {
-        var v: ChatUserMessageProto?
-        var hadOneofValue = false
-        if let current = self.type {
-          hadOneofValue = true
-          if case .userMessage(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {
-          if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.type = .userMessage(v)
-        }
-      }()
       default: break
       }
     }
@@ -1647,10 +1618,6 @@ extension OpenChatRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     case .storyActivityID?: try {
       guard case .storyActivityID(let v)? = self.type else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
-    }()
-    case .userMessage?: try {
-      guard case .userMessage(let v)? = self.type else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
     }()
     case nil: break
     }

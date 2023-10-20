@@ -98,8 +98,8 @@ message OpenChatRequestProto {
     // activity for a story
     ChatStoryActivityIdProto story_activity_id = 5;
 
-    // start chat with this user message
-    ChatUserMessageProto user_message = 6;
+    // Deprecated: start chat with this user message
+    // ChatUserMessageProto user_message = 6 [ deprecated = true ];
   }
 }
 
