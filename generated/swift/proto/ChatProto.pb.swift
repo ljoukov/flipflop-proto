@@ -422,7 +422,7 @@ struct OpenChatRequestProto {
 
   var type: OpenChatRequestProto.OneOf_Type? = nil
 
-  /// open specific activity
+  /// open specific chat
   var chatID: String {
     get {
       if case .chatID(let v)? = type {return v}
@@ -431,22 +431,13 @@ struct OpenChatRequestProto {
     set {type = .chatID(newValue)}
   }
 
-  /// prompt-less global bot
-  var botID: String {
+  /// global bot
+  var globalBotID: String {
     get {
-      if case .botID(let v)? = type {return v}
+      if case .globalBotID(let v)? = type {return v}
       return String()
     }
-    set {type = .botID(newValue)}
-  }
-
-  /// activities for a story
-  var storyID: String {
-    get {
-      if case .storyID(let v)? = type {return v}
-      return String()
-    }
-    set {type = .storyID(newValue)}
+    set {type = .globalBotID(newValue)}
   }
 
   /// activity for a story
@@ -470,12 +461,10 @@ struct OpenChatRequestProto {
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_Type: Equatable {
-    /// open specific activity
+    /// open specific chat
     case chatID(String)
-    /// prompt-less global bot
-    case botID(String)
-    /// activities for a story
-    case storyID(String)
+    /// global bot
+    case globalBotID(String)
     /// activity for a story
     case storyActivityID(ChatStoryActivityIdProto)
     /// start chat with this user message
@@ -491,12 +480,8 @@ struct OpenChatRequestProto {
         guard case .chatID(let l) = lhs, case .chatID(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
-      case (.botID, .botID): return {
-        guard case .botID(let l) = lhs, case .botID(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.storyID, .storyID): return {
-        guard case .storyID(let l) = lhs, case .storyID(let r) = rhs else { preconditionFailure() }
+      case (.globalBotID, .globalBotID): return {
+        guard case .globalBotID(let l) = lhs, case .globalBotID(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       case (.storyActivityID, .storyActivityID): return {
@@ -1583,8 +1568,7 @@ extension OpenChatRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "restart"),
     2: .standard(proto: "chat_id"),
-    3: .standard(proto: "bot_id"),
-    4: .standard(proto: "story_id"),
+    3: .standard(proto: "global_bot_id"),
     5: .standard(proto: "story_activity_id"),
     6: .standard(proto: "user_message"),
   ]
@@ -1609,15 +1593,7 @@ extension OpenChatRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
         try decoder.decodeSingularStringField(value: &v)
         if let v = v {
           if self.type != nil {try decoder.handleConflictingOneOf()}
-          self.type = .botID(v)
-        }
-      }()
-      case 4: try {
-        var v: String?
-        try decoder.decodeSingularStringField(value: &v)
-        if let v = v {
-          if self.type != nil {try decoder.handleConflictingOneOf()}
-          self.type = .storyID(v)
+          self.type = .globalBotID(v)
         }
       }()
       case 5: try {
@@ -1664,13 +1640,9 @@ extension OpenChatRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
       guard case .chatID(let v)? = self.type else { preconditionFailure() }
       try visitor.visitSingularStringField(value: v, fieldNumber: 2)
     }()
-    case .botID?: try {
-      guard case .botID(let v)? = self.type else { preconditionFailure() }
+    case .globalBotID?: try {
+      guard case .globalBotID(let v)? = self.type else { preconditionFailure() }
       try visitor.visitSingularStringField(value: v, fieldNumber: 3)
-    }()
-    case .storyID?: try {
-      guard case .storyID(let v)? = self.type else { preconditionFailure() }
-      try visitor.visitSingularStringField(value: v, fieldNumber: 4)
     }()
     case .storyActivityID?: try {
       guard case .storyActivityID(let v)? = self.type else { preconditionFailure() }

@@ -86,14 +86,14 @@ message OpenChatRequestProto {
   bool restart = 1;
 
   oneof type {
-    // open specific activity
+    // open specific chat
     string chat_id = 2;
 
-    // prompt-less global bot
-    string bot_id = 3;
+    // global bot
+    string global_bot_id = 3;
 
-    // activities for a story
-    string story_id = 4;
+    // Deprecated: activities for a story
+    // string story_id = 4 [ deprecated = true ];
 
     // activity for a story
     ChatStoryActivityIdProto story_activity_id = 5;

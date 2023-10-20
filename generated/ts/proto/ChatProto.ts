@@ -262,29 +262,24 @@ export interface OpenChatRequestProto {
     type: {
         oneofKind: "chatId";
         /**
-         * open specific activity
+         * open specific chat
          *
          * @generated from protobuf field: string chat_id = 2;
          */
         chatId: string;
     } | {
-        oneofKind: "botId";
+        oneofKind: "globalBotId";
         /**
-         * prompt-less global bot
+         * global bot
          *
-         * @generated from protobuf field: string bot_id = 3;
+         * @generated from protobuf field: string global_bot_id = 3;
          */
-        botId: string;
-    } | {
-        oneofKind: "storyId";
-        /**
-         * activities for a story
-         *
-         * @generated from protobuf field: string story_id = 4;
-         */
-        storyId: string;
+        globalBotId: string;
     } | {
         oneofKind: "storyActivityId";
+        // Deprecated: activities for a story
+        // string story_id = 4 [ deprecated = true ];
+
         /**
          * activity for a story
          *
@@ -1337,8 +1332,7 @@ class OpenChatRequestProto$Type extends MessageType<OpenChatRequestProto> {
         super("OpenChatRequestProto", [
             { no: 1, name: "restart", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
             { no: 2, name: "chat_id", kind: "scalar", oneof: "type", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "bot_id", kind: "scalar", oneof: "type", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "story_id", kind: "scalar", oneof: "type", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "global_bot_id", kind: "scalar", oneof: "type", T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "story_activity_id", kind: "message", oneof: "type", T: () => ChatStoryActivityIdProto },
             { no: 6, name: "user_message", kind: "message", oneof: "type", T: () => ChatUserMessageProto }
         ]);
@@ -1364,16 +1358,10 @@ class OpenChatRequestProto$Type extends MessageType<OpenChatRequestProto> {
                         chatId: reader.string()
                     };
                     break;
-                case /* string bot_id */ 3:
+                case /* string global_bot_id */ 3:
                     message.type = {
-                        oneofKind: "botId",
-                        botId: reader.string()
-                    };
-                    break;
-                case /* string story_id */ 4:
-                    message.type = {
-                        oneofKind: "storyId",
-                        storyId: reader.string()
+                        oneofKind: "globalBotId",
+                        globalBotId: reader.string()
                     };
                     break;
                 case /* ChatStoryActivityIdProto story_activity_id */ 5:
@@ -1406,12 +1394,9 @@ class OpenChatRequestProto$Type extends MessageType<OpenChatRequestProto> {
         /* string chat_id = 2; */
         if (message.type.oneofKind === "chatId")
             writer.tag(2, WireType.LengthDelimited).string(message.type.chatId);
-        /* string bot_id = 3; */
-        if (message.type.oneofKind === "botId")
-            writer.tag(3, WireType.LengthDelimited).string(message.type.botId);
-        /* string story_id = 4; */
-        if (message.type.oneofKind === "storyId")
-            writer.tag(4, WireType.LengthDelimited).string(message.type.storyId);
+        /* string global_bot_id = 3; */
+        if (message.type.oneofKind === "globalBotId")
+            writer.tag(3, WireType.LengthDelimited).string(message.type.globalBotId);
         /* ChatStoryActivityIdProto story_activity_id = 5; */
         if (message.type.oneofKind === "storyActivityId")
             ChatStoryActivityIdProto.internalBinaryWrite(message.type.storyActivityId, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
