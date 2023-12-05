@@ -82,6 +82,11 @@ message ChatStoryActivityIdProto {
   string activity_id = 2;
 }
 
+message OpenChatWithUserMessageProto {
+  string global_bot_id = 1;
+  ChatUserMessageProto user_message = 2;
+}
+
 message OpenChatRequestProto {
   bool restart = 1;
 
@@ -98,9 +103,8 @@ message OpenChatRequestProto {
     // activity for a story
     ChatStoryActivityIdProto story_activity_id = 5;
 
-    // start chat with this user message
-    // Consider adding "global_bot_id" as parameter.
-    ChatUserMessageProto user_message = 6;
+    // Opens global bot with user's first message
+    OpenChatWithUserMessageProto user_message = 6;
   }
 }
 
