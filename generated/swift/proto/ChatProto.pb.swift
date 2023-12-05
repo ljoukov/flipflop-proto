@@ -420,20 +420,11 @@ struct OpenChatWithUserMessageProto {
 
   var globalBotID: String = String()
 
-  var userMessage: ChatUserMessageProto {
-    get {return _userMessage ?? ChatUserMessageProto()}
-    set {_userMessage = newValue}
-  }
-  /// Returns true if `userMessage` has been explicitly set.
-  var hasUserMessage: Bool {return self._userMessage != nil}
-  /// Clears the value of `userMessage`. Subsequent reads from it will return its default value.
-  mutating func clearUserMessage() {self._userMessage = nil}
+  var userMessage: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
-
-  fileprivate var _userMessage: ChatUserMessageProto? = nil
 }
 
 struct OpenChatRequestProto {
@@ -1601,29 +1592,25 @@ extension OpenChatWithUserMessageProto: SwiftProtobuf.Message, SwiftProtobuf._Me
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.globalBotID) }()
-      case 2: try { try decoder.decodeSingularMessageField(value: &self._userMessage) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.userMessage) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every if/case branch local when no optimizations
-    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.globalBotID.isEmpty {
       try visitor.visitSingularStringField(value: self.globalBotID, fieldNumber: 1)
     }
-    try { if let v = self._userMessage {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
-    } }()
+    if !self.userMessage.isEmpty {
+      try visitor.visitSingularStringField(value: self.userMessage, fieldNumber: 2)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: OpenChatWithUserMessageProto, rhs: OpenChatWithUserMessageProto) -> Bool {
     if lhs.globalBotID != rhs.globalBotID {return false}
-    if lhs._userMessage != rhs._userMessage {return false}
+    if lhs.userMessage != rhs.userMessage {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

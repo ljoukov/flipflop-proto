@@ -257,9 +257,9 @@ export interface OpenChatWithUserMessageProto {
      */
     globalBotId: string;
     /**
-     * @generated from protobuf field: ChatUserMessageProto user_message = 2;
+     * @generated from protobuf field: string user_message = 2;
      */
-    userMessage?: ChatUserMessageProto;
+    userMessage: string;
 }
 /**
  * @generated from protobuf message OpenChatRequestProto
@@ -1344,11 +1344,11 @@ class OpenChatWithUserMessageProto$Type extends MessageType<OpenChatWithUserMess
     constructor() {
         super("OpenChatWithUserMessageProto", [
             { no: 1, name: "global_bot_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "user_message", kind: "message", T: () => ChatUserMessageProto }
+            { no: 2, name: "user_message", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<OpenChatWithUserMessageProto>): OpenChatWithUserMessageProto {
-        const message = { globalBotId: "" };
+        const message = { globalBotId: "", userMessage: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<OpenChatWithUserMessageProto>(this, message, value);
@@ -1362,8 +1362,8 @@ class OpenChatWithUserMessageProto$Type extends MessageType<OpenChatWithUserMess
                 case /* string global_bot_id */ 1:
                     message.globalBotId = reader.string();
                     break;
-                case /* ChatUserMessageProto user_message */ 2:
-                    message.userMessage = ChatUserMessageProto.internalBinaryRead(reader, reader.uint32(), options, message.userMessage);
+                case /* string user_message */ 2:
+                    message.userMessage = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1380,9 +1380,9 @@ class OpenChatWithUserMessageProto$Type extends MessageType<OpenChatWithUserMess
         /* string global_bot_id = 1; */
         if (message.globalBotId !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.globalBotId);
-        /* ChatUserMessageProto user_message = 2; */
-        if (message.userMessage)
-            ChatUserMessageProto.internalBinaryWrite(message.userMessage, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* string user_message = 2; */
+        if (message.userMessage !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.userMessage);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
