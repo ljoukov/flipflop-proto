@@ -104,7 +104,7 @@ message OpenChatRequestProto {
     ChatStoryActivityIdProto story_activity_id = 5;
 
     // Opens global bot with user's first message
-    OpenChatWithUserMessageProto user_message = 6;
+    OpenChatWithUserMessageProto with_user_message = 6;
   }
 }
 
