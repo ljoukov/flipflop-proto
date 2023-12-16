@@ -82,10 +82,10 @@ enum RecsTopicProto: SwiftProtobuf.Enum {
   case recsTopicPhysics // = 17
   case recsTopicLiterature // = 18
   case recsTopicPhilosophy // = 19
-  case recsTopicsEnvironment // = 20
-  case recsTopicsNature // = 21
-  case recsTopicsPolitics // = 22
-  case recsTopicsBiology // = 23
+  case recsTopicEnvironment // = 20
+  case recsTopicNature // = 21
+  case recsTopicPolitics // = 22
+  case recsTopicBiology // = 23
   case UNRECOGNIZED(Int)
 
   init() {
@@ -114,10 +114,10 @@ enum RecsTopicProto: SwiftProtobuf.Enum {
     case 17: self = .recsTopicPhysics
     case 18: self = .recsTopicLiterature
     case 19: self = .recsTopicPhilosophy
-    case 20: self = .recsTopicsEnvironment
-    case 21: self = .recsTopicsNature
-    case 22: self = .recsTopicsPolitics
-    case 23: self = .recsTopicsBiology
+    case 20: self = .recsTopicEnvironment
+    case 21: self = .recsTopicNature
+    case 22: self = .recsTopicPolitics
+    case 23: self = .recsTopicBiology
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -144,10 +144,10 @@ enum RecsTopicProto: SwiftProtobuf.Enum {
     case .recsTopicPhysics: return 17
     case .recsTopicLiterature: return 18
     case .recsTopicPhilosophy: return 19
-    case .recsTopicsEnvironment: return 20
-    case .recsTopicsNature: return 21
-    case .recsTopicsPolitics: return 22
-    case .recsTopicsBiology: return 23
+    case .recsTopicEnvironment: return 20
+    case .recsTopicNature: return 21
+    case .recsTopicPolitics: return 22
+    case .recsTopicBiology: return 23
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -179,10 +179,10 @@ extension RecsTopicProto: CaseIterable {
     .recsTopicPhysics,
     .recsTopicLiterature,
     .recsTopicPhilosophy,
-    .recsTopicsEnvironment,
-    .recsTopicsNature,
-    .recsTopicsPolitics,
-    .recsTopicsBiology,
+    .recsTopicEnvironment,
+    .recsTopicNature,
+    .recsTopicPolitics,
+    .recsTopicBiology,
   ]
 }
 
@@ -431,10 +431,10 @@ extension RecsTopicProto: SwiftProtobuf._ProtoNameProviding {
     17: .same(proto: "RECS_TOPIC_PHYSICS"),
     18: .same(proto: "RECS_TOPIC_LITERATURE"),
     19: .same(proto: "RECS_TOPIC_PHILOSOPHY"),
-    20: .same(proto: "RECS_TOPICS_ENVIRONMENT"),
-    21: .same(proto: "RECS_TOPICS_NATURE"),
-    22: .same(proto: "RECS_TOPICS_POLITICS"),
-    23: .same(proto: "RECS_TOPICS_BIOLOGY"),
+    20: .same(proto: "RECS_TOPIC_ENVIRONMENT"),
+    21: .same(proto: "RECS_TOPIC_NATURE"),
+    22: .same(proto: "RECS_TOPIC_POLITICS"),
+    23: .same(proto: "RECS_TOPIC_BIOLOGY"),
   ]
 }
 
