@@ -5,6 +5,6 @@
     "generate": "protoc --python_out=generated/python/proto --swift_out=generated/swift/proto/ --ts_out=generated/ts/proto/ --ts_opt eslint_disable,long_type_string,ts_nocheck --proto_path=src/ src/*.proto src/third_party/*.proto"
   },
   "dependencies": {
-    "@protobuf-ts/plugin": "^2.9.1"
+    "@protobuf-ts/plugin": "^2.9.3"
   }
 }
