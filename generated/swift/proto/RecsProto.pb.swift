@@ -82,6 +82,8 @@ enum RecsTopicProto: SwiftProtobuf.Enum {
   case recsTopicPhysics // = 17
   case recsTopicLiterature // = 18
   case recsTopicPhilosophy // = 19
+  case recsTopicsEnvironment // = 20
+  case recsTopicsNature // = 21
   case UNRECOGNIZED(Int)
 
   init() {
@@ -110,6 +112,8 @@ enum RecsTopicProto: SwiftProtobuf.Enum {
     case 17: self = .recsTopicPhysics
     case 18: self = .recsTopicLiterature
     case 19: self = .recsTopicPhilosophy
+    case 20: self = .recsTopicsEnvironment
+    case 21: self = .recsTopicsNature
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -136,6 +140,8 @@ enum RecsTopicProto: SwiftProtobuf.Enum {
     case .recsTopicPhysics: return 17
     case .recsTopicLiterature: return 18
     case .recsTopicPhilosophy: return 19
+    case .recsTopicsEnvironment: return 20
+    case .recsTopicsNature: return 21
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -167,6 +173,8 @@ extension RecsTopicProto: CaseIterable {
     .recsTopicPhysics,
     .recsTopicLiterature,
     .recsTopicPhilosophy,
+    .recsTopicsEnvironment,
+    .recsTopicsNature,
   ]
 }
 
@@ -177,7 +185,7 @@ enum RecsImpactProto: SwiftProtobuf.Enum {
   typealias RawValue = Int
   case recsImpactUnknown // = 0
   case recsImpactLow // = 1
-  case recsImpactMed // = 2
+  case recsImpactMedium // = 2
   case recsImpactHigh // = 3
   case UNRECOGNIZED(Int)
 
@@ -189,7 +197,7 @@ enum RecsImpactProto: SwiftProtobuf.Enum {
     switch rawValue {
     case 0: self = .recsImpactUnknown
     case 1: self = .recsImpactLow
-    case 2: self = .recsImpactMed
+    case 2: self = .recsImpactMedium
     case 3: self = .recsImpactHigh
     default: self = .UNRECOGNIZED(rawValue)
     }
@@ -199,7 +207,7 @@ enum RecsImpactProto: SwiftProtobuf.Enum {
     switch self {
     case .recsImpactUnknown: return 0
     case .recsImpactLow: return 1
-    case .recsImpactMed: return 2
+    case .recsImpactMedium: return 2
     case .recsImpactHigh: return 3
     case .UNRECOGNIZED(let i): return i
     }
@@ -214,7 +222,7 @@ extension RecsImpactProto: CaseIterable {
   static var allCases: [RecsImpactProto] = [
     .recsImpactUnknown,
     .recsImpactLow,
-    .recsImpactMed,
+    .recsImpactMedium,
     .recsImpactHigh,
   ]
 }
@@ -415,6 +423,8 @@ extension RecsTopicProto: SwiftProtobuf._ProtoNameProviding {
     17: .same(proto: "RECS_TOPIC_PHYSICS"),
     18: .same(proto: "RECS_TOPIC_LITERATURE"),
     19: .same(proto: "RECS_TOPIC_PHILOSOPHY"),
+    20: .same(proto: "RECS_TOPICS_ENVIRONMENT"),
+    21: .same(proto: "RECS_TOPICS_NATURE"),
   ]
 }
 
@@ -422,7 +432,7 @@ extension RecsImpactProto: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     0: .same(proto: "RECS_IMPACT_UNKNOWN"),
     1: .same(proto: "RECS_IMPACT_LOW"),
-    2: .same(proto: "RECS_IMPACT_MED"),
+    2: .same(proto: "RECS_IMPACT_MEDIUM"),
     3: .same(proto: "RECS_IMPACT_HIGH"),
   ]
 }

@@ -35,6 +35,8 @@ enum RecsTopicProto {
   RECS_TOPIC_PHYSICS = 17;
   RECS_TOPIC_LITERATURE = 18;
   RECS_TOPIC_PHILOSOPHY = 19;
+  RECS_TOPICS_ENVIRONMENT = 20;
+  RECS_TOPICS_NATURE = 21;
 };
 
 message RecsScoredTopic {
@@ -46,7 +48,7 @@ message RecsScoredTopic {
 enum RecsImpactProto {
   RECS_IMPACT_UNKNOWN = 0;
   RECS_IMPACT_LOW = 1;
-  RECS_IMPACT_MED = 2;
+  RECS_IMPACT_MEDIUM = 2;
   RECS_IMPACT_HIGH = 3;
 }
 

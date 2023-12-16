@@ -186,7 +186,15 @@ export enum RecsTopicProto {
     /**
      * @generated from protobuf enum value: RECS_TOPIC_PHILOSOPHY = 19;
      */
-    RECS_TOPIC_PHILOSOPHY = 19
+    RECS_TOPIC_PHILOSOPHY = 19,
+    /**
+     * @generated from protobuf enum value: RECS_TOPICS_ENVIRONMENT = 20;
+     */
+    RECS_TOPICS_ENVIRONMENT = 20,
+    /**
+     * @generated from protobuf enum value: RECS_TOPICS_NATURE = 21;
+     */
+    RECS_TOPICS_NATURE = 21
 }
 /**
  * Emotional impact on the user.
@@ -203,9 +211,9 @@ export enum RecsImpactProto {
      */
     RECS_IMPACT_LOW = 1,
     /**
-     * @generated from protobuf enum value: RECS_IMPACT_MED = 2;
+     * @generated from protobuf enum value: RECS_IMPACT_MEDIUM = 2;
      */
-    RECS_IMPACT_MED = 2,
+    RECS_IMPACT_MEDIUM = 2,
     /**
      * @generated from protobuf enum value: RECS_IMPACT_HIGH = 3;
      */
