@@ -7,15 +7,49 @@ enum EmbedTypeProto {
   EMBED_TYPE_ADA_002 = 1;
 }
 
-message StoryEmbedProto {
+enum RecsTopicProto {
+  RECS_TOPIC_UNDEFINED = 0;
+  RECS_TOPIC_ARTS = 1;
+  RECS_TOPIC_BUSINESS = 2;
+  RECS_TOPIC_CULTURE = 3;
+  RECS_TOPIC_EDUCATION = 4;
+  RECS_TOPIC_HEALTH = 5;
+  RECS_TOPIC_HISTORY = 6;
+  RECS_TOPIC_HOBBIES = 7;
+  RECS_TOPIC_HUMANITIES = 8;
+  RECS_TOPIC_MATHEMATICS = 9;
+  RECS_TOPIC_LANGUAGE = 10;
+  RECS_TOPIC_PSYCHOLOGY = 11;
+  RECS_TOPIC_RECREATION = 12;
+  RECS_TOPIC_SCIENCE = 13;
+  RECS_TOPIC_SOCIAL_STUDIES = 14;
+  RECS_TOPIC_TECHNOLOGY = 15;
+};
+
+message RecsScoredTopic {
+  RecsTopicProto topic = 1;
+  float score = 2;
+}
+
+// Emotional impact on the user.
+enum RecsImpactProto {
+  RECS_IMPACT_UNKNOWN = 0;
+  RECS_IMPACT_LOW = 1;
+  RECS_IMPACT_MED = 2;
+  RECS_IMPACT_HIGH = 3;
+}
+
+message StoryRecsProto {
   string story_id = 1;
   google.protobuf.Timestamp created_at = 2;
   EmbedTypeProto embed_type = 3;
   bytes input_hash = 4;
   repeated float embedding = 5 [packed=true];
+  RecsImpactProto impact = 6;
+  repeated RecsScoredTopic topics = 7;
 }
 
-message StoriesEmbedCacheProto {
+message StoriesRecsCacheProto {
   google.protobuf.Timestamp created_at = 1;
-  repeated StoryEmbedProto embeds = 2;
+  repeated StoryRecsProto embeds = 2;
 }

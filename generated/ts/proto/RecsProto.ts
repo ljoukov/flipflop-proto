@@ -5,19 +5,32 @@
 // @ts-nocheck
 import type { BinaryWriteOptions } from "@protobuf-ts/runtime";
 import type { IBinaryWriter } from "@protobuf-ts/runtime";
+import { WireType } from "@protobuf-ts/runtime";
 import type { BinaryReadOptions } from "@protobuf-ts/runtime";
 import type { IBinaryReader } from "@protobuf-ts/runtime";
 import { UnknownFieldHandler } from "@protobuf-ts/runtime";
-import { WireType } from "@protobuf-ts/runtime";
 import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
 import { Timestamp } from "./google/protobuf/timestamp";
 /**
- * @generated from protobuf message StoryEmbedProto
+ * @generated from protobuf message RecsScoredTopic
  */
-export interface StoryEmbedProto {
+export interface RecsScoredTopic {
+    /**
+     * @generated from protobuf field: RecsTopicProto topic = 1;
+     */
+    topic: RecsTopicProto;
+    /**
+     * @generated from protobuf field: float score = 2;
+     */
+    score: number;
+}
+/**
+ * @generated from protobuf message StoryRecsProto
+ */
+export interface StoryRecsProto {
     /**
      * @generated from protobuf field: string story_id = 1;
      */
@@ -38,19 +51,27 @@ export interface StoryEmbedProto {
      * @generated from protobuf field: repeated float embedding = 5 [packed = true];
      */
     embedding: number[];
+    /**
+     * @generated from protobuf field: RecsImpactProto impact = 6;
+     */
+    impact: RecsImpactProto;
+    /**
+     * @generated from protobuf field: repeated RecsScoredTopic topics = 7;
+     */
+    topics: RecsScoredTopic[];
 }
 /**
- * @generated from protobuf message StoriesEmbedCacheProto
+ * @generated from protobuf message StoriesRecsCacheProto
  */
-export interface StoriesEmbedCacheProto {
+export interface StoriesRecsCacheProto {
     /**
      * @generated from protobuf field: google.protobuf.Timestamp created_at = 1;
      */
     createdAt?: Timestamp;
     /**
-     * @generated from protobuf field: repeated StoryEmbedProto embeds = 2;
+     * @generated from protobuf field: repeated StoryRecsProto embeds = 2;
      */
-    embeds: StoryEmbedProto[];
+    embeds: StoryRecsProto[];
 }
 /**
  * @generated from protobuf enum EmbedTypeProto
@@ -65,25 +86,173 @@ export enum EmbedTypeProto {
      */
     EMBED_TYPE_ADA_002 = 1
 }
+/**
+ * @generated from protobuf enum RecsTopicProto
+ */
+export enum RecsTopicProto {
+    /**
+     * @generated from protobuf enum value: RECS_TOPIC_UNDEFINED = 0;
+     */
+    RECS_TOPIC_UNDEFINED = 0,
+    /**
+     * @generated from protobuf enum value: RECS_TOPIC_ARTS = 1;
+     */
+    RECS_TOPIC_ARTS = 1,
+    /**
+     * @generated from protobuf enum value: RECS_TOPIC_BUSINESS = 2;
+     */
+    RECS_TOPIC_BUSINESS = 2,
+    /**
+     * @generated from protobuf enum value: RECS_TOPIC_CULTURE = 3;
+     */
+    RECS_TOPIC_CULTURE = 3,
+    /**
+     * @generated from protobuf enum value: RECS_TOPIC_EDUCATION = 4;
+     */
+    RECS_TOPIC_EDUCATION = 4,
+    /**
+     * @generated from protobuf enum value: RECS_TOPIC_HEALTH = 5;
+     */
+    RECS_TOPIC_HEALTH = 5,
+    /**
+     * @generated from protobuf enum value: RECS_TOPIC_HISTORY = 6;
+     */
+    RECS_TOPIC_HISTORY = 6,
+    /**
+     * @generated from protobuf enum value: RECS_TOPIC_HOBBIES = 7;
+     */
+    RECS_TOPIC_HOBBIES = 7,
+    /**
+     * @generated from protobuf enum value: RECS_TOPIC_HUMANITIES = 8;
+     */
+    RECS_TOPIC_HUMANITIES = 8,
+    /**
+     * @generated from protobuf enum value: RECS_TOPIC_MATHEMATICS = 9;
+     */
+    RECS_TOPIC_MATHEMATICS = 9,
+    /**
+     * @generated from protobuf enum value: RECS_TOPIC_LANGUAGE = 10;
+     */
+    RECS_TOPIC_LANGUAGE = 10,
+    /**
+     * @generated from protobuf enum value: RECS_TOPIC_PSYCHOLOGY = 11;
+     */
+    RECS_TOPIC_PSYCHOLOGY = 11,
+    /**
+     * @generated from protobuf enum value: RECS_TOPIC_RECREATION = 12;
+     */
+    RECS_TOPIC_RECREATION = 12,
+    /**
+     * @generated from protobuf enum value: RECS_TOPIC_SCIENCE = 13;
+     */
+    RECS_TOPIC_SCIENCE = 13,
+    /**
+     * @generated from protobuf enum value: RECS_TOPIC_SOCIAL_STUDIES = 14;
+     */
+    RECS_TOPIC_SOCIAL_STUDIES = 14,
+    /**
+     * @generated from protobuf enum value: RECS_TOPIC_TECHNOLOGY = 15;
+     */
+    RECS_TOPIC_TECHNOLOGY = 15
+}
+/**
+ * Emotional impact on the user.
+ *
+ * @generated from protobuf enum RecsImpactProto
+ */
+export enum RecsImpactProto {
+    /**
+     * @generated from protobuf enum value: RECS_IMPACT_UNKNOWN = 0;
+     */
+    RECS_IMPACT_UNKNOWN = 0,
+    /**
+     * @generated from protobuf enum value: RECS_IMPACT_LOW = 1;
+     */
+    RECS_IMPACT_LOW = 1,
+    /**
+     * @generated from protobuf enum value: RECS_IMPACT_MED = 2;
+     */
+    RECS_IMPACT_MED = 2,
+    /**
+     * @generated from protobuf enum value: RECS_IMPACT_HIGH = 3;
+     */
+    RECS_IMPACT_HIGH = 3
+}
 // @generated message type with reflection information, may provide speed optimized methods
-class StoryEmbedProto$Type extends MessageType<StoryEmbedProto> {
+class RecsScoredTopic$Type extends MessageType<RecsScoredTopic> {
     constructor() {
-        super("StoryEmbedProto", [
+        super("RecsScoredTopic", [
+            { no: 1, name: "topic", kind: "enum", T: () => ["RecsTopicProto", RecsTopicProto] },
+            { no: 2, name: "score", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ }
+        ]);
+    }
+    create(value?: PartialMessage<RecsScoredTopic>): RecsScoredTopic {
+        const message = { topic: 0, score: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<RecsScoredTopic>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: RecsScoredTopic): RecsScoredTopic {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* RecsTopicProto topic */ 1:
+                    message.topic = reader.int32();
+                    break;
+                case /* float score */ 2:
+                    message.score = reader.float();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: RecsScoredTopic, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* RecsTopicProto topic = 1; */
+        if (message.topic !== 0)
+            writer.tag(1, WireType.Varint).int32(message.topic);
+        /* float score = 2; */
+        if (message.score !== 0)
+            writer.tag(2, WireType.Bit32).float(message.score);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message RecsScoredTopic
+ */
+export const RecsScoredTopic = new RecsScoredTopic$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class StoryRecsProto$Type extends MessageType<StoryRecsProto> {
+    constructor() {
+        super("StoryRecsProto", [
             { no: 1, name: "story_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "created_at", kind: "message", T: () => Timestamp },
             { no: 3, name: "embed_type", kind: "enum", T: () => ["EmbedTypeProto", EmbedTypeProto] },
             { no: 4, name: "input_hash", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
-            { no: 5, name: "embedding", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 2 /*ScalarType.FLOAT*/ }
+            { no: 5, name: "embedding", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 2 /*ScalarType.FLOAT*/ },
+            { no: 6, name: "impact", kind: "enum", T: () => ["RecsImpactProto", RecsImpactProto] },
+            { no: 7, name: "topics", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => RecsScoredTopic }
         ]);
     }
-    create(value?: PartialMessage<StoryEmbedProto>): StoryEmbedProto {
-        const message = { storyId: "", embedType: 0, inputHash: new Uint8Array(0), embedding: [] };
+    create(value?: PartialMessage<StoryRecsProto>): StoryRecsProto {
+        const message = { storyId: "", embedType: 0, inputHash: new Uint8Array(0), embedding: [], impact: 0, topics: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<StoryEmbedProto>(this, message, value);
+            reflectionMergePartial<StoryRecsProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoryEmbedProto): StoryEmbedProto {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoryRecsProto): StoryRecsProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -107,6 +276,12 @@ class StoryEmbedProto$Type extends MessageType<StoryEmbedProto> {
                     else
                         message.embedding.push(reader.float());
                     break;
+                case /* RecsImpactProto impact */ 6:
+                    message.impact = reader.int32();
+                    break;
+                case /* repeated RecsScoredTopic topics */ 7:
+                    message.topics.push(RecsScoredTopic.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -118,7 +293,7 @@ class StoryEmbedProto$Type extends MessageType<StoryEmbedProto> {
         }
         return message;
     }
-    internalBinaryWrite(message: StoryEmbedProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: StoryRecsProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string story_id = 1; */
         if (message.storyId !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.storyId);
@@ -138,6 +313,12 @@ class StoryEmbedProto$Type extends MessageType<StoryEmbedProto> {
                 writer.float(message.embedding[i]);
             writer.join();
         }
+        /* RecsImpactProto impact = 6; */
+        if (message.impact !== 0)
+            writer.tag(6, WireType.Varint).int32(message.impact);
+        /* repeated RecsScoredTopic topics = 7; */
+        for (let i = 0; i < message.topics.length; i++)
+            RecsScoredTopic.internalBinaryWrite(message.topics[i], writer.tag(7, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -145,25 +326,25 @@ class StoryEmbedProto$Type extends MessageType<StoryEmbedProto> {
     }
 }
 /**
- * @generated MessageType for protobuf message StoryEmbedProto
+ * @generated MessageType for protobuf message StoryRecsProto
  */
-export const StoryEmbedProto = new StoryEmbedProto$Type();
+export const StoryRecsProto = new StoryRecsProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class StoriesEmbedCacheProto$Type extends MessageType<StoriesEmbedCacheProto> {
+class StoriesRecsCacheProto$Type extends MessageType<StoriesRecsCacheProto> {
     constructor() {
-        super("StoriesEmbedCacheProto", [
+        super("StoriesRecsCacheProto", [
             { no: 1, name: "created_at", kind: "message", T: () => Timestamp },
-            { no: 2, name: "embeds", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoryEmbedProto }
+            { no: 2, name: "embeds", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoryRecsProto }
         ]);
     }
-    create(value?: PartialMessage<StoriesEmbedCacheProto>): StoriesEmbedCacheProto {
+    create(value?: PartialMessage<StoriesRecsCacheProto>): StoriesRecsCacheProto {
         const message = { embeds: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<StoriesEmbedCacheProto>(this, message, value);
+            reflectionMergePartial<StoriesRecsCacheProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoriesEmbedCacheProto): StoriesEmbedCacheProto {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoriesRecsCacheProto): StoriesRecsCacheProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -171,8 +352,8 @@ class StoriesEmbedCacheProto$Type extends MessageType<StoriesEmbedCacheProto> {
                 case /* google.protobuf.Timestamp created_at */ 1:
                     message.createdAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.createdAt);
                     break;
-                case /* repeated StoryEmbedProto embeds */ 2:
-                    message.embeds.push(StoryEmbedProto.internalBinaryRead(reader, reader.uint32(), options));
+                case /* repeated StoryRecsProto embeds */ 2:
+                    message.embeds.push(StoryRecsProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -185,13 +366,13 @@ class StoriesEmbedCacheProto$Type extends MessageType<StoriesEmbedCacheProto> {
         }
         return message;
     }
-    internalBinaryWrite(message: StoriesEmbedCacheProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: StoriesRecsCacheProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* google.protobuf.Timestamp created_at = 1; */
         if (message.createdAt)
             Timestamp.internalBinaryWrite(message.createdAt, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* repeated StoryEmbedProto embeds = 2; */
+        /* repeated StoryRecsProto embeds = 2; */
         for (let i = 0; i < message.embeds.length; i++)
-            StoryEmbedProto.internalBinaryWrite(message.embeds[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+            StoryRecsProto.internalBinaryWrite(message.embeds[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -199,6 +380,6 @@ class StoriesEmbedCacheProto$Type extends MessageType<StoriesEmbedCacheProto> {
     }
 }
 /**
- * @generated MessageType for protobuf message StoriesEmbedCacheProto
+ * @generated MessageType for protobuf message StoriesRecsCacheProto
  */
-export const StoriesEmbedCacheProto = new StoriesEmbedCacheProto$Type();
+export const StoriesRecsCacheProto = new StoriesRecsCacheProto$Type();
