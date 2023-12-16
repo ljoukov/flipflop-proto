@@ -84,6 +84,7 @@ enum RecsTopicProto: SwiftProtobuf.Enum {
   case recsTopicPhilosophy // = 19
   case recsTopicsEnvironment // = 20
   case recsTopicsNature // = 21
+  case recsTopicsPolitics // = 22
   case UNRECOGNIZED(Int)
 
   init() {
@@ -114,6 +115,7 @@ enum RecsTopicProto: SwiftProtobuf.Enum {
     case 19: self = .recsTopicPhilosophy
     case 20: self = .recsTopicsEnvironment
     case 21: self = .recsTopicsNature
+    case 22: self = .recsTopicsPolitics
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -142,6 +144,7 @@ enum RecsTopicProto: SwiftProtobuf.Enum {
     case .recsTopicPhilosophy: return 19
     case .recsTopicsEnvironment: return 20
     case .recsTopicsNature: return 21
+    case .recsTopicsPolitics: return 22
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -175,6 +178,7 @@ extension RecsTopicProto: CaseIterable {
     .recsTopicPhilosophy,
     .recsTopicsEnvironment,
     .recsTopicsNature,
+    .recsTopicsPolitics,
   ]
 }
 
@@ -425,6 +429,7 @@ extension RecsTopicProto: SwiftProtobuf._ProtoNameProviding {
     19: .same(proto: "RECS_TOPIC_PHILOSOPHY"),
     20: .same(proto: "RECS_TOPICS_ENVIRONMENT"),
     21: .same(proto: "RECS_TOPICS_NATURE"),
+    22: .same(proto: "RECS_TOPICS_POLITICS"),
   ]
 }
 
