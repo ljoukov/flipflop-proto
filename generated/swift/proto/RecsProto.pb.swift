@@ -205,6 +205,33 @@ extension RecsImpactProto: CaseIterable {
 
 #endif  // swift(>=4.2)
 
+struct EmbedProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_createdAt = newValue}
+  }
+  /// Returns true if `createdAt` has been explicitly set.
+  var hasCreatedAt: Bool {return self._createdAt != nil}
+  /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
+  mutating func clearCreatedAt() {self._createdAt = nil}
+
+  var embedType: EmbedTypeProto = .embedTypeUnknown
+
+  var inputHash: Data = Data()
+
+  var embedding: [Float] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+
+  fileprivate var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+}
+
 struct RecsScoredTopic {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -226,20 +253,14 @@ struct StoryRecsProto {
 
   var storyID: String = String()
 
-  var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {return _createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
-    set {_createdAt = newValue}
+  var embed: EmbedProto {
+    get {return _embed ?? EmbedProto()}
+    set {_embed = newValue}
   }
-  /// Returns true if `createdAt` has been explicitly set.
-  var hasCreatedAt: Bool {return self._createdAt != nil}
-  /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
-  mutating func clearCreatedAt() {self._createdAt = nil}
-
-  var embedType: EmbedTypeProto = .embedTypeUnknown
-
-  var inputHash: Data = Data()
-
-  var embedding: [Float] = []
+  /// Returns true if `embed` has been explicitly set.
+  var hasEmbed: Bool {return self._embed != nil}
+  /// Clears the value of `embed`. Subsequent reads from it will return its default value.
+  mutating func clearEmbed() {self._embed = nil}
 
   var impact: RecsImpactProto = .recsImpactUnknown
 
@@ -249,7 +270,7 @@ struct StoryRecsProto {
 
   init() {}
 
-  fileprivate var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+  fileprivate var _embed: EmbedProto? = nil
 }
 
 struct StoriesRecsCacheProto {
@@ -266,7 +287,7 @@ struct StoriesRecsCacheProto {
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
   mutating func clearCreatedAt() {self._createdAt = nil}
 
-  var embeds: [StoryRecsProto] = []
+  var recs: [StoryRecsProto] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -279,6 +300,7 @@ struct StoriesRecsCacheProto {
 extension EmbedTypeProto: @unchecked Sendable {}
 extension RecsTopicProto: @unchecked Sendable {}
 extension RecsImpactProto: @unchecked Sendable {}
+extension EmbedProto: @unchecked Sendable {}
 extension RecsScoredTopic: @unchecked Sendable {}
 extension StoryRecsProto: @unchecked Sendable {}
 extension StoriesRecsCacheProto: @unchecked Sendable {}
@@ -323,6 +345,60 @@ extension RecsImpactProto: SwiftProtobuf._ProtoNameProviding {
   ]
 }
 
+extension EmbedProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "EmbedProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "created_at"),
+    2: .standard(proto: "embed_type"),
+    3: .standard(proto: "input_hash"),
+    4: .same(proto: "embedding"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._createdAt) }()
+      case 2: try { try decoder.decodeSingularEnumField(value: &self.embedType) }()
+      case 3: try { try decoder.decodeSingularBytesField(value: &self.inputHash) }()
+      case 4: try { try decoder.decodeRepeatedFloatField(value: &self.embedding) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._createdAt {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    if self.embedType != .embedTypeUnknown {
+      try visitor.visitSingularEnumField(value: self.embedType, fieldNumber: 2)
+    }
+    if !self.inputHash.isEmpty {
+      try visitor.visitSingularBytesField(value: self.inputHash, fieldNumber: 3)
+    }
+    if !self.embedding.isEmpty {
+      try visitor.visitPackedFloatField(value: self.embedding, fieldNumber: 4)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: EmbedProto, rhs: EmbedProto) -> Bool {
+    if lhs._createdAt != rhs._createdAt {return false}
+    if lhs.embedType != rhs.embedType {return false}
+    if lhs.inputHash != rhs.inputHash {return false}
+    if lhs.embedding != rhs.embedding {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
 extension RecsScoredTopic: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "RecsScoredTopic"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -365,12 +441,9 @@ extension StoryRecsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
   static let protoMessageName: String = "StoryRecsProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "story_id"),
-    2: .standard(proto: "created_at"),
-    3: .standard(proto: "embed_type"),
-    4: .standard(proto: "input_hash"),
-    5: .same(proto: "embedding"),
-    6: .same(proto: "impact"),
-    7: .same(proto: "topics"),
+    2: .same(proto: "embed"),
+    3: .same(proto: "impact"),
+    4: .same(proto: "topics"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -380,12 +453,9 @@ extension StoryRecsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.storyID) }()
-      case 2: try { try decoder.decodeSingularMessageField(value: &self._createdAt) }()
-      case 3: try { try decoder.decodeSingularEnumField(value: &self.embedType) }()
-      case 4: try { try decoder.decodeSingularBytesField(value: &self.inputHash) }()
-      case 5: try { try decoder.decodeRepeatedFloatField(value: &self.embedding) }()
-      case 6: try { try decoder.decodeSingularEnumField(value: &self.impact) }()
-      case 7: try { try decoder.decodeRepeatedMessageField(value: &self.topics) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._embed) }()
+      case 3: try { try decoder.decodeSingularEnumField(value: &self.impact) }()
+      case 4: try { try decoder.decodeRepeatedMessageField(value: &self.topics) }()
       default: break
       }
     }
@@ -399,33 +469,21 @@ extension StoryRecsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
     if !self.storyID.isEmpty {
       try visitor.visitSingularStringField(value: self.storyID, fieldNumber: 1)
     }
-    try { if let v = self._createdAt {
+    try { if let v = self._embed {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     } }()
-    if self.embedType != .embedTypeUnknown {
-      try visitor.visitSingularEnumField(value: self.embedType, fieldNumber: 3)
-    }
-    if !self.inputHash.isEmpty {
-      try visitor.visitSingularBytesField(value: self.inputHash, fieldNumber: 4)
-    }
-    if !self.embedding.isEmpty {
-      try visitor.visitPackedFloatField(value: self.embedding, fieldNumber: 5)
-    }
     if self.impact != .recsImpactUnknown {
-      try visitor.visitSingularEnumField(value: self.impact, fieldNumber: 6)
+      try visitor.visitSingularEnumField(value: self.impact, fieldNumber: 3)
     }
     if !self.topics.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.topics, fieldNumber: 7)
+      try visitor.visitRepeatedMessageField(value: self.topics, fieldNumber: 4)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: StoryRecsProto, rhs: StoryRecsProto) -> Bool {
     if lhs.storyID != rhs.storyID {return false}
-    if lhs._createdAt != rhs._createdAt {return false}
-    if lhs.embedType != rhs.embedType {return false}
-    if lhs.inputHash != rhs.inputHash {return false}
-    if lhs.embedding != rhs.embedding {return false}
+    if lhs._embed != rhs._embed {return false}
     if lhs.impact != rhs.impact {return false}
     if lhs.topics != rhs.topics {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
@@ -437,7 +495,7 @@ extension StoriesRecsCacheProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
   static let protoMessageName: String = "StoriesRecsCacheProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "created_at"),
-    2: .same(proto: "embeds"),
+    2: .same(proto: "recs"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -447,7 +505,7 @@ extension StoriesRecsCacheProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularMessageField(value: &self._createdAt) }()
-      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.embeds) }()
+      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.recs) }()
       default: break
       }
     }
@@ -461,15 +519,15 @@ extension StoriesRecsCacheProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     try { if let v = self._createdAt {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
     } }()
-    if !self.embeds.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.embeds, fieldNumber: 2)
+    if !self.recs.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.recs, fieldNumber: 2)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: StoriesRecsCacheProto, rhs: StoriesRecsCacheProto) -> Bool {
     if lhs._createdAt != rhs._createdAt {return false}
-    if lhs.embeds != rhs.embeds {return false}
+    if lhs.recs != rhs.recs {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

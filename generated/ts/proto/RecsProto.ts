@@ -5,15 +5,36 @@
 // @ts-nocheck
 import type { BinaryWriteOptions } from "@protobuf-ts/runtime";
 import type { IBinaryWriter } from "@protobuf-ts/runtime";
-import { WireType } from "@protobuf-ts/runtime";
 import type { BinaryReadOptions } from "@protobuf-ts/runtime";
 import type { IBinaryReader } from "@protobuf-ts/runtime";
 import { UnknownFieldHandler } from "@protobuf-ts/runtime";
+import { WireType } from "@protobuf-ts/runtime";
 import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
 import { Timestamp } from "./google/protobuf/timestamp";
+/**
+ * @generated from protobuf message EmbedProto
+ */
+export interface EmbedProto {
+    /**
+     * @generated from protobuf field: google.protobuf.Timestamp created_at = 1;
+     */
+    createdAt?: Timestamp;
+    /**
+     * @generated from protobuf field: EmbedTypeProto embed_type = 2;
+     */
+    embedType: EmbedTypeProto;
+    /**
+     * @generated from protobuf field: bytes input_hash = 3;
+     */
+    inputHash: Uint8Array;
+    /**
+     * @generated from protobuf field: repeated float embedding = 4 [packed = true];
+     */
+    embedding: number[];
+}
 /**
  * @generated from protobuf message RecsScoredTopic
  */
@@ -36,27 +57,15 @@ export interface StoryRecsProto {
      */
     storyId: string;
     /**
-     * @generated from protobuf field: google.protobuf.Timestamp created_at = 2;
+     * @generated from protobuf field: EmbedProto embed = 2;
      */
-    createdAt?: Timestamp;
+    embed?: EmbedProto;
     /**
-     * @generated from protobuf field: EmbedTypeProto embed_type = 3;
-     */
-    embedType: EmbedTypeProto;
-    /**
-     * @generated from protobuf field: bytes input_hash = 4;
-     */
-    inputHash: Uint8Array;
-    /**
-     * @generated from protobuf field: repeated float embedding = 5 [packed = true];
-     */
-    embedding: number[];
-    /**
-     * @generated from protobuf field: RecsImpactProto impact = 6;
+     * @generated from protobuf field: RecsImpactProto impact = 3;
      */
     impact: RecsImpactProto;
     /**
-     * @generated from protobuf field: repeated RecsScoredTopic topics = 7;
+     * @generated from protobuf field: repeated RecsScoredTopic topics = 4;
      */
     topics: RecsScoredTopic[];
 }
@@ -69,9 +78,9 @@ export interface StoriesRecsCacheProto {
      */
     createdAt?: Timestamp;
     /**
-     * @generated from protobuf field: repeated StoryRecsProto embeds = 2;
+     * @generated from protobuf field: repeated StoryRecsProto recs = 2;
      */
-    embeds: StoryRecsProto[];
+    recs: StoryRecsProto[];
 }
 /**
  * @generated from protobuf enum EmbedTypeProto
@@ -179,6 +188,82 @@ export enum RecsImpactProto {
     RECS_IMPACT_HIGH = 3
 }
 // @generated message type with reflection information, may provide speed optimized methods
+class EmbedProto$Type extends MessageType<EmbedProto> {
+    constructor() {
+        super("EmbedProto", [
+            { no: 1, name: "created_at", kind: "message", T: () => Timestamp },
+            { no: 2, name: "embed_type", kind: "enum", T: () => ["EmbedTypeProto", EmbedTypeProto] },
+            { no: 3, name: "input_hash", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
+            { no: 4, name: "embedding", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 2 /*ScalarType.FLOAT*/ }
+        ]);
+    }
+    create(value?: PartialMessage<EmbedProto>): EmbedProto {
+        const message = { embedType: 0, inputHash: new Uint8Array(0), embedding: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<EmbedProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: EmbedProto): EmbedProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* google.protobuf.Timestamp created_at */ 1:
+                    message.createdAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.createdAt);
+                    break;
+                case /* EmbedTypeProto embed_type */ 2:
+                    message.embedType = reader.int32();
+                    break;
+                case /* bytes input_hash */ 3:
+                    message.inputHash = reader.bytes();
+                    break;
+                case /* repeated float embedding = 4 [packed = true];*/ 4:
+                    if (wireType === WireType.LengthDelimited)
+                        for (let e = reader.int32() + reader.pos; reader.pos < e;)
+                            message.embedding.push(reader.float());
+                    else
+                        message.embedding.push(reader.float());
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: EmbedProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* google.protobuf.Timestamp created_at = 1; */
+        if (message.createdAt)
+            Timestamp.internalBinaryWrite(message.createdAt, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* EmbedTypeProto embed_type = 2; */
+        if (message.embedType !== 0)
+            writer.tag(2, WireType.Varint).int32(message.embedType);
+        /* bytes input_hash = 3; */
+        if (message.inputHash.length)
+            writer.tag(3, WireType.LengthDelimited).bytes(message.inputHash);
+        /* repeated float embedding = 4 [packed = true]; */
+        if (message.embedding.length) {
+            writer.tag(4, WireType.LengthDelimited).fork();
+            for (let i = 0; i < message.embedding.length; i++)
+                writer.float(message.embedding[i]);
+            writer.join();
+        }
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message EmbedProto
+ */
+export const EmbedProto = new EmbedProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class RecsScoredTopic$Type extends MessageType<RecsScoredTopic> {
     constructor() {
         super("RecsScoredTopic", [
@@ -237,16 +322,13 @@ class StoryRecsProto$Type extends MessageType<StoryRecsProto> {
     constructor() {
         super("StoryRecsProto", [
             { no: 1, name: "story_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "created_at", kind: "message", T: () => Timestamp },
-            { no: 3, name: "embed_type", kind: "enum", T: () => ["EmbedTypeProto", EmbedTypeProto] },
-            { no: 4, name: "input_hash", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
-            { no: 5, name: "embedding", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 2 /*ScalarType.FLOAT*/ },
-            { no: 6, name: "impact", kind: "enum", T: () => ["RecsImpactProto", RecsImpactProto] },
-            { no: 7, name: "topics", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => RecsScoredTopic }
+            { no: 2, name: "embed", kind: "message", T: () => EmbedProto },
+            { no: 3, name: "impact", kind: "enum", T: () => ["RecsImpactProto", RecsImpactProto] },
+            { no: 4, name: "topics", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => RecsScoredTopic }
         ]);
     }
     create(value?: PartialMessage<StoryRecsProto>): StoryRecsProto {
-        const message = { storyId: "", embedType: 0, inputHash: new Uint8Array(0), embedding: [], impact: 0, topics: [] };
+        const message = { storyId: "", impact: 0, topics: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StoryRecsProto>(this, message, value);
@@ -260,26 +342,13 @@ class StoryRecsProto$Type extends MessageType<StoryRecsProto> {
                 case /* string story_id */ 1:
                     message.storyId = reader.string();
                     break;
-                case /* google.protobuf.Timestamp created_at */ 2:
-                    message.createdAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.createdAt);
+                case /* EmbedProto embed */ 2:
+                    message.embed = EmbedProto.internalBinaryRead(reader, reader.uint32(), options, message.embed);
                     break;
-                case /* EmbedTypeProto embed_type */ 3:
-                    message.embedType = reader.int32();
-                    break;
-                case /* bytes input_hash */ 4:
-                    message.inputHash = reader.bytes();
-                    break;
-                case /* repeated float embedding = 5 [packed = true];*/ 5:
-                    if (wireType === WireType.LengthDelimited)
-                        for (let e = reader.int32() + reader.pos; reader.pos < e;)
-                            message.embedding.push(reader.float());
-                    else
-                        message.embedding.push(reader.float());
-                    break;
-                case /* RecsImpactProto impact */ 6:
+                case /* RecsImpactProto impact */ 3:
                     message.impact = reader.int32();
                     break;
-                case /* repeated RecsScoredTopic topics */ 7:
+                case /* repeated RecsScoredTopic topics */ 4:
                     message.topics.push(RecsScoredTopic.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
@@ -297,28 +366,15 @@ class StoryRecsProto$Type extends MessageType<StoryRecsProto> {
         /* string story_id = 1; */
         if (message.storyId !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.storyId);
-        /* google.protobuf.Timestamp created_at = 2; */
-        if (message.createdAt)
-            Timestamp.internalBinaryWrite(message.createdAt, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* EmbedTypeProto embed_type = 3; */
-        if (message.embedType !== 0)
-            writer.tag(3, WireType.Varint).int32(message.embedType);
-        /* bytes input_hash = 4; */
-        if (message.inputHash.length)
-            writer.tag(4, WireType.LengthDelimited).bytes(message.inputHash);
-        /* repeated float embedding = 5 [packed = true]; */
-        if (message.embedding.length) {
-            writer.tag(5, WireType.LengthDelimited).fork();
-            for (let i = 0; i < message.embedding.length; i++)
-                writer.float(message.embedding[i]);
-            writer.join();
-        }
-        /* RecsImpactProto impact = 6; */
+        /* EmbedProto embed = 2; */
+        if (message.embed)
+            EmbedProto.internalBinaryWrite(message.embed, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* RecsImpactProto impact = 3; */
         if (message.impact !== 0)
-            writer.tag(6, WireType.Varint).int32(message.impact);
-        /* repeated RecsScoredTopic topics = 7; */
+            writer.tag(3, WireType.Varint).int32(message.impact);
+        /* repeated RecsScoredTopic topics = 4; */
         for (let i = 0; i < message.topics.length; i++)
-            RecsScoredTopic.internalBinaryWrite(message.topics[i], writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+            RecsScoredTopic.internalBinaryWrite(message.topics[i], writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -334,11 +390,11 @@ class StoriesRecsCacheProto$Type extends MessageType<StoriesRecsCacheProto> {
     constructor() {
         super("StoriesRecsCacheProto", [
             { no: 1, name: "created_at", kind: "message", T: () => Timestamp },
-            { no: 2, name: "embeds", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoryRecsProto }
+            { no: 2, name: "recs", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoryRecsProto }
         ]);
     }
     create(value?: PartialMessage<StoriesRecsCacheProto>): StoriesRecsCacheProto {
-        const message = { embeds: [] };
+        const message = { recs: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StoriesRecsCacheProto>(this, message, value);
@@ -352,8 +408,8 @@ class StoriesRecsCacheProto$Type extends MessageType<StoriesRecsCacheProto> {
                 case /* google.protobuf.Timestamp created_at */ 1:
                     message.createdAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.createdAt);
                     break;
-                case /* repeated StoryRecsProto embeds */ 2:
-                    message.embeds.push(StoryRecsProto.internalBinaryRead(reader, reader.uint32(), options));
+                case /* repeated StoryRecsProto recs */ 2:
+                    message.recs.push(StoryRecsProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -370,9 +426,9 @@ class StoriesRecsCacheProto$Type extends MessageType<StoriesRecsCacheProto> {
         /* google.protobuf.Timestamp created_at = 1; */
         if (message.createdAt)
             Timestamp.internalBinaryWrite(message.createdAt, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* repeated StoryRecsProto embeds = 2; */
-        for (let i = 0; i < message.embeds.length; i++)
-            StoryRecsProto.internalBinaryWrite(message.embeds[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* repeated StoryRecsProto recs = 2; */
+        for (let i = 0; i < message.recs.length; i++)
+            StoryRecsProto.internalBinaryWrite(message.recs[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
