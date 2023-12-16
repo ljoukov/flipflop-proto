@@ -46,11 +46,22 @@ enum RecsImpactProto {
   RECS_IMPACT_HIGH = 3;
 }
 
+enum RecsContentTypeProto {
+  RECS_CONTENT_TYPE_UNKNOWN = 0;
+  RECS_CONTENT_TYPE_INFO = 1;
+  RECS_CONTENT_TYPE_ABC = 2;
+  RECS_CONTENT_TYPE_TRUE_FALSE = 3;
+  RECS_CONTENT_TYPE_VOTING = 4;
+  RECS_CONTENT_TYPE_CHALLENGE = 5;
+}
+
 message StoryRecsProto {
   string story_id = 1;
   EmbedProto embed = 2;
   RecsImpactProto impact = 3;
   repeated RecsScoredTopic topics = 4;
+  RecsContentTypeProto content_type = 5;
+  float quality = 6; // 0-1
 }
 
 message StoriesRecsCacheProto {

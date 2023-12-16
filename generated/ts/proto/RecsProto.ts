@@ -68,6 +68,14 @@ export interface StoryRecsProto {
      * @generated from protobuf field: repeated RecsScoredTopic topics = 4;
      */
     topics: RecsScoredTopic[];
+    /**
+     * @generated from protobuf field: RecsContentTypeProto content_type = 5;
+     */
+    contentType: RecsContentTypeProto;
+    /**
+     * @generated from protobuf field: float quality = 6;
+     */
+    quality: number; // 0-1
 }
 /**
  * @generated from protobuf message StoriesRecsCacheProto
@@ -186,6 +194,35 @@ export enum RecsImpactProto {
      * @generated from protobuf enum value: RECS_IMPACT_HIGH = 3;
      */
     RECS_IMPACT_HIGH = 3
+}
+/**
+ * @generated from protobuf enum RecsContentTypeProto
+ */
+export enum RecsContentTypeProto {
+    /**
+     * @generated from protobuf enum value: RECS_CONTENT_TYPE_UNKNOWN = 0;
+     */
+    RECS_CONTENT_TYPE_UNKNOWN = 0,
+    /**
+     * @generated from protobuf enum value: RECS_CONTENT_TYPE_INFO = 1;
+     */
+    RECS_CONTENT_TYPE_INFO = 1,
+    /**
+     * @generated from protobuf enum value: RECS_CONTENT_TYPE_ABC = 2;
+     */
+    RECS_CONTENT_TYPE_ABC = 2,
+    /**
+     * @generated from protobuf enum value: RECS_CONTENT_TYPE_TRUE_FALSE = 3;
+     */
+    RECS_CONTENT_TYPE_TRUE_FALSE = 3,
+    /**
+     * @generated from protobuf enum value: RECS_CONTENT_TYPE_VOTING = 4;
+     */
+    RECS_CONTENT_TYPE_VOTING = 4,
+    /**
+     * @generated from protobuf enum value: RECS_CONTENT_TYPE_CHALLENGE = 5;
+     */
+    RECS_CONTENT_TYPE_CHALLENGE = 5
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class EmbedProto$Type extends MessageType<EmbedProto> {
@@ -324,11 +361,13 @@ class StoryRecsProto$Type extends MessageType<StoryRecsProto> {
             { no: 1, name: "story_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "embed", kind: "message", T: () => EmbedProto },
             { no: 3, name: "impact", kind: "enum", T: () => ["RecsImpactProto", RecsImpactProto] },
-            { no: 4, name: "topics", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => RecsScoredTopic }
+            { no: 4, name: "topics", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => RecsScoredTopic },
+            { no: 5, name: "content_type", kind: "enum", T: () => ["RecsContentTypeProto", RecsContentTypeProto] },
+            { no: 6, name: "quality", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ }
         ]);
     }
     create(value?: PartialMessage<StoryRecsProto>): StoryRecsProto {
-        const message = { storyId: "", impact: 0, topics: [] };
+        const message = { storyId: "", impact: 0, topics: [], contentType: 0, quality: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StoryRecsProto>(this, message, value);
@@ -350,6 +389,12 @@ class StoryRecsProto$Type extends MessageType<StoryRecsProto> {
                     break;
                 case /* repeated RecsScoredTopic topics */ 4:
                     message.topics.push(RecsScoredTopic.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* RecsContentTypeProto content_type */ 5:
+                    message.contentType = reader.int32();
+                    break;
+                case /* float quality */ 6:
+                    message.quality = reader.float();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -375,6 +420,12 @@ class StoryRecsProto$Type extends MessageType<StoryRecsProto> {
         /* repeated RecsScoredTopic topics = 4; */
         for (let i = 0; i < message.topics.length; i++)
             RecsScoredTopic.internalBinaryWrite(message.topics[i], writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* RecsContentTypeProto content_type = 5; */
+        if (message.contentType !== 0)
+            writer.tag(5, WireType.Varint).int32(message.contentType);
+        /* float quality = 6; */
+        if (message.quality !== 0)
+            writer.tag(6, WireType.Bit32).float(message.quality);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

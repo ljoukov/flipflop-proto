@@ -205,6 +205,62 @@ extension RecsImpactProto: CaseIterable {
 
 #endif  // swift(>=4.2)
 
+enum RecsContentTypeProto: SwiftProtobuf.Enum {
+  typealias RawValue = Int
+  case recsContentTypeUnknown // = 0
+  case recsContentTypeInfo // = 1
+  case recsContentTypeAbc // = 2
+  case recsContentTypeTrueFalse // = 3
+  case recsContentTypeVoting // = 4
+  case recsContentTypeChallenge // = 5
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .recsContentTypeUnknown
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .recsContentTypeUnknown
+    case 1: self = .recsContentTypeInfo
+    case 2: self = .recsContentTypeAbc
+    case 3: self = .recsContentTypeTrueFalse
+    case 4: self = .recsContentTypeVoting
+    case 5: self = .recsContentTypeChallenge
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .recsContentTypeUnknown: return 0
+    case .recsContentTypeInfo: return 1
+    case .recsContentTypeAbc: return 2
+    case .recsContentTypeTrueFalse: return 3
+    case .recsContentTypeVoting: return 4
+    case .recsContentTypeChallenge: return 5
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+}
+
+#if swift(>=4.2)
+
+extension RecsContentTypeProto: CaseIterable {
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static var allCases: [RecsContentTypeProto] = [
+    .recsContentTypeUnknown,
+    .recsContentTypeInfo,
+    .recsContentTypeAbc,
+    .recsContentTypeTrueFalse,
+    .recsContentTypeVoting,
+    .recsContentTypeChallenge,
+  ]
+}
+
+#endif  // swift(>=4.2)
+
 struct EmbedProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -266,6 +322,11 @@ struct StoryRecsProto {
 
   var topics: [RecsScoredTopic] = []
 
+  var contentType: RecsContentTypeProto = .recsContentTypeUnknown
+
+  /// 0-1
+  var quality: Float = 0
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -300,6 +361,7 @@ struct StoriesRecsCacheProto {
 extension EmbedTypeProto: @unchecked Sendable {}
 extension RecsTopicProto: @unchecked Sendable {}
 extension RecsImpactProto: @unchecked Sendable {}
+extension RecsContentTypeProto: @unchecked Sendable {}
 extension EmbedProto: @unchecked Sendable {}
 extension RecsScoredTopic: @unchecked Sendable {}
 extension StoryRecsProto: @unchecked Sendable {}
@@ -342,6 +404,17 @@ extension RecsImpactProto: SwiftProtobuf._ProtoNameProviding {
     1: .same(proto: "RECS_IMPACT_LOW"),
     2: .same(proto: "RECS_IMPACT_MED"),
     3: .same(proto: "RECS_IMPACT_HIGH"),
+  ]
+}
+
+extension RecsContentTypeProto: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "RECS_CONTENT_TYPE_UNKNOWN"),
+    1: .same(proto: "RECS_CONTENT_TYPE_INFO"),
+    2: .same(proto: "RECS_CONTENT_TYPE_ABC"),
+    3: .same(proto: "RECS_CONTENT_TYPE_TRUE_FALSE"),
+    4: .same(proto: "RECS_CONTENT_TYPE_VOTING"),
+    5: .same(proto: "RECS_CONTENT_TYPE_CHALLENGE"),
   ]
 }
 
@@ -444,6 +517,8 @@ extension StoryRecsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
     2: .same(proto: "embed"),
     3: .same(proto: "impact"),
     4: .same(proto: "topics"),
+    5: .standard(proto: "content_type"),
+    6: .same(proto: "quality"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -456,6 +531,8 @@ extension StoryRecsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
       case 2: try { try decoder.decodeSingularMessageField(value: &self._embed) }()
       case 3: try { try decoder.decodeSingularEnumField(value: &self.impact) }()
       case 4: try { try decoder.decodeRepeatedMessageField(value: &self.topics) }()
+      case 5: try { try decoder.decodeSingularEnumField(value: &self.contentType) }()
+      case 6: try { try decoder.decodeSingularFloatField(value: &self.quality) }()
       default: break
       }
     }
@@ -478,6 +555,12 @@ extension StoryRecsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
     if !self.topics.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.topics, fieldNumber: 4)
     }
+    if self.contentType != .recsContentTypeUnknown {
+      try visitor.visitSingularEnumField(value: self.contentType, fieldNumber: 5)
+    }
+    if self.quality != 0 {
+      try visitor.visitSingularFloatField(value: self.quality, fieldNumber: 6)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -486,6 +569,8 @@ extension StoryRecsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
     if lhs._embed != rhs._embed {return false}
     if lhs.impact != rhs.impact {return false}
     if lhs.topics != rhs.topics {return false}
+    if lhs.contentType != rhs.contentType {return false}
+    if lhs.quality != rhs.quality {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
