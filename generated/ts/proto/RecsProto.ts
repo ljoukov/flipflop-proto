@@ -202,7 +202,15 @@ export enum RecsTopicProto {
     /**
      * @generated from protobuf enum value: RECS_TOPIC_BIOLOGY = 23;
      */
-    RECS_TOPIC_BIOLOGY = 23
+    RECS_TOPIC_BIOLOGY = 23,
+    /**
+     * @generated from protobuf enum value: RECS_TOPIC_CHEMISTRY = 24;
+     */
+    RECS_TOPIC_CHEMISTRY = 24,
+    /**
+     * @generated from protobuf enum value: RECS_TOPIC_AGRICULTURE = 25;
+     */
+    RECS_TOPIC_AGRICULTURE = 25
 }
 /**
  * Emotional impact on the user.

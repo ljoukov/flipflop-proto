@@ -39,6 +39,8 @@ enum RecsTopicProto {
   RECS_TOPIC_NATURE = 21;
   RECS_TOPIC_POLITICS = 22;
   RECS_TOPIC_BIOLOGY = 23;
+  RECS_TOPIC_CHEMISTRY = 24;
+  RECS_TOPIC_AGRICULTURE = 25;
 };
 
 message RecsScoredTopic {
