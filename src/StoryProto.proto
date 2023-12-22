@@ -6,8 +6,10 @@ import "google/protobuf/timestamp.proto";
 import "UserDataProto.proto";
 
 message GetStoriesRequestProto {
+  reserved 1;
+
   // Updates to user data per story
-  repeated StoryUserDataProto stories_data = 1;
+  repeated StoryUserDataProto stories_data = 2;
 }
 
 message GetStoriesResponseProto {

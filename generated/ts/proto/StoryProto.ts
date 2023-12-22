@@ -23,7 +23,7 @@ export interface GetStoriesRequestProto {
     /**
      * Updates to user data per story
      *
-     * @generated from protobuf field: repeated StoryUserDataProto stories_data = 1;
+     * @generated from protobuf field: repeated StoryUserDataProto stories_data = 2;
      */
     storiesData: StoryUserDataProto[];
 }
@@ -979,7 +979,7 @@ export enum TextHyphensProto {
 class GetStoriesRequestProto$Type extends MessageType<GetStoriesRequestProto> {
     constructor() {
         super("GetStoriesRequestProto", [
-            { no: 1, name: "stories_data", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoryUserDataProto }
+            { no: 2, name: "stories_data", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoryUserDataProto }
         ]);
     }
     create(value?: PartialMessage<GetStoriesRequestProto>): GetStoriesRequestProto {
@@ -994,7 +994,7 @@ class GetStoriesRequestProto$Type extends MessageType<GetStoriesRequestProto> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* repeated StoryUserDataProto stories_data */ 1:
+                case /* repeated StoryUserDataProto stories_data */ 2:
                     message.storiesData.push(StoryUserDataProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
@@ -1009,9 +1009,9 @@ class GetStoriesRequestProto$Type extends MessageType<GetStoriesRequestProto> {
         return message;
     }
     internalBinaryWrite(message: GetStoriesRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated StoryUserDataProto stories_data = 1; */
+        /* repeated StoryUserDataProto stories_data = 2; */
         for (let i = 0; i < message.storiesData.length; i++)
-            StoryUserDataProto.internalBinaryWrite(message.storiesData[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+            StoryUserDataProto.internalBinaryWrite(message.storiesData[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

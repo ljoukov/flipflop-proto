@@ -1748,7 +1748,7 @@ extension TextHyphensProto: SwiftProtobuf._ProtoNameProviding {
 extension GetStoriesRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "GetStoriesRequestProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "stories_data"),
+    2: .standard(proto: "stories_data"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1757,7 +1757,7 @@ extension GetStoriesRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageI
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.storiesData) }()
+      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.storiesData) }()
       default: break
       }
     }
@@ -1765,7 +1765,7 @@ extension GetStoriesRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageI
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     if !self.storiesData.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.storiesData, fieldNumber: 1)
+      try visitor.visitRepeatedMessageField(value: self.storiesData, fieldNumber: 2)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
