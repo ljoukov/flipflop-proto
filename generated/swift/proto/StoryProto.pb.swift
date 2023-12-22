@@ -373,20 +373,12 @@ struct GetStoriesRequestProto {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var lastModifiedAfter: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {return _lastModifiedAfter ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
-    set {_lastModifiedAfter = newValue}
-  }
-  /// Returns true if `lastModifiedAfter` has been explicitly set.
-  var hasLastModifiedAfter: Bool {return self._lastModifiedAfter != nil}
-  /// Clears the value of `lastModifiedAfter`. Subsequent reads from it will return its default value.
-  mutating func clearLastModifiedAfter() {self._lastModifiedAfter = nil}
+  /// Updates to user data per story
+  var storiesData: [StoryUserDataProto] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
-
-  fileprivate var _lastModifiedAfter: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
 struct GetStoriesResponseProto {
@@ -396,22 +388,9 @@ struct GetStoriesResponseProto {
 
   var stories: [StoryProto] = []
 
-  var deletedStoryID: [String] = []
-
-  var lastModifiedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {return _lastModifiedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
-    set {_lastModifiedAt = newValue}
-  }
-  /// Returns true if `lastModifiedAt` has been explicitly set.
-  var hasLastModifiedAt: Bool {return self._lastModifiedAt != nil}
-  /// Clears the value of `lastModifiedAt`. Subsequent reads from it will return its default value.
-  mutating func clearLastModifiedAt() {self._lastModifiedAt = nil}
-
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
-
-  fileprivate var _lastModifiedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
 struct CreateStoryRequestProto {
@@ -1769,7 +1748,7 @@ extension TextHyphensProto: SwiftProtobuf._ProtoNameProviding {
 extension GetStoriesRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "GetStoriesRequestProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "last_modified_after"),
+    1: .standard(proto: "stories_data"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1778,25 +1757,21 @@ extension GetStoriesRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageI
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularMessageField(value: &self._lastModifiedAfter) }()
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.storiesData) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every if/case branch local when no optimizations
-    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-    // https://github.com/apple/swift-protobuf/issues/1182
-    try { if let v = self._lastModifiedAfter {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    } }()
+    if !self.storiesData.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.storiesData, fieldNumber: 1)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: GetStoriesRequestProto, rhs: GetStoriesRequestProto) -> Bool {
-    if lhs._lastModifiedAfter != rhs._lastModifiedAfter {return false}
+    if lhs.storiesData != rhs.storiesData {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -1806,8 +1781,6 @@ extension GetStoriesResponseProto: SwiftProtobuf.Message, SwiftProtobuf._Message
   static let protoMessageName: String = "GetStoriesResponseProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "stories"),
-    2: .standard(proto: "deleted_story_id"),
-    3: .standard(proto: "last_modified_at"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1817,34 +1790,20 @@ extension GetStoriesResponseProto: SwiftProtobuf.Message, SwiftProtobuf._Message
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeRepeatedMessageField(value: &self.stories) }()
-      case 2: try { try decoder.decodeRepeatedStringField(value: &self.deletedStoryID) }()
-      case 3: try { try decoder.decodeSingularMessageField(value: &self._lastModifiedAt) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every if/case branch local when no optimizations
-    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.stories.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.stories, fieldNumber: 1)
     }
-    if !self.deletedStoryID.isEmpty {
-      try visitor.visitRepeatedStringField(value: self.deletedStoryID, fieldNumber: 2)
-    }
-    try { if let v = self._lastModifiedAt {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
-    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: GetStoriesResponseProto, rhs: GetStoriesResponseProto) -> Bool {
     if lhs.stories != rhs.stories {return false}
-    if lhs.deletedStoryID != rhs.deletedStoryID {return false}
-    if lhs._lastModifiedAt != rhs._lastModifiedAt {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

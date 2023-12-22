@@ -3,14 +3,15 @@ syntax = "proto3";
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 
+import "UserDataProto.proto";
+
 message GetStoriesRequestProto {
-  google.protobuf.Timestamp last_modified_after = 1;
+  // Updates to user data per story
+  repeated StoryUserDataProto stories_data = 1;
 }
 
 message GetStoriesResponseProto {
   repeated StoryProto stories = 1;
-  repeated string deleted_story_id = 2;
-  google.protobuf.Timestamp last_modified_at = 3;
 }
 
 message CreateStoryRequestProto {

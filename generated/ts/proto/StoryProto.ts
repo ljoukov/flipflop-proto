@@ -13,16 +13,19 @@ import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
-import { Duration } from "./google/protobuf/duration";
 import { Timestamp } from "./google/protobuf/timestamp";
+import { Duration } from "./google/protobuf/duration";
+import { StoryUserDataProto } from "./UserDataProto";
 /**
  * @generated from protobuf message GetStoriesRequestProto
  */
 export interface GetStoriesRequestProto {
     /**
-     * @generated from protobuf field: google.protobuf.Timestamp last_modified_after = 1;
+     * Updates to user data per story
+     *
+     * @generated from protobuf field: repeated StoryUserDataProto stories_data = 1;
      */
-    lastModifiedAfter?: Timestamp;
+    storiesData: StoryUserDataProto[];
 }
 /**
  * @generated from protobuf message GetStoriesResponseProto
@@ -32,14 +35,6 @@ export interface GetStoriesResponseProto {
      * @generated from protobuf field: repeated StoryProto stories = 1;
      */
     stories: StoryProto[];
-    /**
-     * @generated from protobuf field: repeated string deleted_story_id = 2;
-     */
-    deletedStoryId: string[];
-    /**
-     * @generated from protobuf field: google.protobuf.Timestamp last_modified_at = 3;
-     */
-    lastModifiedAt?: Timestamp;
 }
 /**
  * @generated from protobuf message CreateStoryRequestProto
@@ -984,11 +979,11 @@ export enum TextHyphensProto {
 class GetStoriesRequestProto$Type extends MessageType<GetStoriesRequestProto> {
     constructor() {
         super("GetStoriesRequestProto", [
-            { no: 1, name: "last_modified_after", kind: "message", T: () => Timestamp }
+            { no: 1, name: "stories_data", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoryUserDataProto }
         ]);
     }
     create(value?: PartialMessage<GetStoriesRequestProto>): GetStoriesRequestProto {
-        const message = {};
+        const message = { storiesData: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<GetStoriesRequestProto>(this, message, value);
@@ -999,8 +994,8 @@ class GetStoriesRequestProto$Type extends MessageType<GetStoriesRequestProto> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* google.protobuf.Timestamp last_modified_after */ 1:
-                    message.lastModifiedAfter = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.lastModifiedAfter);
+                case /* repeated StoryUserDataProto stories_data */ 1:
+                    message.storiesData.push(StoryUserDataProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1014,9 +1009,9 @@ class GetStoriesRequestProto$Type extends MessageType<GetStoriesRequestProto> {
         return message;
     }
     internalBinaryWrite(message: GetStoriesRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* google.protobuf.Timestamp last_modified_after = 1; */
-        if (message.lastModifiedAfter)
-            Timestamp.internalBinaryWrite(message.lastModifiedAfter, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* repeated StoryUserDataProto stories_data = 1; */
+        for (let i = 0; i < message.storiesData.length; i++)
+            StoryUserDataProto.internalBinaryWrite(message.storiesData[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1031,13 +1026,11 @@ export const GetStoriesRequestProto = new GetStoriesRequestProto$Type();
 class GetStoriesResponseProto$Type extends MessageType<GetStoriesResponseProto> {
     constructor() {
         super("GetStoriesResponseProto", [
-            { no: 1, name: "stories", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoryProto },
-            { no: 2, name: "deleted_story_id", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "last_modified_at", kind: "message", T: () => Timestamp }
+            { no: 1, name: "stories", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoryProto }
         ]);
     }
     create(value?: PartialMessage<GetStoriesResponseProto>): GetStoriesResponseProto {
-        const message = { stories: [], deletedStoryId: [] };
+        const message = { stories: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<GetStoriesResponseProto>(this, message, value);
@@ -1050,12 +1043,6 @@ class GetStoriesResponseProto$Type extends MessageType<GetStoriesResponseProto> 
             switch (fieldNo) {
                 case /* repeated StoryProto stories */ 1:
                     message.stories.push(StoryProto.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                case /* repeated string deleted_story_id */ 2:
-                    message.deletedStoryId.push(reader.string());
-                    break;
-                case /* google.protobuf.Timestamp last_modified_at */ 3:
-                    message.lastModifiedAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.lastModifiedAt);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1072,12 +1059,6 @@ class GetStoriesResponseProto$Type extends MessageType<GetStoriesResponseProto> 
         /* repeated StoryProto stories = 1; */
         for (let i = 0; i < message.stories.length; i++)
             StoryProto.internalBinaryWrite(message.stories[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* repeated string deleted_story_id = 2; */
-        for (let i = 0; i < message.deletedStoryId.length; i++)
-            writer.tag(2, WireType.LengthDelimited).string(message.deletedStoryId[i]);
-        /* google.protobuf.Timestamp last_modified_at = 3; */
-        if (message.lastModifiedAt)
-            Timestamp.internalBinaryWrite(message.lastModifiedAt, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
