@@ -49,6 +49,7 @@ message StoryUserDataProto {
   google.protobuf.Timestamp last_modified_at = 2;
   bool liked = 3;
   repeated CardUserDataProto cards_data = 4;
+  google.protobuf.Duration view_duration = 5;
 }
 
 message UserDataProto {

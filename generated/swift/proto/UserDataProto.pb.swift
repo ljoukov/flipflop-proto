@@ -252,11 +252,21 @@ struct StoryUserDataProto {
 
   var cardsData: [CardUserDataProto] = []
 
+  var viewDuration: SwiftProtobuf.Google_Protobuf_Duration {
+    get {return _viewDuration ?? SwiftProtobuf.Google_Protobuf_Duration()}
+    set {_viewDuration = newValue}
+  }
+  /// Returns true if `viewDuration` has been explicitly set.
+  var hasViewDuration: Bool {return self._viewDuration != nil}
+  /// Clears the value of `viewDuration`. Subsequent reads from it will return its default value.
+  mutating func clearViewDuration() {self._viewDuration = nil}
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 
   fileprivate var _lastModifiedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+  fileprivate var _viewDuration: SwiftProtobuf.Google_Protobuf_Duration? = nil
 }
 
 struct UserDataProto {
@@ -656,6 +666,7 @@ extension StoryUserDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     2: .standard(proto: "last_modified_at"),
     3: .same(proto: "liked"),
     4: .standard(proto: "cards_data"),
+    5: .standard(proto: "view_duration"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -668,6 +679,7 @@ extension StoryUserDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       case 2: try { try decoder.decodeSingularMessageField(value: &self._lastModifiedAt) }()
       case 3: try { try decoder.decodeSingularBoolField(value: &self.liked) }()
       case 4: try { try decoder.decodeRepeatedMessageField(value: &self.cardsData) }()
+      case 5: try { try decoder.decodeSingularMessageField(value: &self._viewDuration) }()
       default: break
       }
     }
@@ -690,6 +702,9 @@ extension StoryUserDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     if !self.cardsData.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.cardsData, fieldNumber: 4)
     }
+    try { if let v = self._viewDuration {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -698,6 +713,7 @@ extension StoryUserDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     if lhs._lastModifiedAt != rhs._lastModifiedAt {return false}
     if lhs.liked != rhs.liked {return false}
     if lhs.cardsData != rhs.cardsData {return false}
+    if lhs._viewDuration != rhs._viewDuration {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

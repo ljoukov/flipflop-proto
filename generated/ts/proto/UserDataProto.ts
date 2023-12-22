@@ -152,6 +152,10 @@ export interface StoryUserDataProto {
      * @generated from protobuf field: repeated CardUserDataProto cards_data = 4;
      */
     cardsData: CardUserDataProto[];
+    /**
+     * @generated from protobuf field: google.protobuf.Duration view_duration = 5;
+     */
+    viewDuration?: Duration;
 }
 /**
  * @generated from protobuf message UserDataProto
@@ -577,7 +581,8 @@ class StoryUserDataProto$Type extends MessageType<StoryUserDataProto> {
             { no: 1, name: "story_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "last_modified_at", kind: "message", T: () => Timestamp },
             { no: 3, name: "liked", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 4, name: "cards_data", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => CardUserDataProto }
+            { no: 4, name: "cards_data", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => CardUserDataProto },
+            { no: 5, name: "view_duration", kind: "message", T: () => Duration }
         ]);
     }
     create(value?: PartialMessage<StoryUserDataProto>): StoryUserDataProto {
@@ -604,6 +609,9 @@ class StoryUserDataProto$Type extends MessageType<StoryUserDataProto> {
                 case /* repeated CardUserDataProto cards_data */ 4:
                     message.cardsData.push(CardUserDataProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
+                case /* google.protobuf.Duration view_duration */ 5:
+                    message.viewDuration = Duration.internalBinaryRead(reader, reader.uint32(), options, message.viewDuration);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -628,6 +636,9 @@ class StoryUserDataProto$Type extends MessageType<StoryUserDataProto> {
         /* repeated CardUserDataProto cards_data = 4; */
         for (let i = 0; i < message.cardsData.length; i++)
             CardUserDataProto.internalBinaryWrite(message.cardsData[i], writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.Duration view_duration = 5; */
+        if (message.viewDuration)
+            Duration.internalBinaryWrite(message.viewDuration, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
