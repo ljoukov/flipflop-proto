@@ -141,10 +141,6 @@ export interface StoryUserDataProto {
      */
     lastModifiedAt?: Timestamp;
     /**
-     * @generated from protobuf field: bool liked = 3;
-     */
-    liked: boolean;
-    /**
      * @generated from protobuf field: LikeStatusProto like_status = 6;
      */
     likeStatus: LikeStatusProto;
@@ -590,14 +586,13 @@ class StoryUserDataProto$Type extends MessageType<StoryUserDataProto> {
         super("StoryUserDataProto", [
             { no: 1, name: "story_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "last_modified_at", kind: "message", T: () => Timestamp },
-            { no: 3, name: "liked", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
             { no: 6, name: "like_status", kind: "enum", T: () => ["LikeStatusProto", LikeStatusProto] },
             { no: 4, name: "cards_data", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => CardUserDataProto },
             { no: 5, name: "view_duration", kind: "message", T: () => Duration }
         ]);
     }
     create(value?: PartialMessage<StoryUserDataProto>): StoryUserDataProto {
-        const message = { storyId: "", liked: false, likeStatus: 0, cardsData: [] };
+        const message = { storyId: "", likeStatus: 0, cardsData: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StoryUserDataProto>(this, message, value);
@@ -613,9 +608,6 @@ class StoryUserDataProto$Type extends MessageType<StoryUserDataProto> {
                     break;
                 case /* google.protobuf.Timestamp last_modified_at */ 2:
                     message.lastModifiedAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.lastModifiedAt);
-                    break;
-                case /* bool liked */ 3:
-                    message.liked = reader.bool();
                     break;
                 case /* LikeStatusProto like_status */ 6:
                     message.likeStatus = reader.int32();
@@ -644,9 +636,6 @@ class StoryUserDataProto$Type extends MessageType<StoryUserDataProto> {
         /* google.protobuf.Timestamp last_modified_at = 2; */
         if (message.lastModifiedAt)
             Timestamp.internalBinaryWrite(message.lastModifiedAt, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* bool liked = 3; */
-        if (message.liked !== false)
-            writer.tag(3, WireType.Varint).bool(message.liked);
         /* LikeStatusProto like_status = 6; */
         if (message.likeStatus !== 0)
             writer.tag(6, WireType.Varint).int32(message.likeStatus);

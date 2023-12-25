@@ -53,7 +53,7 @@ message CardUserDataProto {
 message StoryUserDataProto {
   string story_id = 1;
   google.protobuf.Timestamp last_modified_at = 2;
-  bool liked = 3;
+  reserved 3; // bool liked = 3;
   LikeStatusProto like_status = 6;
   repeated CardUserDataProto cards_data = 4;
   google.protobuf.Duration view_duration = 5;

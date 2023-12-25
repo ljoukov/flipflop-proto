@@ -290,8 +290,6 @@ struct StoryUserDataProto {
   /// Clears the value of `lastModifiedAt`. Subsequent reads from it will return its default value.
   mutating func clearLastModifiedAt() {self._lastModifiedAt = nil}
 
-  var liked: Bool = false
-
   var likeStatus: LikeStatusProto = .likeStatusUnknown
 
   var cardsData: [CardUserDataProto] = []
@@ -711,7 +709,6 @@ extension StoryUserDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "story_id"),
     2: .standard(proto: "last_modified_at"),
-    3: .same(proto: "liked"),
     6: .standard(proto: "like_status"),
     4: .standard(proto: "cards_data"),
     5: .standard(proto: "view_duration"),
@@ -725,7 +722,6 @@ extension StoryUserDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.storyID) }()
       case 2: try { try decoder.decodeSingularMessageField(value: &self._lastModifiedAt) }()
-      case 3: try { try decoder.decodeSingularBoolField(value: &self.liked) }()
       case 4: try { try decoder.decodeRepeatedMessageField(value: &self.cardsData) }()
       case 5: try { try decoder.decodeSingularMessageField(value: &self._viewDuration) }()
       case 6: try { try decoder.decodeSingularEnumField(value: &self.likeStatus) }()
@@ -745,9 +741,6 @@ extension StoryUserDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     try { if let v = self._lastModifiedAt {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     } }()
-    if self.liked != false {
-      try visitor.visitSingularBoolField(value: self.liked, fieldNumber: 3)
-    }
     if !self.cardsData.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.cardsData, fieldNumber: 4)
     }
@@ -763,7 +756,6 @@ extension StoryUserDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
   static func ==(lhs: StoryUserDataProto, rhs: StoryUserDataProto) -> Bool {
     if lhs.storyID != rhs.storyID {return false}
     if lhs._lastModifiedAt != rhs._lastModifiedAt {return false}
-    if lhs.liked != rhs.liked {return false}
     if lhs.likeStatus != rhs.likeStatus {return false}
     if lhs.cardsData != rhs.cardsData {return false}
     if lhs._viewDuration != rhs._viewDuration {return false}
