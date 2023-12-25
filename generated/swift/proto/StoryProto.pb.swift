@@ -373,8 +373,9 @@ struct GetStoriesRequestProto {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  /// Updates to user data per story
   var storiesUserDataUpdate: [StoryUserDataProto] = []
+
+  var queuedStoryIds: [String] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -1751,6 +1752,7 @@ extension GetStoriesRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageI
   static let protoMessageName: String = "GetStoriesRequestProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     2: .standard(proto: "stories_user_data_update"),
+    3: .same(proto: "queuedStoryIds"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1760,6 +1762,7 @@ extension GetStoriesRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageI
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 2: try { try decoder.decodeRepeatedMessageField(value: &self.storiesUserDataUpdate) }()
+      case 3: try { try decoder.decodeRepeatedStringField(value: &self.queuedStoryIds) }()
       default: break
       }
     }
@@ -1769,11 +1772,15 @@ extension GetStoriesRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     if !self.storiesUserDataUpdate.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.storiesUserDataUpdate, fieldNumber: 2)
     }
+    if !self.queuedStoryIds.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.queuedStoryIds, fieldNumber: 3)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: GetStoriesRequestProto, rhs: GetStoriesRequestProto) -> Bool {
     if lhs.storiesUserDataUpdate != rhs.storiesUserDataUpdate {return false}
+    if lhs.queuedStoryIds != rhs.queuedStoryIds {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

@@ -7,9 +7,8 @@ import "UserDataProto.proto";
 
 message GetStoriesRequestProto {
   reserved 1;
-
-  // Updates to user data per story
   repeated StoryUserDataProto stories_user_data_update = 2;
+  repeated string queuedStoryIds = 3;
 }
 
 message GetStoriesResponseProto {

@@ -21,11 +21,13 @@ import { StoryUserDataProto } from "./UserDataProto";
  */
 export interface GetStoriesRequestProto {
     /**
-     * Updates to user data per story
-     *
      * @generated from protobuf field: repeated StoryUserDataProto stories_user_data_update = 2;
      */
     storiesUserDataUpdate: StoryUserDataProto[];
+    /**
+     * @generated from protobuf field: repeated string queuedStoryIds = 3;
+     */
+    queuedStoryIds: string[];
 }
 /**
  * @generated from protobuf message GetStoriesResponseProto
@@ -983,11 +985,12 @@ export enum TextHyphensProto {
 class GetStoriesRequestProto$Type extends MessageType<GetStoriesRequestProto> {
     constructor() {
         super("GetStoriesRequestProto", [
-            { no: 2, name: "stories_user_data_update", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoryUserDataProto }
+            { no: 2, name: "stories_user_data_update", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoryUserDataProto },
+            { no: 3, name: "queuedStoryIds", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<GetStoriesRequestProto>): GetStoriesRequestProto {
-        const message = { storiesUserDataUpdate: [] };
+        const message = { storiesUserDataUpdate: [], queuedStoryIds: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<GetStoriesRequestProto>(this, message, value);
@@ -1000,6 +1003,9 @@ class GetStoriesRequestProto$Type extends MessageType<GetStoriesRequestProto> {
             switch (fieldNo) {
                 case /* repeated StoryUserDataProto stories_user_data_update */ 2:
                     message.storiesUserDataUpdate.push(StoryUserDataProto.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* repeated string queuedStoryIds */ 3:
+                    message.queuedStoryIds.push(reader.string());
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1016,6 +1022,9 @@ class GetStoriesRequestProto$Type extends MessageType<GetStoriesRequestProto> {
         /* repeated StoryUserDataProto stories_user_data_update = 2; */
         for (let i = 0; i < message.storiesUserDataUpdate.length; i++)
             StoryUserDataProto.internalBinaryWrite(message.storiesUserDataUpdate[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* repeated string queuedStoryIds = 3; */
+        for (let i = 0; i < message.queuedStoryIds.length; i++)
+            writer.tag(3, WireType.LengthDelimited).string(message.queuedStoryIds[i]);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
