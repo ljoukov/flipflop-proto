@@ -36,10 +36,16 @@ message UserApiResponseProto {
   map<string, google.protobuf.Duration> latencies = 100;
 }
 
+enum LikeStatusProto {
+  LIKE_STATUS_UNKNOWN = 0;
+  LIKE_STATUS_ACTIVE = 1;
+  LIKE_STATUS_INACTIVE = 2;
+}
+
 message CardUserDataProto {
   string card_id = 1;
   google.protobuf.Timestamp last_modified_at = 2;
-  bool liked = 3;
+  reserved 3; // bool liked = 3;
   // For cards with True/False, ABC, voting, starts with 1; 0 means not acted
   int32 selected_option_number = 4;
 }
@@ -48,6 +54,7 @@ message StoryUserDataProto {
   string story_id = 1;
   google.protobuf.Timestamp last_modified_at = 2;
   bool liked = 3;
+  LikeStatusProto like_status = 6;
   repeated CardUserDataProto cards_data = 4;
   google.protobuf.Duration view_duration = 5;
 }

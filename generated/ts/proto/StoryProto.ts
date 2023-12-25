@@ -23,9 +23,9 @@ export interface GetStoriesRequestProto {
     /**
      * Updates to user data per story
      *
-     * @generated from protobuf field: repeated StoryUserDataProto stories_data = 2;
+     * @generated from protobuf field: repeated StoryUserDataProto stories_user_data_update = 2;
      */
-    storiesData: StoryUserDataProto[];
+    storiesUserDataUpdate: StoryUserDataProto[];
 }
 /**
  * @generated from protobuf message GetStoriesResponseProto
@@ -35,6 +35,10 @@ export interface GetStoriesResponseProto {
      * @generated from protobuf field: repeated StoryProto stories = 1;
      */
     stories: StoryProto[];
+    /**
+     * @generated from protobuf field: repeated StoryUserDataProto stories_user_data = 2;
+     */
+    storiesUserData: StoryUserDataProto[];
 }
 /**
  * @generated from protobuf message CreateStoryRequestProto
@@ -979,11 +983,11 @@ export enum TextHyphensProto {
 class GetStoriesRequestProto$Type extends MessageType<GetStoriesRequestProto> {
     constructor() {
         super("GetStoriesRequestProto", [
-            { no: 2, name: "stories_data", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoryUserDataProto }
+            { no: 2, name: "stories_user_data_update", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoryUserDataProto }
         ]);
     }
     create(value?: PartialMessage<GetStoriesRequestProto>): GetStoriesRequestProto {
-        const message = { storiesData: [] };
+        const message = { storiesUserDataUpdate: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<GetStoriesRequestProto>(this, message, value);
@@ -994,8 +998,8 @@ class GetStoriesRequestProto$Type extends MessageType<GetStoriesRequestProto> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* repeated StoryUserDataProto stories_data */ 2:
-                    message.storiesData.push(StoryUserDataProto.internalBinaryRead(reader, reader.uint32(), options));
+                case /* repeated StoryUserDataProto stories_user_data_update */ 2:
+                    message.storiesUserDataUpdate.push(StoryUserDataProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1009,9 +1013,9 @@ class GetStoriesRequestProto$Type extends MessageType<GetStoriesRequestProto> {
         return message;
     }
     internalBinaryWrite(message: GetStoriesRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated StoryUserDataProto stories_data = 2; */
-        for (let i = 0; i < message.storiesData.length; i++)
-            StoryUserDataProto.internalBinaryWrite(message.storiesData[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* repeated StoryUserDataProto stories_user_data_update = 2; */
+        for (let i = 0; i < message.storiesUserDataUpdate.length; i++)
+            StoryUserDataProto.internalBinaryWrite(message.storiesUserDataUpdate[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1026,11 +1030,12 @@ export const GetStoriesRequestProto = new GetStoriesRequestProto$Type();
 class GetStoriesResponseProto$Type extends MessageType<GetStoriesResponseProto> {
     constructor() {
         super("GetStoriesResponseProto", [
-            { no: 1, name: "stories", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoryProto }
+            { no: 1, name: "stories", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoryProto },
+            { no: 2, name: "stories_user_data", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoryUserDataProto }
         ]);
     }
     create(value?: PartialMessage<GetStoriesResponseProto>): GetStoriesResponseProto {
-        const message = { stories: [] };
+        const message = { stories: [], storiesUserData: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<GetStoriesResponseProto>(this, message, value);
@@ -1043,6 +1048,9 @@ class GetStoriesResponseProto$Type extends MessageType<GetStoriesResponseProto> 
             switch (fieldNo) {
                 case /* repeated StoryProto stories */ 1:
                     message.stories.push(StoryProto.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* repeated StoryUserDataProto stories_user_data */ 2:
+                    message.storiesUserData.push(StoryUserDataProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1059,6 +1067,9 @@ class GetStoriesResponseProto$Type extends MessageType<GetStoriesResponseProto> 
         /* repeated StoryProto stories = 1; */
         for (let i = 0; i < message.stories.length; i++)
             StoryProto.internalBinaryWrite(message.stories[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* repeated StoryUserDataProto stories_user_data = 2; */
+        for (let i = 0; i < message.storiesUserData.length; i++)
+            StoryUserDataProto.internalBinaryWrite(message.storiesUserData[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

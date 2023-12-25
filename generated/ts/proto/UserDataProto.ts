@@ -122,10 +122,6 @@ export interface CardUserDataProto {
      */
     lastModifiedAt?: Timestamp;
     /**
-     * @generated from protobuf field: bool liked = 3;
-     */
-    liked: boolean;
-    /**
      * For cards with True/False, ABC, voting, starts with 1; 0 means not acted
      *
      * @generated from protobuf field: int32 selected_option_number = 4;
@@ -148,6 +144,10 @@ export interface StoryUserDataProto {
      * @generated from protobuf field: bool liked = 3;
      */
     liked: boolean;
+    /**
+     * @generated from protobuf field: LikeStatusProto like_status = 6;
+     */
+    likeStatus: LikeStatusProto;
     /**
      * @generated from protobuf field: repeated CardUserDataProto cards_data = 4;
      */
@@ -177,6 +177,23 @@ export interface UserDataProto {
      * @generated from protobuf field: repeated StoryUserDataProto stories_data = 1;
      */
     storiesData: StoryUserDataProto[];
+}
+/**
+ * @generated from protobuf enum LikeStatusProto
+ */
+export enum LikeStatusProto {
+    /**
+     * @generated from protobuf enum value: LIKE_STATUS_UNKNOWN = 0;
+     */
+    LIKE_STATUS_UNKNOWN = 0,
+    /**
+     * @generated from protobuf enum value: LIKE_STATUS_ACTIVE = 1;
+     */
+    LIKE_STATUS_ACTIVE = 1,
+    /**
+     * @generated from protobuf enum value: LIKE_STATUS_INACTIVE = 2;
+     */
+    LIKE_STATUS_INACTIVE = 2
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class GetUserDataRequestProto$Type extends MessageType<GetUserDataRequestProto> {
@@ -512,12 +529,11 @@ class CardUserDataProto$Type extends MessageType<CardUserDataProto> {
         super("CardUserDataProto", [
             { no: 1, name: "card_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "last_modified_at", kind: "message", T: () => Timestamp },
-            { no: 3, name: "liked", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
             { no: 4, name: "selected_option_number", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
         ]);
     }
     create(value?: PartialMessage<CardUserDataProto>): CardUserDataProto {
-        const message = { cardId: "", liked: false, selectedOptionNumber: 0 };
+        const message = { cardId: "", selectedOptionNumber: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<CardUserDataProto>(this, message, value);
@@ -533,9 +549,6 @@ class CardUserDataProto$Type extends MessageType<CardUserDataProto> {
                     break;
                 case /* google.protobuf.Timestamp last_modified_at */ 2:
                     message.lastModifiedAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.lastModifiedAt);
-                    break;
-                case /* bool liked */ 3:
-                    message.liked = reader.bool();
                     break;
                 case /* int32 selected_option_number */ 4:
                     message.selectedOptionNumber = reader.int32();
@@ -558,9 +571,6 @@ class CardUserDataProto$Type extends MessageType<CardUserDataProto> {
         /* google.protobuf.Timestamp last_modified_at = 2; */
         if (message.lastModifiedAt)
             Timestamp.internalBinaryWrite(message.lastModifiedAt, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* bool liked = 3; */
-        if (message.liked !== false)
-            writer.tag(3, WireType.Varint).bool(message.liked);
         /* int32 selected_option_number = 4; */
         if (message.selectedOptionNumber !== 0)
             writer.tag(4, WireType.Varint).int32(message.selectedOptionNumber);
@@ -581,12 +591,13 @@ class StoryUserDataProto$Type extends MessageType<StoryUserDataProto> {
             { no: 1, name: "story_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "last_modified_at", kind: "message", T: () => Timestamp },
             { no: 3, name: "liked", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 6, name: "like_status", kind: "enum", T: () => ["LikeStatusProto", LikeStatusProto] },
             { no: 4, name: "cards_data", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => CardUserDataProto },
             { no: 5, name: "view_duration", kind: "message", T: () => Duration }
         ]);
     }
     create(value?: PartialMessage<StoryUserDataProto>): StoryUserDataProto {
-        const message = { storyId: "", liked: false, cardsData: [] };
+        const message = { storyId: "", liked: false, likeStatus: 0, cardsData: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StoryUserDataProto>(this, message, value);
@@ -605,6 +616,9 @@ class StoryUserDataProto$Type extends MessageType<StoryUserDataProto> {
                     break;
                 case /* bool liked */ 3:
                     message.liked = reader.bool();
+                    break;
+                case /* LikeStatusProto like_status */ 6:
+                    message.likeStatus = reader.int32();
                     break;
                 case /* repeated CardUserDataProto cards_data */ 4:
                     message.cardsData.push(CardUserDataProto.internalBinaryRead(reader, reader.uint32(), options));
@@ -633,6 +647,9 @@ class StoryUserDataProto$Type extends MessageType<StoryUserDataProto> {
         /* bool liked = 3; */
         if (message.liked !== false)
             writer.tag(3, WireType.Varint).bool(message.liked);
+        /* LikeStatusProto like_status = 6; */
+        if (message.likeStatus !== 0)
+            writer.tag(6, WireType.Varint).int32(message.likeStatus);
         /* repeated CardUserDataProto cards_data = 4; */
         for (let i = 0; i < message.cardsData.length; i++)
             CardUserDataProto.internalBinaryWrite(message.cardsData[i], writer.tag(4, WireType.LengthDelimited).fork(), options).join();

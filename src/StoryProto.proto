@@ -9,11 +9,12 @@ message GetStoriesRequestProto {
   reserved 1;
 
   // Updates to user data per story
-  repeated StoryUserDataProto stories_data = 2;
+  repeated StoryUserDataProto stories_user_data_update = 2;
 }
 
 message GetStoriesResponseProto {
   repeated StoryProto stories = 1;
+  repeated StoryUserDataProto stories_user_data = 2;
 }
 
 message CreateStoryRequestProto {

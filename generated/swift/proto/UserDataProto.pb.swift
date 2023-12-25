@@ -20,6 +20,50 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
+enum LikeStatusProto: SwiftProtobuf.Enum {
+  typealias RawValue = Int
+  case likeStatusUnknown // = 0
+  case likeStatusActive // = 1
+  case likeStatusInactive // = 2
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .likeStatusUnknown
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .likeStatusUnknown
+    case 1: self = .likeStatusActive
+    case 2: self = .likeStatusInactive
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .likeStatusUnknown: return 0
+    case .likeStatusActive: return 1
+    case .likeStatusInactive: return 2
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+}
+
+#if swift(>=4.2)
+
+extension LikeStatusProto: CaseIterable {
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static var allCases: [LikeStatusProto] = [
+    .likeStatusUnknown,
+    .likeStatusActive,
+    .likeStatusInactive,
+  ]
+}
+
+#endif  // swift(>=4.2)
+
 struct GetUserDataRequestProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -220,8 +264,6 @@ struct CardUserDataProto {
   /// Clears the value of `lastModifiedAt`. Subsequent reads from it will return its default value.
   mutating func clearLastModifiedAt() {self._lastModifiedAt = nil}
 
-  var liked: Bool = false
-
   /// For cards with True/False, ABC, voting, starts with 1; 0 means not acted
   var selectedOptionNumber: Int32 = 0
 
@@ -249,6 +291,8 @@ struct StoryUserDataProto {
   mutating func clearLastModifiedAt() {self._lastModifiedAt = nil}
 
   var liked: Bool = false
+
+  var likeStatus: LikeStatusProto = .likeStatusUnknown
 
   var cardsData: [CardUserDataProto] = []
 
@@ -305,6 +349,7 @@ struct UserDataProto {
 }
 
 #if swift(>=5.5) && canImport(_Concurrency)
+extension LikeStatusProto: @unchecked Sendable {}
 extension GetUserDataRequestProto: @unchecked Sendable {}
 extension GetUserDataResponseProto: @unchecked Sendable {}
 extension UpdateUserDataRequestProto: @unchecked Sendable {}
@@ -319,6 +364,14 @@ extension UserDataProto: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
+
+extension LikeStatusProto: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "LIKE_STATUS_UNKNOWN"),
+    1: .same(proto: "LIKE_STATUS_ACTIVE"),
+    2: .same(proto: "LIKE_STATUS_INACTIVE"),
+  ]
+}
 
 extension GetUserDataRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "GetUserDataRequestProto"
@@ -610,7 +663,6 @@ extension CardUserDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "card_id"),
     2: .standard(proto: "last_modified_at"),
-    3: .same(proto: "liked"),
     4: .standard(proto: "selected_option_number"),
   ]
 
@@ -622,7 +674,6 @@ extension CardUserDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.cardID) }()
       case 2: try { try decoder.decodeSingularMessageField(value: &self._lastModifiedAt) }()
-      case 3: try { try decoder.decodeSingularBoolField(value: &self.liked) }()
       case 4: try { try decoder.decodeSingularInt32Field(value: &self.selectedOptionNumber) }()
       default: break
       }
@@ -640,9 +691,6 @@ extension CardUserDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
     try { if let v = self._lastModifiedAt {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     } }()
-    if self.liked != false {
-      try visitor.visitSingularBoolField(value: self.liked, fieldNumber: 3)
-    }
     if self.selectedOptionNumber != 0 {
       try visitor.visitSingularInt32Field(value: self.selectedOptionNumber, fieldNumber: 4)
     }
@@ -652,7 +700,6 @@ extension CardUserDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
   static func ==(lhs: CardUserDataProto, rhs: CardUserDataProto) -> Bool {
     if lhs.cardID != rhs.cardID {return false}
     if lhs._lastModifiedAt != rhs._lastModifiedAt {return false}
-    if lhs.liked != rhs.liked {return false}
     if lhs.selectedOptionNumber != rhs.selectedOptionNumber {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
@@ -665,6 +712,7 @@ extension StoryUserDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     1: .standard(proto: "story_id"),
     2: .standard(proto: "last_modified_at"),
     3: .same(proto: "liked"),
+    6: .standard(proto: "like_status"),
     4: .standard(proto: "cards_data"),
     5: .standard(proto: "view_duration"),
   ]
@@ -680,6 +728,7 @@ extension StoryUserDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       case 3: try { try decoder.decodeSingularBoolField(value: &self.liked) }()
       case 4: try { try decoder.decodeRepeatedMessageField(value: &self.cardsData) }()
       case 5: try { try decoder.decodeSingularMessageField(value: &self._viewDuration) }()
+      case 6: try { try decoder.decodeSingularEnumField(value: &self.likeStatus) }()
       default: break
       }
     }
@@ -705,6 +754,9 @@ extension StoryUserDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     try { if let v = self._viewDuration {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
     } }()
+    if self.likeStatus != .likeStatusUnknown {
+      try visitor.visitSingularEnumField(value: self.likeStatus, fieldNumber: 6)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -712,6 +764,7 @@ extension StoryUserDataProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     if lhs.storyID != rhs.storyID {return false}
     if lhs._lastModifiedAt != rhs._lastModifiedAt {return false}
     if lhs.liked != rhs.liked {return false}
+    if lhs.likeStatus != rhs.likeStatus {return false}
     if lhs.cardsData != rhs.cardsData {return false}
     if lhs._viewDuration != rhs._viewDuration {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
