@@ -48,6 +48,16 @@ export interface UpdateUserDataResponseProto {
     userData?: UserDataProto;
 }
 /**
+ * @generated from protobuf message ClearHistoryRequestProto
+ */
+export interface ClearHistoryRequestProto {
+}
+/**
+ * @generated from protobuf message ClearHistoryResponseProto
+ */
+export interface ClearHistoryResponseProto {
+}
+/**
  * @generated from protobuf message UserApiRequestProto
  */
 export interface UserApiRequestProto {
@@ -70,6 +80,12 @@ export interface UserApiRequestProto {
          * @generated from protobuf field: UpdateUserDataRequestProto update_user_data = 3;
          */
         updateUserData: UpdateUserDataRequestProto;
+    } | {
+        oneofKind: "clearHistory";
+        /**
+         * @generated from protobuf field: ClearHistoryRequestProto clear_history = 4;
+         */
+        clearHistory: ClearHistoryRequestProto;
     } | {
         oneofKind: undefined;
     };
@@ -99,6 +115,12 @@ export interface UserApiResponseProto {
          * @generated from protobuf field: UpdateUserDataResponseProto update_user_data = 3;
          */
         updateUserData: UpdateUserDataResponseProto;
+    } | {
+        oneofKind: "clearHistory";
+        /**
+         * @generated from protobuf field: ClearHistoryResponseProto clear_history = 4;
+         */
+        clearHistory: ClearHistoryResponseProto;
     } | {
         oneofKind: undefined;
     };
@@ -359,12 +381,65 @@ class UpdateUserDataResponseProto$Type extends MessageType<UpdateUserDataRespons
  */
 export const UpdateUserDataResponseProto = new UpdateUserDataResponseProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class ClearHistoryRequestProto$Type extends MessageType<ClearHistoryRequestProto> {
+    constructor() {
+        super("ClearHistoryRequestProto", []);
+    }
+    create(value?: PartialMessage<ClearHistoryRequestProto>): ClearHistoryRequestProto {
+        const message = {};
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<ClearHistoryRequestProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ClearHistoryRequestProto): ClearHistoryRequestProto {
+        return target ?? this.create();
+    }
+    internalBinaryWrite(message: ClearHistoryRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message ClearHistoryRequestProto
+ */
+export const ClearHistoryRequestProto = new ClearHistoryRequestProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ClearHistoryResponseProto$Type extends MessageType<ClearHistoryResponseProto> {
+    constructor() {
+        super("ClearHistoryResponseProto", []);
+    }
+    create(value?: PartialMessage<ClearHistoryResponseProto>): ClearHistoryResponseProto {
+        const message = {};
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<ClearHistoryResponseProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ClearHistoryResponseProto): ClearHistoryResponseProto {
+        return target ?? this.create();
+    }
+    internalBinaryWrite(message: ClearHistoryResponseProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message ClearHistoryResponseProto
+ */
+export const ClearHistoryResponseProto = new ClearHistoryResponseProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class UserApiRequestProto$Type extends MessageType<UserApiRequestProto> {
     constructor() {
         super("UserApiRequestProto", [
             { no: 1, name: "encoded_user_auth", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "get_user_data", kind: "message", oneof: "request", T: () => GetUserDataRequestProto },
-            { no: 3, name: "update_user_data", kind: "message", oneof: "request", T: () => UpdateUserDataRequestProto }
+            { no: 3, name: "update_user_data", kind: "message", oneof: "request", T: () => UpdateUserDataRequestProto },
+            { no: 4, name: "clear_history", kind: "message", oneof: "request", T: () => ClearHistoryRequestProto }
         ]);
     }
     create(value?: PartialMessage<UserApiRequestProto>): UserApiRequestProto {
@@ -394,6 +469,12 @@ class UserApiRequestProto$Type extends MessageType<UserApiRequestProto> {
                         updateUserData: UpdateUserDataRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).updateUserData)
                     };
                     break;
+                case /* ClearHistoryRequestProto clear_history */ 4:
+                    message.request = {
+                        oneofKind: "clearHistory",
+                        clearHistory: ClearHistoryRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).clearHistory)
+                    };
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -415,6 +496,9 @@ class UserApiRequestProto$Type extends MessageType<UserApiRequestProto> {
         /* UpdateUserDataRequestProto update_user_data = 3; */
         if (message.request.oneofKind === "updateUserData")
             UpdateUserDataRequestProto.internalBinaryWrite(message.request.updateUserData, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* ClearHistoryRequestProto clear_history = 4; */
+        if (message.request.oneofKind === "clearHistory")
+            ClearHistoryRequestProto.internalBinaryWrite(message.request.clearHistory, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -432,6 +516,7 @@ class UserApiResponseProto$Type extends MessageType<UserApiResponseProto> {
             { no: 1, name: "refreshed_encoded_user_auth", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "get_user_data", kind: "message", oneof: "response", T: () => GetUserDataResponseProto },
             { no: 3, name: "update_user_data", kind: "message", oneof: "response", T: () => UpdateUserDataResponseProto },
+            { no: 4, name: "clear_history", kind: "message", oneof: "response", T: () => ClearHistoryResponseProto },
             { no: 100, name: "latencies", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => Duration } }
         ]);
     }
@@ -460,6 +545,12 @@ class UserApiResponseProto$Type extends MessageType<UserApiResponseProto> {
                     message.response = {
                         oneofKind: "updateUserData",
                         updateUserData: UpdateUserDataResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).updateUserData)
+                    };
+                    break;
+                case /* ClearHistoryResponseProto clear_history */ 4:
+                    message.response = {
+                        oneofKind: "clearHistory",
+                        clearHistory: ClearHistoryResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).clearHistory)
                     };
                     break;
                 case /* map<string, google.protobuf.Duration> latencies */ 100:
@@ -502,6 +593,9 @@ class UserApiResponseProto$Type extends MessageType<UserApiResponseProto> {
         /* UpdateUserDataResponseProto update_user_data = 3; */
         if (message.response.oneofKind === "updateUserData")
             UpdateUserDataResponseProto.internalBinaryWrite(message.response.updateUserData, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* ClearHistoryResponseProto clear_history = 4; */
+        if (message.response.oneofKind === "clearHistory")
+            ClearHistoryResponseProto.internalBinaryWrite(message.response.clearHistory, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         /* map<string, google.protobuf.Duration> latencies = 100; */
         for (let k of Object.keys(message.latencies)) {
             writer.tag(100, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k);

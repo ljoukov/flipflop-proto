@@ -18,11 +18,18 @@ message UpdateUserDataResponseProto {
   UserDataProto user_data = 1;
 }
 
+message ClearHistoryRequestProto {
+}
+
+message ClearHistoryResponseProto {
+}
+
 message UserApiRequestProto {
   string encoded_user_auth = 1;
   oneof request {
     GetUserDataRequestProto get_user_data = 2;
     UpdateUserDataRequestProto update_user_data = 3;
+    ClearHistoryRequestProto clear_history = 4;
   }
 }
 
@@ -32,6 +39,7 @@ message UserApiResponseProto {
   oneof response {
     GetUserDataResponseProto get_user_data = 2;
     UpdateUserDataResponseProto update_user_data = 3;
+    ClearHistoryResponseProto clear_history = 4;
   }
   map<string, google.protobuf.Duration> latencies = 100;
 }
