@@ -48,14 +48,14 @@ export interface UpdateUserDataResponseProto {
     userData?: UserDataProto;
 }
 /**
- * @generated from protobuf message ClearHistoryRequestProto
+ * @generated from protobuf message DeleteUserHistoryRequestProto
  */
-export interface ClearHistoryRequestProto {
+export interface DeleteUserHistoryRequestProto {
 }
 /**
- * @generated from protobuf message ClearHistoryResponseProto
+ * @generated from protobuf message DeleteUserHistoryResponseProto
  */
-export interface ClearHistoryResponseProto {
+export interface DeleteUserHistoryResponseProto {
 }
 /**
  * @generated from protobuf message UserApiRequestProto
@@ -81,11 +81,11 @@ export interface UserApiRequestProto {
          */
         updateUserData: UpdateUserDataRequestProto;
     } | {
-        oneofKind: "clearHistory";
+        oneofKind: "deleteUserHistory";
         /**
-         * @generated from protobuf field: ClearHistoryRequestProto clear_history = 4;
+         * @generated from protobuf field: DeleteUserHistoryRequestProto delete_user_history = 4;
          */
-        clearHistory: ClearHistoryRequestProto;
+        deleteUserHistory: DeleteUserHistoryRequestProto;
     } | {
         oneofKind: undefined;
     };
@@ -116,11 +116,11 @@ export interface UserApiResponseProto {
          */
         updateUserData: UpdateUserDataResponseProto;
     } | {
-        oneofKind: "clearHistory";
+        oneofKind: "deleteUserHistory";
         /**
-         * @generated from protobuf field: ClearHistoryResponseProto clear_history = 4;
+         * @generated from protobuf field: DeleteUserHistoryResponseProto delete_user_history = 4;
          */
-        clearHistory: ClearHistoryResponseProto;
+        deleteUserHistory: DeleteUserHistoryResponseProto;
     } | {
         oneofKind: undefined;
     };
@@ -381,21 +381,21 @@ class UpdateUserDataResponseProto$Type extends MessageType<UpdateUserDataRespons
  */
 export const UpdateUserDataResponseProto = new UpdateUserDataResponseProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class ClearHistoryRequestProto$Type extends MessageType<ClearHistoryRequestProto> {
+class DeleteUserHistoryRequestProto$Type extends MessageType<DeleteUserHistoryRequestProto> {
     constructor() {
-        super("ClearHistoryRequestProto", []);
+        super("DeleteUserHistoryRequestProto", []);
     }
-    create(value?: PartialMessage<ClearHistoryRequestProto>): ClearHistoryRequestProto {
+    create(value?: PartialMessage<DeleteUserHistoryRequestProto>): DeleteUserHistoryRequestProto {
         const message = {};
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<ClearHistoryRequestProto>(this, message, value);
+            reflectionMergePartial<DeleteUserHistoryRequestProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ClearHistoryRequestProto): ClearHistoryRequestProto {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: DeleteUserHistoryRequestProto): DeleteUserHistoryRequestProto {
         return target ?? this.create();
     }
-    internalBinaryWrite(message: ClearHistoryRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: DeleteUserHistoryRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -403,25 +403,25 @@ class ClearHistoryRequestProto$Type extends MessageType<ClearHistoryRequestProto
     }
 }
 /**
- * @generated MessageType for protobuf message ClearHistoryRequestProto
+ * @generated MessageType for protobuf message DeleteUserHistoryRequestProto
  */
-export const ClearHistoryRequestProto = new ClearHistoryRequestProto$Type();
+export const DeleteUserHistoryRequestProto = new DeleteUserHistoryRequestProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class ClearHistoryResponseProto$Type extends MessageType<ClearHistoryResponseProto> {
+class DeleteUserHistoryResponseProto$Type extends MessageType<DeleteUserHistoryResponseProto> {
     constructor() {
-        super("ClearHistoryResponseProto", []);
+        super("DeleteUserHistoryResponseProto", []);
     }
-    create(value?: PartialMessage<ClearHistoryResponseProto>): ClearHistoryResponseProto {
+    create(value?: PartialMessage<DeleteUserHistoryResponseProto>): DeleteUserHistoryResponseProto {
         const message = {};
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<ClearHistoryResponseProto>(this, message, value);
+            reflectionMergePartial<DeleteUserHistoryResponseProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ClearHistoryResponseProto): ClearHistoryResponseProto {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: DeleteUserHistoryResponseProto): DeleteUserHistoryResponseProto {
         return target ?? this.create();
     }
-    internalBinaryWrite(message: ClearHistoryResponseProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: DeleteUserHistoryResponseProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -429,9 +429,9 @@ class ClearHistoryResponseProto$Type extends MessageType<ClearHistoryResponsePro
     }
 }
 /**
- * @generated MessageType for protobuf message ClearHistoryResponseProto
+ * @generated MessageType for protobuf message DeleteUserHistoryResponseProto
  */
-export const ClearHistoryResponseProto = new ClearHistoryResponseProto$Type();
+export const DeleteUserHistoryResponseProto = new DeleteUserHistoryResponseProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class UserApiRequestProto$Type extends MessageType<UserApiRequestProto> {
     constructor() {
@@ -439,7 +439,7 @@ class UserApiRequestProto$Type extends MessageType<UserApiRequestProto> {
             { no: 1, name: "encoded_user_auth", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "get_user_data", kind: "message", oneof: "request", T: () => GetUserDataRequestProto },
             { no: 3, name: "update_user_data", kind: "message", oneof: "request", T: () => UpdateUserDataRequestProto },
-            { no: 4, name: "clear_history", kind: "message", oneof: "request", T: () => ClearHistoryRequestProto }
+            { no: 4, name: "delete_user_history", kind: "message", oneof: "request", T: () => DeleteUserHistoryRequestProto }
         ]);
     }
     create(value?: PartialMessage<UserApiRequestProto>): UserApiRequestProto {
@@ -469,10 +469,10 @@ class UserApiRequestProto$Type extends MessageType<UserApiRequestProto> {
                         updateUserData: UpdateUserDataRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).updateUserData)
                     };
                     break;
-                case /* ClearHistoryRequestProto clear_history */ 4:
+                case /* DeleteUserHistoryRequestProto delete_user_history */ 4:
                     message.request = {
-                        oneofKind: "clearHistory",
-                        clearHistory: ClearHistoryRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).clearHistory)
+                        oneofKind: "deleteUserHistory",
+                        deleteUserHistory: DeleteUserHistoryRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).deleteUserHistory)
                     };
                     break;
                 default:
@@ -496,9 +496,9 @@ class UserApiRequestProto$Type extends MessageType<UserApiRequestProto> {
         /* UpdateUserDataRequestProto update_user_data = 3; */
         if (message.request.oneofKind === "updateUserData")
             UpdateUserDataRequestProto.internalBinaryWrite(message.request.updateUserData, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* ClearHistoryRequestProto clear_history = 4; */
-        if (message.request.oneofKind === "clearHistory")
-            ClearHistoryRequestProto.internalBinaryWrite(message.request.clearHistory, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* DeleteUserHistoryRequestProto delete_user_history = 4; */
+        if (message.request.oneofKind === "deleteUserHistory")
+            DeleteUserHistoryRequestProto.internalBinaryWrite(message.request.deleteUserHistory, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -516,7 +516,7 @@ class UserApiResponseProto$Type extends MessageType<UserApiResponseProto> {
             { no: 1, name: "refreshed_encoded_user_auth", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "get_user_data", kind: "message", oneof: "response", T: () => GetUserDataResponseProto },
             { no: 3, name: "update_user_data", kind: "message", oneof: "response", T: () => UpdateUserDataResponseProto },
-            { no: 4, name: "clear_history", kind: "message", oneof: "response", T: () => ClearHistoryResponseProto },
+            { no: 4, name: "delete_user_history", kind: "message", oneof: "response", T: () => DeleteUserHistoryResponseProto },
             { no: 100, name: "latencies", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => Duration } }
         ]);
     }
@@ -547,10 +547,10 @@ class UserApiResponseProto$Type extends MessageType<UserApiResponseProto> {
                         updateUserData: UpdateUserDataResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).updateUserData)
                     };
                     break;
-                case /* ClearHistoryResponseProto clear_history */ 4:
+                case /* DeleteUserHistoryResponseProto delete_user_history */ 4:
                     message.response = {
-                        oneofKind: "clearHistory",
-                        clearHistory: ClearHistoryResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).clearHistory)
+                        oneofKind: "deleteUserHistory",
+                        deleteUserHistory: DeleteUserHistoryResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).deleteUserHistory)
                     };
                     break;
                 case /* map<string, google.protobuf.Duration> latencies */ 100:
@@ -593,9 +593,9 @@ class UserApiResponseProto$Type extends MessageType<UserApiResponseProto> {
         /* UpdateUserDataResponseProto update_user_data = 3; */
         if (message.response.oneofKind === "updateUserData")
             UpdateUserDataResponseProto.internalBinaryWrite(message.response.updateUserData, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* ClearHistoryResponseProto clear_history = 4; */
-        if (message.response.oneofKind === "clearHistory")
-            ClearHistoryResponseProto.internalBinaryWrite(message.response.clearHistory, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* DeleteUserHistoryResponseProto delete_user_history = 4; */
+        if (message.response.oneofKind === "deleteUserHistory")
+            DeleteUserHistoryResponseProto.internalBinaryWrite(message.response.deleteUserHistory, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         /* map<string, google.protobuf.Duration> latencies = 100; */
         for (let k of Object.keys(message.latencies)) {
             writer.tag(100, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k);

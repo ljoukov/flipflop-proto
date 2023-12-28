@@ -18,10 +18,10 @@ message UpdateUserDataResponseProto {
   UserDataProto user_data = 1;
 }
 
-message ClearHistoryRequestProto {
+message DeleteUserHistoryRequestProto {
 }
 
-message ClearHistoryResponseProto {
+message DeleteUserHistoryResponseProto {
 }
 
 message UserApiRequestProto {
@@ -29,7 +29,7 @@ message UserApiRequestProto {
   oneof request {
     GetUserDataRequestProto get_user_data = 2;
     UpdateUserDataRequestProto update_user_data = 3;
-    ClearHistoryRequestProto clear_history = 4;
+    DeleteUserHistoryRequestProto delete_user_history = 4;
   }
 }
 
@@ -39,7 +39,7 @@ message UserApiResponseProto {
   oneof response {
     GetUserDataResponseProto get_user_data = 2;
     UpdateUserDataResponseProto update_user_data = 3;
-    ClearHistoryResponseProto clear_history = 4;
+    DeleteUserHistoryResponseProto delete_user_history = 4;
   }
   map<string, google.protobuf.Duration> latencies = 100;
 }

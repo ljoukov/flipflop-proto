@@ -137,7 +137,7 @@ struct UpdateUserDataResponseProto {
   fileprivate var _userData: UserDataProto? = nil
 }
 
-struct ClearHistoryRequestProto {
+struct DeleteUserHistoryRequestProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -147,7 +147,7 @@ struct ClearHistoryRequestProto {
   init() {}
 }
 
-struct ClearHistoryResponseProto {
+struct DeleteUserHistoryResponseProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -182,12 +182,12 @@ struct UserApiRequestProto {
     set {request = .updateUserData(newValue)}
   }
 
-  var clearHistory_p: ClearHistoryRequestProto {
+  var deleteUserHistory: DeleteUserHistoryRequestProto {
     get {
-      if case .clearHistory_p(let v)? = request {return v}
-      return ClearHistoryRequestProto()
+      if case .deleteUserHistory(let v)? = request {return v}
+      return DeleteUserHistoryRequestProto()
     }
-    set {request = .clearHistory_p(newValue)}
+    set {request = .deleteUserHistory(newValue)}
   }
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -195,7 +195,7 @@ struct UserApiRequestProto {
   enum OneOf_Request: Equatable {
     case getUserData(GetUserDataRequestProto)
     case updateUserData(UpdateUserDataRequestProto)
-    case clearHistory_p(ClearHistoryRequestProto)
+    case deleteUserHistory(DeleteUserHistoryRequestProto)
 
   #if !swift(>=4.1)
     static func ==(lhs: UserApiRequestProto.OneOf_Request, rhs: UserApiRequestProto.OneOf_Request) -> Bool {
@@ -211,8 +211,8 @@ struct UserApiRequestProto {
         guard case .updateUserData(let l) = lhs, case .updateUserData(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
-      case (.clearHistory_p, .clearHistory_p): return {
-        guard case .clearHistory_p(let l) = lhs, case .clearHistory_p(let r) = rhs else { preconditionFailure() }
+      case (.deleteUserHistory, .deleteUserHistory): return {
+        guard case .deleteUserHistory(let l) = lhs, case .deleteUserHistory(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       default: return false
@@ -250,12 +250,12 @@ struct UserApiResponseProto {
     set {response = .updateUserData(newValue)}
   }
 
-  var clearHistory_p: ClearHistoryResponseProto {
+  var deleteUserHistory: DeleteUserHistoryResponseProto {
     get {
-      if case .clearHistory_p(let v)? = response {return v}
-      return ClearHistoryResponseProto()
+      if case .deleteUserHistory(let v)? = response {return v}
+      return DeleteUserHistoryResponseProto()
     }
-    set {response = .clearHistory_p(newValue)}
+    set {response = .deleteUserHistory(newValue)}
   }
 
   var latencies: Dictionary<String,SwiftProtobuf.Google_Protobuf_Duration> = [:]
@@ -265,7 +265,7 @@ struct UserApiResponseProto {
   enum OneOf_Response: Equatable {
     case getUserData(GetUserDataResponseProto)
     case updateUserData(UpdateUserDataResponseProto)
-    case clearHistory_p(ClearHistoryResponseProto)
+    case deleteUserHistory(DeleteUserHistoryResponseProto)
 
   #if !swift(>=4.1)
     static func ==(lhs: UserApiResponseProto.OneOf_Response, rhs: UserApiResponseProto.OneOf_Response) -> Bool {
@@ -281,8 +281,8 @@ struct UserApiResponseProto {
         guard case .updateUserData(let l) = lhs, case .updateUserData(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
-      case (.clearHistory_p, .clearHistory_p): return {
-        guard case .clearHistory_p(let l) = lhs, case .clearHistory_p(let r) = rhs else { preconditionFailure() }
+      case (.deleteUserHistory, .deleteUserHistory): return {
+        guard case .deleteUserHistory(let l) = lhs, case .deleteUserHistory(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       default: return false
@@ -398,8 +398,8 @@ extension GetUserDataRequestProto: @unchecked Sendable {}
 extension GetUserDataResponseProto: @unchecked Sendable {}
 extension UpdateUserDataRequestProto: @unchecked Sendable {}
 extension UpdateUserDataResponseProto: @unchecked Sendable {}
-extension ClearHistoryRequestProto: @unchecked Sendable {}
-extension ClearHistoryResponseProto: @unchecked Sendable {}
+extension DeleteUserHistoryRequestProto: @unchecked Sendable {}
+extension DeleteUserHistoryResponseProto: @unchecked Sendable {}
 extension UserApiRequestProto: @unchecked Sendable {}
 extension UserApiRequestProto.OneOf_Request: @unchecked Sendable {}
 extension UserApiResponseProto: @unchecked Sendable {}
@@ -546,8 +546,8 @@ extension UpdateUserDataResponseProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
   }
 }
 
-extension ClearHistoryRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "ClearHistoryRequestProto"
+extension DeleteUserHistoryRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "DeleteUserHistoryRequestProto"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -559,14 +559,14 @@ extension ClearHistoryRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Messag
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: ClearHistoryRequestProto, rhs: ClearHistoryRequestProto) -> Bool {
+  static func ==(lhs: DeleteUserHistoryRequestProto, rhs: DeleteUserHistoryRequestProto) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
-extension ClearHistoryResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "ClearHistoryResponseProto"
+extension DeleteUserHistoryResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "DeleteUserHistoryResponseProto"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -578,7 +578,7 @@ extension ClearHistoryResponseProto: SwiftProtobuf.Message, SwiftProtobuf._Messa
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: ClearHistoryResponseProto, rhs: ClearHistoryResponseProto) -> Bool {
+  static func ==(lhs: DeleteUserHistoryResponseProto, rhs: DeleteUserHistoryResponseProto) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -590,7 +590,7 @@ extension UserApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     1: .standard(proto: "encoded_user_auth"),
     2: .standard(proto: "get_user_data"),
     3: .standard(proto: "update_user_data"),
-    4: .standard(proto: "clear_history"),
+    4: .standard(proto: "delete_user_history"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -627,16 +627,16 @@ extension UserApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
         }
       }()
       case 4: try {
-        var v: ClearHistoryRequestProto?
+        var v: DeleteUserHistoryRequestProto?
         var hadOneofValue = false
         if let current = self.request {
           hadOneofValue = true
-          if case .clearHistory_p(let m) = current {v = m}
+          if case .deleteUserHistory(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.request = .clearHistory_p(v)
+          self.request = .deleteUserHistory(v)
         }
       }()
       default: break
@@ -661,8 +661,8 @@ extension UserApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
       guard case .updateUserData(let v)? = self.request else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
     }()
-    case .clearHistory_p?: try {
-      guard case .clearHistory_p(let v)? = self.request else { preconditionFailure() }
+    case .deleteUserHistory?: try {
+      guard case .deleteUserHistory(let v)? = self.request else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
     }()
     case nil: break
@@ -684,7 +684,7 @@ extension UserApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     1: .standard(proto: "refreshed_encoded_user_auth"),
     2: .standard(proto: "get_user_data"),
     3: .standard(proto: "update_user_data"),
-    4: .standard(proto: "clear_history"),
+    4: .standard(proto: "delete_user_history"),
     100: .same(proto: "latencies"),
   ]
 
@@ -722,16 +722,16 @@ extension UserApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
         }
       }()
       case 4: try {
-        var v: ClearHistoryResponseProto?
+        var v: DeleteUserHistoryResponseProto?
         var hadOneofValue = false
         if let current = self.response {
           hadOneofValue = true
-          if case .clearHistory_p(let m) = current {v = m}
+          if case .deleteUserHistory(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.response = .clearHistory_p(v)
+          self.response = .deleteUserHistory(v)
         }
       }()
       case 100: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.Google_Protobuf_Duration>.self, value: &self.latencies) }()
@@ -757,8 +757,8 @@ extension UserApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
       guard case .updateUserData(let v)? = self.response else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
     }()
-    case .clearHistory_p?: try {
-      guard case .clearHistory_p(let v)? = self.response else { preconditionFailure() }
+    case .deleteUserHistory?: try {
+      guard case .deleteUserHistory(let v)? = self.response else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
     }()
     case nil: break
