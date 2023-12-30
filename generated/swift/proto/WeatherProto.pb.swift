@@ -245,7 +245,7 @@ struct WeatherCacheProto {
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
   mutating func clearCreatedAt() {self._createdAt = nil}
 
-  var weather: [WeatherCacheProto] = []
+  var weather: [WeatherProto] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 

@@ -100,9 +100,9 @@ export interface WeatherCacheProto {
      */
     createdAt?: Timestamp;
     /**
-     * @generated from protobuf field: repeated WeatherCacheProto weather = 2;
+     * @generated from protobuf field: repeated WeatherProto weather = 2;
      */
-    weather: WeatherCacheProto[];
+    weather: WeatherProto[];
 }
 /**
  * @generated from protobuf enum WeatherConditionProto
@@ -344,7 +344,7 @@ class WeatherCacheProto$Type extends MessageType<WeatherCacheProto> {
     constructor() {
         super("WeatherCacheProto", [
             { no: 1, name: "created_at", kind: "message", T: () => Timestamp },
-            { no: 2, name: "weather", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => WeatherCacheProto }
+            { no: 2, name: "weather", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => WeatherProto }
         ]);
     }
     create(value?: PartialMessage<WeatherCacheProto>): WeatherCacheProto {
@@ -362,8 +362,8 @@ class WeatherCacheProto$Type extends MessageType<WeatherCacheProto> {
                 case /* google.protobuf.Timestamp created_at */ 1:
                     message.createdAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.createdAt);
                     break;
-                case /* repeated WeatherCacheProto weather */ 2:
-                    message.weather.push(WeatherCacheProto.internalBinaryRead(reader, reader.uint32(), options));
+                case /* repeated WeatherProto weather */ 2:
+                    message.weather.push(WeatherProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -380,9 +380,9 @@ class WeatherCacheProto$Type extends MessageType<WeatherCacheProto> {
         /* google.protobuf.Timestamp created_at = 1; */
         if (message.createdAt)
             Timestamp.internalBinaryWrite(message.createdAt, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* repeated WeatherCacheProto weather = 2; */
+        /* repeated WeatherProto weather = 2; */
         for (let i = 0; i < message.weather.length; i++)
-            WeatherCacheProto.internalBinaryWrite(message.weather[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+            WeatherProto.internalBinaryWrite(message.weather[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

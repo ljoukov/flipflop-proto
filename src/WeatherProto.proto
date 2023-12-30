@@ -50,5 +50,5 @@ message WeatherProto {
 
 message WeatherCacheProto {
   google.protobuf.Timestamp created_at = 1;
-  repeated WeatherCacheProto weather = 2;
+  repeated WeatherProto weather = 2;
 }
