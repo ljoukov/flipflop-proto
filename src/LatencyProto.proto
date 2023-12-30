@@ -2,6 +2,6 @@ syntax = "proto3";
 
 import "google/protobuf/duration.proto";
 
-message Latencies {
+message LatenciesProto {
   map<string, google.protobuf.Duration> latencies = 1;
 }

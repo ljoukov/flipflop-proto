@@ -15,9 +15,9 @@ import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
 import { Duration } from "./google/protobuf/duration";
 /**
- * @generated from protobuf message Latencies
+ * @generated from protobuf message LatenciesProto
  */
-export interface Latencies {
+export interface LatenciesProto {
     /**
      * @generated from protobuf field: map<string, google.protobuf.Duration> latencies = 1;
      */
@@ -26,20 +26,20 @@ export interface Latencies {
     };
 }
 // @generated message type with reflection information, may provide speed optimized methods
-class Latencies$Type extends MessageType<Latencies> {
+class LatenciesProto$Type extends MessageType<LatenciesProto> {
     constructor() {
-        super("Latencies", [
+        super("LatenciesProto", [
             { no: 1, name: "latencies", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => Duration } }
         ]);
     }
-    create(value?: PartialMessage<Latencies>): Latencies {
+    create(value?: PartialMessage<LatenciesProto>): LatenciesProto {
         const message = { latencies: {} };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<Latencies>(this, message, value);
+            reflectionMergePartial<LatenciesProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: Latencies): Latencies {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: LatenciesProto): LatenciesProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -58,8 +58,8 @@ class Latencies$Type extends MessageType<Latencies> {
         }
         return message;
     }
-    private binaryReadMap1(map: Latencies["latencies"], reader: IBinaryReader, options: BinaryReadOptions): void {
-        let len = reader.uint32(), end = reader.pos + len, key: keyof Latencies["latencies"] | undefined, val: Latencies["latencies"][any] | undefined;
+    private binaryReadMap1(map: LatenciesProto["latencies"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof LatenciesProto["latencies"] | undefined, val: LatenciesProto["latencies"][any] | undefined;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
@@ -69,12 +69,12 @@ class Latencies$Type extends MessageType<Latencies> {
                 case 2:
                     val = Duration.internalBinaryRead(reader, reader.uint32(), options);
                     break;
-                default: throw new globalThis.Error("unknown map entry field for field Latencies.latencies");
+                default: throw new globalThis.Error("unknown map entry field for field LatenciesProto.latencies");
             }
         }
         map[key ?? ""] = val ?? Duration.create();
     }
-    internalBinaryWrite(message: Latencies, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: LatenciesProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* map<string, google.protobuf.Duration> latencies = 1; */
         for (let k of Object.keys(message.latencies)) {
             writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k);
@@ -89,6 +89,6 @@ class Latencies$Type extends MessageType<Latencies> {
     }
 }
 /**
- * @generated MessageType for protobuf message Latencies
+ * @generated MessageType for protobuf message LatenciesProto
  */
-export const Latencies = new Latencies$Type();
+export const LatenciesProto = new LatenciesProto$Type();
