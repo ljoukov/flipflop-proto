@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+import "google/protobuf/duration.proto";
+
+message Latencies {
+  map<string, google.protobuf.Duration> latencies = 1;
+}
