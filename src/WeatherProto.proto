@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+enum WeatherConditionProto {
+  WEATHER_CONDITION_UNKNOWN = 0;
+  WEATHER_CONDITION_THUNDERSTORM = 1;
+  WEATHER_CONDITION_DRIZZLE = 2;
+  WEATHER_CONDITION_RAIN = 3;
+  WEATHER_CONDITION_SNOW = 4;
+  WEATHER_CONDITION_MIST = 5;
+  WEATHER_CONDITION_SMOKE = 6;
+  WEATHER_CONDITION_HAZE = 7;
+  WEATHER_CONDITION_DUST = 8;
+  WEATHER_CONDITION_FOG = 9;
+  WEATHER_CONDITION_SAND = 10;
+  WEATHER_CONDITION_ASH = 11;
+  WEATHER_CONDITION_SQUALL = 12;
+  WEATHER_CONDITION_TORNADO = 13;
+  WEATHER_CONDITION_CLEAR = 14;
+  WEATHER_CONDITION_CLOUDS = 15;
+}
+
+message WeatherProto {
+  google.protobuf.Timestamp created_at = 1;
+
+  string region_code = 2;
+  string country = 3;
+  string city = 4;
+  string time_zone = 5;
+
+  double latitude = 6;
+  double longitude = 7;
+
+  WeatherConditionProto condition = 8;
+  int32 open_weather_condition_id = 9;
+
+  float temperature = 10;  // Celcius
+  float temperature_feels_like = 11;  // Celcius
+  float temperature_min = 12;  // Celcius
+  float temperature_max = 13;  // Celcius
+
+  int32 pressure = 14; // Atmospheric pressure on the sea level, hPa
+  int32 humidity = 15; // Humidity, %
+  int32 visibility = 16; // Visibility, meter.
+  
+  float wind_speed = 17; // Wind speed, meter/sec.
+  int32 wind_degrees = 18; // Wind direction, degrees (meteorological)
+}
