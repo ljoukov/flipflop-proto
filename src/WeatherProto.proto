@@ -47,3 +47,8 @@ message WeatherProto {
   float wind_speed = 17; // Wind speed, meter/sec.
   int32 wind_degrees = 18; // Wind direction, degrees (meteorological)
 }
+
+message WeatherCacheProto {
+  google.protobuf.Timestamp created_at = 1;
+  repeated WeatherCacheProto weather = 2;
+}
