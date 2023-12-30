@@ -236,14 +236,14 @@ struct WeatherCacheProto {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {return _createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
-    set {_createdAt = newValue}
+  var updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_updatedAt = newValue}
   }
-  /// Returns true if `createdAt` has been explicitly set.
-  var hasCreatedAt: Bool {return self._createdAt != nil}
-  /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
-  mutating func clearCreatedAt() {self._createdAt = nil}
+  /// Returns true if `updatedAt` has been explicitly set.
+  var hasUpdatedAt: Bool {return self._updatedAt != nil}
+  /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
+  mutating func clearUpdatedAt() {self._updatedAt = nil}
 
   var weather: [WeatherProto] = []
 
@@ -251,7 +251,7 @@ struct WeatherCacheProto {
 
   init() {}
 
-  fileprivate var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+  fileprivate var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
 #if swift(>=5.5) && canImport(_Concurrency)
@@ -490,7 +490,7 @@ extension WeatherProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
 extension WeatherCacheProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "WeatherCacheProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "created_at"),
+    1: .standard(proto: "updated_at"),
     2: .same(proto: "weather"),
   ]
 
@@ -500,7 +500,7 @@ extension WeatherCacheProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularMessageField(value: &self._createdAt) }()
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._updatedAt) }()
       case 2: try { try decoder.decodeRepeatedMessageField(value: &self.weather) }()
       default: break
       }
@@ -512,7 +512,7 @@ extension WeatherCacheProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    try { if let v = self._createdAt {
+    try { if let v = self._updatedAt {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
     } }()
     if !self.weather.isEmpty {
@@ -522,7 +522,7 @@ extension WeatherCacheProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
   }
 
   static func ==(lhs: WeatherCacheProto, rhs: WeatherCacheProto) -> Bool {
-    if lhs._createdAt != rhs._createdAt {return false}
+    if lhs._updatedAt != rhs._updatedAt {return false}
     if lhs.weather != rhs.weather {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

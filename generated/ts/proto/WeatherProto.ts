@@ -96,9 +96,9 @@ export interface WeatherProto {
  */
 export interface WeatherCacheProto {
     /**
-     * @generated from protobuf field: google.protobuf.Timestamp created_at = 1;
+     * @generated from protobuf field: google.protobuf.Timestamp updated_at = 1;
      */
-    createdAt?: Timestamp;
+    updatedAt?: Timestamp;
     /**
      * @generated from protobuf field: repeated WeatherProto weather = 2;
      */
@@ -343,7 +343,7 @@ export const WeatherProto = new WeatherProto$Type();
 class WeatherCacheProto$Type extends MessageType<WeatherCacheProto> {
     constructor() {
         super("WeatherCacheProto", [
-            { no: 1, name: "created_at", kind: "message", T: () => Timestamp },
+            { no: 1, name: "updated_at", kind: "message", T: () => Timestamp },
             { no: 2, name: "weather", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => WeatherProto }
         ]);
     }
@@ -359,8 +359,8 @@ class WeatherCacheProto$Type extends MessageType<WeatherCacheProto> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* google.protobuf.Timestamp created_at */ 1:
-                    message.createdAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.createdAt);
+                case /* google.protobuf.Timestamp updated_at */ 1:
+                    message.updatedAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.updatedAt);
                     break;
                 case /* repeated WeatherProto weather */ 2:
                     message.weather.push(WeatherProto.internalBinaryRead(reader, reader.uint32(), options));
@@ -377,9 +377,9 @@ class WeatherCacheProto$Type extends MessageType<WeatherCacheProto> {
         return message;
     }
     internalBinaryWrite(message: WeatherCacheProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* google.protobuf.Timestamp created_at = 1; */
-        if (message.createdAt)
-            Timestamp.internalBinaryWrite(message.createdAt, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.Timestamp updated_at = 1; */
+        if (message.updatedAt)
+            Timestamp.internalBinaryWrite(message.updatedAt, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         /* repeated WeatherProto weather = 2; */
         for (let i = 0; i < message.weather.length; i++)
             WeatherProto.internalBinaryWrite(message.weather[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
