@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+enum BookCategoryProto {
+  BOOK_CATEGORY_UNKNOWN = 0;
+  BOOK_CATEGORY_ENTREPRENEURSHIP = 1;
+  BOOK_CATEGORY_POLITICS = 2;
+  BOOK_CATEGORY_MARKETING_AND_SALES = 3;
+  BOOK_CATEGORY_SCIENCE = 4;
+  BOOK_CATEGORY_HEALTH_NUTRITION = 5;
+  BOOK_CATEGORY_PERSONAL_DEVELOPMENT = 6;
+  BOOK_CATEGORY_ECONOMICS = 7;
+  BOOK_CATEGORY_HISTORY = 8;
+  BOOK_CATEGORY_COMMUNICATION_SKILLS = 9;
+  BOOK_CATEGORY_CORPORATE_CULTURE = 10;
+  BOOK_CATEGORY_MANAGEMENT_LEADERSHIP = 11;
+  BOOK_CATEGORY_MOTIVATION_INSPIRATION = 12;
+  BOOK_CATEGORY_MONEY_INVESTMENTS = 13;
+  BOOK_CATEGORY_PSYCHOLOGY = 14;
+  BOOK_CATEGORY_PRODUCTIVITY = 15;
+  BOOK_CATEGORY_SEX_RELATIONSHIPS = 16;
+  BOOK_CATEGORY_TECHNOLOGY_THE_FUTURE = 17;
+  BOOK_CATEGORY_MINDFULNESS_HAPPINESS = 18;
+  BOOK_CATEGORY_PARENTING = 19;
+  BOOK_CATEGORY_SOCIETY_CULTURE = 20;
+  BOOK_CATEGORY_NATURE_THE_ENVIRONMENT = 21;
+  BOOK_CATEGORY_BIOGRAPHY_MEMOIR = 22;
+  BOOK_CATEGORY_CAREER_SUCCESS = 23;
+  BOOK_CATEGORY_EDUCATION = 24;
+  BOOK_CATEGORY_RELIGION_SPIRITUALITY = 25;
+  BOOK_CATEGORY_CREATIVITY = 26;
+  BOOK_CATEGORY_PHILOSOPHY = 27;
+}
+
+message BookProto {
+  string id = 1;
+  google.protobuf.Timestamp published_at = 2;
+
+  string title = 3;
+  string subtitle = 4;
+  string about_book = 5;
+
+  string author = 6;
+  string about_author = 7;
+
+  int32 num_chapters = 8;
+  int32 reading_minutes = 9;
+
+  float rating = 10;
+  int32 num_ratings = 11;
+
+  string quote = 12;
+  string language = 13;
+  
+  repeated BookCategoryProto categories = 14;
+  string target_audience = 15;
+}
