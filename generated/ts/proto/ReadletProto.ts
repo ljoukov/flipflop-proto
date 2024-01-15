@@ -146,9 +146,9 @@ export interface ReadletProto {
      */
     readingMinutes: number;
     /**
-     * @generated from protobuf field: repeated ReadletCategoryProto categories = 8;
+     * @generated from protobuf field: repeated string category_ids = 8;
      */
-    categories: ReadletCategoryProto[];
+    categoryIds: string[];
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class ReadletApiRequestProto$Type extends MessageType<ReadletApiRequestProto> {
@@ -511,11 +511,11 @@ class ReadletProto$Type extends MessageType<ReadletProto> {
             { no: 5, name: "blurb", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 6, name: "num_chapters", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 7, name: "reading_minutes", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 8, name: "categories", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ReadletCategoryProto }
+            { no: 8, name: "category_ids", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<ReadletProto>): ReadletProto {
-        const message = { id: "", title: "", subtitle: "", blurb: "", numChapters: 0, readingMinutes: 0, categories: [] };
+        const message = { id: "", title: "", subtitle: "", blurb: "", numChapters: 0, readingMinutes: 0, categoryIds: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<ReadletProto>(this, message, value);
@@ -547,8 +547,8 @@ class ReadletProto$Type extends MessageType<ReadletProto> {
                 case /* int32 reading_minutes */ 7:
                     message.readingMinutes = reader.int32();
                     break;
-                case /* repeated ReadletCategoryProto categories */ 8:
-                    message.categories.push(ReadletCategoryProto.internalBinaryRead(reader, reader.uint32(), options));
+                case /* repeated string category_ids */ 8:
+                    message.categoryIds.push(reader.string());
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -583,9 +583,9 @@ class ReadletProto$Type extends MessageType<ReadletProto> {
         /* int32 reading_minutes = 7; */
         if (message.readingMinutes !== 0)
             writer.tag(7, WireType.Varint).int32(message.readingMinutes);
-        /* repeated ReadletCategoryProto categories = 8; */
-        for (let i = 0; i < message.categories.length; i++)
-            ReadletCategoryProto.internalBinaryWrite(message.categories[i], writer.tag(8, WireType.LengthDelimited).fork(), options).join();
+        /* repeated string category_ids = 8; */
+        for (let i = 0; i < message.categoryIds.length; i++)
+            writer.tag(8, WireType.LengthDelimited).string(message.categoryIds[i]);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

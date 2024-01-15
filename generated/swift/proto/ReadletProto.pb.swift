@@ -192,7 +192,7 @@ struct ReadletProto {
 
   var readingMinutes: Int32 = 0
 
-  var categories: [ReadletCategoryProto] = []
+  var categoryIds: [String] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -489,7 +489,7 @@ extension ReadletProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     5: .same(proto: "blurb"),
     6: .standard(proto: "num_chapters"),
     7: .standard(proto: "reading_minutes"),
-    8: .same(proto: "categories"),
+    8: .standard(proto: "category_ids"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -505,7 +505,7 @@ extension ReadletProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
       case 5: try { try decoder.decodeSingularStringField(value: &self.blurb) }()
       case 6: try { try decoder.decodeSingularInt32Field(value: &self.numChapters) }()
       case 7: try { try decoder.decodeSingularInt32Field(value: &self.readingMinutes) }()
-      case 8: try { try decoder.decodeRepeatedMessageField(value: &self.categories) }()
+      case 8: try { try decoder.decodeRepeatedStringField(value: &self.categoryIds) }()
       default: break
       }
     }
@@ -537,8 +537,8 @@ extension ReadletProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     if self.readingMinutes != 0 {
       try visitor.visitSingularInt32Field(value: self.readingMinutes, fieldNumber: 7)
     }
-    if !self.categories.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.categories, fieldNumber: 8)
+    if !self.categoryIds.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.categoryIds, fieldNumber: 8)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -551,7 +551,7 @@ extension ReadletProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     if lhs.blurb != rhs.blurb {return false}
     if lhs.numChapters != rhs.numChapters {return false}
     if lhs.readingMinutes != rhs.readingMinutes {return false}
-    if lhs.categories != rhs.categories {return false}
+    if lhs.categoryIds != rhs.categoryIds {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
