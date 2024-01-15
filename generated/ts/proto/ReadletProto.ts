@@ -14,6 +14,79 @@ import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
 import { Timestamp } from "./google/protobuf/timestamp";
+import { Duration } from "./google/protobuf/duration";
+/**
+ * @generated from protobuf message ReadletApiRequestProto
+ */
+export interface ReadletApiRequestProto {
+    /**
+     * @generated from protobuf field: string encoded_user_auth = 1;
+     */
+    encodedUserAuth: string;
+    /**
+     * @generated from protobuf oneof: request
+     */
+    request: {
+        oneofKind: "getReadlets";
+        /**
+         * @generated from protobuf field: GetReadletsRequestProto get_readlets = 2;
+         */
+        getReadlets: GetReadletsRequestProto;
+    } | {
+        oneofKind: undefined;
+    };
+}
+/**
+ * @generated from protobuf message ReadletApiResponseProto
+ */
+export interface ReadletApiResponseProto {
+    /**
+     * If present the token was refreshed and the client should use this new one from now onwards.
+     *
+     * @generated from protobuf field: string refreshed_encoded_user_auth = 1;
+     */
+    refreshedEncodedUserAuth: string;
+    /**
+     * @generated from protobuf oneof: response
+     */
+    response: {
+        oneofKind: "getReadlets";
+        /**
+         * @generated from protobuf field: GetReadletsResponseProto get_readlets = 2;
+         */
+        getReadlets: GetReadletsResponseProto;
+    } | {
+        oneofKind: undefined;
+    };
+    /**
+     * @generated from protobuf field: map<string, google.protobuf.Duration> latencies = 100;
+     */
+    latencies: {
+        [key: string]: Duration;
+    };
+}
+/**
+ * @generated from protobuf message GetReadletsRequestProto
+ */
+export interface GetReadletsRequestProto {
+    /**
+     * @generated from protobuf field: repeated string category_filter = 1;
+     */
+    categoryFilter: string[];
+}
+/**
+ * @generated from protobuf message GetReadletsResponseProto
+ */
+export interface GetReadletsResponseProto {
+    /**
+     * @generated from protobuf field: repeated ReadletProto readlets = 1;
+     */
+    readlets: ReadletProto[];
+    /**
+     * @generated from protobuf field: repeated ReadletCategoryProto available_categories = 2;
+     */
+    availableCategories: ReadletCategoryProto[];
+}
 /**
  * @generated from protobuf message ReadletCategoryProto
  */
@@ -64,6 +137,248 @@ export interface ReadletProto {
      */
     categories: ReadletCategoryProto[];
 }
+// @generated message type with reflection information, may provide speed optimized methods
+class ReadletApiRequestProto$Type extends MessageType<ReadletApiRequestProto> {
+    constructor() {
+        super("ReadletApiRequestProto", [
+            { no: 1, name: "encoded_user_auth", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "get_readlets", kind: "message", oneof: "request", T: () => GetReadletsRequestProto }
+        ]);
+    }
+    create(value?: PartialMessage<ReadletApiRequestProto>): ReadletApiRequestProto {
+        const message = { encodedUserAuth: "", request: { oneofKind: undefined } };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<ReadletApiRequestProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ReadletApiRequestProto): ReadletApiRequestProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string encoded_user_auth */ 1:
+                    message.encodedUserAuth = reader.string();
+                    break;
+                case /* GetReadletsRequestProto get_readlets */ 2:
+                    message.request = {
+                        oneofKind: "getReadlets",
+                        getReadlets: GetReadletsRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).getReadlets)
+                    };
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: ReadletApiRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string encoded_user_auth = 1; */
+        if (message.encodedUserAuth !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.encodedUserAuth);
+        /* GetReadletsRequestProto get_readlets = 2; */
+        if (message.request.oneofKind === "getReadlets")
+            GetReadletsRequestProto.internalBinaryWrite(message.request.getReadlets, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message ReadletApiRequestProto
+ */
+export const ReadletApiRequestProto = new ReadletApiRequestProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ReadletApiResponseProto$Type extends MessageType<ReadletApiResponseProto> {
+    constructor() {
+        super("ReadletApiResponseProto", [
+            { no: 1, name: "refreshed_encoded_user_auth", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "get_readlets", kind: "message", oneof: "response", T: () => GetReadletsResponseProto },
+            { no: 100, name: "latencies", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => Duration } }
+        ]);
+    }
+    create(value?: PartialMessage<ReadletApiResponseProto>): ReadletApiResponseProto {
+        const message = { refreshedEncodedUserAuth: "", response: { oneofKind: undefined }, latencies: {} };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<ReadletApiResponseProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ReadletApiResponseProto): ReadletApiResponseProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string refreshed_encoded_user_auth */ 1:
+                    message.refreshedEncodedUserAuth = reader.string();
+                    break;
+                case /* GetReadletsResponseProto get_readlets */ 2:
+                    message.response = {
+                        oneofKind: "getReadlets",
+                        getReadlets: GetReadletsResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).getReadlets)
+                    };
+                    break;
+                case /* map<string, google.protobuf.Duration> latencies */ 100:
+                    this.binaryReadMap100(message.latencies, reader, options);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    private binaryReadMap100(map: ReadletApiResponseProto["latencies"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof ReadletApiResponseProto["latencies"] | undefined, val: ReadletApiResponseProto["latencies"][any] | undefined;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case 1:
+                    key = reader.string();
+                    break;
+                case 2:
+                    val = Duration.internalBinaryRead(reader, reader.uint32(), options);
+                    break;
+                default: throw new globalThis.Error("unknown map entry field for field ReadletApiResponseProto.latencies");
+            }
+        }
+        map[key ?? ""] = val ?? Duration.create();
+    }
+    internalBinaryWrite(message: ReadletApiResponseProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string refreshed_encoded_user_auth = 1; */
+        if (message.refreshedEncodedUserAuth !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.refreshedEncodedUserAuth);
+        /* GetReadletsResponseProto get_readlets = 2; */
+        if (message.response.oneofKind === "getReadlets")
+            GetReadletsResponseProto.internalBinaryWrite(message.response.getReadlets, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* map<string, google.protobuf.Duration> latencies = 100; */
+        for (let k of Object.keys(message.latencies)) {
+            writer.tag(100, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k);
+            writer.tag(2, WireType.LengthDelimited).fork();
+            Duration.internalBinaryWrite(message.latencies[k], writer, options);
+            writer.join().join();
+        }
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message ReadletApiResponseProto
+ */
+export const ReadletApiResponseProto = new ReadletApiResponseProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class GetReadletsRequestProto$Type extends MessageType<GetReadletsRequestProto> {
+    constructor() {
+        super("GetReadletsRequestProto", [
+            { no: 1, name: "category_filter", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<GetReadletsRequestProto>): GetReadletsRequestProto {
+        const message = { categoryFilter: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<GetReadletsRequestProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetReadletsRequestProto): GetReadletsRequestProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated string category_filter */ 1:
+                    message.categoryFilter.push(reader.string());
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: GetReadletsRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated string category_filter = 1; */
+        for (let i = 0; i < message.categoryFilter.length; i++)
+            writer.tag(1, WireType.LengthDelimited).string(message.categoryFilter[i]);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message GetReadletsRequestProto
+ */
+export const GetReadletsRequestProto = new GetReadletsRequestProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class GetReadletsResponseProto$Type extends MessageType<GetReadletsResponseProto> {
+    constructor() {
+        super("GetReadletsResponseProto", [
+            { no: 1, name: "readlets", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ReadletProto },
+            { no: 2, name: "available_categories", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ReadletCategoryProto }
+        ]);
+    }
+    create(value?: PartialMessage<GetReadletsResponseProto>): GetReadletsResponseProto {
+        const message = { readlets: [], availableCategories: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<GetReadletsResponseProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetReadletsResponseProto): GetReadletsResponseProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated ReadletProto readlets */ 1:
+                    message.readlets.push(ReadletProto.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* repeated ReadletCategoryProto available_categories */ 2:
+                    message.availableCategories.push(ReadletCategoryProto.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: GetReadletsResponseProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated ReadletProto readlets = 1; */
+        for (let i = 0; i < message.readlets.length; i++)
+            ReadletProto.internalBinaryWrite(message.readlets[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* repeated ReadletCategoryProto available_categories = 2; */
+        for (let i = 0; i < message.availableCategories.length; i++)
+            ReadletCategoryProto.internalBinaryWrite(message.availableCategories[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message GetReadletsResponseProto
+ */
+export const GetReadletsResponseProto = new GetReadletsResponseProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class ReadletCategoryProto$Type extends MessageType<ReadletCategoryProto> {
     constructor() {

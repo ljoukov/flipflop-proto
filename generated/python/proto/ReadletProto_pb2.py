@@ -11,18 +11,31 @@ from google.protobuf import symbol_database as _symbol_database
 _sym_db = _symbol_database.Default()
 
 
+from google.protobuf import duration_pb2 as google_dot_protobuf_dot_duration__pb2
 from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x12ReadletProto.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"8\n\x14ReadletCategoryProto\x12\n\n\x02id\x18\x01 \x01(\t\x12\x14\n\x0c\x64isplay_name\x18\x02 \x01(\t\"\xda\x01\n\x0cReadletProto\x12\n\n\x02id\x18\x01 \x01(\t\x12.\n\ncreated_at\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\r\n\x05title\x18\x03 \x01(\t\x12\x10\n\x08subtitle\x18\x04 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x05 \x01(\t\x12\x14\n\x0cnum_chapters\x18\x06 \x01(\x05\x12\x17\n\x0freading_minutes\x18\x07 \x01(\x05\x12)\n\ncategories\x18\x08 \x03(\x0b\x32\x15.ReadletCategoryProtob\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x12ReadletProto.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"p\n\x16ReadletApiRequestProto\x12\x19\n\x11\x65ncoded_user_auth\x18\x01 \x01(\t\x12\x30\n\x0cget_readlets\x18\x02 \x01(\x0b\x32\x18.GetReadletsRequestProtoH\x00\x42\t\n\x07request\"\x86\x02\n\x17ReadletApiResponseProto\x12#\n\x1brefreshed_encoded_user_auth\x18\x01 \x01(\t\x12\x31\n\x0cget_readlets\x18\x02 \x01(\x0b\x32\x19.GetReadletsResponseProtoH\x00\x12:\n\tlatencies\x18\x64 \x03(\x0b\x32\'.ReadletApiResponseProto.LatenciesEntry\x1aK\n\x0eLatenciesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12(\n\x05value\x18\x02 \x01(\x0b\x32\x19.google.protobuf.Duration:\x02\x38\x01\x42\n\n\x08response\"2\n\x17GetReadletsRequestProto\x12\x17\n\x0f\x63\x61tegory_filter\x18\x01 \x03(\t\"p\n\x18GetReadletsResponseProto\x12\x1f\n\x08readlets\x18\x01 \x03(\x0b\x32\r.ReadletProto\x12\x33\n\x14\x61vailable_categories\x18\x02 \x03(\x0b\x32\x15.ReadletCategoryProto\"8\n\x14ReadletCategoryProto\x12\n\n\x02id\x18\x01 \x01(\t\x12\x14\n\x0c\x64isplay_name\x18\x02 \x01(\t\"\xda\x01\n\x0cReadletProto\x12\n\n\x02id\x18\x01 \x01(\t\x12.\n\ncreated_at\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\r\n\x05title\x18\x03 \x01(\t\x12\x10\n\x08subtitle\x18\x04 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x05 \x01(\t\x12\x14\n\x0cnum_chapters\x18\x06 \x01(\x05\x12\x17\n\x0freading_minutes\x18\x07 \x01(\x05\x12)\n\ncategories\x18\x08 \x03(\x0b\x32\x15.ReadletCategoryProtob\x06proto3')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'ReadletProto_pb2', globals())
 if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
-  _READLETCATEGORYPROTO._serialized_start=55
-  _READLETCATEGORYPROTO._serialized_end=111
-  _READLETPROTO._serialized_start=114
-  _READLETPROTO._serialized_end=332
+  _READLETAPIRESPONSEPROTO_LATENCIESENTRY._options = None
+  _READLETAPIRESPONSEPROTO_LATENCIESENTRY._serialized_options = b'8\001'
+  _READLETAPIREQUESTPROTO._serialized_start=87
+  _READLETAPIREQUESTPROTO._serialized_end=199
+  _READLETAPIRESPONSEPROTO._serialized_start=202
+  _READLETAPIRESPONSEPROTO._serialized_end=464
+  _READLETAPIRESPONSEPROTO_LATENCIESENTRY._serialized_start=377
+  _READLETAPIRESPONSEPROTO_LATENCIESENTRY._serialized_end=452
+  _GETREADLETSREQUESTPROTO._serialized_start=466
+  _GETREADLETSREQUESTPROTO._serialized_end=516
+  _GETREADLETSRESPONSEPROTO._serialized_start=518
+  _GETREADLETSRESPONSEPROTO._serialized_end=630
+  _READLETCATEGORYPROTO._serialized_start=632
+  _READLETCATEGORYPROTO._serialized_end=688
+  _READLETPROTO._serialized_start=691
+  _READLETPROTO._serialized_end=909
 # @@protoc_insertion_point(module_scope)

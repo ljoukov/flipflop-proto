@@ -1,6 +1,32 @@
 syntax = "proto3";
 
+import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
+
+message ReadletApiRequestProto {
+  string encoded_user_auth = 1;
+  oneof request {
+    GetReadletsRequestProto get_readlets = 2;
+  }
+}
+
+message ReadletApiResponseProto {
+  // If present the token was refreshed and the client should use this new one from now onwards.
+  string refreshed_encoded_user_auth = 1;
+  oneof response {
+    GetReadletsResponseProto get_readlets = 2;
+  }
+  map<string, google.protobuf.Duration> latencies = 100;
+}
+
+message GetReadletsRequestProto {
+  repeated string category_filter = 1;
+}
+
+message GetReadletsResponseProto {
+  repeated ReadletProto readlets = 1;
+  repeated ReadletCategoryProto available_categories = 2;
+}
 
 message ReadletCategoryProto {
   string id = 1;

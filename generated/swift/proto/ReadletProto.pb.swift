@@ -20,6 +20,115 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
+struct ReadletApiRequestProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var encodedUserAuth: String = String()
+
+  var request: ReadletApiRequestProto.OneOf_Request? = nil
+
+  var getReadlets: GetReadletsRequestProto {
+    get {
+      if case .getReadlets(let v)? = request {return v}
+      return GetReadletsRequestProto()
+    }
+    set {request = .getReadlets(newValue)}
+  }
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  enum OneOf_Request: Equatable {
+    case getReadlets(GetReadletsRequestProto)
+
+  #if !swift(>=4.1)
+    static func ==(lhs: ReadletApiRequestProto.OneOf_Request, rhs: ReadletApiRequestProto.OneOf_Request) -> Bool {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch (lhs, rhs) {
+      case (.getReadlets, .getReadlets): return {
+        guard case .getReadlets(let l) = lhs, case .getReadlets(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      }
+    }
+  #endif
+  }
+
+  init() {}
+}
+
+struct ReadletApiResponseProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// If present the token was refreshed and the client should use this new one from now onwards.
+  var refreshedEncodedUserAuth: String = String()
+
+  var response: ReadletApiResponseProto.OneOf_Response? = nil
+
+  var getReadlets: GetReadletsResponseProto {
+    get {
+      if case .getReadlets(let v)? = response {return v}
+      return GetReadletsResponseProto()
+    }
+    set {response = .getReadlets(newValue)}
+  }
+
+  var latencies: Dictionary<String,SwiftProtobuf.Google_Protobuf_Duration> = [:]
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  enum OneOf_Response: Equatable {
+    case getReadlets(GetReadletsResponseProto)
+
+  #if !swift(>=4.1)
+    static func ==(lhs: ReadletApiResponseProto.OneOf_Response, rhs: ReadletApiResponseProto.OneOf_Response) -> Bool {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch (lhs, rhs) {
+      case (.getReadlets, .getReadlets): return {
+        guard case .getReadlets(let l) = lhs, case .getReadlets(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      }
+    }
+  #endif
+  }
+
+  init() {}
+}
+
+struct GetReadletsRequestProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var categoryFilter: [String] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct GetReadletsResponseProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var readlets: [ReadletProto] = []
+
+  var availableCategories: [ReadletCategoryProto] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 struct ReadletCategoryProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -70,11 +179,201 @@ struct ReadletProto {
 }
 
 #if swift(>=5.5) && canImport(_Concurrency)
+extension ReadletApiRequestProto: @unchecked Sendable {}
+extension ReadletApiRequestProto.OneOf_Request: @unchecked Sendable {}
+extension ReadletApiResponseProto: @unchecked Sendable {}
+extension ReadletApiResponseProto.OneOf_Response: @unchecked Sendable {}
+extension GetReadletsRequestProto: @unchecked Sendable {}
+extension GetReadletsResponseProto: @unchecked Sendable {}
 extension ReadletCategoryProto: @unchecked Sendable {}
 extension ReadletProto: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
+
+extension ReadletApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "ReadletApiRequestProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "encoded_user_auth"),
+    2: .standard(proto: "get_readlets"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.encodedUserAuth) }()
+      case 2: try {
+        var v: GetReadletsRequestProto?
+        var hadOneofValue = false
+        if let current = self.request {
+          hadOneofValue = true
+          if case .getReadlets(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.request = .getReadlets(v)
+        }
+      }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.encodedUserAuth.isEmpty {
+      try visitor.visitSingularStringField(value: self.encodedUserAuth, fieldNumber: 1)
+    }
+    try { if case .getReadlets(let v)? = self.request {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: ReadletApiRequestProto, rhs: ReadletApiRequestProto) -> Bool {
+    if lhs.encodedUserAuth != rhs.encodedUserAuth {return false}
+    if lhs.request != rhs.request {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension ReadletApiResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "ReadletApiResponseProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "refreshed_encoded_user_auth"),
+    2: .standard(proto: "get_readlets"),
+    100: .same(proto: "latencies"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.refreshedEncodedUserAuth) }()
+      case 2: try {
+        var v: GetReadletsResponseProto?
+        var hadOneofValue = false
+        if let current = self.response {
+          hadOneofValue = true
+          if case .getReadlets(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.response = .getReadlets(v)
+        }
+      }()
+      case 100: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.Google_Protobuf_Duration>.self, value: &self.latencies) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.refreshedEncodedUserAuth.isEmpty {
+      try visitor.visitSingularStringField(value: self.refreshedEncodedUserAuth, fieldNumber: 1)
+    }
+    try { if case .getReadlets(let v)? = self.response {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
+    if !self.latencies.isEmpty {
+      try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.Google_Protobuf_Duration>.self, value: self.latencies, fieldNumber: 100)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: ReadletApiResponseProto, rhs: ReadletApiResponseProto) -> Bool {
+    if lhs.refreshedEncodedUserAuth != rhs.refreshedEncodedUserAuth {return false}
+    if lhs.response != rhs.response {return false}
+    if lhs.latencies != rhs.latencies {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension GetReadletsRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "GetReadletsRequestProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "category_filter"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedStringField(value: &self.categoryFilter) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.categoryFilter.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.categoryFilter, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: GetReadletsRequestProto, rhs: GetReadletsRequestProto) -> Bool {
+    if lhs.categoryFilter != rhs.categoryFilter {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension GetReadletsResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "GetReadletsResponseProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "readlets"),
+    2: .standard(proto: "available_categories"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.readlets) }()
+      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.availableCategories) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.readlets.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.readlets, fieldNumber: 1)
+    }
+    if !self.availableCategories.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.availableCategories, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: GetReadletsResponseProto, rhs: GetReadletsResponseProto) -> Bool {
+    if lhs.readlets != rhs.readlets {return false}
+    if lhs.availableCategories != rhs.availableCategories {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
 
 extension ReadletCategoryProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "ReadletCategoryProto"
