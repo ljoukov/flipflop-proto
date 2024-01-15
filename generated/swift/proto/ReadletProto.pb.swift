@@ -194,6 +194,14 @@ struct ReadletProto {
 
   var categoryIds: [String] = []
 
+  var introduction: String = String()
+
+  var conclusion: String = String()
+
+  var tableOfContents: String = String()
+
+  var whoIsItFor: String = String()
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -490,6 +498,10 @@ extension ReadletProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     6: .standard(proto: "num_chapters"),
     7: .standard(proto: "reading_minutes"),
     8: .standard(proto: "category_ids"),
+    9: .same(proto: "introduction"),
+    10: .same(proto: "conclusion"),
+    11: .standard(proto: "table_of_contents"),
+    12: .standard(proto: "who_is_it_for"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -506,6 +518,10 @@ extension ReadletProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
       case 6: try { try decoder.decodeSingularInt32Field(value: &self.numChapters) }()
       case 7: try { try decoder.decodeSingularInt32Field(value: &self.readingMinutes) }()
       case 8: try { try decoder.decodeRepeatedStringField(value: &self.categoryIds) }()
+      case 9: try { try decoder.decodeSingularStringField(value: &self.introduction) }()
+      case 10: try { try decoder.decodeSingularStringField(value: &self.conclusion) }()
+      case 11: try { try decoder.decodeSingularStringField(value: &self.tableOfContents) }()
+      case 12: try { try decoder.decodeSingularStringField(value: &self.whoIsItFor) }()
       default: break
       }
     }
@@ -540,6 +556,18 @@ extension ReadletProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     if !self.categoryIds.isEmpty {
       try visitor.visitRepeatedStringField(value: self.categoryIds, fieldNumber: 8)
     }
+    if !self.introduction.isEmpty {
+      try visitor.visitSingularStringField(value: self.introduction, fieldNumber: 9)
+    }
+    if !self.conclusion.isEmpty {
+      try visitor.visitSingularStringField(value: self.conclusion, fieldNumber: 10)
+    }
+    if !self.tableOfContents.isEmpty {
+      try visitor.visitSingularStringField(value: self.tableOfContents, fieldNumber: 11)
+    }
+    if !self.whoIsItFor.isEmpty {
+      try visitor.visitSingularStringField(value: self.whoIsItFor, fieldNumber: 12)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -552,6 +580,10 @@ extension ReadletProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     if lhs.numChapters != rhs.numChapters {return false}
     if lhs.readingMinutes != rhs.readingMinutes {return false}
     if lhs.categoryIds != rhs.categoryIds {return false}
+    if lhs.introduction != rhs.introduction {return false}
+    if lhs.conclusion != rhs.conclusion {return false}
+    if lhs.tableOfContents != rhs.tableOfContents {return false}
+    if lhs.whoIsItFor != rhs.whoIsItFor {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

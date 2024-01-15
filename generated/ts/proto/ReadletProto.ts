@@ -149,6 +149,22 @@ export interface ReadletProto {
      * @generated from protobuf field: repeated string category_ids = 8;
      */
     categoryIds: string[];
+    /**
+     * @generated from protobuf field: string introduction = 9;
+     */
+    introduction: string;
+    /**
+     * @generated from protobuf field: string conclusion = 10;
+     */
+    conclusion: string;
+    /**
+     * @generated from protobuf field: string table_of_contents = 11;
+     */
+    tableOfContents: string;
+    /**
+     * @generated from protobuf field: string who_is_it_for = 12;
+     */
+    whoIsItFor: string;
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class ReadletApiRequestProto$Type extends MessageType<ReadletApiRequestProto> {
@@ -511,11 +527,15 @@ class ReadletProto$Type extends MessageType<ReadletProto> {
             { no: 5, name: "blurb", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 6, name: "num_chapters", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 7, name: "reading_minutes", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 8, name: "category_ids", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+            { no: 8, name: "category_ids", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
+            { no: 9, name: "introduction", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 10, name: "conclusion", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 11, name: "table_of_contents", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 12, name: "who_is_it_for", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<ReadletProto>): ReadletProto {
-        const message = { id: "", title: "", subtitle: "", blurb: "", numChapters: 0, readingMinutes: 0, categoryIds: [] };
+        const message = { id: "", title: "", subtitle: "", blurb: "", numChapters: 0, readingMinutes: 0, categoryIds: [], introduction: "", conclusion: "", tableOfContents: "", whoIsItFor: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<ReadletProto>(this, message, value);
@@ -549,6 +569,18 @@ class ReadletProto$Type extends MessageType<ReadletProto> {
                     break;
                 case /* repeated string category_ids */ 8:
                     message.categoryIds.push(reader.string());
+                    break;
+                case /* string introduction */ 9:
+                    message.introduction = reader.string();
+                    break;
+                case /* string conclusion */ 10:
+                    message.conclusion = reader.string();
+                    break;
+                case /* string table_of_contents */ 11:
+                    message.tableOfContents = reader.string();
+                    break;
+                case /* string who_is_it_for */ 12:
+                    message.whoIsItFor = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -586,6 +618,18 @@ class ReadletProto$Type extends MessageType<ReadletProto> {
         /* repeated string category_ids = 8; */
         for (let i = 0; i < message.categoryIds.length; i++)
             writer.tag(8, WireType.LengthDelimited).string(message.categoryIds[i]);
+        /* string introduction = 9; */
+        if (message.introduction !== "")
+            writer.tag(9, WireType.LengthDelimited).string(message.introduction);
+        /* string conclusion = 10; */
+        if (message.conclusion !== "")
+            writer.tag(10, WireType.LengthDelimited).string(message.conclusion);
+        /* string table_of_contents = 11; */
+        if (message.tableOfContents !== "")
+            writer.tag(11, WireType.LengthDelimited).string(message.tableOfContents);
+        /* string who_is_it_for = 12; */
+        if (message.whoIsItFor !== "")
+            writer.tag(12, WireType.LengthDelimited).string(message.whoIsItFor);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

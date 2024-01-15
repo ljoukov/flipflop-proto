@@ -50,4 +50,9 @@ message ReadletProto {
   int32 reading_minutes = 7;
   
   repeated string category_ids = 8;
+
+  string introduction = 9;
+  string conclusion = 10;
+  string table_of_contents = 11;
+  string who_is_it_for = 12;
 }
