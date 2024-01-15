@@ -134,9 +134,9 @@ export interface ReadletProto {
      */
     subtitle: string;
     /**
-     * @generated from protobuf field: string description = 5;
+     * @generated from protobuf field: string blurb = 5;
      */
-    description: string;
+    blurb: string;
     /**
      * @generated from protobuf field: int32 num_chapters = 6;
      */
@@ -508,14 +508,14 @@ class ReadletProto$Type extends MessageType<ReadletProto> {
             { no: 2, name: "created_at", kind: "message", T: () => Timestamp },
             { no: 3, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "subtitle", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "blurb", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 6, name: "num_chapters", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 7, name: "reading_minutes", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 8, name: "categories", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ReadletCategoryProto }
         ]);
     }
     create(value?: PartialMessage<ReadletProto>): ReadletProto {
-        const message = { id: "", title: "", subtitle: "", description: "", numChapters: 0, readingMinutes: 0, categories: [] };
+        const message = { id: "", title: "", subtitle: "", blurb: "", numChapters: 0, readingMinutes: 0, categories: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<ReadletProto>(this, message, value);
@@ -538,8 +538,8 @@ class ReadletProto$Type extends MessageType<ReadletProto> {
                 case /* string subtitle */ 4:
                     message.subtitle = reader.string();
                     break;
-                case /* string description */ 5:
-                    message.description = reader.string();
+                case /* string blurb */ 5:
+                    message.blurb = reader.string();
                     break;
                 case /* int32 num_chapters */ 6:
                     message.numChapters = reader.int32();
@@ -574,9 +574,9 @@ class ReadletProto$Type extends MessageType<ReadletProto> {
         /* string subtitle = 4; */
         if (message.subtitle !== "")
             writer.tag(4, WireType.LengthDelimited).string(message.subtitle);
-        /* string description = 5; */
-        if (message.description !== "")
-            writer.tag(5, WireType.LengthDelimited).string(message.description);
+        /* string blurb = 5; */
+        if (message.blurb !== "")
+            writer.tag(5, WireType.LengthDelimited).string(message.blurb);
         /* int32 num_chapters = 6; */
         if (message.numChapters !== 0)
             writer.tag(6, WireType.Varint).int32(message.numChapters);

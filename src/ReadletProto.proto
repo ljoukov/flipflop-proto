@@ -44,7 +44,7 @@ message ReadletProto {
 
   string title = 3;
   string subtitle = 4;
-  string description = 5;
+  string blurb = 5;
 
   int32 num_chapters = 6;
   int32 reading_minutes = 7;

@@ -186,7 +186,7 @@ struct ReadletProto {
 
   var subtitle: String = String()
 
-  var description_p: String = String()
+  var blurb: String = String()
 
   var numChapters: Int32 = 0
 
@@ -486,7 +486,7 @@ extension ReadletProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     2: .standard(proto: "created_at"),
     3: .same(proto: "title"),
     4: .same(proto: "subtitle"),
-    5: .same(proto: "description"),
+    5: .same(proto: "blurb"),
     6: .standard(proto: "num_chapters"),
     7: .standard(proto: "reading_minutes"),
     8: .same(proto: "categories"),
@@ -502,7 +502,7 @@ extension ReadletProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
       case 2: try { try decoder.decodeSingularMessageField(value: &self._createdAt) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.title) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self.subtitle) }()
-      case 5: try { try decoder.decodeSingularStringField(value: &self.description_p) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.blurb) }()
       case 6: try { try decoder.decodeSingularInt32Field(value: &self.numChapters) }()
       case 7: try { try decoder.decodeSingularInt32Field(value: &self.readingMinutes) }()
       case 8: try { try decoder.decodeRepeatedMessageField(value: &self.categories) }()
@@ -528,8 +528,8 @@ extension ReadletProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     if !self.subtitle.isEmpty {
       try visitor.visitSingularStringField(value: self.subtitle, fieldNumber: 4)
     }
-    if !self.description_p.isEmpty {
-      try visitor.visitSingularStringField(value: self.description_p, fieldNumber: 5)
+    if !self.blurb.isEmpty {
+      try visitor.visitSingularStringField(value: self.blurb, fieldNumber: 5)
     }
     if self.numChapters != 0 {
       try visitor.visitSingularInt32Field(value: self.numChapters, fieldNumber: 6)
@@ -548,7 +548,7 @@ extension ReadletProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     if lhs._createdAt != rhs._createdAt {return false}
     if lhs.title != rhs.title {return false}
     if lhs.subtitle != rhs.subtitle {return false}
-    if lhs.description_p != rhs.description_p {return false}
+    if lhs.blurb != rhs.blurb {return false}
     if lhs.numChapters != rhs.numChapters {return false}
     if lhs.readingMinutes != rhs.readingMinutes {return false}
     if lhs.categories != rhs.categories {return false}
