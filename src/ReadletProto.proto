@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+message ReadletCategoryProto {
+  string id = 1;
+  string display_name = 2;
+}
+
+message ReadletProto {
+  string id = 1;
+  google.protobuf.Timestamp created_at = 2;
+
+  string title = 3;
+  string subtitle = 4;
+  string description = 5;
+
+  int32 num_chapters = 6;
+  int32 reading_minutes = 7;
+  
+  repeated ReadletCategoryProto categories = 8;
+}
