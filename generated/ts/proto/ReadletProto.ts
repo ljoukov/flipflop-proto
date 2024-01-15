@@ -88,6 +88,19 @@ export interface GetReadletsResponseProto {
     availableCategories: ReadletCategoryProto[];
 }
 /**
+ * @generated from protobuf message ReadletsCacheProto
+ */
+export interface ReadletsCacheProto {
+    /**
+     * @generated from protobuf field: google.protobuf.Timestamp created_at = 1;
+     */
+    createdAt?: Timestamp;
+    /**
+     * @generated from protobuf field: repeated ReadletProto readlets = 2;
+     */
+    readlets: ReadletProto[];
+}
+/**
  * @generated from protobuf message ReadletCategoryProto
  */
 export interface ReadletCategoryProto {
@@ -379,6 +392,60 @@ class GetReadletsResponseProto$Type extends MessageType<GetReadletsResponseProto
  * @generated MessageType for protobuf message GetReadletsResponseProto
  */
 export const GetReadletsResponseProto = new GetReadletsResponseProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ReadletsCacheProto$Type extends MessageType<ReadletsCacheProto> {
+    constructor() {
+        super("ReadletsCacheProto", [
+            { no: 1, name: "created_at", kind: "message", T: () => Timestamp },
+            { no: 2, name: "readlets", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ReadletProto }
+        ]);
+    }
+    create(value?: PartialMessage<ReadletsCacheProto>): ReadletsCacheProto {
+        const message = { readlets: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<ReadletsCacheProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ReadletsCacheProto): ReadletsCacheProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* google.protobuf.Timestamp created_at */ 1:
+                    message.createdAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.createdAt);
+                    break;
+                case /* repeated ReadletProto readlets */ 2:
+                    message.readlets.push(ReadletProto.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: ReadletsCacheProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* google.protobuf.Timestamp created_at = 1; */
+        if (message.createdAt)
+            Timestamp.internalBinaryWrite(message.createdAt, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* repeated ReadletProto readlets = 2; */
+        for (let i = 0; i < message.readlets.length; i++)
+            ReadletProto.internalBinaryWrite(message.readlets[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message ReadletsCacheProto
+ */
+export const ReadletsCacheProto = new ReadletsCacheProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class ReadletCategoryProto$Type extends MessageType<ReadletCategoryProto> {
     constructor() {

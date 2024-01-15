@@ -28,6 +28,11 @@ message GetReadletsResponseProto {
   repeated ReadletCategoryProto available_categories = 2;
 }
 
+message ReadletsCacheProto {
+  google.protobuf.Timestamp created_at = 1;
+  repeated ReadletProto readlets = 2;
+}
+
 message ReadletCategoryProto {
   string id = 1;
   string display_name = 2;
