@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+
+message BlipApiRequestProto {
+  string encoded_user_auth = 1;
+  oneof request {
+    GetBlipsRequestProto get_blips = 2;
+  }
+}
+
+message BlipApiResponseProto {
+  // If present the token was refreshed and the client should use this new one from now onwards.
+  string refreshed_encoded_user_auth = 1;
+  oneof response {
+    GetBlipsResponseProto get_blips = 2;
+  }
+  map<string, google.protobuf.Duration> latencies = 100;
+}
+
+message GetBlipsRequestProto {
+}
+
+message GetBlipsResponseProto {
+  repeated BlipProto blips = 1;
+}
+
+message BlipsCacheProto {
+  google.protobuf.Timestamp created_at = 1;
+  repeated BlipProto blips = 2;
+}
+
+message BlipProto {
+  string id = 1;
+  google.protobuf.Timestamp created_at = 2;
+
+  string title = 3;
+  string title_emoji = 4;
+  string body = 5;
+  string closure_emoji = 6;
+}
