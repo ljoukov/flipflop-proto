@@ -56,3 +56,19 @@ message BookProto {
   repeated BookCategoryProto categories = 14;
   string target_audience = 15;
 }
+
+message BookAudioChapter {
+  google.protobuf.Timestamp created_at = 1;
+  string audio_key = 2;
+}
+
+message BookAudio {
+  string book_id = 1;
+  google.protobuf.Timestamp updated_at = 2;
+
+  BookAudioChapter introduction = 3;
+  BookAudioChapter conclusion = 4;
+
+  int32 num_chapters = 5;
+  map<int32, BookAudioChapter> chapters = 6;
+}

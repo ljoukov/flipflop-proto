@@ -213,9 +213,81 @@ struct BookProto {
   fileprivate var _publishedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
+struct BookAudioChapter {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_createdAt = newValue}
+  }
+  /// Returns true if `createdAt` has been explicitly set.
+  var hasCreatedAt: Bool {return self._createdAt != nil}
+  /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
+  mutating func clearCreatedAt() {self._createdAt = nil}
+
+  var audioKey: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+
+  fileprivate var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+}
+
+struct BookAudio {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var bookID: String = String()
+
+  var updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_updatedAt = newValue}
+  }
+  /// Returns true if `updatedAt` has been explicitly set.
+  var hasUpdatedAt: Bool {return self._updatedAt != nil}
+  /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
+  mutating func clearUpdatedAt() {self._updatedAt = nil}
+
+  var introduction: BookAudioChapter {
+    get {return _introduction ?? BookAudioChapter()}
+    set {_introduction = newValue}
+  }
+  /// Returns true if `introduction` has been explicitly set.
+  var hasIntroduction: Bool {return self._introduction != nil}
+  /// Clears the value of `introduction`. Subsequent reads from it will return its default value.
+  mutating func clearIntroduction() {self._introduction = nil}
+
+  var conclusion: BookAudioChapter {
+    get {return _conclusion ?? BookAudioChapter()}
+    set {_conclusion = newValue}
+  }
+  /// Returns true if `conclusion` has been explicitly set.
+  var hasConclusion: Bool {return self._conclusion != nil}
+  /// Clears the value of `conclusion`. Subsequent reads from it will return its default value.
+  mutating func clearConclusion() {self._conclusion = nil}
+
+  var numChapters: Int32 = 0
+
+  var chapters: Dictionary<Int32,BookAudioChapter> = [:]
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+
+  fileprivate var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+  fileprivate var _introduction: BookAudioChapter? = nil
+  fileprivate var _conclusion: BookAudioChapter? = nil
+}
+
 #if swift(>=5.5) && canImport(_Concurrency)
 extension BookCategoryProto: @unchecked Sendable {}
 extension BookProto: @unchecked Sendable {}
+extension BookAudioChapter: @unchecked Sendable {}
+extension BookAudio: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
@@ -368,6 +440,114 @@ extension BookProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementation
     if lhs.language != rhs.language {return false}
     if lhs.categories != rhs.categories {return false}
     if lhs.targetAudience != rhs.targetAudience {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension BookAudioChapter: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "BookAudioChapter"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "created_at"),
+    2: .standard(proto: "audio_key"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._createdAt) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.audioKey) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._createdAt {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    if !self.audioKey.isEmpty {
+      try visitor.visitSingularStringField(value: self.audioKey, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: BookAudioChapter, rhs: BookAudioChapter) -> Bool {
+    if lhs._createdAt != rhs._createdAt {return false}
+    if lhs.audioKey != rhs.audioKey {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension BookAudio: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "BookAudio"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "book_id"),
+    2: .standard(proto: "updated_at"),
+    3: .same(proto: "introduction"),
+    4: .same(proto: "conclusion"),
+    5: .standard(proto: "num_chapters"),
+    6: .same(proto: "chapters"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.bookID) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._updatedAt) }()
+      case 3: try { try decoder.decodeSingularMessageField(value: &self._introduction) }()
+      case 4: try { try decoder.decodeSingularMessageField(value: &self._conclusion) }()
+      case 5: try { try decoder.decodeSingularInt32Field(value: &self.numChapters) }()
+      case 6: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufInt32,BookAudioChapter>.self, value: &self.chapters) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.bookID.isEmpty {
+      try visitor.visitSingularStringField(value: self.bookID, fieldNumber: 1)
+    }
+    try { if let v = self._updatedAt {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
+    try { if let v = self._introduction {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+    } }()
+    try { if let v = self._conclusion {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+    } }()
+    if self.numChapters != 0 {
+      try visitor.visitSingularInt32Field(value: self.numChapters, fieldNumber: 5)
+    }
+    if !self.chapters.isEmpty {
+      try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufInt32,BookAudioChapter>.self, value: self.chapters, fieldNumber: 6)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: BookAudio, rhs: BookAudio) -> Bool {
+    if lhs.bookID != rhs.bookID {return false}
+    if lhs._updatedAt != rhs._updatedAt {return false}
+    if lhs._introduction != rhs._introduction {return false}
+    if lhs._conclusion != rhs._conclusion {return false}
+    if lhs.numChapters != rhs.numChapters {return false}
+    if lhs.chapters != rhs.chapters {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
