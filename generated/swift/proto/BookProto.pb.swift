@@ -270,8 +270,6 @@ struct BookAudio {
   /// Clears the value of `conclusion`. Subsequent reads from it will return its default value.
   mutating func clearConclusion() {self._conclusion = nil}
 
-  var numChapters: Int32 = 0
-
   var chapters: Dictionary<Int32,BookAudioChapter> = [:]
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -494,8 +492,7 @@ extension BookAudio: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementation
     2: .standard(proto: "updated_at"),
     3: .same(proto: "introduction"),
     4: .same(proto: "conclusion"),
-    5: .standard(proto: "num_chapters"),
-    6: .same(proto: "chapters"),
+    5: .same(proto: "chapters"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -508,8 +505,7 @@ extension BookAudio: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementation
       case 2: try { try decoder.decodeSingularMessageField(value: &self._updatedAt) }()
       case 3: try { try decoder.decodeSingularMessageField(value: &self._introduction) }()
       case 4: try { try decoder.decodeSingularMessageField(value: &self._conclusion) }()
-      case 5: try { try decoder.decodeSingularInt32Field(value: &self.numChapters) }()
-      case 6: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufInt32,BookAudioChapter>.self, value: &self.chapters) }()
+      case 5: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufInt32,BookAudioChapter>.self, value: &self.chapters) }()
       default: break
       }
     }
@@ -532,11 +528,8 @@ extension BookAudio: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementation
     try { if let v = self._conclusion {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
     } }()
-    if self.numChapters != 0 {
-      try visitor.visitSingularInt32Field(value: self.numChapters, fieldNumber: 5)
-    }
     if !self.chapters.isEmpty {
-      try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufInt32,BookAudioChapter>.self, value: self.chapters, fieldNumber: 6)
+      try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufInt32,BookAudioChapter>.self, value: self.chapters, fieldNumber: 5)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -546,7 +539,6 @@ extension BookAudio: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementation
     if lhs._updatedAt != rhs._updatedAt {return false}
     if lhs._introduction != rhs._introduction {return false}
     if lhs._conclusion != rhs._conclusion {return false}
-    if lhs.numChapters != rhs.numChapters {return false}
     if lhs.chapters != rhs.chapters {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

@@ -69,6 +69,5 @@ message BookAudio {
   BookAudioChapter introduction = 3;
   BookAudioChapter conclusion = 4;
 
-  int32 num_chapters = 5;
-  map<int32, BookAudioChapter> chapters = 6;
+  map<int32, BookAudioChapter> chapters = 5;
 }

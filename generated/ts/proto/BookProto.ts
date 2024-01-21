@@ -113,11 +113,7 @@ export interface BookAudio {
      */
     conclusion?: BookAudioChapter;
     /**
-     * @generated from protobuf field: int32 num_chapters = 5;
-     */
-    numChapters: number;
-    /**
-     * @generated from protobuf field: map<int32, BookAudioChapter> chapters = 6;
+     * @generated from protobuf field: map<int32, BookAudioChapter> chapters = 5;
      */
     chapters: {
         [key: number]: BookAudioChapter;
@@ -455,12 +451,11 @@ class BookAudio$Type extends MessageType<BookAudio> {
             { no: 2, name: "updated_at", kind: "message", T: () => Timestamp },
             { no: 3, name: "introduction", kind: "message", T: () => BookAudioChapter },
             { no: 4, name: "conclusion", kind: "message", T: () => BookAudioChapter },
-            { no: 5, name: "num_chapters", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 6, name: "chapters", kind: "map", K: 5 /*ScalarType.INT32*/, V: { kind: "message", T: () => BookAudioChapter } }
+            { no: 5, name: "chapters", kind: "map", K: 5 /*ScalarType.INT32*/, V: { kind: "message", T: () => BookAudioChapter } }
         ]);
     }
     create(value?: PartialMessage<BookAudio>): BookAudio {
-        const message = { bookId: "", numChapters: 0, chapters: {} };
+        const message = { bookId: "", chapters: {} };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<BookAudio>(this, message, value);
@@ -483,11 +478,8 @@ class BookAudio$Type extends MessageType<BookAudio> {
                 case /* BookAudioChapter conclusion */ 4:
                     message.conclusion = BookAudioChapter.internalBinaryRead(reader, reader.uint32(), options, message.conclusion);
                     break;
-                case /* int32 num_chapters */ 5:
-                    message.numChapters = reader.int32();
-                    break;
-                case /* map<int32, BookAudioChapter> chapters */ 6:
-                    this.binaryReadMap6(message.chapters, reader, options);
+                case /* map<int32, BookAudioChapter> chapters */ 5:
+                    this.binaryReadMap5(message.chapters, reader, options);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -500,7 +492,7 @@ class BookAudio$Type extends MessageType<BookAudio> {
         }
         return message;
     }
-    private binaryReadMap6(map: BookAudio["chapters"], reader: IBinaryReader, options: BinaryReadOptions): void {
+    private binaryReadMap5(map: BookAudio["chapters"], reader: IBinaryReader, options: BinaryReadOptions): void {
         let len = reader.uint32(), end = reader.pos + len, key: keyof BookAudio["chapters"] | undefined, val: BookAudio["chapters"][any] | undefined;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -529,12 +521,9 @@ class BookAudio$Type extends MessageType<BookAudio> {
         /* BookAudioChapter conclusion = 4; */
         if (message.conclusion)
             BookAudioChapter.internalBinaryWrite(message.conclusion, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
-        /* int32 num_chapters = 5; */
-        if (message.numChapters !== 0)
-            writer.tag(5, WireType.Varint).int32(message.numChapters);
-        /* map<int32, BookAudioChapter> chapters = 6; */
+        /* map<int32, BookAudioChapter> chapters = 5; */
         for (let k of Object.keys(message.chapters)) {
-            writer.tag(6, WireType.LengthDelimited).fork().tag(1, WireType.Varint).int32(parseInt(k));
+            writer.tag(5, WireType.LengthDelimited).fork().tag(1, WireType.Varint).int32(parseInt(k));
             writer.tag(2, WireType.LengthDelimited).fork();
             BookAudioChapter.internalBinaryWrite(message.chapters[k as any], writer, options);
             writer.join().join();
