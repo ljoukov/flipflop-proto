@@ -213,6 +213,31 @@ struct BookProto {
   fileprivate var _publishedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
+struct BookAudioPart {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var text: String = String()
+
+  var audioKey: String = String()
+
+  var duration: SwiftProtobuf.Google_Protobuf_Duration {
+    get {return _duration ?? SwiftProtobuf.Google_Protobuf_Duration()}
+    set {_duration = newValue}
+  }
+  /// Returns true if `duration` has been explicitly set.
+  var hasDuration: Bool {return self._duration != nil}
+  /// Clears the value of `duration`. Subsequent reads from it will return its default value.
+  mutating func clearDuration() {self._duration = nil}
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+
+  fileprivate var _duration: SwiftProtobuf.Google_Protobuf_Duration? = nil
+}
+
 struct BookAudioChapter {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -227,7 +252,7 @@ struct BookAudioChapter {
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
   mutating func clearCreatedAt() {self._createdAt = nil}
 
-  var audioKey: String = String()
+  var parts: [BookAudioPart] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -284,6 +309,7 @@ struct BookAudio {
 #if swift(>=5.5) && canImport(_Concurrency)
 extension BookCategoryProto: @unchecked Sendable {}
 extension BookProto: @unchecked Sendable {}
+extension BookAudioPart: @unchecked Sendable {}
 extension BookAudioChapter: @unchecked Sendable {}
 extension BookAudio: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
@@ -443,11 +469,59 @@ extension BookProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementation
   }
 }
 
+extension BookAudioPart: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "BookAudioPart"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "text"),
+    2: .standard(proto: "audio_key"),
+    3: .same(proto: "duration"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.text) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.audioKey) }()
+      case 3: try { try decoder.decodeSingularMessageField(value: &self._duration) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.text.isEmpty {
+      try visitor.visitSingularStringField(value: self.text, fieldNumber: 1)
+    }
+    if !self.audioKey.isEmpty {
+      try visitor.visitSingularStringField(value: self.audioKey, fieldNumber: 2)
+    }
+    try { if let v = self._duration {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: BookAudioPart, rhs: BookAudioPart) -> Bool {
+    if lhs.text != rhs.text {return false}
+    if lhs.audioKey != rhs.audioKey {return false}
+    if lhs._duration != rhs._duration {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
 extension BookAudioChapter: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "BookAudioChapter"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "created_at"),
-    2: .standard(proto: "audio_key"),
+    2: .same(proto: "parts"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -457,7 +531,7 @@ extension BookAudioChapter: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularMessageField(value: &self._createdAt) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.audioKey) }()
+      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.parts) }()
       default: break
       }
     }
@@ -471,15 +545,15 @@ extension BookAudioChapter: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     try { if let v = self._createdAt {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
     } }()
-    if !self.audioKey.isEmpty {
-      try visitor.visitSingularStringField(value: self.audioKey, fieldNumber: 2)
+    if !self.parts.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.parts, fieldNumber: 2)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: BookAudioChapter, rhs: BookAudioChapter) -> Bool {
     if lhs._createdAt != rhs._createdAt {return false}
-    if lhs.audioKey != rhs.audioKey {return false}
+    if lhs.parts != rhs.parts {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

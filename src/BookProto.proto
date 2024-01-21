@@ -1,5 +1,6 @@
 syntax = "proto3";
 
+import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 
 enum BookCategoryProto {
@@ -57,9 +58,16 @@ message BookProto {
   string target_audience = 15;
 }
 
+message BookAudioPart {
+  string text = 1;
+
+  string audio_key = 2;
+  google.protobuf.Duration duration = 3;
+}
+
 message BookAudioChapter {
   google.protobuf.Timestamp created_at = 1;
-  string audio_key = 2;
+  repeated BookAudioPart parts = 2;
 }
 
 message BookAudio {
