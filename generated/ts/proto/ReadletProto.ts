@@ -114,6 +114,27 @@ export interface ReadletCategoryProto {
     displayName: string;
 }
 /**
+ * @generated from protobuf message ReadletChapterProto
+ */
+export interface ReadletChapterProto {
+    /**
+     * @generated from protobuf field: string title = 1;
+     */
+    title: string;
+    /**
+     * @generated from protobuf field: string text = 2;
+     */
+    text: string;
+    /**
+     * @generated from protobuf field: string audio_path = 3;
+     */
+    audioPath: string;
+    /**
+     * @generated from protobuf field: google.protobuf.Duration audio_duration = 4;
+     */
+    audioDuration?: Duration;
+}
+/**
  * @generated from protobuf message ReadletProto
  */
 export interface ReadletProto {
@@ -138,33 +159,13 @@ export interface ReadletProto {
      */
     blurb: string;
     /**
-     * @generated from protobuf field: int32 num_chapters = 6;
-     */
-    numChapters: number;
-    /**
-     * @generated from protobuf field: int32 reading_minutes = 7;
-     */
-    readingMinutes: number;
-    /**
-     * @generated from protobuf field: repeated string category_ids = 8;
+     * @generated from protobuf field: repeated string category_ids = 6;
      */
     categoryIds: string[];
     /**
-     * @generated from protobuf field: string introduction = 9;
+     * @generated from protobuf field: repeated ReadletChapterProto chapters = 7;
      */
-    introduction: string;
-    /**
-     * @generated from protobuf field: string conclusion = 10;
-     */
-    conclusion: string;
-    /**
-     * @generated from protobuf field: string table_of_contents = 11;
-     */
-    tableOfContents: string;
-    /**
-     * @generated from protobuf field: string who_is_it_for = 12;
-     */
-    whoIsItFor: string;
+    chapters: ReadletChapterProto[];
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class ReadletApiRequestProto$Type extends MessageType<ReadletApiRequestProto> {
@@ -517,6 +518,74 @@ class ReadletCategoryProto$Type extends MessageType<ReadletCategoryProto> {
  */
 export const ReadletCategoryProto = new ReadletCategoryProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class ReadletChapterProto$Type extends MessageType<ReadletChapterProto> {
+    constructor() {
+        super("ReadletChapterProto", [
+            { no: 1, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "audio_path", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "audio_duration", kind: "message", T: () => Duration }
+        ]);
+    }
+    create(value?: PartialMessage<ReadletChapterProto>): ReadletChapterProto {
+        const message = { title: "", text: "", audioPath: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<ReadletChapterProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ReadletChapterProto): ReadletChapterProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string title */ 1:
+                    message.title = reader.string();
+                    break;
+                case /* string text */ 2:
+                    message.text = reader.string();
+                    break;
+                case /* string audio_path */ 3:
+                    message.audioPath = reader.string();
+                    break;
+                case /* google.protobuf.Duration audio_duration */ 4:
+                    message.audioDuration = Duration.internalBinaryRead(reader, reader.uint32(), options, message.audioDuration);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: ReadletChapterProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string title = 1; */
+        if (message.title !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.title);
+        /* string text = 2; */
+        if (message.text !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.text);
+        /* string audio_path = 3; */
+        if (message.audioPath !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.audioPath);
+        /* google.protobuf.Duration audio_duration = 4; */
+        if (message.audioDuration)
+            Duration.internalBinaryWrite(message.audioDuration, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message ReadletChapterProto
+ */
+export const ReadletChapterProto = new ReadletChapterProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class ReadletProto$Type extends MessageType<ReadletProto> {
     constructor() {
         super("ReadletProto", [
@@ -525,17 +594,12 @@ class ReadletProto$Type extends MessageType<ReadletProto> {
             { no: 3, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "subtitle", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "blurb", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 6, name: "num_chapters", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 7, name: "reading_minutes", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 8, name: "category_ids", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
-            { no: 9, name: "introduction", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 10, name: "conclusion", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 11, name: "table_of_contents", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 12, name: "who_is_it_for", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 6, name: "category_ids", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
+            { no: 7, name: "chapters", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ReadletChapterProto }
         ]);
     }
     create(value?: PartialMessage<ReadletProto>): ReadletProto {
-        const message = { id: "", title: "", subtitle: "", blurb: "", numChapters: 0, readingMinutes: 0, categoryIds: [], introduction: "", conclusion: "", tableOfContents: "", whoIsItFor: "" };
+        const message = { id: "", title: "", subtitle: "", blurb: "", categoryIds: [], chapters: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<ReadletProto>(this, message, value);
@@ -561,26 +625,11 @@ class ReadletProto$Type extends MessageType<ReadletProto> {
                 case /* string blurb */ 5:
                     message.blurb = reader.string();
                     break;
-                case /* int32 num_chapters */ 6:
-                    message.numChapters = reader.int32();
-                    break;
-                case /* int32 reading_minutes */ 7:
-                    message.readingMinutes = reader.int32();
-                    break;
-                case /* repeated string category_ids */ 8:
+                case /* repeated string category_ids */ 6:
                     message.categoryIds.push(reader.string());
                     break;
-                case /* string introduction */ 9:
-                    message.introduction = reader.string();
-                    break;
-                case /* string conclusion */ 10:
-                    message.conclusion = reader.string();
-                    break;
-                case /* string table_of_contents */ 11:
-                    message.tableOfContents = reader.string();
-                    break;
-                case /* string who_is_it_for */ 12:
-                    message.whoIsItFor = reader.string();
+                case /* repeated ReadletChapterProto chapters */ 7:
+                    message.chapters.push(ReadletChapterProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -609,27 +658,12 @@ class ReadletProto$Type extends MessageType<ReadletProto> {
         /* string blurb = 5; */
         if (message.blurb !== "")
             writer.tag(5, WireType.LengthDelimited).string(message.blurb);
-        /* int32 num_chapters = 6; */
-        if (message.numChapters !== 0)
-            writer.tag(6, WireType.Varint).int32(message.numChapters);
-        /* int32 reading_minutes = 7; */
-        if (message.readingMinutes !== 0)
-            writer.tag(7, WireType.Varint).int32(message.readingMinutes);
-        /* repeated string category_ids = 8; */
+        /* repeated string category_ids = 6; */
         for (let i = 0; i < message.categoryIds.length; i++)
-            writer.tag(8, WireType.LengthDelimited).string(message.categoryIds[i]);
-        /* string introduction = 9; */
-        if (message.introduction !== "")
-            writer.tag(9, WireType.LengthDelimited).string(message.introduction);
-        /* string conclusion = 10; */
-        if (message.conclusion !== "")
-            writer.tag(10, WireType.LengthDelimited).string(message.conclusion);
-        /* string table_of_contents = 11; */
-        if (message.tableOfContents !== "")
-            writer.tag(11, WireType.LengthDelimited).string(message.tableOfContents);
-        /* string who_is_it_for = 12; */
-        if (message.whoIsItFor !== "")
-            writer.tag(12, WireType.LengthDelimited).string(message.whoIsItFor);
+            writer.tag(6, WireType.LengthDelimited).string(message.categoryIds[i]);
+        /* repeated ReadletChapterProto chapters = 7; */
+        for (let i = 0; i < message.chapters.length; i++)
+            ReadletChapterProto.internalBinaryWrite(message.chapters[i], writer.tag(7, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

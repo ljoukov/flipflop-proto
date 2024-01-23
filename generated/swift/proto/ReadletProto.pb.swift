@@ -166,6 +166,33 @@ struct ReadletCategoryProto {
   init() {}
 }
 
+struct ReadletChapterProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var title: String = String()
+
+  var text: String = String()
+
+  var audioPath: String = String()
+
+  var audioDuration: SwiftProtobuf.Google_Protobuf_Duration {
+    get {return _audioDuration ?? SwiftProtobuf.Google_Protobuf_Duration()}
+    set {_audioDuration = newValue}
+  }
+  /// Returns true if `audioDuration` has been explicitly set.
+  var hasAudioDuration: Bool {return self._audioDuration != nil}
+  /// Clears the value of `audioDuration`. Subsequent reads from it will return its default value.
+  mutating func clearAudioDuration() {self._audioDuration = nil}
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+
+  fileprivate var _audioDuration: SwiftProtobuf.Google_Protobuf_Duration? = nil
+}
+
 struct ReadletProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -188,19 +215,9 @@ struct ReadletProto {
 
   var blurb: String = String()
 
-  var numChapters: Int32 = 0
-
-  var readingMinutes: Int32 = 0
-
   var categoryIds: [String] = []
 
-  var introduction: String = String()
-
-  var conclusion: String = String()
-
-  var tableOfContents: String = String()
-
-  var whoIsItFor: String = String()
+  var chapters: [ReadletChapterProto] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -218,6 +235,7 @@ extension GetReadletsRequestProto: @unchecked Sendable {}
 extension GetReadletsResponseProto: @unchecked Sendable {}
 extension ReadletsCacheProto: @unchecked Sendable {}
 extension ReadletCategoryProto: @unchecked Sendable {}
+extension ReadletChapterProto: @unchecked Sendable {}
 extension ReadletProto: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
 
@@ -487,6 +505,60 @@ extension ReadletCategoryProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
   }
 }
 
+extension ReadletChapterProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "ReadletChapterProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "title"),
+    2: .same(proto: "text"),
+    3: .standard(proto: "audio_path"),
+    4: .standard(proto: "audio_duration"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.title) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.text) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.audioPath) }()
+      case 4: try { try decoder.decodeSingularMessageField(value: &self._audioDuration) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.title.isEmpty {
+      try visitor.visitSingularStringField(value: self.title, fieldNumber: 1)
+    }
+    if !self.text.isEmpty {
+      try visitor.visitSingularStringField(value: self.text, fieldNumber: 2)
+    }
+    if !self.audioPath.isEmpty {
+      try visitor.visitSingularStringField(value: self.audioPath, fieldNumber: 3)
+    }
+    try { if let v = self._audioDuration {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: ReadletChapterProto, rhs: ReadletChapterProto) -> Bool {
+    if lhs.title != rhs.title {return false}
+    if lhs.text != rhs.text {return false}
+    if lhs.audioPath != rhs.audioPath {return false}
+    if lhs._audioDuration != rhs._audioDuration {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
 extension ReadletProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "ReadletProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -495,13 +567,8 @@ extension ReadletProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     3: .same(proto: "title"),
     4: .same(proto: "subtitle"),
     5: .same(proto: "blurb"),
-    6: .standard(proto: "num_chapters"),
-    7: .standard(proto: "reading_minutes"),
-    8: .standard(proto: "category_ids"),
-    9: .same(proto: "introduction"),
-    10: .same(proto: "conclusion"),
-    11: .standard(proto: "table_of_contents"),
-    12: .standard(proto: "who_is_it_for"),
+    6: .standard(proto: "category_ids"),
+    7: .same(proto: "chapters"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -515,13 +582,8 @@ extension ReadletProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
       case 3: try { try decoder.decodeSingularStringField(value: &self.title) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self.subtitle) }()
       case 5: try { try decoder.decodeSingularStringField(value: &self.blurb) }()
-      case 6: try { try decoder.decodeSingularInt32Field(value: &self.numChapters) }()
-      case 7: try { try decoder.decodeSingularInt32Field(value: &self.readingMinutes) }()
-      case 8: try { try decoder.decodeRepeatedStringField(value: &self.categoryIds) }()
-      case 9: try { try decoder.decodeSingularStringField(value: &self.introduction) }()
-      case 10: try { try decoder.decodeSingularStringField(value: &self.conclusion) }()
-      case 11: try { try decoder.decodeSingularStringField(value: &self.tableOfContents) }()
-      case 12: try { try decoder.decodeSingularStringField(value: &self.whoIsItFor) }()
+      case 6: try { try decoder.decodeRepeatedStringField(value: &self.categoryIds) }()
+      case 7: try { try decoder.decodeRepeatedMessageField(value: &self.chapters) }()
       default: break
       }
     }
@@ -547,26 +609,11 @@ extension ReadletProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     if !self.blurb.isEmpty {
       try visitor.visitSingularStringField(value: self.blurb, fieldNumber: 5)
     }
-    if self.numChapters != 0 {
-      try visitor.visitSingularInt32Field(value: self.numChapters, fieldNumber: 6)
-    }
-    if self.readingMinutes != 0 {
-      try visitor.visitSingularInt32Field(value: self.readingMinutes, fieldNumber: 7)
-    }
     if !self.categoryIds.isEmpty {
-      try visitor.visitRepeatedStringField(value: self.categoryIds, fieldNumber: 8)
+      try visitor.visitRepeatedStringField(value: self.categoryIds, fieldNumber: 6)
     }
-    if !self.introduction.isEmpty {
-      try visitor.visitSingularStringField(value: self.introduction, fieldNumber: 9)
-    }
-    if !self.conclusion.isEmpty {
-      try visitor.visitSingularStringField(value: self.conclusion, fieldNumber: 10)
-    }
-    if !self.tableOfContents.isEmpty {
-      try visitor.visitSingularStringField(value: self.tableOfContents, fieldNumber: 11)
-    }
-    if !self.whoIsItFor.isEmpty {
-      try visitor.visitSingularStringField(value: self.whoIsItFor, fieldNumber: 12)
+    if !self.chapters.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.chapters, fieldNumber: 7)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -577,13 +624,8 @@ extension ReadletProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     if lhs.title != rhs.title {return false}
     if lhs.subtitle != rhs.subtitle {return false}
     if lhs.blurb != rhs.blurb {return false}
-    if lhs.numChapters != rhs.numChapters {return false}
-    if lhs.readingMinutes != rhs.readingMinutes {return false}
     if lhs.categoryIds != rhs.categoryIds {return false}
-    if lhs.introduction != rhs.introduction {return false}
-    if lhs.conclusion != rhs.conclusion {return false}
-    if lhs.tableOfContents != rhs.tableOfContents {return false}
-    if lhs.whoIsItFor != rhs.whoIsItFor {return false}
+    if lhs.chapters != rhs.chapters {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
