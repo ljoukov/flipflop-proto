@@ -211,7 +211,7 @@ struct ReadletProto {
 
   var title: String = String()
 
-  var subtitle: String = String()
+  var titleEmoji: String = String()
 
   var blurb: String = String()
 
@@ -565,7 +565,7 @@ extension ReadletProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     1: .same(proto: "id"),
     2: .standard(proto: "created_at"),
     3: .same(proto: "title"),
-    4: .same(proto: "subtitle"),
+    4: .standard(proto: "title_emoji"),
     5: .same(proto: "blurb"),
     6: .standard(proto: "category_ids"),
     7: .same(proto: "chapters"),
@@ -580,7 +580,7 @@ extension ReadletProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
       case 1: try { try decoder.decodeSingularStringField(value: &self.id) }()
       case 2: try { try decoder.decodeSingularMessageField(value: &self._createdAt) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.title) }()
-      case 4: try { try decoder.decodeSingularStringField(value: &self.subtitle) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.titleEmoji) }()
       case 5: try { try decoder.decodeSingularStringField(value: &self.blurb) }()
       case 6: try { try decoder.decodeRepeatedStringField(value: &self.categoryIds) }()
       case 7: try { try decoder.decodeRepeatedMessageField(value: &self.chapters) }()
@@ -603,8 +603,8 @@ extension ReadletProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     if !self.title.isEmpty {
       try visitor.visitSingularStringField(value: self.title, fieldNumber: 3)
     }
-    if !self.subtitle.isEmpty {
-      try visitor.visitSingularStringField(value: self.subtitle, fieldNumber: 4)
+    if !self.titleEmoji.isEmpty {
+      try visitor.visitSingularStringField(value: self.titleEmoji, fieldNumber: 4)
     }
     if !self.blurb.isEmpty {
       try visitor.visitSingularStringField(value: self.blurb, fieldNumber: 5)
@@ -622,7 +622,7 @@ extension ReadletProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     if lhs.id != rhs.id {return false}
     if lhs._createdAt != rhs._createdAt {return false}
     if lhs.title != rhs.title {return false}
-    if lhs.subtitle != rhs.subtitle {return false}
+    if lhs.titleEmoji != rhs.titleEmoji {return false}
     if lhs.blurb != rhs.blurb {return false}
     if lhs.categoryIds != rhs.categoryIds {return false}
     if lhs.chapters != rhs.chapters {return false}

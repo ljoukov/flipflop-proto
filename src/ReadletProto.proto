@@ -50,7 +50,8 @@ message ReadletProto {
   google.protobuf.Timestamp created_at = 2;
 
   string title = 3;
-  string subtitle = 4;
+  string title_emoji = 4;
+  
   string blurb = 5;
   
   repeated string category_ids = 6;

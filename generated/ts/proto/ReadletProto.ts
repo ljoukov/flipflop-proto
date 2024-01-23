@@ -151,9 +151,9 @@ export interface ReadletProto {
      */
     title: string;
     /**
-     * @generated from protobuf field: string subtitle = 4;
+     * @generated from protobuf field: string title_emoji = 4;
      */
-    subtitle: string;
+    titleEmoji: string;
     /**
      * @generated from protobuf field: string blurb = 5;
      */
@@ -592,14 +592,14 @@ class ReadletProto$Type extends MessageType<ReadletProto> {
             { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "created_at", kind: "message", T: () => Timestamp },
             { no: 3, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "subtitle", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "title_emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "blurb", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 6, name: "category_ids", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
             { no: 7, name: "chapters", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ReadletChapterProto }
         ]);
     }
     create(value?: PartialMessage<ReadletProto>): ReadletProto {
-        const message = { id: "", title: "", subtitle: "", blurb: "", categoryIds: [], chapters: [] };
+        const message = { id: "", title: "", titleEmoji: "", blurb: "", categoryIds: [], chapters: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<ReadletProto>(this, message, value);
@@ -619,8 +619,8 @@ class ReadletProto$Type extends MessageType<ReadletProto> {
                 case /* string title */ 3:
                     message.title = reader.string();
                     break;
-                case /* string subtitle */ 4:
-                    message.subtitle = reader.string();
+                case /* string title_emoji */ 4:
+                    message.titleEmoji = reader.string();
                     break;
                 case /* string blurb */ 5:
                     message.blurb = reader.string();
@@ -652,9 +652,9 @@ class ReadletProto$Type extends MessageType<ReadletProto> {
         /* string title = 3; */
         if (message.title !== "")
             writer.tag(3, WireType.LengthDelimited).string(message.title);
-        /* string subtitle = 4; */
-        if (message.subtitle !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.subtitle);
+        /* string title_emoji = 4; */
+        if (message.titleEmoji !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.titleEmoji);
         /* string blurb = 5; */
         if (message.blurb !== "")
             writer.tag(5, WireType.LengthDelimited).string(message.blurb);
