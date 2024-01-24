@@ -58,24 +58,24 @@ message BookProto {
   string target_audience = 15;
 }
 
-message BookAudioPart {
+message BookAudioPartProto {
   string text = 1;
 
   string audio_key = 2;
   google.protobuf.Duration duration = 3;
 }
 
-message BookAudioChapter {
+message BookAudioChapterProto {
   google.protobuf.Timestamp created_at = 1;
-  repeated BookAudioPart parts = 2;
+  repeated BookAudioPartProto parts = 2;
 }
 
-message BookAudio {
+message BookAudioProto {
   string book_id = 1;
   google.protobuf.Timestamp updated_at = 2;
 
-  BookAudioChapter introduction = 3;
-  BookAudioChapter conclusion = 4;
+  BookAudioChapterProto introduction = 3;
+  BookAudioChapterProto conclusion = 4;
 
-  map<int32, BookAudioChapter> chapters = 5;
+  map<int32, BookAudioChapterProto> chapters = 5;
 }

@@ -213,7 +213,7 @@ struct BookProto {
   fileprivate var _publishedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
-struct BookAudioPart {
+struct BookAudioPartProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -238,7 +238,7 @@ struct BookAudioPart {
   fileprivate var _duration: SwiftProtobuf.Google_Protobuf_Duration? = nil
 }
 
-struct BookAudioChapter {
+struct BookAudioChapterProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -252,7 +252,7 @@ struct BookAudioChapter {
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
   mutating func clearCreatedAt() {self._createdAt = nil}
 
-  var parts: [BookAudioPart] = []
+  var parts: [BookAudioPartProto] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -261,7 +261,7 @@ struct BookAudioChapter {
   fileprivate var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
-struct BookAudio {
+struct BookAudioProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -277,8 +277,8 @@ struct BookAudio {
   /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
   mutating func clearUpdatedAt() {self._updatedAt = nil}
 
-  var introduction: BookAudioChapter {
-    get {return _introduction ?? BookAudioChapter()}
+  var introduction: BookAudioChapterProto {
+    get {return _introduction ?? BookAudioChapterProto()}
     set {_introduction = newValue}
   }
   /// Returns true if `introduction` has been explicitly set.
@@ -286,8 +286,8 @@ struct BookAudio {
   /// Clears the value of `introduction`. Subsequent reads from it will return its default value.
   mutating func clearIntroduction() {self._introduction = nil}
 
-  var conclusion: BookAudioChapter {
-    get {return _conclusion ?? BookAudioChapter()}
+  var conclusion: BookAudioChapterProto {
+    get {return _conclusion ?? BookAudioChapterProto()}
     set {_conclusion = newValue}
   }
   /// Returns true if `conclusion` has been explicitly set.
@@ -295,23 +295,23 @@ struct BookAudio {
   /// Clears the value of `conclusion`. Subsequent reads from it will return its default value.
   mutating func clearConclusion() {self._conclusion = nil}
 
-  var chapters: Dictionary<Int32,BookAudioChapter> = [:]
+  var chapters: Dictionary<Int32,BookAudioChapterProto> = [:]
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 
   fileprivate var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
-  fileprivate var _introduction: BookAudioChapter? = nil
-  fileprivate var _conclusion: BookAudioChapter? = nil
+  fileprivate var _introduction: BookAudioChapterProto? = nil
+  fileprivate var _conclusion: BookAudioChapterProto? = nil
 }
 
 #if swift(>=5.5) && canImport(_Concurrency)
 extension BookCategoryProto: @unchecked Sendable {}
 extension BookProto: @unchecked Sendable {}
-extension BookAudioPart: @unchecked Sendable {}
-extension BookAudioChapter: @unchecked Sendable {}
-extension BookAudio: @unchecked Sendable {}
+extension BookAudioPartProto: @unchecked Sendable {}
+extension BookAudioChapterProto: @unchecked Sendable {}
+extension BookAudioProto: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
@@ -469,8 +469,8 @@ extension BookProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementation
   }
 }
 
-extension BookAudioPart: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "BookAudioPart"
+extension BookAudioPartProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "BookAudioPartProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "text"),
     2: .standard(proto: "audio_key"),
@@ -508,7 +508,7 @@ extension BookAudioPart: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: BookAudioPart, rhs: BookAudioPart) -> Bool {
+  static func ==(lhs: BookAudioPartProto, rhs: BookAudioPartProto) -> Bool {
     if lhs.text != rhs.text {return false}
     if lhs.audioKey != rhs.audioKey {return false}
     if lhs._duration != rhs._duration {return false}
@@ -517,8 +517,8 @@ extension BookAudioPart: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
   }
 }
 
-extension BookAudioChapter: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "BookAudioChapter"
+extension BookAudioChapterProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "BookAudioChapterProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "created_at"),
     2: .same(proto: "parts"),
@@ -551,7 +551,7 @@ extension BookAudioChapter: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: BookAudioChapter, rhs: BookAudioChapter) -> Bool {
+  static func ==(lhs: BookAudioChapterProto, rhs: BookAudioChapterProto) -> Bool {
     if lhs._createdAt != rhs._createdAt {return false}
     if lhs.parts != rhs.parts {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
@@ -559,8 +559,8 @@ extension BookAudioChapter: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
   }
 }
 
-extension BookAudio: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "BookAudio"
+extension BookAudioProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "BookAudioProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "book_id"),
     2: .standard(proto: "updated_at"),
@@ -579,7 +579,7 @@ extension BookAudio: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementation
       case 2: try { try decoder.decodeSingularMessageField(value: &self._updatedAt) }()
       case 3: try { try decoder.decodeSingularMessageField(value: &self._introduction) }()
       case 4: try { try decoder.decodeSingularMessageField(value: &self._conclusion) }()
-      case 5: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufInt32,BookAudioChapter>.self, value: &self.chapters) }()
+      case 5: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufInt32,BookAudioChapterProto>.self, value: &self.chapters) }()
       default: break
       }
     }
@@ -603,12 +603,12 @@ extension BookAudio: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementation
       try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
     } }()
     if !self.chapters.isEmpty {
-      try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufInt32,BookAudioChapter>.self, value: self.chapters, fieldNumber: 5)
+      try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufInt32,BookAudioChapterProto>.self, value: self.chapters, fieldNumber: 5)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: BookAudio, rhs: BookAudio) -> Bool {
+  static func ==(lhs: BookAudioProto, rhs: BookAudioProto) -> Bool {
     if lhs.bookID != rhs.bookID {return false}
     if lhs._updatedAt != rhs._updatedAt {return false}
     if lhs._introduction != rhs._introduction {return false}

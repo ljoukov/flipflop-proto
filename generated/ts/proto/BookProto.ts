@@ -81,9 +81,9 @@ export interface BookProto {
     targetAudience: string;
 }
 /**
- * @generated from protobuf message BookAudioPart
+ * @generated from protobuf message BookAudioPartProto
  */
-export interface BookAudioPart {
+export interface BookAudioPartProto {
     /**
      * @generated from protobuf field: string text = 1;
      */
@@ -98,22 +98,22 @@ export interface BookAudioPart {
     duration?: Duration;
 }
 /**
- * @generated from protobuf message BookAudioChapter
+ * @generated from protobuf message BookAudioChapterProto
  */
-export interface BookAudioChapter {
+export interface BookAudioChapterProto {
     /**
      * @generated from protobuf field: google.protobuf.Timestamp created_at = 1;
      */
     createdAt?: Timestamp;
     /**
-     * @generated from protobuf field: repeated BookAudioPart parts = 2;
+     * @generated from protobuf field: repeated BookAudioPartProto parts = 2;
      */
-    parts: BookAudioPart[];
+    parts: BookAudioPartProto[];
 }
 /**
- * @generated from protobuf message BookAudio
+ * @generated from protobuf message BookAudioProto
  */
-export interface BookAudio {
+export interface BookAudioProto {
     /**
      * @generated from protobuf field: string book_id = 1;
      */
@@ -123,18 +123,18 @@ export interface BookAudio {
      */
     updatedAt?: Timestamp;
     /**
-     * @generated from protobuf field: BookAudioChapter introduction = 3;
+     * @generated from protobuf field: BookAudioChapterProto introduction = 3;
      */
-    introduction?: BookAudioChapter;
+    introduction?: BookAudioChapterProto;
     /**
-     * @generated from protobuf field: BookAudioChapter conclusion = 4;
+     * @generated from protobuf field: BookAudioChapterProto conclusion = 4;
      */
-    conclusion?: BookAudioChapter;
+    conclusion?: BookAudioChapterProto;
     /**
-     * @generated from protobuf field: map<int32, BookAudioChapter> chapters = 5;
+     * @generated from protobuf field: map<int32, BookAudioChapterProto> chapters = 5;
      */
     chapters: {
-        [key: number]: BookAudioChapter;
+        [key: number]: BookAudioChapterProto;
     };
 }
 /**
@@ -408,22 +408,22 @@ class BookProto$Type extends MessageType<BookProto> {
  */
 export const BookProto = new BookProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class BookAudioPart$Type extends MessageType<BookAudioPart> {
+class BookAudioPartProto$Type extends MessageType<BookAudioPartProto> {
     constructor() {
-        super("BookAudioPart", [
+        super("BookAudioPartProto", [
             { no: 1, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "audio_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "duration", kind: "message", T: () => Duration }
         ]);
     }
-    create(value?: PartialMessage<BookAudioPart>): BookAudioPart {
+    create(value?: PartialMessage<BookAudioPartProto>): BookAudioPartProto {
         const message = { text: "", audioKey: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<BookAudioPart>(this, message, value);
+            reflectionMergePartial<BookAudioPartProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: BookAudioPart): BookAudioPart {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: BookAudioPartProto): BookAudioPartProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -448,7 +448,7 @@ class BookAudioPart$Type extends MessageType<BookAudioPart> {
         }
         return message;
     }
-    internalBinaryWrite(message: BookAudioPart, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: BookAudioPartProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string text = 1; */
         if (message.text !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.text);
@@ -465,25 +465,25 @@ class BookAudioPart$Type extends MessageType<BookAudioPart> {
     }
 }
 /**
- * @generated MessageType for protobuf message BookAudioPart
+ * @generated MessageType for protobuf message BookAudioPartProto
  */
-export const BookAudioPart = new BookAudioPart$Type();
+export const BookAudioPartProto = new BookAudioPartProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class BookAudioChapter$Type extends MessageType<BookAudioChapter> {
+class BookAudioChapterProto$Type extends MessageType<BookAudioChapterProto> {
     constructor() {
-        super("BookAudioChapter", [
+        super("BookAudioChapterProto", [
             { no: 1, name: "created_at", kind: "message", T: () => Timestamp },
-            { no: 2, name: "parts", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => BookAudioPart }
+            { no: 2, name: "parts", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => BookAudioPartProto }
         ]);
     }
-    create(value?: PartialMessage<BookAudioChapter>): BookAudioChapter {
+    create(value?: PartialMessage<BookAudioChapterProto>): BookAudioChapterProto {
         const message = { parts: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<BookAudioChapter>(this, message, value);
+            reflectionMergePartial<BookAudioChapterProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: BookAudioChapter): BookAudioChapter {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: BookAudioChapterProto): BookAudioChapterProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -491,8 +491,8 @@ class BookAudioChapter$Type extends MessageType<BookAudioChapter> {
                 case /* google.protobuf.Timestamp created_at */ 1:
                     message.createdAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.createdAt);
                     break;
-                case /* repeated BookAudioPart parts */ 2:
-                    message.parts.push(BookAudioPart.internalBinaryRead(reader, reader.uint32(), options));
+                case /* repeated BookAudioPartProto parts */ 2:
+                    message.parts.push(BookAudioPartProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -505,13 +505,13 @@ class BookAudioChapter$Type extends MessageType<BookAudioChapter> {
         }
         return message;
     }
-    internalBinaryWrite(message: BookAudioChapter, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: BookAudioChapterProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* google.protobuf.Timestamp created_at = 1; */
         if (message.createdAt)
             Timestamp.internalBinaryWrite(message.createdAt, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* repeated BookAudioPart parts = 2; */
+        /* repeated BookAudioPartProto parts = 2; */
         for (let i = 0; i < message.parts.length; i++)
-            BookAudioPart.internalBinaryWrite(message.parts[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+            BookAudioPartProto.internalBinaryWrite(message.parts[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -519,28 +519,28 @@ class BookAudioChapter$Type extends MessageType<BookAudioChapter> {
     }
 }
 /**
- * @generated MessageType for protobuf message BookAudioChapter
+ * @generated MessageType for protobuf message BookAudioChapterProto
  */
-export const BookAudioChapter = new BookAudioChapter$Type();
+export const BookAudioChapterProto = new BookAudioChapterProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class BookAudio$Type extends MessageType<BookAudio> {
+class BookAudioProto$Type extends MessageType<BookAudioProto> {
     constructor() {
-        super("BookAudio", [
+        super("BookAudioProto", [
             { no: 1, name: "book_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "updated_at", kind: "message", T: () => Timestamp },
-            { no: 3, name: "introduction", kind: "message", T: () => BookAudioChapter },
-            { no: 4, name: "conclusion", kind: "message", T: () => BookAudioChapter },
-            { no: 5, name: "chapters", kind: "map", K: 5 /*ScalarType.INT32*/, V: { kind: "message", T: () => BookAudioChapter } }
+            { no: 3, name: "introduction", kind: "message", T: () => BookAudioChapterProto },
+            { no: 4, name: "conclusion", kind: "message", T: () => BookAudioChapterProto },
+            { no: 5, name: "chapters", kind: "map", K: 5 /*ScalarType.INT32*/, V: { kind: "message", T: () => BookAudioChapterProto } }
         ]);
     }
-    create(value?: PartialMessage<BookAudio>): BookAudio {
+    create(value?: PartialMessage<BookAudioProto>): BookAudioProto {
         const message = { bookId: "", chapters: {} };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<BookAudio>(this, message, value);
+            reflectionMergePartial<BookAudioProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: BookAudio): BookAudio {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: BookAudioProto): BookAudioProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -551,13 +551,13 @@ class BookAudio$Type extends MessageType<BookAudio> {
                 case /* google.protobuf.Timestamp updated_at */ 2:
                     message.updatedAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.updatedAt);
                     break;
-                case /* BookAudioChapter introduction */ 3:
-                    message.introduction = BookAudioChapter.internalBinaryRead(reader, reader.uint32(), options, message.introduction);
+                case /* BookAudioChapterProto introduction */ 3:
+                    message.introduction = BookAudioChapterProto.internalBinaryRead(reader, reader.uint32(), options, message.introduction);
                     break;
-                case /* BookAudioChapter conclusion */ 4:
-                    message.conclusion = BookAudioChapter.internalBinaryRead(reader, reader.uint32(), options, message.conclusion);
+                case /* BookAudioChapterProto conclusion */ 4:
+                    message.conclusion = BookAudioChapterProto.internalBinaryRead(reader, reader.uint32(), options, message.conclusion);
                     break;
-                case /* map<int32, BookAudioChapter> chapters */ 5:
+                case /* map<int32, BookAudioChapterProto> chapters */ 5:
                     this.binaryReadMap5(message.chapters, reader, options);
                     break;
                 default:
@@ -571,8 +571,8 @@ class BookAudio$Type extends MessageType<BookAudio> {
         }
         return message;
     }
-    private binaryReadMap5(map: BookAudio["chapters"], reader: IBinaryReader, options: BinaryReadOptions): void {
-        let len = reader.uint32(), end = reader.pos + len, key: keyof BookAudio["chapters"] | undefined, val: BookAudio["chapters"][any] | undefined;
+    private binaryReadMap5(map: BookAudioProto["chapters"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof BookAudioProto["chapters"] | undefined, val: BookAudioProto["chapters"][any] | undefined;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
@@ -580,31 +580,31 @@ class BookAudio$Type extends MessageType<BookAudio> {
                     key = reader.int32();
                     break;
                 case 2:
-                    val = BookAudioChapter.internalBinaryRead(reader, reader.uint32(), options);
+                    val = BookAudioChapterProto.internalBinaryRead(reader, reader.uint32(), options);
                     break;
-                default: throw new globalThis.Error("unknown map entry field for field BookAudio.chapters");
+                default: throw new globalThis.Error("unknown map entry field for field BookAudioProto.chapters");
             }
         }
-        map[key ?? 0] = val ?? BookAudioChapter.create();
+        map[key ?? 0] = val ?? BookAudioChapterProto.create();
     }
-    internalBinaryWrite(message: BookAudio, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: BookAudioProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string book_id = 1; */
         if (message.bookId !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.bookId);
         /* google.protobuf.Timestamp updated_at = 2; */
         if (message.updatedAt)
             Timestamp.internalBinaryWrite(message.updatedAt, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* BookAudioChapter introduction = 3; */
+        /* BookAudioChapterProto introduction = 3; */
         if (message.introduction)
-            BookAudioChapter.internalBinaryWrite(message.introduction, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* BookAudioChapter conclusion = 4; */
+            BookAudioChapterProto.internalBinaryWrite(message.introduction, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* BookAudioChapterProto conclusion = 4; */
         if (message.conclusion)
-            BookAudioChapter.internalBinaryWrite(message.conclusion, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
-        /* map<int32, BookAudioChapter> chapters = 5; */
+            BookAudioChapterProto.internalBinaryWrite(message.conclusion, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* map<int32, BookAudioChapterProto> chapters = 5; */
         for (let k of Object.keys(message.chapters)) {
             writer.tag(5, WireType.LengthDelimited).fork().tag(1, WireType.Varint).int32(parseInt(k));
             writer.tag(2, WireType.LengthDelimited).fork();
-            BookAudioChapter.internalBinaryWrite(message.chapters[k as any], writer, options);
+            BookAudioChapterProto.internalBinaryWrite(message.chapters[k as any], writer, options);
             writer.join().join();
         }
         let u = options.writeUnknownFields;
@@ -614,6 +614,6 @@ class BookAudio$Type extends MessageType<BookAudio> {
     }
 }
 /**
- * @generated MessageType for protobuf message BookAudio
+ * @generated MessageType for protobuf message BookAudioProto
  */
-export const BookAudio = new BookAudio$Type();
+export const BookAudioProto = new BookAudioProto$Type();
