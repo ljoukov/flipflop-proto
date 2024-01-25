@@ -118,19 +118,27 @@ export interface ReadletCategoryProto {
  */
 export interface ReadletChapterProto {
     /**
-     * @generated from protobuf field: string title = 1;
+     * @generated from protobuf field: ReadletChapterType type = 1;
+     */
+    type: ReadletChapterType;
+    /**
+     * @generated from protobuf field: string title = 2;
      */
     title: string;
     /**
-     * @generated from protobuf field: string text = 2;
+     * @generated from protobuf field: string subtitle = 3;
+     */
+    subtitle: string;
+    /**
+     * @generated from protobuf field: string text = 4;
      */
     text: string;
     /**
-     * @generated from protobuf field: string audio_path = 3;
+     * @generated from protobuf field: string audio_path = 5;
      */
     audioPath: string;
     /**
-     * @generated from protobuf field: google.protobuf.Duration audio_duration = 4;
+     * @generated from protobuf field: google.protobuf.Duration audio_duration = 6;
      */
     audioDuration?: Duration;
 }
@@ -166,6 +174,27 @@ export interface ReadletProto {
      * @generated from protobuf field: repeated ReadletChapterProto chapters = 7;
      */
     chapters: ReadletChapterProto[];
+}
+/**
+ * @generated from protobuf enum ReadletChapterType
+ */
+export enum ReadletChapterType {
+    /**
+     * @generated from protobuf enum value: READLET_CHAPTER_TYPE_UNDEFINED = 0;
+     */
+    UNDEFINED = 0,
+    /**
+     * @generated from protobuf enum value: READLET_CHAPTER_TYPE_INTRODUCTION = 1;
+     */
+    INTRODUCTION = 1,
+    /**
+     * @generated from protobuf enum value: READLET_CHAPTER_TYPE_REGULAR = 2;
+     */
+    REGULAR = 2,
+    /**
+     * @generated from protobuf enum value: READLET_CHAPTER_TYPE_CONCLUSION = 3;
+     */
+    CONCLUSION = 3
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class ReadletApiRequestProto$Type extends MessageType<ReadletApiRequestProto> {
@@ -521,14 +550,16 @@ export const ReadletCategoryProto = new ReadletCategoryProto$Type();
 class ReadletChapterProto$Type extends MessageType<ReadletChapterProto> {
     constructor() {
         super("ReadletChapterProto", [
-            { no: 1, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "audio_path", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "audio_duration", kind: "message", T: () => Duration }
+            { no: 1, name: "type", kind: "enum", T: () => ["ReadletChapterType", ReadletChapterType, "READLET_CHAPTER_TYPE_"] },
+            { no: 2, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "subtitle", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "audio_path", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "audio_duration", kind: "message", T: () => Duration }
         ]);
     }
     create(value?: PartialMessage<ReadletChapterProto>): ReadletChapterProto {
-        const message = { title: "", text: "", audioPath: "" };
+        const message = { type: 0, title: "", subtitle: "", text: "", audioPath: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<ReadletChapterProto>(this, message, value);
@@ -539,16 +570,22 @@ class ReadletChapterProto$Type extends MessageType<ReadletChapterProto> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string title */ 1:
+                case /* ReadletChapterType type */ 1:
+                    message.type = reader.int32();
+                    break;
+                case /* string title */ 2:
                     message.title = reader.string();
                     break;
-                case /* string text */ 2:
+                case /* string subtitle */ 3:
+                    message.subtitle = reader.string();
+                    break;
+                case /* string text */ 4:
                     message.text = reader.string();
                     break;
-                case /* string audio_path */ 3:
+                case /* string audio_path */ 5:
                     message.audioPath = reader.string();
                     break;
-                case /* google.protobuf.Duration audio_duration */ 4:
+                case /* google.protobuf.Duration audio_duration */ 6:
                     message.audioDuration = Duration.internalBinaryRead(reader, reader.uint32(), options, message.audioDuration);
                     break;
                 default:
@@ -563,18 +600,24 @@ class ReadletChapterProto$Type extends MessageType<ReadletChapterProto> {
         return message;
     }
     internalBinaryWrite(message: ReadletChapterProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string title = 1; */
+        /* ReadletChapterType type = 1; */
+        if (message.type !== 0)
+            writer.tag(1, WireType.Varint).int32(message.type);
+        /* string title = 2; */
         if (message.title !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.title);
-        /* string text = 2; */
+            writer.tag(2, WireType.LengthDelimited).string(message.title);
+        /* string subtitle = 3; */
+        if (message.subtitle !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.subtitle);
+        /* string text = 4; */
         if (message.text !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.text);
-        /* string audio_path = 3; */
+            writer.tag(4, WireType.LengthDelimited).string(message.text);
+        /* string audio_path = 5; */
         if (message.audioPath !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.audioPath);
-        /* google.protobuf.Duration audio_duration = 4; */
+            writer.tag(5, WireType.LengthDelimited).string(message.audioPath);
+        /* google.protobuf.Duration audio_duration = 6; */
         if (message.audioDuration)
-            Duration.internalBinaryWrite(message.audioDuration, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+            Duration.internalBinaryWrite(message.audioDuration, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

@@ -20,6 +20,54 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
+enum ReadletChapterType: SwiftProtobuf.Enum {
+  typealias RawValue = Int
+  case undefined // = 0
+  case introduction // = 1
+  case regular // = 2
+  case conclusion // = 3
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .undefined
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .undefined
+    case 1: self = .introduction
+    case 2: self = .regular
+    case 3: self = .conclusion
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .undefined: return 0
+    case .introduction: return 1
+    case .regular: return 2
+    case .conclusion: return 3
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+}
+
+#if swift(>=4.2)
+
+extension ReadletChapterType: CaseIterable {
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static var allCases: [ReadletChapterType] = [
+    .undefined,
+    .introduction,
+    .regular,
+    .conclusion,
+  ]
+}
+
+#endif  // swift(>=4.2)
+
 struct ReadletApiRequestProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -171,7 +219,11 @@ struct ReadletChapterProto {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  var type: ReadletChapterType = .undefined
+
   var title: String = String()
+
+  var subtitle: String = String()
 
   var text: String = String()
 
@@ -227,6 +279,7 @@ struct ReadletProto {
 }
 
 #if swift(>=5.5) && canImport(_Concurrency)
+extension ReadletChapterType: @unchecked Sendable {}
 extension ReadletApiRequestProto: @unchecked Sendable {}
 extension ReadletApiRequestProto.OneOf_Request: @unchecked Sendable {}
 extension ReadletApiResponseProto: @unchecked Sendable {}
@@ -240,6 +293,15 @@ extension ReadletProto: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
+
+extension ReadletChapterType: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "READLET_CHAPTER_TYPE_UNDEFINED"),
+    1: .same(proto: "READLET_CHAPTER_TYPE_INTRODUCTION"),
+    2: .same(proto: "READLET_CHAPTER_TYPE_REGULAR"),
+    3: .same(proto: "READLET_CHAPTER_TYPE_CONCLUSION"),
+  ]
+}
 
 extension ReadletApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "ReadletApiRequestProto"
@@ -508,10 +570,12 @@ extension ReadletCategoryProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
 extension ReadletChapterProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "ReadletChapterProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "title"),
-    2: .same(proto: "text"),
-    3: .standard(proto: "audio_path"),
-    4: .standard(proto: "audio_duration"),
+    1: .same(proto: "type"),
+    2: .same(proto: "title"),
+    3: .same(proto: "subtitle"),
+    4: .same(proto: "text"),
+    5: .standard(proto: "audio_path"),
+    6: .standard(proto: "audio_duration"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -520,10 +584,12 @@ extension ReadletChapterProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.title) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.text) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.audioPath) }()
-      case 4: try { try decoder.decodeSingularMessageField(value: &self._audioDuration) }()
+      case 1: try { try decoder.decodeSingularEnumField(value: &self.type) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.title) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.subtitle) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.text) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.audioPath) }()
+      case 6: try { try decoder.decodeSingularMessageField(value: &self._audioDuration) }()
       default: break
       }
     }
@@ -534,23 +600,31 @@ extension ReadletChapterProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
+    if self.type != .undefined {
+      try visitor.visitSingularEnumField(value: self.type, fieldNumber: 1)
+    }
     if !self.title.isEmpty {
-      try visitor.visitSingularStringField(value: self.title, fieldNumber: 1)
+      try visitor.visitSingularStringField(value: self.title, fieldNumber: 2)
+    }
+    if !self.subtitle.isEmpty {
+      try visitor.visitSingularStringField(value: self.subtitle, fieldNumber: 3)
     }
     if !self.text.isEmpty {
-      try visitor.visitSingularStringField(value: self.text, fieldNumber: 2)
+      try visitor.visitSingularStringField(value: self.text, fieldNumber: 4)
     }
     if !self.audioPath.isEmpty {
-      try visitor.visitSingularStringField(value: self.audioPath, fieldNumber: 3)
+      try visitor.visitSingularStringField(value: self.audioPath, fieldNumber: 5)
     }
     try { if let v = self._audioDuration {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
     } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: ReadletChapterProto, rhs: ReadletChapterProto) -> Bool {
+    if lhs.type != rhs.type {return false}
     if lhs.title != rhs.title {return false}
+    if lhs.subtitle != rhs.subtitle {return false}
     if lhs.text != rhs.text {return false}
     if lhs.audioPath != rhs.audioPath {return false}
     if lhs._audioDuration != rhs._audioDuration {return false}

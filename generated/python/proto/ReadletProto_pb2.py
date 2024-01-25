@@ -15,7 +15,7 @@ from google.protobuf import duration_pb2 as google_dot_protobuf_dot_duration__pb
 from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x12ReadletProto.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"p\n\x16ReadletApiRequestProto\x12\x19\n\x11\x65ncoded_user_auth\x18\x01 \x01(\t\x12\x30\n\x0cget_readlets\x18\x02 \x01(\x0b\x32\x18.GetReadletsRequestProtoH\x00\x42\t\n\x07request\"\x86\x02\n\x17ReadletApiResponseProto\x12#\n\x1brefreshed_encoded_user_auth\x18\x01 \x01(\t\x12\x31\n\x0cget_readlets\x18\x02 \x01(\x0b\x32\x19.GetReadletsResponseProtoH\x00\x12:\n\tlatencies\x18\x64 \x03(\x0b\x32\'.ReadletApiResponseProto.LatenciesEntry\x1aK\n\x0eLatenciesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12(\n\x05value\x18\x02 \x01(\x0b\x32\x19.google.protobuf.Duration:\x02\x38\x01\x42\n\n\x08response\"2\n\x17GetReadletsRequestProto\x12\x17\n\x0f\x63\x61tegory_filter\x18\x01 \x03(\t\"p\n\x18GetReadletsResponseProto\x12\x1f\n\x08readlets\x18\x01 \x03(\x0b\x32\r.ReadletProto\x12\x33\n\x14\x61vailable_categories\x18\x02 \x03(\x0b\x32\x15.ReadletCategoryProto\"e\n\x12ReadletsCacheProto\x12.\n\ncreated_at\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x1f\n\x08readlets\x18\x02 \x03(\x0b\x32\r.ReadletProto\"8\n\x14ReadletCategoryProto\x12\n\n\x02id\x18\x01 \x01(\t\x12\x14\n\x0c\x64isplay_name\x18\x02 \x01(\t\"y\n\x13ReadletChapterProto\x12\r\n\x05title\x18\x01 \x01(\t\x12\x0c\n\x04text\x18\x02 \x01(\t\x12\x12\n\naudio_path\x18\x03 \x01(\t\x12\x31\n\x0e\x61udio_duration\x18\x04 \x01(\x0b\x32\x19.google.protobuf.Duration\"\xbb\x01\n\x0cReadletProto\x12\n\n\x02id\x18\x01 \x01(\t\x12.\n\ncreated_at\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\r\n\x05title\x18\x03 \x01(\t\x12\x13\n\x0btitle_emoji\x18\x04 \x01(\t\x12\r\n\x05\x62lurb\x18\x05 \x01(\t\x12\x14\n\x0c\x63\x61tegory_ids\x18\x06 \x03(\t\x12&\n\x08\x63hapters\x18\x07 \x03(\x0b\x32\x14.ReadletChapterProtob\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x12ReadletProto.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"p\n\x16ReadletApiRequestProto\x12\x19\n\x11\x65ncoded_user_auth\x18\x01 \x01(\t\x12\x30\n\x0cget_readlets\x18\x02 \x01(\x0b\x32\x18.GetReadletsRequestProtoH\x00\x42\t\n\x07request\"\x86\x02\n\x17ReadletApiResponseProto\x12#\n\x1brefreshed_encoded_user_auth\x18\x01 \x01(\t\x12\x31\n\x0cget_readlets\x18\x02 \x01(\x0b\x32\x19.GetReadletsResponseProtoH\x00\x12:\n\tlatencies\x18\x64 \x03(\x0b\x32\'.ReadletApiResponseProto.LatenciesEntry\x1aK\n\x0eLatenciesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12(\n\x05value\x18\x02 \x01(\x0b\x32\x19.google.protobuf.Duration:\x02\x38\x01\x42\n\n\x08response\"2\n\x17GetReadletsRequestProto\x12\x17\n\x0f\x63\x61tegory_filter\x18\x01 \x03(\t\"p\n\x18GetReadletsResponseProto\x12\x1f\n\x08readlets\x18\x01 \x03(\x0b\x32\r.ReadletProto\x12\x33\n\x14\x61vailable_categories\x18\x02 \x03(\x0b\x32\x15.ReadletCategoryProto\"e\n\x12ReadletsCacheProto\x12.\n\ncreated_at\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x1f\n\x08readlets\x18\x02 \x03(\x0b\x32\r.ReadletProto\"8\n\x14ReadletCategoryProto\x12\n\n\x02id\x18\x01 \x01(\t\x12\x14\n\x0c\x64isplay_name\x18\x02 \x01(\t\"\xae\x01\n\x13ReadletChapterProto\x12!\n\x04type\x18\x01 \x01(\x0e\x32\x13.ReadletChapterType\x12\r\n\x05title\x18\x02 \x01(\t\x12\x10\n\x08subtitle\x18\x03 \x01(\t\x12\x0c\n\x04text\x18\x04 \x01(\t\x12\x12\n\naudio_path\x18\x05 \x01(\t\x12\x31\n\x0e\x61udio_duration\x18\x06 \x01(\x0b\x32\x19.google.protobuf.Duration\"\xbb\x01\n\x0cReadletProto\x12\n\n\x02id\x18\x01 \x01(\t\x12.\n\ncreated_at\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\r\n\x05title\x18\x03 \x01(\t\x12\x13\n\x0btitle_emoji\x18\x04 \x01(\t\x12\r\n\x05\x62lurb\x18\x05 \x01(\t\x12\x14\n\x0c\x63\x61tegory_ids\x18\x06 \x03(\t\x12&\n\x08\x63hapters\x18\x07 \x03(\x0b\x32\x14.ReadletChapterProto*\xa6\x01\n\x12ReadletChapterType\x12\"\n\x1eREADLET_CHAPTER_TYPE_UNDEFINED\x10\x00\x12%\n!READLET_CHAPTER_TYPE_INTRODUCTION\x10\x01\x12 \n\x1cREADLET_CHAPTER_TYPE_REGULAR\x10\x02\x12#\n\x1fREADLET_CHAPTER_TYPE_CONCLUSION\x10\x03\x62\x06proto3')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'ReadletProto_pb2', globals())
@@ -24,6 +24,8 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   DESCRIPTOR._options = None
   _READLETAPIRESPONSEPROTO_LATENCIESENTRY._options = None
   _READLETAPIRESPONSEPROTO_LATENCIESENTRY._serialized_options = b'8\001'
+  _READLETCHAPTERTYPE._serialized_start=1161
+  _READLETCHAPTERTYPE._serialized_end=1327
   _READLETAPIREQUESTPROTO._serialized_start=87
   _READLETAPIREQUESTPROTO._serialized_end=199
   _READLETAPIRESPONSEPROTO._serialized_start=202
@@ -38,8 +40,8 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _READLETSCACHEPROTO._serialized_end=733
   _READLETCATEGORYPROTO._serialized_start=735
   _READLETCATEGORYPROTO._serialized_end=791
-  _READLETCHAPTERPROTO._serialized_start=793
-  _READLETCHAPTERPROTO._serialized_end=914
-  _READLETPROTO._serialized_start=917
-  _READLETPROTO._serialized_end=1104
+  _READLETCHAPTERPROTO._serialized_start=794
+  _READLETCHAPTERPROTO._serialized_end=968
+  _READLETPROTO._serialized_start=971
+  _READLETPROTO._serialized_end=1158
 # @@protoc_insertion_point(module_scope)
