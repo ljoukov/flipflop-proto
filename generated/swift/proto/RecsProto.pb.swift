@@ -24,6 +24,7 @@ enum EmbedTypeProto: SwiftProtobuf.Enum {
   typealias RawValue = Int
   case embedTypeUnknown // = 0
   case embedTypeAda002 // = 1
+  case embedTypeTextEmbedding3Large256 // = 2
   case UNRECOGNIZED(Int)
 
   init() {
@@ -34,6 +35,7 @@ enum EmbedTypeProto: SwiftProtobuf.Enum {
     switch rawValue {
     case 0: self = .embedTypeUnknown
     case 1: self = .embedTypeAda002
+    case 2: self = .embedTypeTextEmbedding3Large256
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -42,6 +44,7 @@ enum EmbedTypeProto: SwiftProtobuf.Enum {
     switch self {
     case .embedTypeUnknown: return 0
     case .embedTypeAda002: return 1
+    case .embedTypeTextEmbedding3Large256: return 2
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -55,6 +58,7 @@ extension EmbedTypeProto: CaseIterable {
   static var allCases: [EmbedTypeProto] = [
     .embedTypeUnknown,
     .embedTypeAda002,
+    .embedTypeTextEmbedding3Large256,
   ]
 }
 
@@ -414,6 +418,7 @@ extension EmbedTypeProto: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     0: .same(proto: "EMBED_TYPE_UNKNOWN"),
     1: .same(proto: "EMBED_TYPE_ADA_002"),
+    2: .same(proto: "EMBED_TYPE_TEXT_EMBEDDING_3_LARGE_256"),
   ]
 }
 

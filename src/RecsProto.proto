@@ -5,6 +5,7 @@ import "google/protobuf/timestamp.proto";
 enum EmbedTypeProto {
   EMBED_TYPE_UNKNOWN = 0;
   EMBED_TYPE_ADA_002 = 1;
+  EMBED_TYPE_TEXT_EMBEDDING_3_LARGE_256 = 2;
 }
 
 message EmbedProto {

@@ -101,7 +101,11 @@ export enum EmbedTypeProto {
     /**
      * @generated from protobuf enum value: EMBED_TYPE_ADA_002 = 1;
      */
-    EMBED_TYPE_ADA_002 = 1
+    EMBED_TYPE_ADA_002 = 1,
+    /**
+     * @generated from protobuf enum value: EMBED_TYPE_TEXT_EMBEDDING_3_LARGE_256 = 2;
+     */
+    EMBED_TYPE_TEXT_EMBEDDING_3_LARGE_256 = 2
 }
 /**
  * @generated from protobuf enum RecsTopicProto
