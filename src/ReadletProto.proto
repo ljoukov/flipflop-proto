@@ -3,6 +3,8 @@ syntax = "proto3";
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 
+import "ColorProto.proto";
+
 message ReadletApiRequestProto {
   string encoded_user_auth = 1;
   oneof request {
@@ -60,6 +62,7 @@ message ReadletProto {
 
   string title = 3;
   string title_emoji = 4;
+  ColorTypeProto color = 8;
   
   string blurb = 5;
   

@@ -265,6 +265,8 @@ struct ReadletProto {
 
   var titleEmoji: String = String()
 
+  var color: ColorTypeProto = .undefined
+
   var blurb: String = String()
 
   var categoryIds: [String] = []
@@ -640,6 +642,7 @@ extension ReadletProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     2: .standard(proto: "created_at"),
     3: .same(proto: "title"),
     4: .standard(proto: "title_emoji"),
+    8: .same(proto: "color"),
     5: .same(proto: "blurb"),
     6: .standard(proto: "category_ids"),
     7: .same(proto: "chapters"),
@@ -658,6 +661,7 @@ extension ReadletProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
       case 5: try { try decoder.decodeSingularStringField(value: &self.blurb) }()
       case 6: try { try decoder.decodeRepeatedStringField(value: &self.categoryIds) }()
       case 7: try { try decoder.decodeRepeatedMessageField(value: &self.chapters) }()
+      case 8: try { try decoder.decodeSingularEnumField(value: &self.color) }()
       default: break
       }
     }
@@ -689,6 +693,9 @@ extension ReadletProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     if !self.chapters.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.chapters, fieldNumber: 7)
     }
+    if self.color != .undefined {
+      try visitor.visitSingularEnumField(value: self.color, fieldNumber: 8)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -697,6 +704,7 @@ extension ReadletProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     if lhs._createdAt != rhs._createdAt {return false}
     if lhs.title != rhs.title {return false}
     if lhs.titleEmoji != rhs.titleEmoji {return false}
+    if lhs.color != rhs.color {return false}
     if lhs.blurb != rhs.blurb {return false}
     if lhs.categoryIds != rhs.categoryIds {return false}
     if lhs.chapters != rhs.chapters {return false}

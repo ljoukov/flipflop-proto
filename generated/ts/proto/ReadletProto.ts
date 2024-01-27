@@ -13,6 +13,7 @@ import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
+import { ColorTypeProto } from "./ColorProto";
 import { Timestamp } from "./google/protobuf/timestamp";
 import { Duration } from "./google/protobuf/duration";
 /**
@@ -162,6 +163,10 @@ export interface ReadletProto {
      * @generated from protobuf field: string title_emoji = 4;
      */
     titleEmoji: string;
+    /**
+     * @generated from protobuf field: ColorTypeProto color = 8;
+     */
+    color: ColorTypeProto;
     /**
      * @generated from protobuf field: string blurb = 5;
      */
@@ -636,13 +641,14 @@ class ReadletProto$Type extends MessageType<ReadletProto> {
             { no: 2, name: "created_at", kind: "message", T: () => Timestamp },
             { no: 3, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "title_emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 8, name: "color", kind: "enum", T: () => ["ColorTypeProto", ColorTypeProto, "COLOR_TYPE_PROTO_"] },
             { no: 5, name: "blurb", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 6, name: "category_ids", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
             { no: 7, name: "chapters", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ReadletChapterProto }
         ]);
     }
     create(value?: PartialMessage<ReadletProto>): ReadletProto {
-        const message = { id: "", title: "", titleEmoji: "", blurb: "", categoryIds: [], chapters: [] };
+        const message = { id: "", title: "", titleEmoji: "", color: 0, blurb: "", categoryIds: [], chapters: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<ReadletProto>(this, message, value);
@@ -664,6 +670,9 @@ class ReadletProto$Type extends MessageType<ReadletProto> {
                     break;
                 case /* string title_emoji */ 4:
                     message.titleEmoji = reader.string();
+                    break;
+                case /* ColorTypeProto color */ 8:
+                    message.color = reader.int32();
                     break;
                 case /* string blurb */ 5:
                     message.blurb = reader.string();
@@ -698,6 +707,9 @@ class ReadletProto$Type extends MessageType<ReadletProto> {
         /* string title_emoji = 4; */
         if (message.titleEmoji !== "")
             writer.tag(4, WireType.LengthDelimited).string(message.titleEmoji);
+        /* ColorTypeProto color = 8; */
+        if (message.color !== 0)
+            writer.tag(8, WireType.Varint).int32(message.color);
         /* string blurb = 5; */
         if (message.blurb !== "")
             writer.tag(5, WireType.LengthDelimited).string(message.blurb);
