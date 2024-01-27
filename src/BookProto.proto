@@ -60,14 +60,15 @@ message BookProto {
 
 message BookAudioPartProto {
   string text = 1;
-
   string audio_key = 2;
-  google.protobuf.Duration duration = 3;
 }
 
 message BookAudioChapterProto {
   google.protobuf.Timestamp created_at = 1;
   repeated BookAudioPartProto parts = 2;
+
+  string merged_audio_key = 3;
+  google.protobuf.Duration merged_duration = 4;
 }
 
 message BookAudioProto {

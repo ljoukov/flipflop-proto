@@ -222,20 +222,9 @@ struct BookAudioPartProto {
 
   var audioKey: String = String()
 
-  var duration: SwiftProtobuf.Google_Protobuf_Duration {
-    get {return _duration ?? SwiftProtobuf.Google_Protobuf_Duration()}
-    set {_duration = newValue}
-  }
-  /// Returns true if `duration` has been explicitly set.
-  var hasDuration: Bool {return self._duration != nil}
-  /// Clears the value of `duration`. Subsequent reads from it will return its default value.
-  mutating func clearDuration() {self._duration = nil}
-
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
-
-  fileprivate var _duration: SwiftProtobuf.Google_Protobuf_Duration? = nil
 }
 
 struct BookAudioChapterProto {
@@ -254,11 +243,23 @@ struct BookAudioChapterProto {
 
   var parts: [BookAudioPartProto] = []
 
+  var mergedAudioKey: String = String()
+
+  var mergedDuration: SwiftProtobuf.Google_Protobuf_Duration {
+    get {return _mergedDuration ?? SwiftProtobuf.Google_Protobuf_Duration()}
+    set {_mergedDuration = newValue}
+  }
+  /// Returns true if `mergedDuration` has been explicitly set.
+  var hasMergedDuration: Bool {return self._mergedDuration != nil}
+  /// Clears the value of `mergedDuration`. Subsequent reads from it will return its default value.
+  mutating func clearMergedDuration() {self._mergedDuration = nil}
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 
   fileprivate var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+  fileprivate var _mergedDuration: SwiftProtobuf.Google_Protobuf_Duration? = nil
 }
 
 struct BookAudioProto {
@@ -474,7 +475,6 @@ extension BookAudioPartProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "text"),
     2: .standard(proto: "audio_key"),
-    3: .same(proto: "duration"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -485,33 +485,24 @@ extension BookAudioPartProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.text) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.audioKey) }()
-      case 3: try { try decoder.decodeSingularMessageField(value: &self._duration) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every if/case branch local when no optimizations
-    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.text.isEmpty {
       try visitor.visitSingularStringField(value: self.text, fieldNumber: 1)
     }
     if !self.audioKey.isEmpty {
       try visitor.visitSingularStringField(value: self.audioKey, fieldNumber: 2)
     }
-    try { if let v = self._duration {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
-    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: BookAudioPartProto, rhs: BookAudioPartProto) -> Bool {
     if lhs.text != rhs.text {return false}
     if lhs.audioKey != rhs.audioKey {return false}
-    if lhs._duration != rhs._duration {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -522,6 +513,8 @@ extension BookAudioChapterProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "created_at"),
     2: .same(proto: "parts"),
+    3: .standard(proto: "merged_audio_key"),
+    4: .standard(proto: "merged_duration"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -532,6 +525,8 @@ extension BookAudioChapterProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularMessageField(value: &self._createdAt) }()
       case 2: try { try decoder.decodeRepeatedMessageField(value: &self.parts) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.mergedAudioKey) }()
+      case 4: try { try decoder.decodeSingularMessageField(value: &self._mergedDuration) }()
       default: break
       }
     }
@@ -548,12 +543,20 @@ extension BookAudioChapterProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     if !self.parts.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.parts, fieldNumber: 2)
     }
+    if !self.mergedAudioKey.isEmpty {
+      try visitor.visitSingularStringField(value: self.mergedAudioKey, fieldNumber: 3)
+    }
+    try { if let v = self._mergedDuration {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: BookAudioChapterProto, rhs: BookAudioChapterProto) -> Bool {
     if lhs._createdAt != rhs._createdAt {return false}
     if lhs.parts != rhs.parts {return false}
+    if lhs.mergedAudioKey != rhs.mergedAudioKey {return false}
+    if lhs._mergedDuration != rhs._mergedDuration {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
