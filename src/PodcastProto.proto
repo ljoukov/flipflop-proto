@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+enum PodcastEpisodeState {
+  PODCAST_EPISODE_STATE_UNKNOWN = 0;
+  PODCAST_EPISODE_STATE_DRAFT = 1;
+  PODCAST_EPISODE_STATE_PUBLISHED = 2;
+  PODCAST_EPISODE_STATE_ARCHIVED = 3;
+}
+
+message PodcastEpisodeProto {
+  string episode_id = 1;
+  PodcastEpisodeState state = 2;
+
+  string title = 3;
+  string text = 4;
+
+  repeated string raw_refs = 5;
+}
+
+message PodcastProto {
+  string podcast_id = 1;
+  google.protobuf.Timestamp created_at = 2;
+  google.protobuf.Timestamp updated_at = 3;
+
+  string title = 4;
+  string subtitle = 5;
+  string about = 6;
+
+  repeated PodcastEpisodeProto episodes = 7;
+}
