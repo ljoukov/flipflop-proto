@@ -68,6 +68,46 @@ extension PodcastEpisodeState: CaseIterable {
 
 #endif  // swift(>=4.2)
 
+enum PodcastState: SwiftProtobuf.Enum {
+  typealias RawValue = Int
+  case unknown // = 0
+  case draft // = 1
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .unknown
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .unknown
+    case 1: self = .draft
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .unknown: return 0
+    case .draft: return 1
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+}
+
+#if swift(>=4.2)
+
+extension PodcastState: CaseIterable {
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static var allCases: [PodcastState] = [
+    .unknown,
+    .draft,
+  ]
+}
+
+#endif  // swift(>=4.2)
+
 struct PodcastEpisodeProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -113,6 +153,8 @@ struct PodcastProto {
   /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
   mutating func clearUpdatedAt() {self._updatedAt = nil}
 
+  var state: PodcastState = .unknown
+
   var title: String = String()
 
   var subtitle: String = String()
@@ -131,6 +173,7 @@ struct PodcastProto {
 
 #if swift(>=5.5) && canImport(_Concurrency)
 extension PodcastEpisodeState: @unchecked Sendable {}
+extension PodcastState: @unchecked Sendable {}
 extension PodcastEpisodeProto: @unchecked Sendable {}
 extension PodcastProto: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
@@ -143,6 +186,13 @@ extension PodcastEpisodeState: SwiftProtobuf._ProtoNameProviding {
     1: .same(proto: "PODCAST_EPISODE_STATE_DRAFT"),
     2: .same(proto: "PODCAST_EPISODE_STATE_PUBLISHED"),
     3: .same(proto: "PODCAST_EPISODE_STATE_ARCHIVED"),
+  ]
+}
+
+extension PodcastState: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "PODCAST_STATE_UNKNOWN"),
+    1: .same(proto: "PODCAST_STATE_DRAFT"),
   ]
 }
 
@@ -208,6 +258,7 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     1: .standard(proto: "podcast_id"),
     2: .standard(proto: "created_at"),
     3: .standard(proto: "updated_at"),
+    10: .same(proto: "state"),
     4: .same(proto: "title"),
     5: .same(proto: "subtitle"),
     6: .same(proto: "about"),
@@ -227,6 +278,7 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
       case 5: try { try decoder.decodeSingularStringField(value: &self.subtitle) }()
       case 6: try { try decoder.decodeSingularStringField(value: &self.about) }()
       case 7: try { try decoder.decodeRepeatedMessageField(value: &self.episodes) }()
+      case 10: try { try decoder.decodeSingularEnumField(value: &self.state) }()
       default: break
       }
     }
@@ -258,6 +310,9 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     if !self.episodes.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.episodes, fieldNumber: 7)
     }
+    if self.state != .unknown {
+      try visitor.visitSingularEnumField(value: self.state, fieldNumber: 10)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -265,6 +320,7 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     if lhs.podcastID != rhs.podcastID {return false}
     if lhs._createdAt != rhs._createdAt {return false}
     if lhs._updatedAt != rhs._updatedAt {return false}
+    if lhs.state != rhs.state {return false}
     if lhs.title != rhs.title {return false}
     if lhs.subtitle != rhs.subtitle {return false}
     if lhs.about != rhs.about {return false}

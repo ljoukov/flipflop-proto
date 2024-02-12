@@ -56,6 +56,10 @@ export interface PodcastProto {
      */
     updatedAt?: Timestamp;
     /**
+     * @generated from protobuf field: PodcastState state = 10;
+     */
+    state: PodcastState;
+    /**
      * @generated from protobuf field: string title = 4;
      */
     title: string;
@@ -92,6 +96,19 @@ export enum PodcastEpisodeState {
      * @generated from protobuf enum value: PODCAST_EPISODE_STATE_ARCHIVED = 3;
      */
     ARCHIVED = 3
+}
+/**
+ * @generated from protobuf enum PodcastState
+ */
+export enum PodcastState {
+    /**
+     * @generated from protobuf enum value: PODCAST_STATE_UNKNOWN = 0;
+     */
+    UNKNOWN = 0,
+    /**
+     * @generated from protobuf enum value: PODCAST_STATE_DRAFT = 1;
+     */
+    DRAFT = 1
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class PodcastEpisodeProto$Type extends MessageType<PodcastEpisodeProto> {
@@ -175,6 +192,7 @@ class PodcastProto$Type extends MessageType<PodcastProto> {
             { no: 1, name: "podcast_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "created_at", kind: "message", T: () => Timestamp },
             { no: 3, name: "updated_at", kind: "message", T: () => Timestamp },
+            { no: 10, name: "state", kind: "enum", T: () => ["PodcastState", PodcastState, "PODCAST_STATE_"] },
             { no: 4, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "subtitle", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 6, name: "about", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
@@ -182,7 +200,7 @@ class PodcastProto$Type extends MessageType<PodcastProto> {
         ]);
     }
     create(value?: PartialMessage<PodcastProto>): PodcastProto {
-        const message = { podcastId: "", title: "", subtitle: "", about: "", episodes: [] };
+        const message = { podcastId: "", state: 0, title: "", subtitle: "", about: "", episodes: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastProto>(this, message, value);
@@ -201,6 +219,9 @@ class PodcastProto$Type extends MessageType<PodcastProto> {
                     break;
                 case /* google.protobuf.Timestamp updated_at */ 3:
                     message.updatedAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.updatedAt);
+                    break;
+                case /* PodcastState state */ 10:
+                    message.state = reader.int32();
                     break;
                 case /* string title */ 4:
                     message.title = reader.string();
@@ -235,6 +256,9 @@ class PodcastProto$Type extends MessageType<PodcastProto> {
         /* google.protobuf.Timestamp updated_at = 3; */
         if (message.updatedAt)
             Timestamp.internalBinaryWrite(message.updatedAt, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastState state = 10; */
+        if (message.state !== 0)
+            writer.tag(10, WireType.Varint).int32(message.state);
         /* string title = 4; */
         if (message.title !== "")
             writer.tag(4, WireType.LengthDelimited).string(message.title);

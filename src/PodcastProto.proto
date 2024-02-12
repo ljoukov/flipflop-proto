@@ -19,10 +19,16 @@ message PodcastEpisodeProto {
   repeated string raw_refs = 5;
 }
 
+enum PodcastState {
+  PODCAST_STATE_UNKNOWN = 0;
+  PODCAST_STATE_DRAFT = 1;
+}
+
 message PodcastProto {
   string podcast_id = 1;
   google.protobuf.Timestamp created_at = 2;
   google.protobuf.Timestamp updated_at = 3;
+  PodcastState state = 10;
 
   string title = 4;
   string subtitle = 5;
