@@ -23,11 +23,12 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
 enum PodcastEpisodeState: SwiftProtobuf.Enum {
   typealias RawValue = Int
   case unknown // = 0
-  case refsIncomplete // = 1
-  case refsDone // = 2
-  case planDone // = 3
-  case segmentsIncomplete // = 4
-  case segmentsDone // = 5
+  case empty // = 1
+  case refsIncomplete // = 2
+  case refsDone // = 3
+  case planDone // = 4
+  case segmentsIncomplete // = 5
+  case segmentsDone // = 6
   case UNRECOGNIZED(Int)
 
   init() {
@@ -37,11 +38,12 @@ enum PodcastEpisodeState: SwiftProtobuf.Enum {
   init?(rawValue: Int) {
     switch rawValue {
     case 0: self = .unknown
-    case 1: self = .refsIncomplete
-    case 2: self = .refsDone
-    case 3: self = .planDone
-    case 4: self = .segmentsIncomplete
-    case 5: self = .segmentsDone
+    case 1: self = .empty
+    case 2: self = .refsIncomplete
+    case 3: self = .refsDone
+    case 4: self = .planDone
+    case 5: self = .segmentsIncomplete
+    case 6: self = .segmentsDone
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -49,11 +51,12 @@ enum PodcastEpisodeState: SwiftProtobuf.Enum {
   var rawValue: Int {
     switch self {
     case .unknown: return 0
-    case .refsIncomplete: return 1
-    case .refsDone: return 2
-    case .planDone: return 3
-    case .segmentsIncomplete: return 4
-    case .segmentsDone: return 5
+    case .empty: return 1
+    case .refsIncomplete: return 2
+    case .refsDone: return 3
+    case .planDone: return 4
+    case .segmentsIncomplete: return 5
+    case .segmentsDone: return 6
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -66,6 +69,7 @@ extension PodcastEpisodeState: CaseIterable {
   // The compiler won't synthesize support with the UNRECOGNIZED case.
   static var allCases: [PodcastEpisodeState] = [
     .unknown,
+    .empty,
     .refsIncomplete,
     .refsDone,
     .planDone,
@@ -210,11 +214,12 @@ extension PodcastProto: @unchecked Sendable {}
 extension PodcastEpisodeState: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     0: .same(proto: "PODCAST_EPISODE_STATE_UNKNOWN"),
-    1: .same(proto: "PODCAST_EPISODE_STATE_REFS_INCOMPLETE"),
-    2: .same(proto: "PODCAST_EPISODE_STATE_REFS_DONE"),
-    3: .same(proto: "PODCAST_EPISODE_STATE_PLAN_DONE"),
-    4: .same(proto: "PODCAST_EPISODE_STATE_SEGMENTS_INCOMPLETE"),
-    5: .same(proto: "PODCAST_EPISODE_STATE_SEGMENTS_DONE"),
+    1: .same(proto: "PODCAST_EPISODE_STATE_EMPTY"),
+    2: .same(proto: "PODCAST_EPISODE_STATE_REFS_INCOMPLETE"),
+    3: .same(proto: "PODCAST_EPISODE_STATE_REFS_DONE"),
+    4: .same(proto: "PODCAST_EPISODE_STATE_PLAN_DONE"),
+    5: .same(proto: "PODCAST_EPISODE_STATE_SEGMENTS_INCOMPLETE"),
+    6: .same(proto: "PODCAST_EPISODE_STATE_SEGMENTS_DONE"),
   ]
 }
 

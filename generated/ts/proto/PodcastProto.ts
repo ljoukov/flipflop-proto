@@ -106,25 +106,29 @@ export enum PodcastEpisodeState {
      */
     UNKNOWN = 0,
     /**
-     * @generated from protobuf enum value: PODCAST_EPISODE_STATE_REFS_INCOMPLETE = 1;
+     * @generated from protobuf enum value: PODCAST_EPISODE_STATE_EMPTY = 1;
      */
-    REFS_INCOMPLETE = 1,
+    EMPTY = 1,
     /**
-     * @generated from protobuf enum value: PODCAST_EPISODE_STATE_REFS_DONE = 2;
+     * @generated from protobuf enum value: PODCAST_EPISODE_STATE_REFS_INCOMPLETE = 2;
      */
-    REFS_DONE = 2,
+    REFS_INCOMPLETE = 2,
     /**
-     * @generated from protobuf enum value: PODCAST_EPISODE_STATE_PLAN_DONE = 3;
+     * @generated from protobuf enum value: PODCAST_EPISODE_STATE_REFS_DONE = 3;
      */
-    PLAN_DONE = 3,
+    REFS_DONE = 3,
     /**
-     * @generated from protobuf enum value: PODCAST_EPISODE_STATE_SEGMENTS_INCOMPLETE = 4;
+     * @generated from protobuf enum value: PODCAST_EPISODE_STATE_PLAN_DONE = 4;
      */
-    SEGMENTS_INCOMPLETE = 4,
+    PLAN_DONE = 4,
     /**
-     * @generated from protobuf enum value: PODCAST_EPISODE_STATE_SEGMENTS_DONE = 5;
+     * @generated from protobuf enum value: PODCAST_EPISODE_STATE_SEGMENTS_INCOMPLETE = 5;
      */
-    SEGMENTS_DONE = 5
+    SEGMENTS_INCOMPLETE = 5,
+    /**
+     * @generated from protobuf enum value: PODCAST_EPISODE_STATE_SEGMENTS_DONE = 6;
+     */
+    SEGMENTS_DONE = 6
 }
 /**
  * @generated from protobuf enum PodcastState
