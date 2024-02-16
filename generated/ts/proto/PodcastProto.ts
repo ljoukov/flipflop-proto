@@ -15,6 +15,19 @@ import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
 import { Timestamp } from "./google/protobuf/timestamp";
 /**
+ * @generated from protobuf message PodcastEpisodeSegment
+ */
+export interface PodcastEpisodeSegment {
+    /**
+     * @generated from protobuf field: repeated string drafts = 1;
+     */
+    drafts: string[];
+    /**
+     * @generated from protobuf field: string text = 2;
+     */
+    text: string;
+}
+/**
  * @generated from protobuf message PodcastEpisodeProto
  */
 export interface PodcastEpisodeProto {
@@ -35,9 +48,17 @@ export interface PodcastEpisodeProto {
      */
     text: string;
     /**
-     * @generated from protobuf field: repeated string raw_refs = 5;
+     * @generated from protobuf field: repeated string refs = 5;
      */
-    rawRefs: string[];
+    refs: string[];
+    /**
+     * @generated from protobuf field: string plan = 6;
+     */
+    plan: string;
+    /**
+     * @generated from protobuf field: repeated PodcastEpisodeSegment segments = 7;
+     */
+    segments: PodcastEpisodeSegment[];
 }
 /**
  * @generated from protobuf message PodcastProto
@@ -85,17 +106,25 @@ export enum PodcastEpisodeState {
      */
     UNKNOWN = 0,
     /**
-     * @generated from protobuf enum value: PODCAST_EPISODE_STATE_DRAFT = 1;
+     * @generated from protobuf enum value: PODCAST_EPISODE_STATE_REFS_INCOMPLETE = 1;
      */
-    DRAFT = 1,
+    REFS_INCOMPLETE = 1,
     /**
-     * @generated from protobuf enum value: PODCAST_EPISODE_STATE_PUBLISHED = 2;
+     * @generated from protobuf enum value: PODCAST_EPISODE_STATE_REFS_DONE = 2;
      */
-    PUBLISHED = 2,
+    REFS_DONE = 2,
     /**
-     * @generated from protobuf enum value: PODCAST_EPISODE_STATE_ARCHIVED = 3;
+     * @generated from protobuf enum value: PODCAST_EPISODE_STATE_PLAN_DONE = 3;
      */
-    ARCHIVED = 3
+    PLAN_DONE = 3,
+    /**
+     * @generated from protobuf enum value: PODCAST_EPISODE_STATE_SEGMENTS_INCOMPLETE = 4;
+     */
+    SEGMENTS_INCOMPLETE = 4,
+    /**
+     * @generated from protobuf enum value: PODCAST_EPISODE_STATE_SEGMENTS_DONE = 5;
+     */
+    SEGMENTS_DONE = 5
 }
 /**
  * @generated from protobuf enum PodcastState
@@ -111,6 +140,60 @@ export enum PodcastState {
     DRAFT = 1
 }
 // @generated message type with reflection information, may provide speed optimized methods
+class PodcastEpisodeSegment$Type extends MessageType<PodcastEpisodeSegment> {
+    constructor() {
+        super("PodcastEpisodeSegment", [
+            { no: 1, name: "drafts", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PodcastEpisodeSegment>): PodcastEpisodeSegment {
+        const message = { drafts: [], text: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<PodcastEpisodeSegment>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastEpisodeSegment): PodcastEpisodeSegment {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated string drafts */ 1:
+                    message.drafts.push(reader.string());
+                    break;
+                case /* string text */ 2:
+                    message.text = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PodcastEpisodeSegment, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated string drafts = 1; */
+        for (let i = 0; i < message.drafts.length; i++)
+            writer.tag(1, WireType.LengthDelimited).string(message.drafts[i]);
+        /* string text = 2; */
+        if (message.text !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.text);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message PodcastEpisodeSegment
+ */
+export const PodcastEpisodeSegment = new PodcastEpisodeSegment$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class PodcastEpisodeProto$Type extends MessageType<PodcastEpisodeProto> {
     constructor() {
         super("PodcastEpisodeProto", [
@@ -118,11 +201,13 @@ class PodcastEpisodeProto$Type extends MessageType<PodcastEpisodeProto> {
             { no: 2, name: "state", kind: "enum", T: () => ["PodcastEpisodeState", PodcastEpisodeState, "PODCAST_EPISODE_STATE_"] },
             { no: 3, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "raw_refs", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+            { no: 5, name: "refs", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "plan", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 7, name: "segments", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastEpisodeSegment }
         ]);
     }
     create(value?: PartialMessage<PodcastEpisodeProto>): PodcastEpisodeProto {
-        const message = { episodeId: "", state: 0, title: "", text: "", rawRefs: [] };
+        const message = { episodeId: "", state: 0, title: "", text: "", refs: [], plan: "", segments: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastEpisodeProto>(this, message, value);
@@ -145,8 +230,14 @@ class PodcastEpisodeProto$Type extends MessageType<PodcastEpisodeProto> {
                 case /* string text */ 4:
                     message.text = reader.string();
                     break;
-                case /* repeated string raw_refs */ 5:
-                    message.rawRefs.push(reader.string());
+                case /* repeated string refs */ 5:
+                    message.refs.push(reader.string());
+                    break;
+                case /* string plan */ 6:
+                    message.plan = reader.string();
+                    break;
+                case /* repeated PodcastEpisodeSegment segments */ 7:
+                    message.segments.push(PodcastEpisodeSegment.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -172,9 +263,15 @@ class PodcastEpisodeProto$Type extends MessageType<PodcastEpisodeProto> {
         /* string text = 4; */
         if (message.text !== "")
             writer.tag(4, WireType.LengthDelimited).string(message.text);
-        /* repeated string raw_refs = 5; */
-        for (let i = 0; i < message.rawRefs.length; i++)
-            writer.tag(5, WireType.LengthDelimited).string(message.rawRefs[i]);
+        /* repeated string refs = 5; */
+        for (let i = 0; i < message.refs.length; i++)
+            writer.tag(5, WireType.LengthDelimited).string(message.refs[i]);
+        /* string plan = 6; */
+        if (message.plan !== "")
+            writer.tag(6, WireType.LengthDelimited).string(message.plan);
+        /* repeated PodcastEpisodeSegment segments = 7; */
+        for (let i = 0; i < message.segments.length; i++)
+            PodcastEpisodeSegment.internalBinaryWrite(message.segments[i], writer.tag(7, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

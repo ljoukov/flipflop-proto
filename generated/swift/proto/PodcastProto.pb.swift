@@ -23,9 +23,11 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
 enum PodcastEpisodeState: SwiftProtobuf.Enum {
   typealias RawValue = Int
   case unknown // = 0
-  case draft // = 1
-  case published // = 2
-  case archived // = 3
+  case refsIncomplete // = 1
+  case refsDone // = 2
+  case planDone // = 3
+  case segmentsIncomplete // = 4
+  case segmentsDone // = 5
   case UNRECOGNIZED(Int)
 
   init() {
@@ -35,9 +37,11 @@ enum PodcastEpisodeState: SwiftProtobuf.Enum {
   init?(rawValue: Int) {
     switch rawValue {
     case 0: self = .unknown
-    case 1: self = .draft
-    case 2: self = .published
-    case 3: self = .archived
+    case 1: self = .refsIncomplete
+    case 2: self = .refsDone
+    case 3: self = .planDone
+    case 4: self = .segmentsIncomplete
+    case 5: self = .segmentsDone
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -45,9 +49,11 @@ enum PodcastEpisodeState: SwiftProtobuf.Enum {
   var rawValue: Int {
     switch self {
     case .unknown: return 0
-    case .draft: return 1
-    case .published: return 2
-    case .archived: return 3
+    case .refsIncomplete: return 1
+    case .refsDone: return 2
+    case .planDone: return 3
+    case .segmentsIncomplete: return 4
+    case .segmentsDone: return 5
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -60,9 +66,11 @@ extension PodcastEpisodeState: CaseIterable {
   // The compiler won't synthesize support with the UNRECOGNIZED case.
   static var allCases: [PodcastEpisodeState] = [
     .unknown,
-    .draft,
-    .published,
-    .archived,
+    .refsIncomplete,
+    .refsDone,
+    .planDone,
+    .segmentsIncomplete,
+    .segmentsDone,
   ]
 }
 
@@ -108,6 +116,20 @@ extension PodcastState: CaseIterable {
 
 #endif  // swift(>=4.2)
 
+struct PodcastEpisodeSegment {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var drafts: [String] = []
+
+  var text: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 struct PodcastEpisodeProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -121,7 +143,11 @@ struct PodcastEpisodeProto {
 
   var text: String = String()
 
-  var rawRefs: [String] = []
+  var refs: [String] = []
+
+  var plan: String = String()
+
+  var segments: [PodcastEpisodeSegment] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -174,6 +200,7 @@ struct PodcastProto {
 #if swift(>=5.5) && canImport(_Concurrency)
 extension PodcastEpisodeState: @unchecked Sendable {}
 extension PodcastState: @unchecked Sendable {}
+extension PodcastEpisodeSegment: @unchecked Sendable {}
 extension PodcastEpisodeProto: @unchecked Sendable {}
 extension PodcastProto: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
@@ -183,9 +210,11 @@ extension PodcastProto: @unchecked Sendable {}
 extension PodcastEpisodeState: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     0: .same(proto: "PODCAST_EPISODE_STATE_UNKNOWN"),
-    1: .same(proto: "PODCAST_EPISODE_STATE_DRAFT"),
-    2: .same(proto: "PODCAST_EPISODE_STATE_PUBLISHED"),
-    3: .same(proto: "PODCAST_EPISODE_STATE_ARCHIVED"),
+    1: .same(proto: "PODCAST_EPISODE_STATE_REFS_INCOMPLETE"),
+    2: .same(proto: "PODCAST_EPISODE_STATE_REFS_DONE"),
+    3: .same(proto: "PODCAST_EPISODE_STATE_PLAN_DONE"),
+    4: .same(proto: "PODCAST_EPISODE_STATE_SEGMENTS_INCOMPLETE"),
+    5: .same(proto: "PODCAST_EPISODE_STATE_SEGMENTS_DONE"),
   ]
 }
 
@@ -196,6 +225,44 @@ extension PodcastState: SwiftProtobuf._ProtoNameProviding {
   ]
 }
 
+extension PodcastEpisodeSegment: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastEpisodeSegment"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "drafts"),
+    2: .same(proto: "text"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedStringField(value: &self.drafts) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.text) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.drafts.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.drafts, fieldNumber: 1)
+    }
+    if !self.text.isEmpty {
+      try visitor.visitSingularStringField(value: self.text, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PodcastEpisodeSegment, rhs: PodcastEpisodeSegment) -> Bool {
+    if lhs.drafts != rhs.drafts {return false}
+    if lhs.text != rhs.text {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
 extension PodcastEpisodeProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "PodcastEpisodeProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -203,7 +270,9 @@ extension PodcastEpisodeProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     2: .same(proto: "state"),
     3: .same(proto: "title"),
     4: .same(proto: "text"),
-    5: .standard(proto: "raw_refs"),
+    5: .same(proto: "refs"),
+    6: .same(proto: "plan"),
+    7: .same(proto: "segments"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -216,7 +285,9 @@ extension PodcastEpisodeProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
       case 2: try { try decoder.decodeSingularEnumField(value: &self.state) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.title) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self.text) }()
-      case 5: try { try decoder.decodeRepeatedStringField(value: &self.rawRefs) }()
+      case 5: try { try decoder.decodeRepeatedStringField(value: &self.refs) }()
+      case 6: try { try decoder.decodeSingularStringField(value: &self.plan) }()
+      case 7: try { try decoder.decodeRepeatedMessageField(value: &self.segments) }()
       default: break
       }
     }
@@ -235,8 +306,14 @@ extension PodcastEpisodeProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     if !self.text.isEmpty {
       try visitor.visitSingularStringField(value: self.text, fieldNumber: 4)
     }
-    if !self.rawRefs.isEmpty {
-      try visitor.visitRepeatedStringField(value: self.rawRefs, fieldNumber: 5)
+    if !self.refs.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.refs, fieldNumber: 5)
+    }
+    if !self.plan.isEmpty {
+      try visitor.visitSingularStringField(value: self.plan, fieldNumber: 6)
+    }
+    if !self.segments.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.segments, fieldNumber: 7)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -246,7 +323,9 @@ extension PodcastEpisodeProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     if lhs.state != rhs.state {return false}
     if lhs.title != rhs.title {return false}
     if lhs.text != rhs.text {return false}
-    if lhs.rawRefs != rhs.rawRefs {return false}
+    if lhs.refs != rhs.refs {return false}
+    if lhs.plan != rhs.plan {return false}
+    if lhs.segments != rhs.segments {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
