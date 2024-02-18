@@ -11,7 +11,7 @@ enum LLMMessageRole {
 
 message LLMMessage {
   LLMMessageRole role = 1;
-  string constent = 2;
+  string content = 2;
 }
 
 message LLMUsage {
