@@ -23,9 +23,9 @@ export interface LLMMessage {
      */
     role: LLMMessageRole;
     /**
-     * @generated from protobuf field: string constent = 2;
+     * @generated from protobuf field: string content = 2;
      */
-    constent: string;
+    content: string;
 }
 /**
  * @generated from protobuf message LLMUsage
@@ -95,11 +95,11 @@ class LLMMessage$Type extends MessageType<LLMMessage> {
     constructor() {
         super("LLMMessage", [
             { no: 1, name: "role", kind: "enum", T: () => ["LLMMessageRole", LLMMessageRole] },
-            { no: 2, name: "constent", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "content", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<LLMMessage>): LLMMessage {
-        const message = { role: 0, constent: "" };
+        const message = { role: 0, content: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<LLMMessage>(this, message, value);
@@ -113,8 +113,8 @@ class LLMMessage$Type extends MessageType<LLMMessage> {
                 case /* LLMMessageRole role */ 1:
                     message.role = reader.int32();
                     break;
-                case /* string constent */ 2:
-                    message.constent = reader.string();
+                case /* string content */ 2:
+                    message.content = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -131,9 +131,9 @@ class LLMMessage$Type extends MessageType<LLMMessage> {
         /* LLMMessageRole role = 1; */
         if (message.role !== 0)
             writer.tag(1, WireType.Varint).int32(message.role);
-        /* string constent = 2; */
-        if (message.constent !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.constent);
+        /* string content = 2; */
+        if (message.content !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.content);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

@@ -75,7 +75,7 @@ struct LLMMessage {
 
   var role: LLMMessageRole = .unknown
 
-  var constent: String = String()
+  var content: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -165,7 +165,7 @@ extension LLMMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementatio
   static let protoMessageName: String = "LLMMessage"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "role"),
-    2: .same(proto: "constent"),
+    2: .same(proto: "content"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -175,7 +175,7 @@ extension LLMMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementatio
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularEnumField(value: &self.role) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.constent) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.content) }()
       default: break
       }
     }
@@ -185,15 +185,15 @@ extension LLMMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementatio
     if self.role != .unknown {
       try visitor.visitSingularEnumField(value: self.role, fieldNumber: 1)
     }
-    if !self.constent.isEmpty {
-      try visitor.visitSingularStringField(value: self.constent, fieldNumber: 2)
+    if !self.content.isEmpty {
+      try visitor.visitSingularStringField(value: self.content, fieldNumber: 2)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: LLMMessage, rhs: LLMMessage) -> Bool {
     if lhs.role != rhs.role {return false}
-    if lhs.constent != rhs.constent {return false}
+    if lhs.content != rhs.content {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

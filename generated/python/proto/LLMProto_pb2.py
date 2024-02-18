@@ -14,19 +14,19 @@ _sym_db = _symbol_database.Default()
 from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0eLLMProto.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"=\n\nLLMMessage\x12\x1d\n\x04role\x18\x01 \x01(\x0e\x32\x0f.LLMMessageRole\x12\x10\n\x08\x63onstent\x18\x02 \x01(\t\"Q\n\x08LLMUsage\x12\x14\n\x0cprompt_tokes\x18\x05 \x01(\x05\x12\x19\n\x11\x63ompletion_tokens\x18\x06 \x01(\x05\x12\x14\n\x0ctotal_tokens\x18\x07 \x01(\x05\"\xba\x01\n\x0eLLMOutputProto\x12\r\n\x05model\x18\x01 \x01(\t\x12.\n\ncreated_at\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x30\n\x0c\x63ompleted_at\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x1d\n\x08messages\x18\x04 \x03(\x0b\x32\x0b.LLMMessage\x12\x18\n\x05usage\x18\x05 \x01(\x0b\x32\t.LLMUsage*\x86\x01\n\x0eLLMMessageRole\x12\x1c\n\x18LLM_MESSAGE_ROLE_UNKNOWN\x10\x00\x12\x1b\n\x17LLM_MESSAGE_ROLE_SYSTEM\x10\x01\x12\x19\n\x15LLM_MESSAGE_ROLE_USER\x10\x02\x12\x1e\n\x1aLLM_MESSAGE_ROLE_ASSISTANT\x10\x03\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0eLLMProto.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"<\n\nLLMMessage\x12\x1d\n\x04role\x18\x01 \x01(\x0e\x32\x0f.LLMMessageRole\x12\x0f\n\x07\x63ontent\x18\x02 \x01(\t\"Q\n\x08LLMUsage\x12\x14\n\x0cprompt_tokes\x18\x05 \x01(\x05\x12\x19\n\x11\x63ompletion_tokens\x18\x06 \x01(\x05\x12\x14\n\x0ctotal_tokens\x18\x07 \x01(\x05\"\xba\x01\n\x0eLLMOutputProto\x12\r\n\x05model\x18\x01 \x01(\t\x12.\n\ncreated_at\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x30\n\x0c\x63ompleted_at\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x1d\n\x08messages\x18\x04 \x03(\x0b\x32\x0b.LLMMessage\x12\x18\n\x05usage\x18\x05 \x01(\x0b\x32\t.LLMUsage*\x86\x01\n\x0eLLMMessageRole\x12\x1c\n\x18LLM_MESSAGE_ROLE_UNKNOWN\x10\x00\x12\x1b\n\x17LLM_MESSAGE_ROLE_SYSTEM\x10\x01\x12\x19\n\x15LLM_MESSAGE_ROLE_USER\x10\x02\x12\x1e\n\x1aLLM_MESSAGE_ROLE_ASSISTANT\x10\x03\x62\x06proto3')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'LLMProto_pb2', globals())
 if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
-  _LLMMESSAGEROLE._serialized_start=387
-  _LLMMESSAGEROLE._serialized_end=521
+  _LLMMESSAGEROLE._serialized_start=386
+  _LLMMESSAGEROLE._serialized_end=520
   _LLMMESSAGE._serialized_start=51
-  _LLMMESSAGE._serialized_end=112
-  _LLMUSAGE._serialized_start=114
-  _LLMUSAGE._serialized_end=195
-  _LLMOUTPUTPROTO._serialized_start=198
-  _LLMOUTPUTPROTO._serialized_end=384
+  _LLMMESSAGE._serialized_end=111
+  _LLMUSAGE._serialized_start=113
+  _LLMUSAGE._serialized_end=194
+  _LLMOUTPUTPROTO._serialized_start=197
+  _LLMOUTPUTPROTO._serialized_end=383
 # @@protoc_insertion_point(module_scope)
