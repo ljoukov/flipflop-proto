@@ -13,6 +13,7 @@ import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
+import { LLMOutputProto } from "./LLMProto";
 import { Timestamp } from "./google/protobuf/timestamp";
 import { Duration } from "./google/protobuf/duration";
 /**
@@ -478,6 +479,10 @@ export interface ChatAssistantMessageProto {
      * @generated from protobuf field: repeated ChatAssistantMessageBlockProto blocks = 1;
      */
     blocks: ChatAssistantMessageBlockProto[];
+    /**
+     * @generated from protobuf field: LLMOutputProto llm_output = 2;
+     */
+    llmOutput?: LLMOutputProto;
 }
 /**
  * @generated from protobuf message ChatUserMessageProto
@@ -1924,7 +1929,8 @@ export const ChatAssistantMessageBlockProto = new ChatAssistantMessageBlockProto
 class ChatAssistantMessageProto$Type extends MessageType<ChatAssistantMessageProto> {
     constructor() {
         super("ChatAssistantMessageProto", [
-            { no: 1, name: "blocks", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ChatAssistantMessageBlockProto }
+            { no: 1, name: "blocks", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ChatAssistantMessageBlockProto },
+            { no: 2, name: "llm_output", kind: "message", T: () => LLMOutputProto }
         ]);
     }
     create(value?: PartialMessage<ChatAssistantMessageProto>): ChatAssistantMessageProto {
@@ -1942,6 +1948,9 @@ class ChatAssistantMessageProto$Type extends MessageType<ChatAssistantMessagePro
                 case /* repeated ChatAssistantMessageBlockProto blocks */ 1:
                     message.blocks.push(ChatAssistantMessageBlockProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
+                case /* LLMOutputProto llm_output */ 2:
+                    message.llmOutput = LLMOutputProto.internalBinaryRead(reader, reader.uint32(), options, message.llmOutput);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -1957,6 +1966,9 @@ class ChatAssistantMessageProto$Type extends MessageType<ChatAssistantMessagePro
         /* repeated ChatAssistantMessageBlockProto blocks = 1; */
         for (let i = 0; i < message.blocks.length; i++)
             ChatAssistantMessageBlockProto.internalBinaryWrite(message.blocks[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* LLMOutputProto llm_output = 2; */
+        if (message.llmOutput)
+            LLMOutputProto.internalBinaryWrite(message.llmOutput, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

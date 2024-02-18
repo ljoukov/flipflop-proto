@@ -3,6 +3,8 @@ syntax = "proto3";
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 
+import "LLMProto.proto";
+
 message ChatApiRequestProto {
   string encoded_user_auth = 1;
   oneof request {
@@ -165,6 +167,7 @@ message ChatAssistantMessageBlockProto {
 
 message ChatAssistantMessageProto {
   repeated ChatAssistantMessageBlockProto blocks = 1;
+  LLMOutputProto llm_output = 2;
 }
 
 message ChatUserMessageProto {

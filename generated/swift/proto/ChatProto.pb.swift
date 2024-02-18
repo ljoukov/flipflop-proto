@@ -751,9 +751,20 @@ struct ChatAssistantMessageProto {
 
   var blocks: [ChatAssistantMessageBlockProto] = []
 
+  var llmOutput: LLMOutputProto {
+    get {return _llmOutput ?? LLMOutputProto()}
+    set {_llmOutput = newValue}
+  }
+  /// Returns true if `llmOutput` has been explicitly set.
+  var hasLlmOutput: Bool {return self._llmOutput != nil}
+  /// Clears the value of `llmOutput`. Subsequent reads from it will return its default value.
+  mutating func clearLlmOutput() {self._llmOutput = nil}
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
+
+  fileprivate var _llmOutput: LLMOutputProto? = nil
 }
 
 struct ChatUserMessageProto {
@@ -2075,6 +2086,7 @@ extension ChatAssistantMessageProto: SwiftProtobuf.Message, SwiftProtobuf._Messa
   static let protoMessageName: String = "ChatAssistantMessageProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "blocks"),
+    2: .standard(proto: "llm_output"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2084,20 +2096,29 @@ extension ChatAssistantMessageProto: SwiftProtobuf.Message, SwiftProtobuf._Messa
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeRepeatedMessageField(value: &self.blocks) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._llmOutput) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.blocks.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.blocks, fieldNumber: 1)
     }
+    try { if let v = self._llmOutput {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: ChatAssistantMessageProto, rhs: ChatAssistantMessageProto) -> Bool {
     if lhs.blocks != rhs.blocks {return false}
+    if lhs._llmOutput != rhs._llmOutput {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
