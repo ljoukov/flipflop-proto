@@ -500,6 +500,12 @@ export interface ChatUserMessageProto {
      * @generated from protobuf field: string activity_id = 2;
      */
     activityId: string;
+    /**
+     * What bot user asked to respond
+     *
+     * @generated from protobuf field: string bot_id = 3;
+     */
+    botId: string;
 }
 /**
  * @generated from protobuf message ChatMessageProto
@@ -1984,11 +1990,12 @@ class ChatUserMessageProto$Type extends MessageType<ChatUserMessageProto> {
     constructor() {
         super("ChatUserMessageProto", [
             { no: 1, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "activity_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "activity_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "bot_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<ChatUserMessageProto>): ChatUserMessageProto {
-        const message = { text: "", activityId: "" };
+        const message = { text: "", activityId: "", botId: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<ChatUserMessageProto>(this, message, value);
@@ -2004,6 +2011,9 @@ class ChatUserMessageProto$Type extends MessageType<ChatUserMessageProto> {
                     break;
                 case /* string activity_id */ 2:
                     message.activityId = reader.string();
+                    break;
+                case /* string bot_id */ 3:
+                    message.botId = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2023,6 +2033,9 @@ class ChatUserMessageProto$Type extends MessageType<ChatUserMessageProto> {
         /* string activity_id = 2; */
         if (message.activityId !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.activityId);
+        /* string bot_id = 3; */
+        if (message.botId !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.botId);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

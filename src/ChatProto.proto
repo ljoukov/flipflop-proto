@@ -176,6 +176,9 @@ message ChatUserMessageProto {
 
   // User selected one of the activities
   string activity_id = 2;
+
+  // What bot user asked to respond
+  string bot_id = 3;
 }
 
 message ChatMessageProto {

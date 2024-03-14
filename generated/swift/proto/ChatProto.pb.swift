@@ -778,6 +778,9 @@ struct ChatUserMessageProto {
   /// User selected one of the activities
   var activityID: String = String()
 
+  /// What bot user asked to respond
+  var botID: String = String()
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -2129,6 +2132,7 @@ extension ChatUserMessageProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "text"),
     2: .standard(proto: "activity_id"),
+    3: .standard(proto: "bot_id"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2139,6 +2143,7 @@ extension ChatUserMessageProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.text) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.activityID) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.botID) }()
       default: break
       }
     }
@@ -2151,12 +2156,16 @@ extension ChatUserMessageProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     if !self.activityID.isEmpty {
       try visitor.visitSingularStringField(value: self.activityID, fieldNumber: 2)
     }
+    if !self.botID.isEmpty {
+      try visitor.visitSingularStringField(value: self.botID, fieldNumber: 3)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: ChatUserMessageProto, rhs: ChatUserMessageProto) -> Bool {
     if lhs.text != rhs.text {return false}
     if lhs.activityID != rhs.activityID {return false}
+    if lhs.botID != rhs.botID {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
