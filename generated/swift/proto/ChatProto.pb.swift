@@ -760,6 +760,9 @@ struct ChatAssistantMessageProto {
   /// Clears the value of `llmOutput`. Subsequent reads from it will return its default value.
   mutating func clearLlmOutput() {self._llmOutput = nil}
 
+  /// Bot used to produce this output.
+  var botID: String = String()
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -2090,6 +2093,7 @@ extension ChatAssistantMessageProto: SwiftProtobuf.Message, SwiftProtobuf._Messa
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "blocks"),
     2: .standard(proto: "llm_output"),
+    3: .standard(proto: "bot_id"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2100,6 +2104,7 @@ extension ChatAssistantMessageProto: SwiftProtobuf.Message, SwiftProtobuf._Messa
       switch fieldNumber {
       case 1: try { try decoder.decodeRepeatedMessageField(value: &self.blocks) }()
       case 2: try { try decoder.decodeSingularMessageField(value: &self._llmOutput) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.botID) }()
       default: break
       }
     }
@@ -2116,12 +2121,16 @@ extension ChatAssistantMessageProto: SwiftProtobuf.Message, SwiftProtobuf._Messa
     try { if let v = self._llmOutput {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     } }()
+    if !self.botID.isEmpty {
+      try visitor.visitSingularStringField(value: self.botID, fieldNumber: 3)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: ChatAssistantMessageProto, rhs: ChatAssistantMessageProto) -> Bool {
     if lhs.blocks != rhs.blocks {return false}
     if lhs._llmOutput != rhs._llmOutput {return false}
+    if lhs.botID != rhs.botID {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

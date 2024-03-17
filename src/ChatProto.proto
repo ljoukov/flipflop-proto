@@ -168,6 +168,7 @@ message ChatAssistantMessageBlockProto {
 message ChatAssistantMessageProto {
   repeated ChatAssistantMessageBlockProto blocks = 1;
   LLMOutputProto llm_output = 2;
+  string bot_id = 3; // Bot used to produce this output.
 }
 
 message ChatUserMessageProto {

@@ -483,6 +483,10 @@ export interface ChatAssistantMessageProto {
      * @generated from protobuf field: LLMOutputProto llm_output = 2;
      */
     llmOutput?: LLMOutputProto;
+    /**
+     * @generated from protobuf field: string bot_id = 3;
+     */
+    botId: string; // Bot used to produce this output.
 }
 /**
  * @generated from protobuf message ChatUserMessageProto
@@ -1936,11 +1940,12 @@ class ChatAssistantMessageProto$Type extends MessageType<ChatAssistantMessagePro
     constructor() {
         super("ChatAssistantMessageProto", [
             { no: 1, name: "blocks", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ChatAssistantMessageBlockProto },
-            { no: 2, name: "llm_output", kind: "message", T: () => LLMOutputProto }
+            { no: 2, name: "llm_output", kind: "message", T: () => LLMOutputProto },
+            { no: 3, name: "bot_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<ChatAssistantMessageProto>): ChatAssistantMessageProto {
-        const message = { blocks: [] };
+        const message = { blocks: [], botId: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<ChatAssistantMessageProto>(this, message, value);
@@ -1956,6 +1961,9 @@ class ChatAssistantMessageProto$Type extends MessageType<ChatAssistantMessagePro
                     break;
                 case /* LLMOutputProto llm_output */ 2:
                     message.llmOutput = LLMOutputProto.internalBinaryRead(reader, reader.uint32(), options, message.llmOutput);
+                    break;
+                case /* string bot_id */ 3:
+                    message.botId = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1975,6 +1983,9 @@ class ChatAssistantMessageProto$Type extends MessageType<ChatAssistantMessagePro
         /* LLMOutputProto llm_output = 2; */
         if (message.llmOutput)
             LLMOutputProto.internalBinaryWrite(message.llmOutput, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* string bot_id = 3; */
+        if (message.botId !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.botId);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
