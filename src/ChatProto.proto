@@ -8,8 +8,7 @@ import "LLMProto.proto";
 message ChatApiRequestProto {
   string encoded_user_auth = 1;
   oneof request {
-    GetChatBotsRequestProto get_chat_bots = 2;
-    ListChatsRequestProto list_chats = 3;
+    ListChatsRequestProto list_chats = 2;
   }
 }
 
@@ -17,8 +16,7 @@ message ChatApiResponseProto {
   // If present the token was refreshed and the client should use this new one from now onwards.
   string refreshed_encoded_user_auth = 1;
   oneof response {
-    GetChatBotsResponseProto get_chat_bots = 2;
-    ListChatsResponseProto list_chats = 3;
+    ListChatsResponseProto list_chats = 2;
   }
   map<string, google.protobuf.Duration> latencies = 100;
 }
@@ -45,14 +43,6 @@ message ChatStreamApiResponseDeltaProto {
   oneof response_delta {
     ChatAssistantMessageDeltaProto assistant = 1;
   }
-}
-
-message GetChatBotsRequestProto {
-  ChatBotProto.Type type = 1;
-}
-
-message GetChatBotsResponseProto {
-  repeated ChatBotProto bots = 1;
 }
 
 message ListChatsRequestProto {
@@ -186,19 +176,10 @@ message ChatUserMessageProto {
 
 message ChatMessageProto {
   string message_id = 1;
+  string parent_message_id = 5;  // If empty this is the root message.
   google.protobuf.Timestamp created_at = 2;
   oneof type {
     ChatAssistantMessageProto assistant = 3;
     ChatUserMessageProto user = 4;
   }
-}
-
-message ChatSessionProto {
-  string chat_session_id = 1;
-  google.protobuf.Timestamp created_at = 2;
-  google.protobuf.Timestamp last_modified_at = 3;
-  string story_id = 4;
-  string bot_id = 5;
-  reserved 6;
-  repeated ChatMessageProto messages = 7;
 }
