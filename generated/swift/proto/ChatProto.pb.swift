@@ -394,6 +394,9 @@ struct PostChatMessageResponseHeaderProto {
 
   var streamedMessageID: String = String()
 
+  /// Bot used to produce this output.
+  var botID: String = String()
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -525,6 +528,9 @@ struct OpenChatResponseHeaderProto {
   var messages: [ChatMessageProto] = []
 
   var streamedMessageID: String = String()
+
+  /// Bot used to produce this output.
+  var botID: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -1524,6 +1530,7 @@ extension PostChatMessageResponseHeaderProto: SwiftProtobuf.Message, SwiftProtob
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "messages"),
     2: .standard(proto: "streamed_message_id"),
+    3: .standard(proto: "bot_id"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1534,6 +1541,7 @@ extension PostChatMessageResponseHeaderProto: SwiftProtobuf.Message, SwiftProtob
       switch fieldNumber {
       case 1: try { try decoder.decodeRepeatedMessageField(value: &self.messages) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.streamedMessageID) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.botID) }()
       default: break
       }
     }
@@ -1546,12 +1554,16 @@ extension PostChatMessageResponseHeaderProto: SwiftProtobuf.Message, SwiftProtob
     if !self.streamedMessageID.isEmpty {
       try visitor.visitSingularStringField(value: self.streamedMessageID, fieldNumber: 2)
     }
+    if !self.botID.isEmpty {
+      try visitor.visitSingularStringField(value: self.botID, fieldNumber: 3)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: PostChatMessageResponseHeaderProto, rhs: PostChatMessageResponseHeaderProto) -> Bool {
     if lhs.messages != rhs.messages {return false}
     if lhs.streamedMessageID != rhs.streamedMessageID {return false}
+    if lhs.botID != rhs.botID {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -1741,6 +1753,7 @@ extension OpenChatResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
     1: .standard(proto: "chat_id"),
     2: .same(proto: "messages"),
     3: .standard(proto: "streamed_message_id"),
+    4: .standard(proto: "bot_id"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1752,6 +1765,7 @@ extension OpenChatResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
       case 1: try { try decoder.decodeSingularStringField(value: &self.chatID) }()
       case 2: try { try decoder.decodeRepeatedMessageField(value: &self.messages) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.streamedMessageID) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.botID) }()
       default: break
       }
     }
@@ -1767,6 +1781,9 @@ extension OpenChatResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
     if !self.streamedMessageID.isEmpty {
       try visitor.visitSingularStringField(value: self.streamedMessageID, fieldNumber: 3)
     }
+    if !self.botID.isEmpty {
+      try visitor.visitSingularStringField(value: self.botID, fieldNumber: 4)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1774,6 +1791,7 @@ extension OpenChatResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
     if lhs.chatID != rhs.chatID {return false}
     if lhs.messages != rhs.messages {return false}
     if lhs.streamedMessageID != rhs.streamedMessageID {return false}
+    if lhs.botID != rhs.botID {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

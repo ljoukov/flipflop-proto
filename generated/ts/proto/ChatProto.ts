@@ -235,6 +235,10 @@ export interface PostChatMessageResponseHeaderProto {
      * @generated from protobuf field: string streamed_message_id = 2;
      */
     streamedMessageId: string;
+    /**
+     * @generated from protobuf field: string bot_id = 3;
+     */
+    botId: string; // Bot used to produce this output.
 }
 /**
  * @generated from protobuf message ChatStoryActivityIdProto
@@ -328,6 +332,10 @@ export interface OpenChatResponseHeaderProto {
      * @generated from protobuf field: string streamed_message_id = 3;
      */
     streamedMessageId: string;
+    /**
+     * @generated from protobuf field: string bot_id = 4;
+     */
+    botId: string; // Bot used to produce this output.
 }
 /**
  * @generated from protobuf message ChatAssistantMessageDeltaProto
@@ -1251,11 +1259,12 @@ class PostChatMessageResponseHeaderProto$Type extends MessageType<PostChatMessag
     constructor() {
         super("PostChatMessageResponseHeaderProto", [
             { no: 1, name: "messages", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ChatMessageProto },
-            { no: 2, name: "streamed_message_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "streamed_message_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "bot_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PostChatMessageResponseHeaderProto>): PostChatMessageResponseHeaderProto {
-        const message = { messages: [], streamedMessageId: "" };
+        const message = { messages: [], streamedMessageId: "", botId: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PostChatMessageResponseHeaderProto>(this, message, value);
@@ -1271,6 +1280,9 @@ class PostChatMessageResponseHeaderProto$Type extends MessageType<PostChatMessag
                     break;
                 case /* string streamed_message_id */ 2:
                     message.streamedMessageId = reader.string();
+                    break;
+                case /* string bot_id */ 3:
+                    message.botId = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1290,6 +1302,9 @@ class PostChatMessageResponseHeaderProto$Type extends MessageType<PostChatMessag
         /* string streamed_message_id = 2; */
         if (message.streamedMessageId !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.streamedMessageId);
+        /* string bot_id = 3; */
+        if (message.botId !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.botId);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1501,11 +1516,12 @@ class OpenChatResponseHeaderProto$Type extends MessageType<OpenChatResponseHeade
         super("OpenChatResponseHeaderProto", [
             { no: 1, name: "chat_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "messages", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ChatMessageProto },
-            { no: 3, name: "streamed_message_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 3, name: "streamed_message_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "bot_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<OpenChatResponseHeaderProto>): OpenChatResponseHeaderProto {
-        const message = { chatId: "", messages: [], streamedMessageId: "" };
+        const message = { chatId: "", messages: [], streamedMessageId: "", botId: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<OpenChatResponseHeaderProto>(this, message, value);
@@ -1524,6 +1540,9 @@ class OpenChatResponseHeaderProto$Type extends MessageType<OpenChatResponseHeade
                     break;
                 case /* string streamed_message_id */ 3:
                     message.streamedMessageId = reader.string();
+                    break;
+                case /* string bot_id */ 4:
+                    message.botId = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1546,6 +1565,9 @@ class OpenChatResponseHeaderProto$Type extends MessageType<OpenChatResponseHeade
         /* string streamed_message_id = 3; */
         if (message.streamedMessageId !== "")
             writer.tag(3, WireType.LengthDelimited).string(message.streamedMessageId);
+        /* string bot_id = 4; */
+        if (message.botId !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.botId);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

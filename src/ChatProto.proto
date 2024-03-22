@@ -77,6 +77,7 @@ message PostChatMessageRequestProto {
 message PostChatMessageResponseHeaderProto {
   repeated ChatMessageProto messages = 1;
   string streamed_message_id = 2; 
+  string bot_id = 3; // Bot used to produce this output.
 }
 
 message ChatStoryActivityIdProto {
@@ -114,6 +115,7 @@ message OpenChatResponseHeaderProto {
   string chat_id = 1;
   repeated ChatMessageProto messages = 2;
   string streamed_message_id = 3; 
+  string bot_id = 4; // Bot used to produce this output.
 }
 
 message ChatAssistantMessageDeltaProto {
