@@ -13,7 +13,6 @@ import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
-import { LLMOutputProto } from "./LLMProto";
 import { Timestamp } from "./google/protobuf/timestamp";
 import { Duration } from "./google/protobuf/duration";
 /**
@@ -34,6 +33,12 @@ export interface ChatApiRequestProto {
          */
         listChats: ListChatsRequestProto;
     } | {
+        oneofKind: "getChat";
+        /**
+         * @generated from protobuf field: GetChatRequestProto get_chat = 3;
+         */
+        getChat: GetChatRequestProto;
+    } | {
         oneofKind: undefined;
     };
 }
@@ -42,7 +47,8 @@ export interface ChatApiRequestProto {
  */
 export interface ChatApiResponseProto {
     /**
-     * If present the token was refreshed and the client should use this new one from now onwards.
+     * If present the token was refreshed and the client should use this new one
+     * from now onwards.
      *
      * @generated from protobuf field: string refreshed_encoded_user_auth = 1;
      */
@@ -56,6 +62,12 @@ export interface ChatApiResponseProto {
          * @generated from protobuf field: ListChatsResponseProto list_chats = 2;
          */
         listChats: ListChatsResponseProto;
+    } | {
+        oneofKind: "getChat";
+        /**
+         * @generated from protobuf field: GetChatResponseProto get_chat = 3;
+         */
+        getChat: GetChatResponseProto;
     } | {
         oneofKind: undefined;
     };
@@ -78,15 +90,9 @@ export interface ChatStreamApiRequestProto {
      * @generated from protobuf oneof: request
      */
     request: {
-        oneofKind: "postChatMessage";
-        /**
-         * @generated from protobuf field: PostChatMessageRequestProto post_chat_message = 2;
-         */
-        postChatMessage: PostChatMessageRequestProto;
-    } | {
         oneofKind: "openChat";
         /**
-         * @generated from protobuf field: OpenChatRequestProto open_chat = 3;
+         * @generated from protobuf field: OpenChatRequestProto open_chat = 2;
          */
         openChat: OpenChatRequestProto;
     } | {
@@ -98,7 +104,8 @@ export interface ChatStreamApiRequestProto {
  */
 export interface ChatStreamApiResponseHeaderProto {
     /**
-     * If present the token was refreshed and the client should use this new one from now onwards.
+     * If present the token was refreshed and the client should use this new one
+     * from now onwards.
      *
      * @generated from protobuf field: string refreshed_encoded_user_auth = 1;
      */
@@ -107,15 +114,9 @@ export interface ChatStreamApiResponseHeaderProto {
      * @generated from protobuf oneof: header
      */
     header: {
-        oneofKind: "postChatMessageHeader";
-        /**
-         * @generated from protobuf field: PostChatMessageResponseHeaderProto post_chat_message_header = 2;
-         */
-        postChatMessageHeader: PostChatMessageResponseHeaderProto;
-    } | {
         oneofKind: "openChatHeader";
         /**
-         * @generated from protobuf field: OpenChatResponseHeaderProto open_chat_header = 3;
+         * @generated from protobuf field: OpenChatResponseHeaderProto open_chat_header = 2;
          */
         openChatHeader: OpenChatResponseHeaderProto;
     } | {
@@ -155,13 +156,22 @@ export interface ListChatsRequestProto {
     lastModifiedAfter?: Timestamp;
 }
 /**
+ * @generated from protobuf message ListChatsResponseProto
+ */
+export interface ListChatsResponseProto {
+    /**
+     * @generated from protobuf field: repeated ChatSnippetProto snippets = 1;
+     */
+    snippets: ChatSnippetProto[];
+}
+/**
  * @generated from protobuf message ChatSnippetProto
  */
 export interface ChatSnippetProto {
     /**
-     * @generated from protobuf field: string chat_id = 1;
+     * @generated from protobuf field: string last_message_id = 1;
      */
-    chatId: string;
+    lastMessageId: string;
     /**
      * @generated from protobuf field: string text = 2;
      */
@@ -172,97 +182,38 @@ export interface ChatSnippetProto {
     lastModifiedAt?: Timestamp;
 }
 /**
- * @generated from protobuf message ListChatsResponseProto
+ * @generated from protobuf message GetChatRequestProto
  */
-export interface ListChatsResponseProto {
+export interface GetChatRequestProto {
     /**
-     * @generated from protobuf field: repeated ChatSnippetProto snippets = 1;
+     * @generated from protobuf field: string last_message_id = 1;
      */
-    snippets: ChatSnippetProto[];
+    lastMessageId: string;
 }
 /**
- * @generated from protobuf message PostChatMessageRequestProto
+ * @generated from protobuf message GetChatResponseProto
  */
-export interface PostChatMessageRequestProto {
-    /**
-     * @generated from protobuf field: string chat_id = 1;
-     */
-    chatId: string;
-    /**
-     * @generated from protobuf field: ChatUserMessageProto user_message = 2;
-     */
-    userMessage?: ChatUserMessageProto;
-}
-/**
- * @generated from protobuf message PostChatMessageResponseHeaderProto
- */
-export interface PostChatMessageResponseHeaderProto {
+export interface GetChatResponseProto {
     /**
      * @generated from protobuf field: repeated ChatMessageProto messages = 1;
      */
     messages: ChatMessageProto[];
-    /**
-     * @generated from protobuf field: string streamed_message_id = 2;
-     */
-    streamedMessageId: string;
-    /**
-     * @generated from protobuf field: string bot_id = 3;
-     */
-    botId: string; // Bot used to produce this output.
-}
-/**
- * @generated from protobuf message ChatStoryActivityIdProto
- */
-export interface ChatStoryActivityIdProto {
-    /**
-     * @generated from protobuf field: string story_id = 1;
-     */
-    storyId: string;
-    /**
-     * @generated from protobuf field: string activity_id = 2;
-     */
-    activityId: string;
-}
-/**
- * @generated from protobuf message OpenChatWithUserMessageProto
- */
-export interface OpenChatWithUserMessageProto {
-    /**
-     * @generated from protobuf field: string global_bot_id = 1;
-     */
-    globalBotId: string;
-    /**
-     * @generated from protobuf field: string user_message = 2;
-     */
-    userMessage: string;
 }
 /**
  * @generated from protobuf message OpenChatRequestProto
  */
 export interface OpenChatRequestProto {
     /**
-     * @generated from protobuf field: bool restart = 1;
-     */
-    restart: boolean;
-    /**
      * @generated from protobuf oneof: type
      */
     type: {
-        oneofKind: "chatId";
-        /**
-         * open specific chat
-         *
-         * @generated from protobuf field: string chat_id = 2;
-         */
-        chatId: string;
-    } | {
-        oneofKind: "globalBotId";
+        oneofKind: "botId";
         /**
          * global bot
          *
-         * @generated from protobuf field: string global_bot_id = 3;
+         * @generated from protobuf field: ChatBotIdProto bot_id = 1;
          */
-        globalBotId: string;
+        botId: ChatBotIdProto;
     } | {
         oneofKind: "storyActivityId";
         // Deprecated: activities for a story
@@ -291,203 +242,17 @@ export interface OpenChatRequestProto {
  */
 export interface OpenChatResponseHeaderProto {
     /**
-     * @generated from protobuf field: string chat_id = 1;
-     */
-    chatId: string;
-    /**
-     * @generated from protobuf field: repeated ChatMessageProto messages = 2;
+     * @generated from protobuf field: repeated ChatMessageProto messages = 1;
      */
     messages: ChatMessageProto[];
     /**
-     * @generated from protobuf field: string streamed_message_id = 3;
+     * @generated from protobuf field: string streamed_message_id = 2;
      */
     streamedMessageId: string;
     /**
-     * @generated from protobuf field: string bot_id = 4;
+     * @generated from protobuf field: ChatBotIdProto bot_id = 3;
      */
-    botId: string; // Bot used to produce this output.
-}
-/**
- * @generated from protobuf message ChatAssistantMessageDeltaProto
- */
-export interface ChatAssistantMessageDeltaProto {
-    /**
-     * @generated from protobuf oneof: delta
-     */
-    delta: {
-        oneofKind: "textDelta";
-        /**
-         * Append current text block.
-         *
-         * @generated from protobuf field: string text_delta = 1;
-         */
-        textDelta: string;
-    } | {
-        oneofKind: "activity";
-        /**
-         * Append activity to the current block.
-         * Start a new block on next text_delta.
-         *
-         * @generated from protobuf field: ChatActivityIntroProto activity = 2;
-         */
-        activity: ChatActivityIntroProto;
-    } | {
-        oneofKind: undefined;
-    };
-}
-/**
- * @generated from protobuf message ChatBotProto
- */
-export interface ChatBotProto {
-    /**
-     * @generated from protobuf field: string bot_id = 1;
-     */
-    botId: string;
-    /**
-     * @generated from protobuf field: google.protobuf.Timestamp created_at = 5;
-     */
-    createdAt?: Timestamp;
-    /**
-     * @generated from protobuf field: google.protobuf.Timestamp last_modified_at = 6;
-     */
-    lastModifiedAt?: Timestamp;
-    /**
-     * @generated from protobuf field: ChatBotProto.Type type = 7;
-     */
-    type: ChatBotProto_Type;
-    /**
-     * @generated from protobuf field: string display_name = 2;
-     */
-    displayName: string;
-    /**
-     * @generated from protobuf field: string description_prompt = 3;
-     */
-    descriptionPrompt: string;
-    /**
-     * @generated from protobuf field: ChatActivitiesProto activities = 4;
-     */
-    activities?: ChatActivitiesProto;
-}
-/**
- * @generated from protobuf enum ChatBotProto.Type
- */
-export enum ChatBotProto_Type {
-    /**
-     * @generated from protobuf enum value: UNDEFINED = 0;
-     */
-    UNDEFINED = 0,
-    /**
-     * @generated from protobuf enum value: STORY_BOT = 1;
-     */
-    STORY_BOT = 1,
-    /**
-     * @generated from protobuf enum value: GLOBAL_BOT = 2;
-     */
-    GLOBAL_BOT = 2
-}
-/**
- * @generated from protobuf message ChatActivitiesProto
- */
-export interface ChatActivitiesProto {
-    /**
-     * @generated from protobuf field: string description_prompt = 1;
-     */
-    descriptionPrompt: string;
-    /**
-     * @generated from protobuf field: repeated ChatActivityProto activities = 2;
-     */
-    activities: ChatActivityProto[];
-}
-/**
- * @generated from protobuf message ChatActivityProto
- */
-export interface ChatActivityProto {
-    /**
-     * Machine identifier, LLM-readable, e.g. "compare-and-contrast", "writing-challenge"
-     *
-     * @generated from protobuf field: string activity_id = 1;
-     */
-    activityId: string;
-    /**
-     * How it should be diplayed to the user
-     *
-     * @generated from protobuf field: string display_name = 2;
-     */
-    displayName: string;
-    /**
-     * @generated from protobuf field: string description_prompt = 3;
-     */
-    descriptionPrompt: string;
-    /**
-     * @generated from protobuf field: string action_prompt = 4;
-     */
-    actionPrompt: string;
-}
-/**
- * @generated from protobuf message ChatActivityIntroProto
- */
-export interface ChatActivityIntroProto {
-    /**
-     * @generated from protobuf field: string activity_id = 1;
-     */
-    activityId: string;
-    /**
-     * @generated from protobuf field: string display_name = 2;
-     */
-    displayName: string;
-}
-/**
- * @generated from protobuf message ChatAssistantMessageBlockProto
- */
-export interface ChatAssistantMessageBlockProto {
-    /**
-     * @generated from protobuf field: string text = 1;
-     */
-    text: string;
-    /**
-     * @generated from protobuf field: repeated ChatActivityIntroProto activities = 2;
-     */
-    activities: ChatActivityIntroProto[];
-}
-/**
- * @generated from protobuf message ChatAssistantMessageProto
- */
-export interface ChatAssistantMessageProto {
-    /**
-     * @generated from protobuf field: repeated ChatAssistantMessageBlockProto blocks = 1;
-     */
-    blocks: ChatAssistantMessageBlockProto[];
-    /**
-     * @generated from protobuf field: LLMOutputProto llm_output = 2;
-     */
-    llmOutput?: LLMOutputProto;
-    /**
-     * @generated from protobuf field: string bot_id = 3;
-     */
-    botId: string; // Bot used to produce this output.
-}
-/**
- * @generated from protobuf message ChatUserMessageProto
- */
-export interface ChatUserMessageProto {
-    /**
-     * Explicitly entered by the user
-     *
-     * @generated from protobuf field: string text = 1;
-     */
-    text: string;
-    /**
-     * User selected one of the activities
-     *
-     * @generated from protobuf field: string activity_id = 2;
-     */
-    activityId: string;
-    /**
-     * What bot user asked to respond
-     *
-     * @generated from protobuf field: string bot_id = 3;
-     */
-    botId: string;
+    botId: ChatBotIdProto; // Bot used to produce this output.
 }
 /**
  * @generated from protobuf message ChatMessageProto
@@ -524,12 +289,172 @@ export interface ChatMessageProto {
         oneofKind: undefined;
     };
 }
+/**
+ * @generated from protobuf message ChatAssistantMessageDeltaProto
+ */
+export interface ChatAssistantMessageDeltaProto {
+    /**
+     * @generated from protobuf oneof: delta
+     */
+    delta: {
+        oneofKind: "textDelta";
+        /**
+         * Append current text block.
+         *
+         * @generated from protobuf field: string text_delta = 1;
+         */
+        textDelta: string;
+    } | {
+        oneofKind: "activity";
+        /**
+         * Append activity to the current block.
+         * Start a new block on next text_delta.
+         *
+         * @generated from protobuf field: ChatActivityIntroProto activity = 2;
+         */
+        activity: ChatActivityIntroProto;
+    } | {
+        oneofKind: undefined;
+    };
+}
+/**
+ * @generated from protobuf message ChatAssistantMessageProto
+ */
+export interface ChatAssistantMessageProto {
+    /**
+     * @generated from protobuf field: ChatBotIdProto bot_id = 1;
+     */
+    botId: ChatBotIdProto; // Bot used to produce this output.
+    /**
+     * @generated from protobuf field: repeated ChatAssistantMessageBlockProto blocks = 2;
+     */
+    blocks: ChatAssistantMessageBlockProto[];
+}
+/**
+ * @generated from protobuf message ChatAssistantMessageBlockProto
+ */
+export interface ChatAssistantMessageBlockProto {
+    /**
+     * @generated from protobuf field: string text = 1;
+     */
+    text: string;
+    /**
+     * @generated from protobuf field: repeated ChatActivityIntroProto activities = 2;
+     */
+    activities: ChatActivityIntroProto[];
+}
+/**
+ * @generated from protobuf message ChatActivityIntroProto
+ */
+export interface ChatActivityIntroProto {
+    /**
+     * @generated from protobuf field: string activity_id = 1;
+     */
+    activityId: string;
+    /**
+     * @generated from protobuf field: string display_name = 2;
+     */
+    displayName: string;
+}
+/**
+ * @generated from protobuf message ChatStoryActivityIdProto
+ */
+export interface ChatStoryActivityIdProto {
+    /**
+     * @generated from protobuf field: string story_id = 1;
+     */
+    storyId: string;
+    /**
+     * @generated from protobuf field: string activity_id = 2;
+     */
+    activityId: string;
+}
+/**
+ * @generated from protobuf message OpenChatWithUserMessageProto
+ */
+export interface OpenChatWithUserMessageProto {
+    /**
+     * @generated from protobuf field: string global_bot_id = 1;
+     */
+    globalBotId: string;
+    /**
+     * @generated from protobuf field: string user_message = 2;
+     */
+    userMessage: string;
+}
+/**
+ * @generated from protobuf message ChatUserMessageProto
+ */
+export interface ChatUserMessageProto {
+    /**
+     * What bot user asked to respond
+     *
+     * @generated from protobuf field: ChatBotIdProto bot_id = 1;
+     */
+    botId: ChatBotIdProto;
+    /**
+     * @generated from protobuf oneof: input
+     */
+    input: {
+        oneofKind: "text";
+        /**
+         * Explicitly entered by the user
+         *
+         * @generated from protobuf field: string text = 2;
+         */
+        text: string;
+    } | {
+        oneofKind: "activityId";
+        /**
+         * User selected one of the activities
+         *
+         * @generated from protobuf field: string activity_id = 3;
+         */
+        activityId: string;
+    } | {
+        oneofKind: undefined;
+    };
+}
+/**
+ * @generated from protobuf enum ChatBotIdProto
+ */
+export enum ChatBotIdProto {
+    /**
+     * @generated from protobuf enum value: CHAT_BOT_ID_UNKNOWN = 0;
+     */
+    CHAT_BOT_ID_UNKNOWN = 0,
+    /**
+     * @generated from protobuf enum value: CHAT_BOT_ID_GREETING = 1;
+     */
+    CHAT_BOT_ID_GREETING = 1,
+    /**
+     * @generated from protobuf enum value: CHAT_BOT_ID_AFFIRMATION = 2;
+     */
+    CHAT_BOT_ID_AFFIRMATION = 2,
+    /**
+     * @generated from protobuf enum value: CHAT_BOT_ID_SHORT = 3;
+     */
+    CHAT_BOT_ID_SHORT = 3,
+    /**
+     * @generated from protobuf enum value: CHAT_BOT_ID_REASON = 4;
+     */
+    CHAT_BOT_ID_REASON = 4,
+    /**
+     * @generated from protobuf enum value: CHAT_BOT_ID_SIMPLIFY = 5;
+     */
+    CHAT_BOT_ID_SIMPLIFY = 5,
+    /**
+     * @generated from protobuf enum value: CHAT_BOT_ID_BRAINSTORM = 6;
+     */
+    CHAT_BOT_ID_BRAINSTORM = 6
+}
 // @generated message type with reflection information, may provide speed optimized methods
 class ChatApiRequestProto$Type extends MessageType<ChatApiRequestProto> {
     constructor() {
         super("ChatApiRequestProto", [
             { no: 1, name: "encoded_user_auth", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "list_chats", kind: "message", oneof: "request", T: () => ListChatsRequestProto }
+            { no: 2, name: "list_chats", kind: "message", oneof: "request", T: () => ListChatsRequestProto },
+            { no: 3, name: "get_chat", kind: "message", oneof: "request", T: () => GetChatRequestProto }
         ]);
     }
     create(value?: PartialMessage<ChatApiRequestProto>): ChatApiRequestProto {
@@ -553,6 +478,12 @@ class ChatApiRequestProto$Type extends MessageType<ChatApiRequestProto> {
                         listChats: ListChatsRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).listChats)
                     };
                     break;
+                case /* GetChatRequestProto get_chat */ 3:
+                    message.request = {
+                        oneofKind: "getChat",
+                        getChat: GetChatRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).getChat)
+                    };
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -571,6 +502,9 @@ class ChatApiRequestProto$Type extends MessageType<ChatApiRequestProto> {
         /* ListChatsRequestProto list_chats = 2; */
         if (message.request.oneofKind === "listChats")
             ListChatsRequestProto.internalBinaryWrite(message.request.listChats, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* GetChatRequestProto get_chat = 3; */
+        if (message.request.oneofKind === "getChat")
+            GetChatRequestProto.internalBinaryWrite(message.request.getChat, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -587,6 +521,7 @@ class ChatApiResponseProto$Type extends MessageType<ChatApiResponseProto> {
         super("ChatApiResponseProto", [
             { no: 1, name: "refreshed_encoded_user_auth", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "list_chats", kind: "message", oneof: "response", T: () => ListChatsResponseProto },
+            { no: 3, name: "get_chat", kind: "message", oneof: "response", T: () => GetChatResponseProto },
             { no: 100, name: "latencies", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => Duration } }
         ]);
     }
@@ -609,6 +544,12 @@ class ChatApiResponseProto$Type extends MessageType<ChatApiResponseProto> {
                     message.response = {
                         oneofKind: "listChats",
                         listChats: ListChatsResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).listChats)
+                    };
+                    break;
+                case /* GetChatResponseProto get_chat */ 3:
+                    message.response = {
+                        oneofKind: "getChat",
+                        getChat: GetChatResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.response as any).getChat)
                     };
                     break;
                 case /* map<string, google.protobuf.Duration> latencies */ 100:
@@ -648,6 +589,9 @@ class ChatApiResponseProto$Type extends MessageType<ChatApiResponseProto> {
         /* ListChatsResponseProto list_chats = 2; */
         if (message.response.oneofKind === "listChats")
             ListChatsResponseProto.internalBinaryWrite(message.response.listChats, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* GetChatResponseProto get_chat = 3; */
+        if (message.response.oneofKind === "getChat")
+            GetChatResponseProto.internalBinaryWrite(message.response.getChat, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
         /* map<string, google.protobuf.Duration> latencies = 100; */
         for (let k of Object.keys(message.latencies)) {
             writer.tag(100, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k);
@@ -670,8 +614,7 @@ class ChatStreamApiRequestProto$Type extends MessageType<ChatStreamApiRequestPro
     constructor() {
         super("ChatStreamApiRequestProto", [
             { no: 1, name: "encoded_user_auth", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "post_chat_message", kind: "message", oneof: "request", T: () => PostChatMessageRequestProto },
-            { no: 3, name: "open_chat", kind: "message", oneof: "request", T: () => OpenChatRequestProto }
+            { no: 2, name: "open_chat", kind: "message", oneof: "request", T: () => OpenChatRequestProto }
         ]);
     }
     create(value?: PartialMessage<ChatStreamApiRequestProto>): ChatStreamApiRequestProto {
@@ -689,13 +632,7 @@ class ChatStreamApiRequestProto$Type extends MessageType<ChatStreamApiRequestPro
                 case /* string encoded_user_auth */ 1:
                     message.encodedUserAuth = reader.string();
                     break;
-                case /* PostChatMessageRequestProto post_chat_message */ 2:
-                    message.request = {
-                        oneofKind: "postChatMessage",
-                        postChatMessage: PostChatMessageRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).postChatMessage)
-                    };
-                    break;
-                case /* OpenChatRequestProto open_chat */ 3:
+                case /* OpenChatRequestProto open_chat */ 2:
                     message.request = {
                         oneofKind: "openChat",
                         openChat: OpenChatRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).openChat)
@@ -716,12 +653,9 @@ class ChatStreamApiRequestProto$Type extends MessageType<ChatStreamApiRequestPro
         /* string encoded_user_auth = 1; */
         if (message.encodedUserAuth !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.encodedUserAuth);
-        /* PostChatMessageRequestProto post_chat_message = 2; */
-        if (message.request.oneofKind === "postChatMessage")
-            PostChatMessageRequestProto.internalBinaryWrite(message.request.postChatMessage, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* OpenChatRequestProto open_chat = 3; */
+        /* OpenChatRequestProto open_chat = 2; */
         if (message.request.oneofKind === "openChat")
-            OpenChatRequestProto.internalBinaryWrite(message.request.openChat, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+            OpenChatRequestProto.internalBinaryWrite(message.request.openChat, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -737,8 +671,7 @@ class ChatStreamApiResponseHeaderProto$Type extends MessageType<ChatStreamApiRes
     constructor() {
         super("ChatStreamApiResponseHeaderProto", [
             { no: 1, name: "refreshed_encoded_user_auth", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "post_chat_message_header", kind: "message", oneof: "header", T: () => PostChatMessageResponseHeaderProto },
-            { no: 3, name: "open_chat_header", kind: "message", oneof: "header", T: () => OpenChatResponseHeaderProto },
+            { no: 2, name: "open_chat_header", kind: "message", oneof: "header", T: () => OpenChatResponseHeaderProto },
             { no: 100, name: "latencies", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => Duration } }
         ]);
     }
@@ -757,13 +690,7 @@ class ChatStreamApiResponseHeaderProto$Type extends MessageType<ChatStreamApiRes
                 case /* string refreshed_encoded_user_auth */ 1:
                     message.refreshedEncodedUserAuth = reader.string();
                     break;
-                case /* PostChatMessageResponseHeaderProto post_chat_message_header */ 2:
-                    message.header = {
-                        oneofKind: "postChatMessageHeader",
-                        postChatMessageHeader: PostChatMessageResponseHeaderProto.internalBinaryRead(reader, reader.uint32(), options, (message.header as any).postChatMessageHeader)
-                    };
-                    break;
-                case /* OpenChatResponseHeaderProto open_chat_header */ 3:
+                case /* OpenChatResponseHeaderProto open_chat_header */ 2:
                     message.header = {
                         oneofKind: "openChatHeader",
                         openChatHeader: OpenChatResponseHeaderProto.internalBinaryRead(reader, reader.uint32(), options, (message.header as any).openChatHeader)
@@ -803,12 +730,9 @@ class ChatStreamApiResponseHeaderProto$Type extends MessageType<ChatStreamApiRes
         /* string refreshed_encoded_user_auth = 1; */
         if (message.refreshedEncodedUserAuth !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.refreshedEncodedUserAuth);
-        /* PostChatMessageResponseHeaderProto post_chat_message_header = 2; */
-        if (message.header.oneofKind === "postChatMessageHeader")
-            PostChatMessageResponseHeaderProto.internalBinaryWrite(message.header.postChatMessageHeader, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* OpenChatResponseHeaderProto open_chat_header = 3; */
+        /* OpenChatResponseHeaderProto open_chat_header = 2; */
         if (message.header.oneofKind === "openChatHeader")
-            OpenChatResponseHeaderProto.internalBinaryWrite(message.header.openChatHeader, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+            OpenChatResponseHeaderProto.internalBinaryWrite(message.header.openChatHeader, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         /* map<string, google.protobuf.Duration> latencies = 100; */
         for (let k of Object.keys(message.latencies)) {
             writer.tag(100, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k);
@@ -924,67 +848,6 @@ class ListChatsRequestProto$Type extends MessageType<ListChatsRequestProto> {
  */
 export const ListChatsRequestProto = new ListChatsRequestProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class ChatSnippetProto$Type extends MessageType<ChatSnippetProto> {
-    constructor() {
-        super("ChatSnippetProto", [
-            { no: 1, name: "chat_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "last_modified_at", kind: "message", T: () => Timestamp }
-        ]);
-    }
-    create(value?: PartialMessage<ChatSnippetProto>): ChatSnippetProto {
-        const message = { chatId: "", text: "" };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<ChatSnippetProto>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ChatSnippetProto): ChatSnippetProto {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string chat_id */ 1:
-                    message.chatId = reader.string();
-                    break;
-                case /* string text */ 2:
-                    message.text = reader.string();
-                    break;
-                case /* google.protobuf.Timestamp last_modified_at */ 3:
-                    message.lastModifiedAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.lastModifiedAt);
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: ChatSnippetProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string chat_id = 1; */
-        if (message.chatId !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.chatId);
-        /* string text = 2; */
-        if (message.text !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.text);
-        /* google.protobuf.Timestamp last_modified_at = 3; */
-        if (message.lastModifiedAt)
-            Timestamp.internalBinaryWrite(message.lastModifiedAt, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message ChatSnippetProto
- */
-export const ChatSnippetProto = new ChatSnippetProto$Type();
-// @generated message type with reflection information, may provide speed optimized methods
 class ListChatsResponseProto$Type extends MessageType<ListChatsResponseProto> {
     constructor() {
         super("ListChatsResponseProto", [
@@ -1032,30 +895,34 @@ class ListChatsResponseProto$Type extends MessageType<ListChatsResponseProto> {
  */
 export const ListChatsResponseProto = new ListChatsResponseProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class PostChatMessageRequestProto$Type extends MessageType<PostChatMessageRequestProto> {
+class ChatSnippetProto$Type extends MessageType<ChatSnippetProto> {
     constructor() {
-        super("PostChatMessageRequestProto", [
-            { no: 1, name: "chat_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "user_message", kind: "message", T: () => ChatUserMessageProto }
+        super("ChatSnippetProto", [
+            { no: 1, name: "last_message_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "last_modified_at", kind: "message", T: () => Timestamp }
         ]);
     }
-    create(value?: PartialMessage<PostChatMessageRequestProto>): PostChatMessageRequestProto {
-        const message = { chatId: "" };
+    create(value?: PartialMessage<ChatSnippetProto>): ChatSnippetProto {
+        const message = { lastMessageId: "", text: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<PostChatMessageRequestProto>(this, message, value);
+            reflectionMergePartial<ChatSnippetProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PostChatMessageRequestProto): PostChatMessageRequestProto {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ChatSnippetProto): ChatSnippetProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string chat_id */ 1:
-                    message.chatId = reader.string();
+                case /* string last_message_id */ 1:
+                    message.lastMessageId = reader.string();
                     break;
-                case /* ChatUserMessageProto user_message */ 2:
-                    message.userMessage = ChatUserMessageProto.internalBinaryRead(reader, reader.uint32(), options, message.userMessage);
+                case /* string text */ 2:
+                    message.text = reader.string();
+                    break;
+                case /* google.protobuf.Timestamp last_modified_at */ 3:
+                    message.lastModifiedAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.lastModifiedAt);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1068,13 +935,16 @@ class PostChatMessageRequestProto$Type extends MessageType<PostChatMessageReques
         }
         return message;
     }
-    internalBinaryWrite(message: PostChatMessageRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string chat_id = 1; */
-        if (message.chatId !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.chatId);
-        /* ChatUserMessageProto user_message = 2; */
-        if (message.userMessage)
-            ChatUserMessageProto.internalBinaryWrite(message.userMessage, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+    internalBinaryWrite(message: ChatSnippetProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string last_message_id = 1; */
+        if (message.lastMessageId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.lastMessageId);
+        /* string text = 2; */
+        if (message.text !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.text);
+        /* google.protobuf.Timestamp last_modified_at = 3; */
+        if (message.lastModifiedAt)
+            Timestamp.internalBinaryWrite(message.lastModifiedAt, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1082,26 +952,190 @@ class PostChatMessageRequestProto$Type extends MessageType<PostChatMessageReques
     }
 }
 /**
- * @generated MessageType for protobuf message PostChatMessageRequestProto
+ * @generated MessageType for protobuf message ChatSnippetProto
  */
-export const PostChatMessageRequestProto = new PostChatMessageRequestProto$Type();
+export const ChatSnippetProto = new ChatSnippetProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class PostChatMessageResponseHeaderProto$Type extends MessageType<PostChatMessageResponseHeaderProto> {
+class GetChatRequestProto$Type extends MessageType<GetChatRequestProto> {
     constructor() {
-        super("PostChatMessageResponseHeaderProto", [
-            { no: 1, name: "messages", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ChatMessageProto },
-            { no: 2, name: "streamed_message_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "bot_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        super("GetChatRequestProto", [
+            { no: 1, name: "last_message_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<PostChatMessageResponseHeaderProto>): PostChatMessageResponseHeaderProto {
-        const message = { messages: [], streamedMessageId: "", botId: "" };
+    create(value?: PartialMessage<GetChatRequestProto>): GetChatRequestProto {
+        const message = { lastMessageId: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<PostChatMessageResponseHeaderProto>(this, message, value);
+            reflectionMergePartial<GetChatRequestProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PostChatMessageResponseHeaderProto): PostChatMessageResponseHeaderProto {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetChatRequestProto): GetChatRequestProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string last_message_id */ 1:
+                    message.lastMessageId = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: GetChatRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string last_message_id = 1; */
+        if (message.lastMessageId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.lastMessageId);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message GetChatRequestProto
+ */
+export const GetChatRequestProto = new GetChatRequestProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class GetChatResponseProto$Type extends MessageType<GetChatResponseProto> {
+    constructor() {
+        super("GetChatResponseProto", [
+            { no: 1, name: "messages", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ChatMessageProto }
+        ]);
+    }
+    create(value?: PartialMessage<GetChatResponseProto>): GetChatResponseProto {
+        const message = { messages: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<GetChatResponseProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetChatResponseProto): GetChatResponseProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated ChatMessageProto messages */ 1:
+                    message.messages.push(ChatMessageProto.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: GetChatResponseProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated ChatMessageProto messages = 1; */
+        for (let i = 0; i < message.messages.length; i++)
+            ChatMessageProto.internalBinaryWrite(message.messages[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message GetChatResponseProto
+ */
+export const GetChatResponseProto = new GetChatResponseProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class OpenChatRequestProto$Type extends MessageType<OpenChatRequestProto> {
+    constructor() {
+        super("OpenChatRequestProto", [
+            { no: 1, name: "bot_id", kind: "enum", oneof: "type", T: () => ["ChatBotIdProto", ChatBotIdProto] },
+            { no: 5, name: "story_activity_id", kind: "message", oneof: "type", T: () => ChatStoryActivityIdProto },
+            { no: 6, name: "with_user_message", kind: "message", oneof: "type", T: () => OpenChatWithUserMessageProto }
+        ]);
+    }
+    create(value?: PartialMessage<OpenChatRequestProto>): OpenChatRequestProto {
+        const message = { type: { oneofKind: undefined } };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<OpenChatRequestProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: OpenChatRequestProto): OpenChatRequestProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* ChatBotIdProto bot_id */ 1:
+                    message.type = {
+                        oneofKind: "botId",
+                        botId: reader.int32()
+                    };
+                    break;
+                case /* ChatStoryActivityIdProto story_activity_id */ 5:
+                    message.type = {
+                        oneofKind: "storyActivityId",
+                        storyActivityId: ChatStoryActivityIdProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).storyActivityId)
+                    };
+                    break;
+                case /* OpenChatWithUserMessageProto with_user_message */ 6:
+                    message.type = {
+                        oneofKind: "withUserMessage",
+                        withUserMessage: OpenChatWithUserMessageProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).withUserMessage)
+                    };
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: OpenChatRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* ChatBotIdProto bot_id = 1; */
+        if (message.type.oneofKind === "botId")
+            writer.tag(1, WireType.Varint).int32(message.type.botId);
+        /* ChatStoryActivityIdProto story_activity_id = 5; */
+        if (message.type.oneofKind === "storyActivityId")
+            ChatStoryActivityIdProto.internalBinaryWrite(message.type.storyActivityId, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        /* OpenChatWithUserMessageProto with_user_message = 6; */
+        if (message.type.oneofKind === "withUserMessage")
+            OpenChatWithUserMessageProto.internalBinaryWrite(message.type.withUserMessage, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message OpenChatRequestProto
+ */
+export const OpenChatRequestProto = new OpenChatRequestProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class OpenChatResponseHeaderProto$Type extends MessageType<OpenChatResponseHeaderProto> {
+    constructor() {
+        super("OpenChatResponseHeaderProto", [
+            { no: 1, name: "messages", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ChatMessageProto },
+            { no: 2, name: "streamed_message_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "bot_id", kind: "enum", T: () => ["ChatBotIdProto", ChatBotIdProto] }
+        ]);
+    }
+    create(value?: PartialMessage<OpenChatResponseHeaderProto>): OpenChatResponseHeaderProto {
+        const message = { messages: [], streamedMessageId: "", botId: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<OpenChatResponseHeaderProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: OpenChatResponseHeaderProto): OpenChatResponseHeaderProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -1112,8 +1146,8 @@ class PostChatMessageResponseHeaderProto$Type extends MessageType<PostChatMessag
                 case /* string streamed_message_id */ 2:
                     message.streamedMessageId = reader.string();
                     break;
-                case /* string bot_id */ 3:
-                    message.botId = reader.string();
+                case /* ChatBotIdProto bot_id */ 3:
+                    message.botId = reader.int32();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1126,16 +1160,16 @@ class PostChatMessageResponseHeaderProto$Type extends MessageType<PostChatMessag
         }
         return message;
     }
-    internalBinaryWrite(message: PostChatMessageResponseHeaderProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: OpenChatResponseHeaderProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* repeated ChatMessageProto messages = 1; */
         for (let i = 0; i < message.messages.length; i++)
             ChatMessageProto.internalBinaryWrite(message.messages[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         /* string streamed_message_id = 2; */
         if (message.streamedMessageId !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.streamedMessageId);
-        /* string bot_id = 3; */
-        if (message.botId !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.botId);
+        /* ChatBotIdProto bot_id = 3; */
+        if (message.botId !== 0)
+            writer.tag(3, WireType.Varint).int32(message.botId);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1143,9 +1177,312 @@ class PostChatMessageResponseHeaderProto$Type extends MessageType<PostChatMessag
     }
 }
 /**
- * @generated MessageType for protobuf message PostChatMessageResponseHeaderProto
+ * @generated MessageType for protobuf message OpenChatResponseHeaderProto
  */
-export const PostChatMessageResponseHeaderProto = new PostChatMessageResponseHeaderProto$Type();
+export const OpenChatResponseHeaderProto = new OpenChatResponseHeaderProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ChatMessageProto$Type extends MessageType<ChatMessageProto> {
+    constructor() {
+        super("ChatMessageProto", [
+            { no: 1, name: "message_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "parent_message_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "created_at", kind: "message", T: () => Timestamp },
+            { no: 3, name: "assistant", kind: "message", oneof: "type", T: () => ChatAssistantMessageProto },
+            { no: 4, name: "user", kind: "message", oneof: "type", T: () => ChatUserMessageProto }
+        ]);
+    }
+    create(value?: PartialMessage<ChatMessageProto>): ChatMessageProto {
+        const message = { messageId: "", parentMessageId: "", type: { oneofKind: undefined } };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<ChatMessageProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ChatMessageProto): ChatMessageProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string message_id */ 1:
+                    message.messageId = reader.string();
+                    break;
+                case /* string parent_message_id */ 5:
+                    message.parentMessageId = reader.string();
+                    break;
+                case /* google.protobuf.Timestamp created_at */ 2:
+                    message.createdAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.createdAt);
+                    break;
+                case /* ChatAssistantMessageProto assistant */ 3:
+                    message.type = {
+                        oneofKind: "assistant",
+                        assistant: ChatAssistantMessageProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).assistant)
+                    };
+                    break;
+                case /* ChatUserMessageProto user */ 4:
+                    message.type = {
+                        oneofKind: "user",
+                        user: ChatUserMessageProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).user)
+                    };
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: ChatMessageProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string message_id = 1; */
+        if (message.messageId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.messageId);
+        /* string parent_message_id = 5; */
+        if (message.parentMessageId !== "")
+            writer.tag(5, WireType.LengthDelimited).string(message.parentMessageId);
+        /* google.protobuf.Timestamp created_at = 2; */
+        if (message.createdAt)
+            Timestamp.internalBinaryWrite(message.createdAt, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* ChatAssistantMessageProto assistant = 3; */
+        if (message.type.oneofKind === "assistant")
+            ChatAssistantMessageProto.internalBinaryWrite(message.type.assistant, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* ChatUserMessageProto user = 4; */
+        if (message.type.oneofKind === "user")
+            ChatUserMessageProto.internalBinaryWrite(message.type.user, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message ChatMessageProto
+ */
+export const ChatMessageProto = new ChatMessageProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ChatAssistantMessageDeltaProto$Type extends MessageType<ChatAssistantMessageDeltaProto> {
+    constructor() {
+        super("ChatAssistantMessageDeltaProto", [
+            { no: 1, name: "text_delta", kind: "scalar", oneof: "delta", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "activity", kind: "message", oneof: "delta", T: () => ChatActivityIntroProto }
+        ]);
+    }
+    create(value?: PartialMessage<ChatAssistantMessageDeltaProto>): ChatAssistantMessageDeltaProto {
+        const message = { delta: { oneofKind: undefined } };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<ChatAssistantMessageDeltaProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ChatAssistantMessageDeltaProto): ChatAssistantMessageDeltaProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string text_delta */ 1:
+                    message.delta = {
+                        oneofKind: "textDelta",
+                        textDelta: reader.string()
+                    };
+                    break;
+                case /* ChatActivityIntroProto activity */ 2:
+                    message.delta = {
+                        oneofKind: "activity",
+                        activity: ChatActivityIntroProto.internalBinaryRead(reader, reader.uint32(), options, (message.delta as any).activity)
+                    };
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: ChatAssistantMessageDeltaProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string text_delta = 1; */
+        if (message.delta.oneofKind === "textDelta")
+            writer.tag(1, WireType.LengthDelimited).string(message.delta.textDelta);
+        /* ChatActivityIntroProto activity = 2; */
+        if (message.delta.oneofKind === "activity")
+            ChatActivityIntroProto.internalBinaryWrite(message.delta.activity, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message ChatAssistantMessageDeltaProto
+ */
+export const ChatAssistantMessageDeltaProto = new ChatAssistantMessageDeltaProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ChatAssistantMessageProto$Type extends MessageType<ChatAssistantMessageProto> {
+    constructor() {
+        super("ChatAssistantMessageProto", [
+            { no: 1, name: "bot_id", kind: "enum", T: () => ["ChatBotIdProto", ChatBotIdProto] },
+            { no: 2, name: "blocks", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ChatAssistantMessageBlockProto }
+        ]);
+    }
+    create(value?: PartialMessage<ChatAssistantMessageProto>): ChatAssistantMessageProto {
+        const message = { botId: 0, blocks: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<ChatAssistantMessageProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ChatAssistantMessageProto): ChatAssistantMessageProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* ChatBotIdProto bot_id */ 1:
+                    message.botId = reader.int32();
+                    break;
+                case /* repeated ChatAssistantMessageBlockProto blocks */ 2:
+                    message.blocks.push(ChatAssistantMessageBlockProto.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: ChatAssistantMessageProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* ChatBotIdProto bot_id = 1; */
+        if (message.botId !== 0)
+            writer.tag(1, WireType.Varint).int32(message.botId);
+        /* repeated ChatAssistantMessageBlockProto blocks = 2; */
+        for (let i = 0; i < message.blocks.length; i++)
+            ChatAssistantMessageBlockProto.internalBinaryWrite(message.blocks[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message ChatAssistantMessageProto
+ */
+export const ChatAssistantMessageProto = new ChatAssistantMessageProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ChatAssistantMessageBlockProto$Type extends MessageType<ChatAssistantMessageBlockProto> {
+    constructor() {
+        super("ChatAssistantMessageBlockProto", [
+            { no: 1, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "activities", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ChatActivityIntroProto }
+        ]);
+    }
+    create(value?: PartialMessage<ChatAssistantMessageBlockProto>): ChatAssistantMessageBlockProto {
+        const message = { text: "", activities: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<ChatAssistantMessageBlockProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ChatAssistantMessageBlockProto): ChatAssistantMessageBlockProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string text */ 1:
+                    message.text = reader.string();
+                    break;
+                case /* repeated ChatActivityIntroProto activities */ 2:
+                    message.activities.push(ChatActivityIntroProto.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: ChatAssistantMessageBlockProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string text = 1; */
+        if (message.text !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.text);
+        /* repeated ChatActivityIntroProto activities = 2; */
+        for (let i = 0; i < message.activities.length; i++)
+            ChatActivityIntroProto.internalBinaryWrite(message.activities[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message ChatAssistantMessageBlockProto
+ */
+export const ChatAssistantMessageBlockProto = new ChatAssistantMessageBlockProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ChatActivityIntroProto$Type extends MessageType<ChatActivityIntroProto> {
+    constructor() {
+        super("ChatActivityIntroProto", [
+            { no: 1, name: "activity_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "display_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<ChatActivityIntroProto>): ChatActivityIntroProto {
+        const message = { activityId: "", displayName: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<ChatActivityIntroProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ChatActivityIntroProto): ChatActivityIntroProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string activity_id */ 1:
+                    message.activityId = reader.string();
+                    break;
+                case /* string display_name */ 2:
+                    message.displayName = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: ChatActivityIntroProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string activity_id = 1; */
+        if (message.activityId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.activityId);
+        /* string display_name = 2; */
+        if (message.displayName !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.displayName);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message ChatActivityIntroProto
+ */
+export const ChatActivityIntroProto = new ChatActivityIntroProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class ChatStoryActivityIdProto$Type extends MessageType<ChatStoryActivityIdProto> {
     constructor() {
@@ -1255,611 +1592,16 @@ class OpenChatWithUserMessageProto$Type extends MessageType<OpenChatWithUserMess
  */
 export const OpenChatWithUserMessageProto = new OpenChatWithUserMessageProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class OpenChatRequestProto$Type extends MessageType<OpenChatRequestProto> {
-    constructor() {
-        super("OpenChatRequestProto", [
-            { no: 1, name: "restart", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 2, name: "chat_id", kind: "scalar", oneof: "type", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "global_bot_id", kind: "scalar", oneof: "type", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "story_activity_id", kind: "message", oneof: "type", T: () => ChatStoryActivityIdProto },
-            { no: 6, name: "with_user_message", kind: "message", oneof: "type", T: () => OpenChatWithUserMessageProto }
-        ]);
-    }
-    create(value?: PartialMessage<OpenChatRequestProto>): OpenChatRequestProto {
-        const message = { restart: false, type: { oneofKind: undefined } };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<OpenChatRequestProto>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: OpenChatRequestProto): OpenChatRequestProto {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* bool restart */ 1:
-                    message.restart = reader.bool();
-                    break;
-                case /* string chat_id */ 2:
-                    message.type = {
-                        oneofKind: "chatId",
-                        chatId: reader.string()
-                    };
-                    break;
-                case /* string global_bot_id */ 3:
-                    message.type = {
-                        oneofKind: "globalBotId",
-                        globalBotId: reader.string()
-                    };
-                    break;
-                case /* ChatStoryActivityIdProto story_activity_id */ 5:
-                    message.type = {
-                        oneofKind: "storyActivityId",
-                        storyActivityId: ChatStoryActivityIdProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).storyActivityId)
-                    };
-                    break;
-                case /* OpenChatWithUserMessageProto with_user_message */ 6:
-                    message.type = {
-                        oneofKind: "withUserMessage",
-                        withUserMessage: OpenChatWithUserMessageProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).withUserMessage)
-                    };
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: OpenChatRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* bool restart = 1; */
-        if (message.restart !== false)
-            writer.tag(1, WireType.Varint).bool(message.restart);
-        /* string chat_id = 2; */
-        if (message.type.oneofKind === "chatId")
-            writer.tag(2, WireType.LengthDelimited).string(message.type.chatId);
-        /* string global_bot_id = 3; */
-        if (message.type.oneofKind === "globalBotId")
-            writer.tag(3, WireType.LengthDelimited).string(message.type.globalBotId);
-        /* ChatStoryActivityIdProto story_activity_id = 5; */
-        if (message.type.oneofKind === "storyActivityId")
-            ChatStoryActivityIdProto.internalBinaryWrite(message.type.storyActivityId, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
-        /* OpenChatWithUserMessageProto with_user_message = 6; */
-        if (message.type.oneofKind === "withUserMessage")
-            OpenChatWithUserMessageProto.internalBinaryWrite(message.type.withUserMessage, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message OpenChatRequestProto
- */
-export const OpenChatRequestProto = new OpenChatRequestProto$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class OpenChatResponseHeaderProto$Type extends MessageType<OpenChatResponseHeaderProto> {
-    constructor() {
-        super("OpenChatResponseHeaderProto", [
-            { no: 1, name: "chat_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "messages", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ChatMessageProto },
-            { no: 3, name: "streamed_message_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "bot_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
-        ]);
-    }
-    create(value?: PartialMessage<OpenChatResponseHeaderProto>): OpenChatResponseHeaderProto {
-        const message = { chatId: "", messages: [], streamedMessageId: "", botId: "" };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<OpenChatResponseHeaderProto>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: OpenChatResponseHeaderProto): OpenChatResponseHeaderProto {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string chat_id */ 1:
-                    message.chatId = reader.string();
-                    break;
-                case /* repeated ChatMessageProto messages */ 2:
-                    message.messages.push(ChatMessageProto.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                case /* string streamed_message_id */ 3:
-                    message.streamedMessageId = reader.string();
-                    break;
-                case /* string bot_id */ 4:
-                    message.botId = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: OpenChatResponseHeaderProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string chat_id = 1; */
-        if (message.chatId !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.chatId);
-        /* repeated ChatMessageProto messages = 2; */
-        for (let i = 0; i < message.messages.length; i++)
-            ChatMessageProto.internalBinaryWrite(message.messages[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* string streamed_message_id = 3; */
-        if (message.streamedMessageId !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.streamedMessageId);
-        /* string bot_id = 4; */
-        if (message.botId !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.botId);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message OpenChatResponseHeaderProto
- */
-export const OpenChatResponseHeaderProto = new OpenChatResponseHeaderProto$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class ChatAssistantMessageDeltaProto$Type extends MessageType<ChatAssistantMessageDeltaProto> {
-    constructor() {
-        super("ChatAssistantMessageDeltaProto", [
-            { no: 1, name: "text_delta", kind: "scalar", oneof: "delta", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "activity", kind: "message", oneof: "delta", T: () => ChatActivityIntroProto }
-        ]);
-    }
-    create(value?: PartialMessage<ChatAssistantMessageDeltaProto>): ChatAssistantMessageDeltaProto {
-        const message = { delta: { oneofKind: undefined } };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<ChatAssistantMessageDeltaProto>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ChatAssistantMessageDeltaProto): ChatAssistantMessageDeltaProto {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string text_delta */ 1:
-                    message.delta = {
-                        oneofKind: "textDelta",
-                        textDelta: reader.string()
-                    };
-                    break;
-                case /* ChatActivityIntroProto activity */ 2:
-                    message.delta = {
-                        oneofKind: "activity",
-                        activity: ChatActivityIntroProto.internalBinaryRead(reader, reader.uint32(), options, (message.delta as any).activity)
-                    };
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: ChatAssistantMessageDeltaProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string text_delta = 1; */
-        if (message.delta.oneofKind === "textDelta")
-            writer.tag(1, WireType.LengthDelimited).string(message.delta.textDelta);
-        /* ChatActivityIntroProto activity = 2; */
-        if (message.delta.oneofKind === "activity")
-            ChatActivityIntroProto.internalBinaryWrite(message.delta.activity, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message ChatAssistantMessageDeltaProto
- */
-export const ChatAssistantMessageDeltaProto = new ChatAssistantMessageDeltaProto$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class ChatBotProto$Type extends MessageType<ChatBotProto> {
-    constructor() {
-        super("ChatBotProto", [
-            { no: 1, name: "bot_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "created_at", kind: "message", T: () => Timestamp },
-            { no: 6, name: "last_modified_at", kind: "message", T: () => Timestamp },
-            { no: 7, name: "type", kind: "enum", T: () => ["ChatBotProto.Type", ChatBotProto_Type] },
-            { no: 2, name: "display_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "description_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "activities", kind: "message", T: () => ChatActivitiesProto }
-        ]);
-    }
-    create(value?: PartialMessage<ChatBotProto>): ChatBotProto {
-        const message = { botId: "", type: 0, displayName: "", descriptionPrompt: "" };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<ChatBotProto>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ChatBotProto): ChatBotProto {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string bot_id */ 1:
-                    message.botId = reader.string();
-                    break;
-                case /* google.protobuf.Timestamp created_at */ 5:
-                    message.createdAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.createdAt);
-                    break;
-                case /* google.protobuf.Timestamp last_modified_at */ 6:
-                    message.lastModifiedAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.lastModifiedAt);
-                    break;
-                case /* ChatBotProto.Type type */ 7:
-                    message.type = reader.int32();
-                    break;
-                case /* string display_name */ 2:
-                    message.displayName = reader.string();
-                    break;
-                case /* string description_prompt */ 3:
-                    message.descriptionPrompt = reader.string();
-                    break;
-                case /* ChatActivitiesProto activities */ 4:
-                    message.activities = ChatActivitiesProto.internalBinaryRead(reader, reader.uint32(), options, message.activities);
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: ChatBotProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string bot_id = 1; */
-        if (message.botId !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.botId);
-        /* google.protobuf.Timestamp created_at = 5; */
-        if (message.createdAt)
-            Timestamp.internalBinaryWrite(message.createdAt, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
-        /* google.protobuf.Timestamp last_modified_at = 6; */
-        if (message.lastModifiedAt)
-            Timestamp.internalBinaryWrite(message.lastModifiedAt, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
-        /* ChatBotProto.Type type = 7; */
-        if (message.type !== 0)
-            writer.tag(7, WireType.Varint).int32(message.type);
-        /* string display_name = 2; */
-        if (message.displayName !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.displayName);
-        /* string description_prompt = 3; */
-        if (message.descriptionPrompt !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.descriptionPrompt);
-        /* ChatActivitiesProto activities = 4; */
-        if (message.activities)
-            ChatActivitiesProto.internalBinaryWrite(message.activities, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message ChatBotProto
- */
-export const ChatBotProto = new ChatBotProto$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class ChatActivitiesProto$Type extends MessageType<ChatActivitiesProto> {
-    constructor() {
-        super("ChatActivitiesProto", [
-            { no: 1, name: "description_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "activities", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ChatActivityProto }
-        ]);
-    }
-    create(value?: PartialMessage<ChatActivitiesProto>): ChatActivitiesProto {
-        const message = { descriptionPrompt: "", activities: [] };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<ChatActivitiesProto>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ChatActivitiesProto): ChatActivitiesProto {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string description_prompt */ 1:
-                    message.descriptionPrompt = reader.string();
-                    break;
-                case /* repeated ChatActivityProto activities */ 2:
-                    message.activities.push(ChatActivityProto.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: ChatActivitiesProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string description_prompt = 1; */
-        if (message.descriptionPrompt !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.descriptionPrompt);
-        /* repeated ChatActivityProto activities = 2; */
-        for (let i = 0; i < message.activities.length; i++)
-            ChatActivityProto.internalBinaryWrite(message.activities[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message ChatActivitiesProto
- */
-export const ChatActivitiesProto = new ChatActivitiesProto$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class ChatActivityProto$Type extends MessageType<ChatActivityProto> {
-    constructor() {
-        super("ChatActivityProto", [
-            { no: 1, name: "activity_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "display_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "description_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "action_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
-        ]);
-    }
-    create(value?: PartialMessage<ChatActivityProto>): ChatActivityProto {
-        const message = { activityId: "", displayName: "", descriptionPrompt: "", actionPrompt: "" };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<ChatActivityProto>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ChatActivityProto): ChatActivityProto {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string activity_id */ 1:
-                    message.activityId = reader.string();
-                    break;
-                case /* string display_name */ 2:
-                    message.displayName = reader.string();
-                    break;
-                case /* string description_prompt */ 3:
-                    message.descriptionPrompt = reader.string();
-                    break;
-                case /* string action_prompt */ 4:
-                    message.actionPrompt = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: ChatActivityProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string activity_id = 1; */
-        if (message.activityId !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.activityId);
-        /* string display_name = 2; */
-        if (message.displayName !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.displayName);
-        /* string description_prompt = 3; */
-        if (message.descriptionPrompt !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.descriptionPrompt);
-        /* string action_prompt = 4; */
-        if (message.actionPrompt !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.actionPrompt);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message ChatActivityProto
- */
-export const ChatActivityProto = new ChatActivityProto$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class ChatActivityIntroProto$Type extends MessageType<ChatActivityIntroProto> {
-    constructor() {
-        super("ChatActivityIntroProto", [
-            { no: 1, name: "activity_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "display_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
-        ]);
-    }
-    create(value?: PartialMessage<ChatActivityIntroProto>): ChatActivityIntroProto {
-        const message = { activityId: "", displayName: "" };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<ChatActivityIntroProto>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ChatActivityIntroProto): ChatActivityIntroProto {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string activity_id */ 1:
-                    message.activityId = reader.string();
-                    break;
-                case /* string display_name */ 2:
-                    message.displayName = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: ChatActivityIntroProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string activity_id = 1; */
-        if (message.activityId !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.activityId);
-        /* string display_name = 2; */
-        if (message.displayName !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.displayName);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message ChatActivityIntroProto
- */
-export const ChatActivityIntroProto = new ChatActivityIntroProto$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class ChatAssistantMessageBlockProto$Type extends MessageType<ChatAssistantMessageBlockProto> {
-    constructor() {
-        super("ChatAssistantMessageBlockProto", [
-            { no: 1, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "activities", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ChatActivityIntroProto }
-        ]);
-    }
-    create(value?: PartialMessage<ChatAssistantMessageBlockProto>): ChatAssistantMessageBlockProto {
-        const message = { text: "", activities: [] };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<ChatAssistantMessageBlockProto>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ChatAssistantMessageBlockProto): ChatAssistantMessageBlockProto {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string text */ 1:
-                    message.text = reader.string();
-                    break;
-                case /* repeated ChatActivityIntroProto activities */ 2:
-                    message.activities.push(ChatActivityIntroProto.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: ChatAssistantMessageBlockProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string text = 1; */
-        if (message.text !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.text);
-        /* repeated ChatActivityIntroProto activities = 2; */
-        for (let i = 0; i < message.activities.length; i++)
-            ChatActivityIntroProto.internalBinaryWrite(message.activities[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message ChatAssistantMessageBlockProto
- */
-export const ChatAssistantMessageBlockProto = new ChatAssistantMessageBlockProto$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class ChatAssistantMessageProto$Type extends MessageType<ChatAssistantMessageProto> {
-    constructor() {
-        super("ChatAssistantMessageProto", [
-            { no: 1, name: "blocks", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ChatAssistantMessageBlockProto },
-            { no: 2, name: "llm_output", kind: "message", T: () => LLMOutputProto },
-            { no: 3, name: "bot_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
-        ]);
-    }
-    create(value?: PartialMessage<ChatAssistantMessageProto>): ChatAssistantMessageProto {
-        const message = { blocks: [], botId: "" };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<ChatAssistantMessageProto>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ChatAssistantMessageProto): ChatAssistantMessageProto {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* repeated ChatAssistantMessageBlockProto blocks */ 1:
-                    message.blocks.push(ChatAssistantMessageBlockProto.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                case /* LLMOutputProto llm_output */ 2:
-                    message.llmOutput = LLMOutputProto.internalBinaryRead(reader, reader.uint32(), options, message.llmOutput);
-                    break;
-                case /* string bot_id */ 3:
-                    message.botId = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: ChatAssistantMessageProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated ChatAssistantMessageBlockProto blocks = 1; */
-        for (let i = 0; i < message.blocks.length; i++)
-            ChatAssistantMessageBlockProto.internalBinaryWrite(message.blocks[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* LLMOutputProto llm_output = 2; */
-        if (message.llmOutput)
-            LLMOutputProto.internalBinaryWrite(message.llmOutput, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* string bot_id = 3; */
-        if (message.botId !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.botId);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message ChatAssistantMessageProto
- */
-export const ChatAssistantMessageProto = new ChatAssistantMessageProto$Type();
-// @generated message type with reflection information, may provide speed optimized methods
 class ChatUserMessageProto$Type extends MessageType<ChatUserMessageProto> {
     constructor() {
         super("ChatUserMessageProto", [
-            { no: 1, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "activity_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "bot_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "bot_id", kind: "enum", T: () => ["ChatBotIdProto", ChatBotIdProto] },
+            { no: 2, name: "text", kind: "scalar", oneof: "input", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "activity_id", kind: "scalar", oneof: "input", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<ChatUserMessageProto>): ChatUserMessageProto {
-        const message = { text: "", activityId: "", botId: "" };
+        const message = { botId: 0, input: { oneofKind: undefined } };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<ChatUserMessageProto>(this, message, value);
@@ -1870,14 +1612,20 @@ class ChatUserMessageProto$Type extends MessageType<ChatUserMessageProto> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string text */ 1:
-                    message.text = reader.string();
+                case /* ChatBotIdProto bot_id */ 1:
+                    message.botId = reader.int32();
                     break;
-                case /* string activity_id */ 2:
-                    message.activityId = reader.string();
+                case /* string text */ 2:
+                    message.input = {
+                        oneofKind: "text",
+                        text: reader.string()
+                    };
                     break;
-                case /* string bot_id */ 3:
-                    message.botId = reader.string();
+                case /* string activity_id */ 3:
+                    message.input = {
+                        oneofKind: "activityId",
+                        activityId: reader.string()
+                    };
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1891,15 +1639,15 @@ class ChatUserMessageProto$Type extends MessageType<ChatUserMessageProto> {
         return message;
     }
     internalBinaryWrite(message: ChatUserMessageProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string text = 1; */
-        if (message.text !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.text);
-        /* string activity_id = 2; */
-        if (message.activityId !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.activityId);
-        /* string bot_id = 3; */
-        if (message.botId !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.botId);
+        /* ChatBotIdProto bot_id = 1; */
+        if (message.botId !== 0)
+            writer.tag(1, WireType.Varint).int32(message.botId);
+        /* string text = 2; */
+        if (message.input.oneofKind === "text")
+            writer.tag(2, WireType.LengthDelimited).string(message.input.text);
+        /* string activity_id = 3; */
+        if (message.input.oneofKind === "activityId")
+            writer.tag(3, WireType.LengthDelimited).string(message.input.activityId);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1910,84 +1658,3 @@ class ChatUserMessageProto$Type extends MessageType<ChatUserMessageProto> {
  * @generated MessageType for protobuf message ChatUserMessageProto
  */
 export const ChatUserMessageProto = new ChatUserMessageProto$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class ChatMessageProto$Type extends MessageType<ChatMessageProto> {
-    constructor() {
-        super("ChatMessageProto", [
-            { no: 1, name: "message_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "parent_message_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "created_at", kind: "message", T: () => Timestamp },
-            { no: 3, name: "assistant", kind: "message", oneof: "type", T: () => ChatAssistantMessageProto },
-            { no: 4, name: "user", kind: "message", oneof: "type", T: () => ChatUserMessageProto }
-        ]);
-    }
-    create(value?: PartialMessage<ChatMessageProto>): ChatMessageProto {
-        const message = { messageId: "", parentMessageId: "", type: { oneofKind: undefined } };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<ChatMessageProto>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ChatMessageProto): ChatMessageProto {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string message_id */ 1:
-                    message.messageId = reader.string();
-                    break;
-                case /* string parent_message_id */ 5:
-                    message.parentMessageId = reader.string();
-                    break;
-                case /* google.protobuf.Timestamp created_at */ 2:
-                    message.createdAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.createdAt);
-                    break;
-                case /* ChatAssistantMessageProto assistant */ 3:
-                    message.type = {
-                        oneofKind: "assistant",
-                        assistant: ChatAssistantMessageProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).assistant)
-                    };
-                    break;
-                case /* ChatUserMessageProto user */ 4:
-                    message.type = {
-                        oneofKind: "user",
-                        user: ChatUserMessageProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).user)
-                    };
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: ChatMessageProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string message_id = 1; */
-        if (message.messageId !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.messageId);
-        /* string parent_message_id = 5; */
-        if (message.parentMessageId !== "")
-            writer.tag(5, WireType.LengthDelimited).string(message.parentMessageId);
-        /* google.protobuf.Timestamp created_at = 2; */
-        if (message.createdAt)
-            Timestamp.internalBinaryWrite(message.createdAt, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* ChatAssistantMessageProto assistant = 3; */
-        if (message.type.oneofKind === "assistant")
-            ChatAssistantMessageProto.internalBinaryWrite(message.type.assistant, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* ChatUserMessageProto user = 4; */
-        if (message.type.oneofKind === "user")
-            ChatUserMessageProto.internalBinaryWrite(message.type.user, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message ChatMessageProto
- */
-export const ChatMessageProto = new ChatMessageProto$Type();

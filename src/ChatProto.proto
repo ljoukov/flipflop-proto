@@ -3,20 +3,33 @@ syntax = "proto3";
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 
-import "LLMProto.proto";
+enum ChatBotIdProto {
+  CHAT_BOT_ID_UNKNOWN = 0;
+
+  CHAT_BOT_ID_GREETING = 1;
+  CHAT_BOT_ID_AFFIRMATION = 2;
+
+  CHAT_BOT_ID_SHORT = 3;
+  CHAT_BOT_ID_REASON = 4;
+  CHAT_BOT_ID_SIMPLIFY = 5;
+  CHAT_BOT_ID_BRAINSTORM = 6;
+}
 
 message ChatApiRequestProto {
   string encoded_user_auth = 1;
   oneof request {
     ListChatsRequestProto list_chats = 2;
+    GetChatRequestProto get_chat = 3;
   }
 }
 
 message ChatApiResponseProto {
-  // If present the token was refreshed and the client should use this new one from now onwards.
+  // If present the token was refreshed and the client should use this new one
+  // from now onwards.
   string refreshed_encoded_user_auth = 1;
   oneof response {
     ListChatsResponseProto list_chats = 2;
+    GetChatResponseProto get_chat = 3;
   }
   map<string, google.protobuf.Duration> latencies = 100;
 }
@@ -24,17 +37,16 @@ message ChatApiResponseProto {
 message ChatStreamApiRequestProto {
   string encoded_user_auth = 1;
   oneof request {
-    PostChatMessageRequestProto post_chat_message = 2;
-    OpenChatRequestProto open_chat = 3;
+    OpenChatRequestProto open_chat = 2;
   }
 }
 
 message ChatStreamApiResponseHeaderProto {
-  // If present the token was refreshed and the client should use this new one from now onwards.
+  // If present the token was refreshed and the client should use this new one
+  // from now onwards.
   string refreshed_encoded_user_auth = 1;
   oneof header {
-    PostChatMessageResponseHeaderProto post_chat_message_header = 2;
-    OpenChatResponseHeaderProto open_chat_header = 3;
+    OpenChatResponseHeaderProto open_chat_header = 2;
   }
   map<string, google.protobuf.Duration> latencies = 100;
 }
@@ -49,46 +61,28 @@ message ListChatsRequestProto {
   google.protobuf.Timestamp last_modified_after = 1;
 }
 
-message ChatSnippetProto {
-  string chat_id = 1;
-  string text = 2;
-  google.protobuf.Timestamp last_modified_at = 3;
-}
-
 message ListChatsResponseProto {
   repeated ChatSnippetProto snippets = 1;
 }
 
-message PostChatMessageRequestProto {
-  string chat_id = 1;
-  ChatUserMessageProto user_message = 2;
+message ChatSnippetProto {
+  string last_message_id = 1;
+  string text = 2;
+  google.protobuf.Timestamp last_modified_at = 3;
 }
 
-message PostChatMessageResponseHeaderProto {
+message GetChatRequestProto {
+  string last_message_id = 1;
+}
+
+message GetChatResponseProto {
   repeated ChatMessageProto messages = 1;
-  string streamed_message_id = 2; 
-  string bot_id = 3; // Bot used to produce this output.
-}
-
-message ChatStoryActivityIdProto {
-  string story_id = 1;
-  string activity_id = 2;
-}
-
-message OpenChatWithUserMessageProto {
-  string global_bot_id = 1;
-  string user_message = 2;
 }
 
 message OpenChatRequestProto {
-  bool restart = 1;
-
   oneof type {
-    // open specific chat
-    string chat_id = 2;
-
     // global bot
-    string global_bot_id = 3;
+    ChatBotIdProto bot_id = 1;
 
     // Deprecated: activities for a story
     // string story_id = 4 [ deprecated = true ];
@@ -102,10 +96,19 @@ message OpenChatRequestProto {
 }
 
 message OpenChatResponseHeaderProto {
-  string chat_id = 1;
-  repeated ChatMessageProto messages = 2;
-  string streamed_message_id = 3; 
-  string bot_id = 4; // Bot used to produce this output.
+  repeated ChatMessageProto messages = 1;
+  string streamed_message_id = 2;
+  ChatBotIdProto bot_id = 3;  // Bot used to produce this output.
+}
+
+message ChatMessageProto {
+  string message_id = 1;
+  string parent_message_id = 5;  // If empty this is the root message.
+  google.protobuf.Timestamp created_at = 2;
+  oneof type {
+    ChatAssistantMessageProto assistant = 3;
+    ChatUserMessageProto user = 4;
+  }
 }
 
 message ChatAssistantMessageDeltaProto {
@@ -118,38 +121,9 @@ message ChatAssistantMessageDeltaProto {
   }
 }
 
-message ChatBotProto {
-  enum Type {
-    UNDEFINED = 0;
-    STORY_BOT = 1;
-    GLOBAL_BOT = 2;
-  }
-  string bot_id = 1;
-  google.protobuf.Timestamp created_at = 5;
-  google.protobuf.Timestamp last_modified_at = 6;
-  Type type = 7;
-  string display_name = 2;
-  string description_prompt = 3;
-  ChatActivitiesProto activities = 4;
-}
-
-message ChatActivitiesProto {
-  string description_prompt = 1;
-  repeated ChatActivityProto activities = 2;
-}
-
-message ChatActivityProto {
-  // Machine identifier, LLM-readable, e.g. "compare-and-contrast", "writing-challenge"
-  string activity_id =  1;
-  // How it should be diplayed to the user
-  string display_name = 2;
-  string description_prompt = 3;
-  string action_prompt = 4;
-}
-
-message ChatActivityIntroProto {
-  string activity_id = 1;
-  string display_name = 2;
+message ChatAssistantMessageProto {
+  ChatBotIdProto bot_id = 1;  // Bot used to produce this output.
+  repeated ChatAssistantMessageBlockProto blocks = 2;
 }
 
 message ChatAssistantMessageBlockProto {
@@ -157,29 +131,30 @@ message ChatAssistantMessageBlockProto {
   repeated ChatActivityIntroProto activities = 2;
 }
 
-message ChatAssistantMessageProto {
-  repeated ChatAssistantMessageBlockProto blocks = 1;
-  LLMOutputProto llm_output = 2;
-  string bot_id = 3; // Bot used to produce this output.
+message ChatActivityIntroProto {
+  string activity_id = 1;
+  string display_name = 2;
+}
+
+message ChatStoryActivityIdProto {
+  string story_id = 1;
+  string activity_id = 2;
+}
+
+message OpenChatWithUserMessageProto {
+  string global_bot_id = 1;
+  string user_message = 2;
 }
 
 message ChatUserMessageProto {
-  // Explicitly entered by the user
-  string text = 1;
-
-  // User selected one of the activities
-  string activity_id = 2;
-
   // What bot user asked to respond
-  string bot_id = 3;
-}
+  ChatBotIdProto bot_id = 1;
 
-message ChatMessageProto {
-  string message_id = 1;
-  string parent_message_id = 5;  // If empty this is the root message.
-  google.protobuf.Timestamp created_at = 2;
-  oneof type {
-    ChatAssistantMessageProto assistant = 3;
-    ChatUserMessageProto user = 4;
+  oneof input {
+    // Explicitly entered by the user
+    string text = 2;
+
+    // User selected one of the activities
+    string activity_id = 3;
   }
 }
