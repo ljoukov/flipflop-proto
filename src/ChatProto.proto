@@ -136,13 +136,18 @@ message ChatActivityIntroProto {
 message OpenChatWithStoryProto {
   string parent_message_id = 1;  // If empty this is the root message.
   string story_id = 2;
-  string activity_id = 3;
+
+  // May be missing
+  oneof input {
+    string activity_id = 3;
+    string text = 4;
+  }
 }
 
 message OpenChatWithUserMessageProto {
   string parent_message_id = 1;  // If empty this is the root message.
   ChatBotIdProto bot_id = 2;
-  string user_message = 3;
+  string user_input = 3;
 }
 
 message ChatUserMessageProto {

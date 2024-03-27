@@ -366,9 +366,23 @@ export interface OpenChatWithStoryProto {
      */
     storyId: string;
     /**
-     * @generated from protobuf field: string activity_id = 3;
+     * @generated from protobuf oneof: input
      */
-    activityId: string;
+    input: {
+        oneofKind: "activityId";
+        /**
+         * @generated from protobuf field: string activity_id = 3;
+         */
+        activityId: string;
+    } | {
+        oneofKind: "text";
+        /**
+         * @generated from protobuf field: string text = 4;
+         */
+        text: string;
+    } | {
+        oneofKind: undefined;
+    };
 }
 /**
  * @generated from protobuf message OpenChatWithUserMessageProto
@@ -383,9 +397,9 @@ export interface OpenChatWithUserMessageProto {
      */
     botId: ChatBotIdProto;
     /**
-     * @generated from protobuf field: string user_message = 3;
+     * @generated from protobuf field: string user_input = 3;
      */
-    userMessage: string;
+    userInput: string;
 }
 /**
  * @generated from protobuf message ChatUserMessageProto
@@ -1492,11 +1506,12 @@ class OpenChatWithStoryProto$Type extends MessageType<OpenChatWithStoryProto> {
         super("OpenChatWithStoryProto", [
             { no: 1, name: "parent_message_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "story_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "activity_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 3, name: "activity_id", kind: "scalar", oneof: "input", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "text", kind: "scalar", oneof: "input", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<OpenChatWithStoryProto>): OpenChatWithStoryProto {
-        const message = { parentMessageId: "", storyId: "", activityId: "" };
+        const message = { parentMessageId: "", storyId: "", input: { oneofKind: undefined } };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<OpenChatWithStoryProto>(this, message, value);
@@ -1514,7 +1529,16 @@ class OpenChatWithStoryProto$Type extends MessageType<OpenChatWithStoryProto> {
                     message.storyId = reader.string();
                     break;
                 case /* string activity_id */ 3:
-                    message.activityId = reader.string();
+                    message.input = {
+                        oneofKind: "activityId",
+                        activityId: reader.string()
+                    };
+                    break;
+                case /* string text */ 4:
+                    message.input = {
+                        oneofKind: "text",
+                        text: reader.string()
+                    };
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1535,8 +1559,11 @@ class OpenChatWithStoryProto$Type extends MessageType<OpenChatWithStoryProto> {
         if (message.storyId !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.storyId);
         /* string activity_id = 3; */
-        if (message.activityId !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.activityId);
+        if (message.input.oneofKind === "activityId")
+            writer.tag(3, WireType.LengthDelimited).string(message.input.activityId);
+        /* string text = 4; */
+        if (message.input.oneofKind === "text")
+            writer.tag(4, WireType.LengthDelimited).string(message.input.text);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1553,11 +1580,11 @@ class OpenChatWithUserMessageProto$Type extends MessageType<OpenChatWithUserMess
         super("OpenChatWithUserMessageProto", [
             { no: 1, name: "parent_message_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "bot_id", kind: "enum", T: () => ["ChatBotIdProto", ChatBotIdProto] },
-            { no: 3, name: "user_message", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 3, name: "user_input", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<OpenChatWithUserMessageProto>): OpenChatWithUserMessageProto {
-        const message = { parentMessageId: "", botId: 0, userMessage: "" };
+        const message = { parentMessageId: "", botId: 0, userInput: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<OpenChatWithUserMessageProto>(this, message, value);
@@ -1574,8 +1601,8 @@ class OpenChatWithUserMessageProto$Type extends MessageType<OpenChatWithUserMess
                 case /* ChatBotIdProto bot_id */ 2:
                     message.botId = reader.int32();
                     break;
-                case /* string user_message */ 3:
-                    message.userMessage = reader.string();
+                case /* string user_input */ 3:
+                    message.userInput = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1595,9 +1622,9 @@ class OpenChatWithUserMessageProto$Type extends MessageType<OpenChatWithUserMess
         /* ChatBotIdProto bot_id = 2; */
         if (message.botId !== 0)
             writer.tag(2, WireType.Varint).int32(message.botId);
-        /* string user_message = 3; */
-        if (message.userMessage !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.userMessage);
+        /* string user_input = 3; */
+        if (message.userInput !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.userInput);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
