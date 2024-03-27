@@ -403,12 +403,12 @@ struct OpenChatRequestProto {
 
   var type: OpenChatRequestProto.OneOf_Type? = nil
 
-  var chatBot: ChatBotIdProto {
+  var botID: ChatBotIdProto {
     get {
-      if case .chatBot(let v)? = type {return v}
+      if case .botID(let v)? = type {return v}
       return .unknown
     }
-    set {type = .chatBot(newValue)}
+    set {type = .botID(newValue)}
   }
 
   var storyActivities: OpenStoryActivitiesProto {
@@ -430,7 +430,7 @@ struct OpenChatRequestProto {
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_Type: Equatable {
-    case chatBot(ChatBotIdProto)
+    case botID(ChatBotIdProto)
     case storyActivities(OpenStoryActivitiesProto)
     case withUserMessage(OpenChatWithUserMessageProto)
 
@@ -440,8 +440,8 @@ struct OpenChatRequestProto {
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch (lhs, rhs) {
-      case (.chatBot, .chatBot): return {
-        guard case .chatBot(let l) = lhs, case .chatBot(let r) = rhs else { preconditionFailure() }
+      case (.botID, .botID): return {
+        guard case .botID(let l) = lhs, case .botID(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       case (.storyActivities, .storyActivities): return {
@@ -1287,7 +1287,7 @@ extension GetChatResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
 extension OpenChatRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "OpenChatRequestProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "chat_bot"),
+    1: .standard(proto: "bot_id"),
     2: .standard(proto: "story_activities"),
     3: .standard(proto: "with_user_message"),
   ]
@@ -1303,7 +1303,7 @@ extension OpenChatRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
         try decoder.decodeSingularEnumField(value: &v)
         if let v = v {
           if self.type != nil {try decoder.handleConflictingOneOf()}
-          self.type = .chatBot(v)
+          self.type = .botID(v)
         }
       }()
       case 2: try {
@@ -1343,8 +1343,8 @@ extension OpenChatRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
     switch self.type {
-    case .chatBot?: try {
-      guard case .chatBot(let v)? = self.type else { preconditionFailure() }
+    case .botID?: try {
+      guard case .botID(let v)? = self.type else { preconditionFailure() }
       try visitor.visitSingularEnumField(value: v, fieldNumber: 1)
     }()
     case .storyActivities?: try {

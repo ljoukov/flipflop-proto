@@ -81,7 +81,7 @@ message GetChatResponseProto {
 
 message OpenChatRequestProto {
   oneof type {
-    ChatBotIdProto chat_bot = 1;
+    ChatBotIdProto bot_id = 1;
     OpenStoryActivitiesProto story_activities = 2;
     OpenChatWithUserMessageProto with_user_message = 3;
   }

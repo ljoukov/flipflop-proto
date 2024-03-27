@@ -207,11 +207,11 @@ export interface OpenChatRequestProto {
      * @generated from protobuf oneof: type
      */
     type: {
-        oneofKind: "chatBot";
+        oneofKind: "botId";
         /**
-         * @generated from protobuf field: ChatBotIdProto chat_bot = 1;
+         * @generated from protobuf field: ChatBotIdProto bot_id = 1;
          */
-        chatBot: ChatBotIdProto;
+        botId: ChatBotIdProto;
     } | {
         oneofKind: "storyActivities";
         /**
@@ -1036,7 +1036,7 @@ export const GetChatResponseProto = new GetChatResponseProto$Type();
 class OpenChatRequestProto$Type extends MessageType<OpenChatRequestProto> {
     constructor() {
         super("OpenChatRequestProto", [
-            { no: 1, name: "chat_bot", kind: "enum", oneof: "type", T: () => ["ChatBotIdProto", ChatBotIdProto, "CHAT_BOT_ID_PROTO_"] },
+            { no: 1, name: "bot_id", kind: "enum", oneof: "type", T: () => ["ChatBotIdProto", ChatBotIdProto, "CHAT_BOT_ID_PROTO_"] },
             { no: 2, name: "story_activities", kind: "message", oneof: "type", T: () => OpenStoryActivitiesProto },
             { no: 3, name: "with_user_message", kind: "message", oneof: "type", T: () => OpenChatWithUserMessageProto }
         ]);
@@ -1053,10 +1053,10 @@ class OpenChatRequestProto$Type extends MessageType<OpenChatRequestProto> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* ChatBotIdProto chat_bot */ 1:
+                case /* ChatBotIdProto bot_id */ 1:
                     message.type = {
-                        oneofKind: "chatBot",
-                        chatBot: reader.int32()
+                        oneofKind: "botId",
+                        botId: reader.int32()
                     };
                     break;
                 case /* OpenStoryActivitiesProto story_activities */ 2:
@@ -1083,9 +1083,9 @@ class OpenChatRequestProto$Type extends MessageType<OpenChatRequestProto> {
         return message;
     }
     internalBinaryWrite(message: OpenChatRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* ChatBotIdProto chat_bot = 1; */
-        if (message.type.oneofKind === "chatBot")
-            writer.tag(1, WireType.Varint).int32(message.type.chatBot);
+        /* ChatBotIdProto bot_id = 1; */
+        if (message.type.oneofKind === "botId")
+            writer.tag(1, WireType.Varint).int32(message.type.botId);
         /* OpenStoryActivitiesProto story_activities = 2; */
         if (message.type.oneofKind === "storyActivities")
             OpenStoryActivitiesProto.internalBinaryWrite(message.type.storyActivities, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
