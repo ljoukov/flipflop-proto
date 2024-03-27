@@ -4,15 +4,15 @@ import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 
 enum ChatBotIdProto {
-  CHAT_BOT_ID_UNKNOWN = 0;
+  CHAT_BOT_ID_PROTO_UNKNOWN = 0;
 
-  CHAT_BOT_ID_GREETING = 1;
-  CHAT_BOT_ID_AFFIRMATION = 2;
+  CHAT_BOT_ID_PROTO_GREETING = 1;
+  CHAT_BOT_ID_PROTO_AFFIRMATION = 2;
 
-  CHAT_BOT_ID_SHORT = 3;
-  CHAT_BOT_ID_REASON = 4;
-  CHAT_BOT_ID_SIMPLIFY = 5;
-  CHAT_BOT_ID_BRAINSTORM = 6;
+  CHAT_BOT_ID_PROTO_SHORT = 3;
+  CHAT_BOT_ID_PROTO_REASON = 4;
+  CHAT_BOT_ID_PROTO_SIMPLIFY = 5;
+  CHAT_BOT_ID_PROTO_BRAINSTORM = 6;
 }
 
 message ChatApiRequestProto {
@@ -81,13 +81,8 @@ message GetChatResponseProto {
 
 message OpenChatRequestProto {
   oneof type {
-    // global bot
-    ChatBotIdProto bot_id = 1;
-
-    // activity for a story
-    OpenChatWithStoryProto with_story = 2;
-
-    // Opens global bot with user's first message
+    ChatBotIdProto chat_bot = 1;
+    OpenStoryActivitiesProto story_activities = 2;
     OpenChatWithUserMessageProto with_user_message = 3;
   }
 }
@@ -119,8 +114,8 @@ message ChatAssistantMessageDeltaProto {
 }
 
 message ChatAssistantMessageProto {
-  ChatBotIdProto bot_id = 1;  // Bot used to produce this output.
-  repeated ChatAssistantMessageBlockProto blocks = 2;
+  ChatBotIdProto bot_id = 1;
+  repeated ChatAssistantMessageBlockProto blocks = 3;
 }
 
 message ChatAssistantMessageBlockProto {
@@ -133,31 +128,21 @@ message ChatActivityIntroProto {
   string display_name = 2;
 }
 
-message OpenChatWithStoryProto {
-  string parent_message_id = 1;  // If empty this is the root message.
-  string story_id = 2;
-
-  // May be missing
-  oneof input {
-    string activity_id = 3;
-    string text = 4;
-  }
-}
-
 message OpenChatWithUserMessageProto {
   string parent_message_id = 1;  // If empty this is the root message.
-  ChatBotIdProto bot_id = 2;
-  string user_input = 3;
+  ChatUserMessageProto user_message = 2;
+}
+
+message OpenStoryActivitiesProto {
+  string story_id = 1;
 }
 
 message ChatUserMessageProto {
+  // Optional: user selected this specific chatbot explicitly
   ChatBotIdProto bot_id = 1;
 
   oneof input {
-    // Explicitly entered by the user
     string text = 2;
-
-    // User selected one of the activities
     string activity_id = 3;
   }
 }
