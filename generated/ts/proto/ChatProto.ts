@@ -362,11 +362,11 @@ export interface ChatUserMessageProto {
      * @generated from protobuf oneof: type
      */
     type: {
-        oneofKind: "text";
+        oneofKind: "textInput";
         /**
-         * @generated from protobuf field: ChatUserTextInputProto text = 1;
+         * @generated from protobuf field: ChatUserTextInputProto text_input = 1;
          */
-        text: ChatUserTextInputProto;
+        textInput: ChatUserTextInputProto;
     } | {
         oneofKind: "activityId";
         /**
@@ -1521,7 +1521,7 @@ export const OpenChatWithUserMessageProto = new OpenChatWithUserMessageProto$Typ
 class ChatUserMessageProto$Type extends MessageType<ChatUserMessageProto> {
     constructor() {
         super("ChatUserMessageProto", [
-            { no: 1, name: "text", kind: "message", oneof: "type", T: () => ChatUserTextInputProto },
+            { no: 1, name: "text_input", kind: "message", oneof: "type", T: () => ChatUserTextInputProto },
             { no: 3, name: "activity_id", kind: "scalar", oneof: "type", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "story_activities", kind: "message", oneof: "type", T: () => ChatUserInputStoryActivitiesProto }
         ]);
@@ -1538,10 +1538,10 @@ class ChatUserMessageProto$Type extends MessageType<ChatUserMessageProto> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* ChatUserTextInputProto text */ 1:
+                case /* ChatUserTextInputProto text_input */ 1:
                     message.type = {
-                        oneofKind: "text",
-                        text: ChatUserTextInputProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).text)
+                        oneofKind: "textInput",
+                        textInput: ChatUserTextInputProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).textInput)
                     };
                     break;
                 case /* string activity_id */ 3:
@@ -1568,9 +1568,9 @@ class ChatUserMessageProto$Type extends MessageType<ChatUserMessageProto> {
         return message;
     }
     internalBinaryWrite(message: ChatUserMessageProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* ChatUserTextInputProto text = 1; */
-        if (message.type.oneofKind === "text")
-            ChatUserTextInputProto.internalBinaryWrite(message.type.text, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* ChatUserTextInputProto text_input = 1; */
+        if (message.type.oneofKind === "textInput")
+            ChatUserTextInputProto.internalBinaryWrite(message.type.textInput, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         /* string activity_id = 3; */
         if (message.type.oneofKind === "activityId")
             writer.tag(3, WireType.LengthDelimited).string(message.type.activityId);

@@ -664,12 +664,12 @@ struct ChatUserMessageProto {
 
   var type: ChatUserMessageProto.OneOf_Type? = nil
 
-  var text: ChatUserTextInputProto {
+  var textInput: ChatUserTextInputProto {
     get {
-      if case .text(let v)? = type {return v}
+      if case .textInput(let v)? = type {return v}
       return ChatUserTextInputProto()
     }
-    set {type = .text(newValue)}
+    set {type = .textInput(newValue)}
   }
 
   var activityID: String {
@@ -691,7 +691,7 @@ struct ChatUserMessageProto {
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_Type: Equatable {
-    case text(ChatUserTextInputProto)
+    case textInput(ChatUserTextInputProto)
     case activityID(String)
     case storyActivities(ChatUserInputStoryActivitiesProto)
 
@@ -701,8 +701,8 @@ struct ChatUserMessageProto {
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch (lhs, rhs) {
-      case (.text, .text): return {
-        guard case .text(let l) = lhs, case .text(let r) = rhs else { preconditionFailure() }
+      case (.textInput, .textInput): return {
+        guard case .textInput(let l) = lhs, case .textInput(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       case (.activityID, .activityID): return {
@@ -1717,7 +1717,7 @@ extension OpenChatWithUserMessageProto: SwiftProtobuf.Message, SwiftProtobuf._Me
 extension ChatUserMessageProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "ChatUserMessageProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "text"),
+    1: .standard(proto: "text_input"),
     3: .standard(proto: "activity_id"),
     2: .standard(proto: "story_activities"),
   ]
@@ -1733,12 +1733,12 @@ extension ChatUserMessageProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
         var hadOneofValue = false
         if let current = self.type {
           hadOneofValue = true
-          if case .text(let m) = current {v = m}
+          if case .textInput(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.type = .text(v)
+          self.type = .textInput(v)
         }
       }()
       case 2: try {
@@ -1773,8 +1773,8 @@ extension ChatUserMessageProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
     switch self.type {
-    case .text?: try {
-      guard case .text(let v)? = self.type else { preconditionFailure() }
+    case .textInput?: try {
+      guard case .textInput(let v)? = self.type else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
     }()
     case .storyActivities?: try {

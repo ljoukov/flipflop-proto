@@ -134,7 +134,7 @@ message OpenChatWithUserMessageProto {
 
 message ChatUserMessageProto {
   oneof type {
-    ChatUserTextInputProto text = 1;
+    ChatUserTextInputProto text_input = 1;
     string activity_id = 3;
     ChatUserInputStoryActivitiesProto story_activities = 2;
   }
