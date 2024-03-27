@@ -215,22 +215,19 @@ export interface OpenChatRequestProto {
          */
         botId: ChatBotIdProto;
     } | {
-        oneofKind: "storyActivityId";
-        // Deprecated: activities for a story
-        // string story_id = 4 [ deprecated = true ];
-
+        oneofKind: "withStory";
         /**
          * activity for a story
          *
-         * @generated from protobuf field: ChatStoryActivityIdProto story_activity_id = 5;
+         * @generated from protobuf field: OpenChatWithStoryProto with_story = 2;
          */
-        storyActivityId: ChatStoryActivityIdProto;
+        withStory: OpenChatWithStoryProto;
     } | {
         oneofKind: "withUserMessage";
         /**
          * Opens global bot with user's first message
          *
-         * @generated from protobuf field: OpenChatWithUserMessageProto with_user_message = 6;
+         * @generated from protobuf field: OpenChatWithUserMessageProto with_user_message = 3;
          */
         withUserMessage: OpenChatWithUserMessageProto;
     } | {
@@ -357,15 +354,19 @@ export interface ChatActivityIntroProto {
     displayName: string;
 }
 /**
- * @generated from protobuf message ChatStoryActivityIdProto
+ * @generated from protobuf message OpenChatWithStoryProto
  */
-export interface ChatStoryActivityIdProto {
+export interface OpenChatWithStoryProto {
     /**
-     * @generated from protobuf field: string story_id = 1;
+     * @generated from protobuf field: string parent_message_id = 1;
+     */
+    parentMessageId: string; // If empty this is the root message.
+    /**
+     * @generated from protobuf field: string story_id = 2;
      */
     storyId: string;
     /**
-     * @generated from protobuf field: string activity_id = 2;
+     * @generated from protobuf field: string activity_id = 3;
      */
     activityId: string;
 }
@@ -374,11 +375,15 @@ export interface ChatStoryActivityIdProto {
  */
 export interface OpenChatWithUserMessageProto {
     /**
-     * @generated from protobuf field: string global_bot_id = 1;
+     * @generated from protobuf field: string parent_message_id = 1;
      */
-    globalBotId: string;
+    parentMessageId: string; // If empty this is the root message.
     /**
-     * @generated from protobuf field: string user_message = 2;
+     * @generated from protobuf field: ChatBotIdProto bot_id = 2;
+     */
+    botId: ChatBotIdProto;
+    /**
+     * @generated from protobuf field: string user_message = 3;
      */
     userMessage: string;
 }
@@ -387,8 +392,6 @@ export interface OpenChatWithUserMessageProto {
  */
 export interface ChatUserMessageProto {
     /**
-     * What bot user asked to respond
-     *
      * @generated from protobuf field: ChatBotIdProto bot_id = 1;
      */
     botId: ChatBotIdProto;
@@ -1054,8 +1057,8 @@ class OpenChatRequestProto$Type extends MessageType<OpenChatRequestProto> {
     constructor() {
         super("OpenChatRequestProto", [
             { no: 1, name: "bot_id", kind: "enum", oneof: "type", T: () => ["ChatBotIdProto", ChatBotIdProto] },
-            { no: 5, name: "story_activity_id", kind: "message", oneof: "type", T: () => ChatStoryActivityIdProto },
-            { no: 6, name: "with_user_message", kind: "message", oneof: "type", T: () => OpenChatWithUserMessageProto }
+            { no: 2, name: "with_story", kind: "message", oneof: "type", T: () => OpenChatWithStoryProto },
+            { no: 3, name: "with_user_message", kind: "message", oneof: "type", T: () => OpenChatWithUserMessageProto }
         ]);
     }
     create(value?: PartialMessage<OpenChatRequestProto>): OpenChatRequestProto {
@@ -1076,13 +1079,13 @@ class OpenChatRequestProto$Type extends MessageType<OpenChatRequestProto> {
                         botId: reader.int32()
                     };
                     break;
-                case /* ChatStoryActivityIdProto story_activity_id */ 5:
+                case /* OpenChatWithStoryProto with_story */ 2:
                     message.type = {
-                        oneofKind: "storyActivityId",
-                        storyActivityId: ChatStoryActivityIdProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).storyActivityId)
+                        oneofKind: "withStory",
+                        withStory: OpenChatWithStoryProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).withStory)
                     };
                     break;
-                case /* OpenChatWithUserMessageProto with_user_message */ 6:
+                case /* OpenChatWithUserMessageProto with_user_message */ 3:
                     message.type = {
                         oneofKind: "withUserMessage",
                         withUserMessage: OpenChatWithUserMessageProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).withUserMessage)
@@ -1103,12 +1106,12 @@ class OpenChatRequestProto$Type extends MessageType<OpenChatRequestProto> {
         /* ChatBotIdProto bot_id = 1; */
         if (message.type.oneofKind === "botId")
             writer.tag(1, WireType.Varint).int32(message.type.botId);
-        /* ChatStoryActivityIdProto story_activity_id = 5; */
-        if (message.type.oneofKind === "storyActivityId")
-            ChatStoryActivityIdProto.internalBinaryWrite(message.type.storyActivityId, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
-        /* OpenChatWithUserMessageProto with_user_message = 6; */
+        /* OpenChatWithStoryProto with_story = 2; */
+        if (message.type.oneofKind === "withStory")
+            OpenChatWithStoryProto.internalBinaryWrite(message.type.withStory, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* OpenChatWithUserMessageProto with_user_message = 3; */
         if (message.type.oneofKind === "withUserMessage")
-            OpenChatWithUserMessageProto.internalBinaryWrite(message.type.withUserMessage, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+            OpenChatWithUserMessageProto.internalBinaryWrite(message.type.withUserMessage, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1484,29 +1487,33 @@ class ChatActivityIntroProto$Type extends MessageType<ChatActivityIntroProto> {
  */
 export const ChatActivityIntroProto = new ChatActivityIntroProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class ChatStoryActivityIdProto$Type extends MessageType<ChatStoryActivityIdProto> {
+class OpenChatWithStoryProto$Type extends MessageType<OpenChatWithStoryProto> {
     constructor() {
-        super("ChatStoryActivityIdProto", [
-            { no: 1, name: "story_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "activity_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        super("OpenChatWithStoryProto", [
+            { no: 1, name: "parent_message_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "story_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "activity_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<ChatStoryActivityIdProto>): ChatStoryActivityIdProto {
-        const message = { storyId: "", activityId: "" };
+    create(value?: PartialMessage<OpenChatWithStoryProto>): OpenChatWithStoryProto {
+        const message = { parentMessageId: "", storyId: "", activityId: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<ChatStoryActivityIdProto>(this, message, value);
+            reflectionMergePartial<OpenChatWithStoryProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ChatStoryActivityIdProto): ChatStoryActivityIdProto {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: OpenChatWithStoryProto): OpenChatWithStoryProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string story_id */ 1:
+                case /* string parent_message_id */ 1:
+                    message.parentMessageId = reader.string();
+                    break;
+                case /* string story_id */ 2:
                     message.storyId = reader.string();
                     break;
-                case /* string activity_id */ 2:
+                case /* string activity_id */ 3:
                     message.activityId = reader.string();
                     break;
                 default:
@@ -1520,13 +1527,16 @@ class ChatStoryActivityIdProto$Type extends MessageType<ChatStoryActivityIdProto
         }
         return message;
     }
-    internalBinaryWrite(message: ChatStoryActivityIdProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string story_id = 1; */
+    internalBinaryWrite(message: OpenChatWithStoryProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string parent_message_id = 1; */
+        if (message.parentMessageId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.parentMessageId);
+        /* string story_id = 2; */
         if (message.storyId !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.storyId);
-        /* string activity_id = 2; */
+            writer.tag(2, WireType.LengthDelimited).string(message.storyId);
+        /* string activity_id = 3; */
         if (message.activityId !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.activityId);
+            writer.tag(3, WireType.LengthDelimited).string(message.activityId);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1534,19 +1544,20 @@ class ChatStoryActivityIdProto$Type extends MessageType<ChatStoryActivityIdProto
     }
 }
 /**
- * @generated MessageType for protobuf message ChatStoryActivityIdProto
+ * @generated MessageType for protobuf message OpenChatWithStoryProto
  */
-export const ChatStoryActivityIdProto = new ChatStoryActivityIdProto$Type();
+export const OpenChatWithStoryProto = new OpenChatWithStoryProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class OpenChatWithUserMessageProto$Type extends MessageType<OpenChatWithUserMessageProto> {
     constructor() {
         super("OpenChatWithUserMessageProto", [
-            { no: 1, name: "global_bot_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "user_message", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "parent_message_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "bot_id", kind: "enum", T: () => ["ChatBotIdProto", ChatBotIdProto] },
+            { no: 3, name: "user_message", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<OpenChatWithUserMessageProto>): OpenChatWithUserMessageProto {
-        const message = { globalBotId: "", userMessage: "" };
+        const message = { parentMessageId: "", botId: 0, userMessage: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<OpenChatWithUserMessageProto>(this, message, value);
@@ -1557,10 +1568,13 @@ class OpenChatWithUserMessageProto$Type extends MessageType<OpenChatWithUserMess
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string global_bot_id */ 1:
-                    message.globalBotId = reader.string();
+                case /* string parent_message_id */ 1:
+                    message.parentMessageId = reader.string();
                     break;
-                case /* string user_message */ 2:
+                case /* ChatBotIdProto bot_id */ 2:
+                    message.botId = reader.int32();
+                    break;
+                case /* string user_message */ 3:
                     message.userMessage = reader.string();
                     break;
                 default:
@@ -1575,12 +1589,15 @@ class OpenChatWithUserMessageProto$Type extends MessageType<OpenChatWithUserMess
         return message;
     }
     internalBinaryWrite(message: OpenChatWithUserMessageProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string global_bot_id = 1; */
-        if (message.globalBotId !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.globalBotId);
-        /* string user_message = 2; */
+        /* string parent_message_id = 1; */
+        if (message.parentMessageId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.parentMessageId);
+        /* ChatBotIdProto bot_id = 2; */
+        if (message.botId !== 0)
+            writer.tag(2, WireType.Varint).int32(message.botId);
+        /* string user_message = 3; */
         if (message.userMessage !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.userMessage);
+            writer.tag(3, WireType.LengthDelimited).string(message.userMessage);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

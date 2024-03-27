@@ -413,12 +413,12 @@ struct OpenChatRequestProto {
   }
 
   /// activity for a story
-  var storyActivityID: ChatStoryActivityIdProto {
+  var withStory: OpenChatWithStoryProto {
     get {
-      if case .storyActivityID(let v)? = type {return v}
-      return ChatStoryActivityIdProto()
+      if case .withStory(let v)? = type {return v}
+      return OpenChatWithStoryProto()
     }
-    set {type = .storyActivityID(newValue)}
+    set {type = .withStory(newValue)}
   }
 
   /// Opens global bot with user's first message
@@ -436,7 +436,7 @@ struct OpenChatRequestProto {
     /// global bot
     case botID(ChatBotIdProto)
     /// activity for a story
-    case storyActivityID(ChatStoryActivityIdProto)
+    case withStory(OpenChatWithStoryProto)
     /// Opens global bot with user's first message
     case withUserMessage(OpenChatWithUserMessageProto)
 
@@ -450,8 +450,8 @@ struct OpenChatRequestProto {
         guard case .botID(let l) = lhs, case .botID(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
-      case (.storyActivityID, .storyActivityID): return {
-        guard case .storyActivityID(let l) = lhs, case .storyActivityID(let r) = rhs else { preconditionFailure() }
+      case (.withStory, .withStory): return {
+        guard case .withStory(let l) = lhs, case .withStory(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       case (.withUserMessage, .withUserMessage): return {
@@ -653,10 +653,13 @@ struct ChatActivityIntroProto {
   init() {}
 }
 
-struct ChatStoryActivityIdProto {
+struct OpenChatWithStoryProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
+
+  /// If empty this is the root message.
+  var parentMessageID: String = String()
 
   var storyID: String = String()
 
@@ -672,7 +675,10 @@ struct OpenChatWithUserMessageProto {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var globalBotID: String = String()
+  /// If empty this is the root message.
+  var parentMessageID: String = String()
+
+  var botID: ChatBotIdProto = .chatBotIDUnknown
 
   var userMessage: String = String()
 
@@ -686,7 +692,6 @@ struct ChatUserMessageProto {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  /// What bot user asked to respond
   var botID: ChatBotIdProto = .chatBotIDUnknown
 
   var input: ChatUserMessageProto.OneOf_Input? = nil
@@ -767,7 +772,7 @@ extension ChatAssistantMessageDeltaProto.OneOf_Delta: @unchecked Sendable {}
 extension ChatAssistantMessageProto: @unchecked Sendable {}
 extension ChatAssistantMessageBlockProto: @unchecked Sendable {}
 extension ChatActivityIntroProto: @unchecked Sendable {}
-extension ChatStoryActivityIdProto: @unchecked Sendable {}
+extension OpenChatWithStoryProto: @unchecked Sendable {}
 extension OpenChatWithUserMessageProto: @unchecked Sendable {}
 extension ChatUserMessageProto: @unchecked Sendable {}
 extension ChatUserMessageProto.OneOf_Input: @unchecked Sendable {}
@@ -1291,8 +1296,8 @@ extension OpenChatRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
   static let protoMessageName: String = "OpenChatRequestProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "bot_id"),
-    5: .standard(proto: "story_activity_id"),
-    6: .standard(proto: "with_user_message"),
+    2: .standard(proto: "with_story"),
+    3: .standard(proto: "with_user_message"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1309,20 +1314,20 @@ extension OpenChatRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
           self.type = .botID(v)
         }
       }()
-      case 5: try {
-        var v: ChatStoryActivityIdProto?
+      case 2: try {
+        var v: OpenChatWithStoryProto?
         var hadOneofValue = false
         if let current = self.type {
           hadOneofValue = true
-          if case .storyActivityID(let m) = current {v = m}
+          if case .withStory(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.type = .storyActivityID(v)
+          self.type = .withStory(v)
         }
       }()
-      case 6: try {
+      case 3: try {
         var v: OpenChatWithUserMessageProto?
         var hadOneofValue = false
         if let current = self.type {
@@ -1350,13 +1355,13 @@ extension OpenChatRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
       guard case .botID(let v)? = self.type else { preconditionFailure() }
       try visitor.visitSingularEnumField(value: v, fieldNumber: 1)
     }()
-    case .storyActivityID?: try {
-      guard case .storyActivityID(let v)? = self.type else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
+    case .withStory?: try {
+      guard case .withStory(let v)? = self.type else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     }()
     case .withUserMessage?: try {
       guard case .withUserMessage(let v)? = self.type else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
     }()
     case nil: break
     }
@@ -1681,11 +1686,12 @@ extension ChatActivityIntroProto: SwiftProtobuf.Message, SwiftProtobuf._MessageI
   }
 }
 
-extension ChatStoryActivityIdProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "ChatStoryActivityIdProto"
+extension OpenChatWithStoryProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "OpenChatWithStoryProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "story_id"),
-    2: .standard(proto: "activity_id"),
+    1: .standard(proto: "parent_message_id"),
+    2: .standard(proto: "story_id"),
+    3: .standard(proto: "activity_id"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1694,24 +1700,29 @@ extension ChatStoryActivityIdProto: SwiftProtobuf.Message, SwiftProtobuf._Messag
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.storyID) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.activityID) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self.parentMessageID) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.storyID) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.activityID) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.parentMessageID.isEmpty {
+      try visitor.visitSingularStringField(value: self.parentMessageID, fieldNumber: 1)
+    }
     if !self.storyID.isEmpty {
-      try visitor.visitSingularStringField(value: self.storyID, fieldNumber: 1)
+      try visitor.visitSingularStringField(value: self.storyID, fieldNumber: 2)
     }
     if !self.activityID.isEmpty {
-      try visitor.visitSingularStringField(value: self.activityID, fieldNumber: 2)
+      try visitor.visitSingularStringField(value: self.activityID, fieldNumber: 3)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: ChatStoryActivityIdProto, rhs: ChatStoryActivityIdProto) -> Bool {
+  static func ==(lhs: OpenChatWithStoryProto, rhs: OpenChatWithStoryProto) -> Bool {
+    if lhs.parentMessageID != rhs.parentMessageID {return false}
     if lhs.storyID != rhs.storyID {return false}
     if lhs.activityID != rhs.activityID {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
@@ -1722,8 +1733,9 @@ extension ChatStoryActivityIdProto: SwiftProtobuf.Message, SwiftProtobuf._Messag
 extension OpenChatWithUserMessageProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "OpenChatWithUserMessageProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "global_bot_id"),
-    2: .standard(proto: "user_message"),
+    1: .standard(proto: "parent_message_id"),
+    2: .standard(proto: "bot_id"),
+    3: .standard(proto: "user_message"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1732,25 +1744,30 @@ extension OpenChatWithUserMessageProto: SwiftProtobuf.Message, SwiftProtobuf._Me
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.globalBotID) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.userMessage) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self.parentMessageID) }()
+      case 2: try { try decoder.decodeSingularEnumField(value: &self.botID) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.userMessage) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.globalBotID.isEmpty {
-      try visitor.visitSingularStringField(value: self.globalBotID, fieldNumber: 1)
+    if !self.parentMessageID.isEmpty {
+      try visitor.visitSingularStringField(value: self.parentMessageID, fieldNumber: 1)
+    }
+    if self.botID != .chatBotIDUnknown {
+      try visitor.visitSingularEnumField(value: self.botID, fieldNumber: 2)
     }
     if !self.userMessage.isEmpty {
-      try visitor.visitSingularStringField(value: self.userMessage, fieldNumber: 2)
+      try visitor.visitSingularStringField(value: self.userMessage, fieldNumber: 3)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: OpenChatWithUserMessageProto, rhs: OpenChatWithUserMessageProto) -> Bool {
-    if lhs.globalBotID != rhs.globalBotID {return false}
+    if lhs.parentMessageID != rhs.parentMessageID {return false}
+    if lhs.botID != rhs.botID {return false}
     if lhs.userMessage != rhs.userMessage {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

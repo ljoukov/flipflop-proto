@@ -84,14 +84,11 @@ message OpenChatRequestProto {
     // global bot
     ChatBotIdProto bot_id = 1;
 
-    // Deprecated: activities for a story
-    // string story_id = 4 [ deprecated = true ];
-
     // activity for a story
-    ChatStoryActivityIdProto story_activity_id = 5;
+    OpenChatWithStoryProto with_story = 2;
 
     // Opens global bot with user's first message
-    OpenChatWithUserMessageProto with_user_message = 6;
+    OpenChatWithUserMessageProto with_user_message = 3;
   }
 }
 
@@ -136,18 +133,19 @@ message ChatActivityIntroProto {
   string display_name = 2;
 }
 
-message ChatStoryActivityIdProto {
-  string story_id = 1;
-  string activity_id = 2;
+message OpenChatWithStoryProto {
+  string parent_message_id = 1;  // If empty this is the root message.
+  string story_id = 2;
+  string activity_id = 3;
 }
 
 message OpenChatWithUserMessageProto {
-  string global_bot_id = 1;
-  string user_message = 2;
+  string parent_message_id = 1;  // If empty this is the root message.
+  ChatBotIdProto bot_id = 2;
+  string user_message = 3;
 }
 
 message ChatUserMessageProto {
-  // What bot user asked to respond
   ChatBotIdProto bot_id = 1;
 
   oneof input {
