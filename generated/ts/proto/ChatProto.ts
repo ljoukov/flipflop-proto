@@ -359,9 +359,9 @@ export interface OpenChatWithUserMessageProto {
  */
 export interface ChatUserMessageProto {
     /**
-     * @generated from protobuf oneof: input
+     * @generated from protobuf oneof: type
      */
-    input: {
+    type: {
         oneofKind: "text";
         /**
          * @generated from protobuf field: ChatUserTextInputProto text = 1;
@@ -1521,13 +1521,13 @@ export const OpenChatWithUserMessageProto = new OpenChatWithUserMessageProto$Typ
 class ChatUserMessageProto$Type extends MessageType<ChatUserMessageProto> {
     constructor() {
         super("ChatUserMessageProto", [
-            { no: 1, name: "text", kind: "message", oneof: "input", T: () => ChatUserTextInputProto },
-            { no: 3, name: "activity_id", kind: "scalar", oneof: "input", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "story_activities", kind: "message", oneof: "input", T: () => ChatUserInputStoryActivitiesProto }
+            { no: 1, name: "text", kind: "message", oneof: "type", T: () => ChatUserTextInputProto },
+            { no: 3, name: "activity_id", kind: "scalar", oneof: "type", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "story_activities", kind: "message", oneof: "type", T: () => ChatUserInputStoryActivitiesProto }
         ]);
     }
     create(value?: PartialMessage<ChatUserMessageProto>): ChatUserMessageProto {
-        const message = { input: { oneofKind: undefined } };
+        const message = { type: { oneofKind: undefined } };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<ChatUserMessageProto>(this, message, value);
@@ -1539,21 +1539,21 @@ class ChatUserMessageProto$Type extends MessageType<ChatUserMessageProto> {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
                 case /* ChatUserTextInputProto text */ 1:
-                    message.input = {
+                    message.type = {
                         oneofKind: "text",
-                        text: ChatUserTextInputProto.internalBinaryRead(reader, reader.uint32(), options, (message.input as any).text)
+                        text: ChatUserTextInputProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).text)
                     };
                     break;
                 case /* string activity_id */ 3:
-                    message.input = {
+                    message.type = {
                         oneofKind: "activityId",
                         activityId: reader.string()
                     };
                     break;
                 case /* ChatUserInputStoryActivitiesProto story_activities */ 2:
-                    message.input = {
+                    message.type = {
                         oneofKind: "storyActivities",
-                        storyActivities: ChatUserInputStoryActivitiesProto.internalBinaryRead(reader, reader.uint32(), options, (message.input as any).storyActivities)
+                        storyActivities: ChatUserInputStoryActivitiesProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).storyActivities)
                     };
                     break;
                 default:
@@ -1569,14 +1569,14 @@ class ChatUserMessageProto$Type extends MessageType<ChatUserMessageProto> {
     }
     internalBinaryWrite(message: ChatUserMessageProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* ChatUserTextInputProto text = 1; */
-        if (message.input.oneofKind === "text")
-            ChatUserTextInputProto.internalBinaryWrite(message.input.text, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        if (message.type.oneofKind === "text")
+            ChatUserTextInputProto.internalBinaryWrite(message.type.text, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         /* string activity_id = 3; */
-        if (message.input.oneofKind === "activityId")
-            writer.tag(3, WireType.LengthDelimited).string(message.input.activityId);
+        if (message.type.oneofKind === "activityId")
+            writer.tag(3, WireType.LengthDelimited).string(message.type.activityId);
         /* ChatUserInputStoryActivitiesProto story_activities = 2; */
-        if (message.input.oneofKind === "storyActivities")
-            ChatUserInputStoryActivitiesProto.internalBinaryWrite(message.input.storyActivities, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        if (message.type.oneofKind === "storyActivities")
+            ChatUserInputStoryActivitiesProto.internalBinaryWrite(message.type.storyActivities, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

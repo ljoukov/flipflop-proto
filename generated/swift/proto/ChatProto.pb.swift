@@ -662,41 +662,41 @@ struct ChatUserMessageProto {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var input: ChatUserMessageProto.OneOf_Input? = nil
+  var type: ChatUserMessageProto.OneOf_Type? = nil
 
   var text: ChatUserTextInputProto {
     get {
-      if case .text(let v)? = input {return v}
+      if case .text(let v)? = type {return v}
       return ChatUserTextInputProto()
     }
-    set {input = .text(newValue)}
+    set {type = .text(newValue)}
   }
 
   var activityID: String {
     get {
-      if case .activityID(let v)? = input {return v}
+      if case .activityID(let v)? = type {return v}
       return String()
     }
-    set {input = .activityID(newValue)}
+    set {type = .activityID(newValue)}
   }
 
   var storyActivities: ChatUserInputStoryActivitiesProto {
     get {
-      if case .storyActivities(let v)? = input {return v}
+      if case .storyActivities(let v)? = type {return v}
       return ChatUserInputStoryActivitiesProto()
     }
-    set {input = .storyActivities(newValue)}
+    set {type = .storyActivities(newValue)}
   }
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  enum OneOf_Input: Equatable {
+  enum OneOf_Type: Equatable {
     case text(ChatUserTextInputProto)
     case activityID(String)
     case storyActivities(ChatUserInputStoryActivitiesProto)
 
   #if !swift(>=4.1)
-    static func ==(lhs: ChatUserMessageProto.OneOf_Input, rhs: ChatUserMessageProto.OneOf_Input) -> Bool {
+    static func ==(lhs: ChatUserMessageProto.OneOf_Type, rhs: ChatUserMessageProto.OneOf_Type) -> Bool {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
@@ -777,7 +777,7 @@ extension ChatAssistantMessageBlockProto: @unchecked Sendable {}
 extension ChatActivityIntroProto: @unchecked Sendable {}
 extension OpenChatWithUserMessageProto: @unchecked Sendable {}
 extension ChatUserMessageProto: @unchecked Sendable {}
-extension ChatUserMessageProto.OneOf_Input: @unchecked Sendable {}
+extension ChatUserMessageProto.OneOf_Type: @unchecked Sendable {}
 extension ChatUserTextInputProto: @unchecked Sendable {}
 extension ChatUserInputStoryActivitiesProto: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
@@ -1731,35 +1731,35 @@ extension ChatUserMessageProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
       case 1: try {
         var v: ChatUserTextInputProto?
         var hadOneofValue = false
-        if let current = self.input {
+        if let current = self.type {
           hadOneofValue = true
           if case .text(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.input = .text(v)
+          self.type = .text(v)
         }
       }()
       case 2: try {
         var v: ChatUserInputStoryActivitiesProto?
         var hadOneofValue = false
-        if let current = self.input {
+        if let current = self.type {
           hadOneofValue = true
           if case .storyActivities(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.input = .storyActivities(v)
+          self.type = .storyActivities(v)
         }
       }()
       case 3: try {
         var v: String?
         try decoder.decodeSingularStringField(value: &v)
         if let v = v {
-          if self.input != nil {try decoder.handleConflictingOneOf()}
-          self.input = .activityID(v)
+          if self.type != nil {try decoder.handleConflictingOneOf()}
+          self.type = .activityID(v)
         }
       }()
       default: break
@@ -1772,17 +1772,17 @@ extension ChatUserMessageProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    switch self.input {
+    switch self.type {
     case .text?: try {
-      guard case .text(let v)? = self.input else { preconditionFailure() }
+      guard case .text(let v)? = self.type else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
     }()
     case .storyActivities?: try {
-      guard case .storyActivities(let v)? = self.input else { preconditionFailure() }
+      guard case .storyActivities(let v)? = self.type else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     }()
     case .activityID?: try {
-      guard case .activityID(let v)? = self.input else { preconditionFailure() }
+      guard case .activityID(let v)? = self.type else { preconditionFailure() }
       try visitor.visitSingularStringField(value: v, fieldNumber: 3)
     }()
     case nil: break
@@ -1791,7 +1791,7 @@ extension ChatUserMessageProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
   }
 
   static func ==(lhs: ChatUserMessageProto, rhs: ChatUserMessageProto) -> Bool {
-    if lhs.input != rhs.input {return false}
+    if lhs.type != rhs.type {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
