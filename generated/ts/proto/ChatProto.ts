@@ -260,11 +260,11 @@ export interface ChatMessageProto {
      */
     messageId: string;
     /**
-     * @generated from protobuf field: string parent_message_id = 5;
+     * @generated from protobuf field: string parent_message_id = 2;
      */
     parentMessageId: string; // If empty this is the root message.
     /**
-     * @generated from protobuf field: google.protobuf.Timestamp created_at = 2;
+     * @generated from protobuf field: google.protobuf.Timestamp created_at = 3;
      */
     createdAt?: Timestamp;
     /**
@@ -273,13 +273,13 @@ export interface ChatMessageProto {
     type: {
         oneofKind: "assistant";
         /**
-         * @generated from protobuf field: ChatAssistantMessageProto assistant = 3;
+         * @generated from protobuf field: ChatAssistantMessageProto assistant = 4;
          */
         assistant: ChatAssistantMessageProto;
     } | {
         oneofKind: "user";
         /**
-         * @generated from protobuf field: ChatUserMessageProto user = 4;
+         * @generated from protobuf field: ChatUserMessageProto user = 5;
          */
         user: ChatUserMessageProto;
     } | {
@@ -1188,10 +1188,10 @@ class ChatMessageProto$Type extends MessageType<ChatMessageProto> {
     constructor() {
         super("ChatMessageProto", [
             { no: 1, name: "message_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "parent_message_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "created_at", kind: "message", T: () => Timestamp },
-            { no: 3, name: "assistant", kind: "message", oneof: "type", T: () => ChatAssistantMessageProto },
-            { no: 4, name: "user", kind: "message", oneof: "type", T: () => ChatUserMessageProto }
+            { no: 2, name: "parent_message_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "created_at", kind: "message", T: () => Timestamp },
+            { no: 4, name: "assistant", kind: "message", oneof: "type", T: () => ChatAssistantMessageProto },
+            { no: 5, name: "user", kind: "message", oneof: "type", T: () => ChatUserMessageProto }
         ]);
     }
     create(value?: PartialMessage<ChatMessageProto>): ChatMessageProto {
@@ -1209,19 +1209,19 @@ class ChatMessageProto$Type extends MessageType<ChatMessageProto> {
                 case /* string message_id */ 1:
                     message.messageId = reader.string();
                     break;
-                case /* string parent_message_id */ 5:
+                case /* string parent_message_id */ 2:
                     message.parentMessageId = reader.string();
                     break;
-                case /* google.protobuf.Timestamp created_at */ 2:
+                case /* google.protobuf.Timestamp created_at */ 3:
                     message.createdAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.createdAt);
                     break;
-                case /* ChatAssistantMessageProto assistant */ 3:
+                case /* ChatAssistantMessageProto assistant */ 4:
                     message.type = {
                         oneofKind: "assistant",
                         assistant: ChatAssistantMessageProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).assistant)
                     };
                     break;
-                case /* ChatUserMessageProto user */ 4:
+                case /* ChatUserMessageProto user */ 5:
                     message.type = {
                         oneofKind: "user",
                         user: ChatUserMessageProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).user)
@@ -1242,18 +1242,18 @@ class ChatMessageProto$Type extends MessageType<ChatMessageProto> {
         /* string message_id = 1; */
         if (message.messageId !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.messageId);
-        /* string parent_message_id = 5; */
+        /* string parent_message_id = 2; */
         if (message.parentMessageId !== "")
-            writer.tag(5, WireType.LengthDelimited).string(message.parentMessageId);
-        /* google.protobuf.Timestamp created_at = 2; */
+            writer.tag(2, WireType.LengthDelimited).string(message.parentMessageId);
+        /* google.protobuf.Timestamp created_at = 3; */
         if (message.createdAt)
-            Timestamp.internalBinaryWrite(message.createdAt, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* ChatAssistantMessageProto assistant = 3; */
+            Timestamp.internalBinaryWrite(message.createdAt, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* ChatAssistantMessageProto assistant = 4; */
         if (message.type.oneofKind === "assistant")
-            ChatAssistantMessageProto.internalBinaryWrite(message.type.assistant, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* ChatUserMessageProto user = 4; */
+            ChatAssistantMessageProto.internalBinaryWrite(message.type.assistant, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* ChatUserMessageProto user = 5; */
         if (message.type.oneofKind === "user")
-            ChatUserMessageProto.internalBinaryWrite(message.type.user, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+            ChatUserMessageProto.internalBinaryWrite(message.type.user, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

@@ -100,11 +100,11 @@ message OpenChatResponseHeaderProto {
 
 message ChatMessageProto {
   string message_id = 1;
-  string parent_message_id = 5;  // If empty this is the root message.
-  google.protobuf.Timestamp created_at = 2;
+  string parent_message_id = 2;  // If empty this is the root message.
+  google.protobuf.Timestamp created_at = 3;
   oneof type {
-    ChatAssistantMessageProto assistant = 3;
-    ChatUserMessageProto user = 4;
+    ChatAssistantMessageProto assistant = 4;
+    ChatUserMessageProto user = 5;
   }
 }
 

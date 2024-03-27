@@ -1423,10 +1423,10 @@ extension ChatMessageProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
   static let protoMessageName: String = "ChatMessageProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "message_id"),
-    5: .standard(proto: "parent_message_id"),
-    2: .standard(proto: "created_at"),
-    3: .same(proto: "assistant"),
-    4: .same(proto: "user"),
+    2: .standard(proto: "parent_message_id"),
+    3: .standard(proto: "created_at"),
+    4: .same(proto: "assistant"),
+    5: .same(proto: "user"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1436,8 +1436,9 @@ extension ChatMessageProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.messageID) }()
-      case 2: try { try decoder.decodeSingularMessageField(value: &self._createdAt) }()
-      case 3: try {
+      case 2: try { try decoder.decodeSingularStringField(value: &self.parentMessageID) }()
+      case 3: try { try decoder.decodeSingularMessageField(value: &self._createdAt) }()
+      case 4: try {
         var v: ChatAssistantMessageProto?
         var hadOneofValue = false
         if let current = self.type {
@@ -1450,7 +1451,7 @@ extension ChatMessageProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
           self.type = .assistant(v)
         }
       }()
-      case 4: try {
+      case 5: try {
         var v: ChatUserMessageProto?
         var hadOneofValue = false
         if let current = self.type {
@@ -1463,7 +1464,6 @@ extension ChatMessageProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
           self.type = .user(v)
         }
       }()
-      case 5: try { try decoder.decodeSingularStringField(value: &self.parentMessageID) }()
       default: break
       }
     }
@@ -1477,22 +1477,22 @@ extension ChatMessageProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     if !self.messageID.isEmpty {
       try visitor.visitSingularStringField(value: self.messageID, fieldNumber: 1)
     }
+    if !self.parentMessageID.isEmpty {
+      try visitor.visitSingularStringField(value: self.parentMessageID, fieldNumber: 2)
+    }
     try { if let v = self._createdAt {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
     } }()
     switch self.type {
     case .assistant?: try {
       guard case .assistant(let v)? = self.type else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
     }()
     case .user?: try {
       guard case .user(let v)? = self.type else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
     }()
     case nil: break
-    }
-    if !self.parentMessageID.isEmpty {
-      try visitor.visitSingularStringField(value: self.parentMessageID, fieldNumber: 5)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
