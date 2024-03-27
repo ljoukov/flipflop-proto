@@ -138,11 +138,20 @@ message OpenStoryActivitiesProto {
 }
 
 message ChatUserMessageProto {
-  // Optional: user selected this specific chatbot explicitly
-  ChatBotIdProto bot_id = 1;
+  oneof type {
+    ChatUserInputTextProto text = 1;
+    ChatUserInputStoryActivitiesProto story_activities = 2;
+  }
+}
 
+message ChatUserInputTextProto {
+  ChatBotIdProto bot_id = 1;
   oneof input {
     string text = 2;
     string activity_id = 3;
   }
+}
+
+message ChatUserInputStoryActivitiesProto {
+  string story_id = 1;
 }
