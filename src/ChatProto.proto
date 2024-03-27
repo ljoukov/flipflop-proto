@@ -4,7 +4,7 @@ import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 
 enum ChatBotIdProto {
-  CHAT_BOT_ID_PROTO_UNKNOWN = 0;
+  CHAT_BOT_ID_PROTO_UNDEFINED = 0;
 
   CHAT_BOT_ID_PROTO_GREETING = 1;
   CHAT_BOT_ID_PROTO_AFFIRMATION = 2;

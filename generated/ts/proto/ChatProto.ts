@@ -403,9 +403,9 @@ export interface ChatUserMessageProto {
  */
 export enum ChatBotIdProto {
     /**
-     * @generated from protobuf enum value: CHAT_BOT_ID_PROTO_UNKNOWN = 0;
+     * @generated from protobuf enum value: CHAT_BOT_ID_PROTO_UNDEFINED = 0;
      */
-    UNKNOWN = 0,
+    UNDEFINED = 0,
     /**
      * @generated from protobuf enum value: CHAT_BOT_ID_PROTO_GREETING = 1;
      */

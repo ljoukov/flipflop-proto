@@ -22,7 +22,7 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
 
 enum ChatBotIdProto: SwiftProtobuf.Enum {
   typealias RawValue = Int
-  case unknown // = 0
+  case undefined // = 0
   case greeting // = 1
   case affirmation // = 2
   case short // = 3
@@ -32,12 +32,12 @@ enum ChatBotIdProto: SwiftProtobuf.Enum {
   case UNRECOGNIZED(Int)
 
   init() {
-    self = .unknown
+    self = .undefined
   }
 
   init?(rawValue: Int) {
     switch rawValue {
-    case 0: self = .unknown
+    case 0: self = .undefined
     case 1: self = .greeting
     case 2: self = .affirmation
     case 3: self = .short
@@ -50,7 +50,7 @@ enum ChatBotIdProto: SwiftProtobuf.Enum {
 
   var rawValue: Int {
     switch self {
-    case .unknown: return 0
+    case .undefined: return 0
     case .greeting: return 1
     case .affirmation: return 2
     case .short: return 3
@@ -68,7 +68,7 @@ enum ChatBotIdProto: SwiftProtobuf.Enum {
 extension ChatBotIdProto: CaseIterable {
   // The compiler won't synthesize support with the UNRECOGNIZED case.
   static var allCases: [ChatBotIdProto] = [
-    .unknown,
+    .undefined,
     .greeting,
     .affirmation,
     .short,
@@ -406,7 +406,7 @@ struct OpenChatRequestProto {
   var botID: ChatBotIdProto {
     get {
       if case .botID(let v)? = type {return v}
-      return .unknown
+      return .undefined
     }
     set {type = .botID(newValue)}
   }
@@ -471,7 +471,7 @@ struct OpenChatResponseHeaderProto {
   var streamedMessageID: String = String()
 
   /// Bot used to produce this output.
-  var botID: ChatBotIdProto = .unknown
+  var botID: ChatBotIdProto = .undefined
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -609,7 +609,7 @@ struct ChatAssistantMessageProto {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var botID: ChatBotIdProto = .unknown
+  var botID: ChatBotIdProto = .undefined
 
   var blocks: [ChatAssistantMessageBlockProto] = []
 
@@ -688,7 +688,7 @@ struct ChatUserMessageProto {
   // methods supported on all messages.
 
   /// Optional: user selected this specific chatbot explicitly
-  var botID: ChatBotIdProto = .unknown
+  var botID: ChatBotIdProto = .undefined
 
   var input: ChatUserMessageProto.OneOf_Input? = nil
 
@@ -774,7 +774,7 @@ extension ChatUserMessageProto.OneOf_Input: @unchecked Sendable {}
 
 extension ChatBotIdProto: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    0: .same(proto: "CHAT_BOT_ID_PROTO_UNKNOWN"),
+    0: .same(proto: "CHAT_BOT_ID_PROTO_UNDEFINED"),
     1: .same(proto: "CHAT_BOT_ID_PROTO_GREETING"),
     2: .same(proto: "CHAT_BOT_ID_PROTO_AFFIRMATION"),
     3: .same(proto: "CHAT_BOT_ID_PROTO_SHORT"),
@@ -1396,7 +1396,7 @@ extension OpenChatResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
     if !self.streamedMessageID.isEmpty {
       try visitor.visitSingularStringField(value: self.streamedMessageID, fieldNumber: 2)
     }
-    if self.botID != .unknown {
+    if self.botID != .undefined {
       try visitor.visitSingularEnumField(value: self.botID, fieldNumber: 3)
     }
     try unknownFields.traverse(visitor: &visitor)
@@ -1585,7 +1585,7 @@ extension ChatAssistantMessageProto: SwiftProtobuf.Message, SwiftProtobuf._Messa
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if self.botID != .unknown {
+    if self.botID != .undefined {
       try visitor.visitSingularEnumField(value: self.botID, fieldNumber: 1)
     }
     if !self.blocks.isEmpty {
@@ -1793,7 +1793,7 @@ extension ChatUserMessageProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    if self.botID != .unknown {
+    if self.botID != .undefined {
       try visitor.visitSingularEnumField(value: self.botID, fieldNumber: 1)
     }
     switch self.input {
