@@ -82,7 +82,6 @@ message GetChatResponseProto {
 message OpenChatRequestProto {
   oneof type {
     ChatBotIdProto bot_id = 1;
-    OpenStoryActivitiesProto story_activities = 2;
     OpenChatWithUserMessageProto with_user_message = 3;
   }
 }
@@ -133,23 +132,17 @@ message OpenChatWithUserMessageProto {
   ChatUserMessageProto user_message = 2;
 }
 
-message OpenStoryActivitiesProto {
-  string story_id = 1;
-}
-
 message ChatUserMessageProto {
   oneof type {
-    ChatUserInputTextProto text = 1;
+    ChatUserTextInputProto text = 1;
+    string activity_id = 3;
     ChatUserInputStoryActivitiesProto story_activities = 2;
   }
 }
 
-message ChatUserInputTextProto {
+message ChatUserTextInputProto {
   ChatBotIdProto bot_id = 1;
-  oneof input {
-    string text = 2;
-    string activity_id = 3;
-  }
+  string text = 2;
 }
 
 message ChatUserInputStoryActivitiesProto {
