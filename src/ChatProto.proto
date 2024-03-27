@@ -133,7 +133,7 @@ message OpenChatWithUserMessageProto {
 }
 
 message ChatUserMessageProto {
-  oneof type {
+  oneof input {
     ChatUserTextInputProto text = 1;
     string activity_id = 3;
     ChatUserInputStoryActivitiesProto story_activities = 2;
