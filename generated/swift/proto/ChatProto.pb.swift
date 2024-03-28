@@ -22,29 +22,29 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
 
 enum ChatSoloBotTypeProto: SwiftProtobuf.Enum {
   typealias RawValue = Int
-  case soloBotTypeUndefined // = 0
-  case soloBotTypeGreeting // = 1
-  case soloBotTypeAffirmation // = 2
+  case undefined // = 0
+  case greeting // = 1
+  case affirmation // = 2
   case UNRECOGNIZED(Int)
 
   init() {
-    self = .soloBotTypeUndefined
+    self = .undefined
   }
 
   init?(rawValue: Int) {
     switch rawValue {
-    case 0: self = .soloBotTypeUndefined
-    case 1: self = .soloBotTypeGreeting
-    case 2: self = .soloBotTypeAffirmation
+    case 0: self = .undefined
+    case 1: self = .greeting
+    case 2: self = .affirmation
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
 
   var rawValue: Int {
     switch self {
-    case .soloBotTypeUndefined: return 0
-    case .soloBotTypeGreeting: return 1
-    case .soloBotTypeAffirmation: return 2
+    case .undefined: return 0
+    case .greeting: return 1
+    case .affirmation: return 2
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -56,9 +56,9 @@ enum ChatSoloBotTypeProto: SwiftProtobuf.Enum {
 extension ChatSoloBotTypeProto: CaseIterable {
   // The compiler won't synthesize support with the UNRECOGNIZED case.
   static var allCases: [ChatSoloBotTypeProto] = [
-    .soloBotTypeUndefined,
-    .soloBotTypeGreeting,
-    .soloBotTypeAffirmation,
+    .undefined,
+    .greeting,
+    .affirmation,
   ]
 }
 
@@ -442,7 +442,7 @@ struct OpenChatRequestProto {
   var withSoloBot: ChatSoloBotTypeProto {
     get {
       if case .withSoloBot(let v)? = type {return v}
-      return .soloBotTypeUndefined
+      return .undefined
     }
     set {type = .withSoloBot(newValue)}
   }
@@ -768,9 +768,9 @@ extension ChatUserMessageProto: @unchecked Sendable {}
 
 extension ChatSoloBotTypeProto: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    0: .same(proto: "SOLO_BOT_TYPE_UNDEFINED"),
-    1: .same(proto: "SOLO_BOT_TYPE_GREETING"),
-    2: .same(proto: "SOLO_BOT_TYPE_AFFIRMATION"),
+    0: .same(proto: "CHAT_SOLO_BOT_TYPE_PROTO_UNDEFINED"),
+    1: .same(proto: "CHAT_SOLO_BOT_TYPE_PROTO_GREETING"),
+    2: .same(proto: "CHAT_SOLO_BOT_TYPE_PROTO_AFFIRMATION"),
   ]
 }
 

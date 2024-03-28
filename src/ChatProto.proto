@@ -81,10 +81,10 @@ message OpenChatResponseHeaderProto {
 }
 
 enum ChatSoloBotTypeProto {
-  SOLO_BOT_TYPE_UNDEFINED = 0;
+  CHAT_SOLO_BOT_TYPE_PROTO_UNDEFINED = 0;
 
-  SOLO_BOT_TYPE_GREETING = 1;
-  SOLO_BOT_TYPE_AFFIRMATION = 2;
+  CHAT_SOLO_BOT_TYPE_PROTO_GREETING = 1;
+  CHAT_SOLO_BOT_TYPE_PROTO_AFFIRMATION = 2;
 }
 
 message OpenChatWithUserMessageProto {

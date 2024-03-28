@@ -385,17 +385,17 @@ export interface ChatUserMessageProto {
  */
 export enum ChatSoloBotTypeProto {
     /**
-     * @generated from protobuf enum value: SOLO_BOT_TYPE_UNDEFINED = 0;
+     * @generated from protobuf enum value: CHAT_SOLO_BOT_TYPE_PROTO_UNDEFINED = 0;
      */
-    SOLO_BOT_TYPE_UNDEFINED = 0,
+    UNDEFINED = 0,
     /**
-     * @generated from protobuf enum value: SOLO_BOT_TYPE_GREETING = 1;
+     * @generated from protobuf enum value: CHAT_SOLO_BOT_TYPE_PROTO_GREETING = 1;
      */
-    SOLO_BOT_TYPE_GREETING = 1,
+    GREETING = 1,
     /**
-     * @generated from protobuf enum value: SOLO_BOT_TYPE_AFFIRMATION = 2;
+     * @generated from protobuf enum value: CHAT_SOLO_BOT_TYPE_PROTO_AFFIRMATION = 2;
      */
-    SOLO_BOT_TYPE_AFFIRMATION = 2
+    AFFIRMATION = 2
 }
 /**
  * @generated from protobuf enum ChatResponseTypeProto
@@ -1027,7 +1027,7 @@ export const GetChatResponseProto = new GetChatResponseProto$Type();
 class OpenChatRequestProto$Type extends MessageType<OpenChatRequestProto> {
     constructor() {
         super("OpenChatRequestProto", [
-            { no: 1, name: "with_solo_bot", kind: "enum", oneof: "type", T: () => ["ChatSoloBotTypeProto", ChatSoloBotTypeProto] },
+            { no: 1, name: "with_solo_bot", kind: "enum", oneof: "type", T: () => ["ChatSoloBotTypeProto", ChatSoloBotTypeProto, "CHAT_SOLO_BOT_TYPE_PROTO_"] },
             { no: 2, name: "with_user_message", kind: "message", oneof: "type", T: () => OpenChatWithUserMessageProto },
             { no: 3, name: "with_story", kind: "message", oneof: "type", T: () => OpenChatWithStoryProto }
         ]);
