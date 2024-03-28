@@ -3,18 +3,6 @@ syntax = "proto3";
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 
-enum ChatBotIdProto {
-  CHAT_BOT_ID_PROTO_UNDEFINED = 0;
-
-  CHAT_BOT_ID_PROTO_GREETING = 1;
-  CHAT_BOT_ID_PROTO_AFFIRMATION = 2;
-
-  CHAT_BOT_ID_PROTO_SHORT = 3;
-  CHAT_BOT_ID_PROTO_REASON = 4;
-  CHAT_BOT_ID_PROTO_SIMPLIFY = 5;
-  CHAT_BOT_ID_PROTO_BRAINSTORM = 6;
-}
-
 message ChatApiRequestProto {
   string encoded_user_auth = 1;
   oneof request {
@@ -81,15 +69,32 @@ message GetChatResponseProto {
 
 message OpenChatRequestProto {
   oneof type {
-    ChatBotIdProto bot_id = 1;
-    OpenChatWithUserMessageProto with_user_message = 3;
+    ChatSoloBotTypeProto with_solo_bot = 1;
+    OpenChatWithUserMessageProto with_user_message = 2;
+    OpenChatWithStoryProto with_story = 3;
   }
 }
 
 message OpenChatResponseHeaderProto {
   repeated ChatMessageProto messages = 1;
   string streamed_message_id = 2;
-  ChatBotIdProto bot_id = 3;  // Bot used to produce this output.
+}
+
+enum ChatSoloBotTypeProto {
+  SOLO_BOT_TYPE_UNDEFINED = 0;
+
+  SOLO_BOT_TYPE_GREETING = 1;
+  SOLO_BOT_TYPE_AFFIRMATION = 2;
+}
+
+message OpenChatWithUserMessageProto {
+  string parent_message_id = 1;  // If empty this is the root message.
+  ChatUserMessageProto user_message = 2;
+}
+
+message OpenChatWithStoryProto {
+  string story_id = 1;
+  string activity_id = 2;  // If absent: responds with a list of activities.
 }
 
 message ChatMessageProto {
@@ -126,20 +131,16 @@ message ChatActivityIntroProto {
   string display_name = 2;
 }
 
-message OpenChatWithUserMessageProto {
-  string parent_message_id = 1;  // If empty this is the root message.
-  ChatUserMessageProto user_message = 2;
-}
-
 message ChatUserMessageProto {
-  oneof type {
-    ChatUserTextInputProto text_input = 1;
-    string activity_id = 3;
-    string activities_for_story_id = 2;
-  }
+  // Optional: if present user explicitly asked for this type of response.
+  ChatResponseTypeProto response_type = 1;
+  string text = 2;
 }
 
-message ChatUserTextInputProto {
-  ChatBotIdProto bot_id = 1;
-  string text = 2;
+enum ChatResponseTypeProto {
+  CHAT_RESPONSE_TYPE_PROTO_UNDEFINED = 0;
+  CHAT_RESPONSE_TYPE_PROTO_SHORT = 1;
+  CHAT_RESPONSE_TYPE_PROTO_REASON = 2;
+  CHAT_RESPONSE_TYPE_PROTO_SIMPLIFY = 3;
+  CHAT_RESPONSE_TYPE_PROTO_BRAINSTORM = 4;
 }
