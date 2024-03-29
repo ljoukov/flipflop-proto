@@ -71,7 +71,6 @@ message OpenChatRequestProto {
   oneof type {
     ChatSoloBotTypeProto with_solo_bot = 1;
     OpenChatWithUserMessageProto with_user_message = 2;
-    OpenChatWithStoryProto with_story = 3;
   }
 }
 
@@ -90,11 +89,6 @@ enum ChatSoloBotTypeProto {
 message OpenChatWithUserMessageProto {
   string parent_message_id = 1;  // If empty this is the root message.
   ChatUserMessageProto user_message = 2;
-}
-
-message OpenChatWithStoryProto {
-  string story_id = 1;
-  string activity_id = 2;  // If absent: responds with a list of activities.
 }
 
 message ChatMessageProto {
@@ -132,9 +126,21 @@ message ChatActivityIntroProto {
 }
 
 message ChatUserMessageProto {
+  oneof input {
+    ChatUserTextInputProto text_input = 1;
+    ChatUserActivityInputProto activity = 2;
+  }
+}
+
+message ChatUserTextInputProto {
   // Optional: if present user explicitly asked for this type of response.
   ChatResponseTypeProto response_type = 1;
   string text = 2;
+}
+
+message ChatUserActivityInputProto {
+  string story_id = 1;
+  string activity_id = 2;  // If absent: responds with a list of activities.
 }
 
 enum ChatResponseTypeProto {

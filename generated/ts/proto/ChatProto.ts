@@ -219,12 +219,6 @@ export interface OpenChatRequestProto {
          */
         withUserMessage: OpenChatWithUserMessageProto;
     } | {
-        oneofKind: "withStory";
-        /**
-         * @generated from protobuf field: OpenChatWithStoryProto with_story = 3;
-         */
-        withStory: OpenChatWithStoryProto;
-    } | {
         oneofKind: undefined;
     };
 }
@@ -253,19 +247,6 @@ export interface OpenChatWithUserMessageProto {
      * @generated from protobuf field: ChatUserMessageProto user_message = 2;
      */
     userMessage?: ChatUserMessageProto;
-}
-/**
- * @generated from protobuf message OpenChatWithStoryProto
- */
-export interface OpenChatWithStoryProto {
-    /**
-     * @generated from protobuf field: string story_id = 1;
-     */
-    storyId: string;
-    /**
-     * @generated from protobuf field: string activity_id = 2;
-     */
-    activityId: string; // If absent: responds with a list of activities.
 }
 /**
  * @generated from protobuf message ChatMessageProto
@@ -370,6 +351,29 @@ export interface ChatActivityIntroProto {
  */
 export interface ChatUserMessageProto {
     /**
+     * @generated from protobuf oneof: input
+     */
+    input: {
+        oneofKind: "textInput";
+        /**
+         * @generated from protobuf field: ChatUserTextInputProto text_input = 1;
+         */
+        textInput: ChatUserTextInputProto;
+    } | {
+        oneofKind: "activity";
+        /**
+         * @generated from protobuf field: ChatUserActivityInputProto activity = 2;
+         */
+        activity: ChatUserActivityInputProto;
+    } | {
+        oneofKind: undefined;
+    };
+}
+/**
+ * @generated from protobuf message ChatUserTextInputProto
+ */
+export interface ChatUserTextInputProto {
+    /**
      * Optional: if present user explicitly asked for this type of response.
      *
      * @generated from protobuf field: ChatResponseTypeProto response_type = 1;
@@ -379,6 +383,19 @@ export interface ChatUserMessageProto {
      * @generated from protobuf field: string text = 2;
      */
     text: string;
+}
+/**
+ * @generated from protobuf message ChatUserActivityInputProto
+ */
+export interface ChatUserActivityInputProto {
+    /**
+     * @generated from protobuf field: string story_id = 1;
+     */
+    storyId: string;
+    /**
+     * @generated from protobuf field: string activity_id = 2;
+     */
+    activityId: string; // If absent: responds with a list of activities.
 }
 /**
  * @generated from protobuf enum ChatSoloBotTypeProto
@@ -1028,8 +1045,7 @@ class OpenChatRequestProto$Type extends MessageType<OpenChatRequestProto> {
     constructor() {
         super("OpenChatRequestProto", [
             { no: 1, name: "with_solo_bot", kind: "enum", oneof: "type", T: () => ["ChatSoloBotTypeProto", ChatSoloBotTypeProto, "CHAT_SOLO_BOT_TYPE_PROTO_"] },
-            { no: 2, name: "with_user_message", kind: "message", oneof: "type", T: () => OpenChatWithUserMessageProto },
-            { no: 3, name: "with_story", kind: "message", oneof: "type", T: () => OpenChatWithStoryProto }
+            { no: 2, name: "with_user_message", kind: "message", oneof: "type", T: () => OpenChatWithUserMessageProto }
         ]);
     }
     create(value?: PartialMessage<OpenChatRequestProto>): OpenChatRequestProto {
@@ -1056,12 +1072,6 @@ class OpenChatRequestProto$Type extends MessageType<OpenChatRequestProto> {
                         withUserMessage: OpenChatWithUserMessageProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).withUserMessage)
                     };
                     break;
-                case /* OpenChatWithStoryProto with_story */ 3:
-                    message.type = {
-                        oneofKind: "withStory",
-                        withStory: OpenChatWithStoryProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).withStory)
-                    };
-                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -1080,9 +1090,6 @@ class OpenChatRequestProto$Type extends MessageType<OpenChatRequestProto> {
         /* OpenChatWithUserMessageProto with_user_message = 2; */
         if (message.type.oneofKind === "withUserMessage")
             OpenChatWithUserMessageProto.internalBinaryWrite(message.type.withUserMessage, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* OpenChatWithStoryProto with_story = 3; */
-        if (message.type.oneofKind === "withStory")
-            OpenChatWithStoryProto.internalBinaryWrite(message.type.withStory, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1201,60 +1208,6 @@ class OpenChatWithUserMessageProto$Type extends MessageType<OpenChatWithUserMess
  * @generated MessageType for protobuf message OpenChatWithUserMessageProto
  */
 export const OpenChatWithUserMessageProto = new OpenChatWithUserMessageProto$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class OpenChatWithStoryProto$Type extends MessageType<OpenChatWithStoryProto> {
-    constructor() {
-        super("OpenChatWithStoryProto", [
-            { no: 1, name: "story_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "activity_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
-        ]);
-    }
-    create(value?: PartialMessage<OpenChatWithStoryProto>): OpenChatWithStoryProto {
-        const message = { storyId: "", activityId: "" };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<OpenChatWithStoryProto>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: OpenChatWithStoryProto): OpenChatWithStoryProto {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string story_id */ 1:
-                    message.storyId = reader.string();
-                    break;
-                case /* string activity_id */ 2:
-                    message.activityId = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: OpenChatWithStoryProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string story_id = 1; */
-        if (message.storyId !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.storyId);
-        /* string activity_id = 2; */
-        if (message.activityId !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.activityId);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message OpenChatWithStoryProto
- */
-export const OpenChatWithStoryProto = new OpenChatWithStoryProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class ChatMessageProto$Type extends MessageType<ChatMessageProto> {
     constructor() {
@@ -1555,18 +1508,78 @@ export const ChatActivityIntroProto = new ChatActivityIntroProto$Type();
 class ChatUserMessageProto$Type extends MessageType<ChatUserMessageProto> {
     constructor() {
         super("ChatUserMessageProto", [
-            { no: 1, name: "response_type", kind: "enum", T: () => ["ChatResponseTypeProto", ChatResponseTypeProto, "CHAT_RESPONSE_TYPE_PROTO_"] },
-            { no: 2, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "text_input", kind: "message", oneof: "input", T: () => ChatUserTextInputProto },
+            { no: 2, name: "activity", kind: "message", oneof: "input", T: () => ChatUserActivityInputProto }
         ]);
     }
     create(value?: PartialMessage<ChatUserMessageProto>): ChatUserMessageProto {
-        const message = { responseType: 0, text: "" };
+        const message = { input: { oneofKind: undefined } };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<ChatUserMessageProto>(this, message, value);
         return message;
     }
     internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ChatUserMessageProto): ChatUserMessageProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* ChatUserTextInputProto text_input */ 1:
+                    message.input = {
+                        oneofKind: "textInput",
+                        textInput: ChatUserTextInputProto.internalBinaryRead(reader, reader.uint32(), options, (message.input as any).textInput)
+                    };
+                    break;
+                case /* ChatUserActivityInputProto activity */ 2:
+                    message.input = {
+                        oneofKind: "activity",
+                        activity: ChatUserActivityInputProto.internalBinaryRead(reader, reader.uint32(), options, (message.input as any).activity)
+                    };
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: ChatUserMessageProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* ChatUserTextInputProto text_input = 1; */
+        if (message.input.oneofKind === "textInput")
+            ChatUserTextInputProto.internalBinaryWrite(message.input.textInput, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* ChatUserActivityInputProto activity = 2; */
+        if (message.input.oneofKind === "activity")
+            ChatUserActivityInputProto.internalBinaryWrite(message.input.activity, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message ChatUserMessageProto
+ */
+export const ChatUserMessageProto = new ChatUserMessageProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ChatUserTextInputProto$Type extends MessageType<ChatUserTextInputProto> {
+    constructor() {
+        super("ChatUserTextInputProto", [
+            { no: 1, name: "response_type", kind: "enum", T: () => ["ChatResponseTypeProto", ChatResponseTypeProto, "CHAT_RESPONSE_TYPE_PROTO_"] },
+            { no: 2, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<ChatUserTextInputProto>): ChatUserTextInputProto {
+        const message = { responseType: 0, text: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<ChatUserTextInputProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ChatUserTextInputProto): ChatUserTextInputProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -1588,7 +1601,7 @@ class ChatUserMessageProto$Type extends MessageType<ChatUserMessageProto> {
         }
         return message;
     }
-    internalBinaryWrite(message: ChatUserMessageProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: ChatUserTextInputProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* ChatResponseTypeProto response_type = 1; */
         if (message.responseType !== 0)
             writer.tag(1, WireType.Varint).int32(message.responseType);
@@ -1602,6 +1615,60 @@ class ChatUserMessageProto$Type extends MessageType<ChatUserMessageProto> {
     }
 }
 /**
- * @generated MessageType for protobuf message ChatUserMessageProto
+ * @generated MessageType for protobuf message ChatUserTextInputProto
  */
-export const ChatUserMessageProto = new ChatUserMessageProto$Type();
+export const ChatUserTextInputProto = new ChatUserTextInputProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ChatUserActivityInputProto$Type extends MessageType<ChatUserActivityInputProto> {
+    constructor() {
+        super("ChatUserActivityInputProto", [
+            { no: 1, name: "story_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "activity_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<ChatUserActivityInputProto>): ChatUserActivityInputProto {
+        const message = { storyId: "", activityId: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<ChatUserActivityInputProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ChatUserActivityInputProto): ChatUserActivityInputProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string story_id */ 1:
+                    message.storyId = reader.string();
+                    break;
+                case /* string activity_id */ 2:
+                    message.activityId = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: ChatUserActivityInputProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string story_id = 1; */
+        if (message.storyId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.storyId);
+        /* string activity_id = 2; */
+        if (message.activityId !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.activityId);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message ChatUserActivityInputProto
+ */
+export const ChatUserActivityInputProto = new ChatUserActivityInputProto$Type();
