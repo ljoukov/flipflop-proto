@@ -360,11 +360,11 @@ export interface ChatUserMessageProto {
          */
         textInput: ChatUserTextInputProto;
     } | {
-        oneofKind: "activity";
+        oneofKind: "activityInput";
         /**
-         * @generated from protobuf field: ChatUserActivityInputProto activity = 2;
+         * @generated from protobuf field: ChatUserActivityInputProto activity_input = 2;
          */
-        activity: ChatUserActivityInputProto;
+        activityInput: ChatUserActivityInputProto;
     } | {
         oneofKind: undefined;
     };
@@ -1509,7 +1509,7 @@ class ChatUserMessageProto$Type extends MessageType<ChatUserMessageProto> {
     constructor() {
         super("ChatUserMessageProto", [
             { no: 1, name: "text_input", kind: "message", oneof: "input", T: () => ChatUserTextInputProto },
-            { no: 2, name: "activity", kind: "message", oneof: "input", T: () => ChatUserActivityInputProto }
+            { no: 2, name: "activity_input", kind: "message", oneof: "input", T: () => ChatUserActivityInputProto }
         ]);
     }
     create(value?: PartialMessage<ChatUserMessageProto>): ChatUserMessageProto {
@@ -1530,10 +1530,10 @@ class ChatUserMessageProto$Type extends MessageType<ChatUserMessageProto> {
                         textInput: ChatUserTextInputProto.internalBinaryRead(reader, reader.uint32(), options, (message.input as any).textInput)
                     };
                     break;
-                case /* ChatUserActivityInputProto activity */ 2:
+                case /* ChatUserActivityInputProto activity_input */ 2:
                     message.input = {
-                        oneofKind: "activity",
-                        activity: ChatUserActivityInputProto.internalBinaryRead(reader, reader.uint32(), options, (message.input as any).activity)
+                        oneofKind: "activityInput",
+                        activityInput: ChatUserActivityInputProto.internalBinaryRead(reader, reader.uint32(), options, (message.input as any).activityInput)
                     };
                     break;
                 default:
@@ -1551,9 +1551,9 @@ class ChatUserMessageProto$Type extends MessageType<ChatUserMessageProto> {
         /* ChatUserTextInputProto text_input = 1; */
         if (message.input.oneofKind === "textInput")
             ChatUserTextInputProto.internalBinaryWrite(message.input.textInput, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* ChatUserActivityInputProto activity = 2; */
-        if (message.input.oneofKind === "activity")
-            ChatUserActivityInputProto.internalBinaryWrite(message.input.activity, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* ChatUserActivityInputProto activity_input = 2; */
+        if (message.input.oneofKind === "activityInput")
+            ChatUserActivityInputProto.internalBinaryWrite(message.input.activityInput, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

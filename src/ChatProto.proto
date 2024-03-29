@@ -128,7 +128,7 @@ message ChatActivityIntroProto {
 message ChatUserMessageProto {
   oneof input {
     ChatUserTextInputProto text_input = 1;
-    ChatUserActivityInputProto activity = 2;
+    ChatUserActivityInputProto activity_input = 2;
   }
 }
 

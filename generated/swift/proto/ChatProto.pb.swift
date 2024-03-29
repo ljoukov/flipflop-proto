@@ -703,19 +703,19 @@ struct ChatUserMessageProto {
     set {input = .textInput(newValue)}
   }
 
-  var activity: ChatUserActivityInputProto {
+  var activityInput: ChatUserActivityInputProto {
     get {
-      if case .activity(let v)? = input {return v}
+      if case .activityInput(let v)? = input {return v}
       return ChatUserActivityInputProto()
     }
-    set {input = .activity(newValue)}
+    set {input = .activityInput(newValue)}
   }
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_Input: Equatable {
     case textInput(ChatUserTextInputProto)
-    case activity(ChatUserActivityInputProto)
+    case activityInput(ChatUserActivityInputProto)
 
   #if !swift(>=4.1)
     static func ==(lhs: ChatUserMessageProto.OneOf_Input, rhs: ChatUserMessageProto.OneOf_Input) -> Bool {
@@ -727,8 +727,8 @@ struct ChatUserMessageProto {
         guard case .textInput(let l) = lhs, case .textInput(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
-      case (.activity, .activity): return {
-        guard case .activity(let l) = lhs, case .activity(let r) = rhs else { preconditionFailure() }
+      case (.activityInput, .activityInput): return {
+        guard case .activityInput(let l) = lhs, case .activityInput(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       default: return false
@@ -1735,7 +1735,7 @@ extension ChatUserMessageProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
   static let protoMessageName: String = "ChatUserMessageProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "text_input"),
-    2: .same(proto: "activity"),
+    2: .standard(proto: "activity_input"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1762,12 +1762,12 @@ extension ChatUserMessageProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
         var hadOneofValue = false
         if let current = self.input {
           hadOneofValue = true
-          if case .activity(let m) = current {v = m}
+          if case .activityInput(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.input = .activity(v)
+          self.input = .activityInput(v)
         }
       }()
       default: break
@@ -1785,8 +1785,8 @@ extension ChatUserMessageProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
       guard case .textInput(let v)? = self.input else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
     }()
-    case .activity?: try {
-      guard case .activity(let v)? = self.input else { preconditionFailure() }
+    case .activityInput?: try {
+      guard case .activityInput(let v)? = self.input else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     }()
     case nil: break
