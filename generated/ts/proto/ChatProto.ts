@@ -235,7 +235,11 @@ export interface OpenChatResponseHeaderProto {
      */
     streamedMessageId: string;
     /**
-     * @generated from protobuf field: google.protobuf.Timestamp streamed_message_created_at = 3;
+     * @generated from protobuf field: string streamed_message_parent_message_id = 3;
+     */
+    streamedMessageParentMessageId: string;
+    /**
+     * @generated from protobuf field: google.protobuf.Timestamp streamed_message_created_at = 4;
      */
     streamedMessageCreatedAt?: Timestamp;
 }
@@ -1110,11 +1114,12 @@ class OpenChatResponseHeaderProto$Type extends MessageType<OpenChatResponseHeade
         super("OpenChatResponseHeaderProto", [
             { no: 1, name: "messages", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ChatMessageProto },
             { no: 2, name: "streamed_message_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "streamed_message_created_at", kind: "message", T: () => Timestamp }
+            { no: 3, name: "streamed_message_parent_message_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "streamed_message_created_at", kind: "message", T: () => Timestamp }
         ]);
     }
     create(value?: PartialMessage<OpenChatResponseHeaderProto>): OpenChatResponseHeaderProto {
-        const message = { messages: [], streamedMessageId: "" };
+        const message = { messages: [], streamedMessageId: "", streamedMessageParentMessageId: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<OpenChatResponseHeaderProto>(this, message, value);
@@ -1131,7 +1136,10 @@ class OpenChatResponseHeaderProto$Type extends MessageType<OpenChatResponseHeade
                 case /* string streamed_message_id */ 2:
                     message.streamedMessageId = reader.string();
                     break;
-                case /* google.protobuf.Timestamp streamed_message_created_at */ 3:
+                case /* string streamed_message_parent_message_id */ 3:
+                    message.streamedMessageParentMessageId = reader.string();
+                    break;
+                case /* google.protobuf.Timestamp streamed_message_created_at */ 4:
                     message.streamedMessageCreatedAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.streamedMessageCreatedAt);
                     break;
                 default:
@@ -1152,9 +1160,12 @@ class OpenChatResponseHeaderProto$Type extends MessageType<OpenChatResponseHeade
         /* string streamed_message_id = 2; */
         if (message.streamedMessageId !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.streamedMessageId);
-        /* google.protobuf.Timestamp streamed_message_created_at = 3; */
+        /* string streamed_message_parent_message_id = 3; */
+        if (message.streamedMessageParentMessageId !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.streamedMessageParentMessageId);
+        /* google.protobuf.Timestamp streamed_message_created_at = 4; */
         if (message.streamedMessageCreatedAt)
-            Timestamp.internalBinaryWrite(message.streamedMessageCreatedAt, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+            Timestamp.internalBinaryWrite(message.streamedMessageCreatedAt, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
