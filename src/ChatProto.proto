@@ -77,6 +77,7 @@ message OpenChatRequestProto {
 message OpenChatResponseHeaderProto {
   repeated ChatMessageProto messages = 1;
   string streamed_message_id = 2;
+  google.protobuf.Timestamp streamed_message_created_at = 3;
 }
 
 enum ChatSoloBotTypeProto {

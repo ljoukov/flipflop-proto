@@ -234,6 +234,10 @@ export interface OpenChatResponseHeaderProto {
      * @generated from protobuf field: string streamed_message_id = 2;
      */
     streamedMessageId: string;
+    /**
+     * @generated from protobuf field: google.protobuf.Timestamp streamed_message_created_at = 3;
+     */
+    streamedMessageCreatedAt?: Timestamp;
 }
 /**
  * @generated from protobuf message OpenChatWithUserMessageProto
@@ -1105,7 +1109,8 @@ class OpenChatResponseHeaderProto$Type extends MessageType<OpenChatResponseHeade
     constructor() {
         super("OpenChatResponseHeaderProto", [
             { no: 1, name: "messages", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ChatMessageProto },
-            { no: 2, name: "streamed_message_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "streamed_message_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "streamed_message_created_at", kind: "message", T: () => Timestamp }
         ]);
     }
     create(value?: PartialMessage<OpenChatResponseHeaderProto>): OpenChatResponseHeaderProto {
@@ -1126,6 +1131,9 @@ class OpenChatResponseHeaderProto$Type extends MessageType<OpenChatResponseHeade
                 case /* string streamed_message_id */ 2:
                     message.streamedMessageId = reader.string();
                     break;
+                case /* google.protobuf.Timestamp streamed_message_created_at */ 3:
+                    message.streamedMessageCreatedAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.streamedMessageCreatedAt);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -1144,6 +1152,9 @@ class OpenChatResponseHeaderProto$Type extends MessageType<OpenChatResponseHeade
         /* string streamed_message_id = 2; */
         if (message.streamedMessageId !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.streamedMessageId);
+        /* google.protobuf.Timestamp streamed_message_created_at = 3; */
+        if (message.streamedMessageCreatedAt)
+            Timestamp.internalBinaryWrite(message.streamedMessageCreatedAt, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

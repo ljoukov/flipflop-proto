@@ -493,9 +493,20 @@ struct OpenChatResponseHeaderProto {
 
   var streamedMessageID: String = String()
 
+  var streamedMessageCreatedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _streamedMessageCreatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_streamedMessageCreatedAt = newValue}
+  }
+  /// Returns true if `streamedMessageCreatedAt` has been explicitly set.
+  var hasStreamedMessageCreatedAt: Bool {return self._streamedMessageCreatedAt != nil}
+  /// Clears the value of `streamedMessageCreatedAt`. Subsequent reads from it will return its default value.
+  mutating func clearStreamedMessageCreatedAt() {self._streamedMessageCreatedAt = nil}
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
+
+  fileprivate var _streamedMessageCreatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
 struct OpenChatWithUserMessageProto {
@@ -1395,6 +1406,7 @@ extension OpenChatResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "messages"),
     2: .standard(proto: "streamed_message_id"),
+    3: .standard(proto: "streamed_message_created_at"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1405,24 +1417,33 @@ extension OpenChatResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
       switch fieldNumber {
       case 1: try { try decoder.decodeRepeatedMessageField(value: &self.messages) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.streamedMessageID) }()
+      case 3: try { try decoder.decodeSingularMessageField(value: &self._streamedMessageCreatedAt) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.messages.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.messages, fieldNumber: 1)
     }
     if !self.streamedMessageID.isEmpty {
       try visitor.visitSingularStringField(value: self.streamedMessageID, fieldNumber: 2)
     }
+    try { if let v = self._streamedMessageCreatedAt {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: OpenChatResponseHeaderProto, rhs: OpenChatResponseHeaderProto) -> Bool {
     if lhs.messages != rhs.messages {return false}
     if lhs.streamedMessageID != rhs.streamedMessageID {return false}
+    if lhs._streamedMessageCreatedAt != rhs._streamedMessageCreatedAt {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
