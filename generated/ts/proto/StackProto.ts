@@ -13,6 +13,99 @@ import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
+import { Timestamp } from "./google/protobuf/timestamp";
+import { Duration } from "./google/protobuf/duration";
+/**
+ * @generated from protobuf message StackStreamApiRequestProto
+ */
+export interface StackStreamApiRequestProto {
+    /**
+     * @generated from protobuf field: string encoded_user_auth = 1;
+     */
+    encodedUserAuth: string;
+    /**
+     * @generated from protobuf oneof: request
+     */
+    request: {
+        oneofKind: "create";
+        /**
+         * @generated from protobuf field: CreateStacksRequestProto create = 2;
+         */
+        create: CreateStacksRequestProto;
+    } | {
+        oneofKind: undefined;
+    };
+}
+/**
+ * @generated from protobuf message StackStreamApiResponseHeaderProto
+ */
+export interface StackStreamApiResponseHeaderProto {
+    /**
+     * If present the token was refreshed and the client should use this new one
+     * from now onwards.
+     *
+     * @generated from protobuf field: string refreshed_encoded_user_auth = 1;
+     */
+    refreshedEncodedUserAuth: string;
+    /**
+     * @generated from protobuf oneof: header
+     */
+    header: {
+        oneofKind: "createHeader";
+        /**
+         * @generated from protobuf field: CreateStacksResponseHeaderProto create_header = 2;
+         */
+        createHeader: CreateStacksResponseHeaderProto;
+    } | {
+        oneofKind: undefined;
+    };
+    /**
+     * @generated from protobuf field: map<string, google.protobuf.Duration> latencies = 100;
+     */
+    latencies: {
+        [key: string]: Duration;
+    };
+}
+/**
+ * @generated from protobuf message StackStreamApiResponseDeltaProto
+ */
+export interface StackStreamApiResponseDeltaProto {
+    /**
+     * @generated from protobuf oneof: response_delta
+     */
+    responseDelta: {
+        oneofKind: "createDelta";
+        /**
+         * @generated from protobuf field: CreateStacksResponseDeltaProto create_delta = 1;
+         */
+        createDelta: CreateStacksResponseDeltaProto;
+    } | {
+        oneofKind: undefined;
+    };
+}
+/**
+ * @generated from protobuf message CreateStacksRequestProto
+ */
+export interface CreateStacksRequestProto {
+    /**
+     * @generated from protobuf field: string prompt = 1;
+     */
+    prompt: string;
+}
+/**
+ * @generated from protobuf message CreateStacksResponseHeaderProto
+ */
+export interface CreateStacksResponseHeaderProto {
+}
+/**
+ * @generated from protobuf message CreateStacksResponseDeltaProto
+ */
+export interface CreateStacksResponseDeltaProto {
+    /**
+     * @generated from protobuf field: StackItemProto stack = 1;
+     */
+    stack?: StackItemProto;
+}
 /**
  * Presentable as a two-sided card.
  *
@@ -24,30 +117,38 @@ export interface StackItemProto {
      */
     id: string;
     /**
+     * @generated from protobuf field: string created_by = 2;
+     */
+    createdBy: string;
+    /**
+     * @generated from protobuf field: google.protobuf.Timestamp created_at = 3;
+     */
+    createdAt?: Timestamp;
+    /**
      * @generated from protobuf oneof: type
      */
     type: {
         oneofKind: "knowledge";
         /**
-         * @generated from protobuf field: KnowledgeItemProto knowledge = 2;
+         * @generated from protobuf field: KnowledgeItemProto knowledge = 10;
          */
         knowledge: KnowledgeItemProto;
     } | {
         oneofKind: "question";
         /**
-         * @generated from protobuf field: QuestionItemProto question = 3;
+         * @generated from protobuf field: QuestionItemProto question = 11;
          */
         question: QuestionItemProto;
     } | {
         oneofKind: "multipleChoice";
         /**
-         * @generated from protobuf field: MultipleChoiceItemProto multiple_choice = 4;
+         * @generated from protobuf field: MultipleChoiceItemProto multiple_choice = 12;
          */
         multipleChoice: MultipleChoiceItemProto;
     } | {
         oneofKind: "poll";
         /**
-         * @generated from protobuf field: PollItemProto poll = 5;
+         * @generated from protobuf field: PollItemProto poll = 13;
          */
         poll: PollItemProto;
     } | {
@@ -203,18 +304,331 @@ export interface PollOptionProto {
     votesFrac: number;
 }
 // @generated message type with reflection information, may provide speed optimized methods
+class StackStreamApiRequestProto$Type extends MessageType<StackStreamApiRequestProto> {
+    constructor() {
+        super("StackStreamApiRequestProto", [
+            { no: 1, name: "encoded_user_auth", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "create", kind: "message", oneof: "request", T: () => CreateStacksRequestProto }
+        ]);
+    }
+    create(value?: PartialMessage<StackStreamApiRequestProto>): StackStreamApiRequestProto {
+        const message = { encodedUserAuth: "", request: { oneofKind: undefined } };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<StackStreamApiRequestProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StackStreamApiRequestProto): StackStreamApiRequestProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string encoded_user_auth */ 1:
+                    message.encodedUserAuth = reader.string();
+                    break;
+                case /* CreateStacksRequestProto create */ 2:
+                    message.request = {
+                        oneofKind: "create",
+                        create: CreateStacksRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).create)
+                    };
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: StackStreamApiRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string encoded_user_auth = 1; */
+        if (message.encodedUserAuth !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.encodedUserAuth);
+        /* CreateStacksRequestProto create = 2; */
+        if (message.request.oneofKind === "create")
+            CreateStacksRequestProto.internalBinaryWrite(message.request.create, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message StackStreamApiRequestProto
+ */
+export const StackStreamApiRequestProto = new StackStreamApiRequestProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class StackStreamApiResponseHeaderProto$Type extends MessageType<StackStreamApiResponseHeaderProto> {
+    constructor() {
+        super("StackStreamApiResponseHeaderProto", [
+            { no: 1, name: "refreshed_encoded_user_auth", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "create_header", kind: "message", oneof: "header", T: () => CreateStacksResponseHeaderProto },
+            { no: 100, name: "latencies", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => Duration } }
+        ]);
+    }
+    create(value?: PartialMessage<StackStreamApiResponseHeaderProto>): StackStreamApiResponseHeaderProto {
+        const message = { refreshedEncodedUserAuth: "", header: { oneofKind: undefined }, latencies: {} };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<StackStreamApiResponseHeaderProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StackStreamApiResponseHeaderProto): StackStreamApiResponseHeaderProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string refreshed_encoded_user_auth */ 1:
+                    message.refreshedEncodedUserAuth = reader.string();
+                    break;
+                case /* CreateStacksResponseHeaderProto create_header */ 2:
+                    message.header = {
+                        oneofKind: "createHeader",
+                        createHeader: CreateStacksResponseHeaderProto.internalBinaryRead(reader, reader.uint32(), options, (message.header as any).createHeader)
+                    };
+                    break;
+                case /* map<string, google.protobuf.Duration> latencies */ 100:
+                    this.binaryReadMap100(message.latencies, reader, options);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    private binaryReadMap100(map: StackStreamApiResponseHeaderProto["latencies"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof StackStreamApiResponseHeaderProto["latencies"] | undefined, val: StackStreamApiResponseHeaderProto["latencies"][any] | undefined;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case 1:
+                    key = reader.string();
+                    break;
+                case 2:
+                    val = Duration.internalBinaryRead(reader, reader.uint32(), options);
+                    break;
+                default: throw new globalThis.Error("unknown map entry field for field StackStreamApiResponseHeaderProto.latencies");
+            }
+        }
+        map[key ?? ""] = val ?? Duration.create();
+    }
+    internalBinaryWrite(message: StackStreamApiResponseHeaderProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string refreshed_encoded_user_auth = 1; */
+        if (message.refreshedEncodedUserAuth !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.refreshedEncodedUserAuth);
+        /* CreateStacksResponseHeaderProto create_header = 2; */
+        if (message.header.oneofKind === "createHeader")
+            CreateStacksResponseHeaderProto.internalBinaryWrite(message.header.createHeader, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* map<string, google.protobuf.Duration> latencies = 100; */
+        for (let k of Object.keys(message.latencies)) {
+            writer.tag(100, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k);
+            writer.tag(2, WireType.LengthDelimited).fork();
+            Duration.internalBinaryWrite(message.latencies[k], writer, options);
+            writer.join().join();
+        }
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message StackStreamApiResponseHeaderProto
+ */
+export const StackStreamApiResponseHeaderProto = new StackStreamApiResponseHeaderProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class StackStreamApiResponseDeltaProto$Type extends MessageType<StackStreamApiResponseDeltaProto> {
+    constructor() {
+        super("StackStreamApiResponseDeltaProto", [
+            { no: 1, name: "create_delta", kind: "message", oneof: "responseDelta", T: () => CreateStacksResponseDeltaProto }
+        ]);
+    }
+    create(value?: PartialMessage<StackStreamApiResponseDeltaProto>): StackStreamApiResponseDeltaProto {
+        const message = { responseDelta: { oneofKind: undefined } };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<StackStreamApiResponseDeltaProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StackStreamApiResponseDeltaProto): StackStreamApiResponseDeltaProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* CreateStacksResponseDeltaProto create_delta */ 1:
+                    message.responseDelta = {
+                        oneofKind: "createDelta",
+                        createDelta: CreateStacksResponseDeltaProto.internalBinaryRead(reader, reader.uint32(), options, (message.responseDelta as any).createDelta)
+                    };
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: StackStreamApiResponseDeltaProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* CreateStacksResponseDeltaProto create_delta = 1; */
+        if (message.responseDelta.oneofKind === "createDelta")
+            CreateStacksResponseDeltaProto.internalBinaryWrite(message.responseDelta.createDelta, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message StackStreamApiResponseDeltaProto
+ */
+export const StackStreamApiResponseDeltaProto = new StackStreamApiResponseDeltaProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class CreateStacksRequestProto$Type extends MessageType<CreateStacksRequestProto> {
+    constructor() {
+        super("CreateStacksRequestProto", [
+            { no: 1, name: "prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<CreateStacksRequestProto>): CreateStacksRequestProto {
+        const message = { prompt: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<CreateStacksRequestProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CreateStacksRequestProto): CreateStacksRequestProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string prompt */ 1:
+                    message.prompt = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: CreateStacksRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string prompt = 1; */
+        if (message.prompt !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.prompt);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message CreateStacksRequestProto
+ */
+export const CreateStacksRequestProto = new CreateStacksRequestProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class CreateStacksResponseHeaderProto$Type extends MessageType<CreateStacksResponseHeaderProto> {
+    constructor() {
+        super("CreateStacksResponseHeaderProto", []);
+    }
+    create(value?: PartialMessage<CreateStacksResponseHeaderProto>): CreateStacksResponseHeaderProto {
+        const message = {};
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<CreateStacksResponseHeaderProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CreateStacksResponseHeaderProto): CreateStacksResponseHeaderProto {
+        return target ?? this.create();
+    }
+    internalBinaryWrite(message: CreateStacksResponseHeaderProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message CreateStacksResponseHeaderProto
+ */
+export const CreateStacksResponseHeaderProto = new CreateStacksResponseHeaderProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class CreateStacksResponseDeltaProto$Type extends MessageType<CreateStacksResponseDeltaProto> {
+    constructor() {
+        super("CreateStacksResponseDeltaProto", [
+            { no: 1, name: "stack", kind: "message", T: () => StackItemProto }
+        ]);
+    }
+    create(value?: PartialMessage<CreateStacksResponseDeltaProto>): CreateStacksResponseDeltaProto {
+        const message = {};
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<CreateStacksResponseDeltaProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CreateStacksResponseDeltaProto): CreateStacksResponseDeltaProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* StackItemProto stack */ 1:
+                    message.stack = StackItemProto.internalBinaryRead(reader, reader.uint32(), options, message.stack);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: CreateStacksResponseDeltaProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* StackItemProto stack = 1; */
+        if (message.stack)
+            StackItemProto.internalBinaryWrite(message.stack, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message CreateStacksResponseDeltaProto
+ */
+export const CreateStacksResponseDeltaProto = new CreateStacksResponseDeltaProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class StackItemProto$Type extends MessageType<StackItemProto> {
     constructor() {
         super("StackItemProto", [
             { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "knowledge", kind: "message", oneof: "type", T: () => KnowledgeItemProto },
-            { no: 3, name: "question", kind: "message", oneof: "type", T: () => QuestionItemProto },
-            { no: 4, name: "multiple_choice", kind: "message", oneof: "type", T: () => MultipleChoiceItemProto },
-            { no: 5, name: "poll", kind: "message", oneof: "type", T: () => PollItemProto }
+            { no: 2, name: "created_by", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "created_at", kind: "message", T: () => Timestamp },
+            { no: 10, name: "knowledge", kind: "message", oneof: "type", T: () => KnowledgeItemProto },
+            { no: 11, name: "question", kind: "message", oneof: "type", T: () => QuestionItemProto },
+            { no: 12, name: "multiple_choice", kind: "message", oneof: "type", T: () => MultipleChoiceItemProto },
+            { no: 13, name: "poll", kind: "message", oneof: "type", T: () => PollItemProto }
         ]);
     }
     create(value?: PartialMessage<StackItemProto>): StackItemProto {
-        const message = { id: "", type: { oneofKind: undefined } };
+        const message = { id: "", createdBy: "", type: { oneofKind: undefined } };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StackItemProto>(this, message, value);
@@ -228,25 +642,31 @@ class StackItemProto$Type extends MessageType<StackItemProto> {
                 case /* string id */ 1:
                     message.id = reader.string();
                     break;
-                case /* KnowledgeItemProto knowledge */ 2:
+                case /* string created_by */ 2:
+                    message.createdBy = reader.string();
+                    break;
+                case /* google.protobuf.Timestamp created_at */ 3:
+                    message.createdAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.createdAt);
+                    break;
+                case /* KnowledgeItemProto knowledge */ 10:
                     message.type = {
                         oneofKind: "knowledge",
                         knowledge: KnowledgeItemProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).knowledge)
                     };
                     break;
-                case /* QuestionItemProto question */ 3:
+                case /* QuestionItemProto question */ 11:
                     message.type = {
                         oneofKind: "question",
                         question: QuestionItemProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).question)
                     };
                     break;
-                case /* MultipleChoiceItemProto multiple_choice */ 4:
+                case /* MultipleChoiceItemProto multiple_choice */ 12:
                     message.type = {
                         oneofKind: "multipleChoice",
                         multipleChoice: MultipleChoiceItemProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).multipleChoice)
                     };
                     break;
-                case /* PollItemProto poll */ 5:
+                case /* PollItemProto poll */ 13:
                     message.type = {
                         oneofKind: "poll",
                         poll: PollItemProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).poll)
@@ -267,18 +687,24 @@ class StackItemProto$Type extends MessageType<StackItemProto> {
         /* string id = 1; */
         if (message.id !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.id);
-        /* KnowledgeItemProto knowledge = 2; */
+        /* string created_by = 2; */
+        if (message.createdBy !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.createdBy);
+        /* google.protobuf.Timestamp created_at = 3; */
+        if (message.createdAt)
+            Timestamp.internalBinaryWrite(message.createdAt, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* KnowledgeItemProto knowledge = 10; */
         if (message.type.oneofKind === "knowledge")
-            KnowledgeItemProto.internalBinaryWrite(message.type.knowledge, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* QuestionItemProto question = 3; */
+            KnowledgeItemProto.internalBinaryWrite(message.type.knowledge, writer.tag(10, WireType.LengthDelimited).fork(), options).join();
+        /* QuestionItemProto question = 11; */
         if (message.type.oneofKind === "question")
-            QuestionItemProto.internalBinaryWrite(message.type.question, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* MultipleChoiceItemProto multiple_choice = 4; */
+            QuestionItemProto.internalBinaryWrite(message.type.question, writer.tag(11, WireType.LengthDelimited).fork(), options).join();
+        /* MultipleChoiceItemProto multiple_choice = 12; */
         if (message.type.oneofKind === "multipleChoice")
-            MultipleChoiceItemProto.internalBinaryWrite(message.type.multipleChoice, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
-        /* PollItemProto poll = 5; */
+            MultipleChoiceItemProto.internalBinaryWrite(message.type.multipleChoice, writer.tag(12, WireType.LengthDelimited).fork(), options).join();
+        /* PollItemProto poll = 13; */
         if (message.type.oneofKind === "poll")
-            PollItemProto.internalBinaryWrite(message.type.poll, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+            PollItemProto.internalBinaryWrite(message.type.poll, writer.tag(13, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

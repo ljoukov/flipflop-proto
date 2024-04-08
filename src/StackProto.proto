@@ -1,13 +1,54 @@
 syntax = "proto3";
 
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+
+message StackStreamApiRequestProto {
+  string encoded_user_auth = 1;
+  oneof request {
+    CreateStacksRequestProto create = 2;
+  }
+}
+
+message StackStreamApiResponseHeaderProto {
+  // If present the token was refreshed and the client should use this new one
+  // from now onwards.
+  string refreshed_encoded_user_auth = 1;
+  oneof header {
+    CreateStacksResponseHeaderProto create_header = 2;
+  }
+  map<string, google.protobuf.Duration> latencies = 100;
+}
+
+message StackStreamApiResponseDeltaProto {
+  oneof response_delta {
+    CreateStacksResponseDeltaProto create_delta = 1;
+  }
+}
+
+message CreateStacksRequestProto {
+  string prompt = 1;
+}
+
+message CreateStacksResponseHeaderProto {}
+
+message CreateStacksResponseDeltaProto {
+  StackItemProto stack = 1;
+}
+
 // Presentable as a two-sided card.
 message StackItemProto {
   string id = 1;
+
+  string created_by = 2;
+  google.protobuf.Timestamp created_at = 3;
+
+  // ID starts at 10
   oneof type {
-    KnowledgeItemProto knowledge = 2;
-    QuestionItemProto question = 3;
-    MultipleChoiceItemProto multiple_choice = 4;
-    PollItemProto poll = 5;
+    KnowledgeItemProto knowledge = 10;
+    QuestionItemProto question = 11;
+    MultipleChoiceItemProto multiple_choice = 12;
+    PollItemProto poll = 13;
   }
 }
 
