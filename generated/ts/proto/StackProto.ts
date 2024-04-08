@@ -102,9 +102,23 @@ export interface CreateStacksResponseHeaderProto {
  */
 export interface CreateStacksResponseDeltaProto {
     /**
-     * @generated from protobuf field: StackItemProto stack = 1;
+     * @generated from protobuf oneof: type
      */
-    stack?: StackItemProto;
+    type: {
+        oneofKind: "stackDelta";
+        /**
+         * @generated from protobuf field: StackItemProto stack_delta = 1;
+         */
+        stackDelta: StackItemProto;
+    } | {
+        oneofKind: "separator";
+        /**
+         * @generated from protobuf field: bool separator = 2;
+         */
+        separator: boolean;
+    } | {
+        oneofKind: undefined;
+    };
 }
 /**
  * Presentable as a two-sided card.
@@ -571,11 +585,12 @@ export const CreateStacksResponseHeaderProto = new CreateStacksResponseHeaderPro
 class CreateStacksResponseDeltaProto$Type extends MessageType<CreateStacksResponseDeltaProto> {
     constructor() {
         super("CreateStacksResponseDeltaProto", [
-            { no: 1, name: "stack", kind: "message", T: () => StackItemProto }
+            { no: 1, name: "stack_delta", kind: "message", oneof: "type", T: () => StackItemProto },
+            { no: 2, name: "separator", kind: "scalar", oneof: "type", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
     create(value?: PartialMessage<CreateStacksResponseDeltaProto>): CreateStacksResponseDeltaProto {
-        const message = {};
+        const message = { type: { oneofKind: undefined } };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<CreateStacksResponseDeltaProto>(this, message, value);
@@ -586,8 +601,17 @@ class CreateStacksResponseDeltaProto$Type extends MessageType<CreateStacksRespon
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* StackItemProto stack */ 1:
-                    message.stack = StackItemProto.internalBinaryRead(reader, reader.uint32(), options, message.stack);
+                case /* StackItemProto stack_delta */ 1:
+                    message.type = {
+                        oneofKind: "stackDelta",
+                        stackDelta: StackItemProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).stackDelta)
+                    };
+                    break;
+                case /* bool separator */ 2:
+                    message.type = {
+                        oneofKind: "separator",
+                        separator: reader.bool()
+                    };
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -601,9 +625,12 @@ class CreateStacksResponseDeltaProto$Type extends MessageType<CreateStacksRespon
         return message;
     }
     internalBinaryWrite(message: CreateStacksResponseDeltaProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* StackItemProto stack = 1; */
-        if (message.stack)
-            StackItemProto.internalBinaryWrite(message.stack, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* StackItemProto stack_delta = 1; */
+        if (message.type.oneofKind === "stackDelta")
+            StackItemProto.internalBinaryWrite(message.type.stackDelta, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* bool separator = 2; */
+        if (message.type.oneofKind === "separator")
+            writer.tag(2, WireType.Varint).bool(message.type.separator);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

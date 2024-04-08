@@ -33,7 +33,10 @@ message CreateStacksRequestProto {
 message CreateStacksResponseHeaderProto {}
 
 message CreateStacksResponseDeltaProto {
-  StackItemProto stack = 1;
+  oneof type {
+    StackItemProto stack_delta = 1;
+    bool separator = 2;
+  }
 }
 
 // Presentable as a two-sided card.

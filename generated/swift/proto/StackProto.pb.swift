@@ -169,20 +169,51 @@ struct CreateStacksResponseDeltaProto {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var stack: StackItemProto {
-    get {return _stack ?? StackItemProto()}
-    set {_stack = newValue}
+  var type: CreateStacksResponseDeltaProto.OneOf_Type? = nil
+
+  var stackDelta: StackItemProto {
+    get {
+      if case .stackDelta(let v)? = type {return v}
+      return StackItemProto()
+    }
+    set {type = .stackDelta(newValue)}
   }
-  /// Returns true if `stack` has been explicitly set.
-  var hasStack: Bool {return self._stack != nil}
-  /// Clears the value of `stack`. Subsequent reads from it will return its default value.
-  mutating func clearStack() {self._stack = nil}
+
+  var separator: Bool {
+    get {
+      if case .separator(let v)? = type {return v}
+      return false
+    }
+    set {type = .separator(newValue)}
+  }
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  enum OneOf_Type: Equatable {
+    case stackDelta(StackItemProto)
+    case separator(Bool)
 
-  fileprivate var _stack: StackItemProto? = nil
+  #if !swift(>=4.1)
+    static func ==(lhs: CreateStacksResponseDeltaProto.OneOf_Type, rhs: CreateStacksResponseDeltaProto.OneOf_Type) -> Bool {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch (lhs, rhs) {
+      case (.stackDelta, .stackDelta): return {
+        guard case .stackDelta(let l) = lhs, case .stackDelta(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.separator, .separator): return {
+        guard case .separator(let l) = lhs, case .separator(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      default: return false
+      }
+    }
+  #endif
+  }
+
+  init() {}
 }
 
 /// Presentable as a two-sided card.
@@ -410,6 +441,7 @@ extension StackStreamApiResponseDeltaProto.OneOf_ResponseDelta: @unchecked Senda
 extension CreateStacksRequestProto: @unchecked Sendable {}
 extension CreateStacksResponseHeaderProto: @unchecked Sendable {}
 extension CreateStacksResponseDeltaProto: @unchecked Sendable {}
+extension CreateStacksResponseDeltaProto.OneOf_Type: @unchecked Sendable {}
 extension StackItemProto: @unchecked Sendable {}
 extension StackItemProto.OneOf_Type: @unchecked Sendable {}
 extension KnowledgeItemProto: @unchecked Sendable {}
@@ -638,7 +670,8 @@ extension CreateStacksResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobuf.
 extension CreateStacksResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "CreateStacksResponseDeltaProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "stack"),
+    1: .standard(proto: "stack_delta"),
+    2: .same(proto: "separator"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -647,7 +680,27 @@ extension CreateStacksResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf._
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularMessageField(value: &self._stack) }()
+      case 1: try {
+        var v: StackItemProto?
+        var hadOneofValue = false
+        if let current = self.type {
+          hadOneofValue = true
+          if case .stackDelta(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.type = .stackDelta(v)
+        }
+      }()
+      case 2: try {
+        var v: Bool?
+        try decoder.decodeSingularBoolField(value: &v)
+        if let v = v {
+          if self.type != nil {try decoder.handleConflictingOneOf()}
+          self.type = .separator(v)
+        }
+      }()
       default: break
       }
     }
@@ -658,14 +711,22 @@ extension CreateStacksResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf._
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    try { if let v = self._stack {
+    switch self.type {
+    case .stackDelta?: try {
+      guard case .stackDelta(let v)? = self.type else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    } }()
+    }()
+    case .separator?: try {
+      guard case .separator(let v)? = self.type else { preconditionFailure() }
+      try visitor.visitSingularBoolField(value: v, fieldNumber: 2)
+    }()
+    case nil: break
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: CreateStacksResponseDeltaProto, rhs: CreateStacksResponseDeltaProto) -> Bool {
-    if lhs._stack != rhs._stack {return false}
+    if lhs.type != rhs.type {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

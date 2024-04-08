@@ -15,7 +15,7 @@ from google.protobuf import duration_pb2 as google_dot_protobuf_dot_duration__pb
 from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x10StackProto.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"o\n\x1aStackStreamApiRequestProto\x12\x19\n\x11\x65ncoded_user_auth\x18\x01 \x01(\t\x12+\n\x06\x63reate\x18\x02 \x01(\x0b\x32\x19.CreateStacksRequestProtoH\x00\x42\t\n\x07request\"\xa0\x02\n!StackStreamApiResponseHeaderProto\x12#\n\x1brefreshed_encoded_user_auth\x18\x01 \x01(\t\x12\x39\n\rcreate_header\x18\x02 \x01(\x0b\x32 .CreateStacksResponseHeaderProtoH\x00\x12\x44\n\tlatencies\x18\x64 \x03(\x0b\x32\x31.StackStreamApiResponseHeaderProto.LatenciesEntry\x1aK\n\x0eLatenciesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12(\n\x05value\x18\x02 \x01(\x0b\x32\x19.google.protobuf.Duration:\x02\x38\x01\x42\x08\n\x06header\"m\n StackStreamApiResponseDeltaProto\x12\x37\n\x0c\x63reate_delta\x18\x01 \x01(\x0b\x32\x1f.CreateStacksResponseDeltaProtoH\x00\x42\x10\n\x0eresponse_delta\"*\n\x18\x43reateStacksRequestProto\x12\x0e\n\x06prompt\x18\x01 \x01(\t\"!\n\x1f\x43reateStacksResponseHeaderProto\"@\n\x1e\x43reateStacksResponseDeltaProto\x12\x1e\n\x05stack\x18\x01 \x01(\x0b\x32\x0f.StackItemProto\"\x8f\x02\n\x0eStackItemProto\x12\n\n\x02id\x18\x01 \x01(\t\x12\x12\n\ncreated_by\x18\x02 \x01(\t\x12.\n\ncreated_at\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12(\n\tknowledge\x18\n \x01(\x0b\x32\x13.KnowledgeItemProtoH\x00\x12&\n\x08question\x18\x0b \x01(\x0b\x32\x12.QuestionItemProtoH\x00\x12\x33\n\x0fmultiple_choice\x18\x0c \x01(\x0b\x32\x18.MultipleChoiceItemProtoH\x00\x12\x1e\n\x04poll\x18\r \x01(\x0b\x32\x0e.PollItemProtoH\x00\x42\x06\n\x04type\"[\n\x12KnowledgeItemProto\x12\r\n\x05title\x18\x01 \x01(\t\x12\x13\n\x0btitle_emoji\x18\x02 \x01(\t\x12\x0c\n\x04text\x18\x03 \x01(\t\x12\x13\n\x0b\x65xplanation\x18\x04 \x01(\t\"Y\n\x11QuestionItemProto\x12\r\n\x05title\x18\x01 \x01(\t\x12\x13\n\x0btitle_emoji\x18\x02 \x01(\t\x12\x10\n\x08question\x18\x03 \x01(\t\x12\x0e\n\x06\x61nswer\x18\x04 \x01(\t\"\xbd\x01\n\x17MultipleChoiceItemProto\x12\r\n\x05title\x18\x01 \x01(\t\x12\x13\n\x0btitle_emoji\x18\x02 \x01(\t\x12\x10\n\x08question\x18\x03 \x01(\t\x12+\n\x07options\x18\x04 \x03(\x0b\x32\x1a.MultipleChoiceOptionProto\x12\x1c\n\x14\x63orrect_answer_index\x18\x05 \x01(\x05\x12\x0c\n\x04hint\x18\x06 \x01(\t\x12\x13\n\x0b\x65xplanation\x18\x07 \x01(\t\"7\n\x19MultipleChoiceOptionProto\x12\x0c\n\x04text\x18\x01 \x01(\t\x12\x0c\n\x04hint\x18\x02 \x01(\t\"|\n\rPollItemProto\x12\r\n\x05title\x18\x01 \x01(\t\x12\x13\n\x0btitle_emoji\x18\x02 \x01(\t\x12\x10\n\x08question\x18\x03 \x01(\t\x12!\n\x07options\x18\x04 \x03(\x0b\x32\x10.PollOptionProto\x12\x12\n\ncommentary\x18\x05 \x01(\t\"3\n\x0fPollOptionProto\x12\x0c\n\x04text\x18\x01 \x01(\t\x12\x12\n\nvotes_frac\x18\x02 \x01(\x02\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x10StackProto.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"o\n\x1aStackStreamApiRequestProto\x12\x19\n\x11\x65ncoded_user_auth\x18\x01 \x01(\t\x12+\n\x06\x63reate\x18\x02 \x01(\x0b\x32\x19.CreateStacksRequestProtoH\x00\x42\t\n\x07request\"\xa0\x02\n!StackStreamApiResponseHeaderProto\x12#\n\x1brefreshed_encoded_user_auth\x18\x01 \x01(\t\x12\x39\n\rcreate_header\x18\x02 \x01(\x0b\x32 .CreateStacksResponseHeaderProtoH\x00\x12\x44\n\tlatencies\x18\x64 \x03(\x0b\x32\x31.StackStreamApiResponseHeaderProto.LatenciesEntry\x1aK\n\x0eLatenciesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12(\n\x05value\x18\x02 \x01(\x0b\x32\x19.google.protobuf.Duration:\x02\x38\x01\x42\x08\n\x06header\"m\n StackStreamApiResponseDeltaProto\x12\x37\n\x0c\x63reate_delta\x18\x01 \x01(\x0b\x32\x1f.CreateStacksResponseDeltaProtoH\x00\x42\x10\n\x0eresponse_delta\"*\n\x18\x43reateStacksRequestProto\x12\x0e\n\x06prompt\x18\x01 \x01(\t\"!\n\x1f\x43reateStacksResponseHeaderProto\"e\n\x1e\x43reateStacksResponseDeltaProto\x12&\n\x0bstack_delta\x18\x01 \x01(\x0b\x32\x0f.StackItemProtoH\x00\x12\x13\n\tseparator\x18\x02 \x01(\x08H\x00\x42\x06\n\x04type\"\x8f\x02\n\x0eStackItemProto\x12\n\n\x02id\x18\x01 \x01(\t\x12\x12\n\ncreated_by\x18\x02 \x01(\t\x12.\n\ncreated_at\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12(\n\tknowledge\x18\n \x01(\x0b\x32\x13.KnowledgeItemProtoH\x00\x12&\n\x08question\x18\x0b \x01(\x0b\x32\x12.QuestionItemProtoH\x00\x12\x33\n\x0fmultiple_choice\x18\x0c \x01(\x0b\x32\x18.MultipleChoiceItemProtoH\x00\x12\x1e\n\x04poll\x18\r \x01(\x0b\x32\x0e.PollItemProtoH\x00\x42\x06\n\x04type\"[\n\x12KnowledgeItemProto\x12\r\n\x05title\x18\x01 \x01(\t\x12\x13\n\x0btitle_emoji\x18\x02 \x01(\t\x12\x0c\n\x04text\x18\x03 \x01(\t\x12\x13\n\x0b\x65xplanation\x18\x04 \x01(\t\"Y\n\x11QuestionItemProto\x12\r\n\x05title\x18\x01 \x01(\t\x12\x13\n\x0btitle_emoji\x18\x02 \x01(\t\x12\x10\n\x08question\x18\x03 \x01(\t\x12\x0e\n\x06\x61nswer\x18\x04 \x01(\t\"\xbd\x01\n\x17MultipleChoiceItemProto\x12\r\n\x05title\x18\x01 \x01(\t\x12\x13\n\x0btitle_emoji\x18\x02 \x01(\t\x12\x10\n\x08question\x18\x03 \x01(\t\x12+\n\x07options\x18\x04 \x03(\x0b\x32\x1a.MultipleChoiceOptionProto\x12\x1c\n\x14\x63orrect_answer_index\x18\x05 \x01(\x05\x12\x0c\n\x04hint\x18\x06 \x01(\t\x12\x13\n\x0b\x65xplanation\x18\x07 \x01(\t\"7\n\x19MultipleChoiceOptionProto\x12\x0c\n\x04text\x18\x01 \x01(\t\x12\x0c\n\x04hint\x18\x02 \x01(\t\"|\n\rPollItemProto\x12\r\n\x05title\x18\x01 \x01(\t\x12\x13\n\x0btitle_emoji\x18\x02 \x01(\t\x12\x10\n\x08question\x18\x03 \x01(\t\x12!\n\x07options\x18\x04 \x03(\x0b\x32\x10.PollOptionProto\x12\x12\n\ncommentary\x18\x05 \x01(\t\"3\n\x0fPollOptionProto\x12\x0c\n\x04text\x18\x01 \x01(\t\x12\x12\n\nvotes_frac\x18\x02 \x01(\x02\x62\x06proto3')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'StackProto_pb2', globals())
@@ -37,19 +37,19 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _CREATESTACKSRESPONSEHEADERPROTO._serialized_start=644
   _CREATESTACKSRESPONSEHEADERPROTO._serialized_end=677
   _CREATESTACKSRESPONSEDELTAPROTO._serialized_start=679
-  _CREATESTACKSRESPONSEDELTAPROTO._serialized_end=743
-  _STACKITEMPROTO._serialized_start=746
-  _STACKITEMPROTO._serialized_end=1017
-  _KNOWLEDGEITEMPROTO._serialized_start=1019
-  _KNOWLEDGEITEMPROTO._serialized_end=1110
-  _QUESTIONITEMPROTO._serialized_start=1112
-  _QUESTIONITEMPROTO._serialized_end=1201
-  _MULTIPLECHOICEITEMPROTO._serialized_start=1204
-  _MULTIPLECHOICEITEMPROTO._serialized_end=1393
-  _MULTIPLECHOICEOPTIONPROTO._serialized_start=1395
-  _MULTIPLECHOICEOPTIONPROTO._serialized_end=1450
-  _POLLITEMPROTO._serialized_start=1452
-  _POLLITEMPROTO._serialized_end=1576
-  _POLLOPTIONPROTO._serialized_start=1578
-  _POLLOPTIONPROTO._serialized_end=1629
+  _CREATESTACKSRESPONSEDELTAPROTO._serialized_end=780
+  _STACKITEMPROTO._serialized_start=783
+  _STACKITEMPROTO._serialized_end=1054
+  _KNOWLEDGEITEMPROTO._serialized_start=1056
+  _KNOWLEDGEITEMPROTO._serialized_end=1147
+  _QUESTIONITEMPROTO._serialized_start=1149
+  _QUESTIONITEMPROTO._serialized_end=1238
+  _MULTIPLECHOICEITEMPROTO._serialized_start=1241
+  _MULTIPLECHOICEITEMPROTO._serialized_end=1430
+  _MULTIPLECHOICEOPTIONPROTO._serialized_start=1432
+  _MULTIPLECHOICEOPTIONPROTO._serialized_end=1487
+  _POLLITEMPROTO._serialized_start=1489
+  _POLLITEMPROTO._serialized_end=1613
+  _POLLOPTIONPROTO._serialized_start=1615
+  _POLLOPTIONPROTO._serialized_end=1666
 # @@protoc_insertion_point(module_scope)
