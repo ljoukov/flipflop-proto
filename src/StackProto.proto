@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+// Presentable as a two-sided card.
+message StackItemProto {
+  string id = 1;
+  oneof type {
+    KnowledgeItemProto knowledge = 2;
+    QuestionItemProto question = 3;
+    MultipleChoiceItemProto multiple_choice = 4;
+    PollItemProto poll = 5;
+  }
+}
+
+// No user input assumed
+message KnowledgeItemProto {
+  string title = 1;
+  string title_emoji = 2;
+
+  string text = 3;
+
+  // Whole page explanation
+  string explanation = 4;
+}
+
+// Free text user input
+message QuestionItemProto {
+  string title = 1;
+  string title_emoji = 2;
+
+  string question = 3;
+
+  // Whole page explanation
+  string answer = 4;
+}
+
+// 2: True/False, 3: A/B/C or 4: 1/2/3/4 user input
+message MultipleChoiceItemProto {
+  string title = 1;
+  string title_emoji = 2;
+
+  string question = 3;
+  repeated MultipleChoiceOptionProto options = 4;
+  int32 correct_answer_index = 5;
+
+  // Short hint for the whole question
+  string hint = 6;
+
+  // Whole page explanation
+  string explanation = 7;
+}
+
+message MultipleChoiceOptionProto {
+  // Could be a label like True/False or a short sentence
+  string text = 1;
+
+  // Short text to show if this answer is selected.
+  string hint = 2;
+}
+
+// 2, 3 or 4 options to vote for
+message PollItemProto {
+  string title = 1;
+  string title_emoji = 2;
+
+  string question = 3;
+  repeated PollOptionProto options = 4;
+  string commentary = 5;
+}
+
+message PollOptionProto {
+  string text = 1;
+
+  // Fraction of votes this option received
+  float votes_frac = 2;
+}
