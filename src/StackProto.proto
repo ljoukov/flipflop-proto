@@ -84,7 +84,7 @@ message MultipleChoiceItemProto {
 
   string question = 3;
   repeated MultipleChoiceOptionProto options = 4;
-  int32 correct_answer_index = 5;
+  int32 correct_answer_number = 5;  // starts from 1.
 
   // Short hint for the whole question
   string hint = 6;

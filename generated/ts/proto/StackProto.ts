@@ -242,9 +242,9 @@ export interface MultipleChoiceItemProto {
      */
     options: MultipleChoiceOptionProto[];
     /**
-     * @generated from protobuf field: int32 correct_answer_index = 5;
+     * @generated from protobuf field: int32 correct_answer_number = 5;
      */
-    correctAnswerIndex: number;
+    correctAnswerNumber: number; // starts from 1.
     /**
      * Short hint for the whole question
      *
@@ -886,13 +886,13 @@ class MultipleChoiceItemProto$Type extends MessageType<MultipleChoiceItemProto> 
             { no: 2, name: "title_emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "question", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "options", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => MultipleChoiceOptionProto },
-            { no: 5, name: "correct_answer_index", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 5, name: "correct_answer_number", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 6, name: "hint", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 7, name: "explanation", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<MultipleChoiceItemProto>): MultipleChoiceItemProto {
-        const message = { title: "", titleEmoji: "", question: "", options: [], correctAnswerIndex: 0, hint: "", explanation: "" };
+        const message = { title: "", titleEmoji: "", question: "", options: [], correctAnswerNumber: 0, hint: "", explanation: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<MultipleChoiceItemProto>(this, message, value);
@@ -915,8 +915,8 @@ class MultipleChoiceItemProto$Type extends MessageType<MultipleChoiceItemProto> 
                 case /* repeated MultipleChoiceOptionProto options */ 4:
                     message.options.push(MultipleChoiceOptionProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
-                case /* int32 correct_answer_index */ 5:
-                    message.correctAnswerIndex = reader.int32();
+                case /* int32 correct_answer_number */ 5:
+                    message.correctAnswerNumber = reader.int32();
                     break;
                 case /* string hint */ 6:
                     message.hint = reader.string();
@@ -948,9 +948,9 @@ class MultipleChoiceItemProto$Type extends MessageType<MultipleChoiceItemProto> 
         /* repeated MultipleChoiceOptionProto options = 4; */
         for (let i = 0; i < message.options.length; i++)
             MultipleChoiceOptionProto.internalBinaryWrite(message.options[i], writer.tag(4, WireType.LengthDelimited).fork(), options).join();
-        /* int32 correct_answer_index = 5; */
-        if (message.correctAnswerIndex !== 0)
-            writer.tag(5, WireType.Varint).int32(message.correctAnswerIndex);
+        /* int32 correct_answer_number = 5; */
+        if (message.correctAnswerNumber !== 0)
+            writer.tag(5, WireType.Varint).int32(message.correctAnswerNumber);
         /* string hint = 6; */
         if (message.hint !== "")
             writer.tag(6, WireType.LengthDelimited).string(message.hint);

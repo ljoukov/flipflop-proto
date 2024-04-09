@@ -366,7 +366,8 @@ struct MultipleChoiceItemProto {
 
   var options: [MultipleChoiceOptionProto] = []
 
-  var correctAnswerIndex: Int32 = 0
+  /// starts from 1.
+  var correctAnswerNumber: Int32 = 0
 
   /// Short hint for the whole question
   var hint: String = String()
@@ -963,7 +964,7 @@ extension MultipleChoiceItemProto: SwiftProtobuf.Message, SwiftProtobuf._Message
     2: .standard(proto: "title_emoji"),
     3: .same(proto: "question"),
     4: .same(proto: "options"),
-    5: .standard(proto: "correct_answer_index"),
+    5: .standard(proto: "correct_answer_number"),
     6: .same(proto: "hint"),
     7: .same(proto: "explanation"),
   ]
@@ -978,7 +979,7 @@ extension MultipleChoiceItemProto: SwiftProtobuf.Message, SwiftProtobuf._Message
       case 2: try { try decoder.decodeSingularStringField(value: &self.titleEmoji) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.question) }()
       case 4: try { try decoder.decodeRepeatedMessageField(value: &self.options) }()
-      case 5: try { try decoder.decodeSingularInt32Field(value: &self.correctAnswerIndex) }()
+      case 5: try { try decoder.decodeSingularInt32Field(value: &self.correctAnswerNumber) }()
       case 6: try { try decoder.decodeSingularStringField(value: &self.hint) }()
       case 7: try { try decoder.decodeSingularStringField(value: &self.explanation) }()
       default: break
@@ -999,8 +1000,8 @@ extension MultipleChoiceItemProto: SwiftProtobuf.Message, SwiftProtobuf._Message
     if !self.options.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.options, fieldNumber: 4)
     }
-    if self.correctAnswerIndex != 0 {
-      try visitor.visitSingularInt32Field(value: self.correctAnswerIndex, fieldNumber: 5)
+    if self.correctAnswerNumber != 0 {
+      try visitor.visitSingularInt32Field(value: self.correctAnswerNumber, fieldNumber: 5)
     }
     if !self.hint.isEmpty {
       try visitor.visitSingularStringField(value: self.hint, fieldNumber: 6)
@@ -1016,7 +1017,7 @@ extension MultipleChoiceItemProto: SwiftProtobuf.Message, SwiftProtobuf._Message
     if lhs.titleEmoji != rhs.titleEmoji {return false}
     if lhs.question != rhs.question {return false}
     if lhs.options != rhs.options {return false}
-    if lhs.correctAnswerIndex != rhs.correctAnswerIndex {return false}
+    if lhs.correctAnswerNumber != rhs.correctAnswerNumber {return false}
     if lhs.hint != rhs.hint {return false}
     if lhs.explanation != rhs.explanation {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
