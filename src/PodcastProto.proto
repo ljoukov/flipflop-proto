@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+
+message PodcastStreamApiRequestProto {
+  string encoded_user_auth = 1;
+  oneof request {
+    CreatePodcastPlanRequestProto create_plan = 2;
+  }
+}
+
+message PodcastStreamApiResponseHeaderProto {
+  // If present the token was refreshed and the client should use this new one
+  // from now onwards.
+  string refreshed_encoded_user_auth = 1;
+  oneof header {
+    CreatePodcastPlanResponseHeaderProto create_plan_header = 2;
+  }
+  map<string, google.protobuf.Duration> latencies = 100;
+}
+
+message PodcastStreamApiResponseDeltaProto {
+  oneof response_delta {
+    CreatePodcastPlanResponseDeltaProto create_plan_delta = 1;
+  }
+}
+
+message CreatePodcastPlanRequestProto {
+  string prompt = 1;
+}
+
+message CreatePodcastPlanResponseHeaderProto {}
+
+message CreatePodcastPlanResponseDeltaProto {
+  oneof type {
+    bool separator = 1;
+    PodcastPlanProto plan = 2;
+  }
+}
+
+message PodcastPlanProto {
+  string id = 1;
+
+  string created_by = 2;
+  google.protobuf.Timestamp created_at = 3;
+
+  // ID starts at 10
+  string title = 10;
+  string title_emoji = 11;
+
+  string hook = 12;
+
+  repeated string segments = 13;
+}
