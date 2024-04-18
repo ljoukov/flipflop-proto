@@ -1,8 +1,0 @@
-syntax = "proto3";
-
-enum ColorTypeProto {
-  COLOR_TYPE_PROTO_UNDEFINED = 0;
-  COLOR_TYPE_PROTO_BLUE = 1;
-  COLOR_TYPE_PROTO_INDIGO = 2;
-  COLOR_TYPE_PROTO_GREEN = 3;
-}
