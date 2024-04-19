@@ -179,19 +179,19 @@ struct CreatePodcastPlanResponseDeltaProto {
     set {type = .separator(newValue)}
   }
 
-  var plan: PodcastPlanProto {
+  var planDelta: PodcastPlanProto {
     get {
-      if case .plan(let v)? = type {return v}
+      if case .planDelta(let v)? = type {return v}
       return PodcastPlanProto()
     }
-    set {type = .plan(newValue)}
+    set {type = .planDelta(newValue)}
   }
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_Type: Equatable {
     case separator(Bool)
-    case plan(PodcastPlanProto)
+    case planDelta(PodcastPlanProto)
 
   #if !swift(>=4.1)
     static func ==(lhs: CreatePodcastPlanResponseDeltaProto.OneOf_Type, rhs: CreatePodcastPlanResponseDeltaProto.OneOf_Type) -> Bool {
@@ -203,8 +203,8 @@ struct CreatePodcastPlanResponseDeltaProto {
         guard case .separator(let l) = lhs, case .separator(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
-      case (.plan, .plan): return {
-        guard case .plan(let l) = lhs, case .plan(let r) = rhs else { preconditionFailure() }
+      case (.planDelta, .planDelta): return {
+        guard case .planDelta(let l) = lhs, case .planDelta(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       default: return false
@@ -483,7 +483,7 @@ extension CreatePodcastPlanResponseDeltaProto: SwiftProtobuf.Message, SwiftProto
   static let protoMessageName: String = "CreatePodcastPlanResponseDeltaProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "separator"),
-    2: .same(proto: "plan"),
+    2: .standard(proto: "plan_delta"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -505,12 +505,12 @@ extension CreatePodcastPlanResponseDeltaProto: SwiftProtobuf.Message, SwiftProto
         var hadOneofValue = false
         if let current = self.type {
           hadOneofValue = true
-          if case .plan(let m) = current {v = m}
+          if case .planDelta(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.type = .plan(v)
+          self.type = .planDelta(v)
         }
       }()
       default: break
@@ -528,8 +528,8 @@ extension CreatePodcastPlanResponseDeltaProto: SwiftProtobuf.Message, SwiftProto
       guard case .separator(let v)? = self.type else { preconditionFailure() }
       try visitor.visitSingularBoolField(value: v, fieldNumber: 1)
     }()
-    case .plan?: try {
-      guard case .plan(let v)? = self.type else { preconditionFailure() }
+    case .planDelta?: try {
+      guard case .planDelta(let v)? = self.type else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     }()
     case nil: break

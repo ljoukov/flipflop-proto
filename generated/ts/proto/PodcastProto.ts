@@ -111,11 +111,11 @@ export interface CreatePodcastPlanResponseDeltaProto {
          */
         separator: boolean;
     } | {
-        oneofKind: "plan";
+        oneofKind: "planDelta";
         /**
-         * @generated from protobuf field: PodcastPlanProto plan = 2;
+         * @generated from protobuf field: PodcastPlanProto plan_delta = 2;
          */
-        plan: PodcastPlanProto;
+        planDelta: PodcastPlanProto;
     } | {
         oneofKind: undefined;
     };
@@ -424,7 +424,7 @@ class CreatePodcastPlanResponseDeltaProto$Type extends MessageType<CreatePodcast
     constructor() {
         super("CreatePodcastPlanResponseDeltaProto", [
             { no: 1, name: "separator", kind: "scalar", oneof: "type", T: 8 /*ScalarType.BOOL*/ },
-            { no: 2, name: "plan", kind: "message", oneof: "type", T: () => PodcastPlanProto }
+            { no: 2, name: "plan_delta", kind: "message", oneof: "type", T: () => PodcastPlanProto }
         ]);
     }
     create(value?: PartialMessage<CreatePodcastPlanResponseDeltaProto>): CreatePodcastPlanResponseDeltaProto {
@@ -445,10 +445,10 @@ class CreatePodcastPlanResponseDeltaProto$Type extends MessageType<CreatePodcast
                         separator: reader.bool()
                     };
                     break;
-                case /* PodcastPlanProto plan */ 2:
+                case /* PodcastPlanProto plan_delta */ 2:
                     message.type = {
-                        oneofKind: "plan",
-                        plan: PodcastPlanProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).plan)
+                        oneofKind: "planDelta",
+                        planDelta: PodcastPlanProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).planDelta)
                     };
                     break;
                 default:
@@ -466,9 +466,9 @@ class CreatePodcastPlanResponseDeltaProto$Type extends MessageType<CreatePodcast
         /* bool separator = 1; */
         if (message.type.oneofKind === "separator")
             writer.tag(1, WireType.Varint).bool(message.type.separator);
-        /* PodcastPlanProto plan = 2; */
-        if (message.type.oneofKind === "plan")
-            PodcastPlanProto.internalBinaryWrite(message.type.plan, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastPlanProto plan_delta = 2; */
+        if (message.type.oneofKind === "planDelta")
+            PodcastPlanProto.internalBinaryWrite(message.type.planDelta, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

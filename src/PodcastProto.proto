@@ -35,7 +35,7 @@ message CreatePodcastPlanResponseHeaderProto {}
 message CreatePodcastPlanResponseDeltaProto {
   oneof type {
     bool separator = 1;
-    PodcastPlanProto plan = 2;
+    PodcastPlanProto plan_delta = 2;
   }
 }
 
