@@ -7,6 +7,7 @@ message PodcastStreamApiRequestProto {
   string encoded_user_auth = 1;
   oneof request {
     CreatePodcastPreviewRequestProto create_preview = 2;
+    GeneratePodcastRequestProto generate = 3;
   }
 }
 
@@ -16,6 +17,7 @@ message PodcastStreamApiResponseHeaderProto {
   string refreshed_encoded_user_auth = 1;
   oneof header {
     CreatePodcastPreviewResponseHeaderProto create_preview_header = 2;
+    GeneratePodcastResponseHeaderProto generate = 3;
   }
   map<string, google.protobuf.Duration> latencies = 100;
 }
@@ -23,6 +25,7 @@ message PodcastStreamApiResponseHeaderProto {
 message PodcastStreamApiResponseDeltaProto {
   oneof response_delta {
     CreatePodcastPreviewResponseDeltaProto create_preview_delta = 1;
+    GeneratePodcastResponseDeltaProto generate_delta = 2;
   }
 }
 
@@ -41,6 +44,21 @@ message CreatePodcastPreviewResponseDeltaProto {
 
     // IDs start at 10
     PodcastPreviewProto preview_delta = 10;
+  }
+}
+
+message GeneratePodcastRequestProto {
+  string podcast_id = 1;
+}
+
+message GeneratePodcastResponseHeaderProto {}
+
+message GeneratePodcastResponseDeltaProto {
+  oneof type {
+    bool planning = 1;
+    bool producing_transcript = 2;
+    bool narrating = 3;
+    string audio_path = 4;
   }
 }
 
