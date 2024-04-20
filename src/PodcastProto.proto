@@ -66,17 +66,27 @@ message PodcastTranscriptEntry {
   string text = 2;
 }
 
+enum PodcastStateProto {
+  PODCAST_STATE_PROTO_UNKNOWN = 0;
+  PODCAST_STATE_PROTO_SYNOPSYS = 1;
+  PODCAST_STATE_PROTO_PLAN = 2;
+  PODCAST_STATE_PROTO_TRANSCRIPT = 3;
+  PODCAST_STATE_PROTO_AUDIO = 4;
+}
+
 message PodcastProto {
   string podcast_id = 1;
 
   string created_by = 2;
   google.protobuf.Timestamp created_at = 3;
 
-  string reasoning = 4;
-  string title = 5;
-  string title_emoji = 6;
-  string synopsis = 7;
+  PodcastStateProto state = 4;
 
-  string plan = 8;
-  repeated PodcastTranscriptEntry transcript = 9;
+  string reasoning = 5;
+  string title = 6;
+  string title_emoji = 7;
+  string synopsis = 8;
+
+  string plan = 9;
+  repeated PodcastTranscriptEntry transcript = 10;
 }

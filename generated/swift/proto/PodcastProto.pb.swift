@@ -64,6 +64,58 @@ extension PodcastHostProto: CaseIterable {
 
 #endif  // swift(>=4.2)
 
+enum PodcastStateProto: SwiftProtobuf.Enum {
+  typealias RawValue = Int
+  case unknown // = 0
+  case synopsys // = 1
+  case plan // = 2
+  case transcript // = 3
+  case audio // = 4
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .unknown
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .unknown
+    case 1: self = .synopsys
+    case 2: self = .plan
+    case 3: self = .transcript
+    case 4: self = .audio
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .unknown: return 0
+    case .synopsys: return 1
+    case .plan: return 2
+    case .transcript: return 3
+    case .audio: return 4
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+}
+
+#if swift(>=4.2)
+
+extension PodcastStateProto: CaseIterable {
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static var allCases: [PodcastStateProto] = [
+    .unknown,
+    .synopsys,
+    .plan,
+    .transcript,
+    .audio,
+  ]
+}
+
+#endif  // swift(>=4.2)
+
 struct PodcastStreamApiRequestProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -340,6 +392,8 @@ struct PodcastProto {
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
   mutating func clearCreatedAt() {self._createdAt = nil}
 
+  var state: PodcastStateProto = .unknown
+
   var reasoning: String = String()
 
   var title: String = String()
@@ -361,6 +415,7 @@ struct PodcastProto {
 
 #if swift(>=5.5) && canImport(_Concurrency)
 extension PodcastHostProto: @unchecked Sendable {}
+extension PodcastStateProto: @unchecked Sendable {}
 extension PodcastStreamApiRequestProto: @unchecked Sendable {}
 extension PodcastStreamApiRequestProto.OneOf_Request: @unchecked Sendable {}
 extension PodcastStreamApiResponseHeaderProto: @unchecked Sendable {}
@@ -383,6 +438,16 @@ extension PodcastHostProto: SwiftProtobuf._ProtoNameProviding {
     0: .same(proto: "PODCAST_HOST_PROTO_UNKNOWN"),
     1: .same(proto: "PODCAST_HOST_PROTO_MALE"),
     2: .same(proto: "PODCAST_HOST_PROTO_FEMALE"),
+  ]
+}
+
+extension PodcastStateProto: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "PODCAST_STATE_PROTO_UNKNOWN"),
+    1: .same(proto: "PODCAST_STATE_PROTO_SYNOPSYS"),
+    2: .same(proto: "PODCAST_STATE_PROTO_PLAN"),
+    3: .same(proto: "PODCAST_STATE_PROTO_TRANSCRIPT"),
+    4: .same(proto: "PODCAST_STATE_PROTO_AUDIO"),
   ]
 }
 
@@ -787,12 +852,13 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     1: .standard(proto: "podcast_id"),
     2: .standard(proto: "created_by"),
     3: .standard(proto: "created_at"),
-    4: .same(proto: "reasoning"),
-    5: .same(proto: "title"),
-    6: .standard(proto: "title_emoji"),
-    7: .same(proto: "synopsis"),
-    8: .same(proto: "plan"),
-    9: .same(proto: "transcript"),
+    4: .same(proto: "state"),
+    5: .same(proto: "reasoning"),
+    6: .same(proto: "title"),
+    7: .standard(proto: "title_emoji"),
+    8: .same(proto: "synopsis"),
+    9: .same(proto: "plan"),
+    10: .same(proto: "transcript"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -804,12 +870,13 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
       case 1: try { try decoder.decodeSingularStringField(value: &self.podcastID) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.createdBy) }()
       case 3: try { try decoder.decodeSingularMessageField(value: &self._createdAt) }()
-      case 4: try { try decoder.decodeSingularStringField(value: &self.reasoning) }()
-      case 5: try { try decoder.decodeSingularStringField(value: &self.title) }()
-      case 6: try { try decoder.decodeSingularStringField(value: &self.titleEmoji) }()
-      case 7: try { try decoder.decodeSingularStringField(value: &self.synopsis) }()
-      case 8: try { try decoder.decodeSingularStringField(value: &self.plan) }()
-      case 9: try { try decoder.decodeRepeatedMessageField(value: &self.transcript) }()
+      case 4: try { try decoder.decodeSingularEnumField(value: &self.state) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.reasoning) }()
+      case 6: try { try decoder.decodeSingularStringField(value: &self.title) }()
+      case 7: try { try decoder.decodeSingularStringField(value: &self.titleEmoji) }()
+      case 8: try { try decoder.decodeSingularStringField(value: &self.synopsis) }()
+      case 9: try { try decoder.decodeSingularStringField(value: &self.plan) }()
+      case 10: try { try decoder.decodeRepeatedMessageField(value: &self.transcript) }()
       default: break
       }
     }
@@ -829,23 +896,26 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     try { if let v = self._createdAt {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
     } }()
+    if self.state != .unknown {
+      try visitor.visitSingularEnumField(value: self.state, fieldNumber: 4)
+    }
     if !self.reasoning.isEmpty {
-      try visitor.visitSingularStringField(value: self.reasoning, fieldNumber: 4)
+      try visitor.visitSingularStringField(value: self.reasoning, fieldNumber: 5)
     }
     if !self.title.isEmpty {
-      try visitor.visitSingularStringField(value: self.title, fieldNumber: 5)
+      try visitor.visitSingularStringField(value: self.title, fieldNumber: 6)
     }
     if !self.titleEmoji.isEmpty {
-      try visitor.visitSingularStringField(value: self.titleEmoji, fieldNumber: 6)
+      try visitor.visitSingularStringField(value: self.titleEmoji, fieldNumber: 7)
     }
     if !self.synopsis.isEmpty {
-      try visitor.visitSingularStringField(value: self.synopsis, fieldNumber: 7)
+      try visitor.visitSingularStringField(value: self.synopsis, fieldNumber: 8)
     }
     if !self.plan.isEmpty {
-      try visitor.visitSingularStringField(value: self.plan, fieldNumber: 8)
+      try visitor.visitSingularStringField(value: self.plan, fieldNumber: 9)
     }
     if !self.transcript.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.transcript, fieldNumber: 9)
+      try visitor.visitRepeatedMessageField(value: self.transcript, fieldNumber: 10)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -854,6 +924,7 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     if lhs.podcastID != rhs.podcastID {return false}
     if lhs.createdBy != rhs.createdBy {return false}
     if lhs._createdAt != rhs._createdAt {return false}
+    if lhs.state != rhs.state {return false}
     if lhs.reasoning != rhs.reasoning {return false}
     if lhs.title != rhs.title {return false}
     if lhs.titleEmoji != rhs.titleEmoji {return false}
