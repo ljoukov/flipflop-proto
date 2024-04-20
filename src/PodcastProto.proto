@@ -80,13 +80,15 @@ message PodcastProto {
   string created_by = 2;
   google.protobuf.Timestamp created_at = 3;
 
-  PodcastStateProto state = 4;
+  string user_prompt = 4;
 
-  string reasoning = 5;
-  string title = 6;
-  string title_emoji = 7;
-  string synopsis = 8;
+  PodcastStateProto state = 5;
 
-  string plan = 9;
-  repeated PodcastTranscriptEntry transcript = 10;
+  string reasoning = 6;
+  string title = 7;
+  string title_emoji = 8;
+  string synopsis = 9;
+
+  string plan = 10;
+  repeated PodcastTranscriptEntry transcript = 11;
 }

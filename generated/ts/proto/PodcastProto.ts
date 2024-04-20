@@ -189,31 +189,35 @@ export interface PodcastProto {
      */
     createdAt?: Timestamp;
     /**
-     * @generated from protobuf field: PodcastStateProto state = 4;
+     * @generated from protobuf field: string user_prompt = 4;
+     */
+    userPrompt: string;
+    /**
+     * @generated from protobuf field: PodcastStateProto state = 5;
      */
     state: PodcastStateProto;
     /**
-     * @generated from protobuf field: string reasoning = 5;
+     * @generated from protobuf field: string reasoning = 6;
      */
     reasoning: string;
     /**
-     * @generated from protobuf field: string title = 6;
+     * @generated from protobuf field: string title = 7;
      */
     title: string;
     /**
-     * @generated from protobuf field: string title_emoji = 7;
+     * @generated from protobuf field: string title_emoji = 8;
      */
     titleEmoji: string;
     /**
-     * @generated from protobuf field: string synopsis = 8;
+     * @generated from protobuf field: string synopsis = 9;
      */
     synopsis: string;
     /**
-     * @generated from protobuf field: string plan = 9;
+     * @generated from protobuf field: string plan = 10;
      */
     plan: string;
     /**
-     * @generated from protobuf field: repeated PodcastTranscriptEntry transcript = 10;
+     * @generated from protobuf field: repeated PodcastTranscriptEntry transcript = 11;
      */
     transcript: PodcastTranscriptEntry[];
 }
@@ -736,17 +740,18 @@ class PodcastProto$Type extends MessageType<PodcastProto> {
             { no: 1, name: "podcast_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "created_by", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "created_at", kind: "message", T: () => Timestamp },
-            { no: 4, name: "state", kind: "enum", T: () => ["PodcastStateProto", PodcastStateProto, "PODCAST_STATE_PROTO_"] },
-            { no: 5, name: "reasoning", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 6, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 7, name: "title_emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 8, name: "synopsis", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 9, name: "plan", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 10, name: "transcript", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastTranscriptEntry }
+            { no: 4, name: "user_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "state", kind: "enum", T: () => ["PodcastStateProto", PodcastStateProto, "PODCAST_STATE_PROTO_"] },
+            { no: 6, name: "reasoning", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 7, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 8, name: "title_emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 9, name: "synopsis", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 10, name: "plan", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 11, name: "transcript", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastTranscriptEntry }
         ]);
     }
     create(value?: PartialMessage<PodcastProto>): PodcastProto {
-        const message = { podcastId: "", createdBy: "", state: 0, reasoning: "", title: "", titleEmoji: "", synopsis: "", plan: "", transcript: [] };
+        const message = { podcastId: "", createdBy: "", userPrompt: "", state: 0, reasoning: "", title: "", titleEmoji: "", synopsis: "", plan: "", transcript: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastProto>(this, message, value);
@@ -766,25 +771,28 @@ class PodcastProto$Type extends MessageType<PodcastProto> {
                 case /* google.protobuf.Timestamp created_at */ 3:
                     message.createdAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.createdAt);
                     break;
-                case /* PodcastStateProto state */ 4:
+                case /* string user_prompt */ 4:
+                    message.userPrompt = reader.string();
+                    break;
+                case /* PodcastStateProto state */ 5:
                     message.state = reader.int32();
                     break;
-                case /* string reasoning */ 5:
+                case /* string reasoning */ 6:
                     message.reasoning = reader.string();
                     break;
-                case /* string title */ 6:
+                case /* string title */ 7:
                     message.title = reader.string();
                     break;
-                case /* string title_emoji */ 7:
+                case /* string title_emoji */ 8:
                     message.titleEmoji = reader.string();
                     break;
-                case /* string synopsis */ 8:
+                case /* string synopsis */ 9:
                     message.synopsis = reader.string();
                     break;
-                case /* string plan */ 9:
+                case /* string plan */ 10:
                     message.plan = reader.string();
                     break;
-                case /* repeated PodcastTranscriptEntry transcript */ 10:
+                case /* repeated PodcastTranscriptEntry transcript */ 11:
                     message.transcript.push(PodcastTranscriptEntry.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
@@ -808,27 +816,30 @@ class PodcastProto$Type extends MessageType<PodcastProto> {
         /* google.protobuf.Timestamp created_at = 3; */
         if (message.createdAt)
             Timestamp.internalBinaryWrite(message.createdAt, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* PodcastStateProto state = 4; */
+        /* string user_prompt = 4; */
+        if (message.userPrompt !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.userPrompt);
+        /* PodcastStateProto state = 5; */
         if (message.state !== 0)
-            writer.tag(4, WireType.Varint).int32(message.state);
-        /* string reasoning = 5; */
+            writer.tag(5, WireType.Varint).int32(message.state);
+        /* string reasoning = 6; */
         if (message.reasoning !== "")
-            writer.tag(5, WireType.LengthDelimited).string(message.reasoning);
-        /* string title = 6; */
+            writer.tag(6, WireType.LengthDelimited).string(message.reasoning);
+        /* string title = 7; */
         if (message.title !== "")
-            writer.tag(6, WireType.LengthDelimited).string(message.title);
-        /* string title_emoji = 7; */
+            writer.tag(7, WireType.LengthDelimited).string(message.title);
+        /* string title_emoji = 8; */
         if (message.titleEmoji !== "")
-            writer.tag(7, WireType.LengthDelimited).string(message.titleEmoji);
-        /* string synopsis = 8; */
+            writer.tag(8, WireType.LengthDelimited).string(message.titleEmoji);
+        /* string synopsis = 9; */
         if (message.synopsis !== "")
-            writer.tag(8, WireType.LengthDelimited).string(message.synopsis);
-        /* string plan = 9; */
+            writer.tag(9, WireType.LengthDelimited).string(message.synopsis);
+        /* string plan = 10; */
         if (message.plan !== "")
-            writer.tag(9, WireType.LengthDelimited).string(message.plan);
-        /* repeated PodcastTranscriptEntry transcript = 10; */
+            writer.tag(10, WireType.LengthDelimited).string(message.plan);
+        /* repeated PodcastTranscriptEntry transcript = 11; */
         for (let i = 0; i < message.transcript.length; i++)
-            PodcastTranscriptEntry.internalBinaryWrite(message.transcript[i], writer.tag(10, WireType.LengthDelimited).fork(), options).join();
+            PodcastTranscriptEntry.internalBinaryWrite(message.transcript[i], writer.tag(11, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
