@@ -55,25 +55,6 @@ message PodcastPreviewProto {
   string synopsis = 6;
 }
 
-enum PodcastHostProto {
-  PODCAST_HOST_PROTO_UNKNOWN = 0;
-  PODCAST_HOST_PROTO_MALE = 1;
-  PODCAST_HOST_PROTO_FEMALE = 2;
-}
-
-message PodcastTranscriptEntry {
-  PodcastHostProto host = 1;
-  string text = 2;
-}
-
-enum PodcastStateProto {
-  PODCAST_STATE_PROTO_UNKNOWN = 0;
-  PODCAST_STATE_PROTO_SYNOPSYS = 1;
-  PODCAST_STATE_PROTO_PLAN = 2;
-  PODCAST_STATE_PROTO_TRANSCRIPT = 3;
-  PODCAST_STATE_PROTO_AUDIO = 4;
-}
-
 message PodcastProto {
   string podcast_id = 1;
 
@@ -91,5 +72,40 @@ message PodcastProto {
   string synopsis = 10;
 
   string plan = 11;
-  repeated PodcastTranscriptEntry transcript = 12;
+  PodcastTranscriptProto transcript = 12;
+}
+
+enum PodcastStateProto {
+  PODCAST_STATE_PROTO_UNKNOWN = 0;
+  PODCAST_STATE_PROTO_SYNOPSYS = 1;
+  PODCAST_STATE_PROTO_PLAN = 2;
+  PODCAST_STATE_PROTO_TRANSCRIPT = 3;
+  PODCAST_STATE_PROTO_AUDIO = 4;
+}
+
+message PodcastTranscriptProto {
+  repeated PodcastSectionTranscriptProto sections = 1;
+}
+
+message PodcastSectionTranscriptProto {
+  PodcastSectionTypeProto section_type = 1;
+  PodcastTranscriptEntryProto entries = 2;
+}
+
+enum PodcastSectionTypeProto {
+  PODCAST_SECTION_TYPE_PROTO_UNKNOWN = 0;
+  PODCAST_SECTION_TYPE_PROTO_INTRODUCTION = 1;
+  PODCAST_SECTION_TYPE_PROTO_SECTION = 2;
+  PODCAST_SECTION_TYPE_PROTO_CONCLUSION = 3;
+}
+
+message PodcastTranscriptEntryProto {
+  PodcastHostProto host = 1;
+  string text = 2;
+}
+
+enum PodcastHostProto {
+  PODCAST_HOST_PROTO_UNKNOWN = 0;
+  PODCAST_HOST_PROTO_MALE = 1;
+  PODCAST_HOST_PROTO_FEMALE = 2;
 }

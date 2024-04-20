@@ -20,50 +20,6 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
-enum PodcastHostProto: SwiftProtobuf.Enum {
-  typealias RawValue = Int
-  case unknown // = 0
-  case male // = 1
-  case female // = 2
-  case UNRECOGNIZED(Int)
-
-  init() {
-    self = .unknown
-  }
-
-  init?(rawValue: Int) {
-    switch rawValue {
-    case 0: self = .unknown
-    case 1: self = .male
-    case 2: self = .female
-    default: self = .UNRECOGNIZED(rawValue)
-    }
-  }
-
-  var rawValue: Int {
-    switch self {
-    case .unknown: return 0
-    case .male: return 1
-    case .female: return 2
-    case .UNRECOGNIZED(let i): return i
-    }
-  }
-
-}
-
-#if swift(>=4.2)
-
-extension PodcastHostProto: CaseIterable {
-  // The compiler won't synthesize support with the UNRECOGNIZED case.
-  static var allCases: [PodcastHostProto] = [
-    .unknown,
-    .male,
-    .female,
-  ]
-}
-
-#endif  // swift(>=4.2)
-
 enum PodcastStateProto: SwiftProtobuf.Enum {
   typealias RawValue = Int
   case unknown // = 0
@@ -111,6 +67,98 @@ extension PodcastStateProto: CaseIterable {
     .plan,
     .transcript,
     .audio,
+  ]
+}
+
+#endif  // swift(>=4.2)
+
+enum PodcastSectionTypeProto: SwiftProtobuf.Enum {
+  typealias RawValue = Int
+  case unknown // = 0
+  case introduction // = 1
+  case section // = 2
+  case conclusion // = 3
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .unknown
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .unknown
+    case 1: self = .introduction
+    case 2: self = .section
+    case 3: self = .conclusion
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .unknown: return 0
+    case .introduction: return 1
+    case .section: return 2
+    case .conclusion: return 3
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+}
+
+#if swift(>=4.2)
+
+extension PodcastSectionTypeProto: CaseIterable {
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static var allCases: [PodcastSectionTypeProto] = [
+    .unknown,
+    .introduction,
+    .section,
+    .conclusion,
+  ]
+}
+
+#endif  // swift(>=4.2)
+
+enum PodcastHostProto: SwiftProtobuf.Enum {
+  typealias RawValue = Int
+  case unknown // = 0
+  case male // = 1
+  case female // = 2
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .unknown
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .unknown
+    case 1: self = .male
+    case 2: self = .female
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .unknown: return 0
+    case .male: return 1
+    case .female: return 2
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+}
+
+#if swift(>=4.2)
+
+extension PodcastHostProto: CaseIterable {
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static var allCases: [PodcastHostProto] = [
+    .unknown,
+    .male,
+    .female,
   ]
 }
 
@@ -360,20 +408,6 @@ struct PodcastPreviewProto {
   fileprivate var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
-struct PodcastTranscriptEntry {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  var host: PodcastHostProto = .unknown
-
-  var text: String = String()
-
-  var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  init() {}
-}
-
 struct PodcastProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -415,7 +449,14 @@ struct PodcastProto {
 
   var plan: String = String()
 
-  var transcript: [PodcastTranscriptEntry] = []
+  var transcript: PodcastTranscriptProto {
+    get {return _transcript ?? PodcastTranscriptProto()}
+    set {_transcript = newValue}
+  }
+  /// Returns true if `transcript` has been explicitly set.
+  var hasTranscript: Bool {return self._transcript != nil}
+  /// Clears the value of `transcript`. Subsequent reads from it will return its default value.
+  mutating func clearTranscript() {self._transcript = nil}
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -423,11 +464,62 @@ struct PodcastProto {
 
   fileprivate var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
   fileprivate var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+  fileprivate var _transcript: PodcastTranscriptProto? = nil
+}
+
+struct PodcastTranscriptProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var sections: [PodcastSectionTranscriptProto] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct PodcastSectionTranscriptProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var sectionType: PodcastSectionTypeProto = .unknown
+
+  var entries: PodcastTranscriptEntryProto {
+    get {return _entries ?? PodcastTranscriptEntryProto()}
+    set {_entries = newValue}
+  }
+  /// Returns true if `entries` has been explicitly set.
+  var hasEntries: Bool {return self._entries != nil}
+  /// Clears the value of `entries`. Subsequent reads from it will return its default value.
+  mutating func clearEntries() {self._entries = nil}
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+
+  fileprivate var _entries: PodcastTranscriptEntryProto? = nil
+}
+
+struct PodcastTranscriptEntryProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var host: PodcastHostProto = .unknown
+
+  var text: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
 }
 
 #if swift(>=5.5) && canImport(_Concurrency)
-extension PodcastHostProto: @unchecked Sendable {}
 extension PodcastStateProto: @unchecked Sendable {}
+extension PodcastSectionTypeProto: @unchecked Sendable {}
+extension PodcastHostProto: @unchecked Sendable {}
 extension PodcastStreamApiRequestProto: @unchecked Sendable {}
 extension PodcastStreamApiRequestProto.OneOf_Request: @unchecked Sendable {}
 extension PodcastStreamApiResponseHeaderProto: @unchecked Sendable {}
@@ -439,19 +531,13 @@ extension CreatePodcastPreviewResponseHeaderProto: @unchecked Sendable {}
 extension CreatePodcastPreviewResponseDeltaProto: @unchecked Sendable {}
 extension CreatePodcastPreviewResponseDeltaProto.OneOf_Type: @unchecked Sendable {}
 extension PodcastPreviewProto: @unchecked Sendable {}
-extension PodcastTranscriptEntry: @unchecked Sendable {}
 extension PodcastProto: @unchecked Sendable {}
+extension PodcastTranscriptProto: @unchecked Sendable {}
+extension PodcastSectionTranscriptProto: @unchecked Sendable {}
+extension PodcastTranscriptEntryProto: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
-
-extension PodcastHostProto: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    0: .same(proto: "PODCAST_HOST_PROTO_UNKNOWN"),
-    1: .same(proto: "PODCAST_HOST_PROTO_MALE"),
-    2: .same(proto: "PODCAST_HOST_PROTO_FEMALE"),
-  ]
-}
 
 extension PodcastStateProto: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -460,6 +546,23 @@ extension PodcastStateProto: SwiftProtobuf._ProtoNameProviding {
     2: .same(proto: "PODCAST_STATE_PROTO_PLAN"),
     3: .same(proto: "PODCAST_STATE_PROTO_TRANSCRIPT"),
     4: .same(proto: "PODCAST_STATE_PROTO_AUDIO"),
+  ]
+}
+
+extension PodcastSectionTypeProto: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "PODCAST_SECTION_TYPE_PROTO_UNKNOWN"),
+    1: .same(proto: "PODCAST_SECTION_TYPE_PROTO_INTRODUCTION"),
+    2: .same(proto: "PODCAST_SECTION_TYPE_PROTO_SECTION"),
+    3: .same(proto: "PODCAST_SECTION_TYPE_PROTO_CONCLUSION"),
+  ]
+}
+
+extension PodcastHostProto: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "PODCAST_HOST_PROTO_UNKNOWN"),
+    1: .same(proto: "PODCAST_HOST_PROTO_MALE"),
+    2: .same(proto: "PODCAST_HOST_PROTO_FEMALE"),
   ]
 }
 
@@ -820,44 +923,6 @@ extension PodcastPreviewProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
   }
 }
 
-extension PodcastTranscriptEntry: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "PodcastTranscriptEntry"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "host"),
-    2: .same(proto: "text"),
-  ]
-
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularEnumField(value: &self.host) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.text) }()
-      default: break
-      }
-    }
-  }
-
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if self.host != .unknown {
-      try visitor.visitSingularEnumField(value: self.host, fieldNumber: 1)
-    }
-    if !self.text.isEmpty {
-      try visitor.visitSingularStringField(value: self.text, fieldNumber: 2)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  static func ==(lhs: PodcastTranscriptEntry, rhs: PodcastTranscriptEntry) -> Bool {
-    if lhs.host != rhs.host {return false}
-    if lhs.text != rhs.text {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
 extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "PodcastProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -892,7 +957,7 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
       case 9: try { try decoder.decodeSingularStringField(value: &self.titleEmoji) }()
       case 10: try { try decoder.decodeSingularStringField(value: &self.synopsis) }()
       case 11: try { try decoder.decodeSingularStringField(value: &self.plan) }()
-      case 12: try { try decoder.decodeRepeatedMessageField(value: &self.transcript) }()
+      case 12: try { try decoder.decodeSingularMessageField(value: &self._transcript) }()
       default: break
       }
     }
@@ -936,9 +1001,9 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     if !self.plan.isEmpty {
       try visitor.visitSingularStringField(value: self.plan, fieldNumber: 11)
     }
-    if !self.transcript.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.transcript, fieldNumber: 12)
-    }
+    try { if let v = self._transcript {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 12)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -954,7 +1019,119 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     if lhs.titleEmoji != rhs.titleEmoji {return false}
     if lhs.synopsis != rhs.synopsis {return false}
     if lhs.plan != rhs.plan {return false}
-    if lhs.transcript != rhs.transcript {return false}
+    if lhs._transcript != rhs._transcript {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension PodcastTranscriptProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastTranscriptProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "sections"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.sections) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.sections.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.sections, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PodcastTranscriptProto, rhs: PodcastTranscriptProto) -> Bool {
+    if lhs.sections != rhs.sections {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension PodcastSectionTranscriptProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastSectionTranscriptProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "section_type"),
+    2: .same(proto: "entries"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularEnumField(value: &self.sectionType) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._entries) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if self.sectionType != .unknown {
+      try visitor.visitSingularEnumField(value: self.sectionType, fieldNumber: 1)
+    }
+    try { if let v = self._entries {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PodcastSectionTranscriptProto, rhs: PodcastSectionTranscriptProto) -> Bool {
+    if lhs.sectionType != rhs.sectionType {return false}
+    if lhs._entries != rhs._entries {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension PodcastTranscriptEntryProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastTranscriptEntryProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "host"),
+    2: .same(proto: "text"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularEnumField(value: &self.host) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.text) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.host != .unknown {
+      try visitor.visitSingularEnumField(value: self.host, fieldNumber: 1)
+    }
+    if !self.text.isEmpty {
+      try visitor.visitSingularStringField(value: self.text, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PodcastTranscriptEntryProto, rhs: PodcastTranscriptEntryProto) -> Bool {
+    if lhs.host != rhs.host {return false}
+    if lhs.text != rhs.text {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
