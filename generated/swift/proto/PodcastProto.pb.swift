@@ -20,6 +20,50 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
+enum PodcastHostProto: SwiftProtobuf.Enum {
+  typealias RawValue = Int
+  case unknown // = 0
+  case male // = 1
+  case female // = 2
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .unknown
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .unknown
+    case 1: self = .male
+    case 2: self = .female
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .unknown: return 0
+    case .male: return 1
+    case .female: return 2
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+}
+
+#if swift(>=4.2)
+
+extension PodcastHostProto: CaseIterable {
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static var allCases: [PodcastHostProto] = [
+    .unknown,
+    .male,
+    .female,
+  ]
+}
+
+#endif  // swift(>=4.2)
+
 struct PodcastStreamApiRequestProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -29,18 +73,18 @@ struct PodcastStreamApiRequestProto {
 
   var request: PodcastStreamApiRequestProto.OneOf_Request? = nil
 
-  var createPlan: CreatePodcastPlanRequestProto {
+  var createPreview: CreatePodcastPreviewRequestProto {
     get {
-      if case .createPlan(let v)? = request {return v}
-      return CreatePodcastPlanRequestProto()
+      if case .createPreview(let v)? = request {return v}
+      return CreatePodcastPreviewRequestProto()
     }
-    set {request = .createPlan(newValue)}
+    set {request = .createPreview(newValue)}
   }
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_Request: Equatable {
-    case createPlan(CreatePodcastPlanRequestProto)
+    case createPreview(CreatePodcastPreviewRequestProto)
 
   #if !swift(>=4.1)
     static func ==(lhs: PodcastStreamApiRequestProto.OneOf_Request, rhs: PodcastStreamApiRequestProto.OneOf_Request) -> Bool {
@@ -48,8 +92,8 @@ struct PodcastStreamApiRequestProto {
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch (lhs, rhs) {
-      case (.createPlan, .createPlan): return {
-        guard case .createPlan(let l) = lhs, case .createPlan(let r) = rhs else { preconditionFailure() }
+      case (.createPreview, .createPreview): return {
+        guard case .createPreview(let l) = lhs, case .createPreview(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       }
@@ -71,12 +115,12 @@ struct PodcastStreamApiResponseHeaderProto {
 
   var header: PodcastStreamApiResponseHeaderProto.OneOf_Header? = nil
 
-  var createPlanHeader: CreatePodcastPlanResponseHeaderProto {
+  var createPreviewHeader: CreatePodcastPreviewResponseHeaderProto {
     get {
-      if case .createPlanHeader(let v)? = header {return v}
-      return CreatePodcastPlanResponseHeaderProto()
+      if case .createPreviewHeader(let v)? = header {return v}
+      return CreatePodcastPreviewResponseHeaderProto()
     }
-    set {header = .createPlanHeader(newValue)}
+    set {header = .createPreviewHeader(newValue)}
   }
 
   var latencies: Dictionary<String,SwiftProtobuf.Google_Protobuf_Duration> = [:]
@@ -84,7 +128,7 @@ struct PodcastStreamApiResponseHeaderProto {
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_Header: Equatable {
-    case createPlanHeader(CreatePodcastPlanResponseHeaderProto)
+    case createPreviewHeader(CreatePodcastPreviewResponseHeaderProto)
 
   #if !swift(>=4.1)
     static func ==(lhs: PodcastStreamApiResponseHeaderProto.OneOf_Header, rhs: PodcastStreamApiResponseHeaderProto.OneOf_Header) -> Bool {
@@ -92,8 +136,8 @@ struct PodcastStreamApiResponseHeaderProto {
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch (lhs, rhs) {
-      case (.createPlanHeader, .createPlanHeader): return {
-        guard case .createPlanHeader(let l) = lhs, case .createPlanHeader(let r) = rhs else { preconditionFailure() }
+      case (.createPreviewHeader, .createPreviewHeader): return {
+        guard case .createPreviewHeader(let l) = lhs, case .createPreviewHeader(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       }
@@ -111,18 +155,18 @@ struct PodcastStreamApiResponseDeltaProto {
 
   var responseDelta: PodcastStreamApiResponseDeltaProto.OneOf_ResponseDelta? = nil
 
-  var createPlanDelta: CreatePodcastPlanResponseDeltaProto {
+  var createPreviewDelta: CreatePodcastPreviewResponseDeltaProto {
     get {
-      if case .createPlanDelta(let v)? = responseDelta {return v}
-      return CreatePodcastPlanResponseDeltaProto()
+      if case .createPreviewDelta(let v)? = responseDelta {return v}
+      return CreatePodcastPreviewResponseDeltaProto()
     }
-    set {responseDelta = .createPlanDelta(newValue)}
+    set {responseDelta = .createPreviewDelta(newValue)}
   }
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_ResponseDelta: Equatable {
-    case createPlanDelta(CreatePodcastPlanResponseDeltaProto)
+    case createPreviewDelta(CreatePodcastPreviewResponseDeltaProto)
 
   #if !swift(>=4.1)
     static func ==(lhs: PodcastStreamApiResponseDeltaProto.OneOf_ResponseDelta, rhs: PodcastStreamApiResponseDeltaProto.OneOf_ResponseDelta) -> Bool {
@@ -130,8 +174,8 @@ struct PodcastStreamApiResponseDeltaProto {
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch (lhs, rhs) {
-      case (.createPlanDelta, .createPlanDelta): return {
-        guard case .createPlanDelta(let l) = lhs, case .createPlanDelta(let r) = rhs else { preconditionFailure() }
+      case (.createPreviewDelta, .createPreviewDelta): return {
+        guard case .createPreviewDelta(let l) = lhs, case .createPreviewDelta(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       }
@@ -142,7 +186,7 @@ struct PodcastStreamApiResponseDeltaProto {
   init() {}
 }
 
-struct CreatePodcastPlanRequestProto {
+struct CreatePodcastPreviewRequestProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -154,7 +198,7 @@ struct CreatePodcastPlanRequestProto {
   init() {}
 }
 
-struct CreatePodcastPlanResponseHeaderProto {
+struct CreatePodcastPreviewResponseHeaderProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -164,12 +208,12 @@ struct CreatePodcastPlanResponseHeaderProto {
   init() {}
 }
 
-struct CreatePodcastPlanResponseDeltaProto {
+struct CreatePodcastPreviewResponseDeltaProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var type: CreatePodcastPlanResponseDeltaProto.OneOf_Type? = nil
+  var type: CreatePodcastPreviewResponseDeltaProto.OneOf_Type? = nil
 
   var separator: Bool {
     get {
@@ -189,12 +233,12 @@ struct CreatePodcastPlanResponseDeltaProto {
   }
 
   /// IDs start at 10
-  var planDelta: PodcastPlanProto {
+  var previewDelta: PodcastPreviewProto {
     get {
-      if case .planDelta(let v)? = type {return v}
-      return PodcastPlanProto()
+      if case .previewDelta(let v)? = type {return v}
+      return PodcastPreviewProto()
     }
-    set {type = .planDelta(newValue)}
+    set {type = .previewDelta(newValue)}
   }
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -204,10 +248,10 @@ struct CreatePodcastPlanResponseDeltaProto {
     /// This is the last delta message
     case errorNoTopic(Bool)
     /// IDs start at 10
-    case planDelta(PodcastPlanProto)
+    case previewDelta(PodcastPreviewProto)
 
   #if !swift(>=4.1)
-    static func ==(lhs: CreatePodcastPlanResponseDeltaProto.OneOf_Type, rhs: CreatePodcastPlanResponseDeltaProto.OneOf_Type) -> Bool {
+    static func ==(lhs: CreatePodcastPreviewResponseDeltaProto.OneOf_Type, rhs: CreatePodcastPreviewResponseDeltaProto.OneOf_Type) -> Bool {
       // The use of inline closures is to circumvent an issue where the compiler
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
@@ -220,8 +264,8 @@ struct CreatePodcastPlanResponseDeltaProto {
         guard case .errorNoTopic(let l) = lhs, case .errorNoTopic(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
-      case (.planDelta, .planDelta): return {
-        guard case .planDelta(let l) = lhs, case .planDelta(let r) = rhs else { preconditionFailure() }
+      case (.previewDelta, .previewDelta): return {
+        guard case .previewDelta(let l) = lhs, case .previewDelta(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       default: return false
@@ -233,12 +277,12 @@ struct CreatePodcastPlanResponseDeltaProto {
   init() {}
 }
 
-struct PodcastPlanProto {
+struct PodcastPreviewProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var id: String = String()
+  var podcastID: String = String()
 
   var createdBy: String = String()
 
@@ -251,14 +295,62 @@ struct PodcastPlanProto {
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
   mutating func clearCreatedAt() {self._createdAt = nil}
 
-  /// ID starts at 10
   var title: String = String()
 
   var titleEmoji: String = String()
 
-  var hook: String = String()
+  var synopsis: String = String()
 
-  var segments: [String] = []
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+
+  fileprivate var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+}
+
+struct PodcastTranscriptEntry {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var host: PodcastHostProto = .unknown
+
+  var text: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct PodcastProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var podcastID: String = String()
+
+  var createdBy: String = String()
+
+  var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_createdAt = newValue}
+  }
+  /// Returns true if `createdAt` has been explicitly set.
+  var hasCreatedAt: Bool {return self._createdAt != nil}
+  /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
+  mutating func clearCreatedAt() {self._createdAt = nil}
+
+  var reasoning: String = String()
+
+  var title: String = String()
+
+  var titleEmoji: String = String()
+
+  var synopsis: String = String()
+
+  var plan: String = String()
+
+  var transcript: [PodcastTranscriptEntry] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -268,26 +360,37 @@ struct PodcastPlanProto {
 }
 
 #if swift(>=5.5) && canImport(_Concurrency)
+extension PodcastHostProto: @unchecked Sendable {}
 extension PodcastStreamApiRequestProto: @unchecked Sendable {}
 extension PodcastStreamApiRequestProto.OneOf_Request: @unchecked Sendable {}
 extension PodcastStreamApiResponseHeaderProto: @unchecked Sendable {}
 extension PodcastStreamApiResponseHeaderProto.OneOf_Header: @unchecked Sendable {}
 extension PodcastStreamApiResponseDeltaProto: @unchecked Sendable {}
 extension PodcastStreamApiResponseDeltaProto.OneOf_ResponseDelta: @unchecked Sendable {}
-extension CreatePodcastPlanRequestProto: @unchecked Sendable {}
-extension CreatePodcastPlanResponseHeaderProto: @unchecked Sendable {}
-extension CreatePodcastPlanResponseDeltaProto: @unchecked Sendable {}
-extension CreatePodcastPlanResponseDeltaProto.OneOf_Type: @unchecked Sendable {}
-extension PodcastPlanProto: @unchecked Sendable {}
+extension CreatePodcastPreviewRequestProto: @unchecked Sendable {}
+extension CreatePodcastPreviewResponseHeaderProto: @unchecked Sendable {}
+extension CreatePodcastPreviewResponseDeltaProto: @unchecked Sendable {}
+extension CreatePodcastPreviewResponseDeltaProto.OneOf_Type: @unchecked Sendable {}
+extension PodcastPreviewProto: @unchecked Sendable {}
+extension PodcastTranscriptEntry: @unchecked Sendable {}
+extension PodcastProto: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
+
+extension PodcastHostProto: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "PODCAST_HOST_PROTO_UNKNOWN"),
+    1: .same(proto: "PODCAST_HOST_PROTO_MALE"),
+    2: .same(proto: "PODCAST_HOST_PROTO_FEMALE"),
+  ]
+}
 
 extension PodcastStreamApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "PodcastStreamApiRequestProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "encoded_user_auth"),
-    2: .standard(proto: "create_plan"),
+    2: .standard(proto: "create_preview"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -298,16 +401,16 @@ extension PodcastStreamApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Me
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.encodedUserAuth) }()
       case 2: try {
-        var v: CreatePodcastPlanRequestProto?
+        var v: CreatePodcastPreviewRequestProto?
         var hadOneofValue = false
         if let current = self.request {
           hadOneofValue = true
-          if case .createPlan(let m) = current {v = m}
+          if case .createPreview(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.request = .createPlan(v)
+          self.request = .createPreview(v)
         }
       }()
       default: break
@@ -323,7 +426,7 @@ extension PodcastStreamApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Me
     if !self.encodedUserAuth.isEmpty {
       try visitor.visitSingularStringField(value: self.encodedUserAuth, fieldNumber: 1)
     }
-    try { if case .createPlan(let v)? = self.request {
+    try { if case .createPreview(let v)? = self.request {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     } }()
     try unknownFields.traverse(visitor: &visitor)
@@ -341,7 +444,7 @@ extension PodcastStreamApiResponseHeaderProto: SwiftProtobuf.Message, SwiftProto
   static let protoMessageName: String = "PodcastStreamApiResponseHeaderProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "refreshed_encoded_user_auth"),
-    2: .standard(proto: "create_plan_header"),
+    2: .standard(proto: "create_preview_header"),
     100: .same(proto: "latencies"),
   ]
 
@@ -353,16 +456,16 @@ extension PodcastStreamApiResponseHeaderProto: SwiftProtobuf.Message, SwiftProto
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.refreshedEncodedUserAuth) }()
       case 2: try {
-        var v: CreatePodcastPlanResponseHeaderProto?
+        var v: CreatePodcastPreviewResponseHeaderProto?
         var hadOneofValue = false
         if let current = self.header {
           hadOneofValue = true
-          if case .createPlanHeader(let m) = current {v = m}
+          if case .createPreviewHeader(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.header = .createPlanHeader(v)
+          self.header = .createPreviewHeader(v)
         }
       }()
       case 100: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.Google_Protobuf_Duration>.self, value: &self.latencies) }()
@@ -379,7 +482,7 @@ extension PodcastStreamApiResponseHeaderProto: SwiftProtobuf.Message, SwiftProto
     if !self.refreshedEncodedUserAuth.isEmpty {
       try visitor.visitSingularStringField(value: self.refreshedEncodedUserAuth, fieldNumber: 1)
     }
-    try { if case .createPlanHeader(let v)? = self.header {
+    try { if case .createPreviewHeader(let v)? = self.header {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     } }()
     if !self.latencies.isEmpty {
@@ -400,7 +503,7 @@ extension PodcastStreamApiResponseHeaderProto: SwiftProtobuf.Message, SwiftProto
 extension PodcastStreamApiResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "PodcastStreamApiResponseDeltaProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "create_plan_delta"),
+    1: .standard(proto: "create_preview_delta"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -410,16 +513,16 @@ extension PodcastStreamApiResponseDeltaProto: SwiftProtobuf.Message, SwiftProtob
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try {
-        var v: CreatePodcastPlanResponseDeltaProto?
+        var v: CreatePodcastPreviewResponseDeltaProto?
         var hadOneofValue = false
         if let current = self.responseDelta {
           hadOneofValue = true
-          if case .createPlanDelta(let m) = current {v = m}
+          if case .createPreviewDelta(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.responseDelta = .createPlanDelta(v)
+          self.responseDelta = .createPreviewDelta(v)
         }
       }()
       default: break
@@ -432,7 +535,7 @@ extension PodcastStreamApiResponseDeltaProto: SwiftProtobuf.Message, SwiftProtob
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    try { if case .createPlanDelta(let v)? = self.responseDelta {
+    try { if case .createPreviewDelta(let v)? = self.responseDelta {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
     } }()
     try unknownFields.traverse(visitor: &visitor)
@@ -445,8 +548,8 @@ extension PodcastStreamApiResponseDeltaProto: SwiftProtobuf.Message, SwiftProtob
   }
 }
 
-extension CreatePodcastPlanRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "CreatePodcastPlanRequestProto"
+extension CreatePodcastPreviewRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "CreatePodcastPreviewRequestProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "prompt"),
   ]
@@ -470,15 +573,15 @@ extension CreatePodcastPlanRequestProto: SwiftProtobuf.Message, SwiftProtobuf._M
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: CreatePodcastPlanRequestProto, rhs: CreatePodcastPlanRequestProto) -> Bool {
+  static func ==(lhs: CreatePodcastPreviewRequestProto, rhs: CreatePodcastPreviewRequestProto) -> Bool {
     if lhs.prompt != rhs.prompt {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
-extension CreatePodcastPlanResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "CreatePodcastPlanResponseHeaderProto"
+extension CreatePodcastPreviewResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "CreatePodcastPreviewResponseHeaderProto"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -490,18 +593,18 @@ extension CreatePodcastPlanResponseHeaderProto: SwiftProtobuf.Message, SwiftProt
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: CreatePodcastPlanResponseHeaderProto, rhs: CreatePodcastPlanResponseHeaderProto) -> Bool {
+  static func ==(lhs: CreatePodcastPreviewResponseHeaderProto, rhs: CreatePodcastPreviewResponseHeaderProto) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
-extension CreatePodcastPlanResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "CreatePodcastPlanResponseDeltaProto"
+extension CreatePodcastPreviewResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "CreatePodcastPreviewResponseDeltaProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "separator"),
     2: .standard(proto: "error_no_topic"),
-    10: .standard(proto: "plan_delta"),
+    10: .standard(proto: "preview_delta"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -527,16 +630,16 @@ extension CreatePodcastPlanResponseDeltaProto: SwiftProtobuf.Message, SwiftProto
         }
       }()
       case 10: try {
-        var v: PodcastPlanProto?
+        var v: PodcastPreviewProto?
         var hadOneofValue = false
         if let current = self.type {
           hadOneofValue = true
-          if case .planDelta(let m) = current {v = m}
+          if case .previewDelta(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.type = .planDelta(v)
+          self.type = .previewDelta(v)
         }
       }()
       default: break
@@ -558,8 +661,8 @@ extension CreatePodcastPlanResponseDeltaProto: SwiftProtobuf.Message, SwiftProto
       guard case .errorNoTopic(let v)? = self.type else { preconditionFailure() }
       try visitor.visitSingularBoolField(value: v, fieldNumber: 2)
     }()
-    case .planDelta?: try {
-      guard case .planDelta(let v)? = self.type else { preconditionFailure() }
+    case .previewDelta?: try {
+      guard case .previewDelta(let v)? = self.type else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
     }()
     case nil: break
@@ -567,23 +670,22 @@ extension CreatePodcastPlanResponseDeltaProto: SwiftProtobuf.Message, SwiftProto
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: CreatePodcastPlanResponseDeltaProto, rhs: CreatePodcastPlanResponseDeltaProto) -> Bool {
+  static func ==(lhs: CreatePodcastPreviewResponseDeltaProto, rhs: CreatePodcastPreviewResponseDeltaProto) -> Bool {
     if lhs.type != rhs.type {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
-extension PodcastPlanProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "PodcastPlanProto"
+extension PodcastPreviewProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastPreviewProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "id"),
+    1: .standard(proto: "podcast_id"),
     2: .standard(proto: "created_by"),
     3: .standard(proto: "created_at"),
-    10: .same(proto: "title"),
-    11: .standard(proto: "title_emoji"),
-    12: .same(proto: "hook"),
-    13: .same(proto: "segments"),
+    4: .same(proto: "title"),
+    5: .standard(proto: "title_emoji"),
+    6: .same(proto: "synopsis"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -592,13 +694,12 @@ extension PodcastPlanProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.id) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self.podcastID) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.createdBy) }()
       case 3: try { try decoder.decodeSingularMessageField(value: &self._createdAt) }()
-      case 10: try { try decoder.decodeSingularStringField(value: &self.title) }()
-      case 11: try { try decoder.decodeSingularStringField(value: &self.titleEmoji) }()
-      case 12: try { try decoder.decodeSingularStringField(value: &self.hook) }()
-      case 13: try { try decoder.decodeRepeatedStringField(value: &self.segments) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.title) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.titleEmoji) }()
+      case 6: try { try decoder.decodeSingularStringField(value: &self.synopsis) }()
       default: break
       }
     }
@@ -609,8 +710,8 @@ extension PodcastPlanProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    if !self.id.isEmpty {
-      try visitor.visitSingularStringField(value: self.id, fieldNumber: 1)
+    if !self.podcastID.isEmpty {
+      try visitor.visitSingularStringField(value: self.podcastID, fieldNumber: 1)
     }
     if !self.createdBy.isEmpty {
       try visitor.visitSingularStringField(value: self.createdBy, fieldNumber: 2)
@@ -619,28 +720,146 @@ extension PodcastPlanProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
       try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
     } }()
     if !self.title.isEmpty {
-      try visitor.visitSingularStringField(value: self.title, fieldNumber: 10)
+      try visitor.visitSingularStringField(value: self.title, fieldNumber: 4)
     }
     if !self.titleEmoji.isEmpty {
-      try visitor.visitSingularStringField(value: self.titleEmoji, fieldNumber: 11)
+      try visitor.visitSingularStringField(value: self.titleEmoji, fieldNumber: 5)
     }
-    if !self.hook.isEmpty {
-      try visitor.visitSingularStringField(value: self.hook, fieldNumber: 12)
-    }
-    if !self.segments.isEmpty {
-      try visitor.visitRepeatedStringField(value: self.segments, fieldNumber: 13)
+    if !self.synopsis.isEmpty {
+      try visitor.visitSingularStringField(value: self.synopsis, fieldNumber: 6)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: PodcastPlanProto, rhs: PodcastPlanProto) -> Bool {
-    if lhs.id != rhs.id {return false}
+  static func ==(lhs: PodcastPreviewProto, rhs: PodcastPreviewProto) -> Bool {
+    if lhs.podcastID != rhs.podcastID {return false}
     if lhs.createdBy != rhs.createdBy {return false}
     if lhs._createdAt != rhs._createdAt {return false}
     if lhs.title != rhs.title {return false}
     if lhs.titleEmoji != rhs.titleEmoji {return false}
-    if lhs.hook != rhs.hook {return false}
-    if lhs.segments != rhs.segments {return false}
+    if lhs.synopsis != rhs.synopsis {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension PodcastTranscriptEntry: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastTranscriptEntry"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "host"),
+    2: .same(proto: "text"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularEnumField(value: &self.host) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.text) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.host != .unknown {
+      try visitor.visitSingularEnumField(value: self.host, fieldNumber: 1)
+    }
+    if !self.text.isEmpty {
+      try visitor.visitSingularStringField(value: self.text, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PodcastTranscriptEntry, rhs: PodcastTranscriptEntry) -> Bool {
+    if lhs.host != rhs.host {return false}
+    if lhs.text != rhs.text {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "podcast_id"),
+    2: .standard(proto: "created_by"),
+    3: .standard(proto: "created_at"),
+    4: .same(proto: "reasoning"),
+    5: .same(proto: "title"),
+    6: .standard(proto: "title_emoji"),
+    7: .same(proto: "synopsis"),
+    8: .same(proto: "plan"),
+    9: .same(proto: "transcript"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.podcastID) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.createdBy) }()
+      case 3: try { try decoder.decodeSingularMessageField(value: &self._createdAt) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.reasoning) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.title) }()
+      case 6: try { try decoder.decodeSingularStringField(value: &self.titleEmoji) }()
+      case 7: try { try decoder.decodeSingularStringField(value: &self.synopsis) }()
+      case 8: try { try decoder.decodeSingularStringField(value: &self.plan) }()
+      case 9: try { try decoder.decodeRepeatedMessageField(value: &self.transcript) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.podcastID.isEmpty {
+      try visitor.visitSingularStringField(value: self.podcastID, fieldNumber: 1)
+    }
+    if !self.createdBy.isEmpty {
+      try visitor.visitSingularStringField(value: self.createdBy, fieldNumber: 2)
+    }
+    try { if let v = self._createdAt {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+    } }()
+    if !self.reasoning.isEmpty {
+      try visitor.visitSingularStringField(value: self.reasoning, fieldNumber: 4)
+    }
+    if !self.title.isEmpty {
+      try visitor.visitSingularStringField(value: self.title, fieldNumber: 5)
+    }
+    if !self.titleEmoji.isEmpty {
+      try visitor.visitSingularStringField(value: self.titleEmoji, fieldNumber: 6)
+    }
+    if !self.synopsis.isEmpty {
+      try visitor.visitSingularStringField(value: self.synopsis, fieldNumber: 7)
+    }
+    if !self.plan.isEmpty {
+      try visitor.visitSingularStringField(value: self.plan, fieldNumber: 8)
+    }
+    if !self.transcript.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.transcript, fieldNumber: 9)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PodcastProto, rhs: PodcastProto) -> Bool {
+    if lhs.podcastID != rhs.podcastID {return false}
+    if lhs.createdBy != rhs.createdBy {return false}
+    if lhs._createdAt != rhs._createdAt {return false}
+    if lhs.reasoning != rhs.reasoning {return false}
+    if lhs.title != rhs.title {return false}
+    if lhs.titleEmoji != rhs.titleEmoji {return false}
+    if lhs.synopsis != rhs.synopsis {return false}
+    if lhs.plan != rhs.plan {return false}
+    if lhs.transcript != rhs.transcript {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

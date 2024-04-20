@@ -6,7 +6,7 @@ import "google/protobuf/timestamp.proto";
 message PodcastStreamApiRequestProto {
   string encoded_user_auth = 1;
   oneof request {
-    CreatePodcastPlanRequestProto create_plan = 2;
+    CreatePodcastPreviewRequestProto create_preview = 2;
   }
 }
 
@@ -15,24 +15,24 @@ message PodcastStreamApiResponseHeaderProto {
   // from now onwards.
   string refreshed_encoded_user_auth = 1;
   oneof header {
-    CreatePodcastPlanResponseHeaderProto create_plan_header = 2;
+    CreatePodcastPreviewResponseHeaderProto create_preview_header = 2;
   }
   map<string, google.protobuf.Duration> latencies = 100;
 }
 
 message PodcastStreamApiResponseDeltaProto {
   oneof response_delta {
-    CreatePodcastPlanResponseDeltaProto create_plan_delta = 1;
+    CreatePodcastPreviewResponseDeltaProto create_preview_delta = 1;
   }
 }
 
-message CreatePodcastPlanRequestProto {
+message CreatePodcastPreviewRequestProto {
   string prompt = 1;
 }
 
-message CreatePodcastPlanResponseHeaderProto {}
+message CreatePodcastPreviewResponseHeaderProto {}
 
-message CreatePodcastPlanResponseDeltaProto {
+message CreatePodcastPreviewResponseDeltaProto {
   oneof type {
     bool separator = 1;
 
@@ -40,21 +40,43 @@ message CreatePodcastPlanResponseDeltaProto {
     bool error_no_topic = 2;
 
     // IDs start at 10
-    PodcastPlanProto plan_delta = 10;
+    PodcastPreviewProto preview_delta = 10;
   }
 }
 
-message PodcastPlanProto {
-  string id = 1;
+message PodcastPreviewProto {
+  string podcast_id = 1;
 
   string created_by = 2;
   google.protobuf.Timestamp created_at = 3;
 
-  // ID starts at 10
-  string title = 10;
-  string title_emoji = 11;
+  string title = 4;
+  string title_emoji = 5;
+  string synopsis = 6;
+}
 
-  string hook = 12;
+enum PodcastHostProto {
+  PODCAST_HOST_PROTO_UNKNOWN = 0;
+  PODCAST_HOST_PROTO_MALE = 1;
+  PODCAST_HOST_PROTO_FEMALE = 2;
+}
 
-  repeated string segments = 13;
+message PodcastTranscriptEntry {
+  PodcastHostProto host = 1;
+  string text = 2;
+}
+
+message PodcastProto {
+  string podcast_id = 1;
+
+  string created_by = 2;
+  google.protobuf.Timestamp created_at = 3;
+
+  string reasoning = 4;
+  string title = 5;
+  string title_emoji = 6;
+  string synopsis = 7;
+
+  string plan = 8;
+  repeated PodcastTranscriptEntry transcript = 9;
 }
