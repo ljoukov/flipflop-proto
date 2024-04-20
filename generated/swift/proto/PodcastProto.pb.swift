@@ -392,6 +392,15 @@ struct PodcastProto {
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
   mutating func clearCreatedAt() {self._createdAt = nil}
 
+  var updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_updatedAt = newValue}
+  }
+  /// Returns true if `updatedAt` has been explicitly set.
+  var hasUpdatedAt: Bool {return self._updatedAt != nil}
+  /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
+  mutating func clearUpdatedAt() {self._updatedAt = nil}
+
   var userPrompt: String = String()
 
   var state: PodcastStateProto = .unknown
@@ -413,6 +422,7 @@ struct PodcastProto {
   init() {}
 
   fileprivate var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+  fileprivate var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
 #if swift(>=5.5) && canImport(_Concurrency)
@@ -854,14 +864,15 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     1: .standard(proto: "podcast_id"),
     2: .standard(proto: "created_by"),
     3: .standard(proto: "created_at"),
-    4: .standard(proto: "user_prompt"),
-    5: .same(proto: "state"),
-    6: .same(proto: "reasoning"),
-    7: .same(proto: "title"),
-    8: .standard(proto: "title_emoji"),
-    9: .same(proto: "synopsis"),
-    10: .same(proto: "plan"),
-    11: .same(proto: "transcript"),
+    4: .standard(proto: "updated_at"),
+    5: .standard(proto: "user_prompt"),
+    6: .same(proto: "state"),
+    7: .same(proto: "reasoning"),
+    8: .same(proto: "title"),
+    9: .standard(proto: "title_emoji"),
+    10: .same(proto: "synopsis"),
+    11: .same(proto: "plan"),
+    12: .same(proto: "transcript"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -873,14 +884,15 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
       case 1: try { try decoder.decodeSingularStringField(value: &self.podcastID) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.createdBy) }()
       case 3: try { try decoder.decodeSingularMessageField(value: &self._createdAt) }()
-      case 4: try { try decoder.decodeSingularStringField(value: &self.userPrompt) }()
-      case 5: try { try decoder.decodeSingularEnumField(value: &self.state) }()
-      case 6: try { try decoder.decodeSingularStringField(value: &self.reasoning) }()
-      case 7: try { try decoder.decodeSingularStringField(value: &self.title) }()
-      case 8: try { try decoder.decodeSingularStringField(value: &self.titleEmoji) }()
-      case 9: try { try decoder.decodeSingularStringField(value: &self.synopsis) }()
-      case 10: try { try decoder.decodeSingularStringField(value: &self.plan) }()
-      case 11: try { try decoder.decodeRepeatedMessageField(value: &self.transcript) }()
+      case 4: try { try decoder.decodeSingularMessageField(value: &self._updatedAt) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.userPrompt) }()
+      case 6: try { try decoder.decodeSingularEnumField(value: &self.state) }()
+      case 7: try { try decoder.decodeSingularStringField(value: &self.reasoning) }()
+      case 8: try { try decoder.decodeSingularStringField(value: &self.title) }()
+      case 9: try { try decoder.decodeSingularStringField(value: &self.titleEmoji) }()
+      case 10: try { try decoder.decodeSingularStringField(value: &self.synopsis) }()
+      case 11: try { try decoder.decodeSingularStringField(value: &self.plan) }()
+      case 12: try { try decoder.decodeRepeatedMessageField(value: &self.transcript) }()
       default: break
       }
     }
@@ -900,29 +912,32 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     try { if let v = self._createdAt {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
     } }()
+    try { if let v = self._updatedAt {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+    } }()
     if !self.userPrompt.isEmpty {
-      try visitor.visitSingularStringField(value: self.userPrompt, fieldNumber: 4)
+      try visitor.visitSingularStringField(value: self.userPrompt, fieldNumber: 5)
     }
     if self.state != .unknown {
-      try visitor.visitSingularEnumField(value: self.state, fieldNumber: 5)
+      try visitor.visitSingularEnumField(value: self.state, fieldNumber: 6)
     }
     if !self.reasoning.isEmpty {
-      try visitor.visitSingularStringField(value: self.reasoning, fieldNumber: 6)
+      try visitor.visitSingularStringField(value: self.reasoning, fieldNumber: 7)
     }
     if !self.title.isEmpty {
-      try visitor.visitSingularStringField(value: self.title, fieldNumber: 7)
+      try visitor.visitSingularStringField(value: self.title, fieldNumber: 8)
     }
     if !self.titleEmoji.isEmpty {
-      try visitor.visitSingularStringField(value: self.titleEmoji, fieldNumber: 8)
+      try visitor.visitSingularStringField(value: self.titleEmoji, fieldNumber: 9)
     }
     if !self.synopsis.isEmpty {
-      try visitor.visitSingularStringField(value: self.synopsis, fieldNumber: 9)
+      try visitor.visitSingularStringField(value: self.synopsis, fieldNumber: 10)
     }
     if !self.plan.isEmpty {
-      try visitor.visitSingularStringField(value: self.plan, fieldNumber: 10)
+      try visitor.visitSingularStringField(value: self.plan, fieldNumber: 11)
     }
     if !self.transcript.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.transcript, fieldNumber: 11)
+      try visitor.visitRepeatedMessageField(value: self.transcript, fieldNumber: 12)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -931,6 +946,7 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     if lhs.podcastID != rhs.podcastID {return false}
     if lhs.createdBy != rhs.createdBy {return false}
     if lhs._createdAt != rhs._createdAt {return false}
+    if lhs._updatedAt != rhs._updatedAt {return false}
     if lhs.userPrompt != rhs.userPrompt {return false}
     if lhs.state != rhs.state {return false}
     if lhs.reasoning != rhs.reasoning {return false}

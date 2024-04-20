@@ -79,16 +79,17 @@ message PodcastProto {
 
   string created_by = 2;
   google.protobuf.Timestamp created_at = 3;
+  google.protobuf.Timestamp updated_at = 4;
 
-  string user_prompt = 4;
+  string user_prompt = 5;
 
-  PodcastStateProto state = 5;
+  PodcastStateProto state = 6;
 
-  string reasoning = 6;
-  string title = 7;
-  string title_emoji = 8;
-  string synopsis = 9;
+  string reasoning = 7;
+  string title = 8;
+  string title_emoji = 9;
+  string synopsis = 10;
 
-  string plan = 10;
-  repeated PodcastTranscriptEntry transcript = 11;
+  string plan = 11;
+  repeated PodcastTranscriptEntry transcript = 12;
 }
