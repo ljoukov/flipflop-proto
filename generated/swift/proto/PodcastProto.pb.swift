@@ -179,6 +179,16 @@ struct CreatePodcastPlanResponseDeltaProto {
     set {type = .separator(newValue)}
   }
 
+  /// This is the last delta message
+  var errorNoTopic: Bool {
+    get {
+      if case .errorNoTopic(let v)? = type {return v}
+      return false
+    }
+    set {type = .errorNoTopic(newValue)}
+  }
+
+  /// IDs start at 10
   var planDelta: PodcastPlanProto {
     get {
       if case .planDelta(let v)? = type {return v}
@@ -191,6 +201,9 @@ struct CreatePodcastPlanResponseDeltaProto {
 
   enum OneOf_Type: Equatable {
     case separator(Bool)
+    /// This is the last delta message
+    case errorNoTopic(Bool)
+    /// IDs start at 10
     case planDelta(PodcastPlanProto)
 
   #if !swift(>=4.1)
@@ -201,6 +214,10 @@ struct CreatePodcastPlanResponseDeltaProto {
       switch (lhs, rhs) {
       case (.separator, .separator): return {
         guard case .separator(let l) = lhs, case .separator(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.errorNoTopic, .errorNoTopic): return {
+        guard case .errorNoTopic(let l) = lhs, case .errorNoTopic(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       case (.planDelta, .planDelta): return {
@@ -483,7 +500,8 @@ extension CreatePodcastPlanResponseDeltaProto: SwiftProtobuf.Message, SwiftProto
   static let protoMessageName: String = "CreatePodcastPlanResponseDeltaProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "separator"),
-    2: .standard(proto: "plan_delta"),
+    2: .standard(proto: "error_no_topic"),
+    10: .standard(proto: "plan_delta"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -501,6 +519,14 @@ extension CreatePodcastPlanResponseDeltaProto: SwiftProtobuf.Message, SwiftProto
         }
       }()
       case 2: try {
+        var v: Bool?
+        try decoder.decodeSingularBoolField(value: &v)
+        if let v = v {
+          if self.type != nil {try decoder.handleConflictingOneOf()}
+          self.type = .errorNoTopic(v)
+        }
+      }()
+      case 10: try {
         var v: PodcastPlanProto?
         var hadOneofValue = false
         if let current = self.type {
@@ -528,9 +554,13 @@ extension CreatePodcastPlanResponseDeltaProto: SwiftProtobuf.Message, SwiftProto
       guard case .separator(let v)? = self.type else { preconditionFailure() }
       try visitor.visitSingularBoolField(value: v, fieldNumber: 1)
     }()
+    case .errorNoTopic?: try {
+      guard case .errorNoTopic(let v)? = self.type else { preconditionFailure() }
+      try visitor.visitSingularBoolField(value: v, fieldNumber: 2)
+    }()
     case .planDelta?: try {
       guard case .planDelta(let v)? = self.type else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
     }()
     case nil: break
     }

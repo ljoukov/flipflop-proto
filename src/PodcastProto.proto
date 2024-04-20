@@ -35,7 +35,12 @@ message CreatePodcastPlanResponseHeaderProto {}
 message CreatePodcastPlanResponseDeltaProto {
   oneof type {
     bool separator = 1;
-    PodcastPlanProto plan_delta = 2;
+
+    // This is the last delta message
+    bool error_no_topic = 2;
+
+    // IDs start at 10
+    PodcastPlanProto plan_delta = 10;
   }
 }
 
