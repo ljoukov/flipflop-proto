@@ -301,9 +301,9 @@ export interface PodcastSectionTranscriptProto {
      */
     sectionType: PodcastSectionTypeProto;
     /**
-     * @generated from protobuf field: PodcastTranscriptEntryProto entries = 2;
+     * @generated from protobuf field: repeated PodcastTranscriptEntryProto entries = 2;
      */
-    entries?: PodcastTranscriptEntryProto;
+    entries: PodcastTranscriptEntryProto[];
 }
 /**
  * @generated from protobuf message PodcastTranscriptEntryProto
@@ -1163,11 +1163,11 @@ class PodcastSectionTranscriptProto$Type extends MessageType<PodcastSectionTrans
     constructor() {
         super("PodcastSectionTranscriptProto", [
             { no: 1, name: "section_type", kind: "enum", T: () => ["PodcastSectionTypeProto", PodcastSectionTypeProto, "PODCAST_SECTION_TYPE_PROTO_"] },
-            { no: 2, name: "entries", kind: "message", T: () => PodcastTranscriptEntryProto }
+            { no: 2, name: "entries", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastTranscriptEntryProto }
         ]);
     }
     create(value?: PartialMessage<PodcastSectionTranscriptProto>): PodcastSectionTranscriptProto {
-        const message = { sectionType: 0 };
+        const message = { sectionType: 0, entries: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastSectionTranscriptProto>(this, message, value);
@@ -1181,8 +1181,8 @@ class PodcastSectionTranscriptProto$Type extends MessageType<PodcastSectionTrans
                 case /* PodcastSectionTypeProto section_type */ 1:
                     message.sectionType = reader.int32();
                     break;
-                case /* PodcastTranscriptEntryProto entries */ 2:
-                    message.entries = PodcastTranscriptEntryProto.internalBinaryRead(reader, reader.uint32(), options, message.entries);
+                case /* repeated PodcastTranscriptEntryProto entries */ 2:
+                    message.entries.push(PodcastTranscriptEntryProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1199,9 +1199,9 @@ class PodcastSectionTranscriptProto$Type extends MessageType<PodcastSectionTrans
         /* PodcastSectionTypeProto section_type = 1; */
         if (message.sectionType !== 0)
             writer.tag(1, WireType.Varint).int32(message.sectionType);
-        /* PodcastTranscriptEntryProto entries = 2; */
-        if (message.entries)
-            PodcastTranscriptEntryProto.internalBinaryWrite(message.entries, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* repeated PodcastTranscriptEntryProto entries = 2; */
+        for (let i = 0; i < message.entries.length; i++)
+            PodcastTranscriptEntryProto.internalBinaryWrite(message.entries[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

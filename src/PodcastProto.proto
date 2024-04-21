@@ -109,7 +109,7 @@ message PodcastTranscriptProto {
 
 message PodcastSectionTranscriptProto {
   PodcastSectionTypeProto section_type = 1;
-  PodcastTranscriptEntryProto entries = 2;
+  repeated PodcastTranscriptEntryProto entries = 2;
 }
 
 enum PodcastSectionTypeProto {
