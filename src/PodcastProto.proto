@@ -91,6 +91,8 @@ message PodcastProto {
 
   string plan = 11;
   PodcastTranscriptProto transcript = 12;
+
+  string audio_key = 13;
 }
 
 enum PodcastStateProto {

@@ -600,6 +600,8 @@ struct PodcastProto {
   /// Clears the value of `transcript`. Subsequent reads from it will return its default value.
   mutating func clearTranscript() {self._transcript = nil}
 
+  var audioKey: String = String()
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -1287,6 +1289,7 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     10: .same(proto: "synopsis"),
     11: .same(proto: "plan"),
     12: .same(proto: "transcript"),
+    13: .standard(proto: "audio_key"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1307,6 +1310,7 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
       case 10: try { try decoder.decodeSingularStringField(value: &self.synopsis) }()
       case 11: try { try decoder.decodeSingularStringField(value: &self.plan) }()
       case 12: try { try decoder.decodeSingularMessageField(value: &self._transcript) }()
+      case 13: try { try decoder.decodeSingularStringField(value: &self.audioKey) }()
       default: break
       }
     }
@@ -1353,6 +1357,9 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     try { if let v = self._transcript {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 12)
     } }()
+    if !self.audioKey.isEmpty {
+      try visitor.visitSingularStringField(value: self.audioKey, fieldNumber: 13)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1369,6 +1376,7 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     if lhs.synopsis != rhs.synopsis {return false}
     if lhs.plan != rhs.plan {return false}
     if lhs._transcript != rhs._transcript {return false}
+    if lhs.audioKey != rhs.audioKey {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

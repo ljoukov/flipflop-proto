@@ -278,6 +278,10 @@ export interface PodcastProto {
      * @generated from protobuf field: PodcastTranscriptProto transcript = 12;
      */
     transcript?: PodcastTranscriptProto;
+    /**
+     * @generated from protobuf field: string audio_key = 13;
+     */
+    audioKey: string;
 }
 /**
  * @generated from protobuf message PodcastTranscriptProto
@@ -991,11 +995,12 @@ class PodcastProto$Type extends MessageType<PodcastProto> {
             { no: 9, name: "title_emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 10, name: "synopsis", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 11, name: "plan", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 12, name: "transcript", kind: "message", T: () => PodcastTranscriptProto }
+            { no: 12, name: "transcript", kind: "message", T: () => PodcastTranscriptProto },
+            { no: 13, name: "audio_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PodcastProto>): PodcastProto {
-        const message = { podcastId: "", createdBy: "", userPrompt: "", state: 0, reasoning: "", title: "", titleEmoji: "", synopsis: "", plan: "" };
+        const message = { podcastId: "", createdBy: "", userPrompt: "", state: 0, reasoning: "", title: "", titleEmoji: "", synopsis: "", plan: "", audioKey: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastProto>(this, message, value);
@@ -1041,6 +1046,9 @@ class PodcastProto$Type extends MessageType<PodcastProto> {
                     break;
                 case /* PodcastTranscriptProto transcript */ 12:
                     message.transcript = PodcastTranscriptProto.internalBinaryRead(reader, reader.uint32(), options, message.transcript);
+                    break;
+                case /* string audio_key */ 13:
+                    message.audioKey = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1090,6 +1098,9 @@ class PodcastProto$Type extends MessageType<PodcastProto> {
         /* PodcastTranscriptProto transcript = 12; */
         if (message.transcript)
             PodcastTranscriptProto.internalBinaryWrite(message.transcript, writer.tag(12, WireType.LengthDelimited).fork(), options).join();
+        /* string audio_key = 13; */
+        if (message.audioKey !== "")
+            writer.tag(13, WireType.LengthDelimited).string(message.audioKey);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
