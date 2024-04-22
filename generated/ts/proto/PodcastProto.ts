@@ -388,21 +388,37 @@ export enum PodcastStateProto {
      */
     READY = 1,
     /**
-     * @generated from protobuf enum value: PODCAST_STATE_PROTO_SYNOPSYS = 2;
+     * @generated from protobuf enum value: PODCAST_STATE_PROTO_GENERATING_SYNOPSYS = 2;
      */
-    SYNOPSYS = 2,
+    GENERATING_SYNOPSYS = 2,
     /**
-     * @generated from protobuf enum value: PODCAST_STATE_PROTO_PLAN = 3;
+     * @generated from protobuf enum value: PODCAST_STATE_PROTO_SYNOPSYS_READY = 3;
      */
-    PLAN = 3,
+    SYNOPSYS_READY = 3,
     /**
-     * @generated from protobuf enum value: PODCAST_STATE_PROTO_TRANSCRIPT = 4;
+     * @generated from protobuf enum value: PODCAST_STATE_PROTO_GENERATING_PLAN = 4;
      */
-    TRANSCRIPT = 4,
+    GENERATING_PLAN = 4,
     /**
-     * @generated from protobuf enum value: PODCAST_STATE_PROTO_AUDIO = 5;
+     * @generated from protobuf enum value: PODCAST_STATE_PROTO_PLAN_READY = 5;
      */
-    AUDIO = 5
+    PLAN_READY = 5,
+    /**
+     * @generated from protobuf enum value: PODCAST_STATE_PROTO_GENERATING_TRANSCRIPT = 6;
+     */
+    GENERATING_TRANSCRIPT = 6,
+    /**
+     * @generated from protobuf enum value: PODCAST_STATE_PROTO_TRANSCRIPT_READY = 7;
+     */
+    TRANSCRIPT_READY = 7,
+    /**
+     * @generated from protobuf enum value: PODCAST_STATE_PROTO_GENERATING_AUDIO = 8;
+     */
+    GENERATING_AUDIO = 8,
+    /**
+     * @generated from protobuf enum value: PODCAST_STATE_PROTO_AUDIO_READY = 9;
+     */
+    AUDIO_READY = 9
 }
 /**
  * @generated from protobuf enum PodcastSectionTypeProto

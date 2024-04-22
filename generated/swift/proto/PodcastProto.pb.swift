@@ -24,10 +24,14 @@ enum PodcastStateProto: SwiftProtobuf.Enum {
   typealias RawValue = Int
   case unknown // = 0
   case ready // = 1
-  case synopsys // = 2
-  case plan // = 3
-  case transcript // = 4
-  case audio // = 5
+  case generatingSynopsys // = 2
+  case synopsysReady // = 3
+  case generatingPlan // = 4
+  case planReady // = 5
+  case generatingTranscript // = 6
+  case transcriptReady // = 7
+  case generatingAudio // = 8
+  case audioReady // = 9
   case UNRECOGNIZED(Int)
 
   init() {
@@ -38,10 +42,14 @@ enum PodcastStateProto: SwiftProtobuf.Enum {
     switch rawValue {
     case 0: self = .unknown
     case 1: self = .ready
-    case 2: self = .synopsys
-    case 3: self = .plan
-    case 4: self = .transcript
-    case 5: self = .audio
+    case 2: self = .generatingSynopsys
+    case 3: self = .synopsysReady
+    case 4: self = .generatingPlan
+    case 5: self = .planReady
+    case 6: self = .generatingTranscript
+    case 7: self = .transcriptReady
+    case 8: self = .generatingAudio
+    case 9: self = .audioReady
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -50,10 +58,14 @@ enum PodcastStateProto: SwiftProtobuf.Enum {
     switch self {
     case .unknown: return 0
     case .ready: return 1
-    case .synopsys: return 2
-    case .plan: return 3
-    case .transcript: return 4
-    case .audio: return 5
+    case .generatingSynopsys: return 2
+    case .synopsysReady: return 3
+    case .generatingPlan: return 4
+    case .planReady: return 5
+    case .generatingTranscript: return 6
+    case .transcriptReady: return 7
+    case .generatingAudio: return 8
+    case .audioReady: return 9
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -67,10 +79,14 @@ extension PodcastStateProto: CaseIterable {
   static var allCases: [PodcastStateProto] = [
     .unknown,
     .ready,
-    .synopsys,
-    .plan,
-    .transcript,
-    .audio,
+    .generatingSynopsys,
+    .synopsysReady,
+    .generatingPlan,
+    .planReady,
+    .generatingTranscript,
+    .transcriptReady,
+    .generatingAudio,
+    .audioReady,
   ]
 }
 
@@ -793,10 +809,14 @@ extension PodcastStateProto: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     0: .same(proto: "PODCAST_STATE_PROTO_UNKNOWN"),
     1: .same(proto: "PODCAST_STATE_PROTO_READY"),
-    2: .same(proto: "PODCAST_STATE_PROTO_SYNOPSYS"),
-    3: .same(proto: "PODCAST_STATE_PROTO_PLAN"),
-    4: .same(proto: "PODCAST_STATE_PROTO_TRANSCRIPT"),
-    5: .same(proto: "PODCAST_STATE_PROTO_AUDIO"),
+    2: .same(proto: "PODCAST_STATE_PROTO_GENERATING_SYNOPSYS"),
+    3: .same(proto: "PODCAST_STATE_PROTO_SYNOPSYS_READY"),
+    4: .same(proto: "PODCAST_STATE_PROTO_GENERATING_PLAN"),
+    5: .same(proto: "PODCAST_STATE_PROTO_PLAN_READY"),
+    6: .same(proto: "PODCAST_STATE_PROTO_GENERATING_TRANSCRIPT"),
+    7: .same(proto: "PODCAST_STATE_PROTO_TRANSCRIPT_READY"),
+    8: .same(proto: "PODCAST_STATE_PROTO_GENERATING_AUDIO"),
+    9: .same(proto: "PODCAST_STATE_PROTO_AUDIO_READY"),
   ]
 }
 
