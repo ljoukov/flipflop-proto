@@ -28,7 +28,7 @@ message PodcastStreamApiResponseDeltaProto {
   oneof response_delta {
     CreatePodcastPreviewResponseDeltaProto create_preview_delta = 1;
     GeneratePodcastResponseDeltaProto generate_delta = 2;
-    ListPodcastsResponseDeltaProto list = 3;
+    ListPodcastsResponseDeltaProto list_delta = 3;
   }
 }
 
