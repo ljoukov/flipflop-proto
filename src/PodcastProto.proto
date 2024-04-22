@@ -8,6 +8,7 @@ message PodcastStreamApiRequestProto {
   oneof request {
     CreatePodcastPreviewRequestProto create_preview = 2;
     GeneratePodcastRequestProto generate = 3;
+    ListPodcastsRequestProto list = 4;
   }
 }
 
@@ -18,6 +19,7 @@ message PodcastStreamApiResponseHeaderProto {
   oneof header {
     CreatePodcastPreviewResponseHeaderProto create_preview_header = 2;
     GeneratePodcastResponseHeaderProto generate = 3;
+    ListPodcastsResponseHeaderProto list = 4;
   }
   map<string, google.protobuf.Duration> latencies = 100;
 }
@@ -26,6 +28,7 @@ message PodcastStreamApiResponseDeltaProto {
   oneof response_delta {
     CreatePodcastPreviewResponseDeltaProto create_preview_delta = 1;
     GeneratePodcastResponseDeltaProto generate_delta = 2;
+    ListPodcastsResponseDeltaProto list = 3;
   }
 }
 
@@ -62,15 +65,31 @@ message GeneratePodcastResponseDeltaProto {
   }
 }
 
+message ListPodcastsRequestProto {}
+
+message ListPodcastsResponseHeaderProto {
+  repeated PodcastPreviewProto podcasts = 1;
+}
+
+message ListPodcastsResponseDeltaProto {
+  oneof type {
+    PodcastPreviewProto updated_podcast = 1;
+  }
+}
+
 message PodcastPreviewProto {
   string podcast_id = 1;
 
   string created_by = 2;
   google.protobuf.Timestamp created_at = 3;
 
-  string title = 4;
-  string title_emoji = 5;
-  string synopsis = 6;
+  PodcastStateProto state = 4;
+
+  string title = 5;
+  string title_emoji = 6;
+  string synopsis = 7;
+
+  string audio_path = 8;
 }
 
 message PodcastProto {
@@ -97,10 +116,12 @@ message PodcastProto {
 
 enum PodcastStateProto {
   PODCAST_STATE_PROTO_UNKNOWN = 0;
-  PODCAST_STATE_PROTO_SYNOPSYS = 1;
-  PODCAST_STATE_PROTO_PLAN = 2;
-  PODCAST_STATE_PROTO_TRANSCRIPT = 3;
-  PODCAST_STATE_PROTO_AUDIO = 4;
+  PODCAST_STATE_PROTO_READY = 1;
+
+  PODCAST_STATE_PROTO_SYNOPSYS = 2;
+  PODCAST_STATE_PROTO_PLAN = 3;
+  PODCAST_STATE_PROTO_TRANSCRIPT = 4;
+  PODCAST_STATE_PROTO_AUDIO = 5;
 }
 
 message PodcastTranscriptProto {
