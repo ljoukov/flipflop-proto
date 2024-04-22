@@ -615,10 +615,19 @@ struct ListPodcastsResponseDeltaProto {
     set {type = .updatedPodcast(newValue)}
   }
 
+  var deletedPodcastID: String {
+    get {
+      if case .deletedPodcastID(let v)? = type {return v}
+      return String()
+    }
+    set {type = .deletedPodcastID(newValue)}
+  }
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_Type: Equatable {
     case updatedPodcast(PodcastPreviewProto)
+    case deletedPodcastID(String)
 
   #if !swift(>=4.1)
     static func ==(lhs: ListPodcastsResponseDeltaProto.OneOf_Type, rhs: ListPodcastsResponseDeltaProto.OneOf_Type) -> Bool {
@@ -630,6 +639,11 @@ struct ListPodcastsResponseDeltaProto {
         guard case .updatedPodcast(let l) = lhs, case .updatedPodcast(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
+      case (.deletedPodcastID, .deletedPodcastID): return {
+        guard case .deletedPodcastID(let l) = lhs, case .deletedPodcastID(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      default: return false
       }
     }
   #endif
@@ -1440,6 +1454,7 @@ extension ListPodcastsResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf._
   static let protoMessageName: String = "ListPodcastsResponseDeltaProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "updated_podcast"),
+    2: .standard(proto: "deleted_podcast_id"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1461,6 +1476,14 @@ extension ListPodcastsResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf._
           self.type = .updatedPodcast(v)
         }
       }()
+      case 2: try {
+        var v: String?
+        try decoder.decodeSingularStringField(value: &v)
+        if let v = v {
+          if self.type != nil {try decoder.handleConflictingOneOf()}
+          self.type = .deletedPodcastID(v)
+        }
+      }()
       default: break
       }
     }
@@ -1471,9 +1494,17 @@ extension ListPodcastsResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf._
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    try { if case .updatedPodcast(let v)? = self.type {
+    switch self.type {
+    case .updatedPodcast?: try {
+      guard case .updatedPodcast(let v)? = self.type else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    } }()
+    }()
+    case .deletedPodcastID?: try {
+      guard case .deletedPodcastID(let v)? = self.type else { preconditionFailure() }
+      try visitor.visitSingularStringField(value: v, fieldNumber: 2)
+    }()
+    case nil: break
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 

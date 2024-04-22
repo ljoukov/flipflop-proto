@@ -74,6 +74,7 @@ message ListPodcastsResponseHeaderProto {
 message ListPodcastsResponseDeltaProto {
   oneof type {
     PodcastPreviewProto updated_podcast = 1;
+    string deleted_podcast_id = 2;
   }
 }
 

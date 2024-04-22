@@ -243,6 +243,12 @@ export interface ListPodcastsResponseDeltaProto {
          */
         updatedPodcast: PodcastPreviewProto;
     } | {
+        oneofKind: "deletedPodcastId";
+        /**
+         * @generated from protobuf field: string deleted_podcast_id = 2;
+         */
+        deletedPodcastId: string;
+    } | {
         oneofKind: undefined;
     };
 }
@@ -1082,7 +1088,8 @@ export const ListPodcastsResponseHeaderProto = new ListPodcastsResponseHeaderPro
 class ListPodcastsResponseDeltaProto$Type extends MessageType<ListPodcastsResponseDeltaProto> {
     constructor() {
         super("ListPodcastsResponseDeltaProto", [
-            { no: 1, name: "updated_podcast", kind: "message", oneof: "type", T: () => PodcastPreviewProto }
+            { no: 1, name: "updated_podcast", kind: "message", oneof: "type", T: () => PodcastPreviewProto },
+            { no: 2, name: "deleted_podcast_id", kind: "scalar", oneof: "type", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<ListPodcastsResponseDeltaProto>): ListPodcastsResponseDeltaProto {
@@ -1103,6 +1110,12 @@ class ListPodcastsResponseDeltaProto$Type extends MessageType<ListPodcastsRespon
                         updatedPodcast: PodcastPreviewProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).updatedPodcast)
                     };
                     break;
+                case /* string deleted_podcast_id */ 2:
+                    message.type = {
+                        oneofKind: "deletedPodcastId",
+                        deletedPodcastId: reader.string()
+                    };
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -1118,6 +1131,9 @@ class ListPodcastsResponseDeltaProto$Type extends MessageType<ListPodcastsRespon
         /* PodcastPreviewProto updated_podcast = 1; */
         if (message.type.oneofKind === "updatedPodcast")
             PodcastPreviewProto.internalBinaryWrite(message.type.updatedPodcast, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* string deleted_podcast_id = 2; */
+        if (message.type.oneofKind === "deletedPodcastId")
+            writer.tag(2, WireType.LengthDelimited).string(message.type.deletedPodcastId);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
