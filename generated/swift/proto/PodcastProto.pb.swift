@@ -581,6 +581,14 @@ struct ListPodcastsResponseDeltaProto {
 
   var type: ListPodcastsResponseDeltaProto.OneOf_Type? = nil
 
+  var ping: Bool {
+    get {
+      if case .ping(let v)? = type {return v}
+      return false
+    }
+    set {type = .ping(newValue)}
+  }
+
   var updatedPodcast: PodcastPreviewProto {
     get {
       if case .updatedPodcast(let v)? = type {return v}
@@ -600,6 +608,7 @@ struct ListPodcastsResponseDeltaProto {
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_Type: Equatable {
+    case ping(Bool)
     case updatedPodcast(PodcastPreviewProto)
     case deletedPodcastID(String)
 
@@ -609,6 +618,10 @@ struct ListPodcastsResponseDeltaProto {
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch (lhs, rhs) {
+      case (.ping, .ping): return {
+        guard case .ping(let l) = lhs, case .ping(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
       case (.updatedPodcast, .updatedPodcast): return {
         guard case .updatedPodcast(let l) = lhs, case .updatedPodcast(let r) = rhs else { preconditionFailure() }
         return l == r
@@ -1405,8 +1418,9 @@ extension ListPodcastsResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobuf.
 extension ListPodcastsResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "ListPodcastsResponseDeltaProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "updated_podcast"),
-    2: .standard(proto: "deleted_podcast_id"),
+    1: .same(proto: "ping"),
+    2: .standard(proto: "updated_podcast"),
+    3: .standard(proto: "deleted_podcast_id"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1416,6 +1430,14 @@ extension ListPodcastsResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf._
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try {
+        var v: Bool?
+        try decoder.decodeSingularBoolField(value: &v)
+        if let v = v {
+          if self.type != nil {try decoder.handleConflictingOneOf()}
+          self.type = .ping(v)
+        }
+      }()
+      case 2: try {
         var v: PodcastPreviewProto?
         var hadOneofValue = false
         if let current = self.type {
@@ -1428,7 +1450,7 @@ extension ListPodcastsResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf._
           self.type = .updatedPodcast(v)
         }
       }()
-      case 2: try {
+      case 3: try {
         var v: String?
         try decoder.decodeSingularStringField(value: &v)
         if let v = v {
@@ -1447,13 +1469,17 @@ extension ListPodcastsResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf._
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
     switch self.type {
+    case .ping?: try {
+      guard case .ping(let v)? = self.type else { preconditionFailure() }
+      try visitor.visitSingularBoolField(value: v, fieldNumber: 1)
+    }()
     case .updatedPodcast?: try {
       guard case .updatedPodcast(let v)? = self.type else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     }()
     case .deletedPodcastID?: try {
       guard case .deletedPodcastID(let v)? = self.type else { preconditionFailure() }
-      try visitor.visitSingularStringField(value: v, fieldNumber: 2)
+      try visitor.visitSingularStringField(value: v, fieldNumber: 3)
     }()
     case nil: break
     }

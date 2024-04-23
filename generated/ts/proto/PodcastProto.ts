@@ -225,15 +225,21 @@ export interface ListPodcastsResponseDeltaProto {
      * @generated from protobuf oneof: type
      */
     type: {
+        oneofKind: "ping";
+        /**
+         * @generated from protobuf field: bool ping = 1;
+         */
+        ping: boolean;
+    } | {
         oneofKind: "updatedPodcast";
         /**
-         * @generated from protobuf field: PodcastPreviewProto updated_podcast = 1;
+         * @generated from protobuf field: PodcastPreviewProto updated_podcast = 2;
          */
         updatedPodcast: PodcastPreviewProto;
     } | {
         oneofKind: "deletedPodcastId";
         /**
-         * @generated from protobuf field: string deleted_podcast_id = 2;
+         * @generated from protobuf field: string deleted_podcast_id = 3;
          */
         deletedPodcastId: string;
     } | {
@@ -1064,8 +1070,9 @@ export const ListPodcastsResponseHeaderProto = new ListPodcastsResponseHeaderPro
 class ListPodcastsResponseDeltaProto$Type extends MessageType<ListPodcastsResponseDeltaProto> {
     constructor() {
         super("ListPodcastsResponseDeltaProto", [
-            { no: 1, name: "updated_podcast", kind: "message", oneof: "type", T: () => PodcastPreviewProto },
-            { no: 2, name: "deleted_podcast_id", kind: "scalar", oneof: "type", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "ping", kind: "scalar", oneof: "type", T: 8 /*ScalarType.BOOL*/ },
+            { no: 2, name: "updated_podcast", kind: "message", oneof: "type", T: () => PodcastPreviewProto },
+            { no: 3, name: "deleted_podcast_id", kind: "scalar", oneof: "type", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<ListPodcastsResponseDeltaProto>): ListPodcastsResponseDeltaProto {
@@ -1080,13 +1087,19 @@ class ListPodcastsResponseDeltaProto$Type extends MessageType<ListPodcastsRespon
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* PodcastPreviewProto updated_podcast */ 1:
+                case /* bool ping */ 1:
+                    message.type = {
+                        oneofKind: "ping",
+                        ping: reader.bool()
+                    };
+                    break;
+                case /* PodcastPreviewProto updated_podcast */ 2:
                     message.type = {
                         oneofKind: "updatedPodcast",
                         updatedPodcast: PodcastPreviewProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).updatedPodcast)
                     };
                     break;
-                case /* string deleted_podcast_id */ 2:
+                case /* string deleted_podcast_id */ 3:
                     message.type = {
                         oneofKind: "deletedPodcastId",
                         deletedPodcastId: reader.string()
@@ -1104,12 +1117,15 @@ class ListPodcastsResponseDeltaProto$Type extends MessageType<ListPodcastsRespon
         return message;
     }
     internalBinaryWrite(message: ListPodcastsResponseDeltaProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* PodcastPreviewProto updated_podcast = 1; */
+        /* bool ping = 1; */
+        if (message.type.oneofKind === "ping")
+            writer.tag(1, WireType.Varint).bool(message.type.ping);
+        /* PodcastPreviewProto updated_podcast = 2; */
         if (message.type.oneofKind === "updatedPodcast")
-            PodcastPreviewProto.internalBinaryWrite(message.type.updatedPodcast, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* string deleted_podcast_id = 2; */
+            PodcastPreviewProto.internalBinaryWrite(message.type.updatedPodcast, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* string deleted_podcast_id = 3; */
         if (message.type.oneofKind === "deletedPodcastId")
-            writer.tag(2, WireType.LengthDelimited).string(message.type.deletedPodcastId);
+            writer.tag(3, WireType.LengthDelimited).string(message.type.deletedPodcastId);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
