@@ -87,8 +87,9 @@ message PodcastPreviewProto {
   string title = 5;
   string title_emoji = 6;
   string synopsis = 7;
+  string short_synopsis = 8;
 
-  string audio_path = 8;
+  string audio_path = 9;
 }
 
 message PodcastProto {

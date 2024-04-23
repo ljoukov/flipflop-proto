@@ -652,6 +652,8 @@ struct PodcastPreviewProto {
 
   var synopsis: String = String()
 
+  var shortSynopsis: String = String()
+
   var audioPath: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -1475,7 +1477,8 @@ extension PodcastPreviewProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     5: .same(proto: "title"),
     6: .standard(proto: "title_emoji"),
     7: .same(proto: "synopsis"),
-    8: .standard(proto: "audio_path"),
+    8: .standard(proto: "short_synopsis"),
+    9: .standard(proto: "audio_path"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1491,7 +1494,8 @@ extension PodcastPreviewProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
       case 5: try { try decoder.decodeSingularStringField(value: &self.title) }()
       case 6: try { try decoder.decodeSingularStringField(value: &self.titleEmoji) }()
       case 7: try { try decoder.decodeSingularStringField(value: &self.synopsis) }()
-      case 8: try { try decoder.decodeSingularStringField(value: &self.audioPath) }()
+      case 8: try { try decoder.decodeSingularStringField(value: &self.shortSynopsis) }()
+      case 9: try { try decoder.decodeSingularStringField(value: &self.audioPath) }()
       default: break
       }
     }
@@ -1523,8 +1527,11 @@ extension PodcastPreviewProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     if !self.synopsis.isEmpty {
       try visitor.visitSingularStringField(value: self.synopsis, fieldNumber: 7)
     }
+    if !self.shortSynopsis.isEmpty {
+      try visitor.visitSingularStringField(value: self.shortSynopsis, fieldNumber: 8)
+    }
     if !self.audioPath.isEmpty {
-      try visitor.visitSingularStringField(value: self.audioPath, fieldNumber: 8)
+      try visitor.visitSingularStringField(value: self.audioPath, fieldNumber: 9)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -1537,6 +1544,7 @@ extension PodcastPreviewProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     if lhs.title != rhs.title {return false}
     if lhs.titleEmoji != rhs.titleEmoji {return false}
     if lhs.synopsis != rhs.synopsis {return false}
+    if lhs.shortSynopsis != rhs.shortSynopsis {return false}
     if lhs.audioPath != rhs.audioPath {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

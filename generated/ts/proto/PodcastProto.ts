@@ -273,7 +273,11 @@ export interface PodcastPreviewProto {
      */
     synopsis: string;
     /**
-     * @generated from protobuf field: string audio_path = 8;
+     * @generated from protobuf field: string short_synopsis = 8;
+     */
+    shortSynopsis: string;
+    /**
+     * @generated from protobuf field: string audio_path = 9;
      */
     audioPath: string;
 }
@@ -1127,11 +1131,12 @@ class PodcastPreviewProto$Type extends MessageType<PodcastPreviewProto> {
             { no: 5, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 6, name: "title_emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 7, name: "synopsis", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 8, name: "audio_path", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 8, name: "short_synopsis", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 9, name: "audio_path", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PodcastPreviewProto>): PodcastPreviewProto {
-        const message = { podcastId: "", createdBy: "", state: 0, title: "", titleEmoji: "", synopsis: "", audioPath: "" };
+        const message = { podcastId: "", createdBy: "", state: 0, title: "", titleEmoji: "", synopsis: "", shortSynopsis: "", audioPath: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastPreviewProto>(this, message, value);
@@ -1163,7 +1168,10 @@ class PodcastPreviewProto$Type extends MessageType<PodcastPreviewProto> {
                 case /* string synopsis */ 7:
                     message.synopsis = reader.string();
                     break;
-                case /* string audio_path */ 8:
+                case /* string short_synopsis */ 8:
+                    message.shortSynopsis = reader.string();
+                    break;
+                case /* string audio_path */ 9:
                     message.audioPath = reader.string();
                     break;
                 default:
@@ -1199,9 +1207,12 @@ class PodcastPreviewProto$Type extends MessageType<PodcastPreviewProto> {
         /* string synopsis = 7; */
         if (message.synopsis !== "")
             writer.tag(7, WireType.LengthDelimited).string(message.synopsis);
-        /* string audio_path = 8; */
+        /* string short_synopsis = 8; */
+        if (message.shortSynopsis !== "")
+            writer.tag(8, WireType.LengthDelimited).string(message.shortSynopsis);
+        /* string audio_path = 9; */
         if (message.audioPath !== "")
-            writer.tag(8, WireType.LengthDelimited).string(message.audioPath);
+            writer.tag(9, WireType.LengthDelimited).string(message.audioPath);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
