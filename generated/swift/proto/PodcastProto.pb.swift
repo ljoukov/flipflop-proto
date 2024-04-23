@@ -698,7 +698,9 @@ struct PodcastProto {
 
   var titleEmoji: String = String()
 
-  var synopsis: String = String()
+  var hook: String = String()
+
+  var shortHook: String = String()
 
   var plan: String = String()
 
@@ -1553,10 +1555,11 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     7: .same(proto: "reasoning"),
     8: .same(proto: "title"),
     9: .standard(proto: "title_emoji"),
-    10: .same(proto: "synopsis"),
-    11: .same(proto: "plan"),
-    12: .same(proto: "transcript"),
-    13: .standard(proto: "audio_key"),
+    10: .same(proto: "hook"),
+    11: .standard(proto: "short_hook"),
+    12: .same(proto: "plan"),
+    13: .same(proto: "transcript"),
+    14: .standard(proto: "audio_key"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1574,10 +1577,11 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
       case 7: try { try decoder.decodeSingularStringField(value: &self.reasoning) }()
       case 8: try { try decoder.decodeSingularStringField(value: &self.title) }()
       case 9: try { try decoder.decodeSingularStringField(value: &self.titleEmoji) }()
-      case 10: try { try decoder.decodeSingularStringField(value: &self.synopsis) }()
-      case 11: try { try decoder.decodeSingularStringField(value: &self.plan) }()
-      case 12: try { try decoder.decodeSingularMessageField(value: &self._transcript) }()
-      case 13: try { try decoder.decodeSingularStringField(value: &self.audioKey) }()
+      case 10: try { try decoder.decodeSingularStringField(value: &self.hook) }()
+      case 11: try { try decoder.decodeSingularStringField(value: &self.shortHook) }()
+      case 12: try { try decoder.decodeSingularStringField(value: &self.plan) }()
+      case 13: try { try decoder.decodeSingularMessageField(value: &self._transcript) }()
+      case 14: try { try decoder.decodeSingularStringField(value: &self.audioKey) }()
       default: break
       }
     }
@@ -1615,17 +1619,20 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     if !self.titleEmoji.isEmpty {
       try visitor.visitSingularStringField(value: self.titleEmoji, fieldNumber: 9)
     }
-    if !self.synopsis.isEmpty {
-      try visitor.visitSingularStringField(value: self.synopsis, fieldNumber: 10)
+    if !self.hook.isEmpty {
+      try visitor.visitSingularStringField(value: self.hook, fieldNumber: 10)
+    }
+    if !self.shortHook.isEmpty {
+      try visitor.visitSingularStringField(value: self.shortHook, fieldNumber: 11)
     }
     if !self.plan.isEmpty {
-      try visitor.visitSingularStringField(value: self.plan, fieldNumber: 11)
+      try visitor.visitSingularStringField(value: self.plan, fieldNumber: 12)
     }
     try { if let v = self._transcript {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 12)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 13)
     } }()
     if !self.audioKey.isEmpty {
-      try visitor.visitSingularStringField(value: self.audioKey, fieldNumber: 13)
+      try visitor.visitSingularStringField(value: self.audioKey, fieldNumber: 14)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -1640,7 +1647,8 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     if lhs.reasoning != rhs.reasoning {return false}
     if lhs.title != rhs.title {return false}
     if lhs.titleEmoji != rhs.titleEmoji {return false}
-    if lhs.synopsis != rhs.synopsis {return false}
+    if lhs.hook != rhs.hook {return false}
+    if lhs.shortHook != rhs.shortHook {return false}
     if lhs.plan != rhs.plan {return false}
     if lhs._transcript != rhs._transcript {return false}
     if lhs.audioKey != rhs.audioKey {return false}

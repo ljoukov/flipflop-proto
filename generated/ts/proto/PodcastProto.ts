@@ -318,19 +318,23 @@ export interface PodcastProto {
      */
     titleEmoji: string;
     /**
-     * @generated from protobuf field: string synopsis = 10;
+     * @generated from protobuf field: string hook = 10;
      */
-    synopsis: string;
+    hook: string;
     /**
-     * @generated from protobuf field: string plan = 11;
+     * @generated from protobuf field: string short_hook = 11;
+     */
+    shortHook: string;
+    /**
+     * @generated from protobuf field: string plan = 12;
      */
     plan: string;
     /**
-     * @generated from protobuf field: PodcastTranscriptProto transcript = 12;
+     * @generated from protobuf field: PodcastTranscriptProto transcript = 13;
      */
     transcript?: PodcastTranscriptProto;
     /**
-     * @generated from protobuf field: string audio_key = 13;
+     * @generated from protobuf field: string audio_key = 14;
      */
     audioKey: string;
 }
@@ -1221,14 +1225,15 @@ class PodcastProto$Type extends MessageType<PodcastProto> {
             { no: 7, name: "reasoning", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 8, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 9, name: "title_emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 10, name: "synopsis", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 11, name: "plan", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 12, name: "transcript", kind: "message", T: () => PodcastTranscriptProto },
-            { no: 13, name: "audio_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 10, name: "hook", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 11, name: "short_hook", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 12, name: "plan", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 13, name: "transcript", kind: "message", T: () => PodcastTranscriptProto },
+            { no: 14, name: "audio_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PodcastProto>): PodcastProto {
-        const message = { podcastId: "", createdBy: "", userPrompt: "", state: 0, reasoning: "", title: "", titleEmoji: "", synopsis: "", plan: "", audioKey: "" };
+        const message = { podcastId: "", createdBy: "", userPrompt: "", state: 0, reasoning: "", title: "", titleEmoji: "", hook: "", shortHook: "", plan: "", audioKey: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastProto>(this, message, value);
@@ -1266,16 +1271,19 @@ class PodcastProto$Type extends MessageType<PodcastProto> {
                 case /* string title_emoji */ 9:
                     message.titleEmoji = reader.string();
                     break;
-                case /* string synopsis */ 10:
-                    message.synopsis = reader.string();
+                case /* string hook */ 10:
+                    message.hook = reader.string();
                     break;
-                case /* string plan */ 11:
+                case /* string short_hook */ 11:
+                    message.shortHook = reader.string();
+                    break;
+                case /* string plan */ 12:
                     message.plan = reader.string();
                     break;
-                case /* PodcastTranscriptProto transcript */ 12:
+                case /* PodcastTranscriptProto transcript */ 13:
                     message.transcript = PodcastTranscriptProto.internalBinaryRead(reader, reader.uint32(), options, message.transcript);
                     break;
-                case /* string audio_key */ 13:
+                case /* string audio_key */ 14:
                     message.audioKey = reader.string();
                     break;
                 default:
@@ -1317,18 +1325,21 @@ class PodcastProto$Type extends MessageType<PodcastProto> {
         /* string title_emoji = 9; */
         if (message.titleEmoji !== "")
             writer.tag(9, WireType.LengthDelimited).string(message.titleEmoji);
-        /* string synopsis = 10; */
-        if (message.synopsis !== "")
-            writer.tag(10, WireType.LengthDelimited).string(message.synopsis);
-        /* string plan = 11; */
+        /* string hook = 10; */
+        if (message.hook !== "")
+            writer.tag(10, WireType.LengthDelimited).string(message.hook);
+        /* string short_hook = 11; */
+        if (message.shortHook !== "")
+            writer.tag(11, WireType.LengthDelimited).string(message.shortHook);
+        /* string plan = 12; */
         if (message.plan !== "")
-            writer.tag(11, WireType.LengthDelimited).string(message.plan);
-        /* PodcastTranscriptProto transcript = 12; */
+            writer.tag(12, WireType.LengthDelimited).string(message.plan);
+        /* PodcastTranscriptProto transcript = 13; */
         if (message.transcript)
-            PodcastTranscriptProto.internalBinaryWrite(message.transcript, writer.tag(12, WireType.LengthDelimited).fork(), options).join();
-        /* string audio_key = 13; */
+            PodcastTranscriptProto.internalBinaryWrite(message.transcript, writer.tag(13, WireType.LengthDelimited).fork(), options).join();
+        /* string audio_key = 14; */
         if (message.audioKey !== "")
-            writer.tag(13, WireType.LengthDelimited).string(message.audioKey);
+            writer.tag(14, WireType.LengthDelimited).string(message.audioKey);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
