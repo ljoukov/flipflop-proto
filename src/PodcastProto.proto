@@ -58,10 +58,8 @@ message GeneratePodcastResponseHeaderProto {}
 
 message GeneratePodcastResponseDeltaProto {
   oneof type {
-    bool planning = 1;
-    bool producing_transcript = 2;
-    bool narrating = 3;
-    string audio_path = 4;
+    PodcastStateProto state_update = 1;
+    string audio_path = 2;
   }
 }
 

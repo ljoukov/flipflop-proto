@@ -188,27 +188,15 @@ export interface GeneratePodcastResponseDeltaProto {
      * @generated from protobuf oneof: type
      */
     type: {
-        oneofKind: "planning";
+        oneofKind: "stateUpdate";
         /**
-         * @generated from protobuf field: bool planning = 1;
+         * @generated from protobuf field: PodcastStateProto state_update = 1;
          */
-        planning: boolean;
-    } | {
-        oneofKind: "producingTranscript";
-        /**
-         * @generated from protobuf field: bool producing_transcript = 2;
-         */
-        producingTranscript: boolean;
-    } | {
-        oneofKind: "narrating";
-        /**
-         * @generated from protobuf field: bool narrating = 3;
-         */
-        narrating: boolean;
+        stateUpdate: PodcastStateProto;
     } | {
         oneofKind: "audioPath";
         /**
-         * @generated from protobuf field: string audio_path = 4;
+         * @generated from protobuf field: string audio_path = 2;
          */
         audioPath: string;
     } | {
@@ -935,10 +923,8 @@ export const GeneratePodcastResponseHeaderProto = new GeneratePodcastResponseHea
 class GeneratePodcastResponseDeltaProto$Type extends MessageType<GeneratePodcastResponseDeltaProto> {
     constructor() {
         super("GeneratePodcastResponseDeltaProto", [
-            { no: 1, name: "planning", kind: "scalar", oneof: "type", T: 8 /*ScalarType.BOOL*/ },
-            { no: 2, name: "producing_transcript", kind: "scalar", oneof: "type", T: 8 /*ScalarType.BOOL*/ },
-            { no: 3, name: "narrating", kind: "scalar", oneof: "type", T: 8 /*ScalarType.BOOL*/ },
-            { no: 4, name: "audio_path", kind: "scalar", oneof: "type", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "state_update", kind: "enum", oneof: "type", T: () => ["PodcastStateProto", PodcastStateProto, "PODCAST_STATE_PROTO_"] },
+            { no: 2, name: "audio_path", kind: "scalar", oneof: "type", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<GeneratePodcastResponseDeltaProto>): GeneratePodcastResponseDeltaProto {
@@ -953,25 +939,13 @@ class GeneratePodcastResponseDeltaProto$Type extends MessageType<GeneratePodcast
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* bool planning */ 1:
+                case /* PodcastStateProto state_update */ 1:
                     message.type = {
-                        oneofKind: "planning",
-                        planning: reader.bool()
+                        oneofKind: "stateUpdate",
+                        stateUpdate: reader.int32()
                     };
                     break;
-                case /* bool producing_transcript */ 2:
-                    message.type = {
-                        oneofKind: "producingTranscript",
-                        producingTranscript: reader.bool()
-                    };
-                    break;
-                case /* bool narrating */ 3:
-                    message.type = {
-                        oneofKind: "narrating",
-                        narrating: reader.bool()
-                    };
-                    break;
-                case /* string audio_path */ 4:
+                case /* string audio_path */ 2:
                     message.type = {
                         oneofKind: "audioPath",
                         audioPath: reader.string()
@@ -989,18 +963,12 @@ class GeneratePodcastResponseDeltaProto$Type extends MessageType<GeneratePodcast
         return message;
     }
     internalBinaryWrite(message: GeneratePodcastResponseDeltaProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* bool planning = 1; */
-        if (message.type.oneofKind === "planning")
-            writer.tag(1, WireType.Varint).bool(message.type.planning);
-        /* bool producing_transcript = 2; */
-        if (message.type.oneofKind === "producingTranscript")
-            writer.tag(2, WireType.Varint).bool(message.type.producingTranscript);
-        /* bool narrating = 3; */
-        if (message.type.oneofKind === "narrating")
-            writer.tag(3, WireType.Varint).bool(message.type.narrating);
-        /* string audio_path = 4; */
+        /* PodcastStateProto state_update = 1; */
+        if (message.type.oneofKind === "stateUpdate")
+            writer.tag(1, WireType.Varint).int32(message.type.stateUpdate);
+        /* string audio_path = 2; */
         if (message.type.oneofKind === "audioPath")
-            writer.tag(4, WireType.LengthDelimited).string(message.type.audioPath);
+            writer.tag(2, WireType.LengthDelimited).string(message.type.audioPath);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

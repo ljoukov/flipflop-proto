@@ -507,28 +507,12 @@ struct GeneratePodcastResponseDeltaProto {
 
   var type: GeneratePodcastResponseDeltaProto.OneOf_Type? = nil
 
-  var planning: Bool {
+  var stateUpdate: PodcastStateProto {
     get {
-      if case .planning(let v)? = type {return v}
-      return false
+      if case .stateUpdate(let v)? = type {return v}
+      return .unknown
     }
-    set {type = .planning(newValue)}
-  }
-
-  var producingTranscript: Bool {
-    get {
-      if case .producingTranscript(let v)? = type {return v}
-      return false
-    }
-    set {type = .producingTranscript(newValue)}
-  }
-
-  var narrating: Bool {
-    get {
-      if case .narrating(let v)? = type {return v}
-      return false
-    }
-    set {type = .narrating(newValue)}
+    set {type = .stateUpdate(newValue)}
   }
 
   var audioPath: String {
@@ -542,9 +526,7 @@ struct GeneratePodcastResponseDeltaProto {
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_Type: Equatable {
-    case planning(Bool)
-    case producingTranscript(Bool)
-    case narrating(Bool)
+    case stateUpdate(PodcastStateProto)
     case audioPath(String)
 
   #if !swift(>=4.1)
@@ -553,16 +535,8 @@ struct GeneratePodcastResponseDeltaProto {
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch (lhs, rhs) {
-      case (.planning, .planning): return {
-        guard case .planning(let l) = lhs, case .planning(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.producingTranscript, .producingTranscript): return {
-        guard case .producingTranscript(let l) = lhs, case .producingTranscript(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
-      case (.narrating, .narrating): return {
-        guard case .narrating(let l) = lhs, case .narrating(let r) = rhs else { preconditionFailure() }
+      case (.stateUpdate, .stateUpdate): return {
+        guard case .stateUpdate(let l) = lhs, case .stateUpdate(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       case (.audioPath, .audioPath): return {
@@ -1316,10 +1290,8 @@ extension GeneratePodcastResponseHeaderProto: SwiftProtobuf.Message, SwiftProtob
 extension GeneratePodcastResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "GeneratePodcastResponseDeltaProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "planning"),
-    2: .standard(proto: "producing_transcript"),
-    3: .same(proto: "narrating"),
-    4: .standard(proto: "audio_path"),
+    1: .standard(proto: "state_update"),
+    2: .standard(proto: "audio_path"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1329,30 +1301,14 @@ extension GeneratePodcastResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobu
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try {
-        var v: Bool?
-        try decoder.decodeSingularBoolField(value: &v)
+        var v: PodcastStateProto?
+        try decoder.decodeSingularEnumField(value: &v)
         if let v = v {
           if self.type != nil {try decoder.handleConflictingOneOf()}
-          self.type = .planning(v)
+          self.type = .stateUpdate(v)
         }
       }()
       case 2: try {
-        var v: Bool?
-        try decoder.decodeSingularBoolField(value: &v)
-        if let v = v {
-          if self.type != nil {try decoder.handleConflictingOneOf()}
-          self.type = .producingTranscript(v)
-        }
-      }()
-      case 3: try {
-        var v: Bool?
-        try decoder.decodeSingularBoolField(value: &v)
-        if let v = v {
-          if self.type != nil {try decoder.handleConflictingOneOf()}
-          self.type = .narrating(v)
-        }
-      }()
-      case 4: try {
         var v: String?
         try decoder.decodeSingularStringField(value: &v)
         if let v = v {
@@ -1371,21 +1327,13 @@ extension GeneratePodcastResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobu
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
     switch self.type {
-    case .planning?: try {
-      guard case .planning(let v)? = self.type else { preconditionFailure() }
-      try visitor.visitSingularBoolField(value: v, fieldNumber: 1)
-    }()
-    case .producingTranscript?: try {
-      guard case .producingTranscript(let v)? = self.type else { preconditionFailure() }
-      try visitor.visitSingularBoolField(value: v, fieldNumber: 2)
-    }()
-    case .narrating?: try {
-      guard case .narrating(let v)? = self.type else { preconditionFailure() }
-      try visitor.visitSingularBoolField(value: v, fieldNumber: 3)
+    case .stateUpdate?: try {
+      guard case .stateUpdate(let v)? = self.type else { preconditionFailure() }
+      try visitor.visitSingularEnumField(value: v, fieldNumber: 1)
     }()
     case .audioPath?: try {
       guard case .audioPath(let v)? = self.type else { preconditionFailure() }
-      try visitor.visitSingularStringField(value: v, fieldNumber: 4)
+      try visitor.visitSingularStringField(value: v, fieldNumber: 2)
     }()
     case nil: break
     }
