@@ -657,6 +657,15 @@ struct PodcastPreviewProto {
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
   mutating func clearCreatedAt() {self._createdAt = nil}
 
+  var updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_updatedAt = newValue}
+  }
+  /// Returns true if `updatedAt` has been explicitly set.
+  var hasUpdatedAt: Bool {return self._updatedAt != nil}
+  /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
+  mutating func clearUpdatedAt() {self._updatedAt = nil}
+
   var state: PodcastStateProto = .unknown
 
   var title: String = String()
@@ -674,6 +683,7 @@ struct PodcastPreviewProto {
   init() {}
 
   fileprivate var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+  fileprivate var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
 struct PodcastProto {
@@ -1499,12 +1509,13 @@ extension PodcastPreviewProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     1: .standard(proto: "podcast_id"),
     2: .standard(proto: "created_by"),
     3: .standard(proto: "created_at"),
-    4: .same(proto: "state"),
-    5: .same(proto: "title"),
-    6: .standard(proto: "title_emoji"),
-    7: .same(proto: "synopsis"),
-    8: .standard(proto: "short_synopsis"),
-    9: .standard(proto: "audio_path"),
+    4: .standard(proto: "updated_at"),
+    5: .same(proto: "state"),
+    6: .same(proto: "title"),
+    7: .standard(proto: "title_emoji"),
+    8: .same(proto: "synopsis"),
+    9: .standard(proto: "short_synopsis"),
+    10: .standard(proto: "audio_path"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1516,12 +1527,13 @@ extension PodcastPreviewProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
       case 1: try { try decoder.decodeSingularStringField(value: &self.podcastID) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.createdBy) }()
       case 3: try { try decoder.decodeSingularMessageField(value: &self._createdAt) }()
-      case 4: try { try decoder.decodeSingularEnumField(value: &self.state) }()
-      case 5: try { try decoder.decodeSingularStringField(value: &self.title) }()
-      case 6: try { try decoder.decodeSingularStringField(value: &self.titleEmoji) }()
-      case 7: try { try decoder.decodeSingularStringField(value: &self.synopsis) }()
-      case 8: try { try decoder.decodeSingularStringField(value: &self.shortSynopsis) }()
-      case 9: try { try decoder.decodeSingularStringField(value: &self.audioPath) }()
+      case 4: try { try decoder.decodeSingularMessageField(value: &self._updatedAt) }()
+      case 5: try { try decoder.decodeSingularEnumField(value: &self.state) }()
+      case 6: try { try decoder.decodeSingularStringField(value: &self.title) }()
+      case 7: try { try decoder.decodeSingularStringField(value: &self.titleEmoji) }()
+      case 8: try { try decoder.decodeSingularStringField(value: &self.synopsis) }()
+      case 9: try { try decoder.decodeSingularStringField(value: &self.shortSynopsis) }()
+      case 10: try { try decoder.decodeSingularStringField(value: &self.audioPath) }()
       default: break
       }
     }
@@ -1541,23 +1553,26 @@ extension PodcastPreviewProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     try { if let v = self._createdAt {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
     } }()
+    try { if let v = self._updatedAt {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+    } }()
     if self.state != .unknown {
-      try visitor.visitSingularEnumField(value: self.state, fieldNumber: 4)
+      try visitor.visitSingularEnumField(value: self.state, fieldNumber: 5)
     }
     if !self.title.isEmpty {
-      try visitor.visitSingularStringField(value: self.title, fieldNumber: 5)
+      try visitor.visitSingularStringField(value: self.title, fieldNumber: 6)
     }
     if !self.titleEmoji.isEmpty {
-      try visitor.visitSingularStringField(value: self.titleEmoji, fieldNumber: 6)
+      try visitor.visitSingularStringField(value: self.titleEmoji, fieldNumber: 7)
     }
     if !self.synopsis.isEmpty {
-      try visitor.visitSingularStringField(value: self.synopsis, fieldNumber: 7)
+      try visitor.visitSingularStringField(value: self.synopsis, fieldNumber: 8)
     }
     if !self.shortSynopsis.isEmpty {
-      try visitor.visitSingularStringField(value: self.shortSynopsis, fieldNumber: 8)
+      try visitor.visitSingularStringField(value: self.shortSynopsis, fieldNumber: 9)
     }
     if !self.audioPath.isEmpty {
-      try visitor.visitSingularStringField(value: self.audioPath, fieldNumber: 9)
+      try visitor.visitSingularStringField(value: self.audioPath, fieldNumber: 10)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -1566,6 +1581,7 @@ extension PodcastPreviewProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     if lhs.podcastID != rhs.podcastID {return false}
     if lhs.createdBy != rhs.createdBy {return false}
     if lhs._createdAt != rhs._createdAt {return false}
+    if lhs._updatedAt != rhs._updatedAt {return false}
     if lhs.state != rhs.state {return false}
     if lhs.title != rhs.title {return false}
     if lhs.titleEmoji != rhs.titleEmoji {return false}

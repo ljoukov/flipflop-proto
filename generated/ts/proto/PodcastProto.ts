@@ -263,27 +263,31 @@ export interface PodcastPreviewProto {
      */
     createdAt?: Timestamp;
     /**
-     * @generated from protobuf field: PodcastStateProto state = 4;
+     * @generated from protobuf field: google.protobuf.Timestamp updated_at = 4;
+     */
+    updatedAt?: Timestamp;
+    /**
+     * @generated from protobuf field: PodcastStateProto state = 5;
      */
     state: PodcastStateProto;
     /**
-     * @generated from protobuf field: string title = 5;
+     * @generated from protobuf field: string title = 6;
      */
     title: string;
     /**
-     * @generated from protobuf field: string title_emoji = 6;
+     * @generated from protobuf field: string title_emoji = 7;
      */
     titleEmoji: string;
     /**
-     * @generated from protobuf field: string synopsis = 7;
+     * @generated from protobuf field: string synopsis = 8;
      */
     synopsis: string;
     /**
-     * @generated from protobuf field: string short_synopsis = 8;
+     * @generated from protobuf field: string short_synopsis = 9;
      */
     shortSynopsis: string;
     /**
-     * @generated from protobuf field: string audio_path = 9;
+     * @generated from protobuf field: string audio_path = 10;
      */
     audioPath: string;
 }
@@ -1143,12 +1147,13 @@ class PodcastPreviewProto$Type extends MessageType<PodcastPreviewProto> {
             { no: 1, name: "podcast_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "created_by", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "created_at", kind: "message", T: () => Timestamp },
-            { no: 4, name: "state", kind: "enum", T: () => ["PodcastStateProto", PodcastStateProto, "PODCAST_STATE_PROTO_"] },
-            { no: 5, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 6, name: "title_emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 7, name: "synopsis", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 8, name: "short_synopsis", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 9, name: "audio_path", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 4, name: "updated_at", kind: "message", T: () => Timestamp },
+            { no: 5, name: "state", kind: "enum", T: () => ["PodcastStateProto", PodcastStateProto, "PODCAST_STATE_PROTO_"] },
+            { no: 6, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 7, name: "title_emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 8, name: "synopsis", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 9, name: "short_synopsis", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 10, name: "audio_path", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PodcastPreviewProto>): PodcastPreviewProto {
@@ -1172,22 +1177,25 @@ class PodcastPreviewProto$Type extends MessageType<PodcastPreviewProto> {
                 case /* google.protobuf.Timestamp created_at */ 3:
                     message.createdAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.createdAt);
                     break;
-                case /* PodcastStateProto state */ 4:
+                case /* google.protobuf.Timestamp updated_at */ 4:
+                    message.updatedAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.updatedAt);
+                    break;
+                case /* PodcastStateProto state */ 5:
                     message.state = reader.int32();
                     break;
-                case /* string title */ 5:
+                case /* string title */ 6:
                     message.title = reader.string();
                     break;
-                case /* string title_emoji */ 6:
+                case /* string title_emoji */ 7:
                     message.titleEmoji = reader.string();
                     break;
-                case /* string synopsis */ 7:
+                case /* string synopsis */ 8:
                     message.synopsis = reader.string();
                     break;
-                case /* string short_synopsis */ 8:
+                case /* string short_synopsis */ 9:
                     message.shortSynopsis = reader.string();
                     break;
-                case /* string audio_path */ 9:
+                case /* string audio_path */ 10:
                     message.audioPath = reader.string();
                     break;
                 default:
@@ -1211,24 +1219,27 @@ class PodcastPreviewProto$Type extends MessageType<PodcastPreviewProto> {
         /* google.protobuf.Timestamp created_at = 3; */
         if (message.createdAt)
             Timestamp.internalBinaryWrite(message.createdAt, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* PodcastStateProto state = 4; */
+        /* google.protobuf.Timestamp updated_at = 4; */
+        if (message.updatedAt)
+            Timestamp.internalBinaryWrite(message.updatedAt, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastStateProto state = 5; */
         if (message.state !== 0)
-            writer.tag(4, WireType.Varint).int32(message.state);
-        /* string title = 5; */
+            writer.tag(5, WireType.Varint).int32(message.state);
+        /* string title = 6; */
         if (message.title !== "")
-            writer.tag(5, WireType.LengthDelimited).string(message.title);
-        /* string title_emoji = 6; */
+            writer.tag(6, WireType.LengthDelimited).string(message.title);
+        /* string title_emoji = 7; */
         if (message.titleEmoji !== "")
-            writer.tag(6, WireType.LengthDelimited).string(message.titleEmoji);
-        /* string synopsis = 7; */
+            writer.tag(7, WireType.LengthDelimited).string(message.titleEmoji);
+        /* string synopsis = 8; */
         if (message.synopsis !== "")
-            writer.tag(7, WireType.LengthDelimited).string(message.synopsis);
-        /* string short_synopsis = 8; */
+            writer.tag(8, WireType.LengthDelimited).string(message.synopsis);
+        /* string short_synopsis = 9; */
         if (message.shortSynopsis !== "")
-            writer.tag(8, WireType.LengthDelimited).string(message.shortSynopsis);
-        /* string audio_path = 9; */
+            writer.tag(9, WireType.LengthDelimited).string(message.shortSynopsis);
+        /* string audio_path = 10; */
         if (message.audioPath !== "")
-            writer.tag(9, WireType.LengthDelimited).string(message.audioPath);
+            writer.tag(10, WireType.LengthDelimited).string(message.audioPath);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
