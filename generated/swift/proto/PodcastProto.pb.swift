@@ -686,7 +686,7 @@ struct PodcastPreviewProto {
   fileprivate var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
-struct PodcastProto {
+struct StoredPodcastProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -812,7 +812,7 @@ extension ListPodcastsResponseHeaderProto: @unchecked Sendable {}
 extension ListPodcastsResponseDeltaProto: @unchecked Sendable {}
 extension ListPodcastsResponseDeltaProto.OneOf_Type: @unchecked Sendable {}
 extension PodcastPreviewProto: @unchecked Sendable {}
-extension PodcastProto: @unchecked Sendable {}
+extension StoredPodcastProto: @unchecked Sendable {}
 extension PodcastTranscriptProto: @unchecked Sendable {}
 extension PodcastSectionTranscriptProto: @unchecked Sendable {}
 extension PodcastTranscriptEntryProto: @unchecked Sendable {}
@@ -1593,8 +1593,8 @@ extension PodcastPreviewProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
   }
 }
 
-extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "PodcastProto"
+extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredPodcastProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "podcast_id"),
     2: .standard(proto: "created_by"),
@@ -1687,7 +1687,7 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: PodcastProto, rhs: PodcastProto) -> Bool {
+  static func ==(lhs: StoredPodcastProto, rhs: StoredPodcastProto) -> Bool {
     if lhs.podcastID != rhs.podcastID {return false}
     if lhs.createdBy != rhs.createdBy {return false}
     if lhs._createdAt != rhs._createdAt {return false}

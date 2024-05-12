@@ -292,9 +292,9 @@ export interface PodcastPreviewProto {
     audioPath: string;
 }
 /**
- * @generated from protobuf message PodcastProto
+ * @generated from protobuf message StoredPodcastProto
  */
-export interface PodcastProto {
+export interface StoredPodcastProto {
     /**
      * @generated from protobuf field: string podcast_id = 1;
      */
@@ -1251,9 +1251,9 @@ class PodcastPreviewProto$Type extends MessageType<PodcastPreviewProto> {
  */
 export const PodcastPreviewProto = new PodcastPreviewProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class PodcastProto$Type extends MessageType<PodcastProto> {
+class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
     constructor() {
-        super("PodcastProto", [
+        super("StoredPodcastProto", [
             { no: 1, name: "podcast_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "created_by", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "created_at", kind: "message", T: () => Timestamp },
@@ -1270,14 +1270,14 @@ class PodcastProto$Type extends MessageType<PodcastProto> {
             { no: 14, name: "audio_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<PodcastProto>): PodcastProto {
+    create(value?: PartialMessage<StoredPodcastProto>): StoredPodcastProto {
         const message = { podcastId: "", createdBy: "", userPrompt: "", state: 0, reasoning: "", title: "", titleEmoji: "", hook: "", shortHook: "", plan: "", audioKey: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<PodcastProto>(this, message, value);
+            reflectionMergePartial<StoredPodcastProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastProto): PodcastProto {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredPodcastProto): StoredPodcastProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -1335,7 +1335,7 @@ class PodcastProto$Type extends MessageType<PodcastProto> {
         }
         return message;
     }
-    internalBinaryWrite(message: PodcastProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: StoredPodcastProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string podcast_id = 1; */
         if (message.podcastId !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.podcastId);
@@ -1385,9 +1385,9 @@ class PodcastProto$Type extends MessageType<PodcastProto> {
     }
 }
 /**
- * @generated MessageType for protobuf message PodcastProto
+ * @generated MessageType for protobuf message StoredPodcastProto
  */
-export const PodcastProto = new PodcastProto$Type();
+export const StoredPodcastProto = new StoredPodcastProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class PodcastTranscriptProto$Type extends MessageType<PodcastTranscriptProto> {
     constructor() {

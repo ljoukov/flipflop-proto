@@ -94,7 +94,7 @@ message PodcastPreviewProto {
   string audio_path = 10;
 }
 
-message PodcastProto {
+message StoredPodcastProto {
   string podcast_id = 1;
 
   string created_by = 2;
