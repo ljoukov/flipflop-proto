@@ -92,6 +92,7 @@ message PodcastPreviewProto {
   string short_synopsis = 9;
 
   string audio_path = 10;
+  google.protobuf.Duration audio_duration = 11;
 }
 
 message StoredPodcastProto {
@@ -115,6 +116,7 @@ message StoredPodcastProto {
   PodcastTranscriptProto transcript = 13;
 
   string audio_key = 14;
+  google.protobuf.Duration audio_duration = 15;
 }
 
 enum PodcastStateProto {

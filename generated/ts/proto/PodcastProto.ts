@@ -290,6 +290,10 @@ export interface PodcastPreviewProto {
      * @generated from protobuf field: string audio_path = 10;
      */
     audioPath: string;
+    /**
+     * @generated from protobuf field: google.protobuf.Duration audio_duration = 11;
+     */
+    audioDuration?: Duration;
 }
 /**
  * @generated from protobuf message StoredPodcastProto
@@ -351,6 +355,10 @@ export interface StoredPodcastProto {
      * @generated from protobuf field: string audio_key = 14;
      */
     audioKey: string;
+    /**
+     * @generated from protobuf field: google.protobuf.Duration audio_duration = 15;
+     */
+    audioDuration?: Duration;
 }
 /**
  * @generated from protobuf message PodcastTranscriptProto
@@ -1153,7 +1161,8 @@ class PodcastPreviewProto$Type extends MessageType<PodcastPreviewProto> {
             { no: 7, name: "title_emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 8, name: "synopsis", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 9, name: "short_synopsis", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 10, name: "audio_path", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 10, name: "audio_path", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 11, name: "audio_duration", kind: "message", T: () => Duration }
         ]);
     }
     create(value?: PartialMessage<PodcastPreviewProto>): PodcastPreviewProto {
@@ -1198,6 +1207,9 @@ class PodcastPreviewProto$Type extends MessageType<PodcastPreviewProto> {
                 case /* string audio_path */ 10:
                     message.audioPath = reader.string();
                     break;
+                case /* google.protobuf.Duration audio_duration */ 11:
+                    message.audioDuration = Duration.internalBinaryRead(reader, reader.uint32(), options, message.audioDuration);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -1240,6 +1252,9 @@ class PodcastPreviewProto$Type extends MessageType<PodcastPreviewProto> {
         /* string audio_path = 10; */
         if (message.audioPath !== "")
             writer.tag(10, WireType.LengthDelimited).string(message.audioPath);
+        /* google.protobuf.Duration audio_duration = 11; */
+        if (message.audioDuration)
+            Duration.internalBinaryWrite(message.audioDuration, writer.tag(11, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1267,7 +1282,8 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
             { no: 11, name: "short_hook", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 12, name: "plan", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 13, name: "transcript", kind: "message", T: () => PodcastTranscriptProto },
-            { no: 14, name: "audio_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 14, name: "audio_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 15, name: "audio_duration", kind: "message", T: () => Duration }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastProto>): StoredPodcastProto {
@@ -1324,6 +1340,9 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
                 case /* string audio_key */ 14:
                     message.audioKey = reader.string();
                     break;
+                case /* google.protobuf.Duration audio_duration */ 15:
+                    message.audioDuration = Duration.internalBinaryRead(reader, reader.uint32(), options, message.audioDuration);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -1378,6 +1397,9 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
         /* string audio_key = 14; */
         if (message.audioKey !== "")
             writer.tag(14, WireType.LengthDelimited).string(message.audioKey);
+        /* google.protobuf.Duration audio_duration = 15; */
+        if (message.audioDuration)
+            Duration.internalBinaryWrite(message.audioDuration, writer.tag(15, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

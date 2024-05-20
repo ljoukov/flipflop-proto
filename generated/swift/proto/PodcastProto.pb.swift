@@ -678,12 +678,22 @@ struct PodcastPreviewProto {
 
   var audioPath: String = String()
 
+  var audioDuration: SwiftProtobuf.Google_Protobuf_Duration {
+    get {return _audioDuration ?? SwiftProtobuf.Google_Protobuf_Duration()}
+    set {_audioDuration = newValue}
+  }
+  /// Returns true if `audioDuration` has been explicitly set.
+  var hasAudioDuration: Bool {return self._audioDuration != nil}
+  /// Clears the value of `audioDuration`. Subsequent reads from it will return its default value.
+  mutating func clearAudioDuration() {self._audioDuration = nil}
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 
   fileprivate var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
   fileprivate var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+  fileprivate var _audioDuration: SwiftProtobuf.Google_Protobuf_Duration? = nil
 }
 
 struct StoredPodcastProto {
@@ -691,62 +701,102 @@ struct StoredPodcastProto {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var podcastID: String = String()
+  var podcastID: String {
+    get {return _storage._podcastID}
+    set {_uniqueStorage()._podcastID = newValue}
+  }
 
-  var createdBy: String = String()
+  var createdBy: String {
+    get {return _storage._createdBy}
+    set {_uniqueStorage()._createdBy = newValue}
+  }
 
   var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {return _createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
-    set {_createdAt = newValue}
+    get {return _storage._createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_uniqueStorage()._createdAt = newValue}
   }
   /// Returns true if `createdAt` has been explicitly set.
-  var hasCreatedAt: Bool {return self._createdAt != nil}
+  var hasCreatedAt: Bool {return _storage._createdAt != nil}
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
-  mutating func clearCreatedAt() {self._createdAt = nil}
+  mutating func clearCreatedAt() {_uniqueStorage()._createdAt = nil}
 
   var updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {return _updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
-    set {_updatedAt = newValue}
+    get {return _storage._updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_uniqueStorage()._updatedAt = newValue}
   }
   /// Returns true if `updatedAt` has been explicitly set.
-  var hasUpdatedAt: Bool {return self._updatedAt != nil}
+  var hasUpdatedAt: Bool {return _storage._updatedAt != nil}
   /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
-  mutating func clearUpdatedAt() {self._updatedAt = nil}
+  mutating func clearUpdatedAt() {_uniqueStorage()._updatedAt = nil}
 
-  var userPrompt: String = String()
+  var userPrompt: String {
+    get {return _storage._userPrompt}
+    set {_uniqueStorage()._userPrompt = newValue}
+  }
 
-  var state: PodcastStateProto = .unknown
+  var state: PodcastStateProto {
+    get {return _storage._state}
+    set {_uniqueStorage()._state = newValue}
+  }
 
-  var reasoning: String = String()
+  var reasoning: String {
+    get {return _storage._reasoning}
+    set {_uniqueStorage()._reasoning = newValue}
+  }
 
-  var title: String = String()
+  var title: String {
+    get {return _storage._title}
+    set {_uniqueStorage()._title = newValue}
+  }
 
-  var titleEmoji: String = String()
+  var titleEmoji: String {
+    get {return _storage._titleEmoji}
+    set {_uniqueStorage()._titleEmoji = newValue}
+  }
 
-  var hook: String = String()
+  var hook: String {
+    get {return _storage._hook}
+    set {_uniqueStorage()._hook = newValue}
+  }
 
-  var shortHook: String = String()
+  var shortHook: String {
+    get {return _storage._shortHook}
+    set {_uniqueStorage()._shortHook = newValue}
+  }
 
-  var plan: String = String()
+  var plan: String {
+    get {return _storage._plan}
+    set {_uniqueStorage()._plan = newValue}
+  }
 
   var transcript: PodcastTranscriptProto {
-    get {return _transcript ?? PodcastTranscriptProto()}
-    set {_transcript = newValue}
+    get {return _storage._transcript ?? PodcastTranscriptProto()}
+    set {_uniqueStorage()._transcript = newValue}
   }
   /// Returns true if `transcript` has been explicitly set.
-  var hasTranscript: Bool {return self._transcript != nil}
+  var hasTranscript: Bool {return _storage._transcript != nil}
   /// Clears the value of `transcript`. Subsequent reads from it will return its default value.
-  mutating func clearTranscript() {self._transcript = nil}
+  mutating func clearTranscript() {_uniqueStorage()._transcript = nil}
 
-  var audioKey: String = String()
+  var audioKey: String {
+    get {return _storage._audioKey}
+    set {_uniqueStorage()._audioKey = newValue}
+  }
+
+  var audioDuration: SwiftProtobuf.Google_Protobuf_Duration {
+    get {return _storage._audioDuration ?? SwiftProtobuf.Google_Protobuf_Duration()}
+    set {_uniqueStorage()._audioDuration = newValue}
+  }
+  /// Returns true if `audioDuration` has been explicitly set.
+  var hasAudioDuration: Bool {return _storage._audioDuration != nil}
+  /// Clears the value of `audioDuration`. Subsequent reads from it will return its default value.
+  mutating func clearAudioDuration() {_uniqueStorage()._audioDuration = nil}
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 
-  fileprivate var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
-  fileprivate var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
-  fileprivate var _transcript: PodcastTranscriptProto? = nil
+  fileprivate var _storage = _StorageClass.defaultInstance
 }
 
 struct PodcastTranscriptProto {
@@ -1516,6 +1566,7 @@ extension PodcastPreviewProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     8: .same(proto: "synopsis"),
     9: .standard(proto: "short_synopsis"),
     10: .standard(proto: "audio_path"),
+    11: .standard(proto: "audio_duration"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1534,6 +1585,7 @@ extension PodcastPreviewProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
       case 8: try { try decoder.decodeSingularStringField(value: &self.synopsis) }()
       case 9: try { try decoder.decodeSingularStringField(value: &self.shortSynopsis) }()
       case 10: try { try decoder.decodeSingularStringField(value: &self.audioPath) }()
+      case 11: try { try decoder.decodeSingularMessageField(value: &self._audioDuration) }()
       default: break
       }
     }
@@ -1574,6 +1626,9 @@ extension PodcastPreviewProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     if !self.audioPath.isEmpty {
       try visitor.visitSingularStringField(value: self.audioPath, fieldNumber: 10)
     }
+    try { if let v = self._audioDuration {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 11)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1588,6 +1643,7 @@ extension PodcastPreviewProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     if lhs.synopsis != rhs.synopsis {return false}
     if lhs.shortSynopsis != rhs.shortSynopsis {return false}
     if lhs.audioPath != rhs.audioPath {return false}
+    if lhs._audioDuration != rhs._audioDuration {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -1610,98 +1666,164 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     12: .same(proto: "plan"),
     13: .same(proto: "transcript"),
     14: .standard(proto: "audio_key"),
+    15: .standard(proto: "audio_duration"),
   ]
 
+  fileprivate class _StorageClass {
+    var _podcastID: String = String()
+    var _createdBy: String = String()
+    var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+    var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+    var _userPrompt: String = String()
+    var _state: PodcastStateProto = .unknown
+    var _reasoning: String = String()
+    var _title: String = String()
+    var _titleEmoji: String = String()
+    var _hook: String = String()
+    var _shortHook: String = String()
+    var _plan: String = String()
+    var _transcript: PodcastTranscriptProto? = nil
+    var _audioKey: String = String()
+    var _audioDuration: SwiftProtobuf.Google_Protobuf_Duration? = nil
+
+    static let defaultInstance = _StorageClass()
+
+    private init() {}
+
+    init(copying source: _StorageClass) {
+      _podcastID = source._podcastID
+      _createdBy = source._createdBy
+      _createdAt = source._createdAt
+      _updatedAt = source._updatedAt
+      _userPrompt = source._userPrompt
+      _state = source._state
+      _reasoning = source._reasoning
+      _title = source._title
+      _titleEmoji = source._titleEmoji
+      _hook = source._hook
+      _shortHook = source._shortHook
+      _plan = source._plan
+      _transcript = source._transcript
+      _audioKey = source._audioKey
+      _audioDuration = source._audioDuration
+    }
+  }
+
+  fileprivate mutating func _uniqueStorage() -> _StorageClass {
+    if !isKnownUniquelyReferenced(&_storage) {
+      _storage = _StorageClass(copying: _storage)
+    }
+    return _storage
+  }
+
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.podcastID) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.createdBy) }()
-      case 3: try { try decoder.decodeSingularMessageField(value: &self._createdAt) }()
-      case 4: try { try decoder.decodeSingularMessageField(value: &self._updatedAt) }()
-      case 5: try { try decoder.decodeSingularStringField(value: &self.userPrompt) }()
-      case 6: try { try decoder.decodeSingularEnumField(value: &self.state) }()
-      case 7: try { try decoder.decodeSingularStringField(value: &self.reasoning) }()
-      case 8: try { try decoder.decodeSingularStringField(value: &self.title) }()
-      case 9: try { try decoder.decodeSingularStringField(value: &self.titleEmoji) }()
-      case 10: try { try decoder.decodeSingularStringField(value: &self.hook) }()
-      case 11: try { try decoder.decodeSingularStringField(value: &self.shortHook) }()
-      case 12: try { try decoder.decodeSingularStringField(value: &self.plan) }()
-      case 13: try { try decoder.decodeSingularMessageField(value: &self._transcript) }()
-      case 14: try { try decoder.decodeSingularStringField(value: &self.audioKey) }()
-      default: break
+    _ = _uniqueStorage()
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      while let fieldNumber = try decoder.nextFieldNumber() {
+        // The use of inline closures is to circumvent an issue where the compiler
+        // allocates stack space for every case branch when no optimizations are
+        // enabled. https://github.com/apple/swift-protobuf/issues/1034
+        switch fieldNumber {
+        case 1: try { try decoder.decodeSingularStringField(value: &_storage._podcastID) }()
+        case 2: try { try decoder.decodeSingularStringField(value: &_storage._createdBy) }()
+        case 3: try { try decoder.decodeSingularMessageField(value: &_storage._createdAt) }()
+        case 4: try { try decoder.decodeSingularMessageField(value: &_storage._updatedAt) }()
+        case 5: try { try decoder.decodeSingularStringField(value: &_storage._userPrompt) }()
+        case 6: try { try decoder.decodeSingularEnumField(value: &_storage._state) }()
+        case 7: try { try decoder.decodeSingularStringField(value: &_storage._reasoning) }()
+        case 8: try { try decoder.decodeSingularStringField(value: &_storage._title) }()
+        case 9: try { try decoder.decodeSingularStringField(value: &_storage._titleEmoji) }()
+        case 10: try { try decoder.decodeSingularStringField(value: &_storage._hook) }()
+        case 11: try { try decoder.decodeSingularStringField(value: &_storage._shortHook) }()
+        case 12: try { try decoder.decodeSingularStringField(value: &_storage._plan) }()
+        case 13: try { try decoder.decodeSingularMessageField(value: &_storage._transcript) }()
+        case 14: try { try decoder.decodeSingularStringField(value: &_storage._audioKey) }()
+        case 15: try { try decoder.decodeSingularMessageField(value: &_storage._audioDuration) }()
+        default: break
+        }
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every if/case branch local when no optimizations
-    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-    // https://github.com/apple/swift-protobuf/issues/1182
-    if !self.podcastID.isEmpty {
-      try visitor.visitSingularStringField(value: self.podcastID, fieldNumber: 1)
-    }
-    if !self.createdBy.isEmpty {
-      try visitor.visitSingularStringField(value: self.createdBy, fieldNumber: 2)
-    }
-    try { if let v = self._createdAt {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
-    } }()
-    try { if let v = self._updatedAt {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
-    } }()
-    if !self.userPrompt.isEmpty {
-      try visitor.visitSingularStringField(value: self.userPrompt, fieldNumber: 5)
-    }
-    if self.state != .unknown {
-      try visitor.visitSingularEnumField(value: self.state, fieldNumber: 6)
-    }
-    if !self.reasoning.isEmpty {
-      try visitor.visitSingularStringField(value: self.reasoning, fieldNumber: 7)
-    }
-    if !self.title.isEmpty {
-      try visitor.visitSingularStringField(value: self.title, fieldNumber: 8)
-    }
-    if !self.titleEmoji.isEmpty {
-      try visitor.visitSingularStringField(value: self.titleEmoji, fieldNumber: 9)
-    }
-    if !self.hook.isEmpty {
-      try visitor.visitSingularStringField(value: self.hook, fieldNumber: 10)
-    }
-    if !self.shortHook.isEmpty {
-      try visitor.visitSingularStringField(value: self.shortHook, fieldNumber: 11)
-    }
-    if !self.plan.isEmpty {
-      try visitor.visitSingularStringField(value: self.plan, fieldNumber: 12)
-    }
-    try { if let v = self._transcript {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 13)
-    } }()
-    if !self.audioKey.isEmpty {
-      try visitor.visitSingularStringField(value: self.audioKey, fieldNumber: 14)
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every if/case branch local when no optimizations
+      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+      // https://github.com/apple/swift-protobuf/issues/1182
+      if !_storage._podcastID.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._podcastID, fieldNumber: 1)
+      }
+      if !_storage._createdBy.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._createdBy, fieldNumber: 2)
+      }
+      try { if let v = _storage._createdAt {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+      } }()
+      try { if let v = _storage._updatedAt {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+      } }()
+      if !_storage._userPrompt.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._userPrompt, fieldNumber: 5)
+      }
+      if _storage._state != .unknown {
+        try visitor.visitSingularEnumField(value: _storage._state, fieldNumber: 6)
+      }
+      if !_storage._reasoning.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._reasoning, fieldNumber: 7)
+      }
+      if !_storage._title.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._title, fieldNumber: 8)
+      }
+      if !_storage._titleEmoji.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._titleEmoji, fieldNumber: 9)
+      }
+      if !_storage._hook.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._hook, fieldNumber: 10)
+      }
+      if !_storage._shortHook.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._shortHook, fieldNumber: 11)
+      }
+      if !_storage._plan.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._plan, fieldNumber: 12)
+      }
+      try { if let v = _storage._transcript {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 13)
+      } }()
+      if !_storage._audioKey.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._audioKey, fieldNumber: 14)
+      }
+      try { if let v = _storage._audioDuration {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
+      } }()
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: StoredPodcastProto, rhs: StoredPodcastProto) -> Bool {
-    if lhs.podcastID != rhs.podcastID {return false}
-    if lhs.createdBy != rhs.createdBy {return false}
-    if lhs._createdAt != rhs._createdAt {return false}
-    if lhs._updatedAt != rhs._updatedAt {return false}
-    if lhs.userPrompt != rhs.userPrompt {return false}
-    if lhs.state != rhs.state {return false}
-    if lhs.reasoning != rhs.reasoning {return false}
-    if lhs.title != rhs.title {return false}
-    if lhs.titleEmoji != rhs.titleEmoji {return false}
-    if lhs.hook != rhs.hook {return false}
-    if lhs.shortHook != rhs.shortHook {return false}
-    if lhs.plan != rhs.plan {return false}
-    if lhs._transcript != rhs._transcript {return false}
-    if lhs.audioKey != rhs.audioKey {return false}
+    if lhs._storage !== rhs._storage {
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+        let _storage = _args.0
+        let rhs_storage = _args.1
+        if _storage._podcastID != rhs_storage._podcastID {return false}
+        if _storage._createdBy != rhs_storage._createdBy {return false}
+        if _storage._createdAt != rhs_storage._createdAt {return false}
+        if _storage._updatedAt != rhs_storage._updatedAt {return false}
+        if _storage._userPrompt != rhs_storage._userPrompt {return false}
+        if _storage._state != rhs_storage._state {return false}
+        if _storage._reasoning != rhs_storage._reasoning {return false}
+        if _storage._title != rhs_storage._title {return false}
+        if _storage._titleEmoji != rhs_storage._titleEmoji {return false}
+        if _storage._hook != rhs_storage._hook {return false}
+        if _storage._shortHook != rhs_storage._shortHook {return false}
+        if _storage._plan != rhs_storage._plan {return false}
+        if _storage._transcript != rhs_storage._transcript {return false}
+        if _storage._audioKey != rhs_storage._audioKey {return false}
+        if _storage._audioDuration != rhs_storage._audioDuration {return false}
+        return true
+      }
+      if !storagesAreEqual {return false}
+    }
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
