@@ -27,11 +27,11 @@ export interface PodcastStreamApiRequestProto {
      * @generated from protobuf oneof: request
      */
     request: {
-        oneofKind: "createPreview";
+        oneofKind: "create";
         /**
-         * @generated from protobuf field: CreatePodcastPreviewRequestProto create_preview = 2;
+         * @generated from protobuf field: CreatePodcastRequestProto create = 2;
          */
-        createPreview: CreatePodcastPreviewRequestProto;
+        create: CreatePodcastRequestProto;
     } | {
         oneofKind: "generate";
         /**
@@ -63,11 +63,11 @@ export interface PodcastStreamApiResponseHeaderProto {
      * @generated from protobuf oneof: header
      */
     header: {
-        oneofKind: "createPreviewHeader";
+        oneofKind: "createHeader";
         /**
-         * @generated from protobuf field: CreatePodcastPreviewResponseHeaderProto create_preview_header = 2;
+         * @generated from protobuf field: CreatePodcastResponseHeaderProto create_header = 2;
          */
-        createPreviewHeader: CreatePodcastPreviewResponseHeaderProto;
+        createHeader: CreatePodcastResponseHeaderProto;
     } | {
         oneofKind: "generate";
         /**
@@ -98,11 +98,11 @@ export interface PodcastStreamApiResponseDeltaProto {
      * @generated from protobuf oneof: response_delta
      */
     responseDelta: {
-        oneofKind: "createPreviewDelta";
+        oneofKind: "createDelta";
         /**
-         * @generated from protobuf field: CreatePodcastPreviewResponseDeltaProto create_preview_delta = 1;
+         * @generated from protobuf field: CreatePodcastResponseDeltaProto create_delta = 1;
          */
-        createPreviewDelta: CreatePodcastPreviewResponseDeltaProto;
+        createDelta: CreatePodcastResponseDeltaProto;
     } | {
         oneofKind: "generateDelta";
         /**
@@ -120,23 +120,23 @@ export interface PodcastStreamApiResponseDeltaProto {
     };
 }
 /**
- * @generated from protobuf message CreatePodcastPreviewRequestProto
+ * @generated from protobuf message CreatePodcastRequestProto
  */
-export interface CreatePodcastPreviewRequestProto {
+export interface CreatePodcastRequestProto {
     /**
      * @generated from protobuf field: string prompt = 1;
      */
     prompt: string;
 }
 /**
- * @generated from protobuf message CreatePodcastPreviewResponseHeaderProto
+ * @generated from protobuf message CreatePodcastResponseHeaderProto
  */
-export interface CreatePodcastPreviewResponseHeaderProto {
+export interface CreatePodcastResponseHeaderProto {
 }
 /**
- * @generated from protobuf message CreatePodcastPreviewResponseDeltaProto
+ * @generated from protobuf message CreatePodcastResponseDeltaProto
  */
-export interface CreatePodcastPreviewResponseDeltaProto {
+export interface CreatePodcastResponseDeltaProto {
     /**
      * @generated from protobuf oneof: type
      */
@@ -155,13 +155,13 @@ export interface CreatePodcastPreviewResponseDeltaProto {
          */
         errorNoTopic: boolean;
     } | {
-        oneofKind: "previewDelta";
+        oneofKind: "podcast";
         /**
          * IDs start at 10
          *
-         * @generated from protobuf field: PodcastPreviewProto preview_delta = 10;
+         * @generated from protobuf field: PodcastProto podcast = 10;
          */
-        previewDelta: PodcastPreviewProto;
+        podcast: PodcastProto;
     } | {
         oneofKind: undefined;
     };
@@ -213,9 +213,9 @@ export interface ListPodcastsRequestProto {
  */
 export interface ListPodcastsResponseHeaderProto {
     /**
-     * @generated from protobuf field: repeated PodcastPreviewProto podcasts = 1;
+     * @generated from protobuf field: repeated PodcastProto podcasts = 1;
      */
-    podcasts: PodcastPreviewProto[];
+    podcasts: PodcastProto[];
 }
 /**
  * @generated from protobuf message ListPodcastsResponseDeltaProto
@@ -233,9 +233,9 @@ export interface ListPodcastsResponseDeltaProto {
     } | {
         oneofKind: "updatedPodcast";
         /**
-         * @generated from protobuf field: PodcastPreviewProto updated_podcast = 2;
+         * @generated from protobuf field: PodcastProto updated_podcast = 2;
          */
-        updatedPodcast: PodcastPreviewProto;
+        updatedPodcast: PodcastProto;
     } | {
         oneofKind: "deletedPodcastId";
         /**
@@ -247,9 +247,9 @@ export interface ListPodcastsResponseDeltaProto {
     };
 }
 /**
- * @generated from protobuf message PodcastPreviewProto
+ * @generated from protobuf message PodcastProto
  */
-export interface PodcastPreviewProto {
+export interface PodcastProto {
     /**
      * @generated from protobuf field: string podcast_id = 1;
      */
@@ -483,7 +483,7 @@ class PodcastStreamApiRequestProto$Type extends MessageType<PodcastStreamApiRequ
     constructor() {
         super("PodcastStreamApiRequestProto", [
             { no: 1, name: "encoded_user_auth", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "create_preview", kind: "message", oneof: "request", T: () => CreatePodcastPreviewRequestProto },
+            { no: 2, name: "create", kind: "message", oneof: "request", T: () => CreatePodcastRequestProto },
             { no: 3, name: "generate", kind: "message", oneof: "request", T: () => GeneratePodcastRequestProto },
             { no: 4, name: "list", kind: "message", oneof: "request", T: () => ListPodcastsRequestProto }
         ]);
@@ -503,10 +503,10 @@ class PodcastStreamApiRequestProto$Type extends MessageType<PodcastStreamApiRequ
                 case /* string encoded_user_auth */ 1:
                     message.encodedUserAuth = reader.string();
                     break;
-                case /* CreatePodcastPreviewRequestProto create_preview */ 2:
+                case /* CreatePodcastRequestProto create */ 2:
                     message.request = {
-                        oneofKind: "createPreview",
-                        createPreview: CreatePodcastPreviewRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).createPreview)
+                        oneofKind: "create",
+                        create: CreatePodcastRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).create)
                     };
                     break;
                 case /* GeneratePodcastRequestProto generate */ 3:
@@ -536,9 +536,9 @@ class PodcastStreamApiRequestProto$Type extends MessageType<PodcastStreamApiRequ
         /* string encoded_user_auth = 1; */
         if (message.encodedUserAuth !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.encodedUserAuth);
-        /* CreatePodcastPreviewRequestProto create_preview = 2; */
-        if (message.request.oneofKind === "createPreview")
-            CreatePodcastPreviewRequestProto.internalBinaryWrite(message.request.createPreview, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* CreatePodcastRequestProto create = 2; */
+        if (message.request.oneofKind === "create")
+            CreatePodcastRequestProto.internalBinaryWrite(message.request.create, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         /* GeneratePodcastRequestProto generate = 3; */
         if (message.request.oneofKind === "generate")
             GeneratePodcastRequestProto.internalBinaryWrite(message.request.generate, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
@@ -560,7 +560,7 @@ class PodcastStreamApiResponseHeaderProto$Type extends MessageType<PodcastStream
     constructor() {
         super("PodcastStreamApiResponseHeaderProto", [
             { no: 1, name: "refreshed_encoded_user_auth", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "create_preview_header", kind: "message", oneof: "header", T: () => CreatePodcastPreviewResponseHeaderProto },
+            { no: 2, name: "create_header", kind: "message", oneof: "header", T: () => CreatePodcastResponseHeaderProto },
             { no: 3, name: "generate", kind: "message", oneof: "header", T: () => GeneratePodcastResponseHeaderProto },
             { no: 4, name: "list", kind: "message", oneof: "header", T: () => ListPodcastsResponseHeaderProto },
             { no: 100, name: "latencies", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => Duration } }
@@ -581,10 +581,10 @@ class PodcastStreamApiResponseHeaderProto$Type extends MessageType<PodcastStream
                 case /* string refreshed_encoded_user_auth */ 1:
                     message.refreshedEncodedUserAuth = reader.string();
                     break;
-                case /* CreatePodcastPreviewResponseHeaderProto create_preview_header */ 2:
+                case /* CreatePodcastResponseHeaderProto create_header */ 2:
                     message.header = {
-                        oneofKind: "createPreviewHeader",
-                        createPreviewHeader: CreatePodcastPreviewResponseHeaderProto.internalBinaryRead(reader, reader.uint32(), options, (message.header as any).createPreviewHeader)
+                        oneofKind: "createHeader",
+                        createHeader: CreatePodcastResponseHeaderProto.internalBinaryRead(reader, reader.uint32(), options, (message.header as any).createHeader)
                     };
                     break;
                 case /* GeneratePodcastResponseHeaderProto generate */ 3:
@@ -633,9 +633,9 @@ class PodcastStreamApiResponseHeaderProto$Type extends MessageType<PodcastStream
         /* string refreshed_encoded_user_auth = 1; */
         if (message.refreshedEncodedUserAuth !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.refreshedEncodedUserAuth);
-        /* CreatePodcastPreviewResponseHeaderProto create_preview_header = 2; */
-        if (message.header.oneofKind === "createPreviewHeader")
-            CreatePodcastPreviewResponseHeaderProto.internalBinaryWrite(message.header.createPreviewHeader, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* CreatePodcastResponseHeaderProto create_header = 2; */
+        if (message.header.oneofKind === "createHeader")
+            CreatePodcastResponseHeaderProto.internalBinaryWrite(message.header.createHeader, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         /* GeneratePodcastResponseHeaderProto generate = 3; */
         if (message.header.oneofKind === "generate")
             GeneratePodcastResponseHeaderProto.internalBinaryWrite(message.header.generate, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
@@ -663,7 +663,7 @@ export const PodcastStreamApiResponseHeaderProto = new PodcastStreamApiResponseH
 class PodcastStreamApiResponseDeltaProto$Type extends MessageType<PodcastStreamApiResponseDeltaProto> {
     constructor() {
         super("PodcastStreamApiResponseDeltaProto", [
-            { no: 1, name: "create_preview_delta", kind: "message", oneof: "responseDelta", T: () => CreatePodcastPreviewResponseDeltaProto },
+            { no: 1, name: "create_delta", kind: "message", oneof: "responseDelta", T: () => CreatePodcastResponseDeltaProto },
             { no: 2, name: "generate_delta", kind: "message", oneof: "responseDelta", T: () => GeneratePodcastResponseDeltaProto },
             { no: 3, name: "list_delta", kind: "message", oneof: "responseDelta", T: () => ListPodcastsResponseDeltaProto }
         ]);
@@ -680,10 +680,10 @@ class PodcastStreamApiResponseDeltaProto$Type extends MessageType<PodcastStreamA
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* CreatePodcastPreviewResponseDeltaProto create_preview_delta */ 1:
+                case /* CreatePodcastResponseDeltaProto create_delta */ 1:
                     message.responseDelta = {
-                        oneofKind: "createPreviewDelta",
-                        createPreviewDelta: CreatePodcastPreviewResponseDeltaProto.internalBinaryRead(reader, reader.uint32(), options, (message.responseDelta as any).createPreviewDelta)
+                        oneofKind: "createDelta",
+                        createDelta: CreatePodcastResponseDeltaProto.internalBinaryRead(reader, reader.uint32(), options, (message.responseDelta as any).createDelta)
                     };
                     break;
                 case /* GeneratePodcastResponseDeltaProto generate_delta */ 2:
@@ -710,9 +710,9 @@ class PodcastStreamApiResponseDeltaProto$Type extends MessageType<PodcastStreamA
         return message;
     }
     internalBinaryWrite(message: PodcastStreamApiResponseDeltaProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* CreatePodcastPreviewResponseDeltaProto create_preview_delta = 1; */
-        if (message.responseDelta.oneofKind === "createPreviewDelta")
-            CreatePodcastPreviewResponseDeltaProto.internalBinaryWrite(message.responseDelta.createPreviewDelta, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* CreatePodcastResponseDeltaProto create_delta = 1; */
+        if (message.responseDelta.oneofKind === "createDelta")
+            CreatePodcastResponseDeltaProto.internalBinaryWrite(message.responseDelta.createDelta, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         /* GeneratePodcastResponseDeltaProto generate_delta = 2; */
         if (message.responseDelta.oneofKind === "generateDelta")
             GeneratePodcastResponseDeltaProto.internalBinaryWrite(message.responseDelta.generateDelta, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
@@ -730,20 +730,20 @@ class PodcastStreamApiResponseDeltaProto$Type extends MessageType<PodcastStreamA
  */
 export const PodcastStreamApiResponseDeltaProto = new PodcastStreamApiResponseDeltaProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class CreatePodcastPreviewRequestProto$Type extends MessageType<CreatePodcastPreviewRequestProto> {
+class CreatePodcastRequestProto$Type extends MessageType<CreatePodcastRequestProto> {
     constructor() {
-        super("CreatePodcastPreviewRequestProto", [
+        super("CreatePodcastRequestProto", [
             { no: 1, name: "prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<CreatePodcastPreviewRequestProto>): CreatePodcastPreviewRequestProto {
+    create(value?: PartialMessage<CreatePodcastRequestProto>): CreatePodcastRequestProto {
         const message = { prompt: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<CreatePodcastPreviewRequestProto>(this, message, value);
+            reflectionMergePartial<CreatePodcastRequestProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CreatePodcastPreviewRequestProto): CreatePodcastPreviewRequestProto {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CreatePodcastRequestProto): CreatePodcastRequestProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -762,7 +762,7 @@ class CreatePodcastPreviewRequestProto$Type extends MessageType<CreatePodcastPre
         }
         return message;
     }
-    internalBinaryWrite(message: CreatePodcastPreviewRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: CreatePodcastRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string prompt = 1; */
         if (message.prompt !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.prompt);
@@ -773,25 +773,25 @@ class CreatePodcastPreviewRequestProto$Type extends MessageType<CreatePodcastPre
     }
 }
 /**
- * @generated MessageType for protobuf message CreatePodcastPreviewRequestProto
+ * @generated MessageType for protobuf message CreatePodcastRequestProto
  */
-export const CreatePodcastPreviewRequestProto = new CreatePodcastPreviewRequestProto$Type();
+export const CreatePodcastRequestProto = new CreatePodcastRequestProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class CreatePodcastPreviewResponseHeaderProto$Type extends MessageType<CreatePodcastPreviewResponseHeaderProto> {
+class CreatePodcastResponseHeaderProto$Type extends MessageType<CreatePodcastResponseHeaderProto> {
     constructor() {
-        super("CreatePodcastPreviewResponseHeaderProto", []);
+        super("CreatePodcastResponseHeaderProto", []);
     }
-    create(value?: PartialMessage<CreatePodcastPreviewResponseHeaderProto>): CreatePodcastPreviewResponseHeaderProto {
+    create(value?: PartialMessage<CreatePodcastResponseHeaderProto>): CreatePodcastResponseHeaderProto {
         const message = {};
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<CreatePodcastPreviewResponseHeaderProto>(this, message, value);
+            reflectionMergePartial<CreatePodcastResponseHeaderProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CreatePodcastPreviewResponseHeaderProto): CreatePodcastPreviewResponseHeaderProto {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CreatePodcastResponseHeaderProto): CreatePodcastResponseHeaderProto {
         return target ?? this.create();
     }
-    internalBinaryWrite(message: CreatePodcastPreviewResponseHeaderProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: CreatePodcastResponseHeaderProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -799,26 +799,26 @@ class CreatePodcastPreviewResponseHeaderProto$Type extends MessageType<CreatePod
     }
 }
 /**
- * @generated MessageType for protobuf message CreatePodcastPreviewResponseHeaderProto
+ * @generated MessageType for protobuf message CreatePodcastResponseHeaderProto
  */
-export const CreatePodcastPreviewResponseHeaderProto = new CreatePodcastPreviewResponseHeaderProto$Type();
+export const CreatePodcastResponseHeaderProto = new CreatePodcastResponseHeaderProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class CreatePodcastPreviewResponseDeltaProto$Type extends MessageType<CreatePodcastPreviewResponseDeltaProto> {
+class CreatePodcastResponseDeltaProto$Type extends MessageType<CreatePodcastResponseDeltaProto> {
     constructor() {
-        super("CreatePodcastPreviewResponseDeltaProto", [
+        super("CreatePodcastResponseDeltaProto", [
             { no: 1, name: "separator", kind: "scalar", oneof: "type", T: 8 /*ScalarType.BOOL*/ },
             { no: 2, name: "error_no_topic", kind: "scalar", oneof: "type", T: 8 /*ScalarType.BOOL*/ },
-            { no: 10, name: "preview_delta", kind: "message", oneof: "type", T: () => PodcastPreviewProto }
+            { no: 10, name: "podcast", kind: "message", oneof: "type", T: () => PodcastProto }
         ]);
     }
-    create(value?: PartialMessage<CreatePodcastPreviewResponseDeltaProto>): CreatePodcastPreviewResponseDeltaProto {
+    create(value?: PartialMessage<CreatePodcastResponseDeltaProto>): CreatePodcastResponseDeltaProto {
         const message = { type: { oneofKind: undefined } };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<CreatePodcastPreviewResponseDeltaProto>(this, message, value);
+            reflectionMergePartial<CreatePodcastResponseDeltaProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CreatePodcastPreviewResponseDeltaProto): CreatePodcastPreviewResponseDeltaProto {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CreatePodcastResponseDeltaProto): CreatePodcastResponseDeltaProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -835,10 +835,10 @@ class CreatePodcastPreviewResponseDeltaProto$Type extends MessageType<CreatePodc
                         errorNoTopic: reader.bool()
                     };
                     break;
-                case /* PodcastPreviewProto preview_delta */ 10:
+                case /* PodcastProto podcast */ 10:
                     message.type = {
-                        oneofKind: "previewDelta",
-                        previewDelta: PodcastPreviewProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).previewDelta)
+                        oneofKind: "podcast",
+                        podcast: PodcastProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).podcast)
                     };
                     break;
                 default:
@@ -852,16 +852,16 @@ class CreatePodcastPreviewResponseDeltaProto$Type extends MessageType<CreatePodc
         }
         return message;
     }
-    internalBinaryWrite(message: CreatePodcastPreviewResponseDeltaProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: CreatePodcastResponseDeltaProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* bool separator = 1; */
         if (message.type.oneofKind === "separator")
             writer.tag(1, WireType.Varint).bool(message.type.separator);
         /* bool error_no_topic = 2; */
         if (message.type.oneofKind === "errorNoTopic")
             writer.tag(2, WireType.Varint).bool(message.type.errorNoTopic);
-        /* PodcastPreviewProto preview_delta = 10; */
-        if (message.type.oneofKind === "previewDelta")
-            PodcastPreviewProto.internalBinaryWrite(message.type.previewDelta, writer.tag(10, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastProto podcast = 10; */
+        if (message.type.oneofKind === "podcast")
+            PodcastProto.internalBinaryWrite(message.type.podcast, writer.tag(10, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -869,9 +869,9 @@ class CreatePodcastPreviewResponseDeltaProto$Type extends MessageType<CreatePodc
     }
 }
 /**
- * @generated MessageType for protobuf message CreatePodcastPreviewResponseDeltaProto
+ * @generated MessageType for protobuf message CreatePodcastResponseDeltaProto
  */
-export const CreatePodcastPreviewResponseDeltaProto = new CreatePodcastPreviewResponseDeltaProto$Type();
+export const CreatePodcastResponseDeltaProto = new CreatePodcastResponseDeltaProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class GeneratePodcastRequestProto$Type extends MessageType<GeneratePodcastRequestProto> {
     constructor() {
@@ -1035,7 +1035,7 @@ export const ListPodcastsRequestProto = new ListPodcastsRequestProto$Type();
 class ListPodcastsResponseHeaderProto$Type extends MessageType<ListPodcastsResponseHeaderProto> {
     constructor() {
         super("ListPodcastsResponseHeaderProto", [
-            { no: 1, name: "podcasts", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastPreviewProto }
+            { no: 1, name: "podcasts", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastProto }
         ]);
     }
     create(value?: PartialMessage<ListPodcastsResponseHeaderProto>): ListPodcastsResponseHeaderProto {
@@ -1050,8 +1050,8 @@ class ListPodcastsResponseHeaderProto$Type extends MessageType<ListPodcastsRespo
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* repeated PodcastPreviewProto podcasts */ 1:
-                    message.podcasts.push(PodcastPreviewProto.internalBinaryRead(reader, reader.uint32(), options));
+                case /* repeated PodcastProto podcasts */ 1:
+                    message.podcasts.push(PodcastProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1065,9 +1065,9 @@ class ListPodcastsResponseHeaderProto$Type extends MessageType<ListPodcastsRespo
         return message;
     }
     internalBinaryWrite(message: ListPodcastsResponseHeaderProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated PodcastPreviewProto podcasts = 1; */
+        /* repeated PodcastProto podcasts = 1; */
         for (let i = 0; i < message.podcasts.length; i++)
-            PodcastPreviewProto.internalBinaryWrite(message.podcasts[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+            PodcastProto.internalBinaryWrite(message.podcasts[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1083,7 +1083,7 @@ class ListPodcastsResponseDeltaProto$Type extends MessageType<ListPodcastsRespon
     constructor() {
         super("ListPodcastsResponseDeltaProto", [
             { no: 1, name: "ping", kind: "scalar", oneof: "type", T: 8 /*ScalarType.BOOL*/ },
-            { no: 2, name: "updated_podcast", kind: "message", oneof: "type", T: () => PodcastPreviewProto },
+            { no: 2, name: "updated_podcast", kind: "message", oneof: "type", T: () => PodcastProto },
             { no: 3, name: "deleted_podcast_id", kind: "scalar", oneof: "type", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
@@ -1105,10 +1105,10 @@ class ListPodcastsResponseDeltaProto$Type extends MessageType<ListPodcastsRespon
                         ping: reader.bool()
                     };
                     break;
-                case /* PodcastPreviewProto updated_podcast */ 2:
+                case /* PodcastProto updated_podcast */ 2:
                     message.type = {
                         oneofKind: "updatedPodcast",
-                        updatedPodcast: PodcastPreviewProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).updatedPodcast)
+                        updatedPodcast: PodcastProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).updatedPodcast)
                     };
                     break;
                 case /* string deleted_podcast_id */ 3:
@@ -1132,9 +1132,9 @@ class ListPodcastsResponseDeltaProto$Type extends MessageType<ListPodcastsRespon
         /* bool ping = 1; */
         if (message.type.oneofKind === "ping")
             writer.tag(1, WireType.Varint).bool(message.type.ping);
-        /* PodcastPreviewProto updated_podcast = 2; */
+        /* PodcastProto updated_podcast = 2; */
         if (message.type.oneofKind === "updatedPodcast")
-            PodcastPreviewProto.internalBinaryWrite(message.type.updatedPodcast, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+            PodcastProto.internalBinaryWrite(message.type.updatedPodcast, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         /* string deleted_podcast_id = 3; */
         if (message.type.oneofKind === "deletedPodcastId")
             writer.tag(3, WireType.LengthDelimited).string(message.type.deletedPodcastId);
@@ -1149,9 +1149,9 @@ class ListPodcastsResponseDeltaProto$Type extends MessageType<ListPodcastsRespon
  */
 export const ListPodcastsResponseDeltaProto = new ListPodcastsResponseDeltaProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class PodcastPreviewProto$Type extends MessageType<PodcastPreviewProto> {
+class PodcastProto$Type extends MessageType<PodcastProto> {
     constructor() {
-        super("PodcastPreviewProto", [
+        super("PodcastProto", [
             { no: 1, name: "podcast_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "created_by", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "created_at", kind: "message", T: () => Timestamp },
@@ -1165,14 +1165,14 @@ class PodcastPreviewProto$Type extends MessageType<PodcastPreviewProto> {
             { no: 11, name: "audio_duration", kind: "message", T: () => Duration }
         ]);
     }
-    create(value?: PartialMessage<PodcastPreviewProto>): PodcastPreviewProto {
+    create(value?: PartialMessage<PodcastProto>): PodcastProto {
         const message = { podcastId: "", createdBy: "", state: 0, title: "", titleEmoji: "", synopsis: "", shortSynopsis: "", audioPath: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<PodcastPreviewProto>(this, message, value);
+            reflectionMergePartial<PodcastProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastPreviewProto): PodcastPreviewProto {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastProto): PodcastProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -1221,7 +1221,7 @@ class PodcastPreviewProto$Type extends MessageType<PodcastPreviewProto> {
         }
         return message;
     }
-    internalBinaryWrite(message: PodcastPreviewProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: PodcastProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string podcast_id = 1; */
         if (message.podcastId !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.podcastId);
@@ -1262,9 +1262,9 @@ class PodcastPreviewProto$Type extends MessageType<PodcastPreviewProto> {
     }
 }
 /**
- * @generated MessageType for protobuf message PodcastPreviewProto
+ * @generated MessageType for protobuf message PodcastProto
  */
-export const PodcastPreviewProto = new PodcastPreviewProto$Type();
+export const PodcastProto = new PodcastProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
     constructor() {

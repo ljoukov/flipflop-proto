@@ -6,7 +6,7 @@ import "google/protobuf/timestamp.proto";
 message PodcastStreamApiRequestProto {
   string encoded_user_auth = 1;
   oneof request {
-    CreatePodcastPreviewRequestProto create_preview = 2;
+    CreatePodcastRequestProto create = 2;
     GeneratePodcastRequestProto generate = 3;
     ListPodcastsRequestProto list = 4;
   }
@@ -17,7 +17,7 @@ message PodcastStreamApiResponseHeaderProto {
   // from now onwards.
   string refreshed_encoded_user_auth = 1;
   oneof header {
-    CreatePodcastPreviewResponseHeaderProto create_preview_header = 2;
+    CreatePodcastResponseHeaderProto create_header = 2;
     GeneratePodcastResponseHeaderProto generate = 3;
     ListPodcastsResponseHeaderProto list = 4;
   }
@@ -26,19 +26,19 @@ message PodcastStreamApiResponseHeaderProto {
 
 message PodcastStreamApiResponseDeltaProto {
   oneof response_delta {
-    CreatePodcastPreviewResponseDeltaProto create_preview_delta = 1;
+    CreatePodcastResponseDeltaProto create_delta = 1;
     GeneratePodcastResponseDeltaProto generate_delta = 2;
     ListPodcastsResponseDeltaProto list_delta = 3;
   }
 }
 
-message CreatePodcastPreviewRequestProto {
+message CreatePodcastRequestProto {
   string prompt = 1;
 }
 
-message CreatePodcastPreviewResponseHeaderProto {}
+message CreatePodcastResponseHeaderProto {}
 
-message CreatePodcastPreviewResponseDeltaProto {
+message CreatePodcastResponseDeltaProto {
   oneof type {
     bool separator = 1;
 
@@ -46,7 +46,7 @@ message CreatePodcastPreviewResponseDeltaProto {
     bool error_no_topic = 2;
 
     // IDs start at 10
-    PodcastPreviewProto preview_delta = 10;
+    PodcastProto podcast = 10;
   }
 }
 
@@ -66,18 +66,18 @@ message GeneratePodcastResponseDeltaProto {
 message ListPodcastsRequestProto {}
 
 message ListPodcastsResponseHeaderProto {
-  repeated PodcastPreviewProto podcasts = 1;
+  repeated PodcastProto podcasts = 1;
 }
 
 message ListPodcastsResponseDeltaProto {
   oneof type {
     bool ping = 1;
-    PodcastPreviewProto updated_podcast = 2;
+    PodcastProto updated_podcast = 2;
     string deleted_podcast_id = 3;
   }
 }
 
-message PodcastPreviewProto {
+message PodcastProto {
   string podcast_id = 1;
 
   string created_by = 2;
