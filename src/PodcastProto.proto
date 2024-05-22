@@ -117,10 +117,9 @@ message StoredPodcastProto {
   string plan = 12;
   PodcastTranscriptProto transcript = 13;
 
-  string audio_key = 14;
-  google.protobuf.Duration audio_duration = 15;
+  PodcastAudioProto audio = 14;
 
-  PodcastVisualsProto visuals = 16;
+  PodcastVisualsProto visuals = 15;
 }
 
 enum PodcastStateProto {
@@ -178,6 +177,18 @@ enum PodcastHostProto {
   PODCAST_HOST_PROTO_UNKNOWN = 0;
   PODCAST_HOST_PROTO_MALE = 1;
   PODCAST_HOST_PROTO_FEMALE = 2;
+}
+
+message PodcastAudioProto {
+  string audio_key = 1;
+  google.protobuf.Duration audio_duration = 2;
+  repeated PodcastWordProto words = 3;
+}
+
+message PodcastWordProto {
+  string word = 1;
+  int32 start_millis = 2;
+  int32 end_millis = 3;
 }
 
 message PodcastVisualsProto {

@@ -796,19 +796,14 @@ struct StoredPodcastProto {
   /// Clears the value of `transcript`. Subsequent reads from it will return its default value.
   mutating func clearTranscript() {_uniqueStorage()._transcript = nil}
 
-  var audioKey: String {
-    get {return _storage._audioKey}
-    set {_uniqueStorage()._audioKey = newValue}
+  var audio: PodcastAudioProto {
+    get {return _storage._audio ?? PodcastAudioProto()}
+    set {_uniqueStorage()._audio = newValue}
   }
-
-  var audioDuration: SwiftProtobuf.Google_Protobuf_Duration {
-    get {return _storage._audioDuration ?? SwiftProtobuf.Google_Protobuf_Duration()}
-    set {_uniqueStorage()._audioDuration = newValue}
-  }
-  /// Returns true if `audioDuration` has been explicitly set.
-  var hasAudioDuration: Bool {return _storage._audioDuration != nil}
-  /// Clears the value of `audioDuration`. Subsequent reads from it will return its default value.
-  mutating func clearAudioDuration() {_uniqueStorage()._audioDuration = nil}
+  /// Returns true if `audio` has been explicitly set.
+  var hasAudio: Bool {return _storage._audio != nil}
+  /// Clears the value of `audio`. Subsequent reads from it will return its default value.
+  mutating func clearAudio() {_uniqueStorage()._audio = nil}
 
   var visuals: PodcastVisualsProto {
     get {return _storage._visuals ?? PodcastVisualsProto()}
@@ -924,6 +919,47 @@ struct PodcastHostSpeechProto {
   init() {}
 }
 
+struct PodcastAudioProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var audioKey: String = String()
+
+  var audioDuration: SwiftProtobuf.Google_Protobuf_Duration {
+    get {return _audioDuration ?? SwiftProtobuf.Google_Protobuf_Duration()}
+    set {_audioDuration = newValue}
+  }
+  /// Returns true if `audioDuration` has been explicitly set.
+  var hasAudioDuration: Bool {return self._audioDuration != nil}
+  /// Clears the value of `audioDuration`. Subsequent reads from it will return its default value.
+  mutating func clearAudioDuration() {self._audioDuration = nil}
+
+  var words: [PodcastWordProto] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+
+  fileprivate var _audioDuration: SwiftProtobuf.Google_Protobuf_Duration? = nil
+}
+
+struct PodcastWordProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var word: String = String()
+
+  var startMillis: Int32 = 0
+
+  var endMillis: Int32 = 0
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 struct PodcastVisualsProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -981,6 +1017,8 @@ extension PodcastSectionTranscriptProto: @unchecked Sendable {}
 extension PodcastTranscriptEntryProto: @unchecked Sendable {}
 extension PodcastTranscriptEntryProto.OneOf_Type: @unchecked Sendable {}
 extension PodcastHostSpeechProto: @unchecked Sendable {}
+extension PodcastAudioProto: @unchecked Sendable {}
+extension PodcastWordProto: @unchecked Sendable {}
 extension PodcastVisualsProto: @unchecked Sendable {}
 extension PodcastVisualProto: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
@@ -1790,9 +1828,8 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     11: .standard(proto: "short_hook"),
     12: .same(proto: "plan"),
     13: .same(proto: "transcript"),
-    14: .standard(proto: "audio_key"),
-    15: .standard(proto: "audio_duration"),
-    16: .same(proto: "visuals"),
+    14: .same(proto: "audio"),
+    15: .same(proto: "visuals"),
   ]
 
   fileprivate class _StorageClass {
@@ -1809,8 +1846,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     var _shortHook: String = String()
     var _plan: String = String()
     var _transcript: PodcastTranscriptProto? = nil
-    var _audioKey: String = String()
-    var _audioDuration: SwiftProtobuf.Google_Protobuf_Duration? = nil
+    var _audio: PodcastAudioProto? = nil
     var _visuals: PodcastVisualsProto? = nil
 
     static let defaultInstance = _StorageClass()
@@ -1831,8 +1867,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       _shortHook = source._shortHook
       _plan = source._plan
       _transcript = source._transcript
-      _audioKey = source._audioKey
-      _audioDuration = source._audioDuration
+      _audio = source._audio
       _visuals = source._visuals
     }
   }
@@ -1865,9 +1900,8 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         case 11: try { try decoder.decodeSingularStringField(value: &_storage._shortHook) }()
         case 12: try { try decoder.decodeSingularStringField(value: &_storage._plan) }()
         case 13: try { try decoder.decodeSingularMessageField(value: &_storage._transcript) }()
-        case 14: try { try decoder.decodeSingularStringField(value: &_storage._audioKey) }()
-        case 15: try { try decoder.decodeSingularMessageField(value: &_storage._audioDuration) }()
-        case 16: try { try decoder.decodeSingularMessageField(value: &_storage._visuals) }()
+        case 14: try { try decoder.decodeSingularMessageField(value: &_storage._audio) }()
+        case 15: try { try decoder.decodeSingularMessageField(value: &_storage._visuals) }()
         default: break
         }
       }
@@ -1919,14 +1953,11 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       try { if let v = _storage._transcript {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 13)
       } }()
-      if !_storage._audioKey.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._audioKey, fieldNumber: 14)
-      }
-      try { if let v = _storage._audioDuration {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
+      try { if let v = _storage._audio {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 14)
       } }()
       try { if let v = _storage._visuals {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 16)
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
       } }()
     }
     try unknownFields.traverse(visitor: &visitor)
@@ -1950,8 +1981,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         if _storage._shortHook != rhs_storage._shortHook {return false}
         if _storage._plan != rhs_storage._plan {return false}
         if _storage._transcript != rhs_storage._transcript {return false}
-        if _storage._audioKey != rhs_storage._audioKey {return false}
-        if _storage._audioDuration != rhs_storage._audioDuration {return false}
+        if _storage._audio != rhs_storage._audio {return false}
         if _storage._visuals != rhs_storage._visuals {return false}
         return true
       }
@@ -2148,6 +2178,98 @@ extension PodcastHostSpeechProto: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     if lhs.host != rhs.host {return false}
     if lhs.text != rhs.text {return false}
     if lhs.startMillis != rhs.startMillis {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension PodcastAudioProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastAudioProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "audio_key"),
+    2: .standard(proto: "audio_duration"),
+    3: .same(proto: "words"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.audioKey) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._audioDuration) }()
+      case 3: try { try decoder.decodeRepeatedMessageField(value: &self.words) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.audioKey.isEmpty {
+      try visitor.visitSingularStringField(value: self.audioKey, fieldNumber: 1)
+    }
+    try { if let v = self._audioDuration {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
+    if !self.words.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.words, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PodcastAudioProto, rhs: PodcastAudioProto) -> Bool {
+    if lhs.audioKey != rhs.audioKey {return false}
+    if lhs._audioDuration != rhs._audioDuration {return false}
+    if lhs.words != rhs.words {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension PodcastWordProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastWordProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "word"),
+    2: .standard(proto: "start_millis"),
+    3: .standard(proto: "end_millis"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.word) }()
+      case 2: try { try decoder.decodeSingularInt32Field(value: &self.startMillis) }()
+      case 3: try { try decoder.decodeSingularInt32Field(value: &self.endMillis) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.word.isEmpty {
+      try visitor.visitSingularStringField(value: self.word, fieldNumber: 1)
+    }
+    if self.startMillis != 0 {
+      try visitor.visitSingularInt32Field(value: self.startMillis, fieldNumber: 2)
+    }
+    if self.endMillis != 0 {
+      try visitor.visitSingularInt32Field(value: self.endMillis, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PodcastWordProto, rhs: PodcastWordProto) -> Bool {
+    if lhs.word != rhs.word {return false}
+    if lhs.startMillis != rhs.startMillis {return false}
+    if lhs.endMillis != rhs.endMillis {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

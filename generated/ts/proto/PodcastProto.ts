@@ -356,15 +356,11 @@ export interface StoredPodcastProto {
      */
     transcript?: PodcastTranscriptProto;
     /**
-     * @generated from protobuf field: string audio_key = 14;
+     * @generated from protobuf field: PodcastAudioProto audio = 14;
      */
-    audioKey: string;
+    audio?: PodcastAudioProto;
     /**
-     * @generated from protobuf field: google.protobuf.Duration audio_duration = 15;
-     */
-    audioDuration?: Duration;
-    /**
-     * @generated from protobuf field: PodcastVisualsProto visuals = 16;
+     * @generated from protobuf field: PodcastVisualsProto visuals = 15;
      */
     visuals?: PodcastVisualsProto;
 }
@@ -437,6 +433,40 @@ export interface PodcastHostSpeechProto {
      * @generated from protobuf field: int32 start_millis = 3;
      */
     startMillis: number;
+}
+/**
+ * @generated from protobuf message PodcastAudioProto
+ */
+export interface PodcastAudioProto {
+    /**
+     * @generated from protobuf field: string audio_key = 1;
+     */
+    audioKey: string;
+    /**
+     * @generated from protobuf field: google.protobuf.Duration audio_duration = 2;
+     */
+    audioDuration?: Duration;
+    /**
+     * @generated from protobuf field: repeated PodcastWordProto words = 3;
+     */
+    words: PodcastWordProto[];
+}
+/**
+ * @generated from protobuf message PodcastWordProto
+ */
+export interface PodcastWordProto {
+    /**
+     * @generated from protobuf field: string word = 1;
+     */
+    word: string;
+    /**
+     * @generated from protobuf field: int32 start_millis = 2;
+     */
+    startMillis: number;
+    /**
+     * @generated from protobuf field: int32 end_millis = 3;
+     */
+    endMillis: number;
 }
 /**
  * @generated from protobuf message PodcastVisualsProto
@@ -1366,13 +1396,12 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
             { no: 11, name: "short_hook", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 12, name: "plan", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 13, name: "transcript", kind: "message", T: () => PodcastTranscriptProto },
-            { no: 14, name: "audio_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 15, name: "audio_duration", kind: "message", T: () => Duration },
-            { no: 16, name: "visuals", kind: "message", T: () => PodcastVisualsProto }
+            { no: 14, name: "audio", kind: "message", T: () => PodcastAudioProto },
+            { no: 15, name: "visuals", kind: "message", T: () => PodcastVisualsProto }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastProto>): StoredPodcastProto {
-        const message = { podcastId: "", createdBy: "", userPrompt: "", state: 0, reasoning: "", title: "", titleEmoji: "", hook: "", shortHook: "", plan: "", audioKey: "" };
+        const message = { podcastId: "", createdBy: "", userPrompt: "", state: 0, reasoning: "", title: "", titleEmoji: "", hook: "", shortHook: "", plan: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastProto>(this, message, value);
@@ -1422,13 +1451,10 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
                 case /* PodcastTranscriptProto transcript */ 13:
                     message.transcript = PodcastTranscriptProto.internalBinaryRead(reader, reader.uint32(), options, message.transcript);
                     break;
-                case /* string audio_key */ 14:
-                    message.audioKey = reader.string();
+                case /* PodcastAudioProto audio */ 14:
+                    message.audio = PodcastAudioProto.internalBinaryRead(reader, reader.uint32(), options, message.audio);
                     break;
-                case /* google.protobuf.Duration audio_duration */ 15:
-                    message.audioDuration = Duration.internalBinaryRead(reader, reader.uint32(), options, message.audioDuration);
-                    break;
-                case /* PodcastVisualsProto visuals */ 16:
+                case /* PodcastVisualsProto visuals */ 15:
                     message.visuals = PodcastVisualsProto.internalBinaryRead(reader, reader.uint32(), options, message.visuals);
                     break;
                 default:
@@ -1482,15 +1508,12 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
         /* PodcastTranscriptProto transcript = 13; */
         if (message.transcript)
             PodcastTranscriptProto.internalBinaryWrite(message.transcript, writer.tag(13, WireType.LengthDelimited).fork(), options).join();
-        /* string audio_key = 14; */
-        if (message.audioKey !== "")
-            writer.tag(14, WireType.LengthDelimited).string(message.audioKey);
-        /* google.protobuf.Duration audio_duration = 15; */
-        if (message.audioDuration)
-            Duration.internalBinaryWrite(message.audioDuration, writer.tag(15, WireType.LengthDelimited).fork(), options).join();
-        /* PodcastVisualsProto visuals = 16; */
+        /* PodcastAudioProto audio = 14; */
+        if (message.audio)
+            PodcastAudioProto.internalBinaryWrite(message.audio, writer.tag(14, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastVisualsProto visuals = 15; */
         if (message.visuals)
-            PodcastVisualsProto.internalBinaryWrite(message.visuals, writer.tag(16, WireType.LengthDelimited).fork(), options).join();
+            PodcastVisualsProto.internalBinaryWrite(message.visuals, writer.tag(15, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1737,6 +1760,128 @@ class PodcastHostSpeechProto$Type extends MessageType<PodcastHostSpeechProto> {
  * @generated MessageType for protobuf message PodcastHostSpeechProto
  */
 export const PodcastHostSpeechProto = new PodcastHostSpeechProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PodcastAudioProto$Type extends MessageType<PodcastAudioProto> {
+    constructor() {
+        super("PodcastAudioProto", [
+            { no: 1, name: "audio_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "audio_duration", kind: "message", T: () => Duration },
+            { no: 3, name: "words", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastWordProto }
+        ]);
+    }
+    create(value?: PartialMessage<PodcastAudioProto>): PodcastAudioProto {
+        const message = { audioKey: "", words: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<PodcastAudioProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastAudioProto): PodcastAudioProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string audio_key */ 1:
+                    message.audioKey = reader.string();
+                    break;
+                case /* google.protobuf.Duration audio_duration */ 2:
+                    message.audioDuration = Duration.internalBinaryRead(reader, reader.uint32(), options, message.audioDuration);
+                    break;
+                case /* repeated PodcastWordProto words */ 3:
+                    message.words.push(PodcastWordProto.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PodcastAudioProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string audio_key = 1; */
+        if (message.audioKey !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.audioKey);
+        /* google.protobuf.Duration audio_duration = 2; */
+        if (message.audioDuration)
+            Duration.internalBinaryWrite(message.audioDuration, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* repeated PodcastWordProto words = 3; */
+        for (let i = 0; i < message.words.length; i++)
+            PodcastWordProto.internalBinaryWrite(message.words[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message PodcastAudioProto
+ */
+export const PodcastAudioProto = new PodcastAudioProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PodcastWordProto$Type extends MessageType<PodcastWordProto> {
+    constructor() {
+        super("PodcastWordProto", [
+            { no: 1, name: "word", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "start_millis", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 3, name: "end_millis", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PodcastWordProto>): PodcastWordProto {
+        const message = { word: "", startMillis: 0, endMillis: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<PodcastWordProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastWordProto): PodcastWordProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string word */ 1:
+                    message.word = reader.string();
+                    break;
+                case /* int32 start_millis */ 2:
+                    message.startMillis = reader.int32();
+                    break;
+                case /* int32 end_millis */ 3:
+                    message.endMillis = reader.int32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PodcastWordProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string word = 1; */
+        if (message.word !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.word);
+        /* int32 start_millis = 2; */
+        if (message.startMillis !== 0)
+            writer.tag(2, WireType.Varint).int32(message.startMillis);
+        /* int32 end_millis = 3; */
+        if (message.endMillis !== 0)
+            writer.tag(3, WireType.Varint).int32(message.endMillis);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message PodcastWordProto
+ */
+export const PodcastWordProto = new PodcastWordProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class PodcastVisualsProto$Type extends MessageType<PodcastVisualsProto> {
     constructor() {
