@@ -93,6 +93,8 @@ message PodcastProto {
 
   string audio_path = 10;
   google.protobuf.Duration audio_duration = 11;
+
+  PodcastVisualsProto visuals = 12;
 }
 
 message StoredPodcastProto {

@@ -695,6 +695,15 @@ struct PodcastProto {
   /// Clears the value of `audioDuration`. Subsequent reads from it will return its default value.
   mutating func clearAudioDuration() {self._audioDuration = nil}
 
+  var visuals: PodcastVisualsProto {
+    get {return _visuals ?? PodcastVisualsProto()}
+    set {_visuals = newValue}
+  }
+  /// Returns true if `visuals` has been explicitly set.
+  var hasVisuals: Bool {return self._visuals != nil}
+  /// Clears the value of `visuals`. Subsequent reads from it will return its default value.
+  mutating func clearVisuals() {self._visuals = nil}
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -702,6 +711,7 @@ struct PodcastProto {
   fileprivate var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
   fileprivate var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
   fileprivate var _audioDuration: SwiftProtobuf.Google_Protobuf_Duration? = nil
+  fileprivate var _visuals: PodcastVisualsProto? = nil
 }
 
 struct StoredPodcastProto {
@@ -1676,6 +1686,7 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     9: .standard(proto: "short_synopsis"),
     10: .standard(proto: "audio_path"),
     11: .standard(proto: "audio_duration"),
+    12: .same(proto: "visuals"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1695,6 +1706,7 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
       case 9: try { try decoder.decodeSingularStringField(value: &self.shortSynopsis) }()
       case 10: try { try decoder.decodeSingularStringField(value: &self.audioPath) }()
       case 11: try { try decoder.decodeSingularMessageField(value: &self._audioDuration) }()
+      case 12: try { try decoder.decodeSingularMessageField(value: &self._visuals) }()
       default: break
       }
     }
@@ -1738,6 +1750,9 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     try { if let v = self._audioDuration {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 11)
     } }()
+    try { if let v = self._visuals {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 12)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1753,6 +1768,7 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     if lhs.shortSynopsis != rhs.shortSynopsis {return false}
     if lhs.audioPath != rhs.audioPath {return false}
     if lhs._audioDuration != rhs._audioDuration {return false}
+    if lhs._visuals != rhs._visuals {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

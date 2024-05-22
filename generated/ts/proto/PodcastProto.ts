@@ -294,6 +294,10 @@ export interface PodcastProto {
      * @generated from protobuf field: google.protobuf.Duration audio_duration = 11;
      */
     audioDuration?: Duration;
+    /**
+     * @generated from protobuf field: PodcastVisualsProto visuals = 12;
+     */
+    visuals?: PodcastVisualsProto;
 }
 /**
  * @generated from protobuf message StoredPodcastProto
@@ -1235,7 +1239,8 @@ class PodcastProto$Type extends MessageType<PodcastProto> {
             { no: 8, name: "synopsis", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 9, name: "short_synopsis", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 10, name: "audio_path", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 11, name: "audio_duration", kind: "message", T: () => Duration }
+            { no: 11, name: "audio_duration", kind: "message", T: () => Duration },
+            { no: 12, name: "visuals", kind: "message", T: () => PodcastVisualsProto }
         ]);
     }
     create(value?: PartialMessage<PodcastProto>): PodcastProto {
@@ -1283,6 +1288,9 @@ class PodcastProto$Type extends MessageType<PodcastProto> {
                 case /* google.protobuf.Duration audio_duration */ 11:
                     message.audioDuration = Duration.internalBinaryRead(reader, reader.uint32(), options, message.audioDuration);
                     break;
+                case /* PodcastVisualsProto visuals */ 12:
+                    message.visuals = PodcastVisualsProto.internalBinaryRead(reader, reader.uint32(), options, message.visuals);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -1328,6 +1336,9 @@ class PodcastProto$Type extends MessageType<PodcastProto> {
         /* google.protobuf.Duration audio_duration = 11; */
         if (message.audioDuration)
             Duration.internalBinaryWrite(message.audioDuration, writer.tag(11, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastVisualsProto visuals = 12; */
+        if (message.visuals)
+            PodcastVisualsProto.internalBinaryWrite(message.visuals, writer.tag(12, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
