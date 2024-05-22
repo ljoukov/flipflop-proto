@@ -448,9 +448,9 @@ export interface PodcastVisualsProto {
  */
 export interface PodcastVisualProto {
     /**
-     * @generated from protobuf field: int64 timestamp_millis = 1;
+     * @generated from protobuf field: int32 timestamp_millis = 1;
      */
-    timestampMillis: string;
+    timestampMillis: number;
     /**
      * @generated from protobuf field: string image_key = 2;
      */
@@ -1773,12 +1773,12 @@ export const PodcastVisualsProto = new PodcastVisualsProto$Type();
 class PodcastVisualProto$Type extends MessageType<PodcastVisualProto> {
     constructor() {
         super("PodcastVisualProto", [
-            { no: 1, name: "timestamp_millis", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
+            { no: 1, name: "timestamp_millis", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 2, name: "image_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PodcastVisualProto>): PodcastVisualProto {
-        const message = { timestampMillis: "0", imageKey: "" };
+        const message = { timestampMillis: 0, imageKey: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastVisualProto>(this, message, value);
@@ -1789,8 +1789,8 @@ class PodcastVisualProto$Type extends MessageType<PodcastVisualProto> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* int64 timestamp_millis */ 1:
-                    message.timestampMillis = reader.int64().toString();
+                case /* int32 timestamp_millis */ 1:
+                    message.timestampMillis = reader.int32();
                     break;
                 case /* string image_key */ 2:
                     message.imageKey = reader.string();
@@ -1807,9 +1807,9 @@ class PodcastVisualProto$Type extends MessageType<PodcastVisualProto> {
         return message;
     }
     internalBinaryWrite(message: PodcastVisualProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* int64 timestamp_millis = 1; */
-        if (message.timestampMillis !== "0")
-            writer.tag(1, WireType.Varint).int64(message.timestampMillis);
+        /* int32 timestamp_millis = 1; */
+        if (message.timestampMillis !== 0)
+            writer.tag(1, WireType.Varint).int32(message.timestampMillis);
         /* string image_key = 2; */
         if (message.imageKey !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.imageKey);

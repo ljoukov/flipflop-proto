@@ -183,6 +183,6 @@ message PodcastVisualsProto {
 }
 
 message PodcastVisualProto {
-  int64 timestamp_millis = 1;
+  int32 timestamp_millis = 1;
   string image_key = 2;
 }
