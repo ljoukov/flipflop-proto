@@ -359,6 +359,10 @@ export interface StoredPodcastProto {
      * @generated from protobuf field: google.protobuf.Duration audio_duration = 15;
      */
     audioDuration?: Duration;
+    /**
+     * @generated from protobuf field: PodcastVisualsProto visuals = 16;
+     */
+    visuals?: PodcastVisualsProto;
 }
 /**
  * @generated from protobuf message PodcastTranscriptProto
@@ -408,6 +412,32 @@ export interface PodcastTranscriptEntryProto {
     imagePrompt: string;
 }
 /**
+ * @generated from protobuf message PodcastVisualsProto
+ */
+export interface PodcastVisualsProto {
+    /**
+     * @generated from protobuf field: string thumbnail_key = 1;
+     */
+    thumbnailKey: string;
+    /**
+     * @generated from protobuf field: repeated PodcastVisualProto visuals = 2;
+     */
+    visuals: PodcastVisualProto[];
+}
+/**
+ * @generated from protobuf message PodcastVisualProto
+ */
+export interface PodcastVisualProto {
+    /**
+     * @generated from protobuf field: int64 timestamp_millis = 1;
+     */
+    timestampMillis: string;
+    /**
+     * @generated from protobuf field: string image_key = 2;
+     */
+    imageKey: string;
+}
+/**
  * @generated from protobuf enum PodcastStateProto
  */
 export enum PodcastStateProto {
@@ -444,21 +474,21 @@ export enum PodcastStateProto {
      */
     TRANSCRIPT_READY = 7,
     /**
-     * @generated from protobuf enum value: PODCAST_STATE_PROTO_GENERATING_IMAGES = 8;
+     * @generated from protobuf enum value: PODCAST_STATE_PROTO_GENERATING_AUDIO = 8;
      */
-    GENERATING_IMAGES = 8,
+    GENERATING_AUDIO = 8,
     /**
-     * @generated from protobuf enum value: PODCAST_STATE_PROTO_IMAGES_READY = 9;
+     * @generated from protobuf enum value: PODCAST_STATE_PROTO_AUDIO_READY = 9;
      */
-    IMAGES_READY = 9,
+    AUDIO_READY = 9,
     /**
-     * @generated from protobuf enum value: PODCAST_STATE_PROTO_GENERATING_AUDIO = 10;
+     * @generated from protobuf enum value: PODCAST_STATE_PROTO_GENERATING_VISUALS = 10;
      */
-    GENERATING_AUDIO = 10,
+    GENERATING_VISUALS = 10,
     /**
-     * @generated from protobuf enum value: PODCAST_STATE_PROTO_AUDIO_READY = 11;
+     * @generated from protobuf enum value: PODCAST_STATE_PROTO_VISUALS_READY = 11;
      */
-    AUDIO_READY = 11
+    VISUALS_READY = 11
 }
 /**
  * @generated from protobuf enum PodcastSectionTypeProto
@@ -1303,7 +1333,8 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
             { no: 12, name: "plan", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 13, name: "transcript", kind: "message", T: () => PodcastTranscriptProto },
             { no: 14, name: "audio_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 15, name: "audio_duration", kind: "message", T: () => Duration }
+            { no: 15, name: "audio_duration", kind: "message", T: () => Duration },
+            { no: 16, name: "visuals", kind: "message", T: () => PodcastVisualsProto }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastProto>): StoredPodcastProto {
@@ -1363,6 +1394,9 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
                 case /* google.protobuf.Duration audio_duration */ 15:
                     message.audioDuration = Duration.internalBinaryRead(reader, reader.uint32(), options, message.audioDuration);
                     break;
+                case /* PodcastVisualsProto visuals */ 16:
+                    message.visuals = PodcastVisualsProto.internalBinaryRead(reader, reader.uint32(), options, message.visuals);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -1420,6 +1454,9 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
         /* google.protobuf.Duration audio_duration = 15; */
         if (message.audioDuration)
             Duration.internalBinaryWrite(message.audioDuration, writer.tag(15, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastVisualsProto visuals = 16; */
+        if (message.visuals)
+            PodcastVisualsProto.internalBinaryWrite(message.visuals, writer.tag(16, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1606,3 +1643,111 @@ class PodcastTranscriptEntryProto$Type extends MessageType<PodcastTranscriptEntr
  * @generated MessageType for protobuf message PodcastTranscriptEntryProto
  */
 export const PodcastTranscriptEntryProto = new PodcastTranscriptEntryProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PodcastVisualsProto$Type extends MessageType<PodcastVisualsProto> {
+    constructor() {
+        super("PodcastVisualsProto", [
+            { no: 1, name: "thumbnail_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "visuals", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastVisualProto }
+        ]);
+    }
+    create(value?: PartialMessage<PodcastVisualsProto>): PodcastVisualsProto {
+        const message = { thumbnailKey: "", visuals: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<PodcastVisualsProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastVisualsProto): PodcastVisualsProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string thumbnail_key */ 1:
+                    message.thumbnailKey = reader.string();
+                    break;
+                case /* repeated PodcastVisualProto visuals */ 2:
+                    message.visuals.push(PodcastVisualProto.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PodcastVisualsProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string thumbnail_key = 1; */
+        if (message.thumbnailKey !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.thumbnailKey);
+        /* repeated PodcastVisualProto visuals = 2; */
+        for (let i = 0; i < message.visuals.length; i++)
+            PodcastVisualProto.internalBinaryWrite(message.visuals[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message PodcastVisualsProto
+ */
+export const PodcastVisualsProto = new PodcastVisualsProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PodcastVisualProto$Type extends MessageType<PodcastVisualProto> {
+    constructor() {
+        super("PodcastVisualProto", [
+            { no: 1, name: "timestamp_millis", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
+            { no: 2, name: "image_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PodcastVisualProto>): PodcastVisualProto {
+        const message = { timestampMillis: "0", imageKey: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<PodcastVisualProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastVisualProto): PodcastVisualProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int64 timestamp_millis */ 1:
+                    message.timestampMillis = reader.int64().toString();
+                    break;
+                case /* string image_key */ 2:
+                    message.imageKey = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PodcastVisualProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int64 timestamp_millis = 1; */
+        if (message.timestampMillis !== "0")
+            writer.tag(1, WireType.Varint).int64(message.timestampMillis);
+        /* string image_key = 2; */
+        if (message.imageKey !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.imageKey);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message PodcastVisualProto
+ */
+export const PodcastVisualProto = new PodcastVisualProto$Type();

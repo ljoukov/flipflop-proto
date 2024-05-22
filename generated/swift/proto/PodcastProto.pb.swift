@@ -30,10 +30,10 @@ enum PodcastStateProto: SwiftProtobuf.Enum {
   case planReady // = 5
   case generatingTranscript // = 6
   case transcriptReady // = 7
-  case generatingImages // = 8
-  case imagesReady // = 9
-  case generatingAudio // = 10
-  case audioReady // = 11
+  case generatingAudio // = 8
+  case audioReady // = 9
+  case generatingVisuals // = 10
+  case visualsReady // = 11
   case UNRECOGNIZED(Int)
 
   init() {
@@ -50,10 +50,10 @@ enum PodcastStateProto: SwiftProtobuf.Enum {
     case 5: self = .planReady
     case 6: self = .generatingTranscript
     case 7: self = .transcriptReady
-    case 8: self = .generatingImages
-    case 9: self = .imagesReady
-    case 10: self = .generatingAudio
-    case 11: self = .audioReady
+    case 8: self = .generatingAudio
+    case 9: self = .audioReady
+    case 10: self = .generatingVisuals
+    case 11: self = .visualsReady
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -68,10 +68,10 @@ enum PodcastStateProto: SwiftProtobuf.Enum {
     case .planReady: return 5
     case .generatingTranscript: return 6
     case .transcriptReady: return 7
-    case .generatingImages: return 8
-    case .imagesReady: return 9
-    case .generatingAudio: return 10
-    case .audioReady: return 11
+    case .generatingAudio: return 8
+    case .audioReady: return 9
+    case .generatingVisuals: return 10
+    case .visualsReady: return 11
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -91,10 +91,10 @@ extension PodcastStateProto: CaseIterable {
     .planReady,
     .generatingTranscript,
     .transcriptReady,
-    .generatingImages,
-    .imagesReady,
     .generatingAudio,
     .audioReady,
+    .generatingVisuals,
+    .visualsReady,
   ]
 }
 
@@ -800,6 +800,15 @@ struct StoredPodcastProto {
   /// Clears the value of `audioDuration`. Subsequent reads from it will return its default value.
   mutating func clearAudioDuration() {_uniqueStorage()._audioDuration = nil}
 
+  var visuals: PodcastVisualsProto {
+    get {return _storage._visuals ?? PodcastVisualsProto()}
+    set {_uniqueStorage()._visuals = newValue}
+  }
+  /// Returns true if `visuals` has been explicitly set.
+  var hasVisuals: Bool {return _storage._visuals != nil}
+  /// Clears the value of `visuals`. Subsequent reads from it will return its default value.
+  mutating func clearVisuals() {_uniqueStorage()._visuals = nil}
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -853,6 +862,34 @@ struct PodcastTranscriptEntryProto {
   init() {}
 }
 
+struct PodcastVisualsProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var thumbnailKey: String = String()
+
+  var visuals: [PodcastVisualProto] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct PodcastVisualProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var timestampMillis: Int64 = 0
+
+  var imageKey: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 #if swift(>=5.5) && canImport(_Concurrency)
 extension PodcastStateProto: @unchecked Sendable {}
 extension PodcastSectionTypeProto: @unchecked Sendable {}
@@ -880,6 +917,8 @@ extension StoredPodcastProto: @unchecked Sendable {}
 extension PodcastTranscriptProto: @unchecked Sendable {}
 extension PodcastSectionTranscriptProto: @unchecked Sendable {}
 extension PodcastTranscriptEntryProto: @unchecked Sendable {}
+extension PodcastVisualsProto: @unchecked Sendable {}
+extension PodcastVisualProto: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
@@ -894,10 +933,10 @@ extension PodcastStateProto: SwiftProtobuf._ProtoNameProviding {
     5: .same(proto: "PODCAST_STATE_PROTO_PLAN_READY"),
     6: .same(proto: "PODCAST_STATE_PROTO_GENERATING_TRANSCRIPT"),
     7: .same(proto: "PODCAST_STATE_PROTO_TRANSCRIPT_READY"),
-    8: .same(proto: "PODCAST_STATE_PROTO_GENERATING_IMAGES"),
-    9: .same(proto: "PODCAST_STATE_PROTO_IMAGES_READY"),
-    10: .same(proto: "PODCAST_STATE_PROTO_GENERATING_AUDIO"),
-    11: .same(proto: "PODCAST_STATE_PROTO_AUDIO_READY"),
+    8: .same(proto: "PODCAST_STATE_PROTO_GENERATING_AUDIO"),
+    9: .same(proto: "PODCAST_STATE_PROTO_AUDIO_READY"),
+    10: .same(proto: "PODCAST_STATE_PROTO_GENERATING_VISUALS"),
+    11: .same(proto: "PODCAST_STATE_PROTO_VISUALS_READY"),
   ]
 }
 
@@ -1683,6 +1722,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     13: .same(proto: "transcript"),
     14: .standard(proto: "audio_key"),
     15: .standard(proto: "audio_duration"),
+    16: .same(proto: "visuals"),
   ]
 
   fileprivate class _StorageClass {
@@ -1701,6 +1741,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     var _transcript: PodcastTranscriptProto? = nil
     var _audioKey: String = String()
     var _audioDuration: SwiftProtobuf.Google_Protobuf_Duration? = nil
+    var _visuals: PodcastVisualsProto? = nil
 
     static let defaultInstance = _StorageClass()
 
@@ -1722,6 +1763,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       _transcript = source._transcript
       _audioKey = source._audioKey
       _audioDuration = source._audioDuration
+      _visuals = source._visuals
     }
   }
 
@@ -1755,6 +1797,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         case 13: try { try decoder.decodeSingularMessageField(value: &_storage._transcript) }()
         case 14: try { try decoder.decodeSingularStringField(value: &_storage._audioKey) }()
         case 15: try { try decoder.decodeSingularMessageField(value: &_storage._audioDuration) }()
+        case 16: try { try decoder.decodeSingularMessageField(value: &_storage._visuals) }()
         default: break
         }
       }
@@ -1812,6 +1855,9 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       try { if let v = _storage._audioDuration {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
       } }()
+      try { if let v = _storage._visuals {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 16)
+      } }()
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -1836,6 +1882,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         if _storage._transcript != rhs_storage._transcript {return false}
         if _storage._audioKey != rhs_storage._audioKey {return false}
         if _storage._audioDuration != rhs_storage._audioDuration {return false}
+        if _storage._visuals != rhs_storage._visuals {return false}
         return true
       }
       if !storagesAreEqual {return false}
@@ -1966,6 +2013,82 @@ extension PodcastTranscriptEntryProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
     if lhs.host != rhs.host {return false}
     if lhs.text != rhs.text {return false}
     if lhs.imagePrompt != rhs.imagePrompt {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension PodcastVisualsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastVisualsProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "thumbnail_key"),
+    2: .same(proto: "visuals"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.thumbnailKey) }()
+      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.visuals) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.thumbnailKey.isEmpty {
+      try visitor.visitSingularStringField(value: self.thumbnailKey, fieldNumber: 1)
+    }
+    if !self.visuals.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.visuals, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PodcastVisualsProto, rhs: PodcastVisualsProto) -> Bool {
+    if lhs.thumbnailKey != rhs.thumbnailKey {return false}
+    if lhs.visuals != rhs.visuals {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension PodcastVisualProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastVisualProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "timestamp_millis"),
+    2: .standard(proto: "image_key"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularInt64Field(value: &self.timestampMillis) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.imageKey) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.timestampMillis != 0 {
+      try visitor.visitSingularInt64Field(value: self.timestampMillis, fieldNumber: 1)
+    }
+    if !self.imageKey.isEmpty {
+      try visitor.visitSingularStringField(value: self.imageKey, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PodcastVisualProto, rhs: PodcastVisualProto) -> Bool {
+    if lhs.timestampMillis != rhs.timestampMillis {return false}
+    if lhs.imageKey != rhs.imageKey {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

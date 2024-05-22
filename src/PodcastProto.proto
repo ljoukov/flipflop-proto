@@ -117,6 +117,8 @@ message StoredPodcastProto {
 
   string audio_key = 14;
   google.protobuf.Duration audio_duration = 15;
+
+  PodcastVisualsProto visuals = 16;
 }
 
 enum PodcastStateProto {
@@ -132,11 +134,11 @@ enum PodcastStateProto {
   PODCAST_STATE_PROTO_GENERATING_TRANSCRIPT = 6;
   PODCAST_STATE_PROTO_TRANSCRIPT_READY = 7;
 
-  PODCAST_STATE_PROTO_GENERATING_IMAGES = 8;
-  PODCAST_STATE_PROTO_IMAGES_READY = 9;
+  PODCAST_STATE_PROTO_GENERATING_AUDIO = 8;
+  PODCAST_STATE_PROTO_AUDIO_READY = 9;
 
-  PODCAST_STATE_PROTO_GENERATING_AUDIO = 10;
-  PODCAST_STATE_PROTO_AUDIO_READY = 11;
+  PODCAST_STATE_PROTO_GENERATING_VISUALS = 10;
+  PODCAST_STATE_PROTO_VISUALS_READY = 11;
 }
 
 message PodcastTranscriptProto {
@@ -167,4 +169,14 @@ enum PodcastHostProto {
   PODCAST_HOST_PROTO_UNKNOWN = 0;
   PODCAST_HOST_PROTO_MALE = 1;
   PODCAST_HOST_PROTO_FEMALE = 2;
+}
+
+message PodcastVisualsProto {
+  string thumbnail_key = 1;
+  repeated PodcastVisualProto visuals = 2;
+}
+
+message PodcastVisualProto {
+  int64 timestamp_millis = 1;
+  string image_key = 2;
 }
