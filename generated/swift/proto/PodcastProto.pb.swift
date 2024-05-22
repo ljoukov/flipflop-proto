@@ -907,6 +907,8 @@ struct PodcastHostSpeechProto {
 
   var text: String = String()
 
+  var startMillis: Int32 = 0
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -2096,6 +2098,7 @@ extension PodcastHostSpeechProto: SwiftProtobuf.Message, SwiftProtobuf._MessageI
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "host"),
     2: .same(proto: "text"),
+    3: .standard(proto: "start_millis"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2106,6 +2109,7 @@ extension PodcastHostSpeechProto: SwiftProtobuf.Message, SwiftProtobuf._MessageI
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularEnumField(value: &self.host) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.text) }()
+      case 3: try { try decoder.decodeSingularInt32Field(value: &self.startMillis) }()
       default: break
       }
     }
@@ -2118,12 +2122,16 @@ extension PodcastHostSpeechProto: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     if !self.text.isEmpty {
       try visitor.visitSingularStringField(value: self.text, fieldNumber: 2)
     }
+    if self.startMillis != 0 {
+      try visitor.visitSingularInt32Field(value: self.startMillis, fieldNumber: 3)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: PodcastHostSpeechProto, rhs: PodcastHostSpeechProto) -> Bool {
     if lhs.host != rhs.host {return false}
     if lhs.text != rhs.text {return false}
+    if lhs.startMillis != rhs.startMillis {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

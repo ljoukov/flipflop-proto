@@ -169,6 +169,7 @@ message PodcastTranscriptEntryProto {
 message PodcastHostSpeechProto {
   PodcastHostProto host = 1;
   string text = 2;
+  int32 start_millis = 3;
 }
 
 enum PodcastHostProto {

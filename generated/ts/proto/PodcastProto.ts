@@ -429,6 +429,10 @@ export interface PodcastHostSpeechProto {
      * @generated from protobuf field: string text = 2;
      */
     text: string;
+    /**
+     * @generated from protobuf field: int32 start_millis = 3;
+     */
+    startMillis: number;
 }
 /**
  * @generated from protobuf message PodcastVisualsProto
@@ -1666,11 +1670,12 @@ class PodcastHostSpeechProto$Type extends MessageType<PodcastHostSpeechProto> {
     constructor() {
         super("PodcastHostSpeechProto", [
             { no: 1, name: "host", kind: "enum", T: () => ["PodcastHostProto", PodcastHostProto, "PODCAST_HOST_PROTO_"] },
-            { no: 2, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "start_millis", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
         ]);
     }
     create(value?: PartialMessage<PodcastHostSpeechProto>): PodcastHostSpeechProto {
-        const message = { host: 0, text: "" };
+        const message = { host: 0, text: "", startMillis: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastHostSpeechProto>(this, message, value);
@@ -1686,6 +1691,9 @@ class PodcastHostSpeechProto$Type extends MessageType<PodcastHostSpeechProto> {
                     break;
                 case /* string text */ 2:
                     message.text = reader.string();
+                    break;
+                case /* int32 start_millis */ 3:
+                    message.startMillis = reader.int32();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1705,6 +1713,9 @@ class PodcastHostSpeechProto$Type extends MessageType<PodcastHostSpeechProto> {
         /* string text = 2; */
         if (message.text !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.text);
+        /* int32 start_millis = 3; */
+        if (message.startMillis !== 0)
+            writer.tag(3, WireType.Varint).int32(message.startMillis);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
