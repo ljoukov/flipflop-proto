@@ -59,7 +59,6 @@ message GeneratePodcastResponseHeaderProto {}
 message GeneratePodcastResponseDeltaProto {
   oneof type {
     PodcastStateProto state_update = 1;
-    string audio_path = 2;
   }
 }
 

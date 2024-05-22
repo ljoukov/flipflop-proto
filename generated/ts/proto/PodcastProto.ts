@@ -194,12 +194,6 @@ export interface GeneratePodcastResponseDeltaProto {
          */
         stateUpdate: PodcastStateProto;
     } | {
-        oneofKind: "audioPath";
-        /**
-         * @generated from protobuf field: string audio_path = 2;
-         */
-        audioPath: string;
-    } | {
         oneofKind: undefined;
     };
 }
@@ -1056,8 +1050,7 @@ export const GeneratePodcastResponseHeaderProto = new GeneratePodcastResponseHea
 class GeneratePodcastResponseDeltaProto$Type extends MessageType<GeneratePodcastResponseDeltaProto> {
     constructor() {
         super("GeneratePodcastResponseDeltaProto", [
-            { no: 1, name: "state_update", kind: "enum", oneof: "type", T: () => ["PodcastStateProto", PodcastStateProto, "PODCAST_STATE_PROTO_"] },
-            { no: 2, name: "audio_path", kind: "scalar", oneof: "type", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "state_update", kind: "enum", oneof: "type", T: () => ["PodcastStateProto", PodcastStateProto, "PODCAST_STATE_PROTO_"] }
         ]);
     }
     create(value?: PartialMessage<GeneratePodcastResponseDeltaProto>): GeneratePodcastResponseDeltaProto {
@@ -1078,12 +1071,6 @@ class GeneratePodcastResponseDeltaProto$Type extends MessageType<GeneratePodcast
                         stateUpdate: reader.int32()
                     };
                     break;
-                case /* string audio_path */ 2:
-                    message.type = {
-                        oneofKind: "audioPath",
-                        audioPath: reader.string()
-                    };
-                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -1099,9 +1086,6 @@ class GeneratePodcastResponseDeltaProto$Type extends MessageType<GeneratePodcast
         /* PodcastStateProto state_update = 1; */
         if (message.type.oneofKind === "stateUpdate")
             writer.tag(1, WireType.Varint).int32(message.type.stateUpdate);
-        /* string audio_path = 2; */
-        if (message.type.oneofKind === "audioPath")
-            writer.tag(2, WireType.LengthDelimited).string(message.type.audioPath);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
