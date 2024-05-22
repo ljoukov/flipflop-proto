@@ -365,7 +365,15 @@ export interface StoredPodcastProto {
  */
 export interface PodcastTranscriptProto {
     /**
-     * @generated from protobuf field: repeated PodcastSectionTranscriptProto sections = 1;
+     * @generated from protobuf field: string images_style = 1;
+     */
+    imagesStyle: string;
+    /**
+     * @generated from protobuf field: string thumbnail_prompt = 2;
+     */
+    thumbnailPrompt: string;
+    /**
+     * @generated from protobuf field: repeated PodcastSectionTranscriptProto sections = 3;
      */
     sections: PodcastSectionTranscriptProto[];
 }
@@ -394,6 +402,10 @@ export interface PodcastTranscriptEntryProto {
      * @generated from protobuf field: string text = 2;
      */
     text: string;
+    /**
+     * @generated from protobuf field: string image_prompt = 3;
+     */
+    imagePrompt: string;
 }
 /**
  * @generated from protobuf enum PodcastStateProto
@@ -432,13 +444,21 @@ export enum PodcastStateProto {
      */
     TRANSCRIPT_READY = 7,
     /**
-     * @generated from protobuf enum value: PODCAST_STATE_PROTO_GENERATING_AUDIO = 8;
+     * @generated from protobuf enum value: PODCAST_STATE_PROTO_GENERATING_IMAGES = 8;
      */
-    GENERATING_AUDIO = 8,
+    GENERATING_IMAGES = 8,
     /**
-     * @generated from protobuf enum value: PODCAST_STATE_PROTO_AUDIO_READY = 9;
+     * @generated from protobuf enum value: PODCAST_STATE_PROTO_IMAGES_READY = 9;
      */
-    AUDIO_READY = 9
+    IMAGES_READY = 9,
+    /**
+     * @generated from protobuf enum value: PODCAST_STATE_PROTO_GENERATING_AUDIO = 10;
+     */
+    GENERATING_AUDIO = 10,
+    /**
+     * @generated from protobuf enum value: PODCAST_STATE_PROTO_AUDIO_READY = 11;
+     */
+    AUDIO_READY = 11
 }
 /**
  * @generated from protobuf enum PodcastSectionTypeProto
@@ -1414,11 +1434,13 @@ export const StoredPodcastProto = new StoredPodcastProto$Type();
 class PodcastTranscriptProto$Type extends MessageType<PodcastTranscriptProto> {
     constructor() {
         super("PodcastTranscriptProto", [
-            { no: 1, name: "sections", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastSectionTranscriptProto }
+            { no: 1, name: "images_style", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "thumbnail_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "sections", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastSectionTranscriptProto }
         ]);
     }
     create(value?: PartialMessage<PodcastTranscriptProto>): PodcastTranscriptProto {
-        const message = { sections: [] };
+        const message = { imagesStyle: "", thumbnailPrompt: "", sections: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastTranscriptProto>(this, message, value);
@@ -1429,7 +1451,13 @@ class PodcastTranscriptProto$Type extends MessageType<PodcastTranscriptProto> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* repeated PodcastSectionTranscriptProto sections */ 1:
+                case /* string images_style */ 1:
+                    message.imagesStyle = reader.string();
+                    break;
+                case /* string thumbnail_prompt */ 2:
+                    message.thumbnailPrompt = reader.string();
+                    break;
+                case /* repeated PodcastSectionTranscriptProto sections */ 3:
                     message.sections.push(PodcastSectionTranscriptProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
@@ -1444,9 +1472,15 @@ class PodcastTranscriptProto$Type extends MessageType<PodcastTranscriptProto> {
         return message;
     }
     internalBinaryWrite(message: PodcastTranscriptProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated PodcastSectionTranscriptProto sections = 1; */
+        /* string images_style = 1; */
+        if (message.imagesStyle !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.imagesStyle);
+        /* string thumbnail_prompt = 2; */
+        if (message.thumbnailPrompt !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.thumbnailPrompt);
+        /* repeated PodcastSectionTranscriptProto sections = 3; */
         for (let i = 0; i < message.sections.length; i++)
-            PodcastSectionTranscriptProto.internalBinaryWrite(message.sections[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+            PodcastSectionTranscriptProto.internalBinaryWrite(message.sections[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1516,11 +1550,12 @@ class PodcastTranscriptEntryProto$Type extends MessageType<PodcastTranscriptEntr
     constructor() {
         super("PodcastTranscriptEntryProto", [
             { no: 1, name: "host", kind: "enum", T: () => ["PodcastHostProto", PodcastHostProto, "PODCAST_HOST_PROTO_"] },
-            { no: 2, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "image_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PodcastTranscriptEntryProto>): PodcastTranscriptEntryProto {
-        const message = { host: 0, text: "" };
+        const message = { host: 0, text: "", imagePrompt: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastTranscriptEntryProto>(this, message, value);
@@ -1536,6 +1571,9 @@ class PodcastTranscriptEntryProto$Type extends MessageType<PodcastTranscriptEntr
                     break;
                 case /* string text */ 2:
                     message.text = reader.string();
+                    break;
+                case /* string image_prompt */ 3:
+                    message.imagePrompt = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1555,6 +1593,9 @@ class PodcastTranscriptEntryProto$Type extends MessageType<PodcastTranscriptEntr
         /* string text = 2; */
         if (message.text !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.text);
+        /* string image_prompt = 3; */
+        if (message.imagePrompt !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.imagePrompt);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

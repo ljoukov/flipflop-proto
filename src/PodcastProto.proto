@@ -132,12 +132,17 @@ enum PodcastStateProto {
   PODCAST_STATE_PROTO_GENERATING_TRANSCRIPT = 6;
   PODCAST_STATE_PROTO_TRANSCRIPT_READY = 7;
 
-  PODCAST_STATE_PROTO_GENERATING_AUDIO = 8;
-  PODCAST_STATE_PROTO_AUDIO_READY = 9;
+  PODCAST_STATE_PROTO_GENERATING_IMAGES = 8;
+  PODCAST_STATE_PROTO_IMAGES_READY = 9;
+
+  PODCAST_STATE_PROTO_GENERATING_AUDIO = 10;
+  PODCAST_STATE_PROTO_AUDIO_READY = 11;
 }
 
 message PodcastTranscriptProto {
-  repeated PodcastSectionTranscriptProto sections = 1;
+  string images_style = 1;
+  string thumbnail_prompt = 2;
+  repeated PodcastSectionTranscriptProto sections = 3;
 }
 
 message PodcastSectionTranscriptProto {
@@ -155,6 +160,7 @@ enum PodcastSectionTypeProto {
 message PodcastTranscriptEntryProto {
   PodcastHostProto host = 1;
   string text = 2;
+  string image_prompt = 3;
 }
 
 enum PodcastHostProto {

@@ -30,8 +30,10 @@ enum PodcastStateProto: SwiftProtobuf.Enum {
   case planReady // = 5
   case generatingTranscript // = 6
   case transcriptReady // = 7
-  case generatingAudio // = 8
-  case audioReady // = 9
+  case generatingImages // = 8
+  case imagesReady // = 9
+  case generatingAudio // = 10
+  case audioReady // = 11
   case UNRECOGNIZED(Int)
 
   init() {
@@ -48,8 +50,10 @@ enum PodcastStateProto: SwiftProtobuf.Enum {
     case 5: self = .planReady
     case 6: self = .generatingTranscript
     case 7: self = .transcriptReady
-    case 8: self = .generatingAudio
-    case 9: self = .audioReady
+    case 8: self = .generatingImages
+    case 9: self = .imagesReady
+    case 10: self = .generatingAudio
+    case 11: self = .audioReady
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -64,8 +68,10 @@ enum PodcastStateProto: SwiftProtobuf.Enum {
     case .planReady: return 5
     case .generatingTranscript: return 6
     case .transcriptReady: return 7
-    case .generatingAudio: return 8
-    case .audioReady: return 9
+    case .generatingImages: return 8
+    case .imagesReady: return 9
+    case .generatingAudio: return 10
+    case .audioReady: return 11
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -85,6 +91,8 @@ extension PodcastStateProto: CaseIterable {
     .planReady,
     .generatingTranscript,
     .transcriptReady,
+    .generatingImages,
+    .imagesReady,
     .generatingAudio,
     .audioReady,
   ]
@@ -804,6 +812,10 @@ struct PodcastTranscriptProto {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  var imagesStyle: String = String()
+
+  var thumbnailPrompt: String = String()
+
   var sections: [PodcastSectionTranscriptProto] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -833,6 +845,8 @@ struct PodcastTranscriptEntryProto {
   var host: PodcastHostProto = .unknown
 
   var text: String = String()
+
+  var imagePrompt: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -880,8 +894,10 @@ extension PodcastStateProto: SwiftProtobuf._ProtoNameProviding {
     5: .same(proto: "PODCAST_STATE_PROTO_PLAN_READY"),
     6: .same(proto: "PODCAST_STATE_PROTO_GENERATING_TRANSCRIPT"),
     7: .same(proto: "PODCAST_STATE_PROTO_TRANSCRIPT_READY"),
-    8: .same(proto: "PODCAST_STATE_PROTO_GENERATING_AUDIO"),
-    9: .same(proto: "PODCAST_STATE_PROTO_AUDIO_READY"),
+    8: .same(proto: "PODCAST_STATE_PROTO_GENERATING_IMAGES"),
+    9: .same(proto: "PODCAST_STATE_PROTO_IMAGES_READY"),
+    10: .same(proto: "PODCAST_STATE_PROTO_GENERATING_AUDIO"),
+    11: .same(proto: "PODCAST_STATE_PROTO_AUDIO_READY"),
   ]
 }
 
@@ -1832,7 +1848,9 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
 extension PodcastTranscriptProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "PodcastTranscriptProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "sections"),
+    1: .standard(proto: "images_style"),
+    2: .standard(proto: "thumbnail_prompt"),
+    3: .same(proto: "sections"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1841,20 +1859,30 @@ extension PodcastTranscriptProto: SwiftProtobuf.Message, SwiftProtobuf._MessageI
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.sections) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self.imagesStyle) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.thumbnailPrompt) }()
+      case 3: try { try decoder.decodeRepeatedMessageField(value: &self.sections) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.imagesStyle.isEmpty {
+      try visitor.visitSingularStringField(value: self.imagesStyle, fieldNumber: 1)
+    }
+    if !self.thumbnailPrompt.isEmpty {
+      try visitor.visitSingularStringField(value: self.thumbnailPrompt, fieldNumber: 2)
+    }
     if !self.sections.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.sections, fieldNumber: 1)
+      try visitor.visitRepeatedMessageField(value: self.sections, fieldNumber: 3)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: PodcastTranscriptProto, rhs: PodcastTranscriptProto) -> Bool {
+    if lhs.imagesStyle != rhs.imagesStyle {return false}
+    if lhs.thumbnailPrompt != rhs.thumbnailPrompt {return false}
     if lhs.sections != rhs.sections {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
@@ -1904,6 +1932,7 @@ extension PodcastTranscriptEntryProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "host"),
     2: .same(proto: "text"),
+    3: .standard(proto: "image_prompt"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1914,6 +1943,7 @@ extension PodcastTranscriptEntryProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularEnumField(value: &self.host) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.text) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.imagePrompt) }()
       default: break
       }
     }
@@ -1926,12 +1956,16 @@ extension PodcastTranscriptEntryProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
     if !self.text.isEmpty {
       try visitor.visitSingularStringField(value: self.text, fieldNumber: 2)
     }
+    if !self.imagePrompt.isEmpty {
+      try visitor.visitSingularStringField(value: self.imagePrompt, fieldNumber: 3)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: PodcastTranscriptEntryProto, rhs: PodcastTranscriptEntryProto) -> Bool {
     if lhs.host != rhs.host {return false}
     if lhs.text != rhs.text {return false}
+    if lhs.imagePrompt != rhs.imagePrompt {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
