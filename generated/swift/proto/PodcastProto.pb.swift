@@ -851,11 +851,61 @@ struct PodcastTranscriptEntryProto {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  var type: PodcastTranscriptEntryProto.OneOf_Type? = nil
+
+  var host: PodcastHostSpeechProto {
+    get {
+      if case .host(let v)? = type {return v}
+      return PodcastHostSpeechProto()
+    }
+    set {type = .host(newValue)}
+  }
+
+  var imagePrompt: String {
+    get {
+      if case .imagePrompt(let v)? = type {return v}
+      return String()
+    }
+    set {type = .imagePrompt(newValue)}
+  }
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  enum OneOf_Type: Equatable {
+    case host(PodcastHostSpeechProto)
+    case imagePrompt(String)
+
+  #if !swift(>=4.1)
+    static func ==(lhs: PodcastTranscriptEntryProto.OneOf_Type, rhs: PodcastTranscriptEntryProto.OneOf_Type) -> Bool {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch (lhs, rhs) {
+      case (.host, .host): return {
+        guard case .host(let l) = lhs, case .host(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.imagePrompt, .imagePrompt): return {
+        guard case .imagePrompt(let l) = lhs, case .imagePrompt(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      default: return false
+      }
+    }
+  #endif
+  }
+
+  init() {}
+}
+
+struct PodcastHostSpeechProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
   var host: PodcastHostProto = .unknown
 
   var text: String = String()
-
-  var imagePrompt: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -917,6 +967,8 @@ extension StoredPodcastProto: @unchecked Sendable {}
 extension PodcastTranscriptProto: @unchecked Sendable {}
 extension PodcastSectionTranscriptProto: @unchecked Sendable {}
 extension PodcastTranscriptEntryProto: @unchecked Sendable {}
+extension PodcastTranscriptEntryProto.OneOf_Type: @unchecked Sendable {}
+extension PodcastHostSpeechProto: @unchecked Sendable {}
 extension PodcastVisualsProto: @unchecked Sendable {}
 extension PodcastVisualProto: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
@@ -1978,8 +2030,72 @@ extension PodcastTranscriptEntryProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
   static let protoMessageName: String = "PodcastTranscriptEntryProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "host"),
+    2: .standard(proto: "image_prompt"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try {
+        var v: PodcastHostSpeechProto?
+        var hadOneofValue = false
+        if let current = self.type {
+          hadOneofValue = true
+          if case .host(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.type = .host(v)
+        }
+      }()
+      case 2: try {
+        var v: String?
+        try decoder.decodeSingularStringField(value: &v)
+        if let v = v {
+          if self.type != nil {try decoder.handleConflictingOneOf()}
+          self.type = .imagePrompt(v)
+        }
+      }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    switch self.type {
+    case .host?: try {
+      guard case .host(let v)? = self.type else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    }()
+    case .imagePrompt?: try {
+      guard case .imagePrompt(let v)? = self.type else { preconditionFailure() }
+      try visitor.visitSingularStringField(value: v, fieldNumber: 2)
+    }()
+    case nil: break
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PodcastTranscriptEntryProto, rhs: PodcastTranscriptEntryProto) -> Bool {
+    if lhs.type != rhs.type {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension PodcastHostSpeechProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastHostSpeechProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "host"),
     2: .same(proto: "text"),
-    3: .standard(proto: "image_prompt"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1990,7 +2106,6 @@ extension PodcastTranscriptEntryProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularEnumField(value: &self.host) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.text) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.imagePrompt) }()
       default: break
       }
     }
@@ -2003,16 +2118,12 @@ extension PodcastTranscriptEntryProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
     if !self.text.isEmpty {
       try visitor.visitSingularStringField(value: self.text, fieldNumber: 2)
     }
-    if !self.imagePrompt.isEmpty {
-      try visitor.visitSingularStringField(value: self.imagePrompt, fieldNumber: 3)
-    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: PodcastTranscriptEntryProto, rhs: PodcastTranscriptEntryProto) -> Bool {
+  static func ==(lhs: PodcastHostSpeechProto, rhs: PodcastHostSpeechProto) -> Bool {
     if lhs.host != rhs.host {return false}
     if lhs.text != rhs.text {return false}
-    if lhs.imagePrompt != rhs.imagePrompt {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

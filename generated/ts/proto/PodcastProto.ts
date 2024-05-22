@@ -399,6 +399,29 @@ export interface PodcastSectionTranscriptProto {
  */
 export interface PodcastTranscriptEntryProto {
     /**
+     * @generated from protobuf oneof: type
+     */
+    type: {
+        oneofKind: "host";
+        /**
+         * @generated from protobuf field: PodcastHostSpeechProto host = 1;
+         */
+        host: PodcastHostSpeechProto;
+    } | {
+        oneofKind: "imagePrompt";
+        /**
+         * @generated from protobuf field: string image_prompt = 2;
+         */
+        imagePrompt: string;
+    } | {
+        oneofKind: undefined;
+    };
+}
+/**
+ * @generated from protobuf message PodcastHostSpeechProto
+ */
+export interface PodcastHostSpeechProto {
+    /**
      * @generated from protobuf field: PodcastHostProto host = 1;
      */
     host: PodcastHostProto;
@@ -406,10 +429,6 @@ export interface PodcastTranscriptEntryProto {
      * @generated from protobuf field: string text = 2;
      */
     text: string;
-    /**
-     * @generated from protobuf field: string image_prompt = 3;
-     */
-    imagePrompt: string;
 }
 /**
  * @generated from protobuf message PodcastVisualsProto
@@ -1586,13 +1605,12 @@ export const PodcastSectionTranscriptProto = new PodcastSectionTranscriptProto$T
 class PodcastTranscriptEntryProto$Type extends MessageType<PodcastTranscriptEntryProto> {
     constructor() {
         super("PodcastTranscriptEntryProto", [
-            { no: 1, name: "host", kind: "enum", T: () => ["PodcastHostProto", PodcastHostProto, "PODCAST_HOST_PROTO_"] },
-            { no: 2, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "image_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "host", kind: "message", oneof: "type", T: () => PodcastHostSpeechProto },
+            { no: 2, name: "image_prompt", kind: "scalar", oneof: "type", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PodcastTranscriptEntryProto>): PodcastTranscriptEntryProto {
-        const message = { host: 0, text: "", imagePrompt: "" };
+        const message = { type: { oneofKind: undefined } };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastTranscriptEntryProto>(this, message, value);
@@ -1603,14 +1621,17 @@ class PodcastTranscriptEntryProto$Type extends MessageType<PodcastTranscriptEntr
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* PodcastHostProto host */ 1:
-                    message.host = reader.int32();
+                case /* PodcastHostSpeechProto host */ 1:
+                    message.type = {
+                        oneofKind: "host",
+                        host: PodcastHostSpeechProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).host)
+                    };
                     break;
-                case /* string text */ 2:
-                    message.text = reader.string();
-                    break;
-                case /* string image_prompt */ 3:
-                    message.imagePrompt = reader.string();
+                case /* string image_prompt */ 2:
+                    message.type = {
+                        oneofKind: "imagePrompt",
+                        imagePrompt: reader.string()
+                    };
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1624,15 +1645,12 @@ class PodcastTranscriptEntryProto$Type extends MessageType<PodcastTranscriptEntr
         return message;
     }
     internalBinaryWrite(message: PodcastTranscriptEntryProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* PodcastHostProto host = 1; */
-        if (message.host !== 0)
-            writer.tag(1, WireType.Varint).int32(message.host);
-        /* string text = 2; */
-        if (message.text !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.text);
-        /* string image_prompt = 3; */
-        if (message.imagePrompt !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.imagePrompt);
+        /* PodcastHostSpeechProto host = 1; */
+        if (message.type.oneofKind === "host")
+            PodcastHostSpeechProto.internalBinaryWrite(message.type.host, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* string image_prompt = 2; */
+        if (message.type.oneofKind === "imagePrompt")
+            writer.tag(2, WireType.LengthDelimited).string(message.type.imagePrompt);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1643,6 +1661,60 @@ class PodcastTranscriptEntryProto$Type extends MessageType<PodcastTranscriptEntr
  * @generated MessageType for protobuf message PodcastTranscriptEntryProto
  */
 export const PodcastTranscriptEntryProto = new PodcastTranscriptEntryProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PodcastHostSpeechProto$Type extends MessageType<PodcastHostSpeechProto> {
+    constructor() {
+        super("PodcastHostSpeechProto", [
+            { no: 1, name: "host", kind: "enum", T: () => ["PodcastHostProto", PodcastHostProto, "PODCAST_HOST_PROTO_"] },
+            { no: 2, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PodcastHostSpeechProto>): PodcastHostSpeechProto {
+        const message = { host: 0, text: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<PodcastHostSpeechProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastHostSpeechProto): PodcastHostSpeechProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* PodcastHostProto host */ 1:
+                    message.host = reader.int32();
+                    break;
+                case /* string text */ 2:
+                    message.text = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PodcastHostSpeechProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* PodcastHostProto host = 1; */
+        if (message.host !== 0)
+            writer.tag(1, WireType.Varint).int32(message.host);
+        /* string text = 2; */
+        if (message.text !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.text);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message PodcastHostSpeechProto
+ */
+export const PodcastHostSpeechProto = new PodcastHostSpeechProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class PodcastVisualsProto$Type extends MessageType<PodcastVisualsProto> {
     constructor() {

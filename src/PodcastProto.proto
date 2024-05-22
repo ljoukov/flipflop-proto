@@ -160,9 +160,15 @@ enum PodcastSectionTypeProto {
 }
 
 message PodcastTranscriptEntryProto {
+  oneof type {
+    PodcastHostSpeechProto host = 1;
+    string image_prompt = 2;
+  }
+}
+
+message PodcastHostSpeechProto {
   PodcastHostProto host = 1;
   string text = 2;
-  string image_prompt = 3;
 }
 
 enum PodcastHostProto {
