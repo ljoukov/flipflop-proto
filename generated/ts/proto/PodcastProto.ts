@@ -359,15 +359,7 @@ export interface StoredPodcastProto {
  */
 export interface PodcastTranscriptProto {
     /**
-     * @generated from protobuf field: string images_style = 1;
-     */
-    imagesStyle: string;
-    /**
-     * @generated from protobuf field: string thumbnail_prompt = 2;
-     */
-    thumbnailPrompt: string;
-    /**
-     * @generated from protobuf field: repeated PodcastSectionTranscriptProto sections = 3;
+     * @generated from protobuf field: repeated PodcastSectionTranscriptProto sections = 1;
      */
     sections: PodcastSectionTranscriptProto[];
 }
@@ -388,29 +380,6 @@ export interface PodcastSectionTranscriptProto {
  * @generated from protobuf message PodcastTranscriptEntryProto
  */
 export interface PodcastTranscriptEntryProto {
-    /**
-     * @generated from protobuf oneof: type
-     */
-    type: {
-        oneofKind: "host";
-        /**
-         * @generated from protobuf field: PodcastHostSpeechProto host = 1;
-         */
-        host: PodcastHostSpeechProto;
-    } | {
-        oneofKind: "imagePrompt";
-        /**
-         * @generated from protobuf field: string image_prompt = 2;
-         */
-        imagePrompt: string;
-    } | {
-        oneofKind: undefined;
-    };
-}
-/**
- * @generated from protobuf message PodcastHostSpeechProto
- */
-export interface PodcastHostSpeechProto {
     /**
      * @generated from protobuf field: PodcastHostProto host = 1;
      */
@@ -471,9 +440,9 @@ export interface PodcastWordProto {
  */
 export interface PodcastVisualsProto {
     /**
-     * @generated from protobuf field: string thumbnail_key = 1;
+     * @generated from protobuf field: string style_prompt = 1;
      */
-    thumbnailKey: string;
+    stylePrompt: string;
     /**
      * @generated from protobuf field: repeated PodcastVisualProto visuals = 2;
      */
@@ -488,7 +457,11 @@ export interface PodcastVisualProto {
      */
     timestampMillis: number;
     /**
-     * @generated from protobuf field: string image_key = 2;
+     * @generated from protobuf field: string image_prompt = 2;
+     */
+    imagePrompt: string;
+    /**
+     * @generated from protobuf field: string image_key = 3;
      */
     imageKey: string;
 }
@@ -1517,13 +1490,11 @@ export const StoredPodcastProto = new StoredPodcastProto$Type();
 class PodcastTranscriptProto$Type extends MessageType<PodcastTranscriptProto> {
     constructor() {
         super("PodcastTranscriptProto", [
-            { no: 1, name: "images_style", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "thumbnail_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "sections", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastSectionTranscriptProto }
+            { no: 1, name: "sections", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastSectionTranscriptProto }
         ]);
     }
     create(value?: PartialMessage<PodcastTranscriptProto>): PodcastTranscriptProto {
-        const message = { imagesStyle: "", thumbnailPrompt: "", sections: [] };
+        const message = { sections: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastTranscriptProto>(this, message, value);
@@ -1534,13 +1505,7 @@ class PodcastTranscriptProto$Type extends MessageType<PodcastTranscriptProto> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string images_style */ 1:
-                    message.imagesStyle = reader.string();
-                    break;
-                case /* string thumbnail_prompt */ 2:
-                    message.thumbnailPrompt = reader.string();
-                    break;
-                case /* repeated PodcastSectionTranscriptProto sections */ 3:
+                case /* repeated PodcastSectionTranscriptProto sections */ 1:
                     message.sections.push(PodcastSectionTranscriptProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
@@ -1555,15 +1520,9 @@ class PodcastTranscriptProto$Type extends MessageType<PodcastTranscriptProto> {
         return message;
     }
     internalBinaryWrite(message: PodcastTranscriptProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string images_style = 1; */
-        if (message.imagesStyle !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.imagesStyle);
-        /* string thumbnail_prompt = 2; */
-        if (message.thumbnailPrompt !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.thumbnailPrompt);
-        /* repeated PodcastSectionTranscriptProto sections = 3; */
+        /* repeated PodcastSectionTranscriptProto sections = 1; */
         for (let i = 0; i < message.sections.length; i++)
-            PodcastSectionTranscriptProto.internalBinaryWrite(message.sections[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+            PodcastSectionTranscriptProto.internalBinaryWrite(message.sections[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1632,80 +1591,20 @@ export const PodcastSectionTranscriptProto = new PodcastSectionTranscriptProto$T
 class PodcastTranscriptEntryProto$Type extends MessageType<PodcastTranscriptEntryProto> {
     constructor() {
         super("PodcastTranscriptEntryProto", [
-            { no: 1, name: "host", kind: "message", oneof: "type", T: () => PodcastHostSpeechProto },
-            { no: 2, name: "image_prompt", kind: "scalar", oneof: "type", T: 9 /*ScalarType.STRING*/ }
-        ]);
-    }
-    create(value?: PartialMessage<PodcastTranscriptEntryProto>): PodcastTranscriptEntryProto {
-        const message = { type: { oneofKind: undefined } };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<PodcastTranscriptEntryProto>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastTranscriptEntryProto): PodcastTranscriptEntryProto {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* PodcastHostSpeechProto host */ 1:
-                    message.type = {
-                        oneofKind: "host",
-                        host: PodcastHostSpeechProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).host)
-                    };
-                    break;
-                case /* string image_prompt */ 2:
-                    message.type = {
-                        oneofKind: "imagePrompt",
-                        imagePrompt: reader.string()
-                    };
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: PodcastTranscriptEntryProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* PodcastHostSpeechProto host = 1; */
-        if (message.type.oneofKind === "host")
-            PodcastHostSpeechProto.internalBinaryWrite(message.type.host, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* string image_prompt = 2; */
-        if (message.type.oneofKind === "imagePrompt")
-            writer.tag(2, WireType.LengthDelimited).string(message.type.imagePrompt);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message PodcastTranscriptEntryProto
- */
-export const PodcastTranscriptEntryProto = new PodcastTranscriptEntryProto$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class PodcastHostSpeechProto$Type extends MessageType<PodcastHostSpeechProto> {
-    constructor() {
-        super("PodcastHostSpeechProto", [
             { no: 1, name: "host", kind: "enum", T: () => ["PodcastHostProto", PodcastHostProto, "PODCAST_HOST_PROTO_"] },
             { no: 2, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "start_millis", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 4, name: "end_millis", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
         ]);
     }
-    create(value?: PartialMessage<PodcastHostSpeechProto>): PodcastHostSpeechProto {
+    create(value?: PartialMessage<PodcastTranscriptEntryProto>): PodcastTranscriptEntryProto {
         const message = { host: 0, text: "", startMillis: 0, endMillis: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<PodcastHostSpeechProto>(this, message, value);
+            reflectionMergePartial<PodcastTranscriptEntryProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastHostSpeechProto): PodcastHostSpeechProto {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastTranscriptEntryProto): PodcastTranscriptEntryProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -1733,7 +1632,7 @@ class PodcastHostSpeechProto$Type extends MessageType<PodcastHostSpeechProto> {
         }
         return message;
     }
-    internalBinaryWrite(message: PodcastHostSpeechProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: PodcastTranscriptEntryProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* PodcastHostProto host = 1; */
         if (message.host !== 0)
             writer.tag(1, WireType.Varint).int32(message.host);
@@ -1753,9 +1652,9 @@ class PodcastHostSpeechProto$Type extends MessageType<PodcastHostSpeechProto> {
     }
 }
 /**
- * @generated MessageType for protobuf message PodcastHostSpeechProto
+ * @generated MessageType for protobuf message PodcastTranscriptEntryProto
  */
-export const PodcastHostSpeechProto = new PodcastHostSpeechProto$Type();
+export const PodcastTranscriptEntryProto = new PodcastTranscriptEntryProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class PodcastAudioProto$Type extends MessageType<PodcastAudioProto> {
     constructor() {
@@ -1889,12 +1788,12 @@ export const PodcastWordProto = new PodcastWordProto$Type();
 class PodcastVisualsProto$Type extends MessageType<PodcastVisualsProto> {
     constructor() {
         super("PodcastVisualsProto", [
-            { no: 1, name: "thumbnail_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 1, name: "style_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "visuals", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastVisualProto }
         ]);
     }
     create(value?: PartialMessage<PodcastVisualsProto>): PodcastVisualsProto {
-        const message = { thumbnailKey: "", visuals: [] };
+        const message = { stylePrompt: "", visuals: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastVisualsProto>(this, message, value);
@@ -1905,8 +1804,8 @@ class PodcastVisualsProto$Type extends MessageType<PodcastVisualsProto> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string thumbnail_key */ 1:
-                    message.thumbnailKey = reader.string();
+                case /* string style_prompt */ 1:
+                    message.stylePrompt = reader.string();
                     break;
                 case /* repeated PodcastVisualProto visuals */ 2:
                     message.visuals.push(PodcastVisualProto.internalBinaryRead(reader, reader.uint32(), options));
@@ -1923,9 +1822,9 @@ class PodcastVisualsProto$Type extends MessageType<PodcastVisualsProto> {
         return message;
     }
     internalBinaryWrite(message: PodcastVisualsProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string thumbnail_key = 1; */
-        if (message.thumbnailKey !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.thumbnailKey);
+        /* string style_prompt = 1; */
+        if (message.stylePrompt !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.stylePrompt);
         /* repeated PodcastVisualProto visuals = 2; */
         for (let i = 0; i < message.visuals.length; i++)
             PodcastVisualProto.internalBinaryWrite(message.visuals[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
@@ -1944,11 +1843,12 @@ class PodcastVisualProto$Type extends MessageType<PodcastVisualProto> {
     constructor() {
         super("PodcastVisualProto", [
             { no: 1, name: "timestamp_millis", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 2, name: "image_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "image_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "image_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PodcastVisualProto>): PodcastVisualProto {
-        const message = { timestampMillis: 0, imageKey: "" };
+        const message = { timestampMillis: 0, imagePrompt: "", imageKey: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastVisualProto>(this, message, value);
@@ -1962,7 +1862,10 @@ class PodcastVisualProto$Type extends MessageType<PodcastVisualProto> {
                 case /* int32 timestamp_millis */ 1:
                     message.timestampMillis = reader.int32();
                     break;
-                case /* string image_key */ 2:
+                case /* string image_prompt */ 2:
+                    message.imagePrompt = reader.string();
+                    break;
+                case /* string image_key */ 3:
                     message.imageKey = reader.string();
                     break;
                 default:
@@ -1980,9 +1883,12 @@ class PodcastVisualProto$Type extends MessageType<PodcastVisualProto> {
         /* int32 timestamp_millis = 1; */
         if (message.timestampMillis !== 0)
             writer.tag(1, WireType.Varint).int32(message.timestampMillis);
-        /* string image_key = 2; */
+        /* string image_prompt = 2; */
+        if (message.imagePrompt !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.imagePrompt);
+        /* string image_key = 3; */
         if (message.imageKey !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.imageKey);
+            writer.tag(3, WireType.LengthDelimited).string(message.imageKey);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

@@ -144,9 +144,7 @@ enum PodcastStateProto {
 }
 
 message PodcastTranscriptProto {
-  string images_style = 1;
-  string thumbnail_prompt = 2;
-  repeated PodcastSectionTranscriptProto sections = 3;
+  repeated PodcastSectionTranscriptProto sections = 1;
 }
 
 message PodcastSectionTranscriptProto {
@@ -162,13 +160,6 @@ enum PodcastSectionTypeProto {
 }
 
 message PodcastTranscriptEntryProto {
-  oneof type {
-    PodcastHostSpeechProto host = 1;
-    string image_prompt = 2;
-  }
-}
-
-message PodcastHostSpeechProto {
   PodcastHostProto host = 1;
   string text = 2;
   int32 start_millis = 3;
@@ -195,11 +186,12 @@ message PodcastWordProto {
 }
 
 message PodcastVisualsProto {
-  string thumbnail_key = 1;
+  string style_prompt = 1;
   repeated PodcastVisualProto visuals = 2;
 }
 
 message PodcastVisualProto {
   int32 timestamp_millis = 1;
-  string image_key = 2;
+  string image_prompt = 2;
+  string image_key = 3;
 }
