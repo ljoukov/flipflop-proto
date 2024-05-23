@@ -170,6 +170,7 @@ message PodcastHostSpeechProto {
   PodcastHostProto host = 1;
   string text = 2;
   int32 start_millis = 3;
+  int32 end_millis = 4;
 }
 
 enum PodcastHostProto {
@@ -188,6 +189,7 @@ message PodcastWordProto {
   string word = 1;
   int32 start_millis = 2;
   int32 end_millis = 3;
+  string separator = 4;
 }
 
 message PodcastVisualsProto {

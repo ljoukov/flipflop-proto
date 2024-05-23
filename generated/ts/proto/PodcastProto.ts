@@ -427,6 +427,10 @@ export interface PodcastHostSpeechProto {
      * @generated from protobuf field: int32 start_millis = 3;
      */
     startMillis: number;
+    /**
+     * @generated from protobuf field: int32 end_millis = 4;
+     */
+    endMillis: number;
 }
 /**
  * @generated from protobuf message PodcastAudioProto
@@ -461,6 +465,10 @@ export interface PodcastWordProto {
      * @generated from protobuf field: int32 end_millis = 3;
      */
     endMillis: number;
+    /**
+     * @generated from protobuf field: string separator = 4;
+     */
+    separator: string;
 }
 /**
  * @generated from protobuf message PodcastVisualsProto
@@ -1689,11 +1697,12 @@ class PodcastHostSpeechProto$Type extends MessageType<PodcastHostSpeechProto> {
         super("PodcastHostSpeechProto", [
             { no: 1, name: "host", kind: "enum", T: () => ["PodcastHostProto", PodcastHostProto, "PODCAST_HOST_PROTO_"] },
             { no: 2, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "start_millis", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
+            { no: 3, name: "start_millis", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 4, name: "end_millis", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
         ]);
     }
     create(value?: PartialMessage<PodcastHostSpeechProto>): PodcastHostSpeechProto {
-        const message = { host: 0, text: "", startMillis: 0 };
+        const message = { host: 0, text: "", startMillis: 0, endMillis: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastHostSpeechProto>(this, message, value);
@@ -1712,6 +1721,9 @@ class PodcastHostSpeechProto$Type extends MessageType<PodcastHostSpeechProto> {
                     break;
                 case /* int32 start_millis */ 3:
                     message.startMillis = reader.int32();
+                    break;
+                case /* int32 end_millis */ 4:
+                    message.endMillis = reader.int32();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1734,6 +1746,9 @@ class PodcastHostSpeechProto$Type extends MessageType<PodcastHostSpeechProto> {
         /* int32 start_millis = 3; */
         if (message.startMillis !== 0)
             writer.tag(3, WireType.Varint).int32(message.startMillis);
+        /* int32 end_millis = 4; */
+        if (message.endMillis !== 0)
+            writer.tag(4, WireType.Varint).int32(message.endMillis);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1811,11 +1826,12 @@ class PodcastWordProto$Type extends MessageType<PodcastWordProto> {
         super("PodcastWordProto", [
             { no: 1, name: "word", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "start_millis", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 3, name: "end_millis", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
+            { no: 3, name: "end_millis", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 4, name: "separator", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PodcastWordProto>): PodcastWordProto {
-        const message = { word: "", startMillis: 0, endMillis: 0 };
+        const message = { word: "", startMillis: 0, endMillis: 0, separator: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastWordProto>(this, message, value);
@@ -1834,6 +1850,9 @@ class PodcastWordProto$Type extends MessageType<PodcastWordProto> {
                     break;
                 case /* int32 end_millis */ 3:
                     message.endMillis = reader.int32();
+                    break;
+                case /* string separator */ 4:
+                    message.separator = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1856,6 +1875,9 @@ class PodcastWordProto$Type extends MessageType<PodcastWordProto> {
         /* int32 end_millis = 3; */
         if (message.endMillis !== 0)
             writer.tag(3, WireType.Varint).int32(message.endMillis);
+        /* string separator = 4; */
+        if (message.separator !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.separator);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

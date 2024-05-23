@@ -900,6 +900,8 @@ struct PodcastHostSpeechProto {
 
   var startMillis: Int32 = 0
 
+  var endMillis: Int32 = 0
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -940,6 +942,8 @@ struct PodcastWordProto {
   var startMillis: Int32 = 0
 
   var endMillis: Int32 = 0
+
+  var separator: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -2114,6 +2118,7 @@ extension PodcastHostSpeechProto: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     1: .same(proto: "host"),
     2: .same(proto: "text"),
     3: .standard(proto: "start_millis"),
+    4: .standard(proto: "end_millis"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2125,6 +2130,7 @@ extension PodcastHostSpeechProto: SwiftProtobuf.Message, SwiftProtobuf._MessageI
       case 1: try { try decoder.decodeSingularEnumField(value: &self.host) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.text) }()
       case 3: try { try decoder.decodeSingularInt32Field(value: &self.startMillis) }()
+      case 4: try { try decoder.decodeSingularInt32Field(value: &self.endMillis) }()
       default: break
       }
     }
@@ -2140,6 +2146,9 @@ extension PodcastHostSpeechProto: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     if self.startMillis != 0 {
       try visitor.visitSingularInt32Field(value: self.startMillis, fieldNumber: 3)
     }
+    if self.endMillis != 0 {
+      try visitor.visitSingularInt32Field(value: self.endMillis, fieldNumber: 4)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -2147,6 +2156,7 @@ extension PodcastHostSpeechProto: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     if lhs.host != rhs.host {return false}
     if lhs.text != rhs.text {return false}
     if lhs.startMillis != rhs.startMillis {return false}
+    if lhs.endMillis != rhs.endMillis {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -2206,6 +2216,7 @@ extension PodcastWordProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     1: .same(proto: "word"),
     2: .standard(proto: "start_millis"),
     3: .standard(proto: "end_millis"),
+    4: .same(proto: "separator"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2217,6 +2228,7 @@ extension PodcastWordProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
       case 1: try { try decoder.decodeSingularStringField(value: &self.word) }()
       case 2: try { try decoder.decodeSingularInt32Field(value: &self.startMillis) }()
       case 3: try { try decoder.decodeSingularInt32Field(value: &self.endMillis) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.separator) }()
       default: break
       }
     }
@@ -2232,6 +2244,9 @@ extension PodcastWordProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     if self.endMillis != 0 {
       try visitor.visitSingularInt32Field(value: self.endMillis, fieldNumber: 3)
     }
+    if !self.separator.isEmpty {
+      try visitor.visitSingularStringField(value: self.separator, fieldNumber: 4)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -2239,6 +2254,7 @@ extension PodcastWordProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     if lhs.word != rhs.word {return false}
     if lhs.startMillis != rhs.startMillis {return false}
     if lhs.endMillis != rhs.endMillis {return false}
+    if lhs.separator != rhs.separator {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
