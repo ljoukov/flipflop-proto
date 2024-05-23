@@ -95,6 +95,16 @@ message PodcastProto {
   PodcastVisualsProto visuals = 11;
 }
 
+message PodcastVisualsProto {
+  string thumbnail_path = 1;
+  repeated PodcastVisualProto visuals = 2;
+}
+
+message PodcastVisualProto {
+  int32 timestamp_millis = 1;
+  string image_path = 2;
+}
+
 message StoredPodcastProto {
   string podcast_id = 1;
 
@@ -116,7 +126,7 @@ message StoredPodcastProto {
 
   PodcastAudioProto audio = 13;
 
-  PodcastVisualsProto visuals = 14;
+  StoredPodcastVisualsProto visuals = 14;
 }
 
 enum PodcastStateProto {
@@ -184,14 +194,14 @@ message PodcastWordProto {
   string separator = 4;
 }
 
-message PodcastVisualsProto {
+message StoredPodcastVisualsProto {
   string style_prompt = 1;
   string thumbnail_prompt = 2;
   string thumbnail_key = 3;
-  repeated PodcastVisualProto visuals = 4;
+  repeated StoredPodcastVisualProto visuals = 4;
 }
 
-message PodcastVisualProto {
+message StoredPodcastVisualProto {
   int32 timestamp_millis = 1;
   string image_prompt = 2;
   string image_key = 3;
