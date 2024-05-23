@@ -342,19 +342,23 @@ export interface StoredPodcastProto {
      */
     shortHook: string;
     /**
-     * @generated from protobuf field: string plan = 12;
+     * @generated from protobuf field: string thumbnail_prompt = 12;
+     */
+    thumbnailPrompt: string;
+    /**
+     * @generated from protobuf field: string plan = 13;
      */
     plan: string;
     /**
-     * @generated from protobuf field: PodcastTranscriptProto transcript = 13;
+     * @generated from protobuf field: PodcastTranscriptProto transcript = 14;
      */
     transcript?: PodcastTranscriptProto;
     /**
-     * @generated from protobuf field: PodcastAudioProto audio = 14;
+     * @generated from protobuf field: PodcastAudioProto audio = 15;
      */
     audio?: PodcastAudioProto;
     /**
-     * @generated from protobuf field: PodcastVisualsProto visuals = 15;
+     * @generated from protobuf field: PodcastVisualsProto visuals = 16;
      */
     visuals?: PodcastVisualsProto;
 }
@@ -1386,14 +1390,15 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
             { no: 9, name: "title_emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 10, name: "hook", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 11, name: "short_hook", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 12, name: "plan", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 13, name: "transcript", kind: "message", T: () => PodcastTranscriptProto },
-            { no: 14, name: "audio", kind: "message", T: () => PodcastAudioProto },
-            { no: 15, name: "visuals", kind: "message", T: () => PodcastVisualsProto }
+            { no: 12, name: "thumbnail_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 13, name: "plan", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 14, name: "transcript", kind: "message", T: () => PodcastTranscriptProto },
+            { no: 15, name: "audio", kind: "message", T: () => PodcastAudioProto },
+            { no: 16, name: "visuals", kind: "message", T: () => PodcastVisualsProto }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastProto>): StoredPodcastProto {
-        const message = { podcastId: "", createdBy: "", userPrompt: "", state: 0, reasoning: "", title: "", titleEmoji: "", hook: "", shortHook: "", plan: "" };
+        const message = { podcastId: "", createdBy: "", userPrompt: "", state: 0, reasoning: "", title: "", titleEmoji: "", hook: "", shortHook: "", thumbnailPrompt: "", plan: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastProto>(this, message, value);
@@ -1437,16 +1442,19 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
                 case /* string short_hook */ 11:
                     message.shortHook = reader.string();
                     break;
-                case /* string plan */ 12:
+                case /* string thumbnail_prompt */ 12:
+                    message.thumbnailPrompt = reader.string();
+                    break;
+                case /* string plan */ 13:
                     message.plan = reader.string();
                     break;
-                case /* PodcastTranscriptProto transcript */ 13:
+                case /* PodcastTranscriptProto transcript */ 14:
                     message.transcript = PodcastTranscriptProto.internalBinaryRead(reader, reader.uint32(), options, message.transcript);
                     break;
-                case /* PodcastAudioProto audio */ 14:
+                case /* PodcastAudioProto audio */ 15:
                     message.audio = PodcastAudioProto.internalBinaryRead(reader, reader.uint32(), options, message.audio);
                     break;
-                case /* PodcastVisualsProto visuals */ 15:
+                case /* PodcastVisualsProto visuals */ 16:
                     message.visuals = PodcastVisualsProto.internalBinaryRead(reader, reader.uint32(), options, message.visuals);
                     break;
                 default:
@@ -1494,18 +1502,21 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
         /* string short_hook = 11; */
         if (message.shortHook !== "")
             writer.tag(11, WireType.LengthDelimited).string(message.shortHook);
-        /* string plan = 12; */
+        /* string thumbnail_prompt = 12; */
+        if (message.thumbnailPrompt !== "")
+            writer.tag(12, WireType.LengthDelimited).string(message.thumbnailPrompt);
+        /* string plan = 13; */
         if (message.plan !== "")
-            writer.tag(12, WireType.LengthDelimited).string(message.plan);
-        /* PodcastTranscriptProto transcript = 13; */
+            writer.tag(13, WireType.LengthDelimited).string(message.plan);
+        /* PodcastTranscriptProto transcript = 14; */
         if (message.transcript)
-            PodcastTranscriptProto.internalBinaryWrite(message.transcript, writer.tag(13, WireType.LengthDelimited).fork(), options).join();
-        /* PodcastAudioProto audio = 14; */
+            PodcastTranscriptProto.internalBinaryWrite(message.transcript, writer.tag(14, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastAudioProto audio = 15; */
         if (message.audio)
-            PodcastAudioProto.internalBinaryWrite(message.audio, writer.tag(14, WireType.LengthDelimited).fork(), options).join();
-        /* PodcastVisualsProto visuals = 15; */
+            PodcastAudioProto.internalBinaryWrite(message.audio, writer.tag(15, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastVisualsProto visuals = 16; */
         if (message.visuals)
-            PodcastVisualsProto.internalBinaryWrite(message.visuals, writer.tag(15, WireType.LengthDelimited).fork(), options).join();
+            PodcastVisualsProto.internalBinaryWrite(message.visuals, writer.tag(16, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

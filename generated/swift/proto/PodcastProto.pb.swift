@@ -768,6 +768,11 @@ struct StoredPodcastProto {
     set {_uniqueStorage()._shortHook = newValue}
   }
 
+  var thumbnailPrompt: String {
+    get {return _storage._thumbnailPrompt}
+    set {_uniqueStorage()._thumbnailPrompt = newValue}
+  }
+
   var plan: String {
     get {return _storage._plan}
     set {_uniqueStorage()._plan = newValue}
@@ -1799,10 +1804,11 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     9: .standard(proto: "title_emoji"),
     10: .same(proto: "hook"),
     11: .standard(proto: "short_hook"),
-    12: .same(proto: "plan"),
-    13: .same(proto: "transcript"),
-    14: .same(proto: "audio"),
-    15: .same(proto: "visuals"),
+    12: .standard(proto: "thumbnail_prompt"),
+    13: .same(proto: "plan"),
+    14: .same(proto: "transcript"),
+    15: .same(proto: "audio"),
+    16: .same(proto: "visuals"),
   ]
 
   fileprivate class _StorageClass {
@@ -1817,6 +1823,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     var _titleEmoji: String = String()
     var _hook: String = String()
     var _shortHook: String = String()
+    var _thumbnailPrompt: String = String()
     var _plan: String = String()
     var _transcript: PodcastTranscriptProto? = nil
     var _audio: PodcastAudioProto? = nil
@@ -1838,6 +1845,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       _titleEmoji = source._titleEmoji
       _hook = source._hook
       _shortHook = source._shortHook
+      _thumbnailPrompt = source._thumbnailPrompt
       _plan = source._plan
       _transcript = source._transcript
       _audio = source._audio
@@ -1871,10 +1879,11 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         case 9: try { try decoder.decodeSingularStringField(value: &_storage._titleEmoji) }()
         case 10: try { try decoder.decodeSingularStringField(value: &_storage._hook) }()
         case 11: try { try decoder.decodeSingularStringField(value: &_storage._shortHook) }()
-        case 12: try { try decoder.decodeSingularStringField(value: &_storage._plan) }()
-        case 13: try { try decoder.decodeSingularMessageField(value: &_storage._transcript) }()
-        case 14: try { try decoder.decodeSingularMessageField(value: &_storage._audio) }()
-        case 15: try { try decoder.decodeSingularMessageField(value: &_storage._visuals) }()
+        case 12: try { try decoder.decodeSingularStringField(value: &_storage._thumbnailPrompt) }()
+        case 13: try { try decoder.decodeSingularStringField(value: &_storage._plan) }()
+        case 14: try { try decoder.decodeSingularMessageField(value: &_storage._transcript) }()
+        case 15: try { try decoder.decodeSingularMessageField(value: &_storage._audio) }()
+        case 16: try { try decoder.decodeSingularMessageField(value: &_storage._visuals) }()
         default: break
         }
       }
@@ -1920,17 +1929,20 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       if !_storage._shortHook.isEmpty {
         try visitor.visitSingularStringField(value: _storage._shortHook, fieldNumber: 11)
       }
+      if !_storage._thumbnailPrompt.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._thumbnailPrompt, fieldNumber: 12)
+      }
       if !_storage._plan.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._plan, fieldNumber: 12)
+        try visitor.visitSingularStringField(value: _storage._plan, fieldNumber: 13)
       }
       try { if let v = _storage._transcript {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 13)
-      } }()
-      try { if let v = _storage._audio {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 14)
       } }()
-      try { if let v = _storage._visuals {
+      try { if let v = _storage._audio {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
+      } }()
+      try { if let v = _storage._visuals {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 16)
       } }()
     }
     try unknownFields.traverse(visitor: &visitor)
@@ -1952,6 +1964,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         if _storage._titleEmoji != rhs_storage._titleEmoji {return false}
         if _storage._hook != rhs_storage._hook {return false}
         if _storage._shortHook != rhs_storage._shortHook {return false}
+        if _storage._thumbnailPrompt != rhs_storage._thumbnailPrompt {return false}
         if _storage._plan != rhs_storage._plan {return false}
         if _storage._transcript != rhs_storage._transcript {return false}
         if _storage._audio != rhs_storage._audio {return false}

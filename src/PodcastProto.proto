@@ -112,13 +112,14 @@ message StoredPodcastProto {
   string title_emoji = 9;
   string hook = 10;
   string short_hook = 11;
+  string thumbnail_prompt = 12;
 
-  string plan = 12;
-  PodcastTranscriptProto transcript = 13;
+  string plan = 13;
+  PodcastTranscriptProto transcript = 14;
 
-  PodcastAudioProto audio = 14;
+  PodcastAudioProto audio = 15;
 
-  PodcastVisualsProto visuals = 15;
+  PodcastVisualsProto visuals = 16;
 }
 
 enum PodcastStateProto {
