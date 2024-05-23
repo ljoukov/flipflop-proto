@@ -513,37 +513,45 @@ export enum PodcastStateProto {
      */
     SYNOPSYS_READY = 3,
     /**
-     * @generated from protobuf enum value: PODCAST_STATE_PROTO_GENERATING_PLAN = 4;
+     * @generated from protobuf enum value: PODCAST_STATE_PROTO_GENERATING_THUMBNAIL = 4;
      */
-    GENERATING_PLAN = 4,
+    GENERATING_THUMBNAIL = 4,
     /**
-     * @generated from protobuf enum value: PODCAST_STATE_PROTO_PLAN_READY = 5;
+     * @generated from protobuf enum value: PODCAST_STATE_PROTO_THUMBNAIL_READY = 5;
      */
-    PLAN_READY = 5,
+    THUMBNAIL_READY = 5,
     /**
-     * @generated from protobuf enum value: PODCAST_STATE_PROTO_GENERATING_TRANSCRIPT = 6;
+     * @generated from protobuf enum value: PODCAST_STATE_PROTO_GENERATING_PLAN = 6;
      */
-    GENERATING_TRANSCRIPT = 6,
+    GENERATING_PLAN = 6,
     /**
-     * @generated from protobuf enum value: PODCAST_STATE_PROTO_TRANSCRIPT_READY = 7;
+     * @generated from protobuf enum value: PODCAST_STATE_PROTO_PLAN_READY = 7;
      */
-    TRANSCRIPT_READY = 7,
+    PLAN_READY = 7,
     /**
-     * @generated from protobuf enum value: PODCAST_STATE_PROTO_GENERATING_AUDIO = 8;
+     * @generated from protobuf enum value: PODCAST_STATE_PROTO_GENERATING_TRANSCRIPT = 8;
      */
-    GENERATING_AUDIO = 8,
+    GENERATING_TRANSCRIPT = 8,
     /**
-     * @generated from protobuf enum value: PODCAST_STATE_PROTO_AUDIO_READY = 9;
+     * @generated from protobuf enum value: PODCAST_STATE_PROTO_TRANSCRIPT_READY = 9;
      */
-    AUDIO_READY = 9,
+    TRANSCRIPT_READY = 9,
     /**
-     * @generated from protobuf enum value: PODCAST_STATE_PROTO_GENERATING_VISUALS = 10;
+     * @generated from protobuf enum value: PODCAST_STATE_PROTO_GENERATING_AUDIO = 10;
      */
-    GENERATING_VISUALS = 10,
+    GENERATING_AUDIO = 10,
     /**
-     * @generated from protobuf enum value: PODCAST_STATE_PROTO_VISUALS_READY = 11;
+     * @generated from protobuf enum value: PODCAST_STATE_PROTO_AUDIO_READY = 11;
      */
-    VISUALS_READY = 11
+    AUDIO_READY = 11,
+    /**
+     * @generated from protobuf enum value: PODCAST_STATE_PROTO_GENERATING_VISUALS = 12;
+     */
+    GENERATING_VISUALS = 12,
+    /**
+     * @generated from protobuf enum value: PODCAST_STATE_PROTO_VISUALS_READY = 13;
+     */
+    VISUALS_READY = 13
 }
 /**
  * @generated from protobuf enum PodcastSectionTypeProto

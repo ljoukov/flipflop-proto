@@ -26,14 +26,16 @@ enum PodcastStateProto: SwiftProtobuf.Enum {
   case ready // = 1
   case generatingSynopsys // = 2
   case synopsysReady // = 3
-  case generatingPlan // = 4
-  case planReady // = 5
-  case generatingTranscript // = 6
-  case transcriptReady // = 7
-  case generatingAudio // = 8
-  case audioReady // = 9
-  case generatingVisuals // = 10
-  case visualsReady // = 11
+  case generatingThumbnail // = 4
+  case thumbnailReady // = 5
+  case generatingPlan // = 6
+  case planReady // = 7
+  case generatingTranscript // = 8
+  case transcriptReady // = 9
+  case generatingAudio // = 10
+  case audioReady // = 11
+  case generatingVisuals // = 12
+  case visualsReady // = 13
   case UNRECOGNIZED(Int)
 
   init() {
@@ -46,14 +48,16 @@ enum PodcastStateProto: SwiftProtobuf.Enum {
     case 1: self = .ready
     case 2: self = .generatingSynopsys
     case 3: self = .synopsysReady
-    case 4: self = .generatingPlan
-    case 5: self = .planReady
-    case 6: self = .generatingTranscript
-    case 7: self = .transcriptReady
-    case 8: self = .generatingAudio
-    case 9: self = .audioReady
-    case 10: self = .generatingVisuals
-    case 11: self = .visualsReady
+    case 4: self = .generatingThumbnail
+    case 5: self = .thumbnailReady
+    case 6: self = .generatingPlan
+    case 7: self = .planReady
+    case 8: self = .generatingTranscript
+    case 9: self = .transcriptReady
+    case 10: self = .generatingAudio
+    case 11: self = .audioReady
+    case 12: self = .generatingVisuals
+    case 13: self = .visualsReady
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -64,14 +68,16 @@ enum PodcastStateProto: SwiftProtobuf.Enum {
     case .ready: return 1
     case .generatingSynopsys: return 2
     case .synopsysReady: return 3
-    case .generatingPlan: return 4
-    case .planReady: return 5
-    case .generatingTranscript: return 6
-    case .transcriptReady: return 7
-    case .generatingAudio: return 8
-    case .audioReady: return 9
-    case .generatingVisuals: return 10
-    case .visualsReady: return 11
+    case .generatingThumbnail: return 4
+    case .thumbnailReady: return 5
+    case .generatingPlan: return 6
+    case .planReady: return 7
+    case .generatingTranscript: return 8
+    case .transcriptReady: return 9
+    case .generatingAudio: return 10
+    case .audioReady: return 11
+    case .generatingVisuals: return 12
+    case .visualsReady: return 13
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -87,6 +93,8 @@ extension PodcastStateProto: CaseIterable {
     .ready,
     .generatingSynopsys,
     .synopsysReady,
+    .generatingThumbnail,
+    .thumbnailReady,
     .generatingPlan,
     .planReady,
     .generatingTranscript,
@@ -1019,14 +1027,16 @@ extension PodcastStateProto: SwiftProtobuf._ProtoNameProviding {
     1: .same(proto: "PODCAST_STATE_PROTO_READY"),
     2: .same(proto: "PODCAST_STATE_PROTO_GENERATING_SYNOPSYS"),
     3: .same(proto: "PODCAST_STATE_PROTO_SYNOPSYS_READY"),
-    4: .same(proto: "PODCAST_STATE_PROTO_GENERATING_PLAN"),
-    5: .same(proto: "PODCAST_STATE_PROTO_PLAN_READY"),
-    6: .same(proto: "PODCAST_STATE_PROTO_GENERATING_TRANSCRIPT"),
-    7: .same(proto: "PODCAST_STATE_PROTO_TRANSCRIPT_READY"),
-    8: .same(proto: "PODCAST_STATE_PROTO_GENERATING_AUDIO"),
-    9: .same(proto: "PODCAST_STATE_PROTO_AUDIO_READY"),
-    10: .same(proto: "PODCAST_STATE_PROTO_GENERATING_VISUALS"),
-    11: .same(proto: "PODCAST_STATE_PROTO_VISUALS_READY"),
+    4: .same(proto: "PODCAST_STATE_PROTO_GENERATING_THUMBNAIL"),
+    5: .same(proto: "PODCAST_STATE_PROTO_THUMBNAIL_READY"),
+    6: .same(proto: "PODCAST_STATE_PROTO_GENERATING_PLAN"),
+    7: .same(proto: "PODCAST_STATE_PROTO_PLAN_READY"),
+    8: .same(proto: "PODCAST_STATE_PROTO_GENERATING_TRANSCRIPT"),
+    9: .same(proto: "PODCAST_STATE_PROTO_TRANSCRIPT_READY"),
+    10: .same(proto: "PODCAST_STATE_PROTO_GENERATING_AUDIO"),
+    11: .same(proto: "PODCAST_STATE_PROTO_AUDIO_READY"),
+    12: .same(proto: "PODCAST_STATE_PROTO_GENERATING_VISUALS"),
+    13: .same(proto: "PODCAST_STATE_PROTO_VISUALS_READY"),
   ]
 }
 
