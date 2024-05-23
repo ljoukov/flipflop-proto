@@ -187,7 +187,9 @@ message PodcastWordProto {
 
 message PodcastVisualsProto {
   string style_prompt = 1;
-  repeated PodcastVisualProto visuals = 2;
+  string thumbnail_prompt = 2;
+  string thumbnail_key = 3;
+  repeated PodcastVisualProto visuals = 4;
 }
 
 message PodcastVisualProto {

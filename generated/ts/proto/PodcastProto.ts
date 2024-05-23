@@ -444,7 +444,15 @@ export interface PodcastVisualsProto {
      */
     stylePrompt: string;
     /**
-     * @generated from protobuf field: repeated PodcastVisualProto visuals = 2;
+     * @generated from protobuf field: string thumbnail_prompt = 2;
+     */
+    thumbnailPrompt: string;
+    /**
+     * @generated from protobuf field: string thumbnail_key = 3;
+     */
+    thumbnailKey: string;
+    /**
+     * @generated from protobuf field: repeated PodcastVisualProto visuals = 4;
      */
     visuals: PodcastVisualProto[];
 }
@@ -1789,11 +1797,13 @@ class PodcastVisualsProto$Type extends MessageType<PodcastVisualsProto> {
     constructor() {
         super("PodcastVisualsProto", [
             { no: 1, name: "style_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "visuals", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastVisualProto }
+            { no: 2, name: "thumbnail_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "thumbnail_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "visuals", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastVisualProto }
         ]);
     }
     create(value?: PartialMessage<PodcastVisualsProto>): PodcastVisualsProto {
-        const message = { stylePrompt: "", visuals: [] };
+        const message = { stylePrompt: "", thumbnailPrompt: "", thumbnailKey: "", visuals: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastVisualsProto>(this, message, value);
@@ -1807,7 +1817,13 @@ class PodcastVisualsProto$Type extends MessageType<PodcastVisualsProto> {
                 case /* string style_prompt */ 1:
                     message.stylePrompt = reader.string();
                     break;
-                case /* repeated PodcastVisualProto visuals */ 2:
+                case /* string thumbnail_prompt */ 2:
+                    message.thumbnailPrompt = reader.string();
+                    break;
+                case /* string thumbnail_key */ 3:
+                    message.thumbnailKey = reader.string();
+                    break;
+                case /* repeated PodcastVisualProto visuals */ 4:
                     message.visuals.push(PodcastVisualProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
@@ -1825,9 +1841,15 @@ class PodcastVisualsProto$Type extends MessageType<PodcastVisualsProto> {
         /* string style_prompt = 1; */
         if (message.stylePrompt !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.stylePrompt);
-        /* repeated PodcastVisualProto visuals = 2; */
+        /* string thumbnail_prompt = 2; */
+        if (message.thumbnailPrompt !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.thumbnailPrompt);
+        /* string thumbnail_key = 3; */
+        if (message.thumbnailKey !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.thumbnailKey);
+        /* repeated PodcastVisualProto visuals = 4; */
         for (let i = 0; i < message.visuals.length; i++)
-            PodcastVisualProto.internalBinaryWrite(message.visuals[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+            PodcastVisualProto.internalBinaryWrite(message.visuals[i], writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
