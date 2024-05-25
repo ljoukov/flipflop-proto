@@ -200,9 +200,16 @@ export interface GeneratePodcastResponseDeltaProto {
     type: {
         oneofKind: "stateUpdate";
         /**
-         * @generated from protobuf field: PodcastStateProto state_update = 1;
+         * @deprecated
+         * @generated from protobuf field: PodcastStateProto state_update = 1 [deprecated = true];
          */
         stateUpdate: PodcastStateProto;
+    } | {
+        oneofKind: "podcast";
+        /**
+         * @generated from protobuf field: PodcastProto podcast = 2;
+         */
+        podcast: PodcastProto;
     } | {
         oneofKind: undefined;
     };
@@ -1105,7 +1112,8 @@ export const GeneratePodcastResponseHeaderProto = new GeneratePodcastResponseHea
 class GeneratePodcastResponseDeltaProto$Type extends MessageType<GeneratePodcastResponseDeltaProto> {
     constructor() {
         super("GeneratePodcastResponseDeltaProto", [
-            { no: 1, name: "state_update", kind: "enum", oneof: "type", T: () => ["PodcastStateProto", PodcastStateProto, "PODCAST_STATE_PROTO_"] }
+            { no: 1, name: "state_update", kind: "enum", oneof: "type", T: () => ["PodcastStateProto", PodcastStateProto, "PODCAST_STATE_PROTO_"] },
+            { no: 2, name: "podcast", kind: "message", oneof: "type", T: () => PodcastProto }
         ]);
     }
     create(value?: PartialMessage<GeneratePodcastResponseDeltaProto>): GeneratePodcastResponseDeltaProto {
@@ -1120,10 +1128,16 @@ class GeneratePodcastResponseDeltaProto$Type extends MessageType<GeneratePodcast
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* PodcastStateProto state_update */ 1:
+                case /* PodcastStateProto state_update = 1 [deprecated = true];*/ 1:
                     message.type = {
                         oneofKind: "stateUpdate",
                         stateUpdate: reader.int32()
+                    };
+                    break;
+                case /* PodcastProto podcast */ 2:
+                    message.type = {
+                        oneofKind: "podcast",
+                        podcast: PodcastProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).podcast)
                     };
                     break;
                 default:
@@ -1138,9 +1152,12 @@ class GeneratePodcastResponseDeltaProto$Type extends MessageType<GeneratePodcast
         return message;
     }
     internalBinaryWrite(message: GeneratePodcastResponseDeltaProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* PodcastStateProto state_update = 1; */
+        /* PodcastStateProto state_update = 1 [deprecated = true]; */
         if (message.type.oneofKind === "stateUpdate")
             writer.tag(1, WireType.Varint).int32(message.type.stateUpdate);
+        /* PodcastProto podcast = 2; */
+        if (message.type.oneofKind === "podcast")
+            PodcastProto.internalBinaryWrite(message.type.podcast, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

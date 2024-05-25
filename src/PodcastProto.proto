@@ -61,7 +61,8 @@ message GeneratePodcastResponseHeaderProto {}
 
 message GeneratePodcastResponseDeltaProto {
   oneof type {
-    PodcastStateProto state_update = 1;
+    PodcastStateProto state_update = 1 [deprecated = true];
+    PodcastProto podcast = 2;
   }
 }
 
