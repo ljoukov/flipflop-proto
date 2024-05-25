@@ -685,6 +685,15 @@ struct PodcastProto {
 
   var state: PodcastStateProto = .unknown
 
+  var answer: PodcastPromptAnswerProto {
+    get {return _answer ?? PodcastPromptAnswerProto()}
+    set {_answer = newValue}
+  }
+  /// Returns true if `answer` has been explicitly set.
+  var hasAnswer: Bool {return self._answer != nil}
+  /// Clears the value of `answer`. Subsequent reads from it will return its default value.
+  mutating func clearAnswer() {self._answer = nil}
+
   var title: String = String()
 
   var titleEmoji: String = String()
@@ -717,6 +726,7 @@ struct PodcastProto {
 
   fileprivate var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
   fileprivate var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+  fileprivate var _answer: PodcastPromptAnswerProto? = nil
   fileprivate var _audioDuration: SwiftProtobuf.Google_Protobuf_Duration? = nil
   fileprivate var _visuals: PodcastVisualsProto? = nil
 }
@@ -1724,6 +1734,7 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     3: .standard(proto: "created_at"),
     4: .standard(proto: "updated_at"),
     5: .same(proto: "state"),
+    12: .same(proto: "answer"),
     6: .same(proto: "title"),
     7: .standard(proto: "title_emoji"),
     8: .same(proto: "synopsis"),
@@ -1749,6 +1760,7 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
       case 9: try { try decoder.decodeSingularStringField(value: &self.audioPath) }()
       case 10: try { try decoder.decodeSingularMessageField(value: &self._audioDuration) }()
       case 11: try { try decoder.decodeSingularMessageField(value: &self._visuals) }()
+      case 12: try { try decoder.decodeSingularMessageField(value: &self._answer) }()
       default: break
       }
     }
@@ -1792,6 +1804,9 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     try { if let v = self._visuals {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 11)
     } }()
+    try { if let v = self._answer {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 12)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1801,6 +1816,7 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     if lhs._createdAt != rhs._createdAt {return false}
     if lhs._updatedAt != rhs._updatedAt {return false}
     if lhs.state != rhs.state {return false}
+    if lhs._answer != rhs._answer {return false}
     if lhs.title != rhs.title {return false}
     if lhs.titleEmoji != rhs.titleEmoji {return false}
     if lhs.synopsis != rhs.synopsis {return false}

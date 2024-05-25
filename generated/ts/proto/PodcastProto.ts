@@ -275,6 +275,10 @@ export interface PodcastProto {
      */
     state: PodcastStateProto;
     /**
+     * @generated from protobuf field: PodcastPromptAnswerProto answer = 12;
+     */
+    answer?: PodcastPromptAnswerProto;
+    /**
      * @generated from protobuf field: string title = 6;
      */
     title: string;
@@ -1299,6 +1303,7 @@ class PodcastProto$Type extends MessageType<PodcastProto> {
             { no: 3, name: "created_at", kind: "message", T: () => Timestamp },
             { no: 4, name: "updated_at", kind: "message", T: () => Timestamp },
             { no: 5, name: "state", kind: "enum", T: () => ["PodcastStateProto", PodcastStateProto, "PODCAST_STATE_PROTO_"] },
+            { no: 12, name: "answer", kind: "message", T: () => PodcastPromptAnswerProto },
             { no: 6, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 7, name: "title_emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 8, name: "synopsis", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
@@ -1333,6 +1338,9 @@ class PodcastProto$Type extends MessageType<PodcastProto> {
                     break;
                 case /* PodcastStateProto state */ 5:
                     message.state = reader.int32();
+                    break;
+                case /* PodcastPromptAnswerProto answer */ 12:
+                    message.answer = PodcastPromptAnswerProto.internalBinaryRead(reader, reader.uint32(), options, message.answer);
                     break;
                 case /* string title */ 6:
                     message.title = reader.string();
@@ -1379,6 +1387,9 @@ class PodcastProto$Type extends MessageType<PodcastProto> {
         /* PodcastStateProto state = 5; */
         if (message.state !== 0)
             writer.tag(5, WireType.Varint).int32(message.state);
+        /* PodcastPromptAnswerProto answer = 12; */
+        if (message.answer)
+            PodcastPromptAnswerProto.internalBinaryWrite(message.answer, writer.tag(12, WireType.LengthDelimited).fork(), options).join();
         /* string title = 6; */
         if (message.title !== "")
             writer.tag(6, WireType.LengthDelimited).string(message.title);
