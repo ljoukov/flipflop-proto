@@ -685,15 +685,6 @@ struct PodcastProto {
 
   var state: PodcastStateProto = .unknown
 
-  var answer: PodcastPromptAnswerProto {
-    get {return _answer ?? PodcastPromptAnswerProto()}
-    set {_answer = newValue}
-  }
-  /// Returns true if `answer` has been explicitly set.
-  var hasAnswer: Bool {return self._answer != nil}
-  /// Clears the value of `answer`. Subsequent reads from it will return its default value.
-  mutating func clearAnswer() {self._answer = nil}
-
   var title: String = String()
 
   var titleEmoji: String = String()
@@ -726,7 +717,6 @@ struct PodcastProto {
 
   fileprivate var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
   fileprivate var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
-  fileprivate var _answer: PodcastPromptAnswerProto? = nil
   fileprivate var _audioDuration: SwiftProtobuf.Google_Protobuf_Duration? = nil
   fileprivate var _visuals: PodcastVisualsProto? = nil
 }
@@ -813,6 +803,15 @@ struct StoredPodcastProto {
     get {return _storage._state}
     set {_uniqueStorage()._state = newValue}
   }
+
+  var answer: PodcastPromptAnswerProto {
+    get {return _storage._answer ?? PodcastPromptAnswerProto()}
+    set {_uniqueStorage()._answer = newValue}
+  }
+  /// Returns true if `answer` has been explicitly set.
+  var hasAnswer: Bool {return _storage._answer != nil}
+  /// Clears the value of `answer`. Subsequent reads from it will return its default value.
+  mutating func clearAnswer() {_uniqueStorage()._answer = nil}
 
   var reasoning: String {
     get {return _storage._reasoning}
@@ -1734,7 +1733,6 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     3: .standard(proto: "created_at"),
     4: .standard(proto: "updated_at"),
     5: .same(proto: "state"),
-    12: .same(proto: "answer"),
     6: .same(proto: "title"),
     7: .standard(proto: "title_emoji"),
     8: .same(proto: "synopsis"),
@@ -1760,7 +1758,6 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
       case 9: try { try decoder.decodeSingularStringField(value: &self.audioPath) }()
       case 10: try { try decoder.decodeSingularMessageField(value: &self._audioDuration) }()
       case 11: try { try decoder.decodeSingularMessageField(value: &self._visuals) }()
-      case 12: try { try decoder.decodeSingularMessageField(value: &self._answer) }()
       default: break
       }
     }
@@ -1804,9 +1801,6 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     try { if let v = self._visuals {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 11)
     } }()
-    try { if let v = self._answer {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 12)
-    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1816,7 +1810,6 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     if lhs._createdAt != rhs._createdAt {return false}
     if lhs._updatedAt != rhs._updatedAt {return false}
     if lhs.state != rhs.state {return false}
-    if lhs._answer != rhs._answer {return false}
     if lhs.title != rhs.title {return false}
     if lhs.titleEmoji != rhs.titleEmoji {return false}
     if lhs.synopsis != rhs.synopsis {return false}
@@ -1945,6 +1938,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     4: .standard(proto: "updated_at"),
     5: .standard(proto: "user_prompt"),
     6: .same(proto: "state"),
+    15: .same(proto: "answer"),
     7: .same(proto: "reasoning"),
     8: .same(proto: "title"),
     9: .standard(proto: "title_emoji"),
@@ -1962,6 +1956,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
     var _userPrompt: String = String()
     var _state: PodcastStateProto = .unknown
+    var _answer: PodcastPromptAnswerProto? = nil
     var _reasoning: String = String()
     var _title: String = String()
     var _titleEmoji: String = String()
@@ -1982,6 +1977,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       _updatedAt = source._updatedAt
       _userPrompt = source._userPrompt
       _state = source._state
+      _answer = source._answer
       _reasoning = source._reasoning
       _title = source._title
       _titleEmoji = source._titleEmoji
@@ -2022,6 +2018,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         case 12: try { try decoder.decodeSingularMessageField(value: &_storage._transcript) }()
         case 13: try { try decoder.decodeSingularMessageField(value: &_storage._audio) }()
         case 14: try { try decoder.decodeSingularMessageField(value: &_storage._visuals) }()
+        case 15: try { try decoder.decodeSingularMessageField(value: &_storage._answer) }()
         default: break
         }
       }
@@ -2076,6 +2073,9 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       try { if let v = _storage._visuals {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 14)
       } }()
+      try { if let v = _storage._answer {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
+      } }()
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -2091,6 +2091,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         if _storage._updatedAt != rhs_storage._updatedAt {return false}
         if _storage._userPrompt != rhs_storage._userPrompt {return false}
         if _storage._state != rhs_storage._state {return false}
+        if _storage._answer != rhs_storage._answer {return false}
         if _storage._reasoning != rhs_storage._reasoning {return false}
         if _storage._title != rhs_storage._title {return false}
         if _storage._titleEmoji != rhs_storage._titleEmoji {return false}

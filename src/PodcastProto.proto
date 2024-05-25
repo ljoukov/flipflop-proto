@@ -88,8 +88,6 @@ message PodcastProto {
 
   PodcastStateProto state = 5;
 
-  PodcastPromptAnswerProto answer = 12;
-
   string title = 6;
   string title_emoji = 7;
   string synopsis = 8;
@@ -124,6 +122,8 @@ message StoredPodcastProto {
   string user_prompt = 5;
 
   PodcastStateProto state = 6;
+
+  PodcastPromptAnswerProto answer = 15;
 
   string reasoning = 7;
   string title = 8;

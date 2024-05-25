@@ -275,10 +275,6 @@ export interface PodcastProto {
      */
     state: PodcastStateProto;
     /**
-     * @generated from protobuf field: PodcastPromptAnswerProto answer = 12;
-     */
-    answer?: PodcastPromptAnswerProto;
-    /**
      * @generated from protobuf field: string title = 6;
      */
     title: string;
@@ -366,6 +362,10 @@ export interface StoredPodcastProto {
      * @generated from protobuf field: PodcastStateProto state = 6;
      */
     state: PodcastStateProto;
+    /**
+     * @generated from protobuf field: PodcastPromptAnswerProto answer = 15;
+     */
+    answer?: PodcastPromptAnswerProto;
     /**
      * @generated from protobuf field: string reasoning = 7;
      */
@@ -1303,7 +1303,6 @@ class PodcastProto$Type extends MessageType<PodcastProto> {
             { no: 3, name: "created_at", kind: "message", T: () => Timestamp },
             { no: 4, name: "updated_at", kind: "message", T: () => Timestamp },
             { no: 5, name: "state", kind: "enum", T: () => ["PodcastStateProto", PodcastStateProto, "PODCAST_STATE_PROTO_"] },
-            { no: 12, name: "answer", kind: "message", T: () => PodcastPromptAnswerProto },
             { no: 6, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 7, name: "title_emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 8, name: "synopsis", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
@@ -1338,9 +1337,6 @@ class PodcastProto$Type extends MessageType<PodcastProto> {
                     break;
                 case /* PodcastStateProto state */ 5:
                     message.state = reader.int32();
-                    break;
-                case /* PodcastPromptAnswerProto answer */ 12:
-                    message.answer = PodcastPromptAnswerProto.internalBinaryRead(reader, reader.uint32(), options, message.answer);
                     break;
                 case /* string title */ 6:
                     message.title = reader.string();
@@ -1387,9 +1383,6 @@ class PodcastProto$Type extends MessageType<PodcastProto> {
         /* PodcastStateProto state = 5; */
         if (message.state !== 0)
             writer.tag(5, WireType.Varint).int32(message.state);
-        /* PodcastPromptAnswerProto answer = 12; */
-        if (message.answer)
-            PodcastPromptAnswerProto.internalBinaryWrite(message.answer, writer.tag(12, WireType.LengthDelimited).fork(), options).join();
         /* string title = 6; */
         if (message.title !== "")
             writer.tag(6, WireType.LengthDelimited).string(message.title);
@@ -1583,6 +1576,7 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
             { no: 4, name: "updated_at", kind: "message", T: () => Timestamp },
             { no: 5, name: "user_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 6, name: "state", kind: "enum", T: () => ["PodcastStateProto", PodcastStateProto, "PODCAST_STATE_PROTO_"] },
+            { no: 15, name: "answer", kind: "message", T: () => PodcastPromptAnswerProto },
             { no: 7, name: "reasoning", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 8, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 9, name: "title_emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
@@ -1622,6 +1616,9 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
                     break;
                 case /* PodcastStateProto state */ 6:
                     message.state = reader.int32();
+                    break;
+                case /* PodcastPromptAnswerProto answer */ 15:
+                    message.answer = PodcastPromptAnswerProto.internalBinaryRead(reader, reader.uint32(), options, message.answer);
                     break;
                 case /* string reasoning */ 7:
                     message.reasoning = reader.string();
@@ -1677,6 +1674,9 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
         /* PodcastStateProto state = 6; */
         if (message.state !== 0)
             writer.tag(6, WireType.Varint).int32(message.state);
+        /* PodcastPromptAnswerProto answer = 15; */
+        if (message.answer)
+            PodcastPromptAnswerProto.internalBinaryWrite(message.answer, writer.tag(15, WireType.LengthDelimited).fork(), options).join();
         /* string reasoning = 7; */
         if (message.reasoning !== "")
             writer.tag(7, WireType.LengthDelimited).string(message.reasoning);
