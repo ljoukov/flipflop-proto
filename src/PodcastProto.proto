@@ -54,6 +54,7 @@ message CreatePodcastResponseDeltaProto {
 
 message GeneratePodcastRequestProto {
   string podcast_id = 1;
+  int32 duration_seconds = 2;
 }
 
 message GeneratePodcastResponseHeaderProto {}

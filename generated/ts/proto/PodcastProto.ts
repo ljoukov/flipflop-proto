@@ -180,6 +180,10 @@ export interface GeneratePodcastRequestProto {
      * @generated from protobuf field: string podcast_id = 1;
      */
     podcastId: string;
+    /**
+     * @generated from protobuf field: int32 duration_seconds = 2;
+     */
+    durationSeconds: number;
 }
 /**
  * @generated from protobuf message GeneratePodcastResponseHeaderProto
@@ -1017,11 +1021,12 @@ export const CreatePodcastResponseDeltaProto = new CreatePodcastResponseDeltaPro
 class GeneratePodcastRequestProto$Type extends MessageType<GeneratePodcastRequestProto> {
     constructor() {
         super("GeneratePodcastRequestProto", [
-            { no: 1, name: "podcast_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "podcast_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "duration_seconds", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
         ]);
     }
     create(value?: PartialMessage<GeneratePodcastRequestProto>): GeneratePodcastRequestProto {
-        const message = { podcastId: "" };
+        const message = { podcastId: "", durationSeconds: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<GeneratePodcastRequestProto>(this, message, value);
@@ -1034,6 +1039,9 @@ class GeneratePodcastRequestProto$Type extends MessageType<GeneratePodcastReques
             switch (fieldNo) {
                 case /* string podcast_id */ 1:
                     message.podcastId = reader.string();
+                    break;
+                case /* int32 duration_seconds */ 2:
+                    message.durationSeconds = reader.int32();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1050,6 +1058,9 @@ class GeneratePodcastRequestProto$Type extends MessageType<GeneratePodcastReques
         /* string podcast_id = 1; */
         if (message.podcastId !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.podcastId);
+        /* int32 duration_seconds = 2; */
+        if (message.durationSeconds !== 0)
+            writer.tag(2, WireType.Varint).int32(message.durationSeconds);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
