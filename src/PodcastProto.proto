@@ -47,6 +47,8 @@ message CreatePodcastResponseDeltaProto {
 
     // IDs start at 10
     PodcastProto podcast = 10;
+
+    PodcastPromptAnswerProto answer = 11;
   }
 }
 
@@ -93,6 +95,10 @@ message PodcastProto {
   google.protobuf.Duration audio_duration = 10;
 
   PodcastVisualsProto visuals = 11;
+}
+
+message PodcastPromptAnswerProto {
+  string text = 1;
 }
 
 message PodcastVisualsProto {

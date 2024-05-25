@@ -458,6 +458,14 @@ struct CreatePodcastResponseDeltaProto {
     set {type = .podcast(newValue)}
   }
 
+  var answer: PodcastPromptAnswerProto {
+    get {
+      if case .answer(let v)? = type {return v}
+      return PodcastPromptAnswerProto()
+    }
+    set {type = .answer(newValue)}
+  }
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_Type: Equatable {
@@ -466,6 +474,7 @@ struct CreatePodcastResponseDeltaProto {
     case errorNoTopic(Bool)
     /// IDs start at 10
     case podcast(PodcastProto)
+    case answer(PodcastPromptAnswerProto)
 
   #if !swift(>=4.1)
     static func ==(lhs: CreatePodcastResponseDeltaProto.OneOf_Type, rhs: CreatePodcastResponseDeltaProto.OneOf_Type) -> Bool {
@@ -483,6 +492,10 @@ struct CreatePodcastResponseDeltaProto {
       }()
       case (.podcast, .podcast): return {
         guard case .podcast(let l) = lhs, case .podcast(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.answer, .answer): return {
+        guard case .answer(let l) = lhs, case .answer(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       default: return false
@@ -704,6 +717,18 @@ struct PodcastProto {
   fileprivate var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
   fileprivate var _audioDuration: SwiftProtobuf.Google_Protobuf_Duration? = nil
   fileprivate var _visuals: PodcastVisualsProto? = nil
+}
+
+struct PodcastPromptAnswerProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var text: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
 }
 
 struct PodcastVisualsProto {
@@ -980,6 +1005,7 @@ extension ListPodcastsResponseHeaderProto: @unchecked Sendable {}
 extension ListPodcastsResponseDeltaProto: @unchecked Sendable {}
 extension ListPodcastsResponseDeltaProto.OneOf_Type: @unchecked Sendable {}
 extension PodcastProto: @unchecked Sendable {}
+extension PodcastPromptAnswerProto: @unchecked Sendable {}
 extension PodcastVisualsProto: @unchecked Sendable {}
 extension PodcastVisualProto: @unchecked Sendable {}
 extension StoredPodcastProto: @unchecked Sendable {}
@@ -1369,6 +1395,7 @@ extension CreatePodcastResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf.
     1: .same(proto: "separator"),
     2: .standard(proto: "error_no_topic"),
     10: .same(proto: "podcast"),
+    11: .same(proto: "answer"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1406,6 +1433,19 @@ extension CreatePodcastResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf.
           self.type = .podcast(v)
         }
       }()
+      case 11: try {
+        var v: PodcastPromptAnswerProto?
+        var hadOneofValue = false
+        if let current = self.type {
+          hadOneofValue = true
+          if case .answer(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.type = .answer(v)
+        }
+      }()
       default: break
       }
     }
@@ -1428,6 +1468,10 @@ extension CreatePodcastResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf.
     case .podcast?: try {
       guard case .podcast(let v)? = self.type else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
+    }()
+    case .answer?: try {
+      guard case .answer(let v)? = self.type else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 11)
     }()
     case nil: break
     }
@@ -1755,6 +1799,38 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     if lhs.audioPath != rhs.audioPath {return false}
     if lhs._audioDuration != rhs._audioDuration {return false}
     if lhs._visuals != rhs._visuals {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension PodcastPromptAnswerProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastPromptAnswerProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "text"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.text) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.text.isEmpty {
+      try visitor.visitSingularStringField(value: self.text, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PodcastPromptAnswerProto, rhs: PodcastPromptAnswerProto) -> Bool {
+    if lhs.text != rhs.text {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
