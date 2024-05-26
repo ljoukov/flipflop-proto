@@ -13,6 +13,7 @@ import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
+import { LogProto } from "./LogProto";
 import { LatenciesProto } from "./LatencyProto";
 import { Timestamp } from "./google/protobuf/timestamp";
 import { Duration } from "./google/protobuf/duration";
@@ -403,6 +404,10 @@ export interface StoredPodcastProto {
      * @generated from protobuf field: LatenciesProto latencies = 100;
      */
     latencies?: LatenciesProto;
+    /**
+     * @generated from protobuf field: LogProto log = 101;
+     */
+    log?: LogProto;
 }
 /**
  * @generated from protobuf message PodcastTranscriptProto
@@ -1596,7 +1601,8 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
             { no: 13, name: "transcript", kind: "message", T: () => PodcastTranscriptProto },
             { no: 14, name: "audio", kind: "message", T: () => PodcastAudioProto },
             { no: 15, name: "visuals", kind: "message", T: () => StoredPodcastVisualsProto },
-            { no: 100, name: "latencies", kind: "message", T: () => LatenciesProto }
+            { no: 100, name: "latencies", kind: "message", T: () => LatenciesProto },
+            { no: 101, name: "log", kind: "message", T: () => LogProto }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastProto>): StoredPodcastProto {
@@ -1659,6 +1665,9 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
                 case /* LatenciesProto latencies */ 100:
                     message.latencies = LatenciesProto.internalBinaryRead(reader, reader.uint32(), options, message.latencies);
                     break;
+                case /* LogProto log */ 101:
+                    message.log = LogProto.internalBinaryRead(reader, reader.uint32(), options, message.log);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -1719,6 +1728,9 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
         /* LatenciesProto latencies = 100; */
         if (message.latencies)
             LatenciesProto.internalBinaryWrite(message.latencies, writer.tag(100, WireType.LengthDelimited).fork(), options).join();
+        /* LogProto log = 101; */
+        if (message.log)
+            LogProto.internalBinaryWrite(message.log, writer.tag(101, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

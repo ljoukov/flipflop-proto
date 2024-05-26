@@ -4,6 +4,7 @@ import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 
 import "LatencyProto.proto";
+import "LogProto.proto";
 
 message PodcastStreamApiRequestProto {
   string encoded_user_auth = 1;
@@ -140,6 +141,7 @@ message StoredPodcastProto {
   StoredPodcastVisualsProto visuals = 15;
 
   LatenciesProto latencies = 100;
+  LogProto log = 101;
 }
 
 enum PodcastStateProto {

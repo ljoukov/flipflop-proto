@@ -880,6 +880,15 @@ struct StoredPodcastProto {
   /// Clears the value of `latencies`. Subsequent reads from it will return its default value.
   mutating func clearLatencies() {_uniqueStorage()._latencies = nil}
 
+  var log: LogProto {
+    get {return _storage._log ?? LogProto()}
+    set {_uniqueStorage()._log = newValue}
+  }
+  /// Returns true if `log` has been explicitly set.
+  var hasLog: Bool {return _storage._log != nil}
+  /// Clears the value of `log`. Subsequent reads from it will return its default value.
+  mutating func clearLog() {_uniqueStorage()._log = nil}
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -1969,6 +1978,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     14: .same(proto: "audio"),
     15: .same(proto: "visuals"),
     100: .same(proto: "latencies"),
+    101: .same(proto: "log"),
   ]
 
   fileprivate class _StorageClass {
@@ -1988,6 +1998,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     var _audio: PodcastAudioProto? = nil
     var _visuals: StoredPodcastVisualsProto? = nil
     var _latencies: LatenciesProto? = nil
+    var _log: LogProto? = nil
 
     static let defaultInstance = _StorageClass()
 
@@ -2010,6 +2021,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       _audio = source._audio
       _visuals = source._visuals
       _latencies = source._latencies
+      _log = source._log
     }
   }
 
@@ -2044,6 +2056,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         case 14: try { try decoder.decodeSingularMessageField(value: &_storage._audio) }()
         case 15: try { try decoder.decodeSingularMessageField(value: &_storage._visuals) }()
         case 100: try { try decoder.decodeSingularMessageField(value: &_storage._latencies) }()
+        case 101: try { try decoder.decodeSingularMessageField(value: &_storage._log) }()
         default: break
         }
       }
@@ -2104,6 +2117,9 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       try { if let v = _storage._latencies {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 100)
       } }()
+      try { if let v = _storage._log {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 101)
+      } }()
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -2129,6 +2145,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         if _storage._audio != rhs_storage._audio {return false}
         if _storage._visuals != rhs_storage._visuals {return false}
         if _storage._latencies != rhs_storage._latencies {return false}
+        if _storage._log != rhs_storage._log {return false}
         return true
       }
       if !storagesAreEqual {return false}
