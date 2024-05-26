@@ -13,7 +13,7 @@ import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
-import { LogProto } from "./LogProto";
+import { LatenciesProto } from "./LatencyProto";
 import { Timestamp } from "./google/protobuf/timestamp";
 import { Duration } from "./google/protobuf/duration";
 /**
@@ -400,9 +400,9 @@ export interface StoredPodcastProto {
      */
     visuals?: StoredPodcastVisualsProto;
     /**
-     * @generated from protobuf field: LogProto log = 16;
+     * @generated from protobuf field: LatenciesProto latencies = 100;
      */
-    log?: LogProto;
+    latencies?: LatenciesProto;
 }
 /**
  * @generated from protobuf message PodcastTranscriptProto
@@ -1596,7 +1596,7 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
             { no: 13, name: "transcript", kind: "message", T: () => PodcastTranscriptProto },
             { no: 14, name: "audio", kind: "message", T: () => PodcastAudioProto },
             { no: 15, name: "visuals", kind: "message", T: () => StoredPodcastVisualsProto },
-            { no: 16, name: "log", kind: "message", T: () => LogProto }
+            { no: 100, name: "latencies", kind: "message", T: () => LatenciesProto }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastProto>): StoredPodcastProto {
@@ -1656,8 +1656,8 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
                 case /* StoredPodcastVisualsProto visuals */ 15:
                     message.visuals = StoredPodcastVisualsProto.internalBinaryRead(reader, reader.uint32(), options, message.visuals);
                     break;
-                case /* LogProto log */ 16:
-                    message.log = LogProto.internalBinaryRead(reader, reader.uint32(), options, message.log);
+                case /* LatenciesProto latencies */ 100:
+                    message.latencies = LatenciesProto.internalBinaryRead(reader, reader.uint32(), options, message.latencies);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1716,9 +1716,9 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
         /* StoredPodcastVisualsProto visuals = 15; */
         if (message.visuals)
             StoredPodcastVisualsProto.internalBinaryWrite(message.visuals, writer.tag(15, WireType.LengthDelimited).fork(), options).join();
-        /* LogProto log = 16; */
-        if (message.log)
-            LogProto.internalBinaryWrite(message.log, writer.tag(16, WireType.LengthDelimited).fork(), options).join();
+        /* LatenciesProto latencies = 100; */
+        if (message.latencies)
+            LatenciesProto.internalBinaryWrite(message.latencies, writer.tag(100, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
