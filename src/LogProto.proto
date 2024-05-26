@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+message LogProto {
+  repeated LogRecordProto records = 1;
+}
+
+message LogRecordProto {
+  google.protobuf.Timestamp timestamp = 1;
+  LogLevelProto level = 2;
+  string message = 3;
+}
+
+enum LogLevelProto {
+  LOG_LEVEL_PROTO_UNKNOWN = 0;
+  LOG_LEVEL_PROTO_INFO = 1;
+  LOG_LEVEL_PROTO_WARNING = 2;
+  LOG_LEVEL_PROTO_ERROR = 3;
+}

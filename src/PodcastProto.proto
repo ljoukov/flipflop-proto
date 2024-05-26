@@ -3,6 +3,8 @@ syntax = "proto3";
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 
+import "LogProto.proto";
+
 message PodcastStreamApiRequestProto {
   string encoded_user_auth = 1;
   oneof request {
@@ -61,8 +63,7 @@ message GeneratePodcastResponseHeaderProto {}
 
 message GeneratePodcastResponseDeltaProto {
   oneof type {
-    PodcastStateProto state_update = 1 [deprecated = true];
-    PodcastProto podcast = 2;
+    PodcastProto podcast = 1;
   }
 }
 
@@ -124,42 +125,47 @@ message StoredPodcastProto {
 
   PodcastStateProto state = 6;
 
-  PodcastPromptAnswerProto answer = 15;
+  PodcastPromptAnswerProto answer = 7;
 
-  string reasoning = 7;
-  string title = 8;
-  string title_emoji = 9;
-  string hook = 10;
+  string reasoning = 8;
+  string title = 9;
+  string title_emoji = 10;
+  string hook = 11;
 
-  string plan = 11;
-  PodcastTranscriptProto transcript = 12;
+  string plan = 12;
+  PodcastTranscriptProto transcript = 13;
 
-  PodcastAudioProto audio = 13;
+  PodcastAudioProto audio = 14;
 
-  StoredPodcastVisualsProto visuals = 14;
+  StoredPodcastVisualsProto visuals = 15;
+
+  LogProto log = 16;
 }
 
 enum PodcastStateProto {
   PODCAST_STATE_PROTO_UNKNOWN = 0;
+
   PODCAST_STATE_PROTO_READY = 1;
+  PODCAST_STATE_PROTO_FAILED = 2;
 
-  PODCAST_STATE_PROTO_GENERATING_SYNOPSYS = 2;
-  PODCAST_STATE_PROTO_SYNOPSYS_READY = 3;
+  // IDs start at 10
+  PODCAST_STATE_PROTO_GENERATING_SYNOPSYS = 10;
+  PODCAST_STATE_PROTO_SYNOPSYS_READY = 11;
 
-  PODCAST_STATE_PROTO_GENERATING_THUMBNAIL = 4;
-  PODCAST_STATE_PROTO_THUMBNAIL_READY = 5;
+  PODCAST_STATE_PROTO_GENERATING_THUMBNAIL = 12;
+  PODCAST_STATE_PROTO_THUMBNAIL_READY = 13;
 
-  PODCAST_STATE_PROTO_GENERATING_PLAN = 6;
-  PODCAST_STATE_PROTO_PLAN_READY = 7;
+  PODCAST_STATE_PROTO_GENERATING_PLAN = 14;
+  PODCAST_STATE_PROTO_PLAN_READY = 15;
 
-  PODCAST_STATE_PROTO_GENERATING_TRANSCRIPT = 8;
-  PODCAST_STATE_PROTO_TRANSCRIPT_READY = 9;
+  PODCAST_STATE_PROTO_GENERATING_TRANSCRIPT = 16;
+  PODCAST_STATE_PROTO_TRANSCRIPT_READY = 17;
 
-  PODCAST_STATE_PROTO_GENERATING_AUDIO = 10;
-  PODCAST_STATE_PROTO_AUDIO_READY = 11;
+  PODCAST_STATE_PROTO_GENERATING_AUDIO = 18;
+  PODCAST_STATE_PROTO_AUDIO_READY = 19;
 
-  PODCAST_STATE_PROTO_GENERATING_VISUALS = 12;
-  PODCAST_STATE_PROTO_VISUALS_READY = 13;
+  PODCAST_STATE_PROTO_GENERATING_VISUALS = 20;
+  PODCAST_STATE_PROTO_VISUALS_READY = 21;
 }
 
 message PodcastTranscriptProto {
