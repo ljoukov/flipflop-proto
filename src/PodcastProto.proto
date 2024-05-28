@@ -99,6 +99,7 @@ message PodcastProto {
   google.protobuf.Duration audio_duration = 10;
 
   PodcastVisualsProto visuals = 11;
+  PodcastTranscriptProto transcript = 12;
 }
 
 message PodcastPromptAnswerProto {
@@ -113,6 +114,15 @@ message PodcastVisualsProto {
 message PodcastVisualProto {
   int32 timestamp_millis = 1;
   string image_path = 2;
+}
+
+message PodcastTranscriptProto {
+  repeated PodcastTranscriptEntryProto entries = 1;
+}
+
+message PodcastTranscriptEntryProto {
+  PodcastHostProto host = 1;
+  repeated PodcastWordProto words = 2;
 }
 
 message StoredPodcastProto {
@@ -134,7 +144,7 @@ message StoredPodcastProto {
   string hook = 11;
 
   string plan = 12;
-  PodcastTranscriptProto transcript = 13;
+  StoredPodcastTranscriptProto transcript = 13;
 
   PodcastAudioProto audio = 14;
 
@@ -170,13 +180,13 @@ enum PodcastStateProto {
   PODCAST_STATE_PROTO_VISUALS_READY = 21;
 }
 
-message PodcastTranscriptProto {
-  repeated PodcastSectionTranscriptProto sections = 1;
+message StoredPodcastTranscriptProto {
+  repeated StoredPodcastSectionTranscriptProto sections = 1;
 }
 
-message PodcastSectionTranscriptProto {
+message StoredPodcastSectionTranscriptProto {
   PodcastSectionTypeProto section_type = 1;
-  repeated PodcastTranscriptEntryProto entries = 2;
+  repeated StoredPodcastTranscriptEntryProto entries = 2;
 }
 
 enum PodcastSectionTypeProto {
@@ -186,7 +196,7 @@ enum PodcastSectionTypeProto {
   PODCAST_SECTION_TYPE_PROTO_CONCLUSION = 3;
 }
 
-message PodcastTranscriptEntryProto {
+message StoredPodcastTranscriptEntryProto {
   PodcastHostProto host = 1;
   string text = 2;
   int32 start_millis = 3;
