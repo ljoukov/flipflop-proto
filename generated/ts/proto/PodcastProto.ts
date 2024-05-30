@@ -339,6 +339,10 @@ export interface PodcastVisualProto {
      * @generated from protobuf field: string image_path = 2;
      */
     imagePath: string;
+    /**
+     * @generated from protobuf field: PodcastVisualTransitionProto transition = 3;
+     */
+    transition: PodcastVisualTransitionProto;
 }
 /**
  * @generated from protobuf message PodcastTranscriptProto
@@ -553,6 +557,35 @@ export interface StoredPodcastVisualProto {
      * @generated from protobuf field: string image_key = 3;
      */
     imageKey: string;
+    /**
+     * @generated from protobuf field: PodcastVisualTransitionProto transition = 4;
+     */
+    transition: PodcastVisualTransitionProto;
+}
+/**
+ * @generated from protobuf enum PodcastVisualTransitionProto
+ */
+export enum PodcastVisualTransitionProto {
+    /**
+     * @generated from protobuf enum value: PODCAST_VISUAL_TRANSITION_PROTO_UNDEFINED = 0;
+     */
+    UNDEFINED = 0,
+    /**
+     * @generated from protobuf enum value: PODCAST_VISUAL_TRANSITION_PROTO_DISSOLVE = 1;
+     */
+    DISSOLVE = 1,
+    /**
+     * @generated from protobuf enum value: PODCAST_VISUAL_TRANSITION_PROTO_SWIPE = 2;
+     */
+    SWIPE = 2,
+    /**
+     * @generated from protobuf enum value: PODCAST_VISUAL_TRANSITION_PROTO_BAR_SWIPE = 3;
+     */
+    BAR_SWIPE = 3,
+    /**
+     * @generated from protobuf enum value: PODCAST_VISUAL_TRANSITION_PROTO_PAGE_CURL = 4;
+     */
+    PAGE_CURL = 4
 }
 /**
  * @generated from protobuf enum PodcastStateProto
@@ -1566,11 +1599,12 @@ class PodcastVisualProto$Type extends MessageType<PodcastVisualProto> {
     constructor() {
         super("PodcastVisualProto", [
             { no: 1, name: "timestamp_millis", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 2, name: "image_path", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "image_path", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "transition", kind: "enum", T: () => ["PodcastVisualTransitionProto", PodcastVisualTransitionProto, "PODCAST_VISUAL_TRANSITION_PROTO_"] }
         ]);
     }
     create(value?: PartialMessage<PodcastVisualProto>): PodcastVisualProto {
-        const message = { timestampMillis: 0, imagePath: "" };
+        const message = { timestampMillis: 0, imagePath: "", transition: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastVisualProto>(this, message, value);
@@ -1586,6 +1620,9 @@ class PodcastVisualProto$Type extends MessageType<PodcastVisualProto> {
                     break;
                 case /* string image_path */ 2:
                     message.imagePath = reader.string();
+                    break;
+                case /* PodcastVisualTransitionProto transition */ 3:
+                    message.transition = reader.int32();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1605,6 +1642,9 @@ class PodcastVisualProto$Type extends MessageType<PodcastVisualProto> {
         /* string image_path = 2; */
         if (message.imagePath !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.imagePath);
+        /* PodcastVisualTransitionProto transition = 3; */
+        if (message.transition !== 0)
+            writer.tag(3, WireType.Varint).int32(message.transition);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2247,11 +2287,12 @@ class StoredPodcastVisualProto$Type extends MessageType<StoredPodcastVisualProto
         super("StoredPodcastVisualProto", [
             { no: 1, name: "timestamp_millis", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 2, name: "image_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "image_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 3, name: "image_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "transition", kind: "enum", T: () => ["PodcastVisualTransitionProto", PodcastVisualTransitionProto, "PODCAST_VISUAL_TRANSITION_PROTO_"] }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastVisualProto>): StoredPodcastVisualProto {
-        const message = { timestampMillis: 0, imagePrompt: "", imageKey: "" };
+        const message = { timestampMillis: 0, imagePrompt: "", imageKey: "", transition: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastVisualProto>(this, message, value);
@@ -2270,6 +2311,9 @@ class StoredPodcastVisualProto$Type extends MessageType<StoredPodcastVisualProto
                     break;
                 case /* string image_key */ 3:
                     message.imageKey = reader.string();
+                    break;
+                case /* PodcastVisualTransitionProto transition */ 4:
+                    message.transition = reader.int32();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2292,6 +2336,9 @@ class StoredPodcastVisualProto$Type extends MessageType<StoredPodcastVisualProto
         /* string image_key = 3; */
         if (message.imageKey !== "")
             writer.tag(3, WireType.LengthDelimited).string(message.imageKey);
+        /* PodcastVisualTransitionProto transition = 4; */
+        if (message.transition !== 0)
+            writer.tag(4, WireType.Varint).int32(message.transition);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

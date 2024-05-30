@@ -114,6 +114,15 @@ message PodcastVisualsProto {
 message PodcastVisualProto {
   int32 timestamp_millis = 1;
   string image_path = 2;
+  PodcastVisualTransitionProto transition = 3;
+}
+
+enum PodcastVisualTransitionProto {
+  PODCAST_VISUAL_TRANSITION_PROTO_UNDEFINED = 0;
+  PODCAST_VISUAL_TRANSITION_PROTO_DISSOLVE = 1;
+  PODCAST_VISUAL_TRANSITION_PROTO_SWIPE = 2;
+  PODCAST_VISUAL_TRANSITION_PROTO_BAR_SWIPE = 3;
+  PODCAST_VISUAL_TRANSITION_PROTO_PAGE_CURL = 4;
 }
 
 message PodcastTranscriptProto {
@@ -233,4 +242,5 @@ message StoredPodcastVisualProto {
   int32 timestamp_millis = 1;
   string image_prompt = 2;
   string image_key = 3;
+  PodcastVisualTransitionProto transition = 4;
 }

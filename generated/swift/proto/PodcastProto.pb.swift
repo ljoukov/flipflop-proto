@@ -20,6 +20,58 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
+enum PodcastVisualTransitionProto: SwiftProtobuf.Enum {
+  typealias RawValue = Int
+  case undefined // = 0
+  case dissolve // = 1
+  case swipe // = 2
+  case barSwipe // = 3
+  case pageCurl // = 4
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .undefined
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .undefined
+    case 1: self = .dissolve
+    case 2: self = .swipe
+    case 3: self = .barSwipe
+    case 4: self = .pageCurl
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .undefined: return 0
+    case .dissolve: return 1
+    case .swipe: return 2
+    case .barSwipe: return 3
+    case .pageCurl: return 4
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+}
+
+#if swift(>=4.2)
+
+extension PodcastVisualTransitionProto: CaseIterable {
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static var allCases: [PodcastVisualTransitionProto] = [
+    .undefined,
+    .dissolve,
+    .swipe,
+    .barSwipe,
+    .pageCurl,
+  ]
+}
+
+#endif  // swift(>=4.2)
+
 enum PodcastStateProto: SwiftProtobuf.Enum {
   typealias RawValue = Int
   case unknown // = 0
@@ -772,6 +824,8 @@ struct PodcastVisualProto {
 
   var imagePath: String = String()
 
+  var transition: PodcastVisualTransitionProto = .undefined
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -1048,12 +1102,15 @@ struct StoredPodcastVisualProto {
 
   var imageKey: String = String()
 
+  var transition: PodcastVisualTransitionProto = .undefined
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 }
 
 #if swift(>=5.5) && canImport(_Concurrency)
+extension PodcastVisualTransitionProto: @unchecked Sendable {}
 extension PodcastStateProto: @unchecked Sendable {}
 extension PodcastSectionTypeProto: @unchecked Sendable {}
 extension PodcastHostProto: @unchecked Sendable {}
@@ -1092,6 +1149,16 @@ extension StoredPodcastVisualProto: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
+
+extension PodcastVisualTransitionProto: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "PODCAST_VISUAL_TRANSITION_PROTO_UNDEFINED"),
+    1: .same(proto: "PODCAST_VISUAL_TRANSITION_PROTO_DISSOLVE"),
+    2: .same(proto: "PODCAST_VISUAL_TRANSITION_PROTO_SWIPE"),
+    3: .same(proto: "PODCAST_VISUAL_TRANSITION_PROTO_BAR_SWIPE"),
+    4: .same(proto: "PODCAST_VISUAL_TRANSITION_PROTO_PAGE_CURL"),
+  ]
+}
 
 extension PodcastStateProto: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -1970,6 +2037,7 @@ extension PodcastVisualProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "timestamp_millis"),
     2: .standard(proto: "image_path"),
+    3: .same(proto: "transition"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1980,6 +2048,7 @@ extension PodcastVisualProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularInt32Field(value: &self.timestampMillis) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.imagePath) }()
+      case 3: try { try decoder.decodeSingularEnumField(value: &self.transition) }()
       default: break
       }
     }
@@ -1992,12 +2061,16 @@ extension PodcastVisualProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     if !self.imagePath.isEmpty {
       try visitor.visitSingularStringField(value: self.imagePath, fieldNumber: 2)
     }
+    if self.transition != .undefined {
+      try visitor.visitSingularEnumField(value: self.transition, fieldNumber: 3)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: PodcastVisualProto, rhs: PodcastVisualProto) -> Bool {
     if lhs.timestampMillis != rhs.timestampMillis {return false}
     if lhs.imagePath != rhs.imagePath {return false}
+    if lhs.transition != rhs.transition {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -2543,6 +2616,7 @@ extension StoredPodcastVisualProto: SwiftProtobuf.Message, SwiftProtobuf._Messag
     1: .standard(proto: "timestamp_millis"),
     2: .standard(proto: "image_prompt"),
     3: .standard(proto: "image_key"),
+    4: .same(proto: "transition"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2554,6 +2628,7 @@ extension StoredPodcastVisualProto: SwiftProtobuf.Message, SwiftProtobuf._Messag
       case 1: try { try decoder.decodeSingularInt32Field(value: &self.timestampMillis) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.imagePrompt) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.imageKey) }()
+      case 4: try { try decoder.decodeSingularEnumField(value: &self.transition) }()
       default: break
       }
     }
@@ -2569,6 +2644,9 @@ extension StoredPodcastVisualProto: SwiftProtobuf.Message, SwiftProtobuf._Messag
     if !self.imageKey.isEmpty {
       try visitor.visitSingularStringField(value: self.imageKey, fieldNumber: 3)
     }
+    if self.transition != .undefined {
+      try visitor.visitSingularEnumField(value: self.transition, fieldNumber: 4)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -2576,6 +2654,7 @@ extension StoredPodcastVisualProto: SwiftProtobuf.Message, SwiftProtobuf._Messag
     if lhs.timestampMillis != rhs.timestampMillis {return false}
     if lhs.imagePrompt != rhs.imagePrompt {return false}
     if lhs.imageKey != rhs.imageKey {return false}
+    if lhs.transition != rhs.transition {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
