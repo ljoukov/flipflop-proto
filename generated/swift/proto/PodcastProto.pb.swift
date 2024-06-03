@@ -826,6 +826,71 @@ struct PodcastVisualProto {
 
   var transition: PodcastVisualTransitionProto = .undefined
 
+  var animation: PodcastVisualAnimationProto {
+    get {return _animation ?? PodcastVisualAnimationProto()}
+    set {_animation = newValue}
+  }
+  /// Returns true if `animation` has been explicitly set.
+  var hasAnimation: Bool {return self._animation != nil}
+  /// Clears the value of `animation`. Subsequent reads from it will return its default value.
+  mutating func clearAnimation() {self._animation = nil}
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+
+  fileprivate var _animation: PodcastVisualAnimationProto? = nil
+}
+
+struct PodcastVisualAnimationProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var type: PodcastVisualAnimationProto.OneOf_Type? = nil
+
+  var kenBurns: KenBurnAnimationProto {
+    get {
+      if case .kenBurns(let v)? = type {return v}
+      return KenBurnAnimationProto()
+    }
+    set {type = .kenBurns(newValue)}
+  }
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  enum OneOf_Type: Equatable {
+    case kenBurns(KenBurnAnimationProto)
+
+  #if !swift(>=4.1)
+    static func ==(lhs: PodcastVisualAnimationProto.OneOf_Type, rhs: PodcastVisualAnimationProto.OneOf_Type) -> Bool {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch (lhs, rhs) {
+      case (.kenBurns, .kenBurns): return {
+        guard case .kenBurns(let l) = lhs, case .kenBurns(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      }
+    }
+  #endif
+  }
+
+  init() {}
+}
+
+struct KenBurnAnimationProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var durationMillis: Int32 = 0
+
+  var startScale: Float = 0
+
+  var endScale: Float = 0
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -1136,6 +1201,9 @@ extension PodcastProto: @unchecked Sendable {}
 extension PodcastPromptAnswerProto: @unchecked Sendable {}
 extension PodcastVisualsProto: @unchecked Sendable {}
 extension PodcastVisualProto: @unchecked Sendable {}
+extension PodcastVisualAnimationProto: @unchecked Sendable {}
+extension PodcastVisualAnimationProto.OneOf_Type: @unchecked Sendable {}
+extension KenBurnAnimationProto: @unchecked Sendable {}
 extension PodcastTranscriptProto: @unchecked Sendable {}
 extension PodcastTranscriptEntryProto: @unchecked Sendable {}
 extension StoredPodcastProto: @unchecked Sendable {}
@@ -2038,6 +2106,7 @@ extension PodcastVisualProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     1: .standard(proto: "timestamp_millis"),
     2: .standard(proto: "image_path"),
     3: .same(proto: "transition"),
+    4: .same(proto: "animation"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2049,12 +2118,17 @@ extension PodcastVisualProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       case 1: try { try decoder.decodeSingularInt32Field(value: &self.timestampMillis) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.imagePath) }()
       case 3: try { try decoder.decodeSingularEnumField(value: &self.transition) }()
+      case 4: try { try decoder.decodeSingularMessageField(value: &self._animation) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if self.timestampMillis != 0 {
       try visitor.visitSingularInt32Field(value: self.timestampMillis, fieldNumber: 1)
     }
@@ -2064,6 +2138,9 @@ extension PodcastVisualProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     if self.transition != .undefined {
       try visitor.visitSingularEnumField(value: self.transition, fieldNumber: 3)
     }
+    try { if let v = self._animation {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -2071,6 +2148,99 @@ extension PodcastVisualProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     if lhs.timestampMillis != rhs.timestampMillis {return false}
     if lhs.imagePath != rhs.imagePath {return false}
     if lhs.transition != rhs.transition {return false}
+    if lhs._animation != rhs._animation {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension PodcastVisualAnimationProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastVisualAnimationProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "ken_burns"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try {
+        var v: KenBurnAnimationProto?
+        var hadOneofValue = false
+        if let current = self.type {
+          hadOneofValue = true
+          if case .kenBurns(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.type = .kenBurns(v)
+        }
+      }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if case .kenBurns(let v)? = self.type {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PodcastVisualAnimationProto, rhs: PodcastVisualAnimationProto) -> Bool {
+    if lhs.type != rhs.type {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension KenBurnAnimationProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "KenBurnAnimationProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "duration_millis"),
+    2: .standard(proto: "start_scale"),
+    3: .standard(proto: "end_scale"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularInt32Field(value: &self.durationMillis) }()
+      case 2: try { try decoder.decodeSingularFloatField(value: &self.startScale) }()
+      case 3: try { try decoder.decodeSingularFloatField(value: &self.endScale) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.durationMillis != 0 {
+      try visitor.visitSingularInt32Field(value: self.durationMillis, fieldNumber: 1)
+    }
+    if self.startScale != 0 {
+      try visitor.visitSingularFloatField(value: self.startScale, fieldNumber: 2)
+    }
+    if self.endScale != 0 {
+      try visitor.visitSingularFloatField(value: self.endScale, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: KenBurnAnimationProto, rhs: KenBurnAnimationProto) -> Bool {
+    if lhs.durationMillis != rhs.durationMillis {return false}
+    if lhs.startScale != rhs.startScale {return false}
+    if lhs.endScale != rhs.endScale {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

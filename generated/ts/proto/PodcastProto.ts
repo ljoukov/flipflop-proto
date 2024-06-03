@@ -343,6 +343,44 @@ export interface PodcastVisualProto {
      * @generated from protobuf field: PodcastVisualTransitionProto transition = 3;
      */
     transition: PodcastVisualTransitionProto;
+    /**
+     * @generated from protobuf field: PodcastVisualAnimationProto animation = 4;
+     */
+    animation?: PodcastVisualAnimationProto;
+}
+/**
+ * @generated from protobuf message PodcastVisualAnimationProto
+ */
+export interface PodcastVisualAnimationProto {
+    /**
+     * @generated from protobuf oneof: type
+     */
+    type: {
+        oneofKind: "kenBurns";
+        /**
+         * @generated from protobuf field: KenBurnAnimationProto ken_burns = 1;
+         */
+        kenBurns: KenBurnAnimationProto;
+    } | {
+        oneofKind: undefined;
+    };
+}
+/**
+ * @generated from protobuf message KenBurnAnimationProto
+ */
+export interface KenBurnAnimationProto {
+    /**
+     * @generated from protobuf field: int32 duration_millis = 1;
+     */
+    durationMillis: number;
+    /**
+     * @generated from protobuf field: float start_scale = 2;
+     */
+    startScale: number;
+    /**
+     * @generated from protobuf field: float end_scale = 3;
+     */
+    endScale: number;
 }
 /**
  * @generated from protobuf message PodcastTranscriptProto
@@ -1600,7 +1638,8 @@ class PodcastVisualProto$Type extends MessageType<PodcastVisualProto> {
         super("PodcastVisualProto", [
             { no: 1, name: "timestamp_millis", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 2, name: "image_path", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "transition", kind: "enum", T: () => ["PodcastVisualTransitionProto", PodcastVisualTransitionProto, "PODCAST_VISUAL_TRANSITION_PROTO_"] }
+            { no: 3, name: "transition", kind: "enum", T: () => ["PodcastVisualTransitionProto", PodcastVisualTransitionProto, "PODCAST_VISUAL_TRANSITION_PROTO_"] },
+            { no: 4, name: "animation", kind: "message", T: () => PodcastVisualAnimationProto }
         ]);
     }
     create(value?: PartialMessage<PodcastVisualProto>): PodcastVisualProto {
@@ -1624,6 +1663,9 @@ class PodcastVisualProto$Type extends MessageType<PodcastVisualProto> {
                 case /* PodcastVisualTransitionProto transition */ 3:
                     message.transition = reader.int32();
                     break;
+                case /* PodcastVisualAnimationProto animation */ 4:
+                    message.animation = PodcastVisualAnimationProto.internalBinaryRead(reader, reader.uint32(), options, message.animation);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -1645,6 +1687,9 @@ class PodcastVisualProto$Type extends MessageType<PodcastVisualProto> {
         /* PodcastVisualTransitionProto transition = 3; */
         if (message.transition !== 0)
             writer.tag(3, WireType.Varint).int32(message.transition);
+        /* PodcastVisualAnimationProto animation = 4; */
+        if (message.animation)
+            PodcastVisualAnimationProto.internalBinaryWrite(message.animation, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1655,6 +1700,117 @@ class PodcastVisualProto$Type extends MessageType<PodcastVisualProto> {
  * @generated MessageType for protobuf message PodcastVisualProto
  */
 export const PodcastVisualProto = new PodcastVisualProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PodcastVisualAnimationProto$Type extends MessageType<PodcastVisualAnimationProto> {
+    constructor() {
+        super("PodcastVisualAnimationProto", [
+            { no: 1, name: "ken_burns", kind: "message", oneof: "type", T: () => KenBurnAnimationProto }
+        ]);
+    }
+    create(value?: PartialMessage<PodcastVisualAnimationProto>): PodcastVisualAnimationProto {
+        const message = { type: { oneofKind: undefined } };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<PodcastVisualAnimationProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastVisualAnimationProto): PodcastVisualAnimationProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* KenBurnAnimationProto ken_burns */ 1:
+                    message.type = {
+                        oneofKind: "kenBurns",
+                        kenBurns: KenBurnAnimationProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).kenBurns)
+                    };
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PodcastVisualAnimationProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* KenBurnAnimationProto ken_burns = 1; */
+        if (message.type.oneofKind === "kenBurns")
+            KenBurnAnimationProto.internalBinaryWrite(message.type.kenBurns, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message PodcastVisualAnimationProto
+ */
+export const PodcastVisualAnimationProto = new PodcastVisualAnimationProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class KenBurnAnimationProto$Type extends MessageType<KenBurnAnimationProto> {
+    constructor() {
+        super("KenBurnAnimationProto", [
+            { no: 1, name: "duration_millis", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 2, name: "start_scale", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
+            { no: 3, name: "end_scale", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ }
+        ]);
+    }
+    create(value?: PartialMessage<KenBurnAnimationProto>): KenBurnAnimationProto {
+        const message = { durationMillis: 0, startScale: 0, endScale: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<KenBurnAnimationProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: KenBurnAnimationProto): KenBurnAnimationProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int32 duration_millis */ 1:
+                    message.durationMillis = reader.int32();
+                    break;
+                case /* float start_scale */ 2:
+                    message.startScale = reader.float();
+                    break;
+                case /* float end_scale */ 3:
+                    message.endScale = reader.float();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: KenBurnAnimationProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int32 duration_millis = 1; */
+        if (message.durationMillis !== 0)
+            writer.tag(1, WireType.Varint).int32(message.durationMillis);
+        /* float start_scale = 2; */
+        if (message.startScale !== 0)
+            writer.tag(2, WireType.Bit32).float(message.startScale);
+        /* float end_scale = 3; */
+        if (message.endScale !== 0)
+            writer.tag(3, WireType.Bit32).float(message.endScale);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message KenBurnAnimationProto
+ */
+export const KenBurnAnimationProto = new KenBurnAnimationProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class PodcastTranscriptProto$Type extends MessageType<PodcastTranscriptProto> {
     constructor() {

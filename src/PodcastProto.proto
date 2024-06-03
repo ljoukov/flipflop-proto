@@ -115,6 +115,19 @@ message PodcastVisualProto {
   int32 timestamp_millis = 1;
   string image_path = 2;
   PodcastVisualTransitionProto transition = 3;
+  PodcastVisualAnimationProto animation = 4;
+}
+
+message PodcastVisualAnimationProto {
+  oneof type {
+    KenBurnAnimationProto ken_burns = 1;
+  }
+}
+
+message KenBurnAnimationProto {
+  int32 duration_millis = 1;
+  float start_scale = 2;
+  float end_scale = 3;
 }
 
 enum PodcastVisualTransitionProto {
