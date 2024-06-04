@@ -332,6 +332,10 @@ export interface PodcastThumbnailProto {
      * @generated from protobuf field: PodcastBadgeProto badge = 2;
      */
     badge: PodcastBadgeProto;
+    /**
+     * @generated from protobuf field: string thumbnail_path = 3;
+     */
+    thumbnailPath: string;
 }
 /**
  * @generated from protobuf message PodcastAudioProto
@@ -392,11 +396,7 @@ export interface PodcastPromptAnswerProto {
  */
 export interface PodcastVisualsProto {
     /**
-     * @generated from protobuf field: string thumbnail_path = 1;
-     */
-    thumbnailPath: string;
-    /**
-     * @generated from protobuf field: repeated PodcastVisualProto visuals = 2;
+     * @generated from protobuf field: repeated PodcastVisualProto visuals = 1;
      */
     visuals: PodcastVisualProto[];
 }
@@ -1509,11 +1509,12 @@ class PodcastThumbnailProto$Type extends MessageType<PodcastThumbnailProto> {
     constructor() {
         super("PodcastThumbnailProto", [
             { no: 1, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "badge", kind: "enum", T: () => ["PodcastBadgeProto", PodcastBadgeProto, "PODCAST_BADGE_PROTO_"] }
+            { no: 2, name: "badge", kind: "enum", T: () => ["PodcastBadgeProto", PodcastBadgeProto, "PODCAST_BADGE_PROTO_"] },
+            { no: 3, name: "thumbnail_path", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PodcastThumbnailProto>): PodcastThumbnailProto {
-        const message = { title: "", badge: 0 };
+        const message = { title: "", badge: 0, thumbnailPath: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastThumbnailProto>(this, message, value);
@@ -1529,6 +1530,9 @@ class PodcastThumbnailProto$Type extends MessageType<PodcastThumbnailProto> {
                     break;
                 case /* PodcastBadgeProto badge */ 2:
                     message.badge = reader.int32();
+                    break;
+                case /* string thumbnail_path */ 3:
+                    message.thumbnailPath = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1548,6 +1552,9 @@ class PodcastThumbnailProto$Type extends MessageType<PodcastThumbnailProto> {
         /* PodcastBadgeProto badge = 2; */
         if (message.badge !== 0)
             writer.tag(2, WireType.Varint).int32(message.badge);
+        /* string thumbnail_path = 3; */
+        if (message.thumbnailPath !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.thumbnailPath);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1770,12 +1777,11 @@ export const PodcastPromptAnswerProto = new PodcastPromptAnswerProto$Type();
 class PodcastVisualsProto$Type extends MessageType<PodcastVisualsProto> {
     constructor() {
         super("PodcastVisualsProto", [
-            { no: 1, name: "thumbnail_path", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "visuals", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastVisualProto }
+            { no: 1, name: "visuals", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastVisualProto }
         ]);
     }
     create(value?: PartialMessage<PodcastVisualsProto>): PodcastVisualsProto {
-        const message = { thumbnailPath: "", visuals: [] };
+        const message = { visuals: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastVisualsProto>(this, message, value);
@@ -1786,10 +1792,7 @@ class PodcastVisualsProto$Type extends MessageType<PodcastVisualsProto> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string thumbnail_path */ 1:
-                    message.thumbnailPath = reader.string();
-                    break;
-                case /* repeated PodcastVisualProto visuals */ 2:
+                case /* repeated PodcastVisualProto visuals */ 1:
                     message.visuals.push(PodcastVisualProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
@@ -1804,12 +1807,9 @@ class PodcastVisualsProto$Type extends MessageType<PodcastVisualsProto> {
         return message;
     }
     internalBinaryWrite(message: PodcastVisualsProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string thumbnail_path = 1; */
-        if (message.thumbnailPath !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.thumbnailPath);
-        /* repeated PodcastVisualProto visuals = 2; */
+        /* repeated PodcastVisualProto visuals = 1; */
         for (let i = 0; i < message.visuals.length; i++)
-            PodcastVisualProto.internalBinaryWrite(message.visuals[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+            PodcastVisualProto.internalBinaryWrite(message.visuals[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

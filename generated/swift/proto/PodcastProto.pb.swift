@@ -749,6 +749,8 @@ struct PodcastThumbnailProto {
 
   var badge: PodcastBadgeProto = .undefined
 
+  var thumbnailPath: String = String()
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -857,8 +859,6 @@ struct PodcastVisualsProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
-
-  var thumbnailPath: String = String()
 
   var visuals: [PodcastVisualProto] = []
 
@@ -1973,6 +1973,7 @@ extension PodcastThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "title"),
     2: .same(proto: "badge"),
+    3: .standard(proto: "thumbnail_path"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1983,6 +1984,7 @@ extension PodcastThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.title) }()
       case 2: try { try decoder.decodeSingularEnumField(value: &self.badge) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.thumbnailPath) }()
       default: break
       }
     }
@@ -1995,12 +1997,16 @@ extension PodcastThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     if self.badge != .undefined {
       try visitor.visitSingularEnumField(value: self.badge, fieldNumber: 2)
     }
+    if !self.thumbnailPath.isEmpty {
+      try visitor.visitSingularStringField(value: self.thumbnailPath, fieldNumber: 3)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: PodcastThumbnailProto, rhs: PodcastThumbnailProto) -> Bool {
     if lhs.title != rhs.title {return false}
     if lhs.badge != rhs.badge {return false}
+    if lhs.thumbnailPath != rhs.thumbnailPath {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -2185,8 +2191,7 @@ extension PodcastPromptAnswerProto: SwiftProtobuf.Message, SwiftProtobuf._Messag
 extension PodcastVisualsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "PodcastVisualsProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "thumbnail_path"),
-    2: .same(proto: "visuals"),
+    1: .same(proto: "visuals"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2195,25 +2200,20 @@ extension PodcastVisualsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.thumbnailPath) }()
-      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.visuals) }()
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.visuals) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.thumbnailPath.isEmpty {
-      try visitor.visitSingularStringField(value: self.thumbnailPath, fieldNumber: 1)
-    }
     if !self.visuals.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.visuals, fieldNumber: 2)
+      try visitor.visitRepeatedMessageField(value: self.visuals, fieldNumber: 1)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: PodcastVisualsProto, rhs: PodcastVisualsProto) -> Bool {
-    if lhs.thumbnailPath != rhs.thumbnailPath {return false}
     if lhs.visuals != rhs.visuals {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
