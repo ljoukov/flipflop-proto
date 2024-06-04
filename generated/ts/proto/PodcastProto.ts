@@ -312,9 +312,9 @@ export interface PodcastPreviewProto {
      */
     title: string;
     /**
-     * @generated from protobuf field: string emoji_title = 2;
+     * @generated from protobuf field: string title_emoji = 2;
      */
-    emojiTitle: string;
+    titleEmoji: string;
     /**
      * @generated from protobuf field: string synopsis = 3;
      */
@@ -325,11 +325,11 @@ export interface PodcastPreviewProto {
  */
 export interface PodcastThumbnailProto {
     /**
-     * @generated from protobuf field: string title = 7;
+     * @generated from protobuf field: string title = 1;
      */
     title: string;
     /**
-     * @generated from protobuf field: PodcastBadgeProto badge = 8;
+     * @generated from protobuf field: PodcastBadgeProto badge = 2;
      */
     badge: PodcastBadgeProto;
 }
@@ -1439,12 +1439,12 @@ class PodcastPreviewProto$Type extends MessageType<PodcastPreviewProto> {
     constructor() {
         super("PodcastPreviewProto", [
             { no: 1, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "emoji_title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "title_emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "synopsis", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PodcastPreviewProto>): PodcastPreviewProto {
-        const message = { title: "", emojiTitle: "", synopsis: "" };
+        const message = { title: "", titleEmoji: "", synopsis: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastPreviewProto>(this, message, value);
@@ -1458,8 +1458,8 @@ class PodcastPreviewProto$Type extends MessageType<PodcastPreviewProto> {
                 case /* string title */ 1:
                     message.title = reader.string();
                     break;
-                case /* string emoji_title */ 2:
-                    message.emojiTitle = reader.string();
+                case /* string title_emoji */ 2:
+                    message.titleEmoji = reader.string();
                     break;
                 case /* string synopsis */ 3:
                     message.synopsis = reader.string();
@@ -1479,9 +1479,9 @@ class PodcastPreviewProto$Type extends MessageType<PodcastPreviewProto> {
         /* string title = 1; */
         if (message.title !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.title);
-        /* string emoji_title = 2; */
-        if (message.emojiTitle !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.emojiTitle);
+        /* string title_emoji = 2; */
+        if (message.titleEmoji !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.titleEmoji);
         /* string synopsis = 3; */
         if (message.synopsis !== "")
             writer.tag(3, WireType.LengthDelimited).string(message.synopsis);
@@ -1499,8 +1499,8 @@ export const PodcastPreviewProto = new PodcastPreviewProto$Type();
 class PodcastThumbnailProto$Type extends MessageType<PodcastThumbnailProto> {
     constructor() {
         super("PodcastThumbnailProto", [
-            { no: 7, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 8, name: "badge", kind: "enum", T: () => ["PodcastBadgeProto", PodcastBadgeProto, "PODCAST_BADGE_PROTO_"] }
+            { no: 1, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "badge", kind: "enum", T: () => ["PodcastBadgeProto", PodcastBadgeProto, "PODCAST_BADGE_PROTO_"] }
         ]);
     }
     create(value?: PartialMessage<PodcastThumbnailProto>): PodcastThumbnailProto {
@@ -1515,10 +1515,10 @@ class PodcastThumbnailProto$Type extends MessageType<PodcastThumbnailProto> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string title */ 7:
+                case /* string title */ 1:
                     message.title = reader.string();
                     break;
-                case /* PodcastBadgeProto badge */ 8:
+                case /* PodcastBadgeProto badge */ 2:
                     message.badge = reader.int32();
                     break;
                 default:
@@ -1533,12 +1533,12 @@ class PodcastThumbnailProto$Type extends MessageType<PodcastThumbnailProto> {
         return message;
     }
     internalBinaryWrite(message: PodcastThumbnailProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string title = 7; */
+        /* string title = 1; */
         if (message.title !== "")
-            writer.tag(7, WireType.LengthDelimited).string(message.title);
-        /* PodcastBadgeProto badge = 8; */
+            writer.tag(1, WireType.LengthDelimited).string(message.title);
+        /* PodcastBadgeProto badge = 2; */
         if (message.badge !== 0)
-            writer.tag(8, WireType.Varint).int32(message.badge);
+            writer.tag(2, WireType.Varint).int32(message.badge);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

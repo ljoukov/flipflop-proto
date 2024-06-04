@@ -727,7 +727,7 @@ struct PodcastPreviewProto {
 
   var title: String = String()
 
-  var emojiTitle: String = String()
+  var titleEmoji: String = String()
 
   var synopsis: String = String()
 
@@ -1911,7 +1911,7 @@ extension PodcastPreviewProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
   static let protoMessageName: String = "PodcastPreviewProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "title"),
-    2: .standard(proto: "emoji_title"),
+    2: .standard(proto: "title_emoji"),
     3: .same(proto: "synopsis"),
   ]
 
@@ -1922,7 +1922,7 @@ extension PodcastPreviewProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.title) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.emojiTitle) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.titleEmoji) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.synopsis) }()
       default: break
       }
@@ -1933,8 +1933,8 @@ extension PodcastPreviewProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     if !self.title.isEmpty {
       try visitor.visitSingularStringField(value: self.title, fieldNumber: 1)
     }
-    if !self.emojiTitle.isEmpty {
-      try visitor.visitSingularStringField(value: self.emojiTitle, fieldNumber: 2)
+    if !self.titleEmoji.isEmpty {
+      try visitor.visitSingularStringField(value: self.titleEmoji, fieldNumber: 2)
     }
     if !self.synopsis.isEmpty {
       try visitor.visitSingularStringField(value: self.synopsis, fieldNumber: 3)
@@ -1944,7 +1944,7 @@ extension PodcastPreviewProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
 
   static func ==(lhs: PodcastPreviewProto, rhs: PodcastPreviewProto) -> Bool {
     if lhs.title != rhs.title {return false}
-    if lhs.emojiTitle != rhs.emojiTitle {return false}
+    if lhs.titleEmoji != rhs.titleEmoji {return false}
     if lhs.synopsis != rhs.synopsis {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
@@ -1954,8 +1954,8 @@ extension PodcastPreviewProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
 extension PodcastThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "PodcastThumbnailProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    7: .same(proto: "title"),
-    8: .same(proto: "badge"),
+    1: .same(proto: "title"),
+    2: .same(proto: "badge"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1964,8 +1964,8 @@ extension PodcastThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 7: try { try decoder.decodeSingularStringField(value: &self.title) }()
-      case 8: try { try decoder.decodeSingularEnumField(value: &self.badge) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self.title) }()
+      case 2: try { try decoder.decodeSingularEnumField(value: &self.badge) }()
       default: break
       }
     }
@@ -1973,10 +1973,10 @@ extension PodcastThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     if !self.title.isEmpty {
-      try visitor.visitSingularStringField(value: self.title, fieldNumber: 7)
+      try visitor.visitSingularStringField(value: self.title, fieldNumber: 1)
     }
     if self.badge != .undefined {
-      try visitor.visitSingularEnumField(value: self.badge, fieldNumber: 8)
+      try visitor.visitSingularEnumField(value: self.badge, fieldNumber: 2)
     }
     try unknownFields.traverse(visitor: &visitor)
   }

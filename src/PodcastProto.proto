@@ -99,13 +99,13 @@ message PodcastProto {
 
 message PodcastPreviewProto {
   string title = 1;
-  string emoji_title = 2;
+  string title_emoji = 2;
   string synopsis = 3;
 }
 
 message PodcastThumbnailProto {
-  string title = 7;
-  PodcastBadgeProto badge = 8;
+  string title = 1;
+  PodcastBadgeProto badge = 2;
 }
 
 enum PodcastBadgeProto {
