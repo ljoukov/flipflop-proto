@@ -333,9 +333,9 @@ export interface PodcastThumbnailProto {
      */
     badge: PodcastBadgeProto;
     /**
-     * @generated from protobuf field: string thumbnail_path = 3;
+     * @generated from protobuf field: string path = 3;
      */
-    thumbnailPath: string;
+    path: string;
 }
 /**
  * @generated from protobuf message PodcastAudioProto
@@ -1510,11 +1510,11 @@ class PodcastThumbnailProto$Type extends MessageType<PodcastThumbnailProto> {
         super("PodcastThumbnailProto", [
             { no: 1, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "badge", kind: "enum", T: () => ["PodcastBadgeProto", PodcastBadgeProto, "PODCAST_BADGE_PROTO_"] },
-            { no: 3, name: "thumbnail_path", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 3, name: "path", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PodcastThumbnailProto>): PodcastThumbnailProto {
-        const message = { title: "", badge: 0, thumbnailPath: "" };
+        const message = { title: "", badge: 0, path: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastThumbnailProto>(this, message, value);
@@ -1531,8 +1531,8 @@ class PodcastThumbnailProto$Type extends MessageType<PodcastThumbnailProto> {
                 case /* PodcastBadgeProto badge */ 2:
                     message.badge = reader.int32();
                     break;
-                case /* string thumbnail_path */ 3:
-                    message.thumbnailPath = reader.string();
+                case /* string path */ 3:
+                    message.path = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1552,9 +1552,9 @@ class PodcastThumbnailProto$Type extends MessageType<PodcastThumbnailProto> {
         /* PodcastBadgeProto badge = 2; */
         if (message.badge !== 0)
             writer.tag(2, WireType.Varint).int32(message.badge);
-        /* string thumbnail_path = 3; */
-        if (message.thumbnailPath !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.thumbnailPath);
+        /* string path = 3; */
+        if (message.path !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.path);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

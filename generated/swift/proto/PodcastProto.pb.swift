@@ -749,7 +749,7 @@ struct PodcastThumbnailProto {
 
   var badge: PodcastBadgeProto = .undefined
 
-  var thumbnailPath: String = String()
+  var path: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -1973,7 +1973,7 @@ extension PodcastThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "title"),
     2: .same(proto: "badge"),
-    3: .standard(proto: "thumbnail_path"),
+    3: .same(proto: "path"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1984,7 +1984,7 @@ extension PodcastThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.title) }()
       case 2: try { try decoder.decodeSingularEnumField(value: &self.badge) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.thumbnailPath) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.path) }()
       default: break
       }
     }
@@ -1997,8 +1997,8 @@ extension PodcastThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     if self.badge != .undefined {
       try visitor.visitSingularEnumField(value: self.badge, fieldNumber: 2)
     }
-    if !self.thumbnailPath.isEmpty {
-      try visitor.visitSingularStringField(value: self.thumbnailPath, fieldNumber: 3)
+    if !self.path.isEmpty {
+      try visitor.visitSingularStringField(value: self.path, fieldNumber: 3)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -2006,7 +2006,7 @@ extension PodcastThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
   static func ==(lhs: PodcastThumbnailProto, rhs: PodcastThumbnailProto) -> Bool {
     if lhs.title != rhs.title {return false}
     if lhs.badge != rhs.badge {return false}
-    if lhs.thumbnailPath != rhs.thumbnailPath {return false}
+    if lhs.path != rhs.path {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

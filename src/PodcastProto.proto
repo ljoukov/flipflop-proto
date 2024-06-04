@@ -106,7 +106,7 @@ message PodcastPreviewProto {
 message PodcastThumbnailProto {
   string title = 1;
   PodcastBadgeProto badge = 2;
-  string thumbnail_path = 3;
+  string path = 3;
 }
 
 enum PodcastBadgeProto {
