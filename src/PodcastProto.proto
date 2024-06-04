@@ -116,8 +116,8 @@ enum PodcastBadgeProto {
 }
 
 message PodcastAudioProto {
-  string audio_path = 1;
-  google.protobuf.Duration audio_duration = 2;
+  string path = 1;
+  google.protobuf.Duration duration = 2;
 }
 
 message PodcastCardsProto {

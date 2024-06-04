@@ -759,22 +759,22 @@ struct PodcastAudioProto {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var audioPath: String = String()
+  var path: String = String()
 
-  var audioDuration: SwiftProtobuf.Google_Protobuf_Duration {
-    get {return _audioDuration ?? SwiftProtobuf.Google_Protobuf_Duration()}
-    set {_audioDuration = newValue}
+  var duration: SwiftProtobuf.Google_Protobuf_Duration {
+    get {return _duration ?? SwiftProtobuf.Google_Protobuf_Duration()}
+    set {_duration = newValue}
   }
-  /// Returns true if `audioDuration` has been explicitly set.
-  var hasAudioDuration: Bool {return self._audioDuration != nil}
-  /// Clears the value of `audioDuration`. Subsequent reads from it will return its default value.
-  mutating func clearAudioDuration() {self._audioDuration = nil}
+  /// Returns true if `duration` has been explicitly set.
+  var hasDuration: Bool {return self._duration != nil}
+  /// Clears the value of `duration`. Subsequent reads from it will return its default value.
+  mutating func clearDuration() {self._duration = nil}
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 
-  fileprivate var _audioDuration: SwiftProtobuf.Google_Protobuf_Duration? = nil
+  fileprivate var _duration: SwiftProtobuf.Google_Protobuf_Duration? = nil
 }
 
 struct PodcastCardsProto {
@@ -2009,8 +2009,8 @@ extension PodcastThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
 extension PodcastAudioProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "PodcastAudioProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "audio_path"),
-    2: .standard(proto: "audio_duration"),
+    1: .same(proto: "path"),
+    2: .same(proto: "duration"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2019,8 +2019,8 @@ extension PodcastAudioProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.audioPath) }()
-      case 2: try { try decoder.decodeSingularMessageField(value: &self._audioDuration) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self.path) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._duration) }()
       default: break
       }
     }
@@ -2031,18 +2031,18 @@ extension PodcastAudioProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    if !self.audioPath.isEmpty {
-      try visitor.visitSingularStringField(value: self.audioPath, fieldNumber: 1)
+    if !self.path.isEmpty {
+      try visitor.visitSingularStringField(value: self.path, fieldNumber: 1)
     }
-    try { if let v = self._audioDuration {
+    try { if let v = self._duration {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: PodcastAudioProto, rhs: PodcastAudioProto) -> Bool {
-    if lhs.audioPath != rhs.audioPath {return false}
-    if lhs._audioDuration != rhs._audioDuration {return false}
+    if lhs.path != rhs.path {return false}
+    if lhs._duration != rhs._duration {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
