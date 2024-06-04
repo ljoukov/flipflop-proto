@@ -3,9 +3,6 @@ syntax = "proto3";
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 
-import "LatencyProto.proto";
-import "LogProto.proto";
-
 message PodcastStreamApiRequestProto {
   string encoded_user_auth = 1;
   oneof request {
@@ -89,17 +86,41 @@ message PodcastProto {
   google.protobuf.Timestamp created_at = 3;
   google.protobuf.Timestamp updated_at = 4;
 
-  PodcastStateProto state = 5;
+  bool is_ready = 5;
+  string display_status = 6;
 
-  string title = 6;
-  string title_emoji = 7;
-  string synopsis = 8;
+  PodcastThumbnailProto thumbnail = 7;
 
-  string audio_path = 9;
-  google.protobuf.Duration audio_duration = 10;
+  PodcastAudioProto audio = 8;
 
-  PodcastVisualsProto visuals = 11;
-  PodcastTranscriptProto transcript = 12;
+  PodcastVisualsProto visuals = 9;
+  PodcastTranscriptProto transcript = 10;
+
+  repeated PodcastCardProto cards = 11;
+}
+
+message PodcastThumbnailProto {
+  string title = 7;
+  PodcastBadgeProto badge = 8;
+}
+
+enum PodcastBadgeProto {
+  PODCAST_BADGE_PROTO_UNDEFINED = 0;
+  PODCAST_BADGE_PROTO_NONE = 1;
+  PODCAST_BADGE_PROTO_LISTEN = 2;
+  PODCAST_BADGE_PROTO_POLL = 3;
+}
+
+message PodcastAudioProto {
+  string audio_path = 1;
+  google.protobuf.Duration audio_duration = 2;
+}
+
+message PodcastCardProto {
+  oneof type {
+    PodcastMultipleChoiceCardProto multiple_choice = 1;
+    PodcastPollCardProto poll = 2;
+  }
 }
 
 message PodcastPromptAnswerProto {
@@ -114,17 +135,11 @@ message PodcastVisualsProto {
 message PodcastVisualProto {
   int32 timestamp_millis = 1;
   string image_path = 2;
-  PodcastVisualTransitionProto transition = 3;
   PodcastVisualAnimationProto animation = 4;
+  PodcastVisualTransitionProto transition = 3;
 }
 
 message PodcastVisualAnimationProto {
-  oneof type {
-    KenBurnAnimationProto ken_burns = 1;
-  }
-}
-
-message KenBurnAnimationProto {
   int32 duration_millis = 1;
   float start_scale = 2;
   float end_scale = 3;
@@ -147,94 +162,10 @@ message PodcastTranscriptEntryProto {
   repeated PodcastWordProto words = 2;
 }
 
-message StoredPodcastProto {
-  string podcast_id = 1;
-
-  string created_by = 2;
-  google.protobuf.Timestamp created_at = 3;
-  google.protobuf.Timestamp updated_at = 4;
-
-  string user_prompt = 5;
-
-  PodcastStateProto state = 6;
-
-  PodcastPromptAnswerProto answer = 7;
-
-  string reasoning = 8;
-  string title = 9;
-  string title_emoji = 10;
-  string hook = 11;
-
-  string plan = 12;
-  StoredPodcastTranscriptProto transcript = 13;
-
-  PodcastAudioProto audio = 14;
-
-  StoredPodcastVisualsProto visuals = 15;
-
-  LatenciesProto latencies = 100;
-  LogProto log = 101;
-}
-
-enum PodcastStateProto {
-  PODCAST_STATE_PROTO_UNKNOWN = 0;
-
-  PODCAST_STATE_PROTO_READY = 1;
-  PODCAST_STATE_PROTO_FAILED = 2;
-
-  // IDs start at 10
-  PODCAST_STATE_PROTO_GENERATING_SYNOPSYS = 10;
-  PODCAST_STATE_PROTO_SYNOPSYS_READY = 11;
-
-  PODCAST_STATE_PROTO_GENERATING_THUMBNAIL = 12;
-  PODCAST_STATE_PROTO_THUMBNAIL_READY = 13;
-
-  PODCAST_STATE_PROTO_GENERATING_PLAN = 14;
-  PODCAST_STATE_PROTO_PLAN_READY = 15;
-
-  PODCAST_STATE_PROTO_GENERATING_TRANSCRIPT = 16;
-  PODCAST_STATE_PROTO_TRANSCRIPT_READY = 17;
-
-  PODCAST_STATE_PROTO_GENERATING_AUDIO = 18;
-  PODCAST_STATE_PROTO_AUDIO_READY = 19;
-
-  PODCAST_STATE_PROTO_GENERATING_VISUALS = 20;
-  PODCAST_STATE_PROTO_VISUALS_READY = 21;
-}
-
-message StoredPodcastTranscriptProto {
-  repeated StoredPodcastSectionTranscriptProto sections = 1;
-}
-
-message StoredPodcastSectionTranscriptProto {
-  PodcastSectionTypeProto section_type = 1;
-  repeated StoredPodcastTranscriptEntryProto entries = 2;
-}
-
-enum PodcastSectionTypeProto {
-  PODCAST_SECTION_TYPE_PROTO_UNKNOWN = 0;
-  PODCAST_SECTION_TYPE_PROTO_INTRODUCTION = 1;
-  PODCAST_SECTION_TYPE_PROTO_SECTION = 2;
-  PODCAST_SECTION_TYPE_PROTO_CONCLUSION = 3;
-}
-
-message StoredPodcastTranscriptEntryProto {
-  PodcastHostProto host = 1;
-  string text = 2;
-  int32 start_millis = 3;
-  int32 end_millis = 4;
-}
-
 enum PodcastHostProto {
   PODCAST_HOST_PROTO_UNKNOWN = 0;
   PODCAST_HOST_PROTO_MALE = 1;
   PODCAST_HOST_PROTO_FEMALE = 2;
-}
-
-message PodcastAudioProto {
-  string audio_key = 1;
-  google.protobuf.Duration audio_duration = 2;
-  repeated PodcastWordProto words = 3;
 }
 
 message PodcastWordProto {
@@ -244,16 +175,43 @@ message PodcastWordProto {
   string separator = 4;
 }
 
-message StoredPodcastVisualsProto {
-  string style_prompt = 1;
-  string thumbnail_prompt = 2;
-  string thumbnail_key = 3;
-  repeated StoredPodcastVisualProto visuals = 4;
+// 2: True/False, 3: A/B/C or 4: 1/2/3/4 user input
+message PodcastMultipleChoiceCardProto {
+  string title = 1;
+  string title_emoji = 2;
+
+  string question = 3;
+  repeated PodcastMultipleChoiceOptionProto options = 4;
+  int32 correct_answer_number = 5;  // starts from 1.
+
+  // Short hint for the whole question
+  string hint = 6;
+
+  // Whole page explanation
+  string explanation = 7;
 }
 
-message StoredPodcastVisualProto {
-  int32 timestamp_millis = 1;
-  string image_prompt = 2;
-  string image_key = 3;
-  PodcastVisualTransitionProto transition = 4;
+message PodcastMultipleChoiceOptionProto {
+  // Could be a label like True/False or a short sentence
+  string text = 1;
+
+  // Short text to show if this answer is selected.
+  string hint = 2;
+}
+
+// 2, 3 or 4 options to vote for
+message PodcastPollCardProto {
+  string title = 1;
+  string title_emoji = 2;
+
+  string question = 3;
+  repeated PodcastPollOptionProto options = 4;
+  string commentary = 5;
+}
+
+message PodcastPollOptionProto {
+  string text = 1;
+
+  // Fraction of votes this option received
+  float votes_frac = 2;
 }

@@ -1,0 +1,107 @@
+syntax = "proto3";
+
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+
+import "LatencyProto.proto";
+import "LogProto.proto";
+import "PodcastProto.proto";
+
+message StoredPodcastProto {
+  string podcast_id = 1;
+
+  string created_by = 2;
+  google.protobuf.Timestamp created_at = 3;
+  google.protobuf.Timestamp updated_at = 4;
+
+  string user_prompt = 5;
+
+  StoredPodcastStateProto state = 6;
+
+  PodcastPromptAnswerProto answer = 7;
+
+  string reasoning = 8;
+  string title = 9;
+  string title_emoji = 10;
+  string hook = 11;
+
+  string plan = 12;
+  StoredPodcastTranscriptProto transcript = 13;
+
+  StoredPodcastAudioProto audio = 14;
+
+  StoredPodcastVisualsProto visuals = 15;
+
+  // Debug metadata
+  LatenciesProto latencies = 100;
+  LogProto log = 101;
+}
+
+enum StoredPodcastStateProto {
+  STORED_PODCAST_STATE_PROTO_UNKNOWN = 0;
+
+  STORED_PODCAST_STATE_PROTO_READY = 1;
+  STORED_PODCAST_STATE_PROTO_FAILED = 2;
+
+  // IDs start at 10
+  STORED_PODCAST_STATE_PROTO_GENERATING_SYNOPSYS = 10;
+  STORED_PODCAST_STATE_PROTO_SYNOPSYS_READY = 11;
+
+  STORED_PODCAST_STATE_PROTO_GENERATING_THUMBNAIL = 12;
+  STORED_PODCAST_STATE_PROTO_THUMBNAIL_READY = 13;
+
+  STORED_PODCAST_STATE_PROTO_GENERATING_PLAN = 14;
+  STORED_PODCAST_STATE_PROTO_PLAN_READY = 15;
+
+  STORED_PODCAST_STATE_PROTO_GENERATING_TRANSCRIPT = 16;
+  STORED_PODCAST_STATE_PROTO_TRANSCRIPT_READY = 17;
+
+  STORED_PODCAST_STATE_PROTO_GENERATING_AUDIO = 18;
+  STORED_PODCAST_STATE_PROTO_AUDIO_READY = 19;
+
+  STORED_PODCAST_STATE_PROTO_GENERATING_VISUALS = 20;
+  STORED_PODCAST_STATE_PROTO_VISUALS_READY = 21;
+}
+
+message StoredPodcastTranscriptProto {
+  repeated StoredPodcastSectionTranscriptProto sections = 1;
+}
+
+message StoredPodcastSectionTranscriptProto {
+  StoredPodcastSectionTypeProto section_type = 1;
+  repeated StoredPodcastTranscriptEntryProto entries = 2;
+}
+
+enum StoredPodcastSectionTypeProto {
+  PODCAST_SECTION_TYPE_PROTO_UNKNOWN = 0;
+  PODCAST_SECTION_TYPE_PROTO_INTRODUCTION = 1;
+  PODCAST_SECTION_TYPE_PROTO_SECTION = 2;
+  PODCAST_SECTION_TYPE_PROTO_CONCLUSION = 3;
+}
+
+message StoredPodcastTranscriptEntryProto {
+  PodcastHostProto host = 1;
+  string text = 2;
+  int32 start_millis = 3;
+  int32 end_millis = 4;
+}
+
+message StoredPodcastVisualsProto {
+  string style_prompt = 1;
+  string thumbnail_prompt = 2;
+  string thumbnail_key = 3;
+  repeated StoredPodcastVisualProto visuals = 4;
+}
+
+message StoredPodcastVisualProto {
+  int32 timestamp_millis = 1;
+  string image_prompt = 2;
+  string image_key = 3;
+  PodcastVisualTransitionProto transition = 4;
+}
+
+message StoredPodcastAudioProto {
+  string audio_key = 1;
+  google.protobuf.Duration audio_duration = 2;
+  repeated PodcastWordProto words = 3;
+}
