@@ -270,21 +270,21 @@ export enum StoredPodcastStateProto {
  */
 export enum StoredPodcastSectionTypeProto {
     /**
-     * @generated from protobuf enum value: PODCAST_SECTION_TYPE_PROTO_UNKNOWN = 0;
+     * @generated from protobuf enum value: STORED_PODCAST_SECTION_TYPE_PROTO_UNKNOWN = 0;
      */
-    PODCAST_SECTION_TYPE_PROTO_UNKNOWN = 0,
+    UNKNOWN = 0,
     /**
-     * @generated from protobuf enum value: PODCAST_SECTION_TYPE_PROTO_INTRODUCTION = 1;
+     * @generated from protobuf enum value: STORED_PODCAST_SECTION_TYPE_PROTO_INTRODUCTION = 1;
      */
-    PODCAST_SECTION_TYPE_PROTO_INTRODUCTION = 1,
+    INTRODUCTION = 1,
     /**
-     * @generated from protobuf enum value: PODCAST_SECTION_TYPE_PROTO_SECTION = 2;
+     * @generated from protobuf enum value: STORED_PODCAST_SECTION_TYPE_PROTO_SECTION = 2;
      */
-    PODCAST_SECTION_TYPE_PROTO_SECTION = 2,
+    SECTION = 2,
     /**
-     * @generated from protobuf enum value: PODCAST_SECTION_TYPE_PROTO_CONCLUSION = 3;
+     * @generated from protobuf enum value: STORED_PODCAST_SECTION_TYPE_PROTO_CONCLUSION = 3;
      */
-    PODCAST_SECTION_TYPE_PROTO_CONCLUSION = 3
+    CONCLUSION = 3
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
@@ -496,7 +496,7 @@ export const StoredPodcastTranscriptProto = new StoredPodcastTranscriptProto$Typ
 class StoredPodcastSectionTranscriptProto$Type extends MessageType<StoredPodcastSectionTranscriptProto> {
     constructor() {
         super("StoredPodcastSectionTranscriptProto", [
-            { no: 1, name: "section_type", kind: "enum", T: () => ["StoredPodcastSectionTypeProto", StoredPodcastSectionTypeProto] },
+            { no: 1, name: "section_type", kind: "enum", T: () => ["StoredPodcastSectionTypeProto", StoredPodcastSectionTypeProto, "STORED_PODCAST_SECTION_TYPE_PROTO_"] },
             { no: 2, name: "entries", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastTranscriptEntryProto }
         ]);
     }

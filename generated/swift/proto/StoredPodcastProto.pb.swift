@@ -116,32 +116,32 @@ extension StoredPodcastStateProto: CaseIterable {
 
 enum StoredPodcastSectionTypeProto: SwiftProtobuf.Enum {
   typealias RawValue = Int
-  case podcastSectionTypeProtoUnknown // = 0
-  case podcastSectionTypeProtoIntroduction // = 1
-  case podcastSectionTypeProtoSection // = 2
-  case podcastSectionTypeProtoConclusion // = 3
+  case unknown // = 0
+  case introduction // = 1
+  case section // = 2
+  case conclusion // = 3
   case UNRECOGNIZED(Int)
 
   init() {
-    self = .podcastSectionTypeProtoUnknown
+    self = .unknown
   }
 
   init?(rawValue: Int) {
     switch rawValue {
-    case 0: self = .podcastSectionTypeProtoUnknown
-    case 1: self = .podcastSectionTypeProtoIntroduction
-    case 2: self = .podcastSectionTypeProtoSection
-    case 3: self = .podcastSectionTypeProtoConclusion
+    case 0: self = .unknown
+    case 1: self = .introduction
+    case 2: self = .section
+    case 3: self = .conclusion
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
 
   var rawValue: Int {
     switch self {
-    case .podcastSectionTypeProtoUnknown: return 0
-    case .podcastSectionTypeProtoIntroduction: return 1
-    case .podcastSectionTypeProtoSection: return 2
-    case .podcastSectionTypeProtoConclusion: return 3
+    case .unknown: return 0
+    case .introduction: return 1
+    case .section: return 2
+    case .conclusion: return 3
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -153,10 +153,10 @@ enum StoredPodcastSectionTypeProto: SwiftProtobuf.Enum {
 extension StoredPodcastSectionTypeProto: CaseIterable {
   // The compiler won't synthesize support with the UNRECOGNIZED case.
   static var allCases: [StoredPodcastSectionTypeProto] = [
-    .podcastSectionTypeProtoUnknown,
-    .podcastSectionTypeProtoIntroduction,
-    .podcastSectionTypeProtoSection,
-    .podcastSectionTypeProtoConclusion,
+    .unknown,
+    .introduction,
+    .section,
+    .conclusion,
   ]
 }
 
@@ -309,7 +309,7 @@ struct StoredPodcastSectionTranscriptProto {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var sectionType: StoredPodcastSectionTypeProto = .podcastSectionTypeProtoUnknown
+  var sectionType: StoredPodcastSectionTypeProto = .unknown
 
   var entries: [StoredPodcastTranscriptEntryProto] = []
 
@@ -433,10 +433,10 @@ extension StoredPodcastStateProto: SwiftProtobuf._ProtoNameProviding {
 
 extension StoredPodcastSectionTypeProto: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    0: .same(proto: "PODCAST_SECTION_TYPE_PROTO_UNKNOWN"),
-    1: .same(proto: "PODCAST_SECTION_TYPE_PROTO_INTRODUCTION"),
-    2: .same(proto: "PODCAST_SECTION_TYPE_PROTO_SECTION"),
-    3: .same(proto: "PODCAST_SECTION_TYPE_PROTO_CONCLUSION"),
+    0: .same(proto: "STORED_PODCAST_SECTION_TYPE_PROTO_UNKNOWN"),
+    1: .same(proto: "STORED_PODCAST_SECTION_TYPE_PROTO_INTRODUCTION"),
+    2: .same(proto: "STORED_PODCAST_SECTION_TYPE_PROTO_SECTION"),
+    3: .same(proto: "STORED_PODCAST_SECTION_TYPE_PROTO_CONCLUSION"),
   ]
 }
 
@@ -689,7 +689,7 @@ extension StoredPodcastSectionTranscriptProto: SwiftProtobuf.Message, SwiftProto
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if self.sectionType != .podcastSectionTypeProtoUnknown {
+    if self.sectionType != .unknown {
       try visitor.visitSingularEnumField(value: self.sectionType, fieldNumber: 1)
     }
     if !self.entries.isEmpty {
