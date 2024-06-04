@@ -708,10 +708,14 @@ struct PodcastProto {
   /// Clears the value of `transcript`. Subsequent reads from it will return its default value.
   mutating func clearTranscript() {_uniqueStorage()._transcript = nil}
 
-  var cards: [PodcastCardProto] {
-    get {return _storage._cards}
+  var cards: PodcastCardsProto {
+    get {return _storage._cards ?? PodcastCardsProto()}
     set {_uniqueStorage()._cards = newValue}
   }
+  /// Returns true if `cards` has been explicitly set.
+  var hasCards: Bool {return _storage._cards != nil}
+  /// Clears the value of `cards`. Subsequent reads from it will return its default value.
+  mutating func clearCards() {_uniqueStorage()._cards = nil}
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -771,6 +775,18 @@ struct PodcastAudioProto {
   init() {}
 
   fileprivate var _audioDuration: SwiftProtobuf.Google_Protobuf_Duration? = nil
+}
+
+struct PodcastCardsProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var cards: [PodcastCardProto] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
 }
 
 struct PodcastCardProto {
@@ -1044,6 +1060,7 @@ extension PodcastProto: @unchecked Sendable {}
 extension PodcastPreviewProto: @unchecked Sendable {}
 extension PodcastThumbnailProto: @unchecked Sendable {}
 extension PodcastAudioProto: @unchecked Sendable {}
+extension PodcastCardsProto: @unchecked Sendable {}
 extension PodcastCardProto: @unchecked Sendable {}
 extension PodcastCardProto.OneOf_Type: @unchecked Sendable {}
 extension PodcastPromptAnswerProto: @unchecked Sendable {}
@@ -1780,7 +1797,7 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     var _audio: PodcastAudioProto? = nil
     var _visuals: PodcastVisualsProto? = nil
     var _transcript: PodcastTranscriptProto? = nil
-    var _cards: [PodcastCardProto] = []
+    var _cards: PodcastCardsProto? = nil
 
     static let defaultInstance = _StorageClass()
 
@@ -1828,7 +1845,7 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
         case 9: try { try decoder.decodeSingularMessageField(value: &_storage._audio) }()
         case 10: try { try decoder.decodeSingularMessageField(value: &_storage._visuals) }()
         case 11: try { try decoder.decodeSingularMessageField(value: &_storage._transcript) }()
-        case 12: try { try decoder.decodeRepeatedMessageField(value: &_storage._cards) }()
+        case 12: try { try decoder.decodeSingularMessageField(value: &_storage._cards) }()
         default: break
         }
       }
@@ -1874,9 +1891,9 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
       try { if let v = _storage._transcript {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 11)
       } }()
-      if !_storage._cards.isEmpty {
-        try visitor.visitRepeatedMessageField(value: _storage._cards, fieldNumber: 12)
-      }
+      try { if let v = _storage._cards {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 12)
+      } }()
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -2026,6 +2043,38 @@ extension PodcastAudioProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
   static func ==(lhs: PodcastAudioProto, rhs: PodcastAudioProto) -> Bool {
     if lhs.audioPath != rhs.audioPath {return false}
     if lhs._audioDuration != rhs._audioDuration {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension PodcastCardsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastCardsProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "cards"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.cards) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.cards.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.cards, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PodcastCardsProto, rhs: PodcastCardsProto) -> Bool {
+    if lhs.cards != rhs.cards {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

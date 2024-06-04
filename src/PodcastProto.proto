@@ -94,7 +94,7 @@ message PodcastProto {
   PodcastAudioProto audio = 9;
   PodcastVisualsProto visuals = 10;
   PodcastTranscriptProto transcript = 11;
-  repeated PodcastCardProto cards = 12;
+  PodcastCardsProto cards = 12;
 }
 
 message PodcastPreviewProto {
@@ -118,6 +118,10 @@ enum PodcastBadgeProto {
 message PodcastAudioProto {
   string audio_path = 1;
   google.protobuf.Duration audio_duration = 2;
+}
+
+message PodcastCardsProto {
+  repeated PodcastCardProto cards = 1;
 }
 
 message PodcastCardProto {

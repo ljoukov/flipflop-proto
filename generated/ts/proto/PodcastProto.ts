@@ -299,9 +299,9 @@ export interface PodcastProto {
      */
     transcript?: PodcastTranscriptProto;
     /**
-     * @generated from protobuf field: repeated PodcastCardProto cards = 12;
+     * @generated from protobuf field: PodcastCardsProto cards = 12;
      */
-    cards: PodcastCardProto[];
+    cards?: PodcastCardsProto;
 }
 /**
  * @generated from protobuf message PodcastPreviewProto
@@ -345,6 +345,15 @@ export interface PodcastAudioProto {
      * @generated from protobuf field: google.protobuf.Duration audio_duration = 2;
      */
     audioDuration?: Duration;
+}
+/**
+ * @generated from protobuf message PodcastCardsProto
+ */
+export interface PodcastCardsProto {
+    /**
+     * @generated from protobuf field: repeated PodcastCardProto cards = 1;
+     */
+    cards: PodcastCardProto[];
 }
 /**
  * @generated from protobuf message PodcastCardProto
@@ -1325,11 +1334,11 @@ class PodcastProto$Type extends MessageType<PodcastProto> {
             { no: 9, name: "audio", kind: "message", T: () => PodcastAudioProto },
             { no: 10, name: "visuals", kind: "message", T: () => PodcastVisualsProto },
             { no: 11, name: "transcript", kind: "message", T: () => PodcastTranscriptProto },
-            { no: 12, name: "cards", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastCardProto }
+            { no: 12, name: "cards", kind: "message", T: () => PodcastCardsProto }
         ]);
     }
     create(value?: PartialMessage<PodcastProto>): PodcastProto {
-        const message = { podcastId: "", createdBy: "", isReady: false, displayStatus: "", cards: [] };
+        const message = { podcastId: "", createdBy: "", isReady: false, displayStatus: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastProto>(this, message, value);
@@ -1373,8 +1382,8 @@ class PodcastProto$Type extends MessageType<PodcastProto> {
                 case /* PodcastTranscriptProto transcript */ 11:
                     message.transcript = PodcastTranscriptProto.internalBinaryRead(reader, reader.uint32(), options, message.transcript);
                     break;
-                case /* repeated PodcastCardProto cards */ 12:
-                    message.cards.push(PodcastCardProto.internalBinaryRead(reader, reader.uint32(), options));
+                case /* PodcastCardsProto cards */ 12:
+                    message.cards = PodcastCardsProto.internalBinaryRead(reader, reader.uint32(), options, message.cards);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1421,9 +1430,9 @@ class PodcastProto$Type extends MessageType<PodcastProto> {
         /* PodcastTranscriptProto transcript = 11; */
         if (message.transcript)
             PodcastTranscriptProto.internalBinaryWrite(message.transcript, writer.tag(11, WireType.LengthDelimited).fork(), options).join();
-        /* repeated PodcastCardProto cards = 12; */
-        for (let i = 0; i < message.cards.length; i++)
-            PodcastCardProto.internalBinaryWrite(message.cards[i], writer.tag(12, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastCardsProto cards = 12; */
+        if (message.cards)
+            PodcastCardsProto.internalBinaryWrite(message.cards, writer.tag(12, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1603,6 +1612,53 @@ class PodcastAudioProto$Type extends MessageType<PodcastAudioProto> {
  * @generated MessageType for protobuf message PodcastAudioProto
  */
 export const PodcastAudioProto = new PodcastAudioProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PodcastCardsProto$Type extends MessageType<PodcastCardsProto> {
+    constructor() {
+        super("PodcastCardsProto", [
+            { no: 1, name: "cards", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastCardProto }
+        ]);
+    }
+    create(value?: PartialMessage<PodcastCardsProto>): PodcastCardsProto {
+        const message = { cards: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<PodcastCardsProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastCardsProto): PodcastCardsProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated PodcastCardProto cards */ 1:
+                    message.cards.push(PodcastCardProto.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PodcastCardsProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated PodcastCardProto cards = 1; */
+        for (let i = 0; i < message.cards.length; i++)
+            PodcastCardProto.internalBinaryWrite(message.cards[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message PodcastCardsProto
+ */
+export const PodcastCardsProto = new PodcastCardsProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class PodcastCardProto$Type extends MessageType<PodcastCardProto> {
     constructor() {
