@@ -663,6 +663,15 @@ struct PodcastProto {
     set {_uniqueStorage()._displayStatus = newValue}
   }
 
+  var preview: PodcastPreviewProto {
+    get {return _storage._preview ?? PodcastPreviewProto()}
+    set {_uniqueStorage()._preview = newValue}
+  }
+  /// Returns true if `preview` has been explicitly set.
+  var hasPreview: Bool {return _storage._preview != nil}
+  /// Clears the value of `preview`. Subsequent reads from it will return its default value.
+  mutating func clearPreview() {_uniqueStorage()._preview = nil}
+
   var thumbnail: PodcastThumbnailProto {
     get {return _storage._thumbnail ?? PodcastThumbnailProto()}
     set {_uniqueStorage()._thumbnail = newValue}
@@ -709,6 +718,22 @@ struct PodcastProto {
   init() {}
 
   fileprivate var _storage = _StorageClass.defaultInstance
+}
+
+struct PodcastPreviewProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var title: String = String()
+
+  var emojiTitle: String = String()
+
+  var synopsis: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
 }
 
 struct PodcastThumbnailProto {
@@ -1016,6 +1041,7 @@ extension ListPodcastsResponseHeaderProto: @unchecked Sendable {}
 extension ListPodcastsResponseDeltaProto: @unchecked Sendable {}
 extension ListPodcastsResponseDeltaProto.OneOf_Type: @unchecked Sendable {}
 extension PodcastProto: @unchecked Sendable {}
+extension PodcastPreviewProto: @unchecked Sendable {}
 extension PodcastThumbnailProto: @unchecked Sendable {}
 extension PodcastAudioProto: @unchecked Sendable {}
 extension PodcastCardProto: @unchecked Sendable {}
@@ -1734,11 +1760,12 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     4: .standard(proto: "updated_at"),
     5: .standard(proto: "is_ready"),
     6: .standard(proto: "display_status"),
-    7: .same(proto: "thumbnail"),
-    8: .same(proto: "audio"),
-    9: .same(proto: "visuals"),
-    10: .same(proto: "transcript"),
-    11: .same(proto: "cards"),
+    7: .same(proto: "preview"),
+    8: .same(proto: "thumbnail"),
+    9: .same(proto: "audio"),
+    10: .same(proto: "visuals"),
+    11: .same(proto: "transcript"),
+    12: .same(proto: "cards"),
   ]
 
   fileprivate class _StorageClass {
@@ -1748,6 +1775,7 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
     var _isReady: Bool = false
     var _displayStatus: String = String()
+    var _preview: PodcastPreviewProto? = nil
     var _thumbnail: PodcastThumbnailProto? = nil
     var _audio: PodcastAudioProto? = nil
     var _visuals: PodcastVisualsProto? = nil
@@ -1765,6 +1793,7 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
       _updatedAt = source._updatedAt
       _isReady = source._isReady
       _displayStatus = source._displayStatus
+      _preview = source._preview
       _thumbnail = source._thumbnail
       _audio = source._audio
       _visuals = source._visuals
@@ -1794,11 +1823,12 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
         case 4: try { try decoder.decodeSingularMessageField(value: &_storage._updatedAt) }()
         case 5: try { try decoder.decodeSingularBoolField(value: &_storage._isReady) }()
         case 6: try { try decoder.decodeSingularStringField(value: &_storage._displayStatus) }()
-        case 7: try { try decoder.decodeSingularMessageField(value: &_storage._thumbnail) }()
-        case 8: try { try decoder.decodeSingularMessageField(value: &_storage._audio) }()
-        case 9: try { try decoder.decodeSingularMessageField(value: &_storage._visuals) }()
-        case 10: try { try decoder.decodeSingularMessageField(value: &_storage._transcript) }()
-        case 11: try { try decoder.decodeRepeatedMessageField(value: &_storage._cards) }()
+        case 7: try { try decoder.decodeSingularMessageField(value: &_storage._preview) }()
+        case 8: try { try decoder.decodeSingularMessageField(value: &_storage._thumbnail) }()
+        case 9: try { try decoder.decodeSingularMessageField(value: &_storage._audio) }()
+        case 10: try { try decoder.decodeSingularMessageField(value: &_storage._visuals) }()
+        case 11: try { try decoder.decodeSingularMessageField(value: &_storage._transcript) }()
+        case 12: try { try decoder.decodeRepeatedMessageField(value: &_storage._cards) }()
         default: break
         }
       }
@@ -1829,20 +1859,23 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
       if !_storage._displayStatus.isEmpty {
         try visitor.visitSingularStringField(value: _storage._displayStatus, fieldNumber: 6)
       }
-      try { if let v = _storage._thumbnail {
+      try { if let v = _storage._preview {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
       } }()
-      try { if let v = _storage._audio {
+      try { if let v = _storage._thumbnail {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
       } }()
-      try { if let v = _storage._visuals {
+      try { if let v = _storage._audio {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 9)
       } }()
-      try { if let v = _storage._transcript {
+      try { if let v = _storage._visuals {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
       } }()
+      try { if let v = _storage._transcript {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 11)
+      } }()
       if !_storage._cards.isEmpty {
-        try visitor.visitRepeatedMessageField(value: _storage._cards, fieldNumber: 11)
+        try visitor.visitRepeatedMessageField(value: _storage._cards, fieldNumber: 12)
       }
     }
     try unknownFields.traverse(visitor: &visitor)
@@ -1859,6 +1892,7 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
         if _storage._updatedAt != rhs_storage._updatedAt {return false}
         if _storage._isReady != rhs_storage._isReady {return false}
         if _storage._displayStatus != rhs_storage._displayStatus {return false}
+        if _storage._preview != rhs_storage._preview {return false}
         if _storage._thumbnail != rhs_storage._thumbnail {return false}
         if _storage._audio != rhs_storage._audio {return false}
         if _storage._visuals != rhs_storage._visuals {return false}
@@ -1868,6 +1902,50 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
       }
       if !storagesAreEqual {return false}
     }
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension PodcastPreviewProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastPreviewProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "title"),
+    2: .standard(proto: "emoji_title"),
+    3: .same(proto: "synopsis"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.title) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.emojiTitle) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.synopsis) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.title.isEmpty {
+      try visitor.visitSingularStringField(value: self.title, fieldNumber: 1)
+    }
+    if !self.emojiTitle.isEmpty {
+      try visitor.visitSingularStringField(value: self.emojiTitle, fieldNumber: 2)
+    }
+    if !self.synopsis.isEmpty {
+      try visitor.visitSingularStringField(value: self.synopsis, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PodcastPreviewProto, rhs: PodcastPreviewProto) -> Bool {
+    if lhs.title != rhs.title {return false}
+    if lhs.emojiTitle != rhs.emojiTitle {return false}
+    if lhs.synopsis != rhs.synopsis {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

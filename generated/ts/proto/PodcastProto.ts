@@ -279,25 +279,46 @@ export interface PodcastProto {
      */
     displayStatus: string;
     /**
-     * @generated from protobuf field: PodcastThumbnailProto thumbnail = 7;
+     * @generated from protobuf field: PodcastPreviewProto preview = 7;
+     */
+    preview?: PodcastPreviewProto;
+    /**
+     * @generated from protobuf field: PodcastThumbnailProto thumbnail = 8;
      */
     thumbnail?: PodcastThumbnailProto;
     /**
-     * @generated from protobuf field: PodcastAudioProto audio = 8;
+     * @generated from protobuf field: PodcastAudioProto audio = 9;
      */
     audio?: PodcastAudioProto;
     /**
-     * @generated from protobuf field: PodcastVisualsProto visuals = 9;
+     * @generated from protobuf field: PodcastVisualsProto visuals = 10;
      */
     visuals?: PodcastVisualsProto;
     /**
-     * @generated from protobuf field: PodcastTranscriptProto transcript = 10;
+     * @generated from protobuf field: PodcastTranscriptProto transcript = 11;
      */
     transcript?: PodcastTranscriptProto;
     /**
-     * @generated from protobuf field: repeated PodcastCardProto cards = 11;
+     * @generated from protobuf field: repeated PodcastCardProto cards = 12;
      */
     cards: PodcastCardProto[];
+}
+/**
+ * @generated from protobuf message PodcastPreviewProto
+ */
+export interface PodcastPreviewProto {
+    /**
+     * @generated from protobuf field: string title = 1;
+     */
+    title: string;
+    /**
+     * @generated from protobuf field: string emoji_title = 2;
+     */
+    emojiTitle: string;
+    /**
+     * @generated from protobuf field: string synopsis = 3;
+     */
+    synopsis: string;
 }
 /**
  * @generated from protobuf message PodcastThumbnailProto
@@ -1299,11 +1320,12 @@ class PodcastProto$Type extends MessageType<PodcastProto> {
             { no: 4, name: "updated_at", kind: "message", T: () => Timestamp },
             { no: 5, name: "is_ready", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
             { no: 6, name: "display_status", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 7, name: "thumbnail", kind: "message", T: () => PodcastThumbnailProto },
-            { no: 8, name: "audio", kind: "message", T: () => PodcastAudioProto },
-            { no: 9, name: "visuals", kind: "message", T: () => PodcastVisualsProto },
-            { no: 10, name: "transcript", kind: "message", T: () => PodcastTranscriptProto },
-            { no: 11, name: "cards", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastCardProto }
+            { no: 7, name: "preview", kind: "message", T: () => PodcastPreviewProto },
+            { no: 8, name: "thumbnail", kind: "message", T: () => PodcastThumbnailProto },
+            { no: 9, name: "audio", kind: "message", T: () => PodcastAudioProto },
+            { no: 10, name: "visuals", kind: "message", T: () => PodcastVisualsProto },
+            { no: 11, name: "transcript", kind: "message", T: () => PodcastTranscriptProto },
+            { no: 12, name: "cards", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastCardProto }
         ]);
     }
     create(value?: PartialMessage<PodcastProto>): PodcastProto {
@@ -1336,19 +1358,22 @@ class PodcastProto$Type extends MessageType<PodcastProto> {
                 case /* string display_status */ 6:
                     message.displayStatus = reader.string();
                     break;
-                case /* PodcastThumbnailProto thumbnail */ 7:
+                case /* PodcastPreviewProto preview */ 7:
+                    message.preview = PodcastPreviewProto.internalBinaryRead(reader, reader.uint32(), options, message.preview);
+                    break;
+                case /* PodcastThumbnailProto thumbnail */ 8:
                     message.thumbnail = PodcastThumbnailProto.internalBinaryRead(reader, reader.uint32(), options, message.thumbnail);
                     break;
-                case /* PodcastAudioProto audio */ 8:
+                case /* PodcastAudioProto audio */ 9:
                     message.audio = PodcastAudioProto.internalBinaryRead(reader, reader.uint32(), options, message.audio);
                     break;
-                case /* PodcastVisualsProto visuals */ 9:
+                case /* PodcastVisualsProto visuals */ 10:
                     message.visuals = PodcastVisualsProto.internalBinaryRead(reader, reader.uint32(), options, message.visuals);
                     break;
-                case /* PodcastTranscriptProto transcript */ 10:
+                case /* PodcastTranscriptProto transcript */ 11:
                     message.transcript = PodcastTranscriptProto.internalBinaryRead(reader, reader.uint32(), options, message.transcript);
                     break;
-                case /* repeated PodcastCardProto cards */ 11:
+                case /* repeated PodcastCardProto cards */ 12:
                     message.cards.push(PodcastCardProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
@@ -1381,21 +1406,24 @@ class PodcastProto$Type extends MessageType<PodcastProto> {
         /* string display_status = 6; */
         if (message.displayStatus !== "")
             writer.tag(6, WireType.LengthDelimited).string(message.displayStatus);
-        /* PodcastThumbnailProto thumbnail = 7; */
+        /* PodcastPreviewProto preview = 7; */
+        if (message.preview)
+            PodcastPreviewProto.internalBinaryWrite(message.preview, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastThumbnailProto thumbnail = 8; */
         if (message.thumbnail)
-            PodcastThumbnailProto.internalBinaryWrite(message.thumbnail, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
-        /* PodcastAudioProto audio = 8; */
+            PodcastThumbnailProto.internalBinaryWrite(message.thumbnail, writer.tag(8, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastAudioProto audio = 9; */
         if (message.audio)
-            PodcastAudioProto.internalBinaryWrite(message.audio, writer.tag(8, WireType.LengthDelimited).fork(), options).join();
-        /* PodcastVisualsProto visuals = 9; */
+            PodcastAudioProto.internalBinaryWrite(message.audio, writer.tag(9, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastVisualsProto visuals = 10; */
         if (message.visuals)
-            PodcastVisualsProto.internalBinaryWrite(message.visuals, writer.tag(9, WireType.LengthDelimited).fork(), options).join();
-        /* PodcastTranscriptProto transcript = 10; */
+            PodcastVisualsProto.internalBinaryWrite(message.visuals, writer.tag(10, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastTranscriptProto transcript = 11; */
         if (message.transcript)
-            PodcastTranscriptProto.internalBinaryWrite(message.transcript, writer.tag(10, WireType.LengthDelimited).fork(), options).join();
-        /* repeated PodcastCardProto cards = 11; */
+            PodcastTranscriptProto.internalBinaryWrite(message.transcript, writer.tag(11, WireType.LengthDelimited).fork(), options).join();
+        /* repeated PodcastCardProto cards = 12; */
         for (let i = 0; i < message.cards.length; i++)
-            PodcastCardProto.internalBinaryWrite(message.cards[i], writer.tag(11, WireType.LengthDelimited).fork(), options).join();
+            PodcastCardProto.internalBinaryWrite(message.cards[i], writer.tag(12, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1406,6 +1434,67 @@ class PodcastProto$Type extends MessageType<PodcastProto> {
  * @generated MessageType for protobuf message PodcastProto
  */
 export const PodcastProto = new PodcastProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PodcastPreviewProto$Type extends MessageType<PodcastPreviewProto> {
+    constructor() {
+        super("PodcastPreviewProto", [
+            { no: 1, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "emoji_title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "synopsis", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PodcastPreviewProto>): PodcastPreviewProto {
+        const message = { title: "", emojiTitle: "", synopsis: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<PodcastPreviewProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastPreviewProto): PodcastPreviewProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string title */ 1:
+                    message.title = reader.string();
+                    break;
+                case /* string emoji_title */ 2:
+                    message.emojiTitle = reader.string();
+                    break;
+                case /* string synopsis */ 3:
+                    message.synopsis = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PodcastPreviewProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string title = 1; */
+        if (message.title !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.title);
+        /* string emoji_title = 2; */
+        if (message.emojiTitle !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.emojiTitle);
+        /* string synopsis = 3; */
+        if (message.synopsis !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.synopsis);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message PodcastPreviewProto
+ */
+export const PodcastPreviewProto = new PodcastPreviewProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class PodcastThumbnailProto$Type extends MessageType<PodcastThumbnailProto> {
     constructor() {

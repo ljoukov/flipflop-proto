@@ -89,14 +89,18 @@ message PodcastProto {
   bool is_ready = 5;
   string display_status = 6;
 
-  PodcastThumbnailProto thumbnail = 7;
+  PodcastPreviewProto preview = 7;
+  PodcastThumbnailProto thumbnail = 8;
+  PodcastAudioProto audio = 9;
+  PodcastVisualsProto visuals = 10;
+  PodcastTranscriptProto transcript = 11;
+  repeated PodcastCardProto cards = 12;
+}
 
-  PodcastAudioProto audio = 8;
-
-  PodcastVisualsProto visuals = 9;
-  PodcastTranscriptProto transcript = 10;
-
-  repeated PodcastCardProto cards = 11;
+message PodcastPreviewProto {
+  string title = 1;
+  string emoji_title = 2;
+  string synopsis = 3;
 }
 
 message PodcastThumbnailProto {
