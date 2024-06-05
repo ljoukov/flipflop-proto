@@ -796,6 +796,9 @@ struct PodcastCardProto {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  var cardID: String = String()
+
+  /// IDs start at 10
   var type: PodcastCardProto.OneOf_Type? = nil
 
   var multipleChoice: PodcastMultipleChoiceCardProto {
@@ -816,6 +819,7 @@ struct PodcastCardProto {
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
+  /// IDs start at 10
   enum OneOf_Type: Equatable {
     case multipleChoice(PodcastMultipleChoiceCardProto)
     case poll(PodcastPollCardProto)
@@ -2089,8 +2093,9 @@ extension PodcastCardsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
 extension PodcastCardProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "PodcastCardProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "multiple_choice"),
-    2: .same(proto: "poll"),
+    1: .standard(proto: "card_id"),
+    10: .standard(proto: "multiple_choice"),
+    11: .same(proto: "poll"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2099,7 +2104,8 @@ extension PodcastCardProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.cardID) }()
+      case 10: try {
         var v: PodcastMultipleChoiceCardProto?
         var hadOneofValue = false
         if let current = self.type {
@@ -2112,7 +2118,7 @@ extension PodcastCardProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
           self.type = .multipleChoice(v)
         }
       }()
-      case 2: try {
+      case 11: try {
         var v: PodcastPollCardProto?
         var hadOneofValue = false
         if let current = self.type {
@@ -2135,14 +2141,17 @@ extension PodcastCardProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.cardID.isEmpty {
+      try visitor.visitSingularStringField(value: self.cardID, fieldNumber: 1)
+    }
     switch self.type {
     case .multipleChoice?: try {
       guard case .multipleChoice(let v)? = self.type else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
     }()
     case .poll?: try {
       guard case .poll(let v)? = self.type else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 11)
     }()
     case nil: break
     }
@@ -2150,6 +2159,7 @@ extension PodcastCardProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
   }
 
   static func ==(lhs: PodcastCardProto, rhs: PodcastCardProto) -> Bool {
+    if lhs.cardID != rhs.cardID {return false}
     if lhs.type != rhs.type {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

@@ -364,18 +364,22 @@ export interface PodcastCardsProto {
  */
 export interface PodcastCardProto {
     /**
+     * @generated from protobuf field: string card_id = 1;
+     */
+    cardId: string;
+    /**
      * @generated from protobuf oneof: type
      */
     type: {
         oneofKind: "multipleChoice";
         /**
-         * @generated from protobuf field: PodcastMultipleChoiceCardProto multiple_choice = 1;
+         * @generated from protobuf field: PodcastMultipleChoiceCardProto multiple_choice = 10;
          */
         multipleChoice: PodcastMultipleChoiceCardProto;
     } | {
         oneofKind: "poll";
         /**
-         * @generated from protobuf field: PodcastPollCardProto poll = 2;
+         * @generated from protobuf field: PodcastPollCardProto poll = 11;
          */
         poll: PodcastPollCardProto;
     } | {
@@ -1670,12 +1674,13 @@ export const PodcastCardsProto = new PodcastCardsProto$Type();
 class PodcastCardProto$Type extends MessageType<PodcastCardProto> {
     constructor() {
         super("PodcastCardProto", [
-            { no: 1, name: "multiple_choice", kind: "message", oneof: "type", T: () => PodcastMultipleChoiceCardProto },
-            { no: 2, name: "poll", kind: "message", oneof: "type", T: () => PodcastPollCardProto }
+            { no: 1, name: "card_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 10, name: "multiple_choice", kind: "message", oneof: "type", T: () => PodcastMultipleChoiceCardProto },
+            { no: 11, name: "poll", kind: "message", oneof: "type", T: () => PodcastPollCardProto }
         ]);
     }
     create(value?: PartialMessage<PodcastCardProto>): PodcastCardProto {
-        const message = { type: { oneofKind: undefined } };
+        const message = { cardId: "", type: { oneofKind: undefined } };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastCardProto>(this, message, value);
@@ -1686,13 +1691,16 @@ class PodcastCardProto$Type extends MessageType<PodcastCardProto> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* PodcastMultipleChoiceCardProto multiple_choice */ 1:
+                case /* string card_id */ 1:
+                    message.cardId = reader.string();
+                    break;
+                case /* PodcastMultipleChoiceCardProto multiple_choice */ 10:
                     message.type = {
                         oneofKind: "multipleChoice",
                         multipleChoice: PodcastMultipleChoiceCardProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).multipleChoice)
                     };
                     break;
-                case /* PodcastPollCardProto poll */ 2:
+                case /* PodcastPollCardProto poll */ 11:
                     message.type = {
                         oneofKind: "poll",
                         poll: PodcastPollCardProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).poll)
@@ -1710,12 +1718,15 @@ class PodcastCardProto$Type extends MessageType<PodcastCardProto> {
         return message;
     }
     internalBinaryWrite(message: PodcastCardProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* PodcastMultipleChoiceCardProto multiple_choice = 1; */
+        /* string card_id = 1; */
+        if (message.cardId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.cardId);
+        /* PodcastMultipleChoiceCardProto multiple_choice = 10; */
         if (message.type.oneofKind === "multipleChoice")
-            PodcastMultipleChoiceCardProto.internalBinaryWrite(message.type.multipleChoice, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* PodcastPollCardProto poll = 2; */
+            PodcastMultipleChoiceCardProto.internalBinaryWrite(message.type.multipleChoice, writer.tag(10, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastPollCardProto poll = 11; */
         if (message.type.oneofKind === "poll")
-            PodcastPollCardProto.internalBinaryWrite(message.type.poll, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+            PodcastPollCardProto.internalBinaryWrite(message.type.poll, writer.tag(11, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
