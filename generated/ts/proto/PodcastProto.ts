@@ -500,29 +500,21 @@ export interface PodcastMultipleChoiceCardProto {
      */
     titleEmoji: string;
     /**
-     * @generated from protobuf field: string question = 3;
+     * @generated from protobuf field: string title_emoji_url = 3;
+     */
+    titleEmojiUrl: string;
+    /**
+     * @generated from protobuf field: string question = 4;
      */
     question: string;
     /**
-     * @generated from protobuf field: repeated PodcastMultipleChoiceOptionProto options = 4;
+     * @generated from protobuf field: repeated PodcastMultipleChoiceOptionProto options = 5;
      */
     options: PodcastMultipleChoiceOptionProto[];
     /**
-     * @generated from protobuf field: int32 correct_answer_number = 5;
+     * @generated from protobuf field: int32 correct_answer_number = 6;
      */
-    correctAnswerNumber: number; // starts from 1.
-    /**
-     * Short hint for the whole question
-     *
-     * @generated from protobuf field: string hint = 6;
-     */
-    hint: string;
-    /**
-     * Whole page explanation
-     *
-     * @generated from protobuf field: string explanation = 7;
-     */
-    explanation: string;
+    correctAnswerNumber: number;
 }
 /**
  * @generated from protobuf message PodcastMultipleChoiceOptionProto
@@ -534,12 +526,6 @@ export interface PodcastMultipleChoiceOptionProto {
      * @generated from protobuf field: string text = 1;
      */
     text: string;
-    /**
-     * Short text to show if this answer is selected.
-     *
-     * @generated from protobuf field: string hint = 2;
-     */
-    hint: string;
 }
 /**
  * 2, 3 or 4 options to vote for
@@ -556,17 +542,17 @@ export interface PodcastPollCardProto {
      */
     titleEmoji: string;
     /**
-     * @generated from protobuf field: string question = 3;
+     * @generated from protobuf field: string title_emoji_url = 3;
+     */
+    titleEmojiUrl: string;
+    /**
+     * @generated from protobuf field: string question = 4;
      */
     question: string;
     /**
-     * @generated from protobuf field: repeated PodcastPollOptionProto options = 4;
+     * @generated from protobuf field: repeated PodcastPollOptionProto options = 5;
      */
-    options: PodcastPollOptionProto[];
-    /**
-     * @generated from protobuf field: string commentary = 5;
-     */
-    commentary: string;
+    options: PodcastPollOptionProto[]; // commentary
 }
 /**
  * @generated from protobuf message PodcastPollOptionProto
@@ -576,12 +562,6 @@ export interface PodcastPollOptionProto {
      * @generated from protobuf field: string text = 1;
      */
     text: string;
-    /**
-     * Fraction of votes this option received
-     *
-     * @generated from protobuf field: float votes_frac = 2;
-     */
-    votesFrac: number;
 }
 /**
  * @generated from protobuf enum PodcastBadgeProto
@@ -2135,15 +2115,14 @@ class PodcastMultipleChoiceCardProto$Type extends MessageType<PodcastMultipleCho
         super("PodcastMultipleChoiceCardProto", [
             { no: 1, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "title_emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "question", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "options", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastMultipleChoiceOptionProto },
-            { no: 5, name: "correct_answer_number", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 6, name: "hint", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 7, name: "explanation", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 3, name: "title_emoji_url", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "question", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "options", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastMultipleChoiceOptionProto },
+            { no: 6, name: "correct_answer_number", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
         ]);
     }
     create(value?: PartialMessage<PodcastMultipleChoiceCardProto>): PodcastMultipleChoiceCardProto {
-        const message = { title: "", titleEmoji: "", question: "", options: [], correctAnswerNumber: 0, hint: "", explanation: "" };
+        const message = { title: "", titleEmoji: "", titleEmojiUrl: "", question: "", options: [], correctAnswerNumber: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastMultipleChoiceCardProto>(this, message, value);
@@ -2160,20 +2139,17 @@ class PodcastMultipleChoiceCardProto$Type extends MessageType<PodcastMultipleCho
                 case /* string title_emoji */ 2:
                     message.titleEmoji = reader.string();
                     break;
-                case /* string question */ 3:
+                case /* string title_emoji_url */ 3:
+                    message.titleEmojiUrl = reader.string();
+                    break;
+                case /* string question */ 4:
                     message.question = reader.string();
                     break;
-                case /* repeated PodcastMultipleChoiceOptionProto options */ 4:
+                case /* repeated PodcastMultipleChoiceOptionProto options */ 5:
                     message.options.push(PodcastMultipleChoiceOptionProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
-                case /* int32 correct_answer_number */ 5:
+                case /* int32 correct_answer_number */ 6:
                     message.correctAnswerNumber = reader.int32();
-                    break;
-                case /* string hint */ 6:
-                    message.hint = reader.string();
-                    break;
-                case /* string explanation */ 7:
-                    message.explanation = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2193,21 +2169,18 @@ class PodcastMultipleChoiceCardProto$Type extends MessageType<PodcastMultipleCho
         /* string title_emoji = 2; */
         if (message.titleEmoji !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.titleEmoji);
-        /* string question = 3; */
+        /* string title_emoji_url = 3; */
+        if (message.titleEmojiUrl !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.titleEmojiUrl);
+        /* string question = 4; */
         if (message.question !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.question);
-        /* repeated PodcastMultipleChoiceOptionProto options = 4; */
+            writer.tag(4, WireType.LengthDelimited).string(message.question);
+        /* repeated PodcastMultipleChoiceOptionProto options = 5; */
         for (let i = 0; i < message.options.length; i++)
-            PodcastMultipleChoiceOptionProto.internalBinaryWrite(message.options[i], writer.tag(4, WireType.LengthDelimited).fork(), options).join();
-        /* int32 correct_answer_number = 5; */
+            PodcastMultipleChoiceOptionProto.internalBinaryWrite(message.options[i], writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        /* int32 correct_answer_number = 6; */
         if (message.correctAnswerNumber !== 0)
-            writer.tag(5, WireType.Varint).int32(message.correctAnswerNumber);
-        /* string hint = 6; */
-        if (message.hint !== "")
-            writer.tag(6, WireType.LengthDelimited).string(message.hint);
-        /* string explanation = 7; */
-        if (message.explanation !== "")
-            writer.tag(7, WireType.LengthDelimited).string(message.explanation);
+            writer.tag(6, WireType.Varint).int32(message.correctAnswerNumber);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2222,12 +2195,11 @@ export const PodcastMultipleChoiceCardProto = new PodcastMultipleChoiceCardProto
 class PodcastMultipleChoiceOptionProto$Type extends MessageType<PodcastMultipleChoiceOptionProto> {
     constructor() {
         super("PodcastMultipleChoiceOptionProto", [
-            { no: 1, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "hint", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PodcastMultipleChoiceOptionProto>): PodcastMultipleChoiceOptionProto {
-        const message = { text: "", hint: "" };
+        const message = { text: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastMultipleChoiceOptionProto>(this, message, value);
@@ -2240,9 +2212,6 @@ class PodcastMultipleChoiceOptionProto$Type extends MessageType<PodcastMultipleC
             switch (fieldNo) {
                 case /* string text */ 1:
                     message.text = reader.string();
-                    break;
-                case /* string hint */ 2:
-                    message.hint = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2259,9 +2228,6 @@ class PodcastMultipleChoiceOptionProto$Type extends MessageType<PodcastMultipleC
         /* string text = 1; */
         if (message.text !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.text);
-        /* string hint = 2; */
-        if (message.hint !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.hint);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2278,13 +2244,13 @@ class PodcastPollCardProto$Type extends MessageType<PodcastPollCardProto> {
         super("PodcastPollCardProto", [
             { no: 1, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "title_emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "question", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "options", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastPollOptionProto },
-            { no: 5, name: "commentary", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 3, name: "title_emoji_url", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "question", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "options", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastPollOptionProto }
         ]);
     }
     create(value?: PartialMessage<PodcastPollCardProto>): PodcastPollCardProto {
-        const message = { title: "", titleEmoji: "", question: "", options: [], commentary: "" };
+        const message = { title: "", titleEmoji: "", titleEmojiUrl: "", question: "", options: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastPollCardProto>(this, message, value);
@@ -2301,14 +2267,14 @@ class PodcastPollCardProto$Type extends MessageType<PodcastPollCardProto> {
                 case /* string title_emoji */ 2:
                     message.titleEmoji = reader.string();
                     break;
-                case /* string question */ 3:
+                case /* string title_emoji_url */ 3:
+                    message.titleEmojiUrl = reader.string();
+                    break;
+                case /* string question */ 4:
                     message.question = reader.string();
                     break;
-                case /* repeated PodcastPollOptionProto options */ 4:
+                case /* repeated PodcastPollOptionProto options */ 5:
                     message.options.push(PodcastPollOptionProto.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                case /* string commentary */ 5:
-                    message.commentary = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2328,15 +2294,15 @@ class PodcastPollCardProto$Type extends MessageType<PodcastPollCardProto> {
         /* string title_emoji = 2; */
         if (message.titleEmoji !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.titleEmoji);
-        /* string question = 3; */
+        /* string title_emoji_url = 3; */
+        if (message.titleEmojiUrl !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.titleEmojiUrl);
+        /* string question = 4; */
         if (message.question !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.question);
-        /* repeated PodcastPollOptionProto options = 4; */
+            writer.tag(4, WireType.LengthDelimited).string(message.question);
+        /* repeated PodcastPollOptionProto options = 5; */
         for (let i = 0; i < message.options.length; i++)
-            PodcastPollOptionProto.internalBinaryWrite(message.options[i], writer.tag(4, WireType.LengthDelimited).fork(), options).join();
-        /* string commentary = 5; */
-        if (message.commentary !== "")
-            writer.tag(5, WireType.LengthDelimited).string(message.commentary);
+            PodcastPollOptionProto.internalBinaryWrite(message.options[i], writer.tag(5, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2351,12 +2317,11 @@ export const PodcastPollCardProto = new PodcastPollCardProto$Type();
 class PodcastPollOptionProto$Type extends MessageType<PodcastPollOptionProto> {
     constructor() {
         super("PodcastPollOptionProto", [
-            { no: 1, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "votes_frac", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ }
+            { no: 1, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PodcastPollOptionProto>): PodcastPollOptionProto {
-        const message = { text: "", votesFrac: 0 };
+        const message = { text: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastPollOptionProto>(this, message, value);
@@ -2369,9 +2334,6 @@ class PodcastPollOptionProto$Type extends MessageType<PodcastPollOptionProto> {
             switch (fieldNo) {
                 case /* string text */ 1:
                     message.text = reader.string();
-                    break;
-                case /* float votes_frac */ 2:
-                    message.votesFrac = reader.float();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2388,9 +2350,6 @@ class PodcastPollOptionProto$Type extends MessageType<PodcastPollOptionProto> {
         /* string text = 1; */
         if (message.text !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.text);
-        /* float votes_frac = 2; */
-        if (message.votesFrac !== 0)
-            writer.tag(2, WireType.Bit32).float(message.votesFrac);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

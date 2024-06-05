@@ -968,18 +968,13 @@ struct PodcastMultipleChoiceCardProto {
 
   var titleEmoji: String = String()
 
+  var titleEmojiURL: String = String()
+
   var question: String = String()
 
   var options: [PodcastMultipleChoiceOptionProto] = []
 
-  /// starts from 1.
   var correctAnswerNumber: Int32 = 0
-
-  /// Short hint for the whole question
-  var hint: String = String()
-
-  /// Whole page explanation
-  var explanation: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -993,9 +988,6 @@ struct PodcastMultipleChoiceOptionProto {
 
   /// Could be a label like True/False or a short sentence
   var text: String = String()
-
-  /// Short text to show if this answer is selected.
-  var hint: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -1012,11 +1004,12 @@ struct PodcastPollCardProto {
 
   var titleEmoji: String = String()
 
+  var titleEmojiURL: String = String()
+
   var question: String = String()
 
+  /// commentary
   var options: [PodcastPollOptionProto] = []
-
-  var commentary: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -1029,9 +1022,6 @@ struct PodcastPollOptionProto {
   // methods supported on all messages.
 
   var text: String = String()
-
-  /// Fraction of votes this option received
-  var votesFrac: Float = 0
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -2453,11 +2443,10 @@ extension PodcastMultipleChoiceCardProto: SwiftProtobuf.Message, SwiftProtobuf._
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "title"),
     2: .standard(proto: "title_emoji"),
-    3: .same(proto: "question"),
-    4: .same(proto: "options"),
-    5: .standard(proto: "correct_answer_number"),
-    6: .same(proto: "hint"),
-    7: .same(proto: "explanation"),
+    3: .standard(proto: "title_emoji_url"),
+    4: .same(proto: "question"),
+    5: .same(proto: "options"),
+    6: .standard(proto: "correct_answer_number"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2468,11 +2457,10 @@ extension PodcastMultipleChoiceCardProto: SwiftProtobuf.Message, SwiftProtobuf._
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.title) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.titleEmoji) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.question) }()
-      case 4: try { try decoder.decodeRepeatedMessageField(value: &self.options) }()
-      case 5: try { try decoder.decodeSingularInt32Field(value: &self.correctAnswerNumber) }()
-      case 6: try { try decoder.decodeSingularStringField(value: &self.hint) }()
-      case 7: try { try decoder.decodeSingularStringField(value: &self.explanation) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.titleEmojiURL) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.question) }()
+      case 5: try { try decoder.decodeRepeatedMessageField(value: &self.options) }()
+      case 6: try { try decoder.decodeSingularInt32Field(value: &self.correctAnswerNumber) }()
       default: break
       }
     }
@@ -2485,20 +2473,17 @@ extension PodcastMultipleChoiceCardProto: SwiftProtobuf.Message, SwiftProtobuf._
     if !self.titleEmoji.isEmpty {
       try visitor.visitSingularStringField(value: self.titleEmoji, fieldNumber: 2)
     }
+    if !self.titleEmojiURL.isEmpty {
+      try visitor.visitSingularStringField(value: self.titleEmojiURL, fieldNumber: 3)
+    }
     if !self.question.isEmpty {
-      try visitor.visitSingularStringField(value: self.question, fieldNumber: 3)
+      try visitor.visitSingularStringField(value: self.question, fieldNumber: 4)
     }
     if !self.options.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.options, fieldNumber: 4)
+      try visitor.visitRepeatedMessageField(value: self.options, fieldNumber: 5)
     }
     if self.correctAnswerNumber != 0 {
-      try visitor.visitSingularInt32Field(value: self.correctAnswerNumber, fieldNumber: 5)
-    }
-    if !self.hint.isEmpty {
-      try visitor.visitSingularStringField(value: self.hint, fieldNumber: 6)
-    }
-    if !self.explanation.isEmpty {
-      try visitor.visitSingularStringField(value: self.explanation, fieldNumber: 7)
+      try visitor.visitSingularInt32Field(value: self.correctAnswerNumber, fieldNumber: 6)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -2506,11 +2491,10 @@ extension PodcastMultipleChoiceCardProto: SwiftProtobuf.Message, SwiftProtobuf._
   static func ==(lhs: PodcastMultipleChoiceCardProto, rhs: PodcastMultipleChoiceCardProto) -> Bool {
     if lhs.title != rhs.title {return false}
     if lhs.titleEmoji != rhs.titleEmoji {return false}
+    if lhs.titleEmojiURL != rhs.titleEmojiURL {return false}
     if lhs.question != rhs.question {return false}
     if lhs.options != rhs.options {return false}
     if lhs.correctAnswerNumber != rhs.correctAnswerNumber {return false}
-    if lhs.hint != rhs.hint {return false}
-    if lhs.explanation != rhs.explanation {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -2520,7 +2504,6 @@ extension PodcastMultipleChoiceOptionProto: SwiftProtobuf.Message, SwiftProtobuf
   static let protoMessageName: String = "PodcastMultipleChoiceOptionProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "text"),
-    2: .same(proto: "hint"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2530,7 +2513,6 @@ extension PodcastMultipleChoiceOptionProto: SwiftProtobuf.Message, SwiftProtobuf
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.text) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.hint) }()
       default: break
       }
     }
@@ -2540,15 +2522,11 @@ extension PodcastMultipleChoiceOptionProto: SwiftProtobuf.Message, SwiftProtobuf
     if !self.text.isEmpty {
       try visitor.visitSingularStringField(value: self.text, fieldNumber: 1)
     }
-    if !self.hint.isEmpty {
-      try visitor.visitSingularStringField(value: self.hint, fieldNumber: 2)
-    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: PodcastMultipleChoiceOptionProto, rhs: PodcastMultipleChoiceOptionProto) -> Bool {
     if lhs.text != rhs.text {return false}
-    if lhs.hint != rhs.hint {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -2559,9 +2537,9 @@ extension PodcastPollCardProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "title"),
     2: .standard(proto: "title_emoji"),
-    3: .same(proto: "question"),
-    4: .same(proto: "options"),
-    5: .same(proto: "commentary"),
+    3: .standard(proto: "title_emoji_url"),
+    4: .same(proto: "question"),
+    5: .same(proto: "options"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2572,9 +2550,9 @@ extension PodcastPollCardProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.title) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.titleEmoji) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.question) }()
-      case 4: try { try decoder.decodeRepeatedMessageField(value: &self.options) }()
-      case 5: try { try decoder.decodeSingularStringField(value: &self.commentary) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.titleEmojiURL) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.question) }()
+      case 5: try { try decoder.decodeRepeatedMessageField(value: &self.options) }()
       default: break
       }
     }
@@ -2587,14 +2565,14 @@ extension PodcastPollCardProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     if !self.titleEmoji.isEmpty {
       try visitor.visitSingularStringField(value: self.titleEmoji, fieldNumber: 2)
     }
+    if !self.titleEmojiURL.isEmpty {
+      try visitor.visitSingularStringField(value: self.titleEmojiURL, fieldNumber: 3)
+    }
     if !self.question.isEmpty {
-      try visitor.visitSingularStringField(value: self.question, fieldNumber: 3)
+      try visitor.visitSingularStringField(value: self.question, fieldNumber: 4)
     }
     if !self.options.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.options, fieldNumber: 4)
-    }
-    if !self.commentary.isEmpty {
-      try visitor.visitSingularStringField(value: self.commentary, fieldNumber: 5)
+      try visitor.visitRepeatedMessageField(value: self.options, fieldNumber: 5)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -2602,9 +2580,9 @@ extension PodcastPollCardProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
   static func ==(lhs: PodcastPollCardProto, rhs: PodcastPollCardProto) -> Bool {
     if lhs.title != rhs.title {return false}
     if lhs.titleEmoji != rhs.titleEmoji {return false}
+    if lhs.titleEmojiURL != rhs.titleEmojiURL {return false}
     if lhs.question != rhs.question {return false}
     if lhs.options != rhs.options {return false}
-    if lhs.commentary != rhs.commentary {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -2614,7 +2592,6 @@ extension PodcastPollOptionProto: SwiftProtobuf.Message, SwiftProtobuf._MessageI
   static let protoMessageName: String = "PodcastPollOptionProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "text"),
-    2: .standard(proto: "votes_frac"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2624,7 +2601,6 @@ extension PodcastPollOptionProto: SwiftProtobuf.Message, SwiftProtobuf._MessageI
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.text) }()
-      case 2: try { try decoder.decodeSingularFloatField(value: &self.votesFrac) }()
       default: break
       }
     }
@@ -2634,15 +2610,11 @@ extension PodcastPollOptionProto: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     if !self.text.isEmpty {
       try visitor.visitSingularStringField(value: self.text, fieldNumber: 1)
     }
-    if self.votesFrac != 0 {
-      try visitor.visitSingularFloatField(value: self.votesFrac, fieldNumber: 2)
-    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: PodcastPollOptionProto, rhs: PodcastPollOptionProto) -> Bool {
     if lhs.text != rhs.text {return false}
-    if lhs.votesFrac != rhs.votesFrac {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

@@ -190,16 +190,14 @@ message PodcastWordProto {
 message PodcastMultipleChoiceCardProto {
   string title = 1;
   string title_emoji = 2;
+  string title_emoji_url = 3;
 
-  string question = 3;
-  repeated PodcastMultipleChoiceOptionProto options = 4;
-  int32 correct_answer_number = 5;  // starts from 1.
+  string question = 4;
+  repeated PodcastMultipleChoiceOptionProto options = 5;
+  int32 correct_answer_number = 6;
 
   // Short hint for the whole question
-  string hint = 6;
-
   // Whole page explanation
-  string explanation = 7;
 }
 
 message PodcastMultipleChoiceOptionProto {
@@ -207,22 +205,21 @@ message PodcastMultipleChoiceOptionProto {
   string text = 1;
 
   // Short text to show if this answer is selected.
-  string hint = 2;
 }
 
 // 2, 3 or 4 options to vote for
 message PodcastPollCardProto {
   string title = 1;
   string title_emoji = 2;
+  string title_emoji_url = 3;
 
-  string question = 3;
-  repeated PodcastPollOptionProto options = 4;
-  string commentary = 5;
+  string question = 4;
+  repeated PodcastPollOptionProto options = 5;
+  // commentary
 }
 
 message PodcastPollOptionProto {
   string text = 1;
 
   // Fraction of votes this option received
-  float votes_frac = 2;
 }
