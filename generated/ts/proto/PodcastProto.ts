@@ -515,6 +515,16 @@ export interface PodcastMultipleChoiceCardProto {
      * @generated from protobuf field: int32 correct_answer_number = 6;
      */
     correctAnswerNumber: number;
+    /**
+     * Number of hints is the number of possible wrong answers.
+     *
+     * @generated from protobuf field: repeated string hints = 7;
+     */
+    hints: string[];
+    /**
+     * @generated from protobuf field: string explanation = 8;
+     */
+    explanation: string;
 }
 /**
  * @generated from protobuf message PodcastMultipleChoiceOptionProto
@@ -2118,11 +2128,13 @@ class PodcastMultipleChoiceCardProto$Type extends MessageType<PodcastMultipleCho
             { no: 3, name: "title_emoji_url", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "question", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "options", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastMultipleChoiceOptionProto },
-            { no: 6, name: "correct_answer_number", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
+            { no: 6, name: "correct_answer_number", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 7, name: "hints", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
+            { no: 8, name: "explanation", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PodcastMultipleChoiceCardProto>): PodcastMultipleChoiceCardProto {
-        const message = { title: "", titleEmoji: "", titleEmojiUrl: "", question: "", options: [], correctAnswerNumber: 0 };
+        const message = { title: "", titleEmoji: "", titleEmojiUrl: "", question: "", options: [], correctAnswerNumber: 0, hints: [], explanation: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastMultipleChoiceCardProto>(this, message, value);
@@ -2150,6 +2162,12 @@ class PodcastMultipleChoiceCardProto$Type extends MessageType<PodcastMultipleCho
                     break;
                 case /* int32 correct_answer_number */ 6:
                     message.correctAnswerNumber = reader.int32();
+                    break;
+                case /* repeated string hints */ 7:
+                    message.hints.push(reader.string());
+                    break;
+                case /* string explanation */ 8:
+                    message.explanation = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2181,6 +2199,12 @@ class PodcastMultipleChoiceCardProto$Type extends MessageType<PodcastMultipleCho
         /* int32 correct_answer_number = 6; */
         if (message.correctAnswerNumber !== 0)
             writer.tag(6, WireType.Varint).int32(message.correctAnswerNumber);
+        /* repeated string hints = 7; */
+        for (let i = 0; i < message.hints.length; i++)
+            writer.tag(7, WireType.LengthDelimited).string(message.hints[i]);
+        /* string explanation = 8; */
+        if (message.explanation !== "")
+            writer.tag(8, WireType.LengthDelimited).string(message.explanation);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

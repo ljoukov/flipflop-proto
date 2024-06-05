@@ -196,8 +196,9 @@ message PodcastMultipleChoiceCardProto {
   repeated PodcastMultipleChoiceOptionProto options = 5;
   int32 correct_answer_number = 6;
 
-  // Short hint for the whole question
-  // Whole page explanation
+  // Number of hints is the number of possible wrong answers.
+  repeated string hints = 7;
+  string explanation = 8;
 }
 
 message PodcastMultipleChoiceOptionProto {

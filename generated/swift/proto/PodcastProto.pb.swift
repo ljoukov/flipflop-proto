@@ -976,6 +976,11 @@ struct PodcastMultipleChoiceCardProto {
 
   var correctAnswerNumber: Int32 = 0
 
+  /// Number of hints is the number of possible wrong answers.
+  var hints: [String] = []
+
+  var explanation: String = String()
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -2447,6 +2452,8 @@ extension PodcastMultipleChoiceCardProto: SwiftProtobuf.Message, SwiftProtobuf._
     4: .same(proto: "question"),
     5: .same(proto: "options"),
     6: .standard(proto: "correct_answer_number"),
+    7: .same(proto: "hints"),
+    8: .same(proto: "explanation"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2461,6 +2468,8 @@ extension PodcastMultipleChoiceCardProto: SwiftProtobuf.Message, SwiftProtobuf._
       case 4: try { try decoder.decodeSingularStringField(value: &self.question) }()
       case 5: try { try decoder.decodeRepeatedMessageField(value: &self.options) }()
       case 6: try { try decoder.decodeSingularInt32Field(value: &self.correctAnswerNumber) }()
+      case 7: try { try decoder.decodeRepeatedStringField(value: &self.hints) }()
+      case 8: try { try decoder.decodeSingularStringField(value: &self.explanation) }()
       default: break
       }
     }
@@ -2485,6 +2494,12 @@ extension PodcastMultipleChoiceCardProto: SwiftProtobuf.Message, SwiftProtobuf._
     if self.correctAnswerNumber != 0 {
       try visitor.visitSingularInt32Field(value: self.correctAnswerNumber, fieldNumber: 6)
     }
+    if !self.hints.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.hints, fieldNumber: 7)
+    }
+    if !self.explanation.isEmpty {
+      try visitor.visitSingularStringField(value: self.explanation, fieldNumber: 8)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -2495,6 +2510,8 @@ extension PodcastMultipleChoiceCardProto: SwiftProtobuf.Message, SwiftProtobuf._
     if lhs.question != rhs.question {return false}
     if lhs.options != rhs.options {return false}
     if lhs.correctAnswerNumber != rhs.correctAnswerNumber {return false}
+    if lhs.hints != rhs.hints {return false}
+    if lhs.explanation != rhs.explanation {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
