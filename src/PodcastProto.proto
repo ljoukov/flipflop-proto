@@ -186,19 +186,44 @@ message PodcastWordProto {
   string separator = 4;
 }
 
+// No user input assumed
+message PodcastKnowledgeCardProto {
+  string title = 1;
+  PodcastCardHeroProto hero = 2;
+
+  string text = 3;
+
+  // Whole page explanation
+  string explanation = 4;
+}
+
 // 2: True/False, 3: A/B/C or 4: 1/2/3/4 user input
 message PodcastMultipleChoiceCardProto {
   string title = 1;
-  string title_emoji = 2;
-  string title_emoji_url = 3;
+  PodcastCardHeroProto hero = 2;
 
-  string question = 4;
-  repeated PodcastMultipleChoiceOptionProto options = 5;
-  int32 correct_answer_number = 6;
+  string question = 3;
+  repeated PodcastMultipleChoiceOptionProto options = 4;
+  int32 correct_answer_number = 5;
 
   // Number of hints is the number of possible wrong answers.
-  repeated string hints = 7;
-  string explanation = 8;
+  repeated string hints = 6;
+  string explanation = 7;
+}
+
+// 2, 3 or 4 options to vote for
+message PodcastPollCardProto {
+  string title = 1;
+  PodcastCardHeroProto hero = 2;
+
+  string question = 3;
+  repeated PodcastPollOptionProto options = 4;
+  // commentary
+}
+
+message PodcastCardHeroProto {
+  string emoji = 1;
+  string lottie_url = 2;
 }
 
 message PodcastMultipleChoiceOptionProto {
@@ -206,17 +231,6 @@ message PodcastMultipleChoiceOptionProto {
   string text = 1;
 
   // Short text to show if this answer is selected.
-}
-
-// 2, 3 or 4 options to vote for
-message PodcastPollCardProto {
-  string title = 1;
-  string title_emoji = 2;
-  string title_emoji_url = 3;
-
-  string question = 4;
-  repeated PodcastPollOptionProto options = 5;
-  // commentary
 }
 
 message PodcastPollOptionProto {

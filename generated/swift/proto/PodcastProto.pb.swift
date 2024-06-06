@@ -958,6 +958,35 @@ struct PodcastWordProto {
   init() {}
 }
 
+/// No user input assumed
+struct PodcastKnowledgeCardProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var title: String = String()
+
+  var hero: PodcastCardHeroProto {
+    get {return _hero ?? PodcastCardHeroProto()}
+    set {_hero = newValue}
+  }
+  /// Returns true if `hero` has been explicitly set.
+  var hasHero: Bool {return self._hero != nil}
+  /// Clears the value of `hero`. Subsequent reads from it will return its default value.
+  mutating func clearHero() {self._hero = nil}
+
+  var text: String = String()
+
+  /// Whole page explanation
+  var explanation: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+
+  fileprivate var _hero: PodcastCardHeroProto? = nil
+}
+
 /// 2: True/False, 3: A/B/C or 4: 1/2/3/4 user input
 struct PodcastMultipleChoiceCardProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
@@ -966,9 +995,14 @@ struct PodcastMultipleChoiceCardProto {
 
   var title: String = String()
 
-  var titleEmoji: String = String()
-
-  var titleEmojiURL: String = String()
+  var hero: PodcastCardHeroProto {
+    get {return _hero ?? PodcastCardHeroProto()}
+    set {_hero = newValue}
+  }
+  /// Returns true if `hero` has been explicitly set.
+  var hasHero: Bool {return self._hero != nil}
+  /// Clears the value of `hero`. Subsequent reads from it will return its default value.
+  mutating func clearHero() {self._hero = nil}
 
   var question: String = String()
 
@@ -984,19 +1018,8 @@ struct PodcastMultipleChoiceCardProto {
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
-}
 
-struct PodcastMultipleChoiceOptionProto {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  /// Could be a label like True/False or a short sentence
-  var text: String = String()
-
-  var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  init() {}
+  fileprivate var _hero: PodcastCardHeroProto? = nil
 }
 
 /// 2, 3 or 4 options to vote for
@@ -1007,14 +1030,48 @@ struct PodcastPollCardProto {
 
   var title: String = String()
 
-  var titleEmoji: String = String()
-
-  var titleEmojiURL: String = String()
+  var hero: PodcastCardHeroProto {
+    get {return _hero ?? PodcastCardHeroProto()}
+    set {_hero = newValue}
+  }
+  /// Returns true if `hero` has been explicitly set.
+  var hasHero: Bool {return self._hero != nil}
+  /// Clears the value of `hero`. Subsequent reads from it will return its default value.
+  mutating func clearHero() {self._hero = nil}
 
   var question: String = String()
 
   /// commentary
   var options: [PodcastPollOptionProto] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+
+  fileprivate var _hero: PodcastCardHeroProto? = nil
+}
+
+struct PodcastCardHeroProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var emoji: String = String()
+
+  var lottieURL: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct PodcastMultipleChoiceOptionProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// Could be a label like True/False or a short sentence
+  var text: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -1069,9 +1126,11 @@ extension PodcastVisualAnimationProto: @unchecked Sendable {}
 extension PodcastTranscriptProto: @unchecked Sendable {}
 extension PodcastTranscriptEntryProto: @unchecked Sendable {}
 extension PodcastWordProto: @unchecked Sendable {}
+extension PodcastKnowledgeCardProto: @unchecked Sendable {}
 extension PodcastMultipleChoiceCardProto: @unchecked Sendable {}
-extension PodcastMultipleChoiceOptionProto: @unchecked Sendable {}
 extension PodcastPollCardProto: @unchecked Sendable {}
+extension PodcastCardHeroProto: @unchecked Sendable {}
+extension PodcastMultipleChoiceOptionProto: @unchecked Sendable {}
 extension PodcastPollOptionProto: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
 
@@ -2443,17 +2502,13 @@ extension PodcastWordProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
   }
 }
 
-extension PodcastMultipleChoiceCardProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "PodcastMultipleChoiceCardProto"
+extension PodcastKnowledgeCardProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastKnowledgeCardProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "title"),
-    2: .standard(proto: "title_emoji"),
-    3: .standard(proto: "title_emoji_url"),
-    4: .same(proto: "question"),
-    5: .same(proto: "options"),
-    6: .standard(proto: "correct_answer_number"),
-    7: .same(proto: "hints"),
-    8: .same(proto: "explanation"),
+    2: .same(proto: "hero"),
+    3: .same(proto: "text"),
+    4: .same(proto: "explanation"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2463,55 +2518,203 @@ extension PodcastMultipleChoiceCardProto: SwiftProtobuf.Message, SwiftProtobuf._
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.title) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.titleEmoji) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.titleEmojiURL) }()
-      case 4: try { try decoder.decodeSingularStringField(value: &self.question) }()
-      case 5: try { try decoder.decodeRepeatedMessageField(value: &self.options) }()
-      case 6: try { try decoder.decodeSingularInt32Field(value: &self.correctAnswerNumber) }()
-      case 7: try { try decoder.decodeRepeatedStringField(value: &self.hints) }()
-      case 8: try { try decoder.decodeSingularStringField(value: &self.explanation) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._hero) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.text) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.explanation) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.title.isEmpty {
       try visitor.visitSingularStringField(value: self.title, fieldNumber: 1)
     }
-    if !self.titleEmoji.isEmpty {
-      try visitor.visitSingularStringField(value: self.titleEmoji, fieldNumber: 2)
-    }
-    if !self.titleEmojiURL.isEmpty {
-      try visitor.visitSingularStringField(value: self.titleEmojiURL, fieldNumber: 3)
-    }
-    if !self.question.isEmpty {
-      try visitor.visitSingularStringField(value: self.question, fieldNumber: 4)
-    }
-    if !self.options.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.options, fieldNumber: 5)
-    }
-    if self.correctAnswerNumber != 0 {
-      try visitor.visitSingularInt32Field(value: self.correctAnswerNumber, fieldNumber: 6)
-    }
-    if !self.hints.isEmpty {
-      try visitor.visitRepeatedStringField(value: self.hints, fieldNumber: 7)
+    try { if let v = self._hero {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
+    if !self.text.isEmpty {
+      try visitor.visitSingularStringField(value: self.text, fieldNumber: 3)
     }
     if !self.explanation.isEmpty {
-      try visitor.visitSingularStringField(value: self.explanation, fieldNumber: 8)
+      try visitor.visitSingularStringField(value: self.explanation, fieldNumber: 4)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PodcastKnowledgeCardProto, rhs: PodcastKnowledgeCardProto) -> Bool {
+    if lhs.title != rhs.title {return false}
+    if lhs._hero != rhs._hero {return false}
+    if lhs.text != rhs.text {return false}
+    if lhs.explanation != rhs.explanation {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension PodcastMultipleChoiceCardProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastMultipleChoiceCardProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "title"),
+    2: .same(proto: "hero"),
+    3: .same(proto: "question"),
+    4: .same(proto: "options"),
+    5: .standard(proto: "correct_answer_number"),
+    6: .same(proto: "hints"),
+    7: .same(proto: "explanation"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.title) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._hero) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.question) }()
+      case 4: try { try decoder.decodeRepeatedMessageField(value: &self.options) }()
+      case 5: try { try decoder.decodeSingularInt32Field(value: &self.correctAnswerNumber) }()
+      case 6: try { try decoder.decodeRepeatedStringField(value: &self.hints) }()
+      case 7: try { try decoder.decodeSingularStringField(value: &self.explanation) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.title.isEmpty {
+      try visitor.visitSingularStringField(value: self.title, fieldNumber: 1)
+    }
+    try { if let v = self._hero {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
+    if !self.question.isEmpty {
+      try visitor.visitSingularStringField(value: self.question, fieldNumber: 3)
+    }
+    if !self.options.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.options, fieldNumber: 4)
+    }
+    if self.correctAnswerNumber != 0 {
+      try visitor.visitSingularInt32Field(value: self.correctAnswerNumber, fieldNumber: 5)
+    }
+    if !self.hints.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.hints, fieldNumber: 6)
+    }
+    if !self.explanation.isEmpty {
+      try visitor.visitSingularStringField(value: self.explanation, fieldNumber: 7)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: PodcastMultipleChoiceCardProto, rhs: PodcastMultipleChoiceCardProto) -> Bool {
     if lhs.title != rhs.title {return false}
-    if lhs.titleEmoji != rhs.titleEmoji {return false}
-    if lhs.titleEmojiURL != rhs.titleEmojiURL {return false}
+    if lhs._hero != rhs._hero {return false}
     if lhs.question != rhs.question {return false}
     if lhs.options != rhs.options {return false}
     if lhs.correctAnswerNumber != rhs.correctAnswerNumber {return false}
     if lhs.hints != rhs.hints {return false}
     if lhs.explanation != rhs.explanation {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension PodcastPollCardProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastPollCardProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "title"),
+    2: .same(proto: "hero"),
+    3: .same(proto: "question"),
+    4: .same(proto: "options"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.title) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._hero) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.question) }()
+      case 4: try { try decoder.decodeRepeatedMessageField(value: &self.options) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.title.isEmpty {
+      try visitor.visitSingularStringField(value: self.title, fieldNumber: 1)
+    }
+    try { if let v = self._hero {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
+    if !self.question.isEmpty {
+      try visitor.visitSingularStringField(value: self.question, fieldNumber: 3)
+    }
+    if !self.options.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.options, fieldNumber: 4)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PodcastPollCardProto, rhs: PodcastPollCardProto) -> Bool {
+    if lhs.title != rhs.title {return false}
+    if lhs._hero != rhs._hero {return false}
+    if lhs.question != rhs.question {return false}
+    if lhs.options != rhs.options {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension PodcastCardHeroProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastCardHeroProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "emoji"),
+    2: .standard(proto: "lottie_url"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.emoji) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.lottieURL) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.emoji.isEmpty {
+      try visitor.visitSingularStringField(value: self.emoji, fieldNumber: 1)
+    }
+    if !self.lottieURL.isEmpty {
+      try visitor.visitSingularStringField(value: self.lottieURL, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PodcastCardHeroProto, rhs: PodcastCardHeroProto) -> Bool {
+    if lhs.emoji != rhs.emoji {return false}
+    if lhs.lottieURL != rhs.lottieURL {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -2544,62 +2747,6 @@ extension PodcastMultipleChoiceOptionProto: SwiftProtobuf.Message, SwiftProtobuf
 
   static func ==(lhs: PodcastMultipleChoiceOptionProto, rhs: PodcastMultipleChoiceOptionProto) -> Bool {
     if lhs.text != rhs.text {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension PodcastPollCardProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "PodcastPollCardProto"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "title"),
-    2: .standard(proto: "title_emoji"),
-    3: .standard(proto: "title_emoji_url"),
-    4: .same(proto: "question"),
-    5: .same(proto: "options"),
-  ]
-
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.title) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.titleEmoji) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.titleEmojiURL) }()
-      case 4: try { try decoder.decodeSingularStringField(value: &self.question) }()
-      case 5: try { try decoder.decodeRepeatedMessageField(value: &self.options) }()
-      default: break
-      }
-    }
-  }
-
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.title.isEmpty {
-      try visitor.visitSingularStringField(value: self.title, fieldNumber: 1)
-    }
-    if !self.titleEmoji.isEmpty {
-      try visitor.visitSingularStringField(value: self.titleEmoji, fieldNumber: 2)
-    }
-    if !self.titleEmojiURL.isEmpty {
-      try visitor.visitSingularStringField(value: self.titleEmojiURL, fieldNumber: 3)
-    }
-    if !self.question.isEmpty {
-      try visitor.visitSingularStringField(value: self.question, fieldNumber: 4)
-    }
-    if !self.options.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.options, fieldNumber: 5)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  static func ==(lhs: PodcastPollCardProto, rhs: PodcastPollCardProto) -> Bool {
-    if lhs.title != rhs.title {return false}
-    if lhs.titleEmoji != rhs.titleEmoji {return false}
-    if lhs.titleEmojiURL != rhs.titleEmojiURL {return false}
-    if lhs.question != rhs.question {return false}
-    if lhs.options != rhs.options {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

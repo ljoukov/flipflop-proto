@@ -32,6 +32,8 @@ message StoredPodcastProto {
 
   StoredPodcastVisualsProto visuals = 15;
 
+  PodcastCardsProto cards = 16;
+
   // Debug metadata
   LatenciesProto latencies = 100;
   LogProto log = 101;

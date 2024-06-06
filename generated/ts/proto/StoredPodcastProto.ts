@@ -19,6 +19,7 @@ import { PodcastVisualTransitionProto } from "./PodcastProto";
 import { PodcastHostProto } from "./PodcastProto";
 import { LogProto } from "./LogProto";
 import { LatenciesProto } from "./LatencyProto";
+import { PodcastCardsProto } from "./PodcastProto";
 import { PodcastPromptAnswerProto } from "./PodcastProto";
 import { Timestamp } from "./google/protobuf/timestamp";
 /**
@@ -85,6 +86,10 @@ export interface StoredPodcastProto {
      * @generated from protobuf field: StoredPodcastVisualsProto visuals = 15;
      */
     visuals?: StoredPodcastVisualsProto;
+    /**
+     * @generated from protobuf field: PodcastCardsProto cards = 16;
+     */
+    cards?: PodcastCardsProto;
     /**
      * Debug metadata
      *
@@ -305,6 +310,7 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
             { no: 13, name: "transcript", kind: "message", T: () => StoredPodcastTranscriptProto },
             { no: 14, name: "audio", kind: "message", T: () => StoredPodcastAudioProto },
             { no: 15, name: "visuals", kind: "message", T: () => StoredPodcastVisualsProto },
+            { no: 16, name: "cards", kind: "message", T: () => PodcastCardsProto },
             { no: 100, name: "latencies", kind: "message", T: () => LatenciesProto },
             { no: 101, name: "log", kind: "message", T: () => LogProto }
         ]);
@@ -365,6 +371,9 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
                     break;
                 case /* StoredPodcastVisualsProto visuals */ 15:
                     message.visuals = StoredPodcastVisualsProto.internalBinaryRead(reader, reader.uint32(), options, message.visuals);
+                    break;
+                case /* PodcastCardsProto cards */ 16:
+                    message.cards = PodcastCardsProto.internalBinaryRead(reader, reader.uint32(), options, message.cards);
                     break;
                 case /* LatenciesProto latencies */ 100:
                     message.latencies = LatenciesProto.internalBinaryRead(reader, reader.uint32(), options, message.latencies);
@@ -429,6 +438,9 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
         /* StoredPodcastVisualsProto visuals = 15; */
         if (message.visuals)
             StoredPodcastVisualsProto.internalBinaryWrite(message.visuals, writer.tag(15, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastCardsProto cards = 16; */
+        if (message.cards)
+            PodcastCardsProto.internalBinaryWrite(message.cards, writer.tag(16, WireType.LengthDelimited).fork(), options).join();
         /* LatenciesProto latencies = 100; */
         if (message.latencies)
             LatenciesProto.internalBinaryWrite(message.latencies, writer.tag(100, WireType.LengthDelimited).fork(), options).join();

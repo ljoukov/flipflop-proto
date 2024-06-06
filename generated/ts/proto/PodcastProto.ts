@@ -486,6 +486,31 @@ export interface PodcastWordProto {
     separator: string;
 }
 /**
+ * No user input assumed
+ *
+ * @generated from protobuf message PodcastKnowledgeCardProto
+ */
+export interface PodcastKnowledgeCardProto {
+    /**
+     * @generated from protobuf field: string title = 1;
+     */
+    title: string;
+    /**
+     * @generated from protobuf field: PodcastCardHeroProto hero = 2;
+     */
+    hero?: PodcastCardHeroProto;
+    /**
+     * @generated from protobuf field: string text = 3;
+     */
+    text: string;
+    /**
+     * Whole page explanation
+     *
+     * @generated from protobuf field: string explanation = 4;
+     */
+    explanation: string;
+}
+/**
  * 2: True/False, 3: A/B/C or 4: 1/2/3/4 user input
  *
  * @generated from protobuf message PodcastMultipleChoiceCardProto
@@ -496,46 +521,31 @@ export interface PodcastMultipleChoiceCardProto {
      */
     title: string;
     /**
-     * @generated from protobuf field: string title_emoji = 2;
+     * @generated from protobuf field: PodcastCardHeroProto hero = 2;
      */
-    titleEmoji: string;
+    hero?: PodcastCardHeroProto;
     /**
-     * @generated from protobuf field: string title_emoji_url = 3;
-     */
-    titleEmojiUrl: string;
-    /**
-     * @generated from protobuf field: string question = 4;
+     * @generated from protobuf field: string question = 3;
      */
     question: string;
     /**
-     * @generated from protobuf field: repeated PodcastMultipleChoiceOptionProto options = 5;
+     * @generated from protobuf field: repeated PodcastMultipleChoiceOptionProto options = 4;
      */
     options: PodcastMultipleChoiceOptionProto[];
     /**
-     * @generated from protobuf field: int32 correct_answer_number = 6;
+     * @generated from protobuf field: int32 correct_answer_number = 5;
      */
     correctAnswerNumber: number;
     /**
      * Number of hints is the number of possible wrong answers.
      *
-     * @generated from protobuf field: repeated string hints = 7;
+     * @generated from protobuf field: repeated string hints = 6;
      */
     hints: string[];
     /**
-     * @generated from protobuf field: string explanation = 8;
+     * @generated from protobuf field: string explanation = 7;
      */
     explanation: string;
-}
-/**
- * @generated from protobuf message PodcastMultipleChoiceOptionProto
- */
-export interface PodcastMultipleChoiceOptionProto {
-    /**
-     * Could be a label like True/False or a short sentence
-     *
-     * @generated from protobuf field: string text = 1;
-     */
-    text: string;
 }
 /**
  * 2, 3 or 4 options to vote for
@@ -548,21 +558,41 @@ export interface PodcastPollCardProto {
      */
     title: string;
     /**
-     * @generated from protobuf field: string title_emoji = 2;
+     * @generated from protobuf field: PodcastCardHeroProto hero = 2;
      */
-    titleEmoji: string;
+    hero?: PodcastCardHeroProto;
     /**
-     * @generated from protobuf field: string title_emoji_url = 3;
-     */
-    titleEmojiUrl: string;
-    /**
-     * @generated from protobuf field: string question = 4;
+     * @generated from protobuf field: string question = 3;
      */
     question: string;
     /**
-     * @generated from protobuf field: repeated PodcastPollOptionProto options = 5;
+     * @generated from protobuf field: repeated PodcastPollOptionProto options = 4;
      */
     options: PodcastPollOptionProto[]; // commentary
+}
+/**
+ * @generated from protobuf message PodcastCardHeroProto
+ */
+export interface PodcastCardHeroProto {
+    /**
+     * @generated from protobuf field: string emoji = 1;
+     */
+    emoji: string;
+    /**
+     * @generated from protobuf field: string lottie_url = 2;
+     */
+    lottieUrl: string;
+}
+/**
+ * @generated from protobuf message PodcastMultipleChoiceOptionProto
+ */
+export interface PodcastMultipleChoiceOptionProto {
+    /**
+     * Could be a label like True/False or a short sentence
+     *
+     * @generated from protobuf field: string text = 1;
+     */
+    text: string;
 }
 /**
  * @generated from protobuf message PodcastPollOptionProto
@@ -2120,21 +2150,88 @@ class PodcastWordProto$Type extends MessageType<PodcastWordProto> {
  */
 export const PodcastWordProto = new PodcastWordProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class PodcastKnowledgeCardProto$Type extends MessageType<PodcastKnowledgeCardProto> {
+    constructor() {
+        super("PodcastKnowledgeCardProto", [
+            { no: 1, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "hero", kind: "message", T: () => PodcastCardHeroProto },
+            { no: 3, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "explanation", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PodcastKnowledgeCardProto>): PodcastKnowledgeCardProto {
+        const message = { title: "", text: "", explanation: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<PodcastKnowledgeCardProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastKnowledgeCardProto): PodcastKnowledgeCardProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string title */ 1:
+                    message.title = reader.string();
+                    break;
+                case /* PodcastCardHeroProto hero */ 2:
+                    message.hero = PodcastCardHeroProto.internalBinaryRead(reader, reader.uint32(), options, message.hero);
+                    break;
+                case /* string text */ 3:
+                    message.text = reader.string();
+                    break;
+                case /* string explanation */ 4:
+                    message.explanation = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PodcastKnowledgeCardProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string title = 1; */
+        if (message.title !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.title);
+        /* PodcastCardHeroProto hero = 2; */
+        if (message.hero)
+            PodcastCardHeroProto.internalBinaryWrite(message.hero, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* string text = 3; */
+        if (message.text !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.text);
+        /* string explanation = 4; */
+        if (message.explanation !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.explanation);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message PodcastKnowledgeCardProto
+ */
+export const PodcastKnowledgeCardProto = new PodcastKnowledgeCardProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class PodcastMultipleChoiceCardProto$Type extends MessageType<PodcastMultipleChoiceCardProto> {
     constructor() {
         super("PodcastMultipleChoiceCardProto", [
             { no: 1, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "title_emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "title_emoji_url", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "question", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "options", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastMultipleChoiceOptionProto },
-            { no: 6, name: "correct_answer_number", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 7, name: "hints", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
-            { no: 8, name: "explanation", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "hero", kind: "message", T: () => PodcastCardHeroProto },
+            { no: 3, name: "question", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "options", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastMultipleChoiceOptionProto },
+            { no: 5, name: "correct_answer_number", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 6, name: "hints", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
+            { no: 7, name: "explanation", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PodcastMultipleChoiceCardProto>): PodcastMultipleChoiceCardProto {
-        const message = { title: "", titleEmoji: "", titleEmojiUrl: "", question: "", options: [], correctAnswerNumber: 0, hints: [], explanation: "" };
+        const message = { title: "", question: "", options: [], correctAnswerNumber: 0, hints: [], explanation: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastMultipleChoiceCardProto>(this, message, value);
@@ -2148,25 +2245,22 @@ class PodcastMultipleChoiceCardProto$Type extends MessageType<PodcastMultipleCho
                 case /* string title */ 1:
                     message.title = reader.string();
                     break;
-                case /* string title_emoji */ 2:
-                    message.titleEmoji = reader.string();
+                case /* PodcastCardHeroProto hero */ 2:
+                    message.hero = PodcastCardHeroProto.internalBinaryRead(reader, reader.uint32(), options, message.hero);
                     break;
-                case /* string title_emoji_url */ 3:
-                    message.titleEmojiUrl = reader.string();
-                    break;
-                case /* string question */ 4:
+                case /* string question */ 3:
                     message.question = reader.string();
                     break;
-                case /* repeated PodcastMultipleChoiceOptionProto options */ 5:
+                case /* repeated PodcastMultipleChoiceOptionProto options */ 4:
                     message.options.push(PodcastMultipleChoiceOptionProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
-                case /* int32 correct_answer_number */ 6:
+                case /* int32 correct_answer_number */ 5:
                     message.correctAnswerNumber = reader.int32();
                     break;
-                case /* repeated string hints */ 7:
+                case /* repeated string hints */ 6:
                     message.hints.push(reader.string());
                     break;
-                case /* string explanation */ 8:
+                case /* string explanation */ 7:
                     message.explanation = reader.string();
                     break;
                 default:
@@ -2184,27 +2278,24 @@ class PodcastMultipleChoiceCardProto$Type extends MessageType<PodcastMultipleCho
         /* string title = 1; */
         if (message.title !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.title);
-        /* string title_emoji = 2; */
-        if (message.titleEmoji !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.titleEmoji);
-        /* string title_emoji_url = 3; */
-        if (message.titleEmojiUrl !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.titleEmojiUrl);
-        /* string question = 4; */
+        /* PodcastCardHeroProto hero = 2; */
+        if (message.hero)
+            PodcastCardHeroProto.internalBinaryWrite(message.hero, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* string question = 3; */
         if (message.question !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.question);
-        /* repeated PodcastMultipleChoiceOptionProto options = 5; */
+            writer.tag(3, WireType.LengthDelimited).string(message.question);
+        /* repeated PodcastMultipleChoiceOptionProto options = 4; */
         for (let i = 0; i < message.options.length; i++)
-            PodcastMultipleChoiceOptionProto.internalBinaryWrite(message.options[i], writer.tag(5, WireType.LengthDelimited).fork(), options).join();
-        /* int32 correct_answer_number = 6; */
+            PodcastMultipleChoiceOptionProto.internalBinaryWrite(message.options[i], writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* int32 correct_answer_number = 5; */
         if (message.correctAnswerNumber !== 0)
-            writer.tag(6, WireType.Varint).int32(message.correctAnswerNumber);
-        /* repeated string hints = 7; */
+            writer.tag(5, WireType.Varint).int32(message.correctAnswerNumber);
+        /* repeated string hints = 6; */
         for (let i = 0; i < message.hints.length; i++)
-            writer.tag(7, WireType.LengthDelimited).string(message.hints[i]);
-        /* string explanation = 8; */
+            writer.tag(6, WireType.LengthDelimited).string(message.hints[i]);
+        /* string explanation = 7; */
         if (message.explanation !== "")
-            writer.tag(8, WireType.LengthDelimited).string(message.explanation);
+            writer.tag(7, WireType.LengthDelimited).string(message.explanation);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2215,6 +2306,128 @@ class PodcastMultipleChoiceCardProto$Type extends MessageType<PodcastMultipleCho
  * @generated MessageType for protobuf message PodcastMultipleChoiceCardProto
  */
 export const PodcastMultipleChoiceCardProto = new PodcastMultipleChoiceCardProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PodcastPollCardProto$Type extends MessageType<PodcastPollCardProto> {
+    constructor() {
+        super("PodcastPollCardProto", [
+            { no: 1, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "hero", kind: "message", T: () => PodcastCardHeroProto },
+            { no: 3, name: "question", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "options", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastPollOptionProto }
+        ]);
+    }
+    create(value?: PartialMessage<PodcastPollCardProto>): PodcastPollCardProto {
+        const message = { title: "", question: "", options: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<PodcastPollCardProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastPollCardProto): PodcastPollCardProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string title */ 1:
+                    message.title = reader.string();
+                    break;
+                case /* PodcastCardHeroProto hero */ 2:
+                    message.hero = PodcastCardHeroProto.internalBinaryRead(reader, reader.uint32(), options, message.hero);
+                    break;
+                case /* string question */ 3:
+                    message.question = reader.string();
+                    break;
+                case /* repeated PodcastPollOptionProto options */ 4:
+                    message.options.push(PodcastPollOptionProto.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PodcastPollCardProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string title = 1; */
+        if (message.title !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.title);
+        /* PodcastCardHeroProto hero = 2; */
+        if (message.hero)
+            PodcastCardHeroProto.internalBinaryWrite(message.hero, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* string question = 3; */
+        if (message.question !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.question);
+        /* repeated PodcastPollOptionProto options = 4; */
+        for (let i = 0; i < message.options.length; i++)
+            PodcastPollOptionProto.internalBinaryWrite(message.options[i], writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message PodcastPollCardProto
+ */
+export const PodcastPollCardProto = new PodcastPollCardProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PodcastCardHeroProto$Type extends MessageType<PodcastCardHeroProto> {
+    constructor() {
+        super("PodcastCardHeroProto", [
+            { no: 1, name: "emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "lottie_url", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PodcastCardHeroProto>): PodcastCardHeroProto {
+        const message = { emoji: "", lottieUrl: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<PodcastCardHeroProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastCardHeroProto): PodcastCardHeroProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string emoji */ 1:
+                    message.emoji = reader.string();
+                    break;
+                case /* string lottie_url */ 2:
+                    message.lottieUrl = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PodcastCardHeroProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string emoji = 1; */
+        if (message.emoji !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.emoji);
+        /* string lottie_url = 2; */
+        if (message.lottieUrl !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.lottieUrl);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message PodcastCardHeroProto
+ */
+export const PodcastCardHeroProto = new PodcastCardHeroProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class PodcastMultipleChoiceOptionProto$Type extends MessageType<PodcastMultipleChoiceOptionProto> {
     constructor() {
@@ -2262,81 +2475,6 @@ class PodcastMultipleChoiceOptionProto$Type extends MessageType<PodcastMultipleC
  * @generated MessageType for protobuf message PodcastMultipleChoiceOptionProto
  */
 export const PodcastMultipleChoiceOptionProto = new PodcastMultipleChoiceOptionProto$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class PodcastPollCardProto$Type extends MessageType<PodcastPollCardProto> {
-    constructor() {
-        super("PodcastPollCardProto", [
-            { no: 1, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "title_emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "title_emoji_url", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "question", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "options", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastPollOptionProto }
-        ]);
-    }
-    create(value?: PartialMessage<PodcastPollCardProto>): PodcastPollCardProto {
-        const message = { title: "", titleEmoji: "", titleEmojiUrl: "", question: "", options: [] };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<PodcastPollCardProto>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastPollCardProto): PodcastPollCardProto {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string title */ 1:
-                    message.title = reader.string();
-                    break;
-                case /* string title_emoji */ 2:
-                    message.titleEmoji = reader.string();
-                    break;
-                case /* string title_emoji_url */ 3:
-                    message.titleEmojiUrl = reader.string();
-                    break;
-                case /* string question */ 4:
-                    message.question = reader.string();
-                    break;
-                case /* repeated PodcastPollOptionProto options */ 5:
-                    message.options.push(PodcastPollOptionProto.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: PodcastPollCardProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string title = 1; */
-        if (message.title !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.title);
-        /* string title_emoji = 2; */
-        if (message.titleEmoji !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.titleEmoji);
-        /* string title_emoji_url = 3; */
-        if (message.titleEmojiUrl !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.titleEmojiUrl);
-        /* string question = 4; */
-        if (message.question !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.question);
-        /* repeated PodcastPollOptionProto options = 5; */
-        for (let i = 0; i < message.options.length; i++)
-            PodcastPollOptionProto.internalBinaryWrite(message.options[i], writer.tag(5, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message PodcastPollCardProto
- */
-export const PodcastPollCardProto = new PodcastPollCardProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class PodcastPollOptionProto$Type extends MessageType<PodcastPollOptionProto> {
     constructor() {

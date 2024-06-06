@@ -266,6 +266,15 @@ struct StoredPodcastProto {
   /// Clears the value of `visuals`. Subsequent reads from it will return its default value.
   mutating func clearVisuals() {_uniqueStorage()._visuals = nil}
 
+  var cards: PodcastCardsProto {
+    get {return _storage._cards ?? PodcastCardsProto()}
+    set {_uniqueStorage()._cards = newValue}
+  }
+  /// Returns true if `cards` has been explicitly set.
+  var hasCards: Bool {return _storage._cards != nil}
+  /// Clears the value of `cards`. Subsequent reads from it will return its default value.
+  mutating func clearCards() {_uniqueStorage()._cards = nil}
+
   /// Debug metadata
   var latencies: LatenciesProto {
     get {return _storage._latencies ?? LatenciesProto()}
@@ -458,6 +467,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     13: .same(proto: "transcript"),
     14: .same(proto: "audio"),
     15: .same(proto: "visuals"),
+    16: .same(proto: "cards"),
     100: .same(proto: "latencies"),
     101: .same(proto: "log"),
   ]
@@ -478,6 +488,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     var _transcript: StoredPodcastTranscriptProto? = nil
     var _audio: StoredPodcastAudioProto? = nil
     var _visuals: StoredPodcastVisualsProto? = nil
+    var _cards: PodcastCardsProto? = nil
     var _latencies: LatenciesProto? = nil
     var _log: LogProto? = nil
 
@@ -501,6 +512,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       _transcript = source._transcript
       _audio = source._audio
       _visuals = source._visuals
+      _cards = source._cards
       _latencies = source._latencies
       _log = source._log
     }
@@ -536,6 +548,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         case 13: try { try decoder.decodeSingularMessageField(value: &_storage._transcript) }()
         case 14: try { try decoder.decodeSingularMessageField(value: &_storage._audio) }()
         case 15: try { try decoder.decodeSingularMessageField(value: &_storage._visuals) }()
+        case 16: try { try decoder.decodeSingularMessageField(value: &_storage._cards) }()
         case 100: try { try decoder.decodeSingularMessageField(value: &_storage._latencies) }()
         case 101: try { try decoder.decodeSingularMessageField(value: &_storage._log) }()
         default: break
@@ -595,6 +608,9 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       try { if let v = _storage._visuals {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
       } }()
+      try { if let v = _storage._cards {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 16)
+      } }()
       try { if let v = _storage._latencies {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 100)
       } }()
@@ -625,6 +641,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         if _storage._transcript != rhs_storage._transcript {return false}
         if _storage._audio != rhs_storage._audio {return false}
         if _storage._visuals != rhs_storage._visuals {return false}
+        if _storage._cards != rhs_storage._cards {return false}
         if _storage._latencies != rhs_storage._latencies {return false}
         if _storage._log != rhs_storage._log {return false}
         return true
