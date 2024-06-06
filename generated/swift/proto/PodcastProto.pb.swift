@@ -801,6 +801,14 @@ struct PodcastCardProto {
   /// IDs start at 10
   var type: PodcastCardProto.OneOf_Type? = nil
 
+  var knowledge: PodcastKnowledgeCardProto {
+    get {
+      if case .knowledge(let v)? = type {return v}
+      return PodcastKnowledgeCardProto()
+    }
+    set {type = .knowledge(newValue)}
+  }
+
   var multipleChoice: PodcastMultipleChoiceCardProto {
     get {
       if case .multipleChoice(let v)? = type {return v}
@@ -821,6 +829,7 @@ struct PodcastCardProto {
 
   /// IDs start at 10
   enum OneOf_Type: Equatable {
+    case knowledge(PodcastKnowledgeCardProto)
     case multipleChoice(PodcastMultipleChoiceCardProto)
     case poll(PodcastPollCardProto)
 
@@ -830,6 +839,10 @@ struct PodcastCardProto {
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch (lhs, rhs) {
+      case (.knowledge, .knowledge): return {
+        guard case .knowledge(let l) = lhs, case .knowledge(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
       case (.multipleChoice, .multipleChoice): return {
         guard case .multipleChoice(let l) = lhs, case .multipleChoice(let r) = rhs else { preconditionFailure() }
         return l == r
@@ -2148,8 +2161,9 @@ extension PodcastCardProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
   static let protoMessageName: String = "PodcastCardProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "card_id"),
-    10: .standard(proto: "multiple_choice"),
-    11: .same(proto: "poll"),
+    10: .same(proto: "knowledge"),
+    11: .standard(proto: "multiple_choice"),
+    12: .same(proto: "poll"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2160,6 +2174,19 @@ extension PodcastCardProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.cardID) }()
       case 10: try {
+        var v: PodcastKnowledgeCardProto?
+        var hadOneofValue = false
+        if let current = self.type {
+          hadOneofValue = true
+          if case .knowledge(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.type = .knowledge(v)
+        }
+      }()
+      case 11: try {
         var v: PodcastMultipleChoiceCardProto?
         var hadOneofValue = false
         if let current = self.type {
@@ -2172,7 +2199,7 @@ extension PodcastCardProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
           self.type = .multipleChoice(v)
         }
       }()
-      case 11: try {
+      case 12: try {
         var v: PodcastPollCardProto?
         var hadOneofValue = false
         if let current = self.type {
@@ -2199,13 +2226,17 @@ extension PodcastCardProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
       try visitor.visitSingularStringField(value: self.cardID, fieldNumber: 1)
     }
     switch self.type {
+    case .knowledge?: try {
+      guard case .knowledge(let v)? = self.type else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
+    }()
     case .multipleChoice?: try {
       guard case .multipleChoice(let v)? = self.type else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 11)
     }()
     case .poll?: try {
       guard case .poll(let v)? = self.type else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 11)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 12)
     }()
     case nil: break
     }

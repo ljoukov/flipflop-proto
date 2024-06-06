@@ -130,8 +130,9 @@ message PodcastCardProto {
 
   // IDs start at 10
   oneof type {
-    PodcastMultipleChoiceCardProto multiple_choice = 10;
-    PodcastPollCardProto poll = 11;
+    PodcastKnowledgeCardProto knowledge = 10;
+    PodcastMultipleChoiceCardProto multiple_choice = 11;
+    PodcastPollCardProto poll = 12;
   }
 }
 
