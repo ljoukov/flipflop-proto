@@ -87,7 +87,11 @@ export interface StoredPodcastProto {
      */
     visuals?: StoredPodcastVisualsProto;
     /**
-     * @generated from protobuf field: PodcastCardsProto cards = 16;
+     * @generated from protobuf field: StoredPodcastCardsStateProto cards_state = 16;
+     */
+    cardsState: StoredPodcastCardsStateProto;
+    /**
+     * @generated from protobuf field: PodcastCardsProto cards = 17;
      */
     cards?: PodcastCardsProto;
     /**
@@ -271,6 +275,27 @@ export enum StoredPodcastStateProto {
     VISUALS_READY = 21
 }
 /**
+ * @generated from protobuf enum StoredPodcastCardsStateProto
+ */
+export enum StoredPodcastCardsStateProto {
+    /**
+     * @generated from protobuf enum value: STORED_PODCAST_CARDS_STATE_PROTO_UNKNOWN = 0;
+     */
+    UNKNOWN = 0,
+    /**
+     * @generated from protobuf enum value: STORED_PODCAST_CARDS_STATE_PROTO_GENERATING = 1;
+     */
+    GENERATING = 1,
+    /**
+     * @generated from protobuf enum value: STORED_PODCAST_CARDS_STATE_PROTO_READY = 2;
+     */
+    READY = 2,
+    /**
+     * @generated from protobuf enum value: STORED_PODCAST_CARDS_STATE_PROTO_FAILED = 3;
+     */
+    FAILED = 3
+}
+/**
  * @generated from protobuf enum StoredPodcastSectionTypeProto
  */
 export enum StoredPodcastSectionTypeProto {
@@ -310,13 +335,14 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
             { no: 13, name: "transcript", kind: "message", T: () => StoredPodcastTranscriptProto },
             { no: 14, name: "audio", kind: "message", T: () => StoredPodcastAudioProto },
             { no: 15, name: "visuals", kind: "message", T: () => StoredPodcastVisualsProto },
-            { no: 16, name: "cards", kind: "message", T: () => PodcastCardsProto },
+            { no: 16, name: "cards_state", kind: "enum", T: () => ["StoredPodcastCardsStateProto", StoredPodcastCardsStateProto, "STORED_PODCAST_CARDS_STATE_PROTO_"] },
+            { no: 17, name: "cards", kind: "message", T: () => PodcastCardsProto },
             { no: 100, name: "latencies", kind: "message", T: () => LatenciesProto },
             { no: 101, name: "log", kind: "message", T: () => LogProto }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastProto>): StoredPodcastProto {
-        const message = { podcastId: "", createdBy: "", userPrompt: "", state: 0, reasoning: "", title: "", titleEmoji: "", synopsis: "", plan: "" };
+        const message = { podcastId: "", createdBy: "", userPrompt: "", state: 0, reasoning: "", title: "", titleEmoji: "", synopsis: "", plan: "", cardsState: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastProto>(this, message, value);
@@ -372,7 +398,10 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
                 case /* StoredPodcastVisualsProto visuals */ 15:
                     message.visuals = StoredPodcastVisualsProto.internalBinaryRead(reader, reader.uint32(), options, message.visuals);
                     break;
-                case /* PodcastCardsProto cards */ 16:
+                case /* StoredPodcastCardsStateProto cards_state */ 16:
+                    message.cardsState = reader.int32();
+                    break;
+                case /* PodcastCardsProto cards */ 17:
                     message.cards = PodcastCardsProto.internalBinaryRead(reader, reader.uint32(), options, message.cards);
                     break;
                 case /* LatenciesProto latencies */ 100:
@@ -438,9 +467,12 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
         /* StoredPodcastVisualsProto visuals = 15; */
         if (message.visuals)
             StoredPodcastVisualsProto.internalBinaryWrite(message.visuals, writer.tag(15, WireType.LengthDelimited).fork(), options).join();
-        /* PodcastCardsProto cards = 16; */
+        /* StoredPodcastCardsStateProto cards_state = 16; */
+        if (message.cardsState !== 0)
+            writer.tag(16, WireType.Varint).int32(message.cardsState);
+        /* PodcastCardsProto cards = 17; */
         if (message.cards)
-            PodcastCardsProto.internalBinaryWrite(message.cards, writer.tag(16, WireType.LengthDelimited).fork(), options).join();
+            PodcastCardsProto.internalBinaryWrite(message.cards, writer.tag(17, WireType.LengthDelimited).fork(), options).join();
         /* LatenciesProto latencies = 100; */
         if (message.latencies)
             LatenciesProto.internalBinaryWrite(message.latencies, writer.tag(100, WireType.LengthDelimited).fork(), options).join();

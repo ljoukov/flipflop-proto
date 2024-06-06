@@ -32,7 +32,8 @@ message StoredPodcastProto {
 
   StoredPodcastVisualsProto visuals = 15;
 
-  PodcastCardsProto cards = 16;
+  StoredPodcastCardsStateProto cards_state = 16;
+  PodcastCardsProto cards = 17;
 
   // Debug metadata
   LatenciesProto latencies = 100;
@@ -63,6 +64,13 @@ enum StoredPodcastStateProto {
 
   STORED_PODCAST_STATE_PROTO_GENERATING_VISUALS = 20;
   STORED_PODCAST_STATE_PROTO_VISUALS_READY = 21;
+}
+
+enum StoredPodcastCardsStateProto {
+  STORED_PODCAST_CARDS_STATE_PROTO_UNKNOWN = 0;
+  STORED_PODCAST_CARDS_STATE_PROTO_GENERATING = 1;
+  STORED_PODCAST_CARDS_STATE_PROTO_READY = 2;
+  STORED_PODCAST_CARDS_STATE_PROTO_FAILED = 3;
 }
 
 message StoredPodcastTranscriptProto {

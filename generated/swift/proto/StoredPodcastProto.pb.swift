@@ -114,6 +114,54 @@ extension StoredPodcastStateProto: CaseIterable {
 
 #endif  // swift(>=4.2)
 
+enum StoredPodcastCardsStateProto: SwiftProtobuf.Enum {
+  typealias RawValue = Int
+  case unknown // = 0
+  case generating // = 1
+  case ready // = 2
+  case failed // = 3
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .unknown
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .unknown
+    case 1: self = .generating
+    case 2: self = .ready
+    case 3: self = .failed
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .unknown: return 0
+    case .generating: return 1
+    case .ready: return 2
+    case .failed: return 3
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+}
+
+#if swift(>=4.2)
+
+extension StoredPodcastCardsStateProto: CaseIterable {
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static var allCases: [StoredPodcastCardsStateProto] = [
+    .unknown,
+    .generating,
+    .ready,
+    .failed,
+  ]
+}
+
+#endif  // swift(>=4.2)
+
 enum StoredPodcastSectionTypeProto: SwiftProtobuf.Enum {
   typealias RawValue = Int
   case unknown // = 0
@@ -266,6 +314,11 @@ struct StoredPodcastProto {
   /// Clears the value of `visuals`. Subsequent reads from it will return its default value.
   mutating func clearVisuals() {_uniqueStorage()._visuals = nil}
 
+  var cardsState: StoredPodcastCardsStateProto {
+    get {return _storage._cardsState}
+    set {_uniqueStorage()._cardsState = newValue}
+  }
+
   var cards: PodcastCardsProto {
     get {return _storage._cards ?? PodcastCardsProto()}
     set {_uniqueStorage()._cards = newValue}
@@ -408,6 +461,7 @@ struct StoredPodcastAudioProto {
 
 #if swift(>=5.5) && canImport(_Concurrency)
 extension StoredPodcastStateProto: @unchecked Sendable {}
+extension StoredPodcastCardsStateProto: @unchecked Sendable {}
 extension StoredPodcastSectionTypeProto: @unchecked Sendable {}
 extension StoredPodcastProto: @unchecked Sendable {}
 extension StoredPodcastTranscriptProto: @unchecked Sendable {}
@@ -440,6 +494,15 @@ extension StoredPodcastStateProto: SwiftProtobuf._ProtoNameProviding {
   ]
 }
 
+extension StoredPodcastCardsStateProto: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "STORED_PODCAST_CARDS_STATE_PROTO_UNKNOWN"),
+    1: .same(proto: "STORED_PODCAST_CARDS_STATE_PROTO_GENERATING"),
+    2: .same(proto: "STORED_PODCAST_CARDS_STATE_PROTO_READY"),
+    3: .same(proto: "STORED_PODCAST_CARDS_STATE_PROTO_FAILED"),
+  ]
+}
+
 extension StoredPodcastSectionTypeProto: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     0: .same(proto: "STORED_PODCAST_SECTION_TYPE_PROTO_UNKNOWN"),
@@ -467,7 +530,8 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     13: .same(proto: "transcript"),
     14: .same(proto: "audio"),
     15: .same(proto: "visuals"),
-    16: .same(proto: "cards"),
+    16: .standard(proto: "cards_state"),
+    17: .same(proto: "cards"),
     100: .same(proto: "latencies"),
     101: .same(proto: "log"),
   ]
@@ -488,6 +552,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     var _transcript: StoredPodcastTranscriptProto? = nil
     var _audio: StoredPodcastAudioProto? = nil
     var _visuals: StoredPodcastVisualsProto? = nil
+    var _cardsState: StoredPodcastCardsStateProto = .unknown
     var _cards: PodcastCardsProto? = nil
     var _latencies: LatenciesProto? = nil
     var _log: LogProto? = nil
@@ -512,6 +577,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       _transcript = source._transcript
       _audio = source._audio
       _visuals = source._visuals
+      _cardsState = source._cardsState
       _cards = source._cards
       _latencies = source._latencies
       _log = source._log
@@ -548,7 +614,8 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         case 13: try { try decoder.decodeSingularMessageField(value: &_storage._transcript) }()
         case 14: try { try decoder.decodeSingularMessageField(value: &_storage._audio) }()
         case 15: try { try decoder.decodeSingularMessageField(value: &_storage._visuals) }()
-        case 16: try { try decoder.decodeSingularMessageField(value: &_storage._cards) }()
+        case 16: try { try decoder.decodeSingularEnumField(value: &_storage._cardsState) }()
+        case 17: try { try decoder.decodeSingularMessageField(value: &_storage._cards) }()
         case 100: try { try decoder.decodeSingularMessageField(value: &_storage._latencies) }()
         case 101: try { try decoder.decodeSingularMessageField(value: &_storage._log) }()
         default: break
@@ -608,8 +675,11 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       try { if let v = _storage._visuals {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
       } }()
+      if _storage._cardsState != .unknown {
+        try visitor.visitSingularEnumField(value: _storage._cardsState, fieldNumber: 16)
+      }
       try { if let v = _storage._cards {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 16)
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 17)
       } }()
       try { if let v = _storage._latencies {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 100)
@@ -641,6 +711,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         if _storage._transcript != rhs_storage._transcript {return false}
         if _storage._audio != rhs_storage._audio {return false}
         if _storage._visuals != rhs_storage._visuals {return false}
+        if _storage._cardsState != rhs_storage._cardsState {return false}
         if _storage._cards != rhs_storage._cards {return false}
         if _storage._latencies != rhs_storage._latencies {return false}
         if _storage._log != rhs_storage._log {return false}
