@@ -116,19 +116,19 @@ extension StoredPodcastStateProto: CaseIterable {
 
 enum StoredPodcastCardsStateProto: SwiftProtobuf.Enum {
   typealias RawValue = Int
-  case unknown // = 0
+  case notStarted // = 0
   case generating // = 1
   case ready // = 2
   case failed // = 3
   case UNRECOGNIZED(Int)
 
   init() {
-    self = .unknown
+    self = .notStarted
   }
 
   init?(rawValue: Int) {
     switch rawValue {
-    case 0: self = .unknown
+    case 0: self = .notStarted
     case 1: self = .generating
     case 2: self = .ready
     case 3: self = .failed
@@ -138,7 +138,7 @@ enum StoredPodcastCardsStateProto: SwiftProtobuf.Enum {
 
   var rawValue: Int {
     switch self {
-    case .unknown: return 0
+    case .notStarted: return 0
     case .generating: return 1
     case .ready: return 2
     case .failed: return 3
@@ -153,7 +153,7 @@ enum StoredPodcastCardsStateProto: SwiftProtobuf.Enum {
 extension StoredPodcastCardsStateProto: CaseIterable {
   // The compiler won't synthesize support with the UNRECOGNIZED case.
   static var allCases: [StoredPodcastCardsStateProto] = [
-    .unknown,
+    .notStarted,
     .generating,
     .ready,
     .failed,
@@ -496,7 +496,7 @@ extension StoredPodcastStateProto: SwiftProtobuf._ProtoNameProviding {
 
 extension StoredPodcastCardsStateProto: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    0: .same(proto: "STORED_PODCAST_CARDS_STATE_PROTO_UNKNOWN"),
+    0: .same(proto: "STORED_PODCAST_CARDS_STATE_PROTO_NOT_STARTED"),
     1: .same(proto: "STORED_PODCAST_CARDS_STATE_PROTO_GENERATING"),
     2: .same(proto: "STORED_PODCAST_CARDS_STATE_PROTO_READY"),
     3: .same(proto: "STORED_PODCAST_CARDS_STATE_PROTO_FAILED"),
@@ -552,7 +552,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     var _transcript: StoredPodcastTranscriptProto? = nil
     var _audio: StoredPodcastAudioProto? = nil
     var _visuals: StoredPodcastVisualsProto? = nil
-    var _cardsState: StoredPodcastCardsStateProto = .unknown
+    var _cardsState: StoredPodcastCardsStateProto = .notStarted
     var _cards: PodcastCardsProto? = nil
     var _latencies: LatenciesProto? = nil
     var _log: LogProto? = nil
@@ -675,7 +675,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       try { if let v = _storage._visuals {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
       } }()
-      if _storage._cardsState != .unknown {
+      if _storage._cardsState != .notStarted {
         try visitor.visitSingularEnumField(value: _storage._cardsState, fieldNumber: 16)
       }
       try { if let v = _storage._cards {

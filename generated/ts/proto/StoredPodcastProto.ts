@@ -279,9 +279,9 @@ export enum StoredPodcastStateProto {
  */
 export enum StoredPodcastCardsStateProto {
     /**
-     * @generated from protobuf enum value: STORED_PODCAST_CARDS_STATE_PROTO_UNKNOWN = 0;
+     * @generated from protobuf enum value: STORED_PODCAST_CARDS_STATE_PROTO_NOT_STARTED = 0;
      */
-    UNKNOWN = 0,
+    NOT_STARTED = 0,
     /**
      * @generated from protobuf enum value: STORED_PODCAST_CARDS_STATE_PROTO_GENERATING = 1;
      */
