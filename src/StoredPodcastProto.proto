@@ -23,7 +23,7 @@ message StoredPodcastProto {
   string reasoning = 8;
   string title = 9;
   string title_emoji = 10;
-  string hook = 11;
+  string synopsis = 11;
 
   string plan = 12;
   StoredPodcastTranscriptProto transcript = 13;

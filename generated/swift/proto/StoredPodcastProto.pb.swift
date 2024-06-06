@@ -229,9 +229,9 @@ struct StoredPodcastProto {
     set {_uniqueStorage()._titleEmoji = newValue}
   }
 
-  var hook: String {
-    get {return _storage._hook}
-    set {_uniqueStorage()._hook = newValue}
+  var synopsis: String {
+    get {return _storage._synopsis}
+    set {_uniqueStorage()._synopsis = newValue}
   }
 
   var plan: String {
@@ -462,7 +462,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     8: .same(proto: "reasoning"),
     9: .same(proto: "title"),
     10: .standard(proto: "title_emoji"),
-    11: .same(proto: "hook"),
+    11: .same(proto: "synopsis"),
     12: .same(proto: "plan"),
     13: .same(proto: "transcript"),
     14: .same(proto: "audio"),
@@ -483,7 +483,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     var _reasoning: String = String()
     var _title: String = String()
     var _titleEmoji: String = String()
-    var _hook: String = String()
+    var _synopsis: String = String()
     var _plan: String = String()
     var _transcript: StoredPodcastTranscriptProto? = nil
     var _audio: StoredPodcastAudioProto? = nil
@@ -507,7 +507,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       _reasoning = source._reasoning
       _title = source._title
       _titleEmoji = source._titleEmoji
-      _hook = source._hook
+      _synopsis = source._synopsis
       _plan = source._plan
       _transcript = source._transcript
       _audio = source._audio
@@ -543,7 +543,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         case 8: try { try decoder.decodeSingularStringField(value: &_storage._reasoning) }()
         case 9: try { try decoder.decodeSingularStringField(value: &_storage._title) }()
         case 10: try { try decoder.decodeSingularStringField(value: &_storage._titleEmoji) }()
-        case 11: try { try decoder.decodeSingularStringField(value: &_storage._hook) }()
+        case 11: try { try decoder.decodeSingularStringField(value: &_storage._synopsis) }()
         case 12: try { try decoder.decodeSingularStringField(value: &_storage._plan) }()
         case 13: try { try decoder.decodeSingularMessageField(value: &_storage._transcript) }()
         case 14: try { try decoder.decodeSingularMessageField(value: &_storage._audio) }()
@@ -593,8 +593,8 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       if !_storage._titleEmoji.isEmpty {
         try visitor.visitSingularStringField(value: _storage._titleEmoji, fieldNumber: 10)
       }
-      if !_storage._hook.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._hook, fieldNumber: 11)
+      if !_storage._synopsis.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._synopsis, fieldNumber: 11)
       }
       if !_storage._plan.isEmpty {
         try visitor.visitSingularStringField(value: _storage._plan, fieldNumber: 12)
@@ -636,7 +636,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         if _storage._reasoning != rhs_storage._reasoning {return false}
         if _storage._title != rhs_storage._title {return false}
         if _storage._titleEmoji != rhs_storage._titleEmoji {return false}
-        if _storage._hook != rhs_storage._hook {return false}
+        if _storage._synopsis != rhs_storage._synopsis {return false}
         if _storage._plan != rhs_storage._plan {return false}
         if _storage._transcript != rhs_storage._transcript {return false}
         if _storage._audio != rhs_storage._audio {return false}

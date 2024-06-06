@@ -67,9 +67,9 @@ export interface StoredPodcastProto {
      */
     titleEmoji: string;
     /**
-     * @generated from protobuf field: string hook = 11;
+     * @generated from protobuf field: string synopsis = 11;
      */
-    hook: string;
+    synopsis: string;
     /**
      * @generated from protobuf field: string plan = 12;
      */
@@ -305,7 +305,7 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
             { no: 8, name: "reasoning", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 9, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 10, name: "title_emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 11, name: "hook", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 11, name: "synopsis", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 12, name: "plan", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 13, name: "transcript", kind: "message", T: () => StoredPodcastTranscriptProto },
             { no: 14, name: "audio", kind: "message", T: () => StoredPodcastAudioProto },
@@ -316,7 +316,7 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
         ]);
     }
     create(value?: PartialMessage<StoredPodcastProto>): StoredPodcastProto {
-        const message = { podcastId: "", createdBy: "", userPrompt: "", state: 0, reasoning: "", title: "", titleEmoji: "", hook: "", plan: "" };
+        const message = { podcastId: "", createdBy: "", userPrompt: "", state: 0, reasoning: "", title: "", titleEmoji: "", synopsis: "", plan: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastProto>(this, message, value);
@@ -357,8 +357,8 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
                 case /* string title_emoji */ 10:
                     message.titleEmoji = reader.string();
                     break;
-                case /* string hook */ 11:
-                    message.hook = reader.string();
+                case /* string synopsis */ 11:
+                    message.synopsis = reader.string();
                     break;
                 case /* string plan */ 12:
                     message.plan = reader.string();
@@ -423,9 +423,9 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
         /* string title_emoji = 10; */
         if (message.titleEmoji !== "")
             writer.tag(10, WireType.LengthDelimited).string(message.titleEmoji);
-        /* string hook = 11; */
-        if (message.hook !== "")
-            writer.tag(11, WireType.LengthDelimited).string(message.hook);
+        /* string synopsis = 11; */
+        if (message.synopsis !== "")
+            writer.tag(11, WireType.LengthDelimited).string(message.synopsis);
         /* string plan = 12; */
         if (message.plan !== "")
             writer.tag(12, WireType.LengthDelimited).string(message.plan);
