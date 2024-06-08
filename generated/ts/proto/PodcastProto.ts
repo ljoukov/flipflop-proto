@@ -510,8 +510,6 @@ export interface PodcastKnowledgeCardProto {
      */
     text: string;
     /**
-     * Whole page explanation
-     *
      * @generated from protobuf field: string explanation = 4;
      */
     explanation: string;

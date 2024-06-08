@@ -990,7 +990,6 @@ struct PodcastKnowledgeCardProto {
 
   var text: String = String()
 
-  /// Whole page explanation
   var explanation: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()

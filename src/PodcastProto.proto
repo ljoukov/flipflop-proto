@@ -191,10 +191,7 @@ message PodcastWordProto {
 message PodcastKnowledgeCardProto {
   string title = 1;
   PodcastCardHeroProto hero = 2;
-
   string text = 3;
-
-  // Whole page explanation
   string explanation = 4;
 }
 
