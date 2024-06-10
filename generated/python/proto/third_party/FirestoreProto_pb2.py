@@ -15,7 +15,7 @@ from google.protobuf import struct_pb2 as google_dot_protobuf_dot_struct__pb2
 from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n third_party/FirestoreProto.proto\x12\x13google.firestore.v1\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\x80\x02\n\x08\x44ocument\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x39\n\x06\x66ields\x18\x02 \x03(\x0b\x32).google.firestore.v1.Document.FieldsEntry\x12/\n\x0b\x63reate_time\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12/\n\x0bupdate_time\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1aI\n\x0b\x46ieldsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12)\n\x05value\x18\x02 \x01(\x0b\x32\x1a.google.firestore.v1.Value:\x02\x38\x01\"\xb6\x03\n\x05Value\x12\x30\n\nnull_value\x18\x0b \x01(\x0e\x32\x1a.google.protobuf.NullValueH\x00\x12\x17\n\rboolean_value\x18\x01 \x01(\x08H\x00\x12\x17\n\rinteger_value\x18\x02 \x01(\x03H\x00\x12\x16\n\x0c\x64ouble_value\x18\x03 \x01(\x01H\x00\x12\x35\n\x0ftimestamp_value\x18\n \x01(\x0b\x32\x1a.google.protobuf.TimestampH\x00\x12\x16\n\x0cstring_value\x18\x11 \x01(\tH\x00\x12\x15\n\x0b\x62ytes_value\x18\x12 \x01(\x0cH\x00\x12\x19\n\x0freference_value\x18\x05 \x01(\tH\x00\x12\x36\n\x0fgeo_point_value\x18\x08 \x01(\x0b\x32\x1b.google.firestore.v1.LatLngH\x00\x12\x36\n\x0b\x61rray_value\x18\t \x01(\x0b\x32\x1f.google.firestore.v1.ArrayValueH\x00\x12\x32\n\tmap_value\x18\x06 \x01(\x0b\x32\x1d.google.firestore.v1.MapValueH\x00\x42\x0c\n\nvalue_type\"8\n\nArrayValue\x12*\n\x06values\x18\x01 \x03(\x0b\x32\x1a.google.firestore.v1.Value\"\x90\x01\n\x08MapValue\x12\x39\n\x06\x66ields\x18\x01 \x03(\x0b\x32).google.firestore.v1.MapValue.FieldsEntry\x1aI\n\x0b\x46ieldsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12)\n\x05value\x18\x02 \x01(\x0b\x32\x1a.google.firestore.v1.Value:\x02\x38\x01\"-\n\x06LatLng\x12\x10\n\x08latitude\x18\x01 \x01(\x01\x12\x11\n\tlongitude\x18\x02 \x01(\x01\"b\n\x15ListDocumentsResponse\x12\x30\n\tdocuments\x18\x01 \x03(\x0b\x32\x1d.google.firestore.v1.Document\x12\x17\n\x0fnext_page_token\x18\x02 \x01(\t\"\xfa\x01\n\x0cWriteRequest\x12\x16\n\tstream_id\x18\x02 \x01(\tH\x00\x88\x01\x01\x12*\n\x06writes\x18\x03 \x03(\x0b\x32\x1a.google.firestore.v1.Write\x12\x19\n\x0cstream_token\x18\x04 \x01(\x0cH\x01\x88\x01\x01\x12=\n\x06labels\x18\x05 \x03(\x0b\x32-.google.firestore.v1.WriteRequest.LabelsEntry\x1a-\n\x0bLabelsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x42\x0c\n\n_stream_idB\x0f\n\r_stream_token\"\xa2\x01\n\rWriteResponse\x12\x11\n\tstream_id\x18\x01 \x01(\t\x12\x14\n\x0cstream_token\x18\x02 \x01(\x0c\x12\x37\n\rwrite_results\x18\x03 \x03(\x0b\x32 .google.firestore.v1.WriteResult\x12/\n\x0b\x63ommit_time\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"u\n\x0bWriteResult\x12/\n\x0bupdate_time\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x35\n\x11transform_results\x18\x02 \x03(\x0b\x32\x1a.google.firestore.v1.Value\"P\n\rCommitRequest\x12*\n\x06writes\x18\x02 \x03(\x0b\x32\x1a.google.firestore.v1.Write\x12\x13\n\x0btransaction\x18\x03 \x01(\x0c\"z\n\x0e\x43ommitResponse\x12\x37\n\rwrite_results\x18\x01 \x03(\x0b\x32 .google.firestore.v1.WriteResult\x12/\n\x0b\x63ommit_time\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"W\n\x05Write\x12/\n\x06update\x18\x01 \x01(\x0b\x32\x1d.google.firestore.v1.DocumentH\x00\x12\x10\n\x06\x64\x65lete\x18\x02 \x01(\tH\x00\x42\x0b\n\toperationb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n third_party/FirestoreProto.proto\x12\x13google.firestore.v1\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"Z\n\x08RpcError\x12\x0c\n\x04\x63ode\x18\x01 \x01(\x05\x12\x0f\n\x07message\x18\x02 \x01(\t\x12/\n\x06status\x18\x03 \x01(\x0e\x32\x1f.google.firestore.v1.StatusCode\"\x80\x02\n\x08\x44ocument\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x39\n\x06\x66ields\x18\x02 \x03(\x0b\x32).google.firestore.v1.Document.FieldsEntry\x12/\n\x0b\x63reate_time\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12/\n\x0bupdate_time\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x1aI\n\x0b\x46ieldsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12)\n\x05value\x18\x02 \x01(\x0b\x32\x1a.google.firestore.v1.Value:\x02\x38\x01\"\xb6\x03\n\x05Value\x12\x30\n\nnull_value\x18\x0b \x01(\x0e\x32\x1a.google.protobuf.NullValueH\x00\x12\x17\n\rboolean_value\x18\x01 \x01(\x08H\x00\x12\x17\n\rinteger_value\x18\x02 \x01(\x03H\x00\x12\x16\n\x0c\x64ouble_value\x18\x03 \x01(\x01H\x00\x12\x35\n\x0ftimestamp_value\x18\n \x01(\x0b\x32\x1a.google.protobuf.TimestampH\x00\x12\x16\n\x0cstring_value\x18\x11 \x01(\tH\x00\x12\x15\n\x0b\x62ytes_value\x18\x12 \x01(\x0cH\x00\x12\x19\n\x0freference_value\x18\x05 \x01(\tH\x00\x12\x36\n\x0fgeo_point_value\x18\x08 \x01(\x0b\x32\x1b.google.firestore.v1.LatLngH\x00\x12\x36\n\x0b\x61rray_value\x18\t \x01(\x0b\x32\x1f.google.firestore.v1.ArrayValueH\x00\x12\x32\n\tmap_value\x18\x06 \x01(\x0b\x32\x1d.google.firestore.v1.MapValueH\x00\x42\x0c\n\nvalue_type\"8\n\nArrayValue\x12*\n\x06values\x18\x01 \x03(\x0b\x32\x1a.google.firestore.v1.Value\"\x90\x01\n\x08MapValue\x12\x39\n\x06\x66ields\x18\x01 \x03(\x0b\x32).google.firestore.v1.MapValue.FieldsEntry\x1aI\n\x0b\x46ieldsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12)\n\x05value\x18\x02 \x01(\x0b\x32\x1a.google.firestore.v1.Value:\x02\x38\x01\"-\n\x06LatLng\x12\x10\n\x08latitude\x18\x01 \x01(\x01\x12\x11\n\tlongitude\x18\x02 \x01(\x01\"b\n\x15ListDocumentsResponse\x12\x30\n\tdocuments\x18\x01 \x03(\x0b\x32\x1d.google.firestore.v1.Document\x12\x17\n\x0fnext_page_token\x18\x02 \x01(\t\"\xfa\x01\n\x0cWriteRequest\x12\x16\n\tstream_id\x18\x02 \x01(\tH\x00\x88\x01\x01\x12*\n\x06writes\x18\x03 \x03(\x0b\x32\x1a.google.firestore.v1.Write\x12\x19\n\x0cstream_token\x18\x04 \x01(\x0cH\x01\x88\x01\x01\x12=\n\x06labels\x18\x05 \x03(\x0b\x32-.google.firestore.v1.WriteRequest.LabelsEntry\x1a-\n\x0bLabelsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x42\x0c\n\n_stream_idB\x0f\n\r_stream_token\"\xa2\x01\n\rWriteResponse\x12\x11\n\tstream_id\x18\x01 \x01(\t\x12\x14\n\x0cstream_token\x18\x02 \x01(\x0c\x12\x37\n\rwrite_results\x18\x03 \x03(\x0b\x32 .google.firestore.v1.WriteResult\x12/\n\x0b\x63ommit_time\x18\x04 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"u\n\x0bWriteResult\x12/\n\x0bupdate_time\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x35\n\x11transform_results\x18\x02 \x03(\x0b\x32\x1a.google.firestore.v1.Value\"P\n\rCommitRequest\x12*\n\x06writes\x18\x02 \x03(\x0b\x32\x1a.google.firestore.v1.Write\x12\x13\n\x0btransaction\x18\x03 \x01(\x0c\"z\n\x0e\x43ommitResponse\x12\x37\n\rwrite_results\x18\x01 \x03(\x0b\x32 .google.firestore.v1.WriteResult\x12/\n\x0b\x63ommit_time\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"W\n\x05Write\x12/\n\x06update\x18\x01 \x01(\x0b\x32\x1d.google.firestore.v1.DocumentH\x00\x12\x10\n\x06\x64\x65lete\x18\x02 \x01(\tH\x00\x42\x0b\n\toperation*\xbd\x02\n\nStatusCode\x12\x06\n\x02OK\x10\x00\x12\r\n\tCANCELLED\x10\x01\x12\x0b\n\x07UNKNOWN\x10\x02\x12\x14\n\x10INVALID_ARGUMENT\x10\x03\x12\x15\n\x11\x44\x45\x41\x44LINE_EXCEEDED\x10\x04\x12\r\n\tNOT_FOUND\x10\x05\x12\x12\n\x0e\x41LREADY_EXISTS\x10\x06\x12\x15\n\x11PERMISSION_DENIED\x10\x07\x12\x13\n\x0fUNAUTHENTICATED\x10\x10\x12\x16\n\x12RESOURCE_EXHAUSTED\x10\x08\x12\x17\n\x13\x46\x41ILED_PRECONDITION\x10\t\x12\x0b\n\x07\x41\x42ORTED\x10\n\x12\x10\n\x0cOUT_OF_RANGE\x10\x0b\x12\x11\n\rUNIMPLEMENTED\x10\x0c\x12\x0c\n\x08INTERNAL\x10\r\x12\x0f\n\x0bUNAVAILABLE\x10\x0e\x12\r\n\tDATA_LOSS\x10\x0f\x62\x06proto3')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'third_party.FirestoreProto_pb2', globals())
@@ -28,34 +28,38 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _MAPVALUE_FIELDSENTRY._serialized_options = b'8\001'
   _WRITEREQUEST_LABELSENTRY._options = None
   _WRITEREQUEST_LABELSENTRY._serialized_options = b'8\001'
-  _DOCUMENT._serialized_start=121
-  _DOCUMENT._serialized_end=377
-  _DOCUMENT_FIELDSENTRY._serialized_start=304
-  _DOCUMENT_FIELDSENTRY._serialized_end=377
-  _VALUE._serialized_start=380
-  _VALUE._serialized_end=818
-  _ARRAYVALUE._serialized_start=820
-  _ARRAYVALUE._serialized_end=876
-  _MAPVALUE._serialized_start=879
-  _MAPVALUE._serialized_end=1023
-  _MAPVALUE_FIELDSENTRY._serialized_start=304
-  _MAPVALUE_FIELDSENTRY._serialized_end=377
-  _LATLNG._serialized_start=1025
-  _LATLNG._serialized_end=1070
-  _LISTDOCUMENTSRESPONSE._serialized_start=1072
-  _LISTDOCUMENTSRESPONSE._serialized_end=1170
-  _WRITEREQUEST._serialized_start=1173
-  _WRITEREQUEST._serialized_end=1423
-  _WRITEREQUEST_LABELSENTRY._serialized_start=1347
-  _WRITEREQUEST_LABELSENTRY._serialized_end=1392
-  _WRITERESPONSE._serialized_start=1426
-  _WRITERESPONSE._serialized_end=1588
-  _WRITERESULT._serialized_start=1590
-  _WRITERESULT._serialized_end=1707
-  _COMMITREQUEST._serialized_start=1709
-  _COMMITREQUEST._serialized_end=1789
-  _COMMITRESPONSE._serialized_start=1791
-  _COMMITRESPONSE._serialized_end=1913
-  _WRITE._serialized_start=1915
-  _WRITE._serialized_end=2002
+  _STATUSCODE._serialized_start=2097
+  _STATUSCODE._serialized_end=2414
+  _RPCERROR._serialized_start=120
+  _RPCERROR._serialized_end=210
+  _DOCUMENT._serialized_start=213
+  _DOCUMENT._serialized_end=469
+  _DOCUMENT_FIELDSENTRY._serialized_start=396
+  _DOCUMENT_FIELDSENTRY._serialized_end=469
+  _VALUE._serialized_start=472
+  _VALUE._serialized_end=910
+  _ARRAYVALUE._serialized_start=912
+  _ARRAYVALUE._serialized_end=968
+  _MAPVALUE._serialized_start=971
+  _MAPVALUE._serialized_end=1115
+  _MAPVALUE_FIELDSENTRY._serialized_start=396
+  _MAPVALUE_FIELDSENTRY._serialized_end=469
+  _LATLNG._serialized_start=1117
+  _LATLNG._serialized_end=1162
+  _LISTDOCUMENTSRESPONSE._serialized_start=1164
+  _LISTDOCUMENTSRESPONSE._serialized_end=1262
+  _WRITEREQUEST._serialized_start=1265
+  _WRITEREQUEST._serialized_end=1515
+  _WRITEREQUEST_LABELSENTRY._serialized_start=1439
+  _WRITEREQUEST_LABELSENTRY._serialized_end=1484
+  _WRITERESPONSE._serialized_start=1518
+  _WRITERESPONSE._serialized_end=1680
+  _WRITERESULT._serialized_start=1682
+  _WRITERESULT._serialized_end=1799
+  _COMMITREQUEST._serialized_start=1801
+  _COMMITREQUEST._serialized_end=1881
+  _COMMITRESPONSE._serialized_start=1883
+  _COMMITRESPONSE._serialized_end=2005
+  _WRITE._serialized_start=2007
+  _WRITE._serialized_end=2094
 # @@protoc_insertion_point(module_scope)

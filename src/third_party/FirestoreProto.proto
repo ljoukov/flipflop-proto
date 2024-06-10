@@ -5,6 +5,32 @@ package google.firestore.v1;
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 
+enum StatusCode {
+  OK = 0;
+  CANCELLED = 1;
+  UNKNOWN = 2;
+  INVALID_ARGUMENT = 3;
+  DEADLINE_EXCEEDED = 4;
+  NOT_FOUND = 5;
+  ALREADY_EXISTS = 6;
+  PERMISSION_DENIED = 7;
+  UNAUTHENTICATED = 16;
+  RESOURCE_EXHAUSTED = 8;
+  FAILED_PRECONDITION = 9;
+  ABORTED = 10;
+  OUT_OF_RANGE = 11;
+  UNIMPLEMENTED = 12;
+  INTERNAL = 13;
+  UNAVAILABLE = 14;
+  DATA_LOSS = 15;
+}
+
+message RpcError {
+  int32 code = 1;
+  string message = 2;
+  StatusCode status = 3;
+}
+
 // A Firestore document.
 //
 // Must not exceed 1 MiB - 4 bytes.
@@ -159,7 +185,8 @@ message WriteRequest {
   // Required. The database name. In the format:
   // `projects/{project_id}/databases/{database_id}`.
   // This is only required in the first message.
-  // [SUPPLIED VIA URL PATH] string database = 1; // [(google.api.field_behavior) = REQUIRED];
+  // [SUPPLIED VIA URL PATH] string database = 1; //
+  // [(google.api.field_behavior) = REQUIRED];
 
   // The ID of the write stream to resume.
   // This may only be set in the first message. When left empty, a new write
@@ -177,9 +204,9 @@ message WriteRequest {
   // A stream token that was previously sent by the server.
   //
   // The client should set this field to the token from the most recent
-  // [WriteResponse][google.firestore.v1.WriteResponse] it has received. This acknowledges that the client has
-  // received responses up to this token. After sending this token, earlier
-  // tokens may not be used anymore.
+  // [WriteResponse][google.firestore.v1.WriteResponse] it has received. This
+  // acknowledges that the client has received responses up to this token. After
+  // sending this token, earlier tokens may not be used anymore.
   //
   // The server may close the stream if there are too many unacknowledged
   // responses.
@@ -226,15 +253,17 @@ message WriteResult {
   // previous update_time.
   google.protobuf.Timestamp update_time = 1;
 
-  // The results of applying each [DocumentTransform.FieldTransform][google.firestore.v1.DocumentTransform.FieldTransform], in the
-  // same order.
+  // The results of applying each
+  // [DocumentTransform.FieldTransform][google.firestore.v1.DocumentTransform.FieldTransform],
+  // in the same order.
   repeated Value transform_results = 2;
 }
 
 message CommitRequest {
   // Required. The database name. In the format:
   // `projects/{project_id}/databases/{database_id}`.
-  // [SUPPLIED VIA URL PATH] string database = 1 [(google.api.field_behavior) = REQUIRED];
+  // [SUPPLIED VIA URL PATH] string database = 1 [(google.api.field_behavior) =
+  // REQUIRED];
 
   // The writes to apply.
   //
@@ -288,7 +317,7 @@ message Write {
   // Fields referenced in the mask, but not present in the input document, are
   // deleted from the document on the server.
   // The field paths in this mask must not contain a reserved field name.
-  
+
   // [NOT IMPLEMENTED] DocumentMask update_mask = 3;
 
   // The transforms to perform after update.
@@ -296,7 +325,8 @@ message Write {
   // This field can be set only when the operation is `update`. If present, this
   // write is equivalent to performing `update` and `transform` to the same
   // document atomically and in order.
-  // [NOT IMPLEMENTED] repeated DocumentTransform.FieldTransform update_transforms = 7;
+  // [NOT IMPLEMENTED] repeated DocumentTransform.FieldTransform
+  // update_transforms = 7;
 
   // An optional precondition on the document.
   //

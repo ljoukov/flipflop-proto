@@ -20,6 +20,122 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
+enum Google_Firestore_V1_StatusCode: SwiftProtobuf.Enum {
+  typealias RawValue = Int
+  case ok // = 0
+  case cancelled // = 1
+  case unknown // = 2
+  case invalidArgument // = 3
+  case deadlineExceeded // = 4
+  case notFound // = 5
+  case alreadyExists // = 6
+  case permissionDenied // = 7
+  case unauthenticated // = 16
+  case resourceExhausted // = 8
+  case failedPrecondition // = 9
+  case aborted // = 10
+  case outOfRange // = 11
+  case unimplemented // = 12
+  case `internal` // = 13
+  case unavailable // = 14
+  case dataLoss // = 15
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .ok
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .ok
+    case 1: self = .cancelled
+    case 2: self = .unknown
+    case 3: self = .invalidArgument
+    case 4: self = .deadlineExceeded
+    case 5: self = .notFound
+    case 6: self = .alreadyExists
+    case 7: self = .permissionDenied
+    case 8: self = .resourceExhausted
+    case 9: self = .failedPrecondition
+    case 10: self = .aborted
+    case 11: self = .outOfRange
+    case 12: self = .unimplemented
+    case 13: self = .internal
+    case 14: self = .unavailable
+    case 15: self = .dataLoss
+    case 16: self = .unauthenticated
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .ok: return 0
+    case .cancelled: return 1
+    case .unknown: return 2
+    case .invalidArgument: return 3
+    case .deadlineExceeded: return 4
+    case .notFound: return 5
+    case .alreadyExists: return 6
+    case .permissionDenied: return 7
+    case .resourceExhausted: return 8
+    case .failedPrecondition: return 9
+    case .aborted: return 10
+    case .outOfRange: return 11
+    case .unimplemented: return 12
+    case .internal: return 13
+    case .unavailable: return 14
+    case .dataLoss: return 15
+    case .unauthenticated: return 16
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+}
+
+#if swift(>=4.2)
+
+extension Google_Firestore_V1_StatusCode: CaseIterable {
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static var allCases: [Google_Firestore_V1_StatusCode] = [
+    .ok,
+    .cancelled,
+    .unknown,
+    .invalidArgument,
+    .deadlineExceeded,
+    .notFound,
+    .alreadyExists,
+    .permissionDenied,
+    .unauthenticated,
+    .resourceExhausted,
+    .failedPrecondition,
+    .aborted,
+    .outOfRange,
+    .unimplemented,
+    .internal,
+    .unavailable,
+    .dataLoss,
+  ]
+}
+
+#endif  // swift(>=4.2)
+
+struct Google_Firestore_V1_RpcError {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var code: Int32 = 0
+
+  var message: String = String()
+
+  var status: Google_Firestore_V1_StatusCode = .ok
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 /// A Firestore document.
 ///
 /// Must not exceed 1 MiB - 4 bytes.
@@ -424,9 +540,9 @@ struct Google_Firestore_V1_WriteRequest {
   /// A stream token that was previously sent by the server.
   ///
   /// The client should set this field to the token from the most recent
-  /// [WriteResponse][google.firestore.v1.WriteResponse] it has received. This acknowledges that the client has
-  /// received responses up to this token. After sending this token, earlier
-  /// tokens may not be used anymore.
+  /// [WriteResponse][google.firestore.v1.WriteResponse] it has received. This
+  /// acknowledges that the client has received responses up to this token. After
+  /// sending this token, earlier tokens may not be used anymore.
   ///
   /// The server may close the stream if there are too many unacknowledged
   /// responses.
@@ -515,8 +631,9 @@ struct Google_Firestore_V1_WriteResult {
   /// Clears the value of `updateTime`. Subsequent reads from it will return its default value.
   mutating func clearUpdateTime() {self._updateTime = nil}
 
-  /// The results of applying each [DocumentTransform.FieldTransform][google.firestore.v1.DocumentTransform.FieldTransform], in the
-  /// same order.
+  /// The results of applying each
+  /// [DocumentTransform.FieldTransform][google.firestore.v1.DocumentTransform.FieldTransform],
+  /// in the same order.
   var transformResults: [Google_Firestore_V1_Value] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -528,7 +645,8 @@ struct Google_Firestore_V1_WriteResult {
 
 /// Required. The database name. In the format:
 /// `projects/{project_id}/databases/{database_id}`.
-/// [SUPPLIED VIA URL PATH] string database = 1 [(google.api.field_behavior) = REQUIRED];
+/// [SUPPLIED VIA URL PATH] string database = 1 [(google.api.field_behavior) =
+/// REQUIRED];
 struct Google_Firestore_V1_CommitRequest {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -639,6 +757,8 @@ struct Google_Firestore_V1_Write {
 }
 
 #if swift(>=5.5) && canImport(_Concurrency)
+extension Google_Firestore_V1_StatusCode: @unchecked Sendable {}
+extension Google_Firestore_V1_RpcError: @unchecked Sendable {}
 extension Google_Firestore_V1_Document: @unchecked Sendable {}
 extension Google_Firestore_V1_Value: @unchecked Sendable {}
 extension Google_Firestore_V1_Value.OneOf_ValueType: @unchecked Sendable {}
@@ -658,6 +778,72 @@ extension Google_Firestore_V1_Write.OneOf_Operation: @unchecked Sendable {}
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 fileprivate let _protobuf_package = "google.firestore.v1"
+
+extension Google_Firestore_V1_StatusCode: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "OK"),
+    1: .same(proto: "CANCELLED"),
+    2: .same(proto: "UNKNOWN"),
+    3: .same(proto: "INVALID_ARGUMENT"),
+    4: .same(proto: "DEADLINE_EXCEEDED"),
+    5: .same(proto: "NOT_FOUND"),
+    6: .same(proto: "ALREADY_EXISTS"),
+    7: .same(proto: "PERMISSION_DENIED"),
+    8: .same(proto: "RESOURCE_EXHAUSTED"),
+    9: .same(proto: "FAILED_PRECONDITION"),
+    10: .same(proto: "ABORTED"),
+    11: .same(proto: "OUT_OF_RANGE"),
+    12: .same(proto: "UNIMPLEMENTED"),
+    13: .same(proto: "INTERNAL"),
+    14: .same(proto: "UNAVAILABLE"),
+    15: .same(proto: "DATA_LOSS"),
+    16: .same(proto: "UNAUTHENTICATED"),
+  ]
+}
+
+extension Google_Firestore_V1_RpcError: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".RpcError"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "code"),
+    2: .same(proto: "message"),
+    3: .same(proto: "status"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularInt32Field(value: &self.code) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.message) }()
+      case 3: try { try decoder.decodeSingularEnumField(value: &self.status) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.code != 0 {
+      try visitor.visitSingularInt32Field(value: self.code, fieldNumber: 1)
+    }
+    if !self.message.isEmpty {
+      try visitor.visitSingularStringField(value: self.message, fieldNumber: 2)
+    }
+    if self.status != .ok {
+      try visitor.visitSingularEnumField(value: self.status, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Google_Firestore_V1_RpcError, rhs: Google_Firestore_V1_RpcError) -> Bool {
+    if lhs.code != rhs.code {return false}
+    if lhs.message != rhs.message {return false}
+    if lhs.status != rhs.status {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
 
 extension Google_Firestore_V1_Document: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".Document"

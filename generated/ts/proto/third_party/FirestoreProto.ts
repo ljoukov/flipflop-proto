@@ -16,6 +16,23 @@ import { MessageType } from "@protobuf-ts/runtime";
 import { NullValue } from "../google/protobuf/struct";
 import { Timestamp } from "../google/protobuf/timestamp";
 /**
+ * @generated from protobuf message google.firestore.v1.RpcError
+ */
+export interface RpcError {
+    /**
+     * @generated from protobuf field: int32 code = 1;
+     */
+    code: number;
+    /**
+     * @generated from protobuf field: string message = 2;
+     */
+    message: string;
+    /**
+     * @generated from protobuf field: google.firestore.v1.StatusCode status = 3;
+     */
+    status: StatusCode;
+}
+/**
  * A Firestore document.
  *
  * Must not exceed 1 MiB - 4 bytes.
@@ -285,7 +302,8 @@ export interface ListDocumentsResponse {
  * Required. The database name. In the format:
  * `projects/{project_id}/databases/{database_id}`.
  * This is only required in the first message.
- * [SUPPLIED VIA URL PATH] string database = 1; // [(google.api.field_behavior) = REQUIRED];
+ * [SUPPLIED VIA URL PATH] string database = 1; //
+ * [(google.api.field_behavior) = REQUIRED];
  *
  * @generated from protobuf message google.firestore.v1.WriteRequest
  */
@@ -313,9 +331,9 @@ export interface WriteRequest {
      * A stream token that was previously sent by the server.
      *
      * The client should set this field to the token from the most recent
-     * [WriteResponse][google.firestore.v1.WriteResponse] it has received. This acknowledges that the client has
-     * received responses up to this token. After sending this token, earlier
-     * tokens may not be used anymore.
+     * [WriteResponse][google.firestore.v1.WriteResponse] it has received. This
+     * acknowledges that the client has received responses up to this token. After
+     * sending this token, earlier tokens may not be used anymore.
      *
      * The server may close the stream if there are too many unacknowledged
      * responses.
@@ -393,8 +411,9 @@ export interface WriteResult {
      */
     updateTime?: Timestamp;
     /**
-     * The results of applying each [DocumentTransform.FieldTransform][google.firestore.v1.DocumentTransform.FieldTransform], in the
-     * same order.
+     * The results of applying each
+     * [DocumentTransform.FieldTransform][google.firestore.v1.DocumentTransform.FieldTransform],
+     * in the same order.
      *
      * @generated from protobuf field: repeated google.firestore.v1.Value transform_results = 2;
      */
@@ -403,7 +422,8 @@ export interface WriteResult {
 /**
  * Required. The database name. In the format:
  * `projects/{project_id}/databases/{database_id}`.
- * [SUPPLIED VIA URL PATH] string database = 1 [(google.api.field_behavior) = REQUIRED];
+ * [SUPPLIED VIA URL PATH] string database = 1 [(google.api.field_behavior) =
+ * REQUIRED];
  *
  * @generated from protobuf message google.firestore.v1.CommitRequest
  */
@@ -476,6 +496,140 @@ export interface Write {
         oneofKind: undefined;
     };
 }
+/**
+ * @generated from protobuf enum google.firestore.v1.StatusCode
+ */
+export enum StatusCode {
+    /**
+     * @generated from protobuf enum value: OK = 0;
+     */
+    OK = 0,
+    /**
+     * @generated from protobuf enum value: CANCELLED = 1;
+     */
+    CANCELLED = 1,
+    /**
+     * @generated from protobuf enum value: UNKNOWN = 2;
+     */
+    UNKNOWN = 2,
+    /**
+     * @generated from protobuf enum value: INVALID_ARGUMENT = 3;
+     */
+    INVALID_ARGUMENT = 3,
+    /**
+     * @generated from protobuf enum value: DEADLINE_EXCEEDED = 4;
+     */
+    DEADLINE_EXCEEDED = 4,
+    /**
+     * @generated from protobuf enum value: NOT_FOUND = 5;
+     */
+    NOT_FOUND = 5,
+    /**
+     * @generated from protobuf enum value: ALREADY_EXISTS = 6;
+     */
+    ALREADY_EXISTS = 6,
+    /**
+     * @generated from protobuf enum value: PERMISSION_DENIED = 7;
+     */
+    PERMISSION_DENIED = 7,
+    /**
+     * @generated from protobuf enum value: UNAUTHENTICATED = 16;
+     */
+    UNAUTHENTICATED = 16,
+    /**
+     * @generated from protobuf enum value: RESOURCE_EXHAUSTED = 8;
+     */
+    RESOURCE_EXHAUSTED = 8,
+    /**
+     * @generated from protobuf enum value: FAILED_PRECONDITION = 9;
+     */
+    FAILED_PRECONDITION = 9,
+    /**
+     * @generated from protobuf enum value: ABORTED = 10;
+     */
+    ABORTED = 10,
+    /**
+     * @generated from protobuf enum value: OUT_OF_RANGE = 11;
+     */
+    OUT_OF_RANGE = 11,
+    /**
+     * @generated from protobuf enum value: UNIMPLEMENTED = 12;
+     */
+    UNIMPLEMENTED = 12,
+    /**
+     * @generated from protobuf enum value: INTERNAL = 13;
+     */
+    INTERNAL = 13,
+    /**
+     * @generated from protobuf enum value: UNAVAILABLE = 14;
+     */
+    UNAVAILABLE = 14,
+    /**
+     * @generated from protobuf enum value: DATA_LOSS = 15;
+     */
+    DATA_LOSS = 15
+}
+// @generated message type with reflection information, may provide speed optimized methods
+class RpcError$Type extends MessageType<RpcError> {
+    constructor() {
+        super("google.firestore.v1.RpcError", [
+            { no: 1, name: "code", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 2, name: "message", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "status", kind: "enum", T: () => ["google.firestore.v1.StatusCode", StatusCode] }
+        ]);
+    }
+    create(value?: PartialMessage<RpcError>): RpcError {
+        const message = { code: 0, message: "", status: 0 };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<RpcError>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: RpcError): RpcError {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int32 code */ 1:
+                    message.code = reader.int32();
+                    break;
+                case /* string message */ 2:
+                    message.message = reader.string();
+                    break;
+                case /* google.firestore.v1.StatusCode status */ 3:
+                    message.status = reader.int32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: RpcError, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int32 code = 1; */
+        if (message.code !== 0)
+            writer.tag(1, WireType.Varint).int32(message.code);
+        /* string message = 2; */
+        if (message.message !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.message);
+        /* google.firestore.v1.StatusCode status = 3; */
+        if (message.status !== 0)
+            writer.tag(3, WireType.Varint).int32(message.status);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message google.firestore.v1.RpcError
+ */
+export const RpcError = new RpcError$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class Document$Type extends MessageType<Document> {
     constructor() {
