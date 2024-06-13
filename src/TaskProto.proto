@@ -9,11 +9,11 @@ message TaskProto {
 
   // IDs start at 10
   oneof type {
-    CreatePodcastTaskProto create_podcast = 10;
+    GeneratePodcastTaskProto generate_podcast = 10;
   }
 }
 
-message CreatePodcastTaskProto {
+message GeneratePodcastTaskProto {
   string user_id = 1;
   GeneratePodcastRequestProto request = 2;
 }

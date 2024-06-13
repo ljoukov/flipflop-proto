@@ -31,19 +31,19 @@ export interface TaskProto {
      * @generated from protobuf oneof: type
      */
     type: {
-        oneofKind: "createPodcast";
+        oneofKind: "generatePodcast";
         /**
-         * @generated from protobuf field: CreatePodcastTaskProto create_podcast = 10;
+         * @generated from protobuf field: GeneratePodcastTaskProto generate_podcast = 10;
          */
-        createPodcast: CreatePodcastTaskProto;
+        generatePodcast: GeneratePodcastTaskProto;
     } | {
         oneofKind: undefined;
     };
 }
 /**
- * @generated from protobuf message CreatePodcastTaskProto
+ * @generated from protobuf message GeneratePodcastTaskProto
  */
-export interface CreatePodcastTaskProto {
+export interface GeneratePodcastTaskProto {
     /**
      * @generated from protobuf field: string user_id = 1;
      */
@@ -59,7 +59,7 @@ class TaskProto$Type extends MessageType<TaskProto> {
         super("TaskProto", [
             { no: 1, name: "task_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "created_at", kind: "message", T: () => Timestamp },
-            { no: 10, name: "create_podcast", kind: "message", oneof: "type", T: () => CreatePodcastTaskProto }
+            { no: 10, name: "generate_podcast", kind: "message", oneof: "type", T: () => GeneratePodcastTaskProto }
         ]);
     }
     create(value?: PartialMessage<TaskProto>): TaskProto {
@@ -80,10 +80,10 @@ class TaskProto$Type extends MessageType<TaskProto> {
                 case /* google.protobuf.Timestamp created_at */ 2:
                     message.createdAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.createdAt);
                     break;
-                case /* CreatePodcastTaskProto create_podcast */ 10:
+                case /* GeneratePodcastTaskProto generate_podcast */ 10:
                     message.type = {
-                        oneofKind: "createPodcast",
-                        createPodcast: CreatePodcastTaskProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).createPodcast)
+                        oneofKind: "generatePodcast",
+                        generatePodcast: GeneratePodcastTaskProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).generatePodcast)
                     };
                     break;
                 default:
@@ -104,9 +104,9 @@ class TaskProto$Type extends MessageType<TaskProto> {
         /* google.protobuf.Timestamp created_at = 2; */
         if (message.createdAt)
             Timestamp.internalBinaryWrite(message.createdAt, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* CreatePodcastTaskProto create_podcast = 10; */
-        if (message.type.oneofKind === "createPodcast")
-            CreatePodcastTaskProto.internalBinaryWrite(message.type.createPodcast, writer.tag(10, WireType.LengthDelimited).fork(), options).join();
+        /* GeneratePodcastTaskProto generate_podcast = 10; */
+        if (message.type.oneofKind === "generatePodcast")
+            GeneratePodcastTaskProto.internalBinaryWrite(message.type.generatePodcast, writer.tag(10, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -118,21 +118,21 @@ class TaskProto$Type extends MessageType<TaskProto> {
  */
 export const TaskProto = new TaskProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class CreatePodcastTaskProto$Type extends MessageType<CreatePodcastTaskProto> {
+class GeneratePodcastTaskProto$Type extends MessageType<GeneratePodcastTaskProto> {
     constructor() {
-        super("CreatePodcastTaskProto", [
+        super("GeneratePodcastTaskProto", [
             { no: 1, name: "user_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "request", kind: "message", T: () => GeneratePodcastRequestProto }
         ]);
     }
-    create(value?: PartialMessage<CreatePodcastTaskProto>): CreatePodcastTaskProto {
+    create(value?: PartialMessage<GeneratePodcastTaskProto>): GeneratePodcastTaskProto {
         const message = { userId: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<CreatePodcastTaskProto>(this, message, value);
+            reflectionMergePartial<GeneratePodcastTaskProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CreatePodcastTaskProto): CreatePodcastTaskProto {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GeneratePodcastTaskProto): GeneratePodcastTaskProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -154,7 +154,7 @@ class CreatePodcastTaskProto$Type extends MessageType<CreatePodcastTaskProto> {
         }
         return message;
     }
-    internalBinaryWrite(message: CreatePodcastTaskProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: GeneratePodcastTaskProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string user_id = 1; */
         if (message.userId !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.userId);
@@ -168,6 +168,6 @@ class CreatePodcastTaskProto$Type extends MessageType<CreatePodcastTaskProto> {
     }
 }
 /**
- * @generated MessageType for protobuf message CreatePodcastTaskProto
+ * @generated MessageType for protobuf message GeneratePodcastTaskProto
  */
-export const CreatePodcastTaskProto = new CreatePodcastTaskProto$Type();
+export const GeneratePodcastTaskProto = new GeneratePodcastTaskProto$Type();
