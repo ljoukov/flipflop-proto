@@ -13,6 +13,7 @@ import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
+import { GeneratePodcastRequestProto } from "./PodcastProto";
 import { Timestamp } from "./google/protobuf/timestamp";
 /**
  * @generated from protobuf message TaskProto
@@ -44,13 +45,13 @@ export interface TaskProto {
  */
 export interface CreatePodcastTaskProto {
     /**
-     * @generated from protobuf field: string podcast_id = 1;
+     * @generated from protobuf field: string user_id = 1;
      */
-    podcastId: string;
+    userId: string;
     /**
-     * @generated from protobuf field: string created_by = 2;
+     * @generated from protobuf field: GeneratePodcastRequestProto request = 2;
      */
-    createdBy: string;
+    request?: GeneratePodcastRequestProto;
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class TaskProto$Type extends MessageType<TaskProto> {
@@ -120,12 +121,12 @@ export const TaskProto = new TaskProto$Type();
 class CreatePodcastTaskProto$Type extends MessageType<CreatePodcastTaskProto> {
     constructor() {
         super("CreatePodcastTaskProto", [
-            { no: 1, name: "podcast_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "created_by", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "user_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "request", kind: "message", T: () => GeneratePodcastRequestProto }
         ]);
     }
     create(value?: PartialMessage<CreatePodcastTaskProto>): CreatePodcastTaskProto {
-        const message = { podcastId: "", createdBy: "" };
+        const message = { userId: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<CreatePodcastTaskProto>(this, message, value);
@@ -136,11 +137,11 @@ class CreatePodcastTaskProto$Type extends MessageType<CreatePodcastTaskProto> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string podcast_id */ 1:
-                    message.podcastId = reader.string();
+                case /* string user_id */ 1:
+                    message.userId = reader.string();
                     break;
-                case /* string created_by */ 2:
-                    message.createdBy = reader.string();
+                case /* GeneratePodcastRequestProto request */ 2:
+                    message.request = GeneratePodcastRequestProto.internalBinaryRead(reader, reader.uint32(), options, message.request);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -154,12 +155,12 @@ class CreatePodcastTaskProto$Type extends MessageType<CreatePodcastTaskProto> {
         return message;
     }
     internalBinaryWrite(message: CreatePodcastTaskProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string podcast_id = 1; */
-        if (message.podcastId !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.podcastId);
-        /* string created_by = 2; */
-        if (message.createdBy !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.createdBy);
+        /* string user_id = 1; */
+        if (message.userId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.userId);
+        /* GeneratePodcastRequestProto request = 2; */
+        if (message.request)
+            GeneratePodcastRequestProto.internalBinaryWrite(message.request, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

@@ -78,13 +78,22 @@ struct CreatePodcastTaskProto {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var podcastID: String = String()
+  var userID: String = String()
 
-  var createdBy: String = String()
+  var request: GeneratePodcastRequestProto {
+    get {return _request ?? GeneratePodcastRequestProto()}
+    set {_request = newValue}
+  }
+  /// Returns true if `request` has been explicitly set.
+  var hasRequest: Bool {return self._request != nil}
+  /// Clears the value of `request`. Subsequent reads from it will return its default value.
+  mutating func clearRequest() {self._request = nil}
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
+
+  fileprivate var _request: GeneratePodcastRequestProto? = nil
 }
 
 #if swift(>=5.5) && canImport(_Concurrency)
@@ -158,8 +167,8 @@ extension TaskProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementation
 extension CreatePodcastTaskProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "CreatePodcastTaskProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "podcast_id"),
-    2: .standard(proto: "created_by"),
+    1: .standard(proto: "user_id"),
+    2: .same(proto: "request"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -168,26 +177,30 @@ extension CreatePodcastTaskProto: SwiftProtobuf.Message, SwiftProtobuf._MessageI
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.podcastID) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.createdBy) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self.userID) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._request) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.podcastID.isEmpty {
-      try visitor.visitSingularStringField(value: self.podcastID, fieldNumber: 1)
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.userID.isEmpty {
+      try visitor.visitSingularStringField(value: self.userID, fieldNumber: 1)
     }
-    if !self.createdBy.isEmpty {
-      try visitor.visitSingularStringField(value: self.createdBy, fieldNumber: 2)
-    }
+    try { if let v = self._request {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: CreatePodcastTaskProto, rhs: CreatePodcastTaskProto) -> Bool {
-    if lhs.podcastID != rhs.podcastID {return false}
-    if lhs.createdBy != rhs.createdBy {return false}
+    if lhs.userID != rhs.userID {return false}
+    if lhs._request != rhs._request {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
