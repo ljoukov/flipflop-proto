@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+// import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+
+message TaskProto {
+  string task_id = 1;
+  google.protobuf.Timestamp created_at = 2;
+
+  // IDs start at 10
+  oneof type {
+    CreatePodcastTaskProto create_podcast = 10;
+  }
+}
+
+message CreatePodcastTaskProto {
+  string podcast_id = 1;
+  string created_by = 2;
+}
