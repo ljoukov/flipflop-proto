@@ -751,9 +751,20 @@ struct PodcastThumbnailProto {
 
   var path: String = String()
 
+  var duration: SwiftProtobuf.Google_Protobuf_Duration {
+    get {return _duration ?? SwiftProtobuf.Google_Protobuf_Duration()}
+    set {_duration = newValue}
+  }
+  /// Returns true if `duration` has been explicitly set.
+  var hasDuration: Bool {return self._duration != nil}
+  /// Clears the value of `duration`. Subsequent reads from it will return its default value.
+  mutating func clearDuration() {self._duration = nil}
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
+
+  fileprivate var _duration: SwiftProtobuf.Google_Protobuf_Duration? = nil
 }
 
 struct PodcastAudioProto {
@@ -2044,6 +2055,7 @@ extension PodcastThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     1: .same(proto: "title"),
     2: .same(proto: "badge"),
     3: .same(proto: "path"),
+    4: .same(proto: "duration"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2055,12 +2067,17 @@ extension PodcastThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
       case 1: try { try decoder.decodeSingularStringField(value: &self.title) }()
       case 2: try { try decoder.decodeSingularEnumField(value: &self.badge) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.path) }()
+      case 4: try { try decoder.decodeSingularMessageField(value: &self._duration) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.title.isEmpty {
       try visitor.visitSingularStringField(value: self.title, fieldNumber: 1)
     }
@@ -2070,6 +2087,9 @@ extension PodcastThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     if !self.path.isEmpty {
       try visitor.visitSingularStringField(value: self.path, fieldNumber: 3)
     }
+    try { if let v = self._duration {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -2077,6 +2097,7 @@ extension PodcastThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     if lhs.title != rhs.title {return false}
     if lhs.badge != rhs.badge {return false}
     if lhs.path != rhs.path {return false}
+    if lhs._duration != rhs._duration {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

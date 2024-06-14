@@ -107,6 +107,7 @@ message PodcastThumbnailProto {
   string title = 1;
   PodcastBadgeProto badge = 2;
   string path = 3;
+  google.protobuf.Duration duration = 4;
 }
 
 enum PodcastBadgeProto {

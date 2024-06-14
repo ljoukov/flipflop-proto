@@ -336,6 +336,10 @@ export interface PodcastThumbnailProto {
      * @generated from protobuf field: string path = 3;
      */
     path: string;
+    /**
+     * @generated from protobuf field: google.protobuf.Duration duration = 4;
+     */
+    duration?: Duration;
 }
 /**
  * @generated from protobuf message PodcastAudioProto
@@ -1538,7 +1542,8 @@ class PodcastThumbnailProto$Type extends MessageType<PodcastThumbnailProto> {
         super("PodcastThumbnailProto", [
             { no: 1, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "badge", kind: "enum", T: () => ["PodcastBadgeProto", PodcastBadgeProto, "PODCAST_BADGE_PROTO_"] },
-            { no: 3, name: "path", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 3, name: "path", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "duration", kind: "message", T: () => Duration }
         ]);
     }
     create(value?: PartialMessage<PodcastThumbnailProto>): PodcastThumbnailProto {
@@ -1562,6 +1567,9 @@ class PodcastThumbnailProto$Type extends MessageType<PodcastThumbnailProto> {
                 case /* string path */ 3:
                     message.path = reader.string();
                     break;
+                case /* google.protobuf.Duration duration */ 4:
+                    message.duration = Duration.internalBinaryRead(reader, reader.uint32(), options, message.duration);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -1583,6 +1591,9 @@ class PodcastThumbnailProto$Type extends MessageType<PodcastThumbnailProto> {
         /* string path = 3; */
         if (message.path !== "")
             writer.tag(3, WireType.LengthDelimited).string(message.path);
+        /* google.protobuf.Duration duration = 4; */
+        if (message.duration)
+            Duration.internalBinaryWrite(message.duration, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
