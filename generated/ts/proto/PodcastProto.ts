@@ -155,19 +155,19 @@ export interface CreatePodcastResponseDeltaProto {
          */
         errorNoTopic: boolean;
     } | {
-        oneofKind: "podcast";
+        oneofKind: "answer";
         /**
          * IDs start at 10
          *
-         * @generated from protobuf field: PodcastProto podcast = 10;
-         */
-        podcast: PodcastProto;
-    } | {
-        oneofKind: "answer";
-        /**
-         * @generated from protobuf field: PodcastPromptAnswerProto answer = 11;
+         * @generated from protobuf field: PodcastPromptAnswerProto answer = 10;
          */
         answer: PodcastPromptAnswerProto;
+    } | {
+        oneofKind: "preview";
+        /**
+         * @generated from protobuf field: PodcastPreviewProto preview = 11;
+         */
+        preview: PodcastPreviewProto;
     } | {
         oneofKind: undefined;
     };
@@ -180,10 +180,6 @@ export interface GeneratePodcastRequestProto {
      * @generated from protobuf field: string podcast_id = 1;
      */
     podcastId: string;
-    /**
-     * @generated from protobuf field: int32 duration_seconds = 2;
-     */
-    durationSeconds: number;
 }
 /**
  * @generated from protobuf message GeneratePodcastResponseHeaderProto
@@ -198,11 +194,11 @@ export interface GeneratePodcastResponseDeltaProto {
      * @generated from protobuf oneof: type
      */
     type: {
-        oneofKind: "podcast";
+        oneofKind: "card";
         /**
-         * @generated from protobuf field: PodcastProto podcast = 1;
+         * @generated from protobuf field: PodcastCardProto card = 1;
          */
-        podcast: PodcastProto;
+        card: PodcastCardProto;
     } | {
         oneofKind: undefined;
     };
@@ -271,35 +267,29 @@ export interface PodcastProto {
      */
     updatedAt?: Timestamp;
     /**
-     * @generated from protobuf field: bool is_ready = 5;
-     */
-    isReady: boolean;
-    /**
-     * @generated from protobuf field: string display_status = 6;
-     */
-    displayStatus: string;
-    /**
-     * @generated from protobuf field: PodcastPreviewProto preview = 7;
+     * IDs start at 10
+     *
+     * @generated from protobuf field: PodcastPreviewProto preview = 10;
      */
     preview?: PodcastPreviewProto;
     /**
-     * @generated from protobuf field: PodcastThumbnailProto thumbnail = 8;
+     * @generated from protobuf field: PodcastThumbnailProto thumbnail = 11;
      */
     thumbnail?: PodcastThumbnailProto;
     /**
-     * @generated from protobuf field: PodcastAudioProto audio = 9;
+     * @generated from protobuf field: PodcastAudioProto audio = 12;
      */
     audio?: PodcastAudioProto;
     /**
-     * @generated from protobuf field: PodcastVisualsProto visuals = 10;
+     * @generated from protobuf field: PodcastVisualsProto visuals = 13;
      */
     visuals?: PodcastVisualsProto;
     /**
-     * @generated from protobuf field: PodcastTranscriptProto transcript = 11;
+     * @generated from protobuf field: PodcastTranscriptProto transcript = 14;
      */
     transcript?: PodcastTranscriptProto;
     /**
-     * @generated from protobuf field: PodcastCardsProto cards = 12;
+     * @generated from protobuf field: PodcastCardsProto cards = 15;
      */
     cards?: PodcastCardsProto;
 }
@@ -340,6 +330,14 @@ export interface PodcastThumbnailProto {
      * @generated from protobuf field: google.protobuf.Duration duration = 4;
      */
     duration?: Duration;
+    /**
+     * @generated from protobuf field: bool is_ready = 5;
+     */
+    isReady: boolean;
+    /**
+     * @generated from protobuf field: string display_status = 6;
+     */
+    displayStatus: string;
 }
 /**
  * @generated from protobuf message PodcastAudioProto
@@ -1004,8 +1002,8 @@ class CreatePodcastResponseDeltaProto$Type extends MessageType<CreatePodcastResp
         super("CreatePodcastResponseDeltaProto", [
             { no: 1, name: "separator", kind: "scalar", oneof: "type", T: 8 /*ScalarType.BOOL*/ },
             { no: 2, name: "error_no_topic", kind: "scalar", oneof: "type", T: 8 /*ScalarType.BOOL*/ },
-            { no: 10, name: "podcast", kind: "message", oneof: "type", T: () => PodcastProto },
-            { no: 11, name: "answer", kind: "message", oneof: "type", T: () => PodcastPromptAnswerProto }
+            { no: 10, name: "answer", kind: "message", oneof: "type", T: () => PodcastPromptAnswerProto },
+            { no: 11, name: "preview", kind: "message", oneof: "type", T: () => PodcastPreviewProto }
         ]);
     }
     create(value?: PartialMessage<CreatePodcastResponseDeltaProto>): CreatePodcastResponseDeltaProto {
@@ -1032,16 +1030,16 @@ class CreatePodcastResponseDeltaProto$Type extends MessageType<CreatePodcastResp
                         errorNoTopic: reader.bool()
                     };
                     break;
-                case /* PodcastProto podcast */ 10:
-                    message.type = {
-                        oneofKind: "podcast",
-                        podcast: PodcastProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).podcast)
-                    };
-                    break;
-                case /* PodcastPromptAnswerProto answer */ 11:
+                case /* PodcastPromptAnswerProto answer */ 10:
                     message.type = {
                         oneofKind: "answer",
                         answer: PodcastPromptAnswerProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).answer)
+                    };
+                    break;
+                case /* PodcastPreviewProto preview */ 11:
+                    message.type = {
+                        oneofKind: "preview",
+                        preview: PodcastPreviewProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).preview)
                     };
                     break;
                 default:
@@ -1062,12 +1060,12 @@ class CreatePodcastResponseDeltaProto$Type extends MessageType<CreatePodcastResp
         /* bool error_no_topic = 2; */
         if (message.type.oneofKind === "errorNoTopic")
             writer.tag(2, WireType.Varint).bool(message.type.errorNoTopic);
-        /* PodcastProto podcast = 10; */
-        if (message.type.oneofKind === "podcast")
-            PodcastProto.internalBinaryWrite(message.type.podcast, writer.tag(10, WireType.LengthDelimited).fork(), options).join();
-        /* PodcastPromptAnswerProto answer = 11; */
+        /* PodcastPromptAnswerProto answer = 10; */
         if (message.type.oneofKind === "answer")
-            PodcastPromptAnswerProto.internalBinaryWrite(message.type.answer, writer.tag(11, WireType.LengthDelimited).fork(), options).join();
+            PodcastPromptAnswerProto.internalBinaryWrite(message.type.answer, writer.tag(10, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastPreviewProto preview = 11; */
+        if (message.type.oneofKind === "preview")
+            PodcastPreviewProto.internalBinaryWrite(message.type.preview, writer.tag(11, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1082,12 +1080,11 @@ export const CreatePodcastResponseDeltaProto = new CreatePodcastResponseDeltaPro
 class GeneratePodcastRequestProto$Type extends MessageType<GeneratePodcastRequestProto> {
     constructor() {
         super("GeneratePodcastRequestProto", [
-            { no: 1, name: "podcast_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "duration_seconds", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
+            { no: 1, name: "podcast_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<GeneratePodcastRequestProto>): GeneratePodcastRequestProto {
-        const message = { podcastId: "", durationSeconds: 0 };
+        const message = { podcastId: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<GeneratePodcastRequestProto>(this, message, value);
@@ -1100,9 +1097,6 @@ class GeneratePodcastRequestProto$Type extends MessageType<GeneratePodcastReques
             switch (fieldNo) {
                 case /* string podcast_id */ 1:
                     message.podcastId = reader.string();
-                    break;
-                case /* int32 duration_seconds */ 2:
-                    message.durationSeconds = reader.int32();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1119,9 +1113,6 @@ class GeneratePodcastRequestProto$Type extends MessageType<GeneratePodcastReques
         /* string podcast_id = 1; */
         if (message.podcastId !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.podcastId);
-        /* int32 duration_seconds = 2; */
-        if (message.durationSeconds !== 0)
-            writer.tag(2, WireType.Varint).int32(message.durationSeconds);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1162,7 +1153,7 @@ export const GeneratePodcastResponseHeaderProto = new GeneratePodcastResponseHea
 class GeneratePodcastResponseDeltaProto$Type extends MessageType<GeneratePodcastResponseDeltaProto> {
     constructor() {
         super("GeneratePodcastResponseDeltaProto", [
-            { no: 1, name: "podcast", kind: "message", oneof: "type", T: () => PodcastProto }
+            { no: 1, name: "card", kind: "message", oneof: "type", T: () => PodcastCardProto }
         ]);
     }
     create(value?: PartialMessage<GeneratePodcastResponseDeltaProto>): GeneratePodcastResponseDeltaProto {
@@ -1177,10 +1168,10 @@ class GeneratePodcastResponseDeltaProto$Type extends MessageType<GeneratePodcast
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* PodcastProto podcast */ 1:
+                case /* PodcastCardProto card */ 1:
                     message.type = {
-                        oneofKind: "podcast",
-                        podcast: PodcastProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).podcast)
+                        oneofKind: "card",
+                        card: PodcastCardProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).card)
                     };
                     break;
                 default:
@@ -1195,9 +1186,9 @@ class GeneratePodcastResponseDeltaProto$Type extends MessageType<GeneratePodcast
         return message;
     }
     internalBinaryWrite(message: GeneratePodcastResponseDeltaProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* PodcastProto podcast = 1; */
-        if (message.type.oneofKind === "podcast")
-            PodcastProto.internalBinaryWrite(message.type.podcast, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastCardProto card = 1; */
+        if (message.type.oneofKind === "card")
+            PodcastCardProto.internalBinaryWrite(message.type.card, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1359,18 +1350,16 @@ class PodcastProto$Type extends MessageType<PodcastProto> {
             { no: 2, name: "created_by", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "created_at", kind: "message", T: () => Timestamp },
             { no: 4, name: "updated_at", kind: "message", T: () => Timestamp },
-            { no: 5, name: "is_ready", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 6, name: "display_status", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 7, name: "preview", kind: "message", T: () => PodcastPreviewProto },
-            { no: 8, name: "thumbnail", kind: "message", T: () => PodcastThumbnailProto },
-            { no: 9, name: "audio", kind: "message", T: () => PodcastAudioProto },
-            { no: 10, name: "visuals", kind: "message", T: () => PodcastVisualsProto },
-            { no: 11, name: "transcript", kind: "message", T: () => PodcastTranscriptProto },
-            { no: 12, name: "cards", kind: "message", T: () => PodcastCardsProto }
+            { no: 10, name: "preview", kind: "message", T: () => PodcastPreviewProto },
+            { no: 11, name: "thumbnail", kind: "message", T: () => PodcastThumbnailProto },
+            { no: 12, name: "audio", kind: "message", T: () => PodcastAudioProto },
+            { no: 13, name: "visuals", kind: "message", T: () => PodcastVisualsProto },
+            { no: 14, name: "transcript", kind: "message", T: () => PodcastTranscriptProto },
+            { no: 15, name: "cards", kind: "message", T: () => PodcastCardsProto }
         ]);
     }
     create(value?: PartialMessage<PodcastProto>): PodcastProto {
-        const message = { podcastId: "", createdBy: "", isReady: false, displayStatus: "" };
+        const message = { podcastId: "", createdBy: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastProto>(this, message, value);
@@ -1393,28 +1382,22 @@ class PodcastProto$Type extends MessageType<PodcastProto> {
                 case /* google.protobuf.Timestamp updated_at */ 4:
                     message.updatedAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.updatedAt);
                     break;
-                case /* bool is_ready */ 5:
-                    message.isReady = reader.bool();
-                    break;
-                case /* string display_status */ 6:
-                    message.displayStatus = reader.string();
-                    break;
-                case /* PodcastPreviewProto preview */ 7:
+                case /* PodcastPreviewProto preview */ 10:
                     message.preview = PodcastPreviewProto.internalBinaryRead(reader, reader.uint32(), options, message.preview);
                     break;
-                case /* PodcastThumbnailProto thumbnail */ 8:
+                case /* PodcastThumbnailProto thumbnail */ 11:
                     message.thumbnail = PodcastThumbnailProto.internalBinaryRead(reader, reader.uint32(), options, message.thumbnail);
                     break;
-                case /* PodcastAudioProto audio */ 9:
+                case /* PodcastAudioProto audio */ 12:
                     message.audio = PodcastAudioProto.internalBinaryRead(reader, reader.uint32(), options, message.audio);
                     break;
-                case /* PodcastVisualsProto visuals */ 10:
+                case /* PodcastVisualsProto visuals */ 13:
                     message.visuals = PodcastVisualsProto.internalBinaryRead(reader, reader.uint32(), options, message.visuals);
                     break;
-                case /* PodcastTranscriptProto transcript */ 11:
+                case /* PodcastTranscriptProto transcript */ 14:
                     message.transcript = PodcastTranscriptProto.internalBinaryRead(reader, reader.uint32(), options, message.transcript);
                     break;
-                case /* PodcastCardsProto cards */ 12:
+                case /* PodcastCardsProto cards */ 15:
                     message.cards = PodcastCardsProto.internalBinaryRead(reader, reader.uint32(), options, message.cards);
                     break;
                 default:
@@ -1441,30 +1424,24 @@ class PodcastProto$Type extends MessageType<PodcastProto> {
         /* google.protobuf.Timestamp updated_at = 4; */
         if (message.updatedAt)
             Timestamp.internalBinaryWrite(message.updatedAt, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
-        /* bool is_ready = 5; */
-        if (message.isReady !== false)
-            writer.tag(5, WireType.Varint).bool(message.isReady);
-        /* string display_status = 6; */
-        if (message.displayStatus !== "")
-            writer.tag(6, WireType.LengthDelimited).string(message.displayStatus);
-        /* PodcastPreviewProto preview = 7; */
+        /* PodcastPreviewProto preview = 10; */
         if (message.preview)
-            PodcastPreviewProto.internalBinaryWrite(message.preview, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
-        /* PodcastThumbnailProto thumbnail = 8; */
+            PodcastPreviewProto.internalBinaryWrite(message.preview, writer.tag(10, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastThumbnailProto thumbnail = 11; */
         if (message.thumbnail)
-            PodcastThumbnailProto.internalBinaryWrite(message.thumbnail, writer.tag(8, WireType.LengthDelimited).fork(), options).join();
-        /* PodcastAudioProto audio = 9; */
+            PodcastThumbnailProto.internalBinaryWrite(message.thumbnail, writer.tag(11, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastAudioProto audio = 12; */
         if (message.audio)
-            PodcastAudioProto.internalBinaryWrite(message.audio, writer.tag(9, WireType.LengthDelimited).fork(), options).join();
-        /* PodcastVisualsProto visuals = 10; */
+            PodcastAudioProto.internalBinaryWrite(message.audio, writer.tag(12, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastVisualsProto visuals = 13; */
         if (message.visuals)
-            PodcastVisualsProto.internalBinaryWrite(message.visuals, writer.tag(10, WireType.LengthDelimited).fork(), options).join();
-        /* PodcastTranscriptProto transcript = 11; */
+            PodcastVisualsProto.internalBinaryWrite(message.visuals, writer.tag(13, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastTranscriptProto transcript = 14; */
         if (message.transcript)
-            PodcastTranscriptProto.internalBinaryWrite(message.transcript, writer.tag(11, WireType.LengthDelimited).fork(), options).join();
-        /* PodcastCardsProto cards = 12; */
+            PodcastTranscriptProto.internalBinaryWrite(message.transcript, writer.tag(14, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastCardsProto cards = 15; */
         if (message.cards)
-            PodcastCardsProto.internalBinaryWrite(message.cards, writer.tag(12, WireType.LengthDelimited).fork(), options).join();
+            PodcastCardsProto.internalBinaryWrite(message.cards, writer.tag(15, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1543,11 +1520,13 @@ class PodcastThumbnailProto$Type extends MessageType<PodcastThumbnailProto> {
             { no: 1, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "badge", kind: "enum", T: () => ["PodcastBadgeProto", PodcastBadgeProto, "PODCAST_BADGE_PROTO_"] },
             { no: 3, name: "path", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "duration", kind: "message", T: () => Duration }
+            { no: 4, name: "duration", kind: "message", T: () => Duration },
+            { no: 5, name: "is_ready", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 6, name: "display_status", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PodcastThumbnailProto>): PodcastThumbnailProto {
-        const message = { title: "", badge: 0, path: "" };
+        const message = { title: "", badge: 0, path: "", isReady: false, displayStatus: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastThumbnailProto>(this, message, value);
@@ -1569,6 +1548,12 @@ class PodcastThumbnailProto$Type extends MessageType<PodcastThumbnailProto> {
                     break;
                 case /* google.protobuf.Duration duration */ 4:
                     message.duration = Duration.internalBinaryRead(reader, reader.uint32(), options, message.duration);
+                    break;
+                case /* bool is_ready */ 5:
+                    message.isReady = reader.bool();
+                    break;
+                case /* string display_status */ 6:
+                    message.displayStatus = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1594,6 +1579,12 @@ class PodcastThumbnailProto$Type extends MessageType<PodcastThumbnailProto> {
         /* google.protobuf.Duration duration = 4; */
         if (message.duration)
             Duration.internalBinaryWrite(message.duration, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* bool is_ready = 5; */
+        if (message.isReady !== false)
+            writer.tag(5, WireType.Varint).bool(message.isReady);
+        /* string display_status = 6; */
+        if (message.displayStatus !== "")
+            writer.tag(6, WireType.LengthDelimited).string(message.displayStatus);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

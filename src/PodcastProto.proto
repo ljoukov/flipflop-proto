@@ -46,22 +46,20 @@ message CreatePodcastResponseDeltaProto {
     bool error_no_topic = 2;
 
     // IDs start at 10
-    PodcastProto podcast = 10;
-
-    PodcastPromptAnswerProto answer = 11;
+    PodcastPromptAnswerProto answer = 10;
+    PodcastPreviewProto preview = 11;
   }
 }
 
 message GeneratePodcastRequestProto {
   string podcast_id = 1;
-  int32 duration_seconds = 2;
 }
 
 message GeneratePodcastResponseHeaderProto {}
 
 message GeneratePodcastResponseDeltaProto {
   oneof type {
-    PodcastProto podcast = 1;
+    PodcastCardProto card = 1;
   }
 }
 
@@ -86,15 +84,13 @@ message PodcastProto {
   google.protobuf.Timestamp created_at = 3;
   google.protobuf.Timestamp updated_at = 4;
 
-  bool is_ready = 5;
-  string display_status = 6;
-
-  PodcastPreviewProto preview = 7;
-  PodcastThumbnailProto thumbnail = 8;
-  PodcastAudioProto audio = 9;
-  PodcastVisualsProto visuals = 10;
-  PodcastTranscriptProto transcript = 11;
-  PodcastCardsProto cards = 12;
+  // IDs start at 10
+  PodcastPreviewProto preview = 10;
+  PodcastThumbnailProto thumbnail = 11;
+  PodcastAudioProto audio = 12;
+  PodcastVisualsProto visuals = 13;
+  PodcastTranscriptProto transcript = 14;
+  PodcastCardsProto cards = 15;
 }
 
 message PodcastPreviewProto {
@@ -108,6 +104,8 @@ message PodcastThumbnailProto {
   PodcastBadgeProto badge = 2;
   string path = 3;
   google.protobuf.Duration duration = 4;
+  bool is_ready = 5;
+  string display_status = 6;
 }
 
 enum PodcastBadgeProto {

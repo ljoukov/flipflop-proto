@@ -414,20 +414,20 @@ struct CreatePodcastResponseDeltaProto {
   }
 
   /// IDs start at 10
-  var podcast: PodcastProto {
-    get {
-      if case .podcast(let v)? = type {return v}
-      return PodcastProto()
-    }
-    set {type = .podcast(newValue)}
-  }
-
   var answer: PodcastPromptAnswerProto {
     get {
       if case .answer(let v)? = type {return v}
       return PodcastPromptAnswerProto()
     }
     set {type = .answer(newValue)}
+  }
+
+  var preview: PodcastPreviewProto {
+    get {
+      if case .preview(let v)? = type {return v}
+      return PodcastPreviewProto()
+    }
+    set {type = .preview(newValue)}
   }
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -437,8 +437,8 @@ struct CreatePodcastResponseDeltaProto {
     /// This is the last delta message
     case errorNoTopic(Bool)
     /// IDs start at 10
-    case podcast(PodcastProto)
     case answer(PodcastPromptAnswerProto)
+    case preview(PodcastPreviewProto)
 
   #if !swift(>=4.1)
     static func ==(lhs: CreatePodcastResponseDeltaProto.OneOf_Type, rhs: CreatePodcastResponseDeltaProto.OneOf_Type) -> Bool {
@@ -454,12 +454,12 @@ struct CreatePodcastResponseDeltaProto {
         guard case .errorNoTopic(let l) = lhs, case .errorNoTopic(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
-      case (.podcast, .podcast): return {
-        guard case .podcast(let l) = lhs, case .podcast(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
       case (.answer, .answer): return {
         guard case .answer(let l) = lhs, case .answer(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.preview, .preview): return {
+        guard case .preview(let l) = lhs, case .preview(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       default: return false
@@ -477,8 +477,6 @@ struct GeneratePodcastRequestProto {
   // methods supported on all messages.
 
   var podcastID: String = String()
-
-  var durationSeconds: Int32 = 0
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -502,18 +500,18 @@ struct GeneratePodcastResponseDeltaProto {
 
   var type: GeneratePodcastResponseDeltaProto.OneOf_Type? = nil
 
-  var podcast: PodcastProto {
+  var card: PodcastCardProto {
     get {
-      if case .podcast(let v)? = type {return v}
-      return PodcastProto()
+      if case .card(let v)? = type {return v}
+      return PodcastCardProto()
     }
-    set {type = .podcast(newValue)}
+    set {type = .card(newValue)}
   }
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_Type: Equatable {
-    case podcast(PodcastProto)
+    case card(PodcastCardProto)
 
   #if !swift(>=4.1)
     static func ==(lhs: GeneratePodcastResponseDeltaProto.OneOf_Type, rhs: GeneratePodcastResponseDeltaProto.OneOf_Type) -> Bool {
@@ -521,8 +519,8 @@ struct GeneratePodcastResponseDeltaProto {
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch (lhs, rhs) {
-      case (.podcast, .podcast): return {
-        guard case .podcast(let l) = lhs, case .podcast(let r) = rhs else { preconditionFailure() }
+      case (.card, .card): return {
+        guard case .card(let l) = lhs, case .card(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       }
@@ -653,16 +651,7 @@ struct PodcastProto {
   /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
   mutating func clearUpdatedAt() {_uniqueStorage()._updatedAt = nil}
 
-  var isReady: Bool {
-    get {return _storage._isReady}
-    set {_uniqueStorage()._isReady = newValue}
-  }
-
-  var displayStatus: String {
-    get {return _storage._displayStatus}
-    set {_uniqueStorage()._displayStatus = newValue}
-  }
-
+  /// IDs start at 10
   var preview: PodcastPreviewProto {
     get {return _storage._preview ?? PodcastPreviewProto()}
     set {_uniqueStorage()._preview = newValue}
@@ -759,6 +748,10 @@ struct PodcastThumbnailProto {
   var hasDuration: Bool {return self._duration != nil}
   /// Clears the value of `duration`. Subsequent reads from it will return its default value.
   mutating func clearDuration() {self._duration = nil}
+
+  var isReady: Bool = false
+
+  var displayStatus: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -1524,8 +1517,8 @@ extension CreatePodcastResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf.
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "separator"),
     2: .standard(proto: "error_no_topic"),
-    10: .same(proto: "podcast"),
-    11: .same(proto: "answer"),
+    10: .same(proto: "answer"),
+    11: .same(proto: "preview"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1551,19 +1544,6 @@ extension CreatePodcastResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf.
         }
       }()
       case 10: try {
-        var v: PodcastProto?
-        var hadOneofValue = false
-        if let current = self.type {
-          hadOneofValue = true
-          if case .podcast(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {
-          if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.type = .podcast(v)
-        }
-      }()
-      case 11: try {
         var v: PodcastPromptAnswerProto?
         var hadOneofValue = false
         if let current = self.type {
@@ -1574,6 +1554,19 @@ extension CreatePodcastResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf.
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
           self.type = .answer(v)
+        }
+      }()
+      case 11: try {
+        var v: PodcastPreviewProto?
+        var hadOneofValue = false
+        if let current = self.type {
+          hadOneofValue = true
+          if case .preview(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.type = .preview(v)
         }
       }()
       default: break
@@ -1595,12 +1588,12 @@ extension CreatePodcastResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf.
       guard case .errorNoTopic(let v)? = self.type else { preconditionFailure() }
       try visitor.visitSingularBoolField(value: v, fieldNumber: 2)
     }()
-    case .podcast?: try {
-      guard case .podcast(let v)? = self.type else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
-    }()
     case .answer?: try {
       guard case .answer(let v)? = self.type else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
+    }()
+    case .preview?: try {
+      guard case .preview(let v)? = self.type else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 11)
     }()
     case nil: break
@@ -1619,7 +1612,6 @@ extension GeneratePodcastRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
   static let protoMessageName: String = "GeneratePodcastRequestProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "podcast_id"),
-    2: .standard(proto: "duration_seconds"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1629,7 +1621,6 @@ extension GeneratePodcastRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.podcastID) }()
-      case 2: try { try decoder.decodeSingularInt32Field(value: &self.durationSeconds) }()
       default: break
       }
     }
@@ -1639,15 +1630,11 @@ extension GeneratePodcastRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
     if !self.podcastID.isEmpty {
       try visitor.visitSingularStringField(value: self.podcastID, fieldNumber: 1)
     }
-    if self.durationSeconds != 0 {
-      try visitor.visitSingularInt32Field(value: self.durationSeconds, fieldNumber: 2)
-    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: GeneratePodcastRequestProto, rhs: GeneratePodcastRequestProto) -> Bool {
     if lhs.podcastID != rhs.podcastID {return false}
-    if lhs.durationSeconds != rhs.durationSeconds {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -1675,7 +1662,7 @@ extension GeneratePodcastResponseHeaderProto: SwiftProtobuf.Message, SwiftProtob
 extension GeneratePodcastResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "GeneratePodcastResponseDeltaProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "podcast"),
+    1: .same(proto: "card"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1685,16 +1672,16 @@ extension GeneratePodcastResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobu
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try {
-        var v: PodcastProto?
+        var v: PodcastCardProto?
         var hadOneofValue = false
         if let current = self.type {
           hadOneofValue = true
-          if case .podcast(let m) = current {v = m}
+          if case .card(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.type = .podcast(v)
+          self.type = .card(v)
         }
       }()
       default: break
@@ -1707,7 +1694,7 @@ extension GeneratePodcastResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobu
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    try { if case .podcast(let v)? = self.type {
+    try { if case .card(let v)? = self.type {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
     } }()
     try unknownFields.traverse(visitor: &visitor)
@@ -1856,14 +1843,12 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     2: .standard(proto: "created_by"),
     3: .standard(proto: "created_at"),
     4: .standard(proto: "updated_at"),
-    5: .standard(proto: "is_ready"),
-    6: .standard(proto: "display_status"),
-    7: .same(proto: "preview"),
-    8: .same(proto: "thumbnail"),
-    9: .same(proto: "audio"),
-    10: .same(proto: "visuals"),
-    11: .same(proto: "transcript"),
-    12: .same(proto: "cards"),
+    10: .same(proto: "preview"),
+    11: .same(proto: "thumbnail"),
+    12: .same(proto: "audio"),
+    13: .same(proto: "visuals"),
+    14: .same(proto: "transcript"),
+    15: .same(proto: "cards"),
   ]
 
   fileprivate class _StorageClass {
@@ -1871,8 +1856,6 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     var _createdBy: String = String()
     var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
     var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
-    var _isReady: Bool = false
-    var _displayStatus: String = String()
     var _preview: PodcastPreviewProto? = nil
     var _thumbnail: PodcastThumbnailProto? = nil
     var _audio: PodcastAudioProto? = nil
@@ -1889,8 +1872,6 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
       _createdBy = source._createdBy
       _createdAt = source._createdAt
       _updatedAt = source._updatedAt
-      _isReady = source._isReady
-      _displayStatus = source._displayStatus
       _preview = source._preview
       _thumbnail = source._thumbnail
       _audio = source._audio
@@ -1919,14 +1900,12 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
         case 2: try { try decoder.decodeSingularStringField(value: &_storage._createdBy) }()
         case 3: try { try decoder.decodeSingularMessageField(value: &_storage._createdAt) }()
         case 4: try { try decoder.decodeSingularMessageField(value: &_storage._updatedAt) }()
-        case 5: try { try decoder.decodeSingularBoolField(value: &_storage._isReady) }()
-        case 6: try { try decoder.decodeSingularStringField(value: &_storage._displayStatus) }()
-        case 7: try { try decoder.decodeSingularMessageField(value: &_storage._preview) }()
-        case 8: try { try decoder.decodeSingularMessageField(value: &_storage._thumbnail) }()
-        case 9: try { try decoder.decodeSingularMessageField(value: &_storage._audio) }()
-        case 10: try { try decoder.decodeSingularMessageField(value: &_storage._visuals) }()
-        case 11: try { try decoder.decodeSingularMessageField(value: &_storage._transcript) }()
-        case 12: try { try decoder.decodeSingularMessageField(value: &_storage._cards) }()
+        case 10: try { try decoder.decodeSingularMessageField(value: &_storage._preview) }()
+        case 11: try { try decoder.decodeSingularMessageField(value: &_storage._thumbnail) }()
+        case 12: try { try decoder.decodeSingularMessageField(value: &_storage._audio) }()
+        case 13: try { try decoder.decodeSingularMessageField(value: &_storage._visuals) }()
+        case 14: try { try decoder.decodeSingularMessageField(value: &_storage._transcript) }()
+        case 15: try { try decoder.decodeSingularMessageField(value: &_storage._cards) }()
         default: break
         }
       }
@@ -1951,29 +1930,23 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
       try { if let v = _storage._updatedAt {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
       } }()
-      if _storage._isReady != false {
-        try visitor.visitSingularBoolField(value: _storage._isReady, fieldNumber: 5)
-      }
-      if !_storage._displayStatus.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._displayStatus, fieldNumber: 6)
-      }
       try { if let v = _storage._preview {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
-      } }()
-      try { if let v = _storage._thumbnail {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
-      } }()
-      try { if let v = _storage._audio {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 9)
-      } }()
-      try { if let v = _storage._visuals {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
       } }()
-      try { if let v = _storage._transcript {
+      try { if let v = _storage._thumbnail {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 11)
       } }()
-      try { if let v = _storage._cards {
+      try { if let v = _storage._audio {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 12)
+      } }()
+      try { if let v = _storage._visuals {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 13)
+      } }()
+      try { if let v = _storage._transcript {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 14)
+      } }()
+      try { if let v = _storage._cards {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
       } }()
     }
     try unknownFields.traverse(visitor: &visitor)
@@ -1988,8 +1961,6 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
         if _storage._createdBy != rhs_storage._createdBy {return false}
         if _storage._createdAt != rhs_storage._createdAt {return false}
         if _storage._updatedAt != rhs_storage._updatedAt {return false}
-        if _storage._isReady != rhs_storage._isReady {return false}
-        if _storage._displayStatus != rhs_storage._displayStatus {return false}
         if _storage._preview != rhs_storage._preview {return false}
         if _storage._thumbnail != rhs_storage._thumbnail {return false}
         if _storage._audio != rhs_storage._audio {return false}
@@ -2056,6 +2027,8 @@ extension PodcastThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     2: .same(proto: "badge"),
     3: .same(proto: "path"),
     4: .same(proto: "duration"),
+    5: .standard(proto: "is_ready"),
+    6: .standard(proto: "display_status"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2068,6 +2041,8 @@ extension PodcastThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
       case 2: try { try decoder.decodeSingularEnumField(value: &self.badge) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.path) }()
       case 4: try { try decoder.decodeSingularMessageField(value: &self._duration) }()
+      case 5: try { try decoder.decodeSingularBoolField(value: &self.isReady) }()
+      case 6: try { try decoder.decodeSingularStringField(value: &self.displayStatus) }()
       default: break
       }
     }
@@ -2090,6 +2065,12 @@ extension PodcastThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     try { if let v = self._duration {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
     } }()
+    if self.isReady != false {
+      try visitor.visitSingularBoolField(value: self.isReady, fieldNumber: 5)
+    }
+    if !self.displayStatus.isEmpty {
+      try visitor.visitSingularStringField(value: self.displayStatus, fieldNumber: 6)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -2098,6 +2079,8 @@ extension PodcastThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     if lhs.badge != rhs.badge {return false}
     if lhs.path != rhs.path {return false}
     if lhs._duration != rhs._duration {return false}
+    if lhs.isReady != rhs.isReady {return false}
+    if lhs.displayStatus != rhs.displayStatus {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
