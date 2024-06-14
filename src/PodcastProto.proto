@@ -126,6 +126,7 @@ message PodcastCardsProto {
 
 message PodcastCardProto {
   string card_id = 1;
+  bool is_ready = 2;
 
   // IDs start at 10
   oneof type {

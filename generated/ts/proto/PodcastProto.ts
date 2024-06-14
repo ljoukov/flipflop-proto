@@ -370,6 +370,10 @@ export interface PodcastCardProto {
      */
     cardId: string;
     /**
+     * @generated from protobuf field: bool is_ready = 2;
+     */
+    isReady: boolean;
+    /**
      * @generated from protobuf oneof: type
      */
     type: {
@@ -1701,13 +1705,14 @@ class PodcastCardProto$Type extends MessageType<PodcastCardProto> {
     constructor() {
         super("PodcastCardProto", [
             { no: 1, name: "card_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "is_ready", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
             { no: 10, name: "knowledge", kind: "message", oneof: "type", T: () => PodcastKnowledgeCardProto },
             { no: 11, name: "multiple_choice", kind: "message", oneof: "type", T: () => PodcastMultipleChoiceCardProto },
             { no: 12, name: "poll", kind: "message", oneof: "type", T: () => PodcastPollCardProto }
         ]);
     }
     create(value?: PartialMessage<PodcastCardProto>): PodcastCardProto {
-        const message = { cardId: "", type: { oneofKind: undefined } };
+        const message = { cardId: "", isReady: false, type: { oneofKind: undefined } };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastCardProto>(this, message, value);
@@ -1720,6 +1725,9 @@ class PodcastCardProto$Type extends MessageType<PodcastCardProto> {
             switch (fieldNo) {
                 case /* string card_id */ 1:
                     message.cardId = reader.string();
+                    break;
+                case /* bool is_ready */ 2:
+                    message.isReady = reader.bool();
                     break;
                 case /* PodcastKnowledgeCardProto knowledge */ 10:
                     message.type = {
@@ -1754,6 +1762,9 @@ class PodcastCardProto$Type extends MessageType<PodcastCardProto> {
         /* string card_id = 1; */
         if (message.cardId !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.cardId);
+        /* bool is_ready = 2; */
+        if (message.isReady !== false)
+            writer.tag(2, WireType.Varint).bool(message.isReady);
         /* PodcastKnowledgeCardProto knowledge = 10; */
         if (message.type.oneofKind === "knowledge")
             PodcastKnowledgeCardProto.internalBinaryWrite(message.type.knowledge, writer.tag(10, WireType.LengthDelimited).fork(), options).join();

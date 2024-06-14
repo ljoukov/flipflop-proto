@@ -802,6 +802,8 @@ struct PodcastCardProto {
 
   var cardID: String = String()
 
+  var isReady: Bool = false
+
   /// IDs start at 10
   var type: PodcastCardProto.OneOf_Type? = nil
 
@@ -2164,6 +2166,7 @@ extension PodcastCardProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
   static let protoMessageName: String = "PodcastCardProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "card_id"),
+    2: .standard(proto: "is_ready"),
     10: .same(proto: "knowledge"),
     11: .standard(proto: "multiple_choice"),
     12: .same(proto: "poll"),
@@ -2176,6 +2179,7 @@ extension PodcastCardProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.cardID) }()
+      case 2: try { try decoder.decodeSingularBoolField(value: &self.isReady) }()
       case 10: try {
         var v: PodcastKnowledgeCardProto?
         var hadOneofValue = false
@@ -2228,6 +2232,9 @@ extension PodcastCardProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     if !self.cardID.isEmpty {
       try visitor.visitSingularStringField(value: self.cardID, fieldNumber: 1)
     }
+    if self.isReady != false {
+      try visitor.visitSingularBoolField(value: self.isReady, fieldNumber: 2)
+    }
     switch self.type {
     case .knowledge?: try {
       guard case .knowledge(let v)? = self.type else { preconditionFailure() }
@@ -2248,6 +2255,7 @@ extension PodcastCardProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
 
   static func ==(lhs: PodcastCardProto, rhs: PodcastCardProto) -> Bool {
     if lhs.cardID != rhs.cardID {return false}
+    if lhs.isReady != rhs.isReady {return false}
     if lhs.type != rhs.type {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
