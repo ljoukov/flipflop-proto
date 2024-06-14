@@ -100,12 +100,12 @@ message PodcastPreviewProto {
 }
 
 message PodcastThumbnailProto {
-  string title = 1;
-  PodcastBadgeProto badge = 2;
-  string path = 3;
-  google.protobuf.Duration duration = 4;
-  bool is_ready = 5;
-  string display_status = 6;
+  bool is_ready = 1;
+  string display_status = 2;
+  string title = 3;
+  PodcastBadgeProto badge = 4;
+  string path = 5;
+  google.protobuf.Duration duration = 6;
 }
 
 enum PodcastBadgeProto {

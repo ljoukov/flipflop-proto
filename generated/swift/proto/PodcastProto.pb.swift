@@ -734,6 +734,10 @@ struct PodcastThumbnailProto {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  var isReady: Bool = false
+
+  var displayStatus: String = String()
+
   var title: String = String()
 
   var badge: PodcastBadgeProto = .undefined
@@ -748,10 +752,6 @@ struct PodcastThumbnailProto {
   var hasDuration: Bool {return self._duration != nil}
   /// Clears the value of `duration`. Subsequent reads from it will return its default value.
   mutating func clearDuration() {self._duration = nil}
-
-  var isReady: Bool = false
-
-  var displayStatus: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -2023,12 +2023,12 @@ extension PodcastPreviewProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
 extension PodcastThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "PodcastThumbnailProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "title"),
-    2: .same(proto: "badge"),
-    3: .same(proto: "path"),
-    4: .same(proto: "duration"),
-    5: .standard(proto: "is_ready"),
-    6: .standard(proto: "display_status"),
+    1: .standard(proto: "is_ready"),
+    2: .standard(proto: "display_status"),
+    3: .same(proto: "title"),
+    4: .same(proto: "badge"),
+    5: .same(proto: "path"),
+    6: .same(proto: "duration"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2037,12 +2037,12 @@ extension PodcastThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.title) }()
-      case 2: try { try decoder.decodeSingularEnumField(value: &self.badge) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.path) }()
-      case 4: try { try decoder.decodeSingularMessageField(value: &self._duration) }()
-      case 5: try { try decoder.decodeSingularBoolField(value: &self.isReady) }()
-      case 6: try { try decoder.decodeSingularStringField(value: &self.displayStatus) }()
+      case 1: try { try decoder.decodeSingularBoolField(value: &self.isReady) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.displayStatus) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.title) }()
+      case 4: try { try decoder.decodeSingularEnumField(value: &self.badge) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.path) }()
+      case 6: try { try decoder.decodeSingularMessageField(value: &self._duration) }()
       default: break
       }
     }
@@ -2053,34 +2053,34 @@ extension PodcastThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    if !self.title.isEmpty {
-      try visitor.visitSingularStringField(value: self.title, fieldNumber: 1)
-    }
-    if self.badge != .undefined {
-      try visitor.visitSingularEnumField(value: self.badge, fieldNumber: 2)
-    }
-    if !self.path.isEmpty {
-      try visitor.visitSingularStringField(value: self.path, fieldNumber: 3)
-    }
-    try { if let v = self._duration {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
-    } }()
     if self.isReady != false {
-      try visitor.visitSingularBoolField(value: self.isReady, fieldNumber: 5)
+      try visitor.visitSingularBoolField(value: self.isReady, fieldNumber: 1)
     }
     if !self.displayStatus.isEmpty {
-      try visitor.visitSingularStringField(value: self.displayStatus, fieldNumber: 6)
+      try visitor.visitSingularStringField(value: self.displayStatus, fieldNumber: 2)
     }
+    if !self.title.isEmpty {
+      try visitor.visitSingularStringField(value: self.title, fieldNumber: 3)
+    }
+    if self.badge != .undefined {
+      try visitor.visitSingularEnumField(value: self.badge, fieldNumber: 4)
+    }
+    if !self.path.isEmpty {
+      try visitor.visitSingularStringField(value: self.path, fieldNumber: 5)
+    }
+    try { if let v = self._duration {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: PodcastThumbnailProto, rhs: PodcastThumbnailProto) -> Bool {
+    if lhs.isReady != rhs.isReady {return false}
+    if lhs.displayStatus != rhs.displayStatus {return false}
     if lhs.title != rhs.title {return false}
     if lhs.badge != rhs.badge {return false}
     if lhs.path != rhs.path {return false}
     if lhs._duration != rhs._duration {return false}
-    if lhs.isReady != rhs.isReady {return false}
-    if lhs.displayStatus != rhs.displayStatus {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
