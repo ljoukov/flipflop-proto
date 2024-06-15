@@ -15,7 +15,7 @@ from google.protobuf import duration_pb2 as google_dot_protobuf_dot_duration__pb
 from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x12PodcastProto.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xcf\x01\n\x1cPodcastStreamApiRequestProto\x12\x19\n\x11\x65ncoded_user_auth\x18\x01 \x01(\t\x12,\n\x06\x63reate\x18\x02 \x01(\x0b\x32\x1a.CreatePodcastRequestProtoH\x00\x12\x30\n\x08generate\x18\x03 \x01(\x0b\x32\x1c.GeneratePodcastRequestProtoH\x00\x12)\n\x04list\x18\x04 \x01(\x0b\x32\x19.ListPodcastsRequestProtoH\x00\x42\t\n\x07request\"\x90\x03\n#PodcastStreamApiResponseHeaderProto\x12#\n\x1brefreshed_encoded_user_auth\x18\x01 \x01(\t\x12:\n\rcreate_header\x18\x02 \x01(\x0b\x32!.CreatePodcastResponseHeaderProtoH\x00\x12\x37\n\x08generate\x18\x03 \x01(\x0b\x32#.GeneratePodcastResponseHeaderProtoH\x00\x12\x30\n\x04list\x18\x04 \x01(\x0b\x32 .ListPodcastsResponseHeaderProtoH\x00\x12\x46\n\tlatencies\x18\x64 \x03(\x0b\x32\x33.PodcastStreamApiResponseHeaderProto.LatenciesEntry\x1aK\n\x0eLatenciesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12(\n\x05value\x18\x02 \x01(\x0b\x32\x19.google.protobuf.Duration:\x02\x38\x01\x42\x08\n\x06header\"\xe5\x01\n\"PodcastStreamApiResponseDeltaProto\x12\x38\n\x0c\x63reate_delta\x18\x01 \x01(\x0b\x32 .CreatePodcastResponseDeltaProtoH\x00\x12<\n\x0egenerate_delta\x18\x02 \x01(\x0b\x32\".GeneratePodcastResponseDeltaProtoH\x00\x12\x35\n\nlist_delta\x18\x03 \x01(\x0b\x32\x1f.ListPodcastsResponseDeltaProtoH\x00\x42\x10\n\x0eresponse_delta\"+\n\x19\x43reatePodcastRequestProto\x12\x0e\n\x06prompt\x18\x01 \x01(\t\"6\n CreatePodcastResponseHeaderProto\x12\x12\n\npodcast_id\x18\x01 \x01(\t\"\xa0\x01\n\x1f\x43reatePodcastResponseDeltaProto\x12#\n\x05\x65rror\x18\x01 \x01(\x0b\x32\x12.PodcastErrorProtoH\x00\x12+\n\x06\x61nswer\x18\x02 \x01(\x0b\x32\x19.PodcastPromptAnswerProtoH\x00\x12#\n\x05point\x18\x03 \x01(\x0b\x32\x12.PodcastPointProtoH\x00\x42\x06\n\x04type\"D\n\x1bGeneratePodcastRequestProto\x12\x12\n\npodcast_id\x18\x01 \x01(\t\x12\x11\n\tpoint_ids\x18\x02 \x03(\t\"$\n\"GeneratePodcastResponseHeaderProto\"N\n!GeneratePodcastResponseDeltaProto\x12!\n\x04\x63\x61rd\x18\x01 \x01(\x0b\x32\x11.PodcastCardProtoH\x00\x42\x06\n\x04type\"\x1a\n\x18ListPodcastsRequestProto\"B\n\x1fListPodcastsResponseHeaderProto\x12\x1f\n\x08podcasts\x18\x01 \x03(\x0b\x32\r.PodcastProto\"\x80\x01\n\x1eListPodcastsResponseDeltaProto\x12\x0e\n\x04ping\x18\x01 \x01(\x08H\x00\x12(\n\x0fupdated_podcast\x18\x02 \x01(\x0b\x32\r.PodcastProtoH\x00\x12\x1c\n\x12\x64\x65leted_podcast_id\x18\x03 \x01(\tH\x00\x42\x06\n\x04type\"\x97\x02\n\x0cPodcastProto\x12\x12\n\npodcast_id\x18\x01 \x01(\t\x12.\n\nupdated_at\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12)\n\tthumbnail\x18\x03 \x01(\x0b\x32\x16.PodcastThumbnailProto\x12!\n\x05\x61udio\x18\x04 \x01(\x0b\x32\x12.PodcastAudioProto\x12%\n\x07visuals\x18\x05 \x01(\x0b\x32\x14.PodcastVisualsProto\x12+\n\ntranscript\x18\x06 \x01(\x0b\x32\x17.PodcastTranscriptProto\x12!\n\x05\x63\x61rds\x18\x07 \x01(\x0b\x32\x12.PodcastCardsProto\"^\n\x11PodcastPointProto\x12\x10\n\x08point_id\x18\x01 \x01(\t\x12\r\n\x05title\x18\x02 \x01(\t\x12\x13\n\x0btitle_emoji\x18\x03 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x04 \x01(\t\"\xae\x01\n\x15PodcastThumbnailProto\x12\x10\n\x08is_ready\x18\x01 \x01(\x08\x12\x16\n\x0e\x64isplay_status\x18\x02 \x01(\t\x12\r\n\x05title\x18\x03 \x01(\t\x12!\n\x05\x62\x61\x64ge\x18\x04 \x01(\x0e\x32\x12.PodcastBadgeProto\x12\x0c\n\x04path\x18\x05 \x01(\t\x12+\n\x08\x64uration\x18\x06 \x01(\x0b\x32\x19.google.protobuf.Duration\"N\n\x11PodcastAudioProto\x12\x0c\n\x04path\x18\x01 \x01(\t\x12+\n\x08\x64uration\x18\x02 \x01(\x0b\x32\x19.google.protobuf.Duration\"5\n\x11PodcastCardsProto\x12 \n\x05\x63\x61rds\x18\x01 \x03(\x0b\x32\x11.PodcastCardProto\"\xd1\x01\n\x10PodcastCardProto\x12\x0f\n\x07\x63\x61rd_id\x18\x01 \x01(\t\x12\x10\n\x08is_ready\x18\x02 \x01(\x08\x12/\n\tknowledge\x18\n \x01(\x0b\x32\x1a.PodcastKnowledgeCardProtoH\x00\x12:\n\x0fmultiple_choice\x18\x0b \x01(\x0b\x32\x1f.PodcastMultipleChoiceCardProtoH\x00\x12%\n\x04poll\x18\x0c \x01(\x0b\x32\x15.PodcastPollCardProtoH\x00\x42\x06\n\x04type\"$\n\x11PodcastErrorProto\x12\x0f\n\x07message\x18\x01 \x01(\t\"(\n\x18PodcastPromptAnswerProto\x12\x0c\n\x04text\x18\x01 \x01(\t\";\n\x13PodcastVisualsProto\x12$\n\x07visuals\x18\x01 \x03(\x0b\x32\x13.PodcastVisualProto\"\xa6\x01\n\x12PodcastVisualProto\x12\x18\n\x10timestamp_millis\x18\x01 \x01(\x05\x12\x12\n\nimage_path\x18\x02 \x01(\t\x12/\n\tanimation\x18\x04 \x01(\x0b\x32\x1c.PodcastVisualAnimationProto\x12\x31\n\ntransition\x18\x03 \x01(\x0e\x32\x1d.PodcastVisualTransitionProto\"^\n\x1bPodcastVisualAnimationProto\x12\x17\n\x0f\x64uration_millis\x18\x01 \x01(\x05\x12\x13\n\x0bstart_scale\x18\x02 \x01(\x02\x12\x11\n\tend_scale\x18\x03 \x01(\x02\"G\n\x16PodcastTranscriptProto\x12-\n\x07\x65ntries\x18\x01 \x03(\x0b\x32\x1c.PodcastTranscriptEntryProto\"`\n\x1bPodcastTranscriptEntryProto\x12\x1f\n\x04host\x18\x01 \x01(\x0e\x32\x11.PodcastHostProto\x12 \n\x05words\x18\x02 \x03(\x0b\x32\x11.PodcastWordProto\"]\n\x10PodcastWordProto\x12\x0c\n\x04word\x18\x01 \x01(\t\x12\x14\n\x0cstart_millis\x18\x02 \x01(\x05\x12\x12\n\nend_millis\x18\x03 \x01(\x05\x12\x11\n\tseparator\x18\x04 \x01(\t\"r\n\x19PodcastKnowledgeCardProto\x12\r\n\x05title\x18\x01 \x01(\t\x12#\n\x04hero\x18\x02 \x01(\x0b\x32\x15.PodcastCardHeroProto\x12\x0c\n\x04text\x18\x03 \x01(\t\x12\x13\n\x0b\x65xplanation\x18\x04 \x01(\t\"\xdd\x01\n\x1ePodcastMultipleChoiceCardProto\x12\r\n\x05title\x18\x01 \x01(\t\x12#\n\x04hero\x18\x02 \x01(\x0b\x32\x15.PodcastCardHeroProto\x12\x10\n\x08question\x18\x03 \x01(\t\x12\x32\n\x07options\x18\x04 \x03(\x0b\x32!.PodcastMultipleChoiceOptionProto\x12\x1d\n\x15\x63orrect_answer_number\x18\x05 \x01(\x05\x12\r\n\x05hints\x18\x06 \x03(\t\x12\x13\n\x0b\x65xplanation\x18\x07 \x01(\t\"\x86\x01\n\x14PodcastPollCardProto\x12\r\n\x05title\x18\x01 \x01(\t\x12#\n\x04hero\x18\x02 \x01(\x0b\x32\x15.PodcastCardHeroProto\x12\x10\n\x08question\x18\x03 \x01(\t\x12(\n\x07options\x18\x04 \x03(\x0b\x32\x17.PodcastPollOptionProto\"9\n\x14PodcastCardHeroProto\x12\r\n\x05\x65moji\x18\x01 \x01(\t\x12\x12\n\nlottie_url\x18\x02 \x01(\t\"0\n PodcastMultipleChoiceOptionProto\x12\x0c\n\x04text\x18\x01 \x01(\t\"&\n\x16PodcastPollOptionProto\x12\x0c\n\x04text\x18\x01 \x01(\t*\x92\x01\n\x11PodcastBadgeProto\x12!\n\x1dPODCAST_BADGE_PROTO_UNDEFINED\x10\x00\x12\x1c\n\x18PODCAST_BADGE_PROTO_NONE\x10\x01\x12\x1e\n\x1aPODCAST_BADGE_PROTO_LISTEN\x10\x02\x12\x1c\n\x18PODCAST_BADGE_PROTO_POLL\x10\x03*\x84\x02\n\x1cPodcastVisualTransitionProto\x12-\n)PODCAST_VISUAL_TRANSITION_PROTO_UNDEFINED\x10\x00\x12,\n(PODCAST_VISUAL_TRANSITION_PROTO_DISSOLVE\x10\x01\x12)\n%PODCAST_VISUAL_TRANSITION_PROTO_SWIPE\x10\x02\x12-\n)PODCAST_VISUAL_TRANSITION_PROTO_BAR_SWIPE\x10\x03\x12-\n)PODCAST_VISUAL_TRANSITION_PROTO_PAGE_CURL\x10\x04*n\n\x10PodcastHostProto\x12\x1e\n\x1aPODCAST_HOST_PROTO_UNKNOWN\x10\x00\x12\x1b\n\x17PODCAST_HOST_PROTO_MALE\x10\x01\x12\x1d\n\x19PODCAST_HOST_PROTO_FEMALE\x10\x02\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x12PodcastProto.proto\x1a\x1egoogle/protobuf/duration.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xcf\x01\n\x1cPodcastStreamApiRequestProto\x12\x19\n\x11\x65ncoded_user_auth\x18\x01 \x01(\t\x12,\n\x06\x63reate\x18\x02 \x01(\x0b\x32\x1a.CreatePodcastRequestProtoH\x00\x12\x30\n\x08generate\x18\x03 \x01(\x0b\x32\x1c.GeneratePodcastRequestProtoH\x00\x12)\n\x04list\x18\x04 \x01(\x0b\x32\x19.ListPodcastsRequestProtoH\x00\x42\t\n\x07request\"\x90\x03\n#PodcastStreamApiResponseHeaderProto\x12#\n\x1brefreshed_encoded_user_auth\x18\x01 \x01(\t\x12:\n\rcreate_header\x18\x02 \x01(\x0b\x32!.CreatePodcastResponseHeaderProtoH\x00\x12\x37\n\x08generate\x18\x03 \x01(\x0b\x32#.GeneratePodcastResponseHeaderProtoH\x00\x12\x30\n\x04list\x18\x04 \x01(\x0b\x32 .ListPodcastsResponseHeaderProtoH\x00\x12\x46\n\tlatencies\x18\x64 \x03(\x0b\x32\x33.PodcastStreamApiResponseHeaderProto.LatenciesEntry\x1aK\n\x0eLatenciesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12(\n\x05value\x18\x02 \x01(\x0b\x32\x19.google.protobuf.Duration:\x02\x38\x01\x42\x08\n\x06header\"\xe5\x01\n\"PodcastStreamApiResponseDeltaProto\x12\x38\n\x0c\x63reate_delta\x18\x01 \x01(\x0b\x32 .CreatePodcastResponseDeltaProtoH\x00\x12<\n\x0egenerate_delta\x18\x02 \x01(\x0b\x32\".GeneratePodcastResponseDeltaProtoH\x00\x12\x35\n\nlist_delta\x18\x03 \x01(\x0b\x32\x1f.ListPodcastsResponseDeltaProtoH\x00\x42\x10\n\x0eresponse_delta\"+\n\x19\x43reatePodcastRequestProto\x12\x0e\n\x06prompt\x18\x01 \x01(\t\"6\n CreatePodcastResponseHeaderProto\x12\x12\n\npodcast_id\x18\x01 \x01(\t\"\xa0\x01\n\x1f\x43reatePodcastResponseDeltaProto\x12#\n\x05\x65rror\x18\x01 \x01(\x0b\x32\x12.PodcastErrorProtoH\x00\x12+\n\x06\x61nswer\x18\x02 \x01(\x0b\x32\x19.PodcastPromptAnswerProtoH\x00\x12#\n\x05point\x18\x03 \x01(\x0b\x32\x12.PodcastPointProtoH\x00\x42\x06\n\x04type\"D\n\x1bGeneratePodcastRequestProto\x12\x12\n\npodcast_id\x18\x01 \x01(\t\x12\x11\n\tpoint_ids\x18\x02 \x03(\t\"$\n\"GeneratePodcastResponseHeaderProto\"N\n!GeneratePodcastResponseDeltaProto\x12!\n\x04\x63\x61rd\x18\x01 \x01(\x0b\x32\x11.PodcastCardProtoH\x00\x42\x06\n\x04type\"\x1a\n\x18ListPodcastsRequestProto\"B\n\x1fListPodcastsResponseHeaderProto\x12\x1f\n\x08podcasts\x18\x01 \x03(\x0b\x32\r.PodcastProto\"\x80\x01\n\x1eListPodcastsResponseDeltaProto\x12\x0e\n\x04ping\x18\x01 \x01(\x08H\x00\x12(\n\x0fupdated_podcast\x18\x02 \x01(\x0b\x32\r.PodcastProtoH\x00\x12\x1c\n\x12\x64\x65leted_podcast_id\x18\x03 \x01(\tH\x00\x42\x06\n\x04type\"\x97\x02\n\x0cPodcastProto\x12\x12\n\npodcast_id\x18\x01 \x01(\t\x12.\n\nupdated_at\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12)\n\tthumbnail\x18\x03 \x01(\x0b\x32\x16.PodcastThumbnailProto\x12!\n\x05\x61udio\x18\x04 \x01(\x0b\x32\x12.PodcastAudioProto\x12%\n\x07visuals\x18\x05 \x01(\x0b\x32\x14.PodcastVisualsProto\x12+\n\ntranscript\x18\x06 \x01(\x0b\x32\x17.PodcastTranscriptProto\x12!\n\x05\x63\x61rds\x18\x07 \x01(\x0b\x32\x12.PodcastCardsProto\"Z\n\x11PodcastPointProto\x12\x10\n\x08point_id\x18\x01 \x01(\t\x12\r\n\x05title\x18\x02 \x01(\t\x12\x13\n\x0btitle_emoji\x18\x03 \x01(\t\x12\x0f\n\x07outline\x18\x04 \x01(\t\"\xae\x01\n\x15PodcastThumbnailProto\x12\x10\n\x08is_ready\x18\x01 \x01(\x08\x12\x16\n\x0e\x64isplay_status\x18\x02 \x01(\t\x12\r\n\x05title\x18\x03 \x01(\t\x12!\n\x05\x62\x61\x64ge\x18\x04 \x01(\x0e\x32\x12.PodcastBadgeProto\x12\x0c\n\x04path\x18\x05 \x01(\t\x12+\n\x08\x64uration\x18\x06 \x01(\x0b\x32\x19.google.protobuf.Duration\"N\n\x11PodcastAudioProto\x12\x0c\n\x04path\x18\x01 \x01(\t\x12+\n\x08\x64uration\x18\x02 \x01(\x0b\x32\x19.google.protobuf.Duration\"5\n\x11PodcastCardsProto\x12 \n\x05\x63\x61rds\x18\x01 \x03(\x0b\x32\x11.PodcastCardProto\"\xd1\x01\n\x10PodcastCardProto\x12\x0f\n\x07\x63\x61rd_id\x18\x01 \x01(\t\x12\x10\n\x08is_ready\x18\x02 \x01(\x08\x12/\n\tknowledge\x18\n \x01(\x0b\x32\x1a.PodcastKnowledgeCardProtoH\x00\x12:\n\x0fmultiple_choice\x18\x0b \x01(\x0b\x32\x1f.PodcastMultipleChoiceCardProtoH\x00\x12%\n\x04poll\x18\x0c \x01(\x0b\x32\x15.PodcastPollCardProtoH\x00\x42\x06\n\x04type\"$\n\x11PodcastErrorProto\x12\x0f\n\x07message\x18\x01 \x01(\t\"(\n\x18PodcastPromptAnswerProto\x12\x0c\n\x04text\x18\x01 \x01(\t\";\n\x13PodcastVisualsProto\x12$\n\x07visuals\x18\x01 \x03(\x0b\x32\x13.PodcastVisualProto\"\xa6\x01\n\x12PodcastVisualProto\x12\x18\n\x10timestamp_millis\x18\x01 \x01(\x05\x12\x12\n\nimage_path\x18\x02 \x01(\t\x12/\n\tanimation\x18\x04 \x01(\x0b\x32\x1c.PodcastVisualAnimationProto\x12\x31\n\ntransition\x18\x03 \x01(\x0e\x32\x1d.PodcastVisualTransitionProto\"^\n\x1bPodcastVisualAnimationProto\x12\x17\n\x0f\x64uration_millis\x18\x01 \x01(\x05\x12\x13\n\x0bstart_scale\x18\x02 \x01(\x02\x12\x11\n\tend_scale\x18\x03 \x01(\x02\"G\n\x16PodcastTranscriptProto\x12-\n\x07\x65ntries\x18\x01 \x03(\x0b\x32\x1c.PodcastTranscriptEntryProto\"`\n\x1bPodcastTranscriptEntryProto\x12\x1f\n\x04host\x18\x01 \x01(\x0e\x32\x11.PodcastHostProto\x12 \n\x05words\x18\x02 \x03(\x0b\x32\x11.PodcastWordProto\"]\n\x10PodcastWordProto\x12\x0c\n\x04word\x18\x01 \x01(\t\x12\x14\n\x0cstart_millis\x18\x02 \x01(\x05\x12\x12\n\nend_millis\x18\x03 \x01(\x05\x12\x11\n\tseparator\x18\x04 \x01(\t\"r\n\x19PodcastKnowledgeCardProto\x12\r\n\x05title\x18\x01 \x01(\t\x12#\n\x04hero\x18\x02 \x01(\x0b\x32\x15.PodcastCardHeroProto\x12\x0c\n\x04text\x18\x03 \x01(\t\x12\x13\n\x0b\x65xplanation\x18\x04 \x01(\t\"\xdd\x01\n\x1ePodcastMultipleChoiceCardProto\x12\r\n\x05title\x18\x01 \x01(\t\x12#\n\x04hero\x18\x02 \x01(\x0b\x32\x15.PodcastCardHeroProto\x12\x10\n\x08question\x18\x03 \x01(\t\x12\x32\n\x07options\x18\x04 \x03(\x0b\x32!.PodcastMultipleChoiceOptionProto\x12\x1d\n\x15\x63orrect_answer_number\x18\x05 \x01(\x05\x12\r\n\x05hints\x18\x06 \x03(\t\x12\x13\n\x0b\x65xplanation\x18\x07 \x01(\t\"\x86\x01\n\x14PodcastPollCardProto\x12\r\n\x05title\x18\x01 \x01(\t\x12#\n\x04hero\x18\x02 \x01(\x0b\x32\x15.PodcastCardHeroProto\x12\x10\n\x08question\x18\x03 \x01(\t\x12(\n\x07options\x18\x04 \x03(\x0b\x32\x17.PodcastPollOptionProto\"9\n\x14PodcastCardHeroProto\x12\r\n\x05\x65moji\x18\x01 \x01(\t\x12\x12\n\nlottie_url\x18\x02 \x01(\t\"0\n PodcastMultipleChoiceOptionProto\x12\x0c\n\x04text\x18\x01 \x01(\t\"&\n\x16PodcastPollOptionProto\x12\x0c\n\x04text\x18\x01 \x01(\t*\x92\x01\n\x11PodcastBadgeProto\x12!\n\x1dPODCAST_BADGE_PROTO_UNDEFINED\x10\x00\x12\x1c\n\x18PODCAST_BADGE_PROTO_NONE\x10\x01\x12\x1e\n\x1aPODCAST_BADGE_PROTO_LISTEN\x10\x02\x12\x1c\n\x18PODCAST_BADGE_PROTO_POLL\x10\x03*\x84\x02\n\x1cPodcastVisualTransitionProto\x12-\n)PODCAST_VISUAL_TRANSITION_PROTO_UNDEFINED\x10\x00\x12,\n(PODCAST_VISUAL_TRANSITION_PROTO_DISSOLVE\x10\x01\x12)\n%PODCAST_VISUAL_TRANSITION_PROTO_SWIPE\x10\x02\x12-\n)PODCAST_VISUAL_TRANSITION_PROTO_BAR_SWIPE\x10\x03\x12-\n)PODCAST_VISUAL_TRANSITION_PROTO_PAGE_CURL\x10\x04*n\n\x10PodcastHostProto\x12\x1e\n\x1aPODCAST_HOST_PROTO_UNKNOWN\x10\x00\x12\x1b\n\x17PODCAST_HOST_PROTO_MALE\x10\x01\x12\x1d\n\x19PODCAST_HOST_PROTO_FEMALE\x10\x02\x62\x06proto3')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'PodcastProto_pb2', globals())
@@ -24,12 +24,12 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   DESCRIPTOR._options = None
   _PODCASTSTREAMAPIRESPONSEHEADERPROTO_LATENCIESENTRY._options = None
   _PODCASTSTREAMAPIRESPONSEHEADERPROTO_LATENCIESENTRY._serialized_options = b'8\001'
-  _PODCASTBADGEPROTO._serialized_start=3812
-  _PODCASTBADGEPROTO._serialized_end=3958
-  _PODCASTVISUALTRANSITIONPROTO._serialized_start=3961
-  _PODCASTVISUALTRANSITIONPROTO._serialized_end=4221
-  _PODCASTHOSTPROTO._serialized_start=4223
-  _PODCASTHOSTPROTO._serialized_end=4333
+  _PODCASTBADGEPROTO._serialized_start=3808
+  _PODCASTBADGEPROTO._serialized_end=3954
+  _PODCASTVISUALTRANSITIONPROTO._serialized_start=3957
+  _PODCASTVISUALTRANSITIONPROTO._serialized_end=4217
+  _PODCASTHOSTPROTO._serialized_start=4219
+  _PODCASTHOSTPROTO._serialized_end=4329
   _PODCASTSTREAMAPIREQUESTPROTO._serialized_start=88
   _PODCASTSTREAMAPIREQUESTPROTO._serialized_end=295
   _PODCASTSTREAMAPIRESPONSEHEADERPROTO._serialized_start=298
@@ -59,41 +59,41 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _PODCASTPROTO._serialized_start=1612
   _PODCASTPROTO._serialized_end=1891
   _PODCASTPOINTPROTO._serialized_start=1893
-  _PODCASTPOINTPROTO._serialized_end=1987
-  _PODCASTTHUMBNAILPROTO._serialized_start=1990
-  _PODCASTTHUMBNAILPROTO._serialized_end=2164
-  _PODCASTAUDIOPROTO._serialized_start=2166
-  _PODCASTAUDIOPROTO._serialized_end=2244
-  _PODCASTCARDSPROTO._serialized_start=2246
-  _PODCASTCARDSPROTO._serialized_end=2299
-  _PODCASTCARDPROTO._serialized_start=2302
-  _PODCASTCARDPROTO._serialized_end=2511
-  _PODCASTERRORPROTO._serialized_start=2513
-  _PODCASTERRORPROTO._serialized_end=2549
-  _PODCASTPROMPTANSWERPROTO._serialized_start=2551
-  _PODCASTPROMPTANSWERPROTO._serialized_end=2591
-  _PODCASTVISUALSPROTO._serialized_start=2593
-  _PODCASTVISUALSPROTO._serialized_end=2652
-  _PODCASTVISUALPROTO._serialized_start=2655
-  _PODCASTVISUALPROTO._serialized_end=2821
-  _PODCASTVISUALANIMATIONPROTO._serialized_start=2823
-  _PODCASTVISUALANIMATIONPROTO._serialized_end=2917
-  _PODCASTTRANSCRIPTPROTO._serialized_start=2919
-  _PODCASTTRANSCRIPTPROTO._serialized_end=2990
-  _PODCASTTRANSCRIPTENTRYPROTO._serialized_start=2992
-  _PODCASTTRANSCRIPTENTRYPROTO._serialized_end=3088
-  _PODCASTWORDPROTO._serialized_start=3090
-  _PODCASTWORDPROTO._serialized_end=3183
-  _PODCASTKNOWLEDGECARDPROTO._serialized_start=3185
-  _PODCASTKNOWLEDGECARDPROTO._serialized_end=3299
-  _PODCASTMULTIPLECHOICECARDPROTO._serialized_start=3302
-  _PODCASTMULTIPLECHOICECARDPROTO._serialized_end=3523
-  _PODCASTPOLLCARDPROTO._serialized_start=3526
-  _PODCASTPOLLCARDPROTO._serialized_end=3660
-  _PODCASTCARDHEROPROTO._serialized_start=3662
-  _PODCASTCARDHEROPROTO._serialized_end=3719
-  _PODCASTMULTIPLECHOICEOPTIONPROTO._serialized_start=3721
-  _PODCASTMULTIPLECHOICEOPTIONPROTO._serialized_end=3769
-  _PODCASTPOLLOPTIONPROTO._serialized_start=3771
-  _PODCASTPOLLOPTIONPROTO._serialized_end=3809
+  _PODCASTPOINTPROTO._serialized_end=1983
+  _PODCASTTHUMBNAILPROTO._serialized_start=1986
+  _PODCASTTHUMBNAILPROTO._serialized_end=2160
+  _PODCASTAUDIOPROTO._serialized_start=2162
+  _PODCASTAUDIOPROTO._serialized_end=2240
+  _PODCASTCARDSPROTO._serialized_start=2242
+  _PODCASTCARDSPROTO._serialized_end=2295
+  _PODCASTCARDPROTO._serialized_start=2298
+  _PODCASTCARDPROTO._serialized_end=2507
+  _PODCASTERRORPROTO._serialized_start=2509
+  _PODCASTERRORPROTO._serialized_end=2545
+  _PODCASTPROMPTANSWERPROTO._serialized_start=2547
+  _PODCASTPROMPTANSWERPROTO._serialized_end=2587
+  _PODCASTVISUALSPROTO._serialized_start=2589
+  _PODCASTVISUALSPROTO._serialized_end=2648
+  _PODCASTVISUALPROTO._serialized_start=2651
+  _PODCASTVISUALPROTO._serialized_end=2817
+  _PODCASTVISUALANIMATIONPROTO._serialized_start=2819
+  _PODCASTVISUALANIMATIONPROTO._serialized_end=2913
+  _PODCASTTRANSCRIPTPROTO._serialized_start=2915
+  _PODCASTTRANSCRIPTPROTO._serialized_end=2986
+  _PODCASTTRANSCRIPTENTRYPROTO._serialized_start=2988
+  _PODCASTTRANSCRIPTENTRYPROTO._serialized_end=3084
+  _PODCASTWORDPROTO._serialized_start=3086
+  _PODCASTWORDPROTO._serialized_end=3179
+  _PODCASTKNOWLEDGECARDPROTO._serialized_start=3181
+  _PODCASTKNOWLEDGECARDPROTO._serialized_end=3295
+  _PODCASTMULTIPLECHOICECARDPROTO._serialized_start=3298
+  _PODCASTMULTIPLECHOICECARDPROTO._serialized_end=3519
+  _PODCASTPOLLCARDPROTO._serialized_start=3522
+  _PODCASTPOLLCARDPROTO._serialized_end=3656
+  _PODCASTCARDHEROPROTO._serialized_start=3658
+  _PODCASTCARDHEROPROTO._serialized_end=3715
+  _PODCASTMULTIPLECHOICEOPTIONPROTO._serialized_start=3717
+  _PODCASTMULTIPLECHOICEOPTIONPROTO._serialized_end=3765
+  _PODCASTPOLLOPTIONPROTO._serialized_start=3767
+  _PODCASTPOLLOPTIONPROTO._serialized_end=3805
 # @@protoc_insertion_point(module_scope)

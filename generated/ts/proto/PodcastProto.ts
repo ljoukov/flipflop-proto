@@ -294,9 +294,9 @@ export interface PodcastPointProto {
      */
     titleEmoji: string;
     /**
-     * @generated from protobuf field: string description = 4;
+     * @generated from protobuf field: string outline = 4;
      */
-    description: string;
+    outline: string;
 }
 /**
  * @generated from protobuf message PodcastThumbnailProto
@@ -1457,11 +1457,11 @@ class PodcastPointProto$Type extends MessageType<PodcastPointProto> {
             { no: 1, name: "point_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "title_emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 4, name: "outline", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PodcastPointProto>): PodcastPointProto {
-        const message = { pointId: "", title: "", titleEmoji: "", description: "" };
+        const message = { pointId: "", title: "", titleEmoji: "", outline: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastPointProto>(this, message, value);
@@ -1481,8 +1481,8 @@ class PodcastPointProto$Type extends MessageType<PodcastPointProto> {
                 case /* string title_emoji */ 3:
                     message.titleEmoji = reader.string();
                     break;
-                case /* string description */ 4:
-                    message.description = reader.string();
+                case /* string outline */ 4:
+                    message.outline = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1505,9 +1505,9 @@ class PodcastPointProto$Type extends MessageType<PodcastPointProto> {
         /* string title_emoji = 3; */
         if (message.titleEmoji !== "")
             writer.tag(3, WireType.LengthDelimited).string(message.titleEmoji);
-        /* string description = 4; */
-        if (message.description !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.description);
+        /* string outline = 4; */
+        if (message.outline !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.outline);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

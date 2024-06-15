@@ -136,9 +136,9 @@ export interface StoredPodcastPointProto {
      */
     titleEmoji: string;
     /**
-     * @generated from protobuf field: string description = 6;
+     * @generated from protobuf field: string outline = 6;
      */
-    description: string;
+    outline: string;
 }
 /**
  * @generated from protobuf message StoredPodcastPlanProto
@@ -611,11 +611,11 @@ class StoredPodcastPointProto$Type extends MessageType<StoredPodcastPointProto> 
             { no: 3, name: "reasoning", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "title_emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 6, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 6, name: "outline", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastPointProto>): StoredPodcastPointProto {
-        const message = { pointId: "", selected: false, reasoning: "", title: "", titleEmoji: "", description: "" };
+        const message = { pointId: "", selected: false, reasoning: "", title: "", titleEmoji: "", outline: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastPointProto>(this, message, value);
@@ -641,8 +641,8 @@ class StoredPodcastPointProto$Type extends MessageType<StoredPodcastPointProto> 
                 case /* string title_emoji */ 5:
                     message.titleEmoji = reader.string();
                     break;
-                case /* string description */ 6:
-                    message.description = reader.string();
+                case /* string outline */ 6:
+                    message.outline = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -671,9 +671,9 @@ class StoredPodcastPointProto$Type extends MessageType<StoredPodcastPointProto> 
         /* string title_emoji = 5; */
         if (message.titleEmoji !== "")
             writer.tag(5, WireType.LengthDelimited).string(message.titleEmoji);
-        /* string description = 6; */
-        if (message.description !== "")
-            writer.tag(6, WireType.LengthDelimited).string(message.description);
+        /* string outline = 6; */
+        if (message.outline !== "")
+            writer.tag(6, WireType.LengthDelimited).string(message.outline);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

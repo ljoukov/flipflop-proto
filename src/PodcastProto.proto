@@ -92,7 +92,7 @@ message PodcastPointProto {
   string point_id = 1;
   string title = 2;
   string title_emoji = 3;
-  string description = 4;
+  string outline = 4;
 }
 
 message PodcastThumbnailProto {

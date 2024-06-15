@@ -82,7 +82,7 @@ message StoredPodcastPointProto {
   string reasoning = 3;
   string title = 4;
   string title_emoji = 5;
-  string description = 6;
+  string outline = 6;
 }
 
 message StoredPodcastPlanProto {

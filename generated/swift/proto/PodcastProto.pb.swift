@@ -691,7 +691,7 @@ struct PodcastPointProto {
 
   var titleEmoji: String = String()
 
-  var description_p: String = String()
+  var outline: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -1909,7 +1909,7 @@ extension PodcastPointProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
     1: .standard(proto: "point_id"),
     2: .same(proto: "title"),
     3: .standard(proto: "title_emoji"),
-    4: .same(proto: "description"),
+    4: .same(proto: "outline"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1921,7 +1921,7 @@ extension PodcastPointProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
       case 1: try { try decoder.decodeSingularStringField(value: &self.pointID) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.title) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.titleEmoji) }()
-      case 4: try { try decoder.decodeSingularStringField(value: &self.description_p) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.outline) }()
       default: break
       }
     }
@@ -1937,8 +1937,8 @@ extension PodcastPointProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
     if !self.titleEmoji.isEmpty {
       try visitor.visitSingularStringField(value: self.titleEmoji, fieldNumber: 3)
     }
-    if !self.description_p.isEmpty {
-      try visitor.visitSingularStringField(value: self.description_p, fieldNumber: 4)
+    if !self.outline.isEmpty {
+      try visitor.visitSingularStringField(value: self.outline, fieldNumber: 4)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -1947,7 +1947,7 @@ extension PodcastPointProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
     if lhs.pointID != rhs.pointID {return false}
     if lhs.title != rhs.title {return false}
     if lhs.titleEmoji != rhs.titleEmoji {return false}
-    if lhs.description_p != rhs.description_p {return false}
+    if lhs.outline != rhs.outline {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
