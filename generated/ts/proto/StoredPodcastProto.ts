@@ -59,9 +59,9 @@ export interface StoredPodcastProto {
      */
     points: StoredPodcastPointProto[];
     /**
-     * @generated from protobuf field: string plan = 9;
+     * @generated from protobuf field: StoredPodcastPlanProto plan = 9;
      */
-    plan: string;
+    plan?: StoredPodcastPlanProto;
     /**
      * @generated from protobuf field: StoredPodcastTranscriptProto transcript = 10;
      */
@@ -121,6 +121,15 @@ export interface StoredPodcastPointProto {
      * @generated from protobuf field: string description = 6;
      */
     description: string;
+}
+/**
+ * @generated from protobuf message StoredPodcastPlanProto
+ */
+export interface StoredPodcastPlanProto {
+    /**
+     * @generated from protobuf field: string plan = 1;
+     */
+    plan: string;
 }
 /**
  * @generated from protobuf message StoredPodcastTranscriptProto
@@ -357,7 +366,7 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
             { no: 6, name: "state", kind: "enum", T: () => ["StoredPodcastStateProto", StoredPodcastStateProto, "STORED_PODCAST_STATE_PROTO_"] },
             { no: 7, name: "answer", kind: "message", T: () => PodcastPromptAnswerProto },
             { no: 8, name: "points", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastPointProto },
-            { no: 9, name: "plan", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 9, name: "plan", kind: "message", T: () => StoredPodcastPlanProto },
             { no: 10, name: "transcript", kind: "message", T: () => StoredPodcastTranscriptProto },
             { no: 11, name: "audio", kind: "message", T: () => StoredPodcastAudioProto },
             { no: 12, name: "visuals", kind: "message", T: () => StoredPodcastVisualsProto },
@@ -368,7 +377,7 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
         ]);
     }
     create(value?: PartialMessage<StoredPodcastProto>): StoredPodcastProto {
-        const message = { podcastId: "", createdBy: "", userPrompt: "", state: 0, points: [], plan: "", cardsState: 0 };
+        const message = { podcastId: "", createdBy: "", userPrompt: "", state: 0, points: [], cardsState: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastProto>(this, message, value);
@@ -403,8 +412,8 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
                 case /* repeated StoredPodcastPointProto points */ 8:
                     message.points.push(StoredPodcastPointProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
-                case /* string plan */ 9:
-                    message.plan = reader.string();
+                case /* StoredPodcastPlanProto plan */ 9:
+                    message.plan = StoredPodcastPlanProto.internalBinaryRead(reader, reader.uint32(), options, message.plan);
                     break;
                 case /* StoredPodcastTranscriptProto transcript */ 10:
                     message.transcript = StoredPodcastTranscriptProto.internalBinaryRead(reader, reader.uint32(), options, message.transcript);
@@ -463,9 +472,9 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
         /* repeated StoredPodcastPointProto points = 8; */
         for (let i = 0; i < message.points.length; i++)
             StoredPodcastPointProto.internalBinaryWrite(message.points[i], writer.tag(8, WireType.LengthDelimited).fork(), options).join();
-        /* string plan = 9; */
-        if (message.plan !== "")
-            writer.tag(9, WireType.LengthDelimited).string(message.plan);
+        /* StoredPodcastPlanProto plan = 9; */
+        if (message.plan)
+            StoredPodcastPlanProto.internalBinaryWrite(message.plan, writer.tag(9, WireType.LengthDelimited).fork(), options).join();
         /* StoredPodcastTranscriptProto transcript = 10; */
         if (message.transcript)
             StoredPodcastTranscriptProto.internalBinaryWrite(message.transcript, writer.tag(10, WireType.LengthDelimited).fork(), options).join();
@@ -579,6 +588,53 @@ class StoredPodcastPointProto$Type extends MessageType<StoredPodcastPointProto> 
  * @generated MessageType for protobuf message StoredPodcastPointProto
  */
 export const StoredPodcastPointProto = new StoredPodcastPointProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class StoredPodcastPlanProto$Type extends MessageType<StoredPodcastPlanProto> {
+    constructor() {
+        super("StoredPodcastPlanProto", [
+            { no: 1, name: "plan", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<StoredPodcastPlanProto>): StoredPodcastPlanProto {
+        const message = { plan: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<StoredPodcastPlanProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredPodcastPlanProto): StoredPodcastPlanProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string plan */ 1:
+                    message.plan = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: StoredPodcastPlanProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string plan = 1; */
+        if (message.plan !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.plan);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message StoredPodcastPlanProto
+ */
+export const StoredPodcastPlanProto = new StoredPodcastPlanProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class StoredPodcastTranscriptProto$Type extends MessageType<StoredPodcastTranscriptProto> {
     constructor() {

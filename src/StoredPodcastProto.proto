@@ -22,7 +22,7 @@ message StoredPodcastProto {
 
   repeated StoredPodcastPointProto points = 8;
 
-  string plan = 9;
+  StoredPodcastPlanProto plan = 9;
   StoredPodcastTranscriptProto transcript = 10;
   StoredPodcastAudioProto audio = 11;
   StoredPodcastVisualsProto visuals = 12;
@@ -81,6 +81,10 @@ enum StoredPodcastCardsStateProto {
   STORED_PODCAST_CARDS_STATE_PROTO_GENERATING = 1;
   STORED_PODCAST_CARDS_STATE_PROTO_READY = 2;
   STORED_PODCAST_CARDS_STATE_PROTO_FAILED = 3;
+}
+
+message StoredPodcastPlanProto {
+  string plan = 1;
 }
 
 message StoredPodcastTranscriptProto {
