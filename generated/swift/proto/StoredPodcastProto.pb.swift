@@ -278,10 +278,14 @@ struct StoredPodcastProto {
   /// Clears the value of `answer`. Subsequent reads from it will return its default value.
   mutating func clearAnswer() {_uniqueStorage()._answer = nil}
 
-  var points: [StoredPodcastPointProto] {
-    get {return _storage._points}
+  var points: StoredPodcastPointsProto {
+    get {return _storage._points ?? StoredPodcastPointsProto()}
     set {_uniqueStorage()._points = newValue}
   }
+  /// Returns true if `points` has been explicitly set.
+  var hasPoints: Bool {return _storage._points != nil}
+  /// Clears the value of `points`. Subsequent reads from it will return its default value.
+  mutating func clearPoints() {_uniqueStorage()._points = nil}
 
   var plan: StoredPodcastPlanProto {
     get {return _storage._plan ?? StoredPodcastPlanProto()}
@@ -365,6 +369,18 @@ struct StoredPodcastUserPromptProto {
   // methods supported on all messages.
 
   var prompt: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct StoredPodcastPointsProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var points: [StoredPodcastPointProto] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -516,6 +532,7 @@ extension StoredPodcastCardsStateProto: @unchecked Sendable {}
 extension StoredPodcastSectionTypeProto: @unchecked Sendable {}
 extension StoredPodcastProto: @unchecked Sendable {}
 extension StoredPodcastUserPromptProto: @unchecked Sendable {}
+extension StoredPodcastPointsProto: @unchecked Sendable {}
 extension StoredPodcastPointProto: @unchecked Sendable {}
 extension StoredPodcastPlanProto: @unchecked Sendable {}
 extension StoredPodcastTranscriptProto: @unchecked Sendable {}
@@ -598,7 +615,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     var _userPrompt: StoredPodcastUserPromptProto? = nil
     var _state: StoredPodcastStateProto = .unknown
     var _answer: PodcastPromptAnswerProto? = nil
-    var _points: [StoredPodcastPointProto] = []
+    var _points: StoredPodcastPointsProto? = nil
     var _plan: StoredPodcastPlanProto? = nil
     var _transcript: StoredPodcastTranscriptProto? = nil
     var _audio: StoredPodcastAudioProto? = nil
@@ -654,7 +671,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         case 5: try { try decoder.decodeSingularMessageField(value: &_storage._userPrompt) }()
         case 6: try { try decoder.decodeSingularEnumField(value: &_storage._state) }()
         case 7: try { try decoder.decodeSingularMessageField(value: &_storage._answer) }()
-        case 8: try { try decoder.decodeRepeatedMessageField(value: &_storage._points) }()
+        case 8: try { try decoder.decodeSingularMessageField(value: &_storage._points) }()
         case 9: try { try decoder.decodeSingularMessageField(value: &_storage._plan) }()
         case 10: try { try decoder.decodeSingularMessageField(value: &_storage._transcript) }()
         case 11: try { try decoder.decodeSingularMessageField(value: &_storage._audio) }()
@@ -696,9 +713,9 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       try { if let v = _storage._answer {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
       } }()
-      if !_storage._points.isEmpty {
-        try visitor.visitRepeatedMessageField(value: _storage._points, fieldNumber: 8)
-      }
+      try { if let v = _storage._points {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
+      } }()
       try { if let v = _storage._plan {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 9)
       } }()
@@ -784,6 +801,38 @@ extension StoredPodcastUserPromptProto: SwiftProtobuf.Message, SwiftProtobuf._Me
 
   static func ==(lhs: StoredPodcastUserPromptProto, rhs: StoredPodcastUserPromptProto) -> Bool {
     if lhs.prompt != rhs.prompt {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension StoredPodcastPointsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredPodcastPointsProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "points"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.points) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.points.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.points, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: StoredPodcastPointsProto, rhs: StoredPodcastPointsProto) -> Bool {
+    if lhs.points != rhs.points {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

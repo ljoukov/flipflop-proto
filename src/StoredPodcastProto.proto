@@ -20,7 +20,7 @@ message StoredPodcastProto {
 
   PodcastPromptAnswerProto answer = 7;
 
-  repeated StoredPodcastPointProto points = 8;
+  StoredPodcastPointsProto points = 8;
 
   StoredPodcastPlanProto plan = 9;
   StoredPodcastTranscriptProto transcript = 10;
@@ -75,6 +75,10 @@ enum StoredPodcastCardsStateProto {
 
 message StoredPodcastUserPromptProto {
   string prompt = 1;
+}
+
+message StoredPodcastPointsProto {
+  repeated StoredPodcastPointProto points = 1;
 }
 
 message StoredPodcastPointProto {
