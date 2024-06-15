@@ -241,6 +241,10 @@ export enum StoredPodcastStateProto {
      */
     FAILED = 2,
     /**
+     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_INITIAL = 3;
+     */
+    INITIAL = 3,
+    /**
      * IDs start at 10
      *
      * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_GENERATING_ANSWER = 10;

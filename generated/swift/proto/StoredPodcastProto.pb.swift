@@ -25,6 +25,7 @@ enum StoredPodcastStateProto: SwiftProtobuf.Enum {
   case unknown // = 0
   case ready // = 1
   case failed // = 2
+  case initial // = 3
 
   /// IDs start at 10
   case generatingAnswer // = 10
@@ -52,6 +53,7 @@ enum StoredPodcastStateProto: SwiftProtobuf.Enum {
     case 0: self = .unknown
     case 1: self = .ready
     case 2: self = .failed
+    case 3: self = .initial
     case 10: self = .generatingAnswer
     case 11: self = .answerReady
     case 12: self = .pointsReady
@@ -75,6 +77,7 @@ enum StoredPodcastStateProto: SwiftProtobuf.Enum {
     case .unknown: return 0
     case .ready: return 1
     case .failed: return 2
+    case .initial: return 3
     case .generatingAnswer: return 10
     case .answerReady: return 11
     case .pointsReady: return 12
@@ -103,6 +106,7 @@ extension StoredPodcastStateProto: CaseIterable {
     .unknown,
     .ready,
     .failed,
+    .initial,
     .generatingAnswer,
     .answerReady,
     .pointsReady,
@@ -495,6 +499,7 @@ extension StoredPodcastStateProto: SwiftProtobuf._ProtoNameProviding {
     0: .same(proto: "STORED_PODCAST_STATE_PROTO_UNKNOWN"),
     1: .same(proto: "STORED_PODCAST_STATE_PROTO_READY"),
     2: .same(proto: "STORED_PODCAST_STATE_PROTO_FAILED"),
+    3: .same(proto: "STORED_PODCAST_STATE_PROTO_INITIAL"),
     10: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATING_ANSWER"),
     11: .same(proto: "STORED_PODCAST_STATE_PROTO_ANSWER_READY"),
     12: .same(proto: "STORED_PODCAST_STATE_PROTO_POINTS_READY"),
