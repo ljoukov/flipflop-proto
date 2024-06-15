@@ -255,8 +255,8 @@ struct StoredPodcastProto {
   /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
   mutating func clearUpdatedAt() {_uniqueStorage()._updatedAt = nil}
 
-  var userPrompt: StoredUserPromptProto {
-    get {return _storage._userPrompt ?? StoredUserPromptProto()}
+  var userPrompt: StoredPodcastUserPromptProto {
+    get {return _storage._userPrompt ?? StoredPodcastUserPromptProto()}
     set {_uniqueStorage()._userPrompt = newValue}
   }
   /// Returns true if `userPrompt` has been explicitly set.
@@ -359,7 +359,7 @@ struct StoredPodcastProto {
   fileprivate var _storage = _StorageClass.defaultInstance
 }
 
-struct StoredUserPromptProto {
+struct StoredPodcastUserPromptProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -515,7 +515,7 @@ extension StoredPodcastStateProto: @unchecked Sendable {}
 extension StoredPodcastCardsStateProto: @unchecked Sendable {}
 extension StoredPodcastSectionTypeProto: @unchecked Sendable {}
 extension StoredPodcastProto: @unchecked Sendable {}
-extension StoredUserPromptProto: @unchecked Sendable {}
+extension StoredPodcastUserPromptProto: @unchecked Sendable {}
 extension StoredPodcastPointProto: @unchecked Sendable {}
 extension StoredPodcastPlanProto: @unchecked Sendable {}
 extension StoredPodcastTranscriptProto: @unchecked Sendable {}
@@ -595,7 +595,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     var _createdBy: String = String()
     var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
     var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
-    var _userPrompt: StoredUserPromptProto? = nil
+    var _userPrompt: StoredPodcastUserPromptProto? = nil
     var _state: StoredPodcastStateProto = .unknown
     var _answer: PodcastPromptAnswerProto? = nil
     var _points: [StoredPodcastPointProto] = []
@@ -757,8 +757,8 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
   }
 }
 
-extension StoredUserPromptProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "StoredUserPromptProto"
+extension StoredPodcastUserPromptProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredPodcastUserPromptProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "prompt"),
   ]
@@ -782,7 +782,7 @@ extension StoredUserPromptProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: StoredUserPromptProto, rhs: StoredUserPromptProto) -> Bool {
+  static func ==(lhs: StoredPodcastUserPromptProto, rhs: StoredPodcastUserPromptProto) -> Bool {
     if lhs.prompt != rhs.prompt {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

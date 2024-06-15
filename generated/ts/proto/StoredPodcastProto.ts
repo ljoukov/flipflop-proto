@@ -43,9 +43,9 @@ export interface StoredPodcastProto {
      */
     updatedAt?: Timestamp;
     /**
-     * @generated from protobuf field: StoredUserPromptProto user_prompt = 5;
+     * @generated from protobuf field: StoredPodcastUserPromptProto user_prompt = 5;
      */
-    userPrompt?: StoredUserPromptProto;
+    userPrompt?: StoredPodcastUserPromptProto;
     /**
      * @generated from protobuf field: StoredPodcastStateProto state = 6;
      */
@@ -94,9 +94,9 @@ export interface StoredPodcastProto {
     log?: LogProto;
 }
 /**
- * @generated from protobuf message StoredUserPromptProto
+ * @generated from protobuf message StoredPodcastUserPromptProto
  */
-export interface StoredUserPromptProto {
+export interface StoredPodcastUserPromptProto {
     /**
      * @generated from protobuf field: string prompt = 1;
      */
@@ -371,7 +371,7 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
             { no: 2, name: "created_by", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "created_at", kind: "message", T: () => Timestamp },
             { no: 4, name: "updated_at", kind: "message", T: () => Timestamp },
-            { no: 5, name: "user_prompt", kind: "message", T: () => StoredUserPromptProto },
+            { no: 5, name: "user_prompt", kind: "message", T: () => StoredPodcastUserPromptProto },
             { no: 6, name: "state", kind: "enum", T: () => ["StoredPodcastStateProto", StoredPodcastStateProto, "STORED_PODCAST_STATE_PROTO_"] },
             { no: 7, name: "answer", kind: "message", T: () => PodcastPromptAnswerProto },
             { no: 8, name: "points", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastPointProto },
@@ -409,8 +409,8 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
                 case /* google.protobuf.Timestamp updated_at */ 4:
                     message.updatedAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.updatedAt);
                     break;
-                case /* StoredUserPromptProto user_prompt */ 5:
-                    message.userPrompt = StoredUserPromptProto.internalBinaryRead(reader, reader.uint32(), options, message.userPrompt);
+                case /* StoredPodcastUserPromptProto user_prompt */ 5:
+                    message.userPrompt = StoredPodcastUserPromptProto.internalBinaryRead(reader, reader.uint32(), options, message.userPrompt);
                     break;
                 case /* StoredPodcastStateProto state */ 6:
                     message.state = reader.int32();
@@ -469,9 +469,9 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
         /* google.protobuf.Timestamp updated_at = 4; */
         if (message.updatedAt)
             Timestamp.internalBinaryWrite(message.updatedAt, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
-        /* StoredUserPromptProto user_prompt = 5; */
+        /* StoredPodcastUserPromptProto user_prompt = 5; */
         if (message.userPrompt)
-            StoredUserPromptProto.internalBinaryWrite(message.userPrompt, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+            StoredPodcastUserPromptProto.internalBinaryWrite(message.userPrompt, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
         /* StoredPodcastStateProto state = 6; */
         if (message.state !== 0)
             writer.tag(6, WireType.Varint).int32(message.state);
@@ -516,20 +516,20 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
  */
 export const StoredPodcastProto = new StoredPodcastProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class StoredUserPromptProto$Type extends MessageType<StoredUserPromptProto> {
+class StoredPodcastUserPromptProto$Type extends MessageType<StoredPodcastUserPromptProto> {
     constructor() {
-        super("StoredUserPromptProto", [
+        super("StoredPodcastUserPromptProto", [
             { no: 1, name: "prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<StoredUserPromptProto>): StoredUserPromptProto {
+    create(value?: PartialMessage<StoredPodcastUserPromptProto>): StoredPodcastUserPromptProto {
         const message = { prompt: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<StoredUserPromptProto>(this, message, value);
+            reflectionMergePartial<StoredPodcastUserPromptProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredUserPromptProto): StoredUserPromptProto {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredPodcastUserPromptProto): StoredPodcastUserPromptProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -548,7 +548,7 @@ class StoredUserPromptProto$Type extends MessageType<StoredUserPromptProto> {
         }
         return message;
     }
-    internalBinaryWrite(message: StoredUserPromptProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: StoredPodcastUserPromptProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string prompt = 1; */
         if (message.prompt !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.prompt);
@@ -559,9 +559,9 @@ class StoredUserPromptProto$Type extends MessageType<StoredUserPromptProto> {
     }
 }
 /**
- * @generated MessageType for protobuf message StoredUserPromptProto
+ * @generated MessageType for protobuf message StoredPodcastUserPromptProto
  */
-export const StoredUserPromptProto = new StoredUserPromptProto$Type();
+export const StoredPodcastUserPromptProto = new StoredPodcastUserPromptProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class StoredPodcastPointProto$Type extends MessageType<StoredPodcastPointProto> {
     constructor() {

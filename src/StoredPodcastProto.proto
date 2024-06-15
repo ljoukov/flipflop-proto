@@ -14,7 +14,7 @@ message StoredPodcastProto {
   google.protobuf.Timestamp created_at = 3;
   google.protobuf.Timestamp updated_at = 4;
 
-  StoredUserPromptProto user_prompt = 5;
+  StoredPodcastUserPromptProto user_prompt = 5;
 
   StoredPodcastStateProto state = 6;
 
@@ -73,7 +73,7 @@ enum StoredPodcastCardsStateProto {
   STORED_PODCAST_CARDS_STATE_PROTO_FAILED = 3;
 }
 
-message StoredUserPromptProto {
+message StoredPodcastUserPromptProto {
   string prompt = 1;
 }
 
