@@ -147,11 +147,9 @@ export interface CreatePodcastResponseDeltaProto {
     type: {
         oneofKind: "error";
         /**
-         * This is the last delta message
-         *
-         * @generated from protobuf field: PodcastAnswerErrorProto error = 1;
+         * @generated from protobuf field: PodcastErrorProto error = 1;
          */
-        error: PodcastAnswerErrorProto;
+        error: PodcastErrorProto; // This is the last delta message
     } | {
         oneofKind: "answer";
         /**
@@ -389,9 +387,9 @@ export interface PodcastCardProto {
     };
 }
 /**
- * @generated from protobuf message PodcastAnswerErrorProto
+ * @generated from protobuf message PodcastErrorProto
  */
-export interface PodcastAnswerErrorProto {
+export interface PodcastErrorProto {
     /**
      * @generated from protobuf field: string message = 1;
      */
@@ -1024,7 +1022,7 @@ export const CreatePodcastResponseHeaderProto = new CreatePodcastResponseHeaderP
 class CreatePodcastResponseDeltaProto$Type extends MessageType<CreatePodcastResponseDeltaProto> {
     constructor() {
         super("CreatePodcastResponseDeltaProto", [
-            { no: 1, name: "error", kind: "message", oneof: "type", T: () => PodcastAnswerErrorProto },
+            { no: 1, name: "error", kind: "message", oneof: "type", T: () => PodcastErrorProto },
             { no: 2, name: "answer", kind: "message", oneof: "type", T: () => PodcastPromptAnswerProto },
             { no: 3, name: "point", kind: "message", oneof: "type", T: () => PodcastPointProto }
         ]);
@@ -1041,10 +1039,10 @@ class CreatePodcastResponseDeltaProto$Type extends MessageType<CreatePodcastResp
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* PodcastAnswerErrorProto error */ 1:
+                case /* PodcastErrorProto error */ 1:
                     message.type = {
                         oneofKind: "error",
-                        error: PodcastAnswerErrorProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).error)
+                        error: PodcastErrorProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).error)
                     };
                     break;
                 case /* PodcastPromptAnswerProto answer */ 2:
@@ -1071,9 +1069,9 @@ class CreatePodcastResponseDeltaProto$Type extends MessageType<CreatePodcastResp
         return message;
     }
     internalBinaryWrite(message: CreatePodcastResponseDeltaProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* PodcastAnswerErrorProto error = 1; */
+        /* PodcastErrorProto error = 1; */
         if (message.type.oneofKind === "error")
-            PodcastAnswerErrorProto.internalBinaryWrite(message.type.error, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+            PodcastErrorProto.internalBinaryWrite(message.type.error, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         /* PodcastPromptAnswerProto answer = 2; */
         if (message.type.oneofKind === "answer")
             PodcastPromptAnswerProto.internalBinaryWrite(message.type.answer, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
@@ -1788,20 +1786,20 @@ class PodcastCardProto$Type extends MessageType<PodcastCardProto> {
  */
 export const PodcastCardProto = new PodcastCardProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class PodcastAnswerErrorProto$Type extends MessageType<PodcastAnswerErrorProto> {
+class PodcastErrorProto$Type extends MessageType<PodcastErrorProto> {
     constructor() {
-        super("PodcastAnswerErrorProto", [
+        super("PodcastErrorProto", [
             { no: 1, name: "message", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<PodcastAnswerErrorProto>): PodcastAnswerErrorProto {
+    create(value?: PartialMessage<PodcastErrorProto>): PodcastErrorProto {
         const message = { message: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<PodcastAnswerErrorProto>(this, message, value);
+            reflectionMergePartial<PodcastErrorProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastAnswerErrorProto): PodcastAnswerErrorProto {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastErrorProto): PodcastErrorProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -1820,7 +1818,7 @@ class PodcastAnswerErrorProto$Type extends MessageType<PodcastAnswerErrorProto> 
         }
         return message;
     }
-    internalBinaryWrite(message: PodcastAnswerErrorProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: PodcastErrorProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string message = 1; */
         if (message.message !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.message);
@@ -1831,9 +1829,9 @@ class PodcastAnswerErrorProto$Type extends MessageType<PodcastAnswerErrorProto> 
     }
 }
 /**
- * @generated MessageType for protobuf message PodcastAnswerErrorProto
+ * @generated MessageType for protobuf message PodcastErrorProto
  */
-export const PodcastAnswerErrorProto = new PodcastAnswerErrorProto$Type();
+export const PodcastErrorProto = new PodcastErrorProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class PodcastPromptAnswerProto$Type extends MessageType<PodcastPromptAnswerProto> {
     constructor() {

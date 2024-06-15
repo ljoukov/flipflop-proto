@@ -399,10 +399,10 @@ struct CreatePodcastResponseDeltaProto {
   var type: CreatePodcastResponseDeltaProto.OneOf_Type? = nil
 
   /// This is the last delta message
-  var error: PodcastAnswerErrorProto {
+  var error: PodcastErrorProto {
     get {
       if case .error(let v)? = type {return v}
-      return PodcastAnswerErrorProto()
+      return PodcastErrorProto()
     }
     set {type = .error(newValue)}
   }
@@ -427,7 +427,7 @@ struct CreatePodcastResponseDeltaProto {
 
   enum OneOf_Type: Equatable {
     /// This is the last delta message
-    case error(PodcastAnswerErrorProto)
+    case error(PodcastErrorProto)
     case answer(PodcastPromptAnswerProto)
     case point(PodcastPointProto)
 
@@ -835,7 +835,7 @@ struct PodcastCardProto {
   init() {}
 }
 
-struct PodcastAnswerErrorProto {
+struct PodcastErrorProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1118,7 +1118,7 @@ extension PodcastAudioProto: @unchecked Sendable {}
 extension PodcastCardsProto: @unchecked Sendable {}
 extension PodcastCardProto: @unchecked Sendable {}
 extension PodcastCardProto.OneOf_Type: @unchecked Sendable {}
-extension PodcastAnswerErrorProto: @unchecked Sendable {}
+extension PodcastErrorProto: @unchecked Sendable {}
 extension PodcastPromptAnswerProto: @unchecked Sendable {}
 extension PodcastVisualsProto: @unchecked Sendable {}
 extension PodcastVisualProto: @unchecked Sendable {}
@@ -1524,7 +1524,7 @@ extension CreatePodcastResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf.
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try {
-        var v: PodcastAnswerErrorProto?
+        var v: PodcastErrorProto?
         var hadOneofValue = false
         if let current = self.type {
           hadOneofValue = true
@@ -2193,8 +2193,8 @@ extension PodcastCardProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
   }
 }
 
-extension PodcastAnswerErrorProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "PodcastAnswerErrorProto"
+extension PodcastErrorProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastErrorProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "message"),
   ]
@@ -2218,7 +2218,7 @@ extension PodcastAnswerErrorProto: SwiftProtobuf.Message, SwiftProtobuf._Message
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: PodcastAnswerErrorProto, rhs: PodcastAnswerErrorProto) -> Bool {
+  static func ==(lhs: PodcastErrorProto, rhs: PodcastErrorProto) -> Bool {
     if lhs.message != rhs.message {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

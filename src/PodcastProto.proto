@@ -42,8 +42,7 @@ message CreatePodcastResponseHeaderProto {
 
 message CreatePodcastResponseDeltaProto {
   oneof type {
-    // This is the last delta message
-    PodcastAnswerErrorProto error = 1;
+    PodcastErrorProto error = 1;  // This is the last delta message
     PodcastPromptAnswerProto answer = 2;
     PodcastPointProto point = 3;
   }
@@ -133,7 +132,7 @@ message PodcastCardProto {
   }
 }
 
-message PodcastAnswerErrorProto {
+message PodcastErrorProto {
   string message = 1;
 }
 
