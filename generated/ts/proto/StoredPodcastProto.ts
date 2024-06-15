@@ -268,67 +268,51 @@ export enum StoredPodcastStateProto {
      */
     FAILED = 2,
     /**
-     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_INITIAL = 3;
-     */
-    INITIAL = 3,
-    /**
      * IDs start at 10
      *
-     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_GENERATING_ANSWER = 10;
+     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_READY_FOR_GENERATION = 10;
      */
-    GENERATING_ANSWER = 10,
+    READY_FOR_GENERATION = 10,
     /**
-     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_ANSWER_READY = 11;
+     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_GENERATING_THUMBNAIL = 11;
      */
-    ANSWER_READY = 11,
+    GENERATING_THUMBNAIL = 11,
     /**
-     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_POINTS_READY = 12;
+     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_THUMBNAIL_READY = 12;
      */
-    POINTS_READY = 12,
+    THUMBNAIL_READY = 12,
     /**
-     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_POINTS_SELECTED = 13;
+     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_GENERATING_PLAN = 13;
      */
-    POINTS_SELECTED = 13,
+    GENERATING_PLAN = 13,
     /**
-     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_GENERATING_THUMBNAIL = 14;
+     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_PLAN_READY = 14;
      */
-    GENERATING_THUMBNAIL = 14,
+    PLAN_READY = 14,
     /**
-     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_THUMBNAIL_READY = 15;
+     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_GENERATING_TRANSCRIPT = 15;
      */
-    THUMBNAIL_READY = 15,
+    GENERATING_TRANSCRIPT = 15,
     /**
-     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_GENERATING_PLAN = 16;
+     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_TRANSCRIPT_READY = 16;
      */
-    GENERATING_PLAN = 16,
+    TRANSCRIPT_READY = 16,
     /**
-     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_PLAN_READY = 17;
+     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_GENERATING_AUDIO = 17;
      */
-    PLAN_READY = 17,
+    GENERATING_AUDIO = 17,
     /**
-     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_GENERATING_TRANSCRIPT = 18;
+     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_AUDIO_READY = 18;
      */
-    GENERATING_TRANSCRIPT = 18,
+    AUDIO_READY = 18,
     /**
-     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_TRANSCRIPT_READY = 19;
+     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_GENERATING_VISUALS = 19;
      */
-    TRANSCRIPT_READY = 19,
+    GENERATING_VISUALS = 19,
     /**
-     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_GENERATING_AUDIO = 20;
+     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_VISUALS_READY = 20;
      */
-    GENERATING_AUDIO = 20,
-    /**
-     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_AUDIO_READY = 21;
-     */
-    AUDIO_READY = 21,
-    /**
-     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_GENERATING_VISUALS = 22;
-     */
-    GENERATING_VISUALS = 22,
-    /**
-     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_VISUALS_READY = 23;
-     */
-    VISUALS_READY = 23
+    VISUALS_READY = 20
 }
 /**
  * @generated from protobuf enum StoredPodcastCardsStateProto

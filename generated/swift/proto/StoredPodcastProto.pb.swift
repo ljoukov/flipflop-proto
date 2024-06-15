@@ -25,23 +25,19 @@ enum StoredPodcastStateProto: SwiftProtobuf.Enum {
   case unknown // = 0
   case ready // = 1
   case failed // = 2
-  case initial // = 3
 
   /// IDs start at 10
-  case generatingAnswer // = 10
-  case answerReady // = 11
-  case pointsReady // = 12
-  case pointsSelected // = 13
-  case generatingThumbnail // = 14
-  case thumbnailReady // = 15
-  case generatingPlan // = 16
-  case planReady // = 17
-  case generatingTranscript // = 18
-  case transcriptReady // = 19
-  case generatingAudio // = 20
-  case audioReady // = 21
-  case generatingVisuals // = 22
-  case visualsReady // = 23
+  case readyForGeneration // = 10
+  case generatingThumbnail // = 11
+  case thumbnailReady // = 12
+  case generatingPlan // = 13
+  case planReady // = 14
+  case generatingTranscript // = 15
+  case transcriptReady // = 16
+  case generatingAudio // = 17
+  case audioReady // = 18
+  case generatingVisuals // = 19
+  case visualsReady // = 20
   case UNRECOGNIZED(Int)
 
   init() {
@@ -53,21 +49,17 @@ enum StoredPodcastStateProto: SwiftProtobuf.Enum {
     case 0: self = .unknown
     case 1: self = .ready
     case 2: self = .failed
-    case 3: self = .initial
-    case 10: self = .generatingAnswer
-    case 11: self = .answerReady
-    case 12: self = .pointsReady
-    case 13: self = .pointsSelected
-    case 14: self = .generatingThumbnail
-    case 15: self = .thumbnailReady
-    case 16: self = .generatingPlan
-    case 17: self = .planReady
-    case 18: self = .generatingTranscript
-    case 19: self = .transcriptReady
-    case 20: self = .generatingAudio
-    case 21: self = .audioReady
-    case 22: self = .generatingVisuals
-    case 23: self = .visualsReady
+    case 10: self = .readyForGeneration
+    case 11: self = .generatingThumbnail
+    case 12: self = .thumbnailReady
+    case 13: self = .generatingPlan
+    case 14: self = .planReady
+    case 15: self = .generatingTranscript
+    case 16: self = .transcriptReady
+    case 17: self = .generatingAudio
+    case 18: self = .audioReady
+    case 19: self = .generatingVisuals
+    case 20: self = .visualsReady
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -77,21 +69,17 @@ enum StoredPodcastStateProto: SwiftProtobuf.Enum {
     case .unknown: return 0
     case .ready: return 1
     case .failed: return 2
-    case .initial: return 3
-    case .generatingAnswer: return 10
-    case .answerReady: return 11
-    case .pointsReady: return 12
-    case .pointsSelected: return 13
-    case .generatingThumbnail: return 14
-    case .thumbnailReady: return 15
-    case .generatingPlan: return 16
-    case .planReady: return 17
-    case .generatingTranscript: return 18
-    case .transcriptReady: return 19
-    case .generatingAudio: return 20
-    case .audioReady: return 21
-    case .generatingVisuals: return 22
-    case .visualsReady: return 23
+    case .readyForGeneration: return 10
+    case .generatingThumbnail: return 11
+    case .thumbnailReady: return 12
+    case .generatingPlan: return 13
+    case .planReady: return 14
+    case .generatingTranscript: return 15
+    case .transcriptReady: return 16
+    case .generatingAudio: return 17
+    case .audioReady: return 18
+    case .generatingVisuals: return 19
+    case .visualsReady: return 20
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -106,11 +94,7 @@ extension StoredPodcastStateProto: CaseIterable {
     .unknown,
     .ready,
     .failed,
-    .initial,
-    .generatingAnswer,
-    .answerReady,
-    .pointsReady,
-    .pointsSelected,
+    .readyForGeneration,
     .generatingThumbnail,
     .thumbnailReady,
     .generatingPlan,
@@ -550,21 +534,17 @@ extension StoredPodcastStateProto: SwiftProtobuf._ProtoNameProviding {
     0: .same(proto: "STORED_PODCAST_STATE_PROTO_UNKNOWN"),
     1: .same(proto: "STORED_PODCAST_STATE_PROTO_READY"),
     2: .same(proto: "STORED_PODCAST_STATE_PROTO_FAILED"),
-    3: .same(proto: "STORED_PODCAST_STATE_PROTO_INITIAL"),
-    10: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATING_ANSWER"),
-    11: .same(proto: "STORED_PODCAST_STATE_PROTO_ANSWER_READY"),
-    12: .same(proto: "STORED_PODCAST_STATE_PROTO_POINTS_READY"),
-    13: .same(proto: "STORED_PODCAST_STATE_PROTO_POINTS_SELECTED"),
-    14: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATING_THUMBNAIL"),
-    15: .same(proto: "STORED_PODCAST_STATE_PROTO_THUMBNAIL_READY"),
-    16: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATING_PLAN"),
-    17: .same(proto: "STORED_PODCAST_STATE_PROTO_PLAN_READY"),
-    18: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATING_TRANSCRIPT"),
-    19: .same(proto: "STORED_PODCAST_STATE_PROTO_TRANSCRIPT_READY"),
-    20: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATING_AUDIO"),
-    21: .same(proto: "STORED_PODCAST_STATE_PROTO_AUDIO_READY"),
-    22: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATING_VISUALS"),
-    23: .same(proto: "STORED_PODCAST_STATE_PROTO_VISUALS_READY"),
+    10: .same(proto: "STORED_PODCAST_STATE_PROTO_READY_FOR_GENERATION"),
+    11: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATING_THUMBNAIL"),
+    12: .same(proto: "STORED_PODCAST_STATE_PROTO_THUMBNAIL_READY"),
+    13: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATING_PLAN"),
+    14: .same(proto: "STORED_PODCAST_STATE_PROTO_PLAN_READY"),
+    15: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATING_TRANSCRIPT"),
+    16: .same(proto: "STORED_PODCAST_STATE_PROTO_TRANSCRIPT_READY"),
+    17: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATING_AUDIO"),
+    18: .same(proto: "STORED_PODCAST_STATE_PROTO_AUDIO_READY"),
+    19: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATING_VISUALS"),
+    20: .same(proto: "STORED_PODCAST_STATE_PROTO_VISUALS_READY"),
   ]
 }
 
