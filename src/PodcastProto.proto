@@ -43,11 +43,9 @@ message CreatePodcastResponseHeaderProto {
 message CreatePodcastResponseDeltaProto {
   oneof type {
     // This is the last delta message
-    bool error_no_topic = 1;
-
-    // IDs start at 10
-    PodcastPromptAnswerProto answer = 10;
-    PodcastPointProto point = 11;
+    PodcastAnswerErrorProto error = 1;
+    PodcastPromptAnswerProto answer = 2;
+    PodcastPointProto point = 3;
   }
 }
 
@@ -133,6 +131,10 @@ message PodcastCardProto {
     PodcastMultipleChoiceCardProto multiple_choice = 11;
     PodcastPollCardProto poll = 12;
   }
+}
+
+message PodcastAnswerErrorProto {
+  string message = 1;
 }
 
 message PodcastPromptAnswerProto {

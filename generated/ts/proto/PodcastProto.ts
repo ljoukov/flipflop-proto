@@ -145,25 +145,23 @@ export interface CreatePodcastResponseDeltaProto {
      * @generated from protobuf oneof: type
      */
     type: {
-        oneofKind: "errorNoTopic";
+        oneofKind: "error";
         /**
          * This is the last delta message
          *
-         * @generated from protobuf field: bool error_no_topic = 1;
+         * @generated from protobuf field: PodcastAnswerErrorProto error = 1;
          */
-        errorNoTopic: boolean;
+        error: PodcastAnswerErrorProto;
     } | {
         oneofKind: "answer";
         /**
-         * IDs start at 10
-         *
-         * @generated from protobuf field: PodcastPromptAnswerProto answer = 10;
+         * @generated from protobuf field: PodcastPromptAnswerProto answer = 2;
          */
         answer: PodcastPromptAnswerProto;
     } | {
         oneofKind: "point";
         /**
-         * @generated from protobuf field: PodcastPointProto point = 11;
+         * @generated from protobuf field: PodcastPointProto point = 3;
          */
         point: PodcastPointProto;
     } | {
@@ -389,6 +387,15 @@ export interface PodcastCardProto {
     } | {
         oneofKind: undefined;
     };
+}
+/**
+ * @generated from protobuf message PodcastAnswerErrorProto
+ */
+export interface PodcastAnswerErrorProto {
+    /**
+     * @generated from protobuf field: string message = 1;
+     */
+    message: string;
 }
 /**
  * @generated from protobuf message PodcastPromptAnswerProto
@@ -1017,9 +1024,9 @@ export const CreatePodcastResponseHeaderProto = new CreatePodcastResponseHeaderP
 class CreatePodcastResponseDeltaProto$Type extends MessageType<CreatePodcastResponseDeltaProto> {
     constructor() {
         super("CreatePodcastResponseDeltaProto", [
-            { no: 1, name: "error_no_topic", kind: "scalar", oneof: "type", T: 8 /*ScalarType.BOOL*/ },
-            { no: 10, name: "answer", kind: "message", oneof: "type", T: () => PodcastPromptAnswerProto },
-            { no: 11, name: "point", kind: "message", oneof: "type", T: () => PodcastPointProto }
+            { no: 1, name: "error", kind: "message", oneof: "type", T: () => PodcastAnswerErrorProto },
+            { no: 2, name: "answer", kind: "message", oneof: "type", T: () => PodcastPromptAnswerProto },
+            { no: 3, name: "point", kind: "message", oneof: "type", T: () => PodcastPointProto }
         ]);
     }
     create(value?: PartialMessage<CreatePodcastResponseDeltaProto>): CreatePodcastResponseDeltaProto {
@@ -1034,19 +1041,19 @@ class CreatePodcastResponseDeltaProto$Type extends MessageType<CreatePodcastResp
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* bool error_no_topic */ 1:
+                case /* PodcastAnswerErrorProto error */ 1:
                     message.type = {
-                        oneofKind: "errorNoTopic",
-                        errorNoTopic: reader.bool()
+                        oneofKind: "error",
+                        error: PodcastAnswerErrorProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).error)
                     };
                     break;
-                case /* PodcastPromptAnswerProto answer */ 10:
+                case /* PodcastPromptAnswerProto answer */ 2:
                     message.type = {
                         oneofKind: "answer",
                         answer: PodcastPromptAnswerProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).answer)
                     };
                     break;
-                case /* PodcastPointProto point */ 11:
+                case /* PodcastPointProto point */ 3:
                     message.type = {
                         oneofKind: "point",
                         point: PodcastPointProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).point)
@@ -1064,15 +1071,15 @@ class CreatePodcastResponseDeltaProto$Type extends MessageType<CreatePodcastResp
         return message;
     }
     internalBinaryWrite(message: CreatePodcastResponseDeltaProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* bool error_no_topic = 1; */
-        if (message.type.oneofKind === "errorNoTopic")
-            writer.tag(1, WireType.Varint).bool(message.type.errorNoTopic);
-        /* PodcastPromptAnswerProto answer = 10; */
+        /* PodcastAnswerErrorProto error = 1; */
+        if (message.type.oneofKind === "error")
+            PodcastAnswerErrorProto.internalBinaryWrite(message.type.error, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastPromptAnswerProto answer = 2; */
         if (message.type.oneofKind === "answer")
-            PodcastPromptAnswerProto.internalBinaryWrite(message.type.answer, writer.tag(10, WireType.LengthDelimited).fork(), options).join();
-        /* PodcastPointProto point = 11; */
+            PodcastPromptAnswerProto.internalBinaryWrite(message.type.answer, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastPointProto point = 3; */
         if (message.type.oneofKind === "point")
-            PodcastPointProto.internalBinaryWrite(message.type.point, writer.tag(11, WireType.LengthDelimited).fork(), options).join();
+            PodcastPointProto.internalBinaryWrite(message.type.point, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1780,6 +1787,53 @@ class PodcastCardProto$Type extends MessageType<PodcastCardProto> {
  * @generated MessageType for protobuf message PodcastCardProto
  */
 export const PodcastCardProto = new PodcastCardProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PodcastAnswerErrorProto$Type extends MessageType<PodcastAnswerErrorProto> {
+    constructor() {
+        super("PodcastAnswerErrorProto", [
+            { no: 1, name: "message", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PodcastAnswerErrorProto>): PodcastAnswerErrorProto {
+        const message = { message: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<PodcastAnswerErrorProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastAnswerErrorProto): PodcastAnswerErrorProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string message */ 1:
+                    message.message = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PodcastAnswerErrorProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string message = 1; */
+        if (message.message !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.message);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message PodcastAnswerErrorProto
+ */
+export const PodcastAnswerErrorProto = new PodcastAnswerErrorProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class PodcastPromptAnswerProto$Type extends MessageType<PodcastPromptAnswerProto> {
     constructor() {

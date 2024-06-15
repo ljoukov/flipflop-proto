@@ -399,15 +399,14 @@ struct CreatePodcastResponseDeltaProto {
   var type: CreatePodcastResponseDeltaProto.OneOf_Type? = nil
 
   /// This is the last delta message
-  var errorNoTopic: Bool {
+  var error: PodcastAnswerErrorProto {
     get {
-      if case .errorNoTopic(let v)? = type {return v}
-      return false
+      if case .error(let v)? = type {return v}
+      return PodcastAnswerErrorProto()
     }
-    set {type = .errorNoTopic(newValue)}
+    set {type = .error(newValue)}
   }
 
-  /// IDs start at 10
   var answer: PodcastPromptAnswerProto {
     get {
       if case .answer(let v)? = type {return v}
@@ -428,8 +427,7 @@ struct CreatePodcastResponseDeltaProto {
 
   enum OneOf_Type: Equatable {
     /// This is the last delta message
-    case errorNoTopic(Bool)
-    /// IDs start at 10
+    case error(PodcastAnswerErrorProto)
     case answer(PodcastPromptAnswerProto)
     case point(PodcastPointProto)
 
@@ -439,8 +437,8 @@ struct CreatePodcastResponseDeltaProto {
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch (lhs, rhs) {
-      case (.errorNoTopic, .errorNoTopic): return {
-        guard case .errorNoTopic(let l) = lhs, case .errorNoTopic(let r) = rhs else { preconditionFailure() }
+      case (.error, .error): return {
+        guard case .error(let l) = lhs, case .error(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       case (.answer, .answer): return {
@@ -837,6 +835,18 @@ struct PodcastCardProto {
   init() {}
 }
 
+struct PodcastAnswerErrorProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var message: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 struct PodcastPromptAnswerProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -1108,6 +1118,7 @@ extension PodcastAudioProto: @unchecked Sendable {}
 extension PodcastCardsProto: @unchecked Sendable {}
 extension PodcastCardProto: @unchecked Sendable {}
 extension PodcastCardProto.OneOf_Type: @unchecked Sendable {}
+extension PodcastAnswerErrorProto: @unchecked Sendable {}
 extension PodcastPromptAnswerProto: @unchecked Sendable {}
 extension PodcastVisualsProto: @unchecked Sendable {}
 extension PodcastVisualProto: @unchecked Sendable {}
@@ -1501,9 +1512,9 @@ extension CreatePodcastResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobuf
 extension CreatePodcastResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "CreatePodcastResponseDeltaProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "error_no_topic"),
-    10: .same(proto: "answer"),
-    11: .same(proto: "point"),
+    1: .same(proto: "error"),
+    2: .same(proto: "answer"),
+    3: .same(proto: "point"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1513,14 +1524,19 @@ extension CreatePodcastResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf.
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try {
-        var v: Bool?
-        try decoder.decodeSingularBoolField(value: &v)
+        var v: PodcastAnswerErrorProto?
+        var hadOneofValue = false
+        if let current = self.type {
+          hadOneofValue = true
+          if case .error(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
         if let v = v {
-          if self.type != nil {try decoder.handleConflictingOneOf()}
-          self.type = .errorNoTopic(v)
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.type = .error(v)
         }
       }()
-      case 10: try {
+      case 2: try {
         var v: PodcastPromptAnswerProto?
         var hadOneofValue = false
         if let current = self.type {
@@ -1533,7 +1549,7 @@ extension CreatePodcastResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf.
           self.type = .answer(v)
         }
       }()
-      case 11: try {
+      case 3: try {
         var v: PodcastPointProto?
         var hadOneofValue = false
         if let current = self.type {
@@ -1557,17 +1573,17 @@ extension CreatePodcastResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf.
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
     switch self.type {
-    case .errorNoTopic?: try {
-      guard case .errorNoTopic(let v)? = self.type else { preconditionFailure() }
-      try visitor.visitSingularBoolField(value: v, fieldNumber: 1)
+    case .error?: try {
+      guard case .error(let v)? = self.type else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
     }()
     case .answer?: try {
       guard case .answer(let v)? = self.type else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     }()
     case .point?: try {
       guard case .point(let v)? = self.type else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 11)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
     }()
     case nil: break
     }
@@ -2172,6 +2188,38 @@ extension PodcastCardProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     if lhs.cardID != rhs.cardID {return false}
     if lhs.isReady != rhs.isReady {return false}
     if lhs.type != rhs.type {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension PodcastAnswerErrorProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastAnswerErrorProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "message"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.message) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.message.isEmpty {
+      try visitor.visitSingularStringField(value: self.message, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PodcastAnswerErrorProto, rhs: PodcastAnswerErrorProto) -> Bool {
+    if lhs.message != rhs.message {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
