@@ -398,14 +398,6 @@ struct CreatePodcastResponseDeltaProto {
 
   var type: CreatePodcastResponseDeltaProto.OneOf_Type? = nil
 
-  var separator: Bool {
-    get {
-      if case .separator(let v)? = type {return v}
-      return false
-    }
-    set {type = .separator(newValue)}
-  }
-
   /// This is the last delta message
   var errorNoTopic: Bool {
     get {
@@ -435,7 +427,6 @@ struct CreatePodcastResponseDeltaProto {
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_Type: Equatable {
-    case separator(Bool)
     /// This is the last delta message
     case errorNoTopic(Bool)
     /// IDs start at 10
@@ -448,10 +439,6 @@ struct CreatePodcastResponseDeltaProto {
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch (lhs, rhs) {
-      case (.separator, .separator): return {
-        guard case .separator(let l) = lhs, case .separator(let r) = rhs else { preconditionFailure() }
-        return l == r
-      }()
       case (.errorNoTopic, .errorNoTopic): return {
         guard case .errorNoTopic(let l) = lhs, case .errorNoTopic(let r) = rhs else { preconditionFailure() }
         return l == r
@@ -1514,8 +1501,7 @@ extension CreatePodcastResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobuf
 extension CreatePodcastResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "CreatePodcastResponseDeltaProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "separator"),
-    2: .standard(proto: "error_no_topic"),
+    1: .standard(proto: "error_no_topic"),
     10: .same(proto: "answer"),
     11: .same(proto: "point"),
   ]
@@ -1527,14 +1513,6 @@ extension CreatePodcastResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf.
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try {
-        var v: Bool?
-        try decoder.decodeSingularBoolField(value: &v)
-        if let v = v {
-          if self.type != nil {try decoder.handleConflictingOneOf()}
-          self.type = .separator(v)
-        }
-      }()
-      case 2: try {
         var v: Bool?
         try decoder.decodeSingularBoolField(value: &v)
         if let v = v {
@@ -1579,13 +1557,9 @@ extension CreatePodcastResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf.
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
     switch self.type {
-    case .separator?: try {
-      guard case .separator(let v)? = self.type else { preconditionFailure() }
-      try visitor.visitSingularBoolField(value: v, fieldNumber: 1)
-    }()
     case .errorNoTopic?: try {
       guard case .errorNoTopic(let v)? = self.type else { preconditionFailure() }
-      try visitor.visitSingularBoolField(value: v, fieldNumber: 2)
+      try visitor.visitSingularBoolField(value: v, fieldNumber: 1)
     }()
     case .answer?: try {
       guard case .answer(let v)? = self.type else { preconditionFailure() }

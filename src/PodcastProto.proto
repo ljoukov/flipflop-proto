@@ -42,10 +42,8 @@ message CreatePodcastResponseHeaderProto {
 
 message CreatePodcastResponseDeltaProto {
   oneof type {
-    bool separator = 1;
-
     // This is the last delta message
-    bool error_no_topic = 2;
+    bool error_no_topic = 1;
 
     // IDs start at 10
     PodcastPromptAnswerProto answer = 10;

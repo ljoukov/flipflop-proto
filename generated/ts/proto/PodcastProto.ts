@@ -145,17 +145,11 @@ export interface CreatePodcastResponseDeltaProto {
      * @generated from protobuf oneof: type
      */
     type: {
-        oneofKind: "separator";
-        /**
-         * @generated from protobuf field: bool separator = 1;
-         */
-        separator: boolean;
-    } | {
         oneofKind: "errorNoTopic";
         /**
          * This is the last delta message
          *
-         * @generated from protobuf field: bool error_no_topic = 2;
+         * @generated from protobuf field: bool error_no_topic = 1;
          */
         errorNoTopic: boolean;
     } | {
@@ -1023,8 +1017,7 @@ export const CreatePodcastResponseHeaderProto = new CreatePodcastResponseHeaderP
 class CreatePodcastResponseDeltaProto$Type extends MessageType<CreatePodcastResponseDeltaProto> {
     constructor() {
         super("CreatePodcastResponseDeltaProto", [
-            { no: 1, name: "separator", kind: "scalar", oneof: "type", T: 8 /*ScalarType.BOOL*/ },
-            { no: 2, name: "error_no_topic", kind: "scalar", oneof: "type", T: 8 /*ScalarType.BOOL*/ },
+            { no: 1, name: "error_no_topic", kind: "scalar", oneof: "type", T: 8 /*ScalarType.BOOL*/ },
             { no: 10, name: "answer", kind: "message", oneof: "type", T: () => PodcastPromptAnswerProto },
             { no: 11, name: "point", kind: "message", oneof: "type", T: () => PodcastPointProto }
         ]);
@@ -1041,13 +1034,7 @@ class CreatePodcastResponseDeltaProto$Type extends MessageType<CreatePodcastResp
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* bool separator */ 1:
-                    message.type = {
-                        oneofKind: "separator",
-                        separator: reader.bool()
-                    };
-                    break;
-                case /* bool error_no_topic */ 2:
+                case /* bool error_no_topic */ 1:
                     message.type = {
                         oneofKind: "errorNoTopic",
                         errorNoTopic: reader.bool()
@@ -1077,12 +1064,9 @@ class CreatePodcastResponseDeltaProto$Type extends MessageType<CreatePodcastResp
         return message;
     }
     internalBinaryWrite(message: CreatePodcastResponseDeltaProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* bool separator = 1; */
-        if (message.type.oneofKind === "separator")
-            writer.tag(1, WireType.Varint).bool(message.type.separator);
-        /* bool error_no_topic = 2; */
+        /* bool error_no_topic = 1; */
         if (message.type.oneofKind === "errorNoTopic")
-            writer.tag(2, WireType.Varint).bool(message.type.errorNoTopic);
+            writer.tag(1, WireType.Varint).bool(message.type.errorNoTopic);
         /* PodcastPromptAnswerProto answer = 10; */
         if (message.type.oneofKind === "answer")
             PodcastPromptAnswerProto.internalBinaryWrite(message.type.answer, writer.tag(10, WireType.LengthDelimited).fork(), options).join();
