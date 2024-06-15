@@ -14,7 +14,7 @@ message StoredPodcastProto {
   google.protobuf.Timestamp created_at = 3;
   google.protobuf.Timestamp updated_at = 4;
 
-  string user_prompt = 5;
+  StoredUserPromptProto user_prompt = 5;
 
   StoredPodcastStateProto state = 6;
 
@@ -33,16 +33,6 @@ message StoredPodcastProto {
   // Debug metadata
   LatenciesProto latencies = 100;
   LogProto log = 101;
-}
-
-message StoredPodcastPointProto {
-  string point_id = 1;
-  bool selected = 2;
-
-  string reasoning = 3;
-  string title = 4;
-  string title_emoji = 5;
-  string description = 6;
 }
 
 enum StoredPodcastStateProto {
@@ -81,6 +71,20 @@ enum StoredPodcastCardsStateProto {
   STORED_PODCAST_CARDS_STATE_PROTO_GENERATING = 1;
   STORED_PODCAST_CARDS_STATE_PROTO_READY = 2;
   STORED_PODCAST_CARDS_STATE_PROTO_FAILED = 3;
+}
+
+message StoredUserPromptProto {
+  string prompt = 1;
+}
+
+message StoredPodcastPointProto {
+  string point_id = 1;
+  bool selected = 2;
+
+  string reasoning = 3;
+  string title = 4;
+  string title_emoji = 5;
+  string description = 6;
 }
 
 message StoredPodcastPlanProto {

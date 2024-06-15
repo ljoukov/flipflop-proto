@@ -255,10 +255,14 @@ struct StoredPodcastProto {
   /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
   mutating func clearUpdatedAt() {_uniqueStorage()._updatedAt = nil}
 
-  var userPrompt: String {
-    get {return _storage._userPrompt}
+  var userPrompt: StoredUserPromptProto {
+    get {return _storage._userPrompt ?? StoredUserPromptProto()}
     set {_uniqueStorage()._userPrompt = newValue}
   }
+  /// Returns true if `userPrompt` has been explicitly set.
+  var hasUserPrompt: Bool {return _storage._userPrompt != nil}
+  /// Clears the value of `userPrompt`. Subsequent reads from it will return its default value.
+  mutating func clearUserPrompt() {_uniqueStorage()._userPrompt = nil}
 
   var state: StoredPodcastStateProto {
     get {return _storage._state}
@@ -353,6 +357,18 @@ struct StoredPodcastProto {
   init() {}
 
   fileprivate var _storage = _StorageClass.defaultInstance
+}
+
+struct StoredUserPromptProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var prompt: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
 }
 
 struct StoredPodcastPointProto {
@@ -499,6 +515,7 @@ extension StoredPodcastStateProto: @unchecked Sendable {}
 extension StoredPodcastCardsStateProto: @unchecked Sendable {}
 extension StoredPodcastSectionTypeProto: @unchecked Sendable {}
 extension StoredPodcastProto: @unchecked Sendable {}
+extension StoredUserPromptProto: @unchecked Sendable {}
 extension StoredPodcastPointProto: @unchecked Sendable {}
 extension StoredPodcastPlanProto: @unchecked Sendable {}
 extension StoredPodcastTranscriptProto: @unchecked Sendable {}
@@ -578,7 +595,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     var _createdBy: String = String()
     var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
     var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
-    var _userPrompt: String = String()
+    var _userPrompt: StoredUserPromptProto? = nil
     var _state: StoredPodcastStateProto = .unknown
     var _answer: PodcastPromptAnswerProto? = nil
     var _points: [StoredPodcastPointProto] = []
@@ -634,7 +651,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         case 2: try { try decoder.decodeSingularStringField(value: &_storage._createdBy) }()
         case 3: try { try decoder.decodeSingularMessageField(value: &_storage._createdAt) }()
         case 4: try { try decoder.decodeSingularMessageField(value: &_storage._updatedAt) }()
-        case 5: try { try decoder.decodeSingularStringField(value: &_storage._userPrompt) }()
+        case 5: try { try decoder.decodeSingularMessageField(value: &_storage._userPrompt) }()
         case 6: try { try decoder.decodeSingularEnumField(value: &_storage._state) }()
         case 7: try { try decoder.decodeSingularMessageField(value: &_storage._answer) }()
         case 8: try { try decoder.decodeRepeatedMessageField(value: &_storage._points) }()
@@ -670,9 +687,9 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       try { if let v = _storage._updatedAt {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
       } }()
-      if !_storage._userPrompt.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._userPrompt, fieldNumber: 5)
-      }
+      try { if let v = _storage._userPrompt {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
+      } }()
       if _storage._state != .unknown {
         try visitor.visitSingularEnumField(value: _storage._state, fieldNumber: 6)
       }
@@ -735,6 +752,38 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       }
       if !storagesAreEqual {return false}
     }
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension StoredUserPromptProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredUserPromptProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "prompt"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.prompt) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.prompt.isEmpty {
+      try visitor.visitSingularStringField(value: self.prompt, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: StoredUserPromptProto, rhs: StoredUserPromptProto) -> Bool {
+    if lhs.prompt != rhs.prompt {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
