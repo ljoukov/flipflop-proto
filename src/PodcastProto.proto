@@ -36,7 +36,9 @@ message CreatePodcastRequestProto {
   string prompt = 1;
 }
 
-message CreatePodcastResponseHeaderProto {}
+message CreatePodcastResponseHeaderProto {
+  string podcast_id = 1;
+}
 
 message CreatePodcastResponseDeltaProto {
   oneof type {
@@ -47,12 +49,13 @@ message CreatePodcastResponseDeltaProto {
 
     // IDs start at 10
     PodcastPromptAnswerProto answer = 10;
-    PodcastPreviewProto preview = 11;
+    PodcastPointProto point = 11;
   }
 }
 
 message GeneratePodcastRequestProto {
   string podcast_id = 1;
+  repeated string point_ids = 2;
 }
 
 message GeneratePodcastResponseHeaderProto {}
@@ -79,24 +82,22 @@ message ListPodcastsResponseDeltaProto {
 
 message PodcastProto {
   string podcast_id = 1;
+  google.protobuf.Timestamp updated_at = 2;
 
-  string created_by = 2;
-  google.protobuf.Timestamp created_at = 3;
-  google.protobuf.Timestamp updated_at = 4;
+  PodcastThumbnailProto thumbnail = 3;
 
-  // IDs start at 10
-  PodcastPreviewProto preview = 10;
-  PodcastThumbnailProto thumbnail = 11;
-  PodcastAudioProto audio = 12;
-  PodcastVisualsProto visuals = 13;
-  PodcastTranscriptProto transcript = 14;
-  PodcastCardsProto cards = 15;
+  PodcastAudioProto audio = 4;
+  PodcastVisualsProto visuals = 5;
+  PodcastTranscriptProto transcript = 6;
+
+  PodcastCardsProto cards = 7;
 }
 
-message PodcastPreviewProto {
-  string title = 1;
-  string title_emoji = 2;
-  string synopsis = 3;
+message PodcastPointProto {
+  string point_id = 1;
+  string title = 2;
+  string title_emoji = 3;
+  string description = 4;
 }
 
 message PodcastThumbnailProto {

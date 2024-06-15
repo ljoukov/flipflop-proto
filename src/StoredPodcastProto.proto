@@ -20,24 +20,29 @@ message StoredPodcastProto {
 
   PodcastPromptAnswerProto answer = 7;
 
-  string reasoning = 8;
-  string title = 9;
-  string title_emoji = 10;
-  string synopsis = 11;
+  repeated StoredPodcastPointProto points = 8;
 
-  string plan = 12;
-  StoredPodcastTranscriptProto transcript = 13;
+  string plan = 9;
+  StoredPodcastTranscriptProto transcript = 10;
+  StoredPodcastAudioProto audio = 11;
+  StoredPodcastVisualsProto visuals = 12;
 
-  StoredPodcastAudioProto audio = 14;
-
-  StoredPodcastVisualsProto visuals = 15;
-
-  StoredPodcastCardsStateProto cards_state = 16;
-  PodcastCardsProto cards = 17;
+  StoredPodcastCardsStateProto cards_state = 13;
+  PodcastCardsProto cards = 14;
 
   // Debug metadata
   LatenciesProto latencies = 100;
   LogProto log = 101;
+}
+
+message StoredPodcastPointProto {
+  string point_id = 1;
+  bool selected = 2;
+
+  string reasoning = 3;
+  string title = 4;
+  string title_emoji = 5;
+  string description = 6;
 }
 
 enum StoredPodcastStateProto {
@@ -47,23 +52,26 @@ enum StoredPodcastStateProto {
   STORED_PODCAST_STATE_PROTO_FAILED = 2;
 
   // IDs start at 10
-  STORED_PODCAST_STATE_PROTO_GENERATING_SYNOPSYS = 10;
-  STORED_PODCAST_STATE_PROTO_SYNOPSYS_READY = 11;
+  STORED_PODCAST_STATE_PROTO_GENERATING_ANSWER = 10;
+  STORED_PODCAST_STATE_PROTO_ANSWER_READY = 11;
 
-  STORED_PODCAST_STATE_PROTO_GENERATING_THUMBNAIL = 12;
-  STORED_PODCAST_STATE_PROTO_THUMBNAIL_READY = 13;
+  STORED_PODCAST_STATE_PROTO_POINTS_READY = 12;
+  STORED_PODCAST_STATE_PROTO_POINTS_SELECTED = 13;
 
-  STORED_PODCAST_STATE_PROTO_GENERATING_PLAN = 14;
-  STORED_PODCAST_STATE_PROTO_PLAN_READY = 15;
+  STORED_PODCAST_STATE_PROTO_GENERATING_THUMBNAIL = 14;
+  STORED_PODCAST_STATE_PROTO_THUMBNAIL_READY = 15;
 
-  STORED_PODCAST_STATE_PROTO_GENERATING_TRANSCRIPT = 16;
-  STORED_PODCAST_STATE_PROTO_TRANSCRIPT_READY = 17;
+  STORED_PODCAST_STATE_PROTO_GENERATING_PLAN = 16;
+  STORED_PODCAST_STATE_PROTO_PLAN_READY = 17;
 
-  STORED_PODCAST_STATE_PROTO_GENERATING_AUDIO = 18;
-  STORED_PODCAST_STATE_PROTO_AUDIO_READY = 19;
+  STORED_PODCAST_STATE_PROTO_GENERATING_TRANSCRIPT = 18;
+  STORED_PODCAST_STATE_PROTO_TRANSCRIPT_READY = 19;
 
-  STORED_PODCAST_STATE_PROTO_GENERATING_VISUALS = 20;
-  STORED_PODCAST_STATE_PROTO_VISUALS_READY = 21;
+  STORED_PODCAST_STATE_PROTO_GENERATING_AUDIO = 20;
+  STORED_PODCAST_STATE_PROTO_AUDIO_READY = 21;
+
+  STORED_PODCAST_STATE_PROTO_GENERATING_VISUALS = 22;
+  STORED_PODCAST_STATE_PROTO_VISUALS_READY = 23;
 }
 
 enum StoredPodcastCardsStateProto {

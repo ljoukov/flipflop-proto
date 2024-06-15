@@ -27,18 +27,20 @@ enum StoredPodcastStateProto: SwiftProtobuf.Enum {
   case failed // = 2
 
   /// IDs start at 10
-  case generatingSynopsys // = 10
-  case synopsysReady // = 11
-  case generatingThumbnail // = 12
-  case thumbnailReady // = 13
-  case generatingPlan // = 14
-  case planReady // = 15
-  case generatingTranscript // = 16
-  case transcriptReady // = 17
-  case generatingAudio // = 18
-  case audioReady // = 19
-  case generatingVisuals // = 20
-  case visualsReady // = 21
+  case generatingAnswer // = 10
+  case answerReady // = 11
+  case pointsReady // = 12
+  case pointsSelected // = 13
+  case generatingThumbnail // = 14
+  case thumbnailReady // = 15
+  case generatingPlan // = 16
+  case planReady // = 17
+  case generatingTranscript // = 18
+  case transcriptReady // = 19
+  case generatingAudio // = 20
+  case audioReady // = 21
+  case generatingVisuals // = 22
+  case visualsReady // = 23
   case UNRECOGNIZED(Int)
 
   init() {
@@ -50,18 +52,20 @@ enum StoredPodcastStateProto: SwiftProtobuf.Enum {
     case 0: self = .unknown
     case 1: self = .ready
     case 2: self = .failed
-    case 10: self = .generatingSynopsys
-    case 11: self = .synopsysReady
-    case 12: self = .generatingThumbnail
-    case 13: self = .thumbnailReady
-    case 14: self = .generatingPlan
-    case 15: self = .planReady
-    case 16: self = .generatingTranscript
-    case 17: self = .transcriptReady
-    case 18: self = .generatingAudio
-    case 19: self = .audioReady
-    case 20: self = .generatingVisuals
-    case 21: self = .visualsReady
+    case 10: self = .generatingAnswer
+    case 11: self = .answerReady
+    case 12: self = .pointsReady
+    case 13: self = .pointsSelected
+    case 14: self = .generatingThumbnail
+    case 15: self = .thumbnailReady
+    case 16: self = .generatingPlan
+    case 17: self = .planReady
+    case 18: self = .generatingTranscript
+    case 19: self = .transcriptReady
+    case 20: self = .generatingAudio
+    case 21: self = .audioReady
+    case 22: self = .generatingVisuals
+    case 23: self = .visualsReady
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -71,18 +75,20 @@ enum StoredPodcastStateProto: SwiftProtobuf.Enum {
     case .unknown: return 0
     case .ready: return 1
     case .failed: return 2
-    case .generatingSynopsys: return 10
-    case .synopsysReady: return 11
-    case .generatingThumbnail: return 12
-    case .thumbnailReady: return 13
-    case .generatingPlan: return 14
-    case .planReady: return 15
-    case .generatingTranscript: return 16
-    case .transcriptReady: return 17
-    case .generatingAudio: return 18
-    case .audioReady: return 19
-    case .generatingVisuals: return 20
-    case .visualsReady: return 21
+    case .generatingAnswer: return 10
+    case .answerReady: return 11
+    case .pointsReady: return 12
+    case .pointsSelected: return 13
+    case .generatingThumbnail: return 14
+    case .thumbnailReady: return 15
+    case .generatingPlan: return 16
+    case .planReady: return 17
+    case .generatingTranscript: return 18
+    case .transcriptReady: return 19
+    case .generatingAudio: return 20
+    case .audioReady: return 21
+    case .generatingVisuals: return 22
+    case .visualsReady: return 23
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -97,8 +103,10 @@ extension StoredPodcastStateProto: CaseIterable {
     .unknown,
     .ready,
     .failed,
-    .generatingSynopsys,
-    .synopsysReady,
+    .generatingAnswer,
+    .answerReady,
+    .pointsReady,
+    .pointsSelected,
     .generatingThumbnail,
     .thumbnailReady,
     .generatingPlan,
@@ -262,24 +270,9 @@ struct StoredPodcastProto {
   /// Clears the value of `answer`. Subsequent reads from it will return its default value.
   mutating func clearAnswer() {_uniqueStorage()._answer = nil}
 
-  var reasoning: String {
-    get {return _storage._reasoning}
-    set {_uniqueStorage()._reasoning = newValue}
-  }
-
-  var title: String {
-    get {return _storage._title}
-    set {_uniqueStorage()._title = newValue}
-  }
-
-  var titleEmoji: String {
-    get {return _storage._titleEmoji}
-    set {_uniqueStorage()._titleEmoji = newValue}
-  }
-
-  var synopsis: String {
-    get {return _storage._synopsis}
-    set {_uniqueStorage()._synopsis = newValue}
+  var points: [StoredPodcastPointProto] {
+    get {return _storage._points}
+    set {_uniqueStorage()._points = newValue}
   }
 
   var plan: String {
@@ -352,6 +345,28 @@ struct StoredPodcastProto {
   init() {}
 
   fileprivate var _storage = _StorageClass.defaultInstance
+}
+
+struct StoredPodcastPointProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var pointID: String = String()
+
+  var selected: Bool = false
+
+  var reasoning: String = String()
+
+  var title: String = String()
+
+  var titleEmoji: String = String()
+
+  var description_p: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
 }
 
 struct StoredPodcastTranscriptProto {
@@ -464,6 +479,7 @@ extension StoredPodcastStateProto: @unchecked Sendable {}
 extension StoredPodcastCardsStateProto: @unchecked Sendable {}
 extension StoredPodcastSectionTypeProto: @unchecked Sendable {}
 extension StoredPodcastProto: @unchecked Sendable {}
+extension StoredPodcastPointProto: @unchecked Sendable {}
 extension StoredPodcastTranscriptProto: @unchecked Sendable {}
 extension StoredPodcastSectionTranscriptProto: @unchecked Sendable {}
 extension StoredPodcastTranscriptEntryProto: @unchecked Sendable {}
@@ -479,18 +495,20 @@ extension StoredPodcastStateProto: SwiftProtobuf._ProtoNameProviding {
     0: .same(proto: "STORED_PODCAST_STATE_PROTO_UNKNOWN"),
     1: .same(proto: "STORED_PODCAST_STATE_PROTO_READY"),
     2: .same(proto: "STORED_PODCAST_STATE_PROTO_FAILED"),
-    10: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATING_SYNOPSYS"),
-    11: .same(proto: "STORED_PODCAST_STATE_PROTO_SYNOPSYS_READY"),
-    12: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATING_THUMBNAIL"),
-    13: .same(proto: "STORED_PODCAST_STATE_PROTO_THUMBNAIL_READY"),
-    14: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATING_PLAN"),
-    15: .same(proto: "STORED_PODCAST_STATE_PROTO_PLAN_READY"),
-    16: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATING_TRANSCRIPT"),
-    17: .same(proto: "STORED_PODCAST_STATE_PROTO_TRANSCRIPT_READY"),
-    18: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATING_AUDIO"),
-    19: .same(proto: "STORED_PODCAST_STATE_PROTO_AUDIO_READY"),
-    20: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATING_VISUALS"),
-    21: .same(proto: "STORED_PODCAST_STATE_PROTO_VISUALS_READY"),
+    10: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATING_ANSWER"),
+    11: .same(proto: "STORED_PODCAST_STATE_PROTO_ANSWER_READY"),
+    12: .same(proto: "STORED_PODCAST_STATE_PROTO_POINTS_READY"),
+    13: .same(proto: "STORED_PODCAST_STATE_PROTO_POINTS_SELECTED"),
+    14: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATING_THUMBNAIL"),
+    15: .same(proto: "STORED_PODCAST_STATE_PROTO_THUMBNAIL_READY"),
+    16: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATING_PLAN"),
+    17: .same(proto: "STORED_PODCAST_STATE_PROTO_PLAN_READY"),
+    18: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATING_TRANSCRIPT"),
+    19: .same(proto: "STORED_PODCAST_STATE_PROTO_TRANSCRIPT_READY"),
+    20: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATING_AUDIO"),
+    21: .same(proto: "STORED_PODCAST_STATE_PROTO_AUDIO_READY"),
+    22: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATING_VISUALS"),
+    23: .same(proto: "STORED_PODCAST_STATE_PROTO_VISUALS_READY"),
   ]
 }
 
@@ -522,16 +540,13 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     5: .standard(proto: "user_prompt"),
     6: .same(proto: "state"),
     7: .same(proto: "answer"),
-    8: .same(proto: "reasoning"),
-    9: .same(proto: "title"),
-    10: .standard(proto: "title_emoji"),
-    11: .same(proto: "synopsis"),
-    12: .same(proto: "plan"),
-    13: .same(proto: "transcript"),
-    14: .same(proto: "audio"),
-    15: .same(proto: "visuals"),
-    16: .standard(proto: "cards_state"),
-    17: .same(proto: "cards"),
+    8: .same(proto: "points"),
+    9: .same(proto: "plan"),
+    10: .same(proto: "transcript"),
+    11: .same(proto: "audio"),
+    12: .same(proto: "visuals"),
+    13: .standard(proto: "cards_state"),
+    14: .same(proto: "cards"),
     100: .same(proto: "latencies"),
     101: .same(proto: "log"),
   ]
@@ -544,10 +559,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     var _userPrompt: String = String()
     var _state: StoredPodcastStateProto = .unknown
     var _answer: PodcastPromptAnswerProto? = nil
-    var _reasoning: String = String()
-    var _title: String = String()
-    var _titleEmoji: String = String()
-    var _synopsis: String = String()
+    var _points: [StoredPodcastPointProto] = []
     var _plan: String = String()
     var _transcript: StoredPodcastTranscriptProto? = nil
     var _audio: StoredPodcastAudioProto? = nil
@@ -569,10 +581,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       _userPrompt = source._userPrompt
       _state = source._state
       _answer = source._answer
-      _reasoning = source._reasoning
-      _title = source._title
-      _titleEmoji = source._titleEmoji
-      _synopsis = source._synopsis
+      _points = source._points
       _plan = source._plan
       _transcript = source._transcript
       _audio = source._audio
@@ -606,16 +615,13 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         case 5: try { try decoder.decodeSingularStringField(value: &_storage._userPrompt) }()
         case 6: try { try decoder.decodeSingularEnumField(value: &_storage._state) }()
         case 7: try { try decoder.decodeSingularMessageField(value: &_storage._answer) }()
-        case 8: try { try decoder.decodeSingularStringField(value: &_storage._reasoning) }()
-        case 9: try { try decoder.decodeSingularStringField(value: &_storage._title) }()
-        case 10: try { try decoder.decodeSingularStringField(value: &_storage._titleEmoji) }()
-        case 11: try { try decoder.decodeSingularStringField(value: &_storage._synopsis) }()
-        case 12: try { try decoder.decodeSingularStringField(value: &_storage._plan) }()
-        case 13: try { try decoder.decodeSingularMessageField(value: &_storage._transcript) }()
-        case 14: try { try decoder.decodeSingularMessageField(value: &_storage._audio) }()
-        case 15: try { try decoder.decodeSingularMessageField(value: &_storage._visuals) }()
-        case 16: try { try decoder.decodeSingularEnumField(value: &_storage._cardsState) }()
-        case 17: try { try decoder.decodeSingularMessageField(value: &_storage._cards) }()
+        case 8: try { try decoder.decodeRepeatedMessageField(value: &_storage._points) }()
+        case 9: try { try decoder.decodeSingularStringField(value: &_storage._plan) }()
+        case 10: try { try decoder.decodeSingularMessageField(value: &_storage._transcript) }()
+        case 11: try { try decoder.decodeSingularMessageField(value: &_storage._audio) }()
+        case 12: try { try decoder.decodeSingularMessageField(value: &_storage._visuals) }()
+        case 13: try { try decoder.decodeSingularEnumField(value: &_storage._cardsState) }()
+        case 14: try { try decoder.decodeSingularMessageField(value: &_storage._cards) }()
         case 100: try { try decoder.decodeSingularMessageField(value: &_storage._latencies) }()
         case 101: try { try decoder.decodeSingularMessageField(value: &_storage._log) }()
         default: break
@@ -651,35 +657,26 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       try { if let v = _storage._answer {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
       } }()
-      if !_storage._reasoning.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._reasoning, fieldNumber: 8)
-      }
-      if !_storage._title.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._title, fieldNumber: 9)
-      }
-      if !_storage._titleEmoji.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._titleEmoji, fieldNumber: 10)
-      }
-      if !_storage._synopsis.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._synopsis, fieldNumber: 11)
+      if !_storage._points.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._points, fieldNumber: 8)
       }
       if !_storage._plan.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._plan, fieldNumber: 12)
+        try visitor.visitSingularStringField(value: _storage._plan, fieldNumber: 9)
       }
       try { if let v = _storage._transcript {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 13)
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
       } }()
       try { if let v = _storage._audio {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 14)
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 11)
       } }()
       try { if let v = _storage._visuals {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 12)
       } }()
       if _storage._cardsState != .notStarted {
-        try visitor.visitSingularEnumField(value: _storage._cardsState, fieldNumber: 16)
+        try visitor.visitSingularEnumField(value: _storage._cardsState, fieldNumber: 13)
       }
       try { if let v = _storage._cards {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 17)
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 14)
       } }()
       try { if let v = _storage._latencies {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 100)
@@ -703,10 +700,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         if _storage._userPrompt != rhs_storage._userPrompt {return false}
         if _storage._state != rhs_storage._state {return false}
         if _storage._answer != rhs_storage._answer {return false}
-        if _storage._reasoning != rhs_storage._reasoning {return false}
-        if _storage._title != rhs_storage._title {return false}
-        if _storage._titleEmoji != rhs_storage._titleEmoji {return false}
-        if _storage._synopsis != rhs_storage._synopsis {return false}
+        if _storage._points != rhs_storage._points {return false}
         if _storage._plan != rhs_storage._plan {return false}
         if _storage._transcript != rhs_storage._transcript {return false}
         if _storage._audio != rhs_storage._audio {return false}
@@ -719,6 +713,68 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       }
       if !storagesAreEqual {return false}
     }
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension StoredPodcastPointProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredPodcastPointProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "point_id"),
+    2: .same(proto: "selected"),
+    3: .same(proto: "reasoning"),
+    4: .same(proto: "title"),
+    5: .standard(proto: "title_emoji"),
+    6: .same(proto: "description"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.pointID) }()
+      case 2: try { try decoder.decodeSingularBoolField(value: &self.selected) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.reasoning) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.title) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.titleEmoji) }()
+      case 6: try { try decoder.decodeSingularStringField(value: &self.description_p) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.pointID.isEmpty {
+      try visitor.visitSingularStringField(value: self.pointID, fieldNumber: 1)
+    }
+    if self.selected != false {
+      try visitor.visitSingularBoolField(value: self.selected, fieldNumber: 2)
+    }
+    if !self.reasoning.isEmpty {
+      try visitor.visitSingularStringField(value: self.reasoning, fieldNumber: 3)
+    }
+    if !self.title.isEmpty {
+      try visitor.visitSingularStringField(value: self.title, fieldNumber: 4)
+    }
+    if !self.titleEmoji.isEmpty {
+      try visitor.visitSingularStringField(value: self.titleEmoji, fieldNumber: 5)
+    }
+    if !self.description_p.isEmpty {
+      try visitor.visitSingularStringField(value: self.description_p, fieldNumber: 6)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: StoredPodcastPointProto, rhs: StoredPodcastPointProto) -> Bool {
+    if lhs.pointID != rhs.pointID {return false}
+    if lhs.selected != rhs.selected {return false}
+    if lhs.reasoning != rhs.reasoning {return false}
+    if lhs.title != rhs.title {return false}
+    if lhs.titleEmoji != rhs.titleEmoji {return false}
+    if lhs.description_p != rhs.description_p {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
