@@ -96,7 +96,7 @@ message PodcastPointProto {
 }
 
 message PodcastThumbnailProto {
-  bool is_ready = 1;
+  bool is_podcast_ready = 1;
   string display_status = 2;
   string title = 3;
   PodcastBadgeProto badge = 4;
