@@ -39,12 +39,6 @@ export interface PodcastStreamApiRequestProto {
          */
         generate: GeneratePodcastRequestProto;
     } | {
-        oneofKind: "list";
-        /**
-         * @generated from protobuf field: ListPodcastsRequestProto list = 4;
-         */
-        list: ListPodcastsRequestProto;
-    } | {
         oneofKind: undefined;
     };
 }
@@ -75,12 +69,6 @@ export interface PodcastStreamApiResponseHeaderProto {
          */
         generate: GeneratePodcastResponseHeaderProto;
     } | {
-        oneofKind: "list";
-        /**
-         * @generated from protobuf field: ListPodcastsResponseHeaderProto list = 4;
-         */
-        list: ListPodcastsResponseHeaderProto;
-    } | {
         oneofKind: undefined;
     };
     /**
@@ -109,12 +97,6 @@ export interface PodcastStreamApiResponseDeltaProto {
          * @generated from protobuf field: GeneratePodcastResponseDeltaProto generate_delta = 2;
          */
         generateDelta: GeneratePodcastResponseDeltaProto;
-    } | {
-        oneofKind: "listDelta";
-        /**
-         * @generated from protobuf field: ListPodcastsResponseDeltaProto list_delta = 3;
-         */
-        listDelta: ListPodcastsResponseDeltaProto;
     } | {
         oneofKind: undefined;
     };
@@ -197,49 +179,6 @@ export interface GeneratePodcastResponseDeltaProto {
          * @generated from protobuf field: PodcastCardProto card = 1;
          */
         card: PodcastCardProto;
-    } | {
-        oneofKind: undefined;
-    };
-}
-/**
- * @generated from protobuf message ListPodcastsRequestProto
- */
-export interface ListPodcastsRequestProto {
-}
-/**
- * @generated from protobuf message ListPodcastsResponseHeaderProto
- */
-export interface ListPodcastsResponseHeaderProto {
-    /**
-     * @generated from protobuf field: repeated PodcastProto podcasts = 1;
-     */
-    podcasts: PodcastProto[];
-}
-/**
- * @generated from protobuf message ListPodcastsResponseDeltaProto
- */
-export interface ListPodcastsResponseDeltaProto {
-    /**
-     * @generated from protobuf oneof: type
-     */
-    type: {
-        oneofKind: "ping";
-        /**
-         * @generated from protobuf field: bool ping = 1;
-         */
-        ping: boolean;
-    } | {
-        oneofKind: "updatedPodcast";
-        /**
-         * @generated from protobuf field: PodcastProto updated_podcast = 2;
-         */
-        updatedPodcast: PodcastProto;
-    } | {
-        oneofKind: "deletedPodcastId";
-        /**
-         * @generated from protobuf field: string deleted_podcast_id = 3;
-         */
-        deletedPodcastId: string;
     } | {
         oneofKind: undefined;
     };
@@ -679,8 +618,7 @@ class PodcastStreamApiRequestProto$Type extends MessageType<PodcastStreamApiRequ
         super("PodcastStreamApiRequestProto", [
             { no: 1, name: "encoded_user_auth", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "create", kind: "message", oneof: "request", T: () => CreatePodcastRequestProto },
-            { no: 3, name: "generate", kind: "message", oneof: "request", T: () => GeneratePodcastRequestProto },
-            { no: 4, name: "list", kind: "message", oneof: "request", T: () => ListPodcastsRequestProto }
+            { no: 3, name: "generate", kind: "message", oneof: "request", T: () => GeneratePodcastRequestProto }
         ]);
     }
     create(value?: PartialMessage<PodcastStreamApiRequestProto>): PodcastStreamApiRequestProto {
@@ -710,12 +648,6 @@ class PodcastStreamApiRequestProto$Type extends MessageType<PodcastStreamApiRequ
                         generate: GeneratePodcastRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).generate)
                     };
                     break;
-                case /* ListPodcastsRequestProto list */ 4:
-                    message.request = {
-                        oneofKind: "list",
-                        list: ListPodcastsRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).list)
-                    };
-                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -737,9 +669,6 @@ class PodcastStreamApiRequestProto$Type extends MessageType<PodcastStreamApiRequ
         /* GeneratePodcastRequestProto generate = 3; */
         if (message.request.oneofKind === "generate")
             GeneratePodcastRequestProto.internalBinaryWrite(message.request.generate, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* ListPodcastsRequestProto list = 4; */
-        if (message.request.oneofKind === "list")
-            ListPodcastsRequestProto.internalBinaryWrite(message.request.list, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -757,7 +686,6 @@ class PodcastStreamApiResponseHeaderProto$Type extends MessageType<PodcastStream
             { no: 1, name: "refreshed_encoded_user_auth", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "create_header", kind: "message", oneof: "header", T: () => CreatePodcastResponseHeaderProto },
             { no: 3, name: "generate", kind: "message", oneof: "header", T: () => GeneratePodcastResponseHeaderProto },
-            { no: 4, name: "list", kind: "message", oneof: "header", T: () => ListPodcastsResponseHeaderProto },
             { no: 100, name: "latencies", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => Duration } }
         ]);
     }
@@ -786,12 +714,6 @@ class PodcastStreamApiResponseHeaderProto$Type extends MessageType<PodcastStream
                     message.header = {
                         oneofKind: "generate",
                         generate: GeneratePodcastResponseHeaderProto.internalBinaryRead(reader, reader.uint32(), options, (message.header as any).generate)
-                    };
-                    break;
-                case /* ListPodcastsResponseHeaderProto list */ 4:
-                    message.header = {
-                        oneofKind: "list",
-                        list: ListPodcastsResponseHeaderProto.internalBinaryRead(reader, reader.uint32(), options, (message.header as any).list)
                     };
                     break;
                 case /* map<string, google.protobuf.Duration> latencies */ 100:
@@ -834,9 +756,6 @@ class PodcastStreamApiResponseHeaderProto$Type extends MessageType<PodcastStream
         /* GeneratePodcastResponseHeaderProto generate = 3; */
         if (message.header.oneofKind === "generate")
             GeneratePodcastResponseHeaderProto.internalBinaryWrite(message.header.generate, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* ListPodcastsResponseHeaderProto list = 4; */
-        if (message.header.oneofKind === "list")
-            ListPodcastsResponseHeaderProto.internalBinaryWrite(message.header.list, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         /* map<string, google.protobuf.Duration> latencies = 100; */
         for (let k of Object.keys(message.latencies)) {
             writer.tag(100, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k);
@@ -859,8 +778,7 @@ class PodcastStreamApiResponseDeltaProto$Type extends MessageType<PodcastStreamA
     constructor() {
         super("PodcastStreamApiResponseDeltaProto", [
             { no: 1, name: "create_delta", kind: "message", oneof: "responseDelta", T: () => CreatePodcastResponseDeltaProto },
-            { no: 2, name: "generate_delta", kind: "message", oneof: "responseDelta", T: () => GeneratePodcastResponseDeltaProto },
-            { no: 3, name: "list_delta", kind: "message", oneof: "responseDelta", T: () => ListPodcastsResponseDeltaProto }
+            { no: 2, name: "generate_delta", kind: "message", oneof: "responseDelta", T: () => GeneratePodcastResponseDeltaProto }
         ]);
     }
     create(value?: PartialMessage<PodcastStreamApiResponseDeltaProto>): PodcastStreamApiResponseDeltaProto {
@@ -887,12 +805,6 @@ class PodcastStreamApiResponseDeltaProto$Type extends MessageType<PodcastStreamA
                         generateDelta: GeneratePodcastResponseDeltaProto.internalBinaryRead(reader, reader.uint32(), options, (message.responseDelta as any).generateDelta)
                     };
                     break;
-                case /* ListPodcastsResponseDeltaProto list_delta */ 3:
-                    message.responseDelta = {
-                        oneofKind: "listDelta",
-                        listDelta: ListPodcastsResponseDeltaProto.internalBinaryRead(reader, reader.uint32(), options, (message.responseDelta as any).listDelta)
-                    };
-                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -911,9 +823,6 @@ class PodcastStreamApiResponseDeltaProto$Type extends MessageType<PodcastStreamA
         /* GeneratePodcastResponseDeltaProto generate_delta = 2; */
         if (message.responseDelta.oneofKind === "generateDelta")
             GeneratePodcastResponseDeltaProto.internalBinaryWrite(message.responseDelta.generateDelta, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* ListPodcastsResponseDeltaProto list_delta = 3; */
-        if (message.responseDelta.oneofKind === "listDelta")
-            ListPodcastsResponseDeltaProto.internalBinaryWrite(message.responseDelta.listDelta, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1218,149 +1127,6 @@ class GeneratePodcastResponseDeltaProto$Type extends MessageType<GeneratePodcast
  * @generated MessageType for protobuf message GeneratePodcastResponseDeltaProto
  */
 export const GeneratePodcastResponseDeltaProto = new GeneratePodcastResponseDeltaProto$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class ListPodcastsRequestProto$Type extends MessageType<ListPodcastsRequestProto> {
-    constructor() {
-        super("ListPodcastsRequestProto", []);
-    }
-    create(value?: PartialMessage<ListPodcastsRequestProto>): ListPodcastsRequestProto {
-        const message = {};
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<ListPodcastsRequestProto>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ListPodcastsRequestProto): ListPodcastsRequestProto {
-        return target ?? this.create();
-    }
-    internalBinaryWrite(message: ListPodcastsRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message ListPodcastsRequestProto
- */
-export const ListPodcastsRequestProto = new ListPodcastsRequestProto$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class ListPodcastsResponseHeaderProto$Type extends MessageType<ListPodcastsResponseHeaderProto> {
-    constructor() {
-        super("ListPodcastsResponseHeaderProto", [
-            { no: 1, name: "podcasts", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastProto }
-        ]);
-    }
-    create(value?: PartialMessage<ListPodcastsResponseHeaderProto>): ListPodcastsResponseHeaderProto {
-        const message = { podcasts: [] };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<ListPodcastsResponseHeaderProto>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ListPodcastsResponseHeaderProto): ListPodcastsResponseHeaderProto {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* repeated PodcastProto podcasts */ 1:
-                    message.podcasts.push(PodcastProto.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: ListPodcastsResponseHeaderProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated PodcastProto podcasts = 1; */
-        for (let i = 0; i < message.podcasts.length; i++)
-            PodcastProto.internalBinaryWrite(message.podcasts[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message ListPodcastsResponseHeaderProto
- */
-export const ListPodcastsResponseHeaderProto = new ListPodcastsResponseHeaderProto$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class ListPodcastsResponseDeltaProto$Type extends MessageType<ListPodcastsResponseDeltaProto> {
-    constructor() {
-        super("ListPodcastsResponseDeltaProto", [
-            { no: 1, name: "ping", kind: "scalar", oneof: "type", T: 8 /*ScalarType.BOOL*/ },
-            { no: 2, name: "updated_podcast", kind: "message", oneof: "type", T: () => PodcastProto },
-            { no: 3, name: "deleted_podcast_id", kind: "scalar", oneof: "type", T: 9 /*ScalarType.STRING*/ }
-        ]);
-    }
-    create(value?: PartialMessage<ListPodcastsResponseDeltaProto>): ListPodcastsResponseDeltaProto {
-        const message = { type: { oneofKind: undefined } };
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<ListPodcastsResponseDeltaProto>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ListPodcastsResponseDeltaProto): ListPodcastsResponseDeltaProto {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* bool ping */ 1:
-                    message.type = {
-                        oneofKind: "ping",
-                        ping: reader.bool()
-                    };
-                    break;
-                case /* PodcastProto updated_podcast */ 2:
-                    message.type = {
-                        oneofKind: "updatedPodcast",
-                        updatedPodcast: PodcastProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).updatedPodcast)
-                    };
-                    break;
-                case /* string deleted_podcast_id */ 3:
-                    message.type = {
-                        oneofKind: "deletedPodcastId",
-                        deletedPodcastId: reader.string()
-                    };
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: ListPodcastsResponseDeltaProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* bool ping = 1; */
-        if (message.type.oneofKind === "ping")
-            writer.tag(1, WireType.Varint).bool(message.type.ping);
-        /* PodcastProto updated_podcast = 2; */
-        if (message.type.oneofKind === "updatedPodcast")
-            PodcastProto.internalBinaryWrite(message.type.updatedPodcast, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* string deleted_podcast_id = 3; */
-        if (message.type.oneofKind === "deletedPodcastId")
-            writer.tag(3, WireType.LengthDelimited).string(message.type.deletedPodcastId);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message ListPodcastsResponseDeltaProto
- */
-export const ListPodcastsResponseDeltaProto = new ListPodcastsResponseDeltaProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class PodcastProto$Type extends MessageType<PodcastProto> {
     constructor() {

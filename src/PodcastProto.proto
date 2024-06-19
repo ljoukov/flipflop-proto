@@ -8,7 +8,6 @@ message PodcastStreamApiRequestProto {
   oneof request {
     CreatePodcastRequestProto create = 2;
     GeneratePodcastRequestProto generate = 3;
-    ListPodcastsRequestProto list = 4;
   }
 }
 
@@ -19,7 +18,6 @@ message PodcastStreamApiResponseHeaderProto {
   oneof header {
     CreatePodcastResponseHeaderProto create_header = 2;
     GeneratePodcastResponseHeaderProto generate = 3;
-    ListPodcastsResponseHeaderProto list = 4;
   }
   map<string, google.protobuf.Duration> latencies = 100;
 }
@@ -28,7 +26,6 @@ message PodcastStreamApiResponseDeltaProto {
   oneof response_delta {
     CreatePodcastResponseDeltaProto create_delta = 1;
     GeneratePodcastResponseDeltaProto generate_delta = 2;
-    ListPodcastsResponseDeltaProto list_delta = 3;
   }
 }
 
@@ -58,20 +55,6 @@ message GeneratePodcastResponseHeaderProto {}
 message GeneratePodcastResponseDeltaProto {
   oneof type {
     PodcastCardProto card = 1;
-  }
-}
-
-message ListPodcastsRequestProto {}
-
-message ListPodcastsResponseHeaderProto {
-  repeated PodcastProto podcasts = 1;
-}
-
-message ListPodcastsResponseDeltaProto {
-  oneof type {
-    bool ping = 1;
-    PodcastProto updated_podcast = 2;
-    string deleted_podcast_id = 3;
   }
 }
 
