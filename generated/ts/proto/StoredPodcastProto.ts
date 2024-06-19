@@ -264,17 +264,17 @@ export enum StoredPodcastStateProto {
      */
     READY = 1,
     /**
-     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_FAILED = 2;
+     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_POINTS_READY = 2;
      */
-    FAILED = 2,
+    POINTS_READY = 2,
     /**
-     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_READY_FOR_GENERATION = 3;
+     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_GENERATION_STARTED = 3;
      */
-    READY_FOR_GENERATION = 3,
+    GENERATION_STARTED = 3,
     /**
-     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_GENERATION_STARTED = 4;
+     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_GENERATION_FAILED = 4;
      */
-    GENERATION_STARTED = 4,
+    GENERATION_FAILED = 4,
     /**
      * IDs start at 10
      *

@@ -24,9 +24,9 @@ enum StoredPodcastStateProto: SwiftProtobuf.Enum {
   typealias RawValue = Int
   case unknown // = 0
   case ready // = 1
-  case failed // = 2
-  case readyForGeneration // = 3
-  case generationStarted // = 4
+  case pointsReady // = 2
+  case generationStarted // = 3
+  case generationFailed // = 4
 
   /// IDs start at 10
   case generatingThumbnail // = 10
@@ -49,9 +49,9 @@ enum StoredPodcastStateProto: SwiftProtobuf.Enum {
     switch rawValue {
     case 0: self = .unknown
     case 1: self = .ready
-    case 2: self = .failed
-    case 3: self = .readyForGeneration
-    case 4: self = .generationStarted
+    case 2: self = .pointsReady
+    case 3: self = .generationStarted
+    case 4: self = .generationFailed
     case 10: self = .generatingThumbnail
     case 11: self = .thumbnailReady
     case 12: self = .generatingPlan
@@ -70,9 +70,9 @@ enum StoredPodcastStateProto: SwiftProtobuf.Enum {
     switch self {
     case .unknown: return 0
     case .ready: return 1
-    case .failed: return 2
-    case .readyForGeneration: return 3
-    case .generationStarted: return 4
+    case .pointsReady: return 2
+    case .generationStarted: return 3
+    case .generationFailed: return 4
     case .generatingThumbnail: return 10
     case .thumbnailReady: return 11
     case .generatingPlan: return 12
@@ -96,9 +96,9 @@ extension StoredPodcastStateProto: CaseIterable {
   static var allCases: [StoredPodcastStateProto] = [
     .unknown,
     .ready,
-    .failed,
-    .readyForGeneration,
+    .pointsReady,
     .generationStarted,
+    .generationFailed,
     .generatingThumbnail,
     .thumbnailReady,
     .generatingPlan,
@@ -537,9 +537,9 @@ extension StoredPodcastStateProto: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     0: .same(proto: "STORED_PODCAST_STATE_PROTO_UNKNOWN"),
     1: .same(proto: "STORED_PODCAST_STATE_PROTO_READY"),
-    2: .same(proto: "STORED_PODCAST_STATE_PROTO_FAILED"),
-    3: .same(proto: "STORED_PODCAST_STATE_PROTO_READY_FOR_GENERATION"),
-    4: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATION_STARTED"),
+    2: .same(proto: "STORED_PODCAST_STATE_PROTO_POINTS_READY"),
+    3: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATION_STARTED"),
+    4: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATION_FAILED"),
     10: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATING_THUMBNAIL"),
     11: .same(proto: "STORED_PODCAST_STATE_PROTO_THUMBNAIL_READY"),
     12: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATING_PLAN"),
