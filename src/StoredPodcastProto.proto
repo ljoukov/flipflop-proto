@@ -27,9 +27,6 @@ message StoredPodcastProto {
   StoredPodcastAudioProto audio = 11;
   StoredPodcastVisualsProto visuals = 12;
 
-  StoredPodcastCardsStateProto cards_state = 13;
-  PodcastCardsProto cards = 14;
-
   // Debug metadata
   LatenciesProto latencies = 100;
   LogProto log = 101;
