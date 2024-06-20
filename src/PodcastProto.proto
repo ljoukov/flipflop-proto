@@ -71,6 +71,11 @@ message PodcastProto {
   PodcastCardsProto cards = 7;
 }
 
+message FirestorePodcastProto {
+  google.protobuf.Timestamp updated_at = 1;
+  PodcastThumbnailProto thumbnail = 2;
+}
+
 message PodcastPointProto {
   string point_id = 1;
   string title = 2;
