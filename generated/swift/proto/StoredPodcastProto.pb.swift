@@ -29,16 +29,10 @@ enum StoredPodcastStateProto: SwiftProtobuf.Enum {
   case generationFailed // = 4
 
   /// IDs start at 10
-  case generatingThumbnail // = 10
-  case thumbnailReady // = 11
-  case generatingPlan // = 12
-  case planReady // = 13
-  case generatingTranscript // = 14
-  case transcriptReady // = 15
-  case generatingAudio // = 16
-  case audioReady // = 17
-  case generatingVisuals // = 18
-  case visualsReady // = 19
+  case generatingPlan // = 10
+  case generatingTranscript // = 11
+  case generatingAudio // = 12
+  case generatingVisuals // = 13
   case UNRECOGNIZED(Int)
 
   init() {
@@ -52,16 +46,10 @@ enum StoredPodcastStateProto: SwiftProtobuf.Enum {
     case 2: self = .pointsReady
     case 3: self = .generationStarted
     case 4: self = .generationFailed
-    case 10: self = .generatingThumbnail
-    case 11: self = .thumbnailReady
-    case 12: self = .generatingPlan
-    case 13: self = .planReady
-    case 14: self = .generatingTranscript
-    case 15: self = .transcriptReady
-    case 16: self = .generatingAudio
-    case 17: self = .audioReady
-    case 18: self = .generatingVisuals
-    case 19: self = .visualsReady
+    case 10: self = .generatingPlan
+    case 11: self = .generatingTranscript
+    case 12: self = .generatingAudio
+    case 13: self = .generatingVisuals
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -73,16 +61,10 @@ enum StoredPodcastStateProto: SwiftProtobuf.Enum {
     case .pointsReady: return 2
     case .generationStarted: return 3
     case .generationFailed: return 4
-    case .generatingThumbnail: return 10
-    case .thumbnailReady: return 11
-    case .generatingPlan: return 12
-    case .planReady: return 13
-    case .generatingTranscript: return 14
-    case .transcriptReady: return 15
-    case .generatingAudio: return 16
-    case .audioReady: return 17
-    case .generatingVisuals: return 18
-    case .visualsReady: return 19
+    case .generatingPlan: return 10
+    case .generatingTranscript: return 11
+    case .generatingAudio: return 12
+    case .generatingVisuals: return 13
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -99,16 +81,10 @@ extension StoredPodcastStateProto: CaseIterable {
     .pointsReady,
     .generationStarted,
     .generationFailed,
-    .generatingThumbnail,
-    .thumbnailReady,
     .generatingPlan,
-    .planReady,
     .generatingTranscript,
-    .transcriptReady,
     .generatingAudio,
-    .audioReady,
     .generatingVisuals,
-    .visualsReady,
   ]
 }
 
@@ -540,16 +516,10 @@ extension StoredPodcastStateProto: SwiftProtobuf._ProtoNameProviding {
     2: .same(proto: "STORED_PODCAST_STATE_PROTO_POINTS_READY"),
     3: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATION_STARTED"),
     4: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATION_FAILED"),
-    10: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATING_THUMBNAIL"),
-    11: .same(proto: "STORED_PODCAST_STATE_PROTO_THUMBNAIL_READY"),
-    12: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATING_PLAN"),
-    13: .same(proto: "STORED_PODCAST_STATE_PROTO_PLAN_READY"),
-    14: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATING_TRANSCRIPT"),
-    15: .same(proto: "STORED_PODCAST_STATE_PROTO_TRANSCRIPT_READY"),
-    16: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATING_AUDIO"),
-    17: .same(proto: "STORED_PODCAST_STATE_PROTO_AUDIO_READY"),
-    18: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATING_VISUALS"),
-    19: .same(proto: "STORED_PODCAST_STATE_PROTO_VISUALS_READY"),
+    10: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATING_PLAN"),
+    11: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATING_TRANSCRIPT"),
+    12: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATING_AUDIO"),
+    13: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATING_VISUALS"),
   ]
 }
 

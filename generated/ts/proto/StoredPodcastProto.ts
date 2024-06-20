@@ -278,45 +278,21 @@ export enum StoredPodcastStateProto {
     /**
      * IDs start at 10
      *
-     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_GENERATING_THUMBNAIL = 10;
+     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_GENERATING_PLAN = 10;
      */
-    GENERATING_THUMBNAIL = 10,
+    GENERATING_PLAN = 10,
     /**
-     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_THUMBNAIL_READY = 11;
+     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_GENERATING_TRANSCRIPT = 11;
      */
-    THUMBNAIL_READY = 11,
+    GENERATING_TRANSCRIPT = 11,
     /**
-     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_GENERATING_PLAN = 12;
+     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_GENERATING_AUDIO = 12;
      */
-    GENERATING_PLAN = 12,
+    GENERATING_AUDIO = 12,
     /**
-     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_PLAN_READY = 13;
+     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_GENERATING_VISUALS = 13;
      */
-    PLAN_READY = 13,
-    /**
-     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_GENERATING_TRANSCRIPT = 14;
-     */
-    GENERATING_TRANSCRIPT = 14,
-    /**
-     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_TRANSCRIPT_READY = 15;
-     */
-    TRANSCRIPT_READY = 15,
-    /**
-     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_GENERATING_AUDIO = 16;
-     */
-    GENERATING_AUDIO = 16,
-    /**
-     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_AUDIO_READY = 17;
-     */
-    AUDIO_READY = 17,
-    /**
-     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_GENERATING_VISUALS = 18;
-     */
-    GENERATING_VISUALS = 18,
-    /**
-     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_VISUALS_READY = 19;
-     */
-    VISUALS_READY = 19
+    GENERATING_VISUALS = 13
 }
 /**
  * @generated from protobuf enum StoredPodcastCardsStateProto
