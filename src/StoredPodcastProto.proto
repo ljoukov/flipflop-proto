@@ -14,7 +14,7 @@ message StoredPodcastProto {
   google.protobuf.Timestamp created_at = 3;
   google.protobuf.Timestamp updated_at = 4;
 
-  StoredPodcastUserPromptProto user_prompt = 5;
+  StoredPodcastUserInputProto user_input = 5;
 
   StoredPodcastStateProto state = 6;
 
@@ -69,8 +69,9 @@ enum StoredPodcastCardsStateProto {
   STORED_PODCAST_CARDS_STATE_PROTO_FAILED = 3;
 }
 
-message StoredPodcastUserPromptProto {
+message StoredPodcastUserInputProto {
   string prompt = 1;
+  repeated string point_ids = 2;
 }
 
 message StoredPodcastPointsProto {
@@ -79,12 +80,10 @@ message StoredPodcastPointsProto {
 
 message StoredPodcastPointProto {
   string point_id = 1;
-  bool selected = 2;
-
-  string reasoning = 3;
-  string title = 4;
-  string title_emoji = 5;
-  string outline = 6;
+  string reasoning = 2;
+  string title = 3;
+  string title_emoji = 4;
+  string outline = 5;
 }
 
 message StoredPodcastPlanProto {

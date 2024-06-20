@@ -43,9 +43,9 @@ export interface StoredPodcastProto {
      */
     updatedAt?: Timestamp;
     /**
-     * @generated from protobuf field: StoredPodcastUserPromptProto user_prompt = 5;
+     * @generated from protobuf field: StoredPodcastUserInputProto user_input = 5;
      */
-    userPrompt?: StoredPodcastUserPromptProto;
+    userInput?: StoredPodcastUserInputProto;
     /**
      * @generated from protobuf field: StoredPodcastStateProto state = 6;
      */
@@ -94,13 +94,17 @@ export interface StoredPodcastProto {
     log?: LogProto;
 }
 /**
- * @generated from protobuf message StoredPodcastUserPromptProto
+ * @generated from protobuf message StoredPodcastUserInputProto
  */
-export interface StoredPodcastUserPromptProto {
+export interface StoredPodcastUserInputProto {
     /**
      * @generated from protobuf field: string prompt = 1;
      */
     prompt: string;
+    /**
+     * @generated from protobuf field: repeated string point_ids = 2;
+     */
+    pointIds: string[];
 }
 /**
  * @generated from protobuf message StoredPodcastPointsProto
@@ -120,23 +124,19 @@ export interface StoredPodcastPointProto {
      */
     pointId: string;
     /**
-     * @generated from protobuf field: bool selected = 2;
-     */
-    selected: boolean;
-    /**
-     * @generated from protobuf field: string reasoning = 3;
+     * @generated from protobuf field: string reasoning = 2;
      */
     reasoning: string;
     /**
-     * @generated from protobuf field: string title = 4;
+     * @generated from protobuf field: string title = 3;
      */
     title: string;
     /**
-     * @generated from protobuf field: string title_emoji = 5;
+     * @generated from protobuf field: string title_emoji = 4;
      */
     titleEmoji: string;
     /**
-     * @generated from protobuf field: string outline = 6;
+     * @generated from protobuf field: string outline = 5;
      */
     outline: string;
 }
@@ -368,7 +368,7 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
             { no: 2, name: "created_by", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "created_at", kind: "message", T: () => Timestamp },
             { no: 4, name: "updated_at", kind: "message", T: () => Timestamp },
-            { no: 5, name: "user_prompt", kind: "message", T: () => StoredPodcastUserPromptProto },
+            { no: 5, name: "user_input", kind: "message", T: () => StoredPodcastUserInputProto },
             { no: 6, name: "state", kind: "enum", T: () => ["StoredPodcastStateProto", StoredPodcastStateProto, "STORED_PODCAST_STATE_PROTO_"] },
             { no: 7, name: "answer", kind: "message", T: () => PodcastPromptAnswerProto },
             { no: 8, name: "points", kind: "message", T: () => StoredPodcastPointsProto },
@@ -406,8 +406,8 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
                 case /* google.protobuf.Timestamp updated_at */ 4:
                     message.updatedAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.updatedAt);
                     break;
-                case /* StoredPodcastUserPromptProto user_prompt */ 5:
-                    message.userPrompt = StoredPodcastUserPromptProto.internalBinaryRead(reader, reader.uint32(), options, message.userPrompt);
+                case /* StoredPodcastUserInputProto user_input */ 5:
+                    message.userInput = StoredPodcastUserInputProto.internalBinaryRead(reader, reader.uint32(), options, message.userInput);
                     break;
                 case /* StoredPodcastStateProto state */ 6:
                     message.state = reader.int32();
@@ -466,9 +466,9 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
         /* google.protobuf.Timestamp updated_at = 4; */
         if (message.updatedAt)
             Timestamp.internalBinaryWrite(message.updatedAt, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
-        /* StoredPodcastUserPromptProto user_prompt = 5; */
-        if (message.userPrompt)
-            StoredPodcastUserPromptProto.internalBinaryWrite(message.userPrompt, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        /* StoredPodcastUserInputProto user_input = 5; */
+        if (message.userInput)
+            StoredPodcastUserInputProto.internalBinaryWrite(message.userInput, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
         /* StoredPodcastStateProto state = 6; */
         if (message.state !== 0)
             writer.tag(6, WireType.Varint).int32(message.state);
@@ -513,26 +513,30 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
  */
 export const StoredPodcastProto = new StoredPodcastProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class StoredPodcastUserPromptProto$Type extends MessageType<StoredPodcastUserPromptProto> {
+class StoredPodcastUserInputProto$Type extends MessageType<StoredPodcastUserInputProto> {
     constructor() {
-        super("StoredPodcastUserPromptProto", [
-            { no: 1, name: "prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        super("StoredPodcastUserInputProto", [
+            { no: 1, name: "prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "point_ids", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<StoredPodcastUserPromptProto>): StoredPodcastUserPromptProto {
-        const message = { prompt: "" };
+    create(value?: PartialMessage<StoredPodcastUserInputProto>): StoredPodcastUserInputProto {
+        const message = { prompt: "", pointIds: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<StoredPodcastUserPromptProto>(this, message, value);
+            reflectionMergePartial<StoredPodcastUserInputProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredPodcastUserPromptProto): StoredPodcastUserPromptProto {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredPodcastUserInputProto): StoredPodcastUserInputProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
                 case /* string prompt */ 1:
                     message.prompt = reader.string();
+                    break;
+                case /* repeated string point_ids */ 2:
+                    message.pointIds.push(reader.string());
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -545,10 +549,13 @@ class StoredPodcastUserPromptProto$Type extends MessageType<StoredPodcastUserPro
         }
         return message;
     }
-    internalBinaryWrite(message: StoredPodcastUserPromptProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: StoredPodcastUserInputProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string prompt = 1; */
         if (message.prompt !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.prompt);
+        /* repeated string point_ids = 2; */
+        for (let i = 0; i < message.pointIds.length; i++)
+            writer.tag(2, WireType.LengthDelimited).string(message.pointIds[i]);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -556,9 +563,9 @@ class StoredPodcastUserPromptProto$Type extends MessageType<StoredPodcastUserPro
     }
 }
 /**
- * @generated MessageType for protobuf message StoredPodcastUserPromptProto
+ * @generated MessageType for protobuf message StoredPodcastUserInputProto
  */
-export const StoredPodcastUserPromptProto = new StoredPodcastUserPromptProto$Type();
+export const StoredPodcastUserInputProto = new StoredPodcastUserInputProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class StoredPodcastPointsProto$Type extends MessageType<StoredPodcastPointsProto> {
     constructor() {
@@ -611,15 +618,14 @@ class StoredPodcastPointProto$Type extends MessageType<StoredPodcastPointProto> 
     constructor() {
         super("StoredPodcastPointProto", [
             { no: 1, name: "point_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "selected", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 3, name: "reasoning", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "title_emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 6, name: "outline", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "reasoning", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "title_emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "outline", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastPointProto>): StoredPodcastPointProto {
-        const message = { pointId: "", selected: false, reasoning: "", title: "", titleEmoji: "", outline: "" };
+        const message = { pointId: "", reasoning: "", title: "", titleEmoji: "", outline: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastPointProto>(this, message, value);
@@ -633,19 +639,16 @@ class StoredPodcastPointProto$Type extends MessageType<StoredPodcastPointProto> 
                 case /* string point_id */ 1:
                     message.pointId = reader.string();
                     break;
-                case /* bool selected */ 2:
-                    message.selected = reader.bool();
-                    break;
-                case /* string reasoning */ 3:
+                case /* string reasoning */ 2:
                     message.reasoning = reader.string();
                     break;
-                case /* string title */ 4:
+                case /* string title */ 3:
                     message.title = reader.string();
                     break;
-                case /* string title_emoji */ 5:
+                case /* string title_emoji */ 4:
                     message.titleEmoji = reader.string();
                     break;
-                case /* string outline */ 6:
+                case /* string outline */ 5:
                     message.outline = reader.string();
                     break;
                 default:
@@ -663,21 +666,18 @@ class StoredPodcastPointProto$Type extends MessageType<StoredPodcastPointProto> 
         /* string point_id = 1; */
         if (message.pointId !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.pointId);
-        /* bool selected = 2; */
-        if (message.selected !== false)
-            writer.tag(2, WireType.Varint).bool(message.selected);
-        /* string reasoning = 3; */
+        /* string reasoning = 2; */
         if (message.reasoning !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.reasoning);
-        /* string title = 4; */
+            writer.tag(2, WireType.LengthDelimited).string(message.reasoning);
+        /* string title = 3; */
         if (message.title !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.title);
-        /* string title_emoji = 5; */
+            writer.tag(3, WireType.LengthDelimited).string(message.title);
+        /* string title_emoji = 4; */
         if (message.titleEmoji !== "")
-            writer.tag(5, WireType.LengthDelimited).string(message.titleEmoji);
-        /* string outline = 6; */
+            writer.tag(4, WireType.LengthDelimited).string(message.titleEmoji);
+        /* string outline = 5; */
         if (message.outline !== "")
-            writer.tag(6, WireType.LengthDelimited).string(message.outline);
+            writer.tag(5, WireType.LengthDelimited).string(message.outline);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

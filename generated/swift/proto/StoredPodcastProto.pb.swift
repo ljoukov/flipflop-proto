@@ -243,14 +243,14 @@ struct StoredPodcastProto {
   /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
   mutating func clearUpdatedAt() {_uniqueStorage()._updatedAt = nil}
 
-  var userPrompt: StoredPodcastUserPromptProto {
-    get {return _storage._userPrompt ?? StoredPodcastUserPromptProto()}
-    set {_uniqueStorage()._userPrompt = newValue}
+  var userInput: StoredPodcastUserInputProto {
+    get {return _storage._userInput ?? StoredPodcastUserInputProto()}
+    set {_uniqueStorage()._userInput = newValue}
   }
-  /// Returns true if `userPrompt` has been explicitly set.
-  var hasUserPrompt: Bool {return _storage._userPrompt != nil}
-  /// Clears the value of `userPrompt`. Subsequent reads from it will return its default value.
-  mutating func clearUserPrompt() {_uniqueStorage()._userPrompt = nil}
+  /// Returns true if `userInput` has been explicitly set.
+  var hasUserInput: Bool {return _storage._userInput != nil}
+  /// Clears the value of `userInput`. Subsequent reads from it will return its default value.
+  mutating func clearUserInput() {_uniqueStorage()._userInput = nil}
 
   var state: StoredPodcastStateProto {
     get {return _storage._state}
@@ -351,12 +351,14 @@ struct StoredPodcastProto {
   fileprivate var _storage = _StorageClass.defaultInstance
 }
 
-struct StoredPodcastUserPromptProto {
+struct StoredPodcastUserInputProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   var prompt: String = String()
+
+  var pointIds: [String] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -381,8 +383,6 @@ struct StoredPodcastPointProto {
   // methods supported on all messages.
 
   var pointID: String = String()
-
-  var selected: Bool = false
 
   var reasoning: String = String()
 
@@ -519,7 +519,7 @@ extension StoredPodcastStateProto: @unchecked Sendable {}
 extension StoredPodcastCardsStateProto: @unchecked Sendable {}
 extension StoredPodcastSectionTypeProto: @unchecked Sendable {}
 extension StoredPodcastProto: @unchecked Sendable {}
-extension StoredPodcastUserPromptProto: @unchecked Sendable {}
+extension StoredPodcastUserInputProto: @unchecked Sendable {}
 extension StoredPodcastPointsProto: @unchecked Sendable {}
 extension StoredPodcastPointProto: @unchecked Sendable {}
 extension StoredPodcastPlanProto: @unchecked Sendable {}
@@ -578,7 +578,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     2: .standard(proto: "created_by"),
     3: .standard(proto: "created_at"),
     4: .standard(proto: "updated_at"),
-    5: .standard(proto: "user_prompt"),
+    5: .standard(proto: "user_input"),
     6: .same(proto: "state"),
     7: .same(proto: "answer"),
     8: .same(proto: "points"),
@@ -597,7 +597,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     var _createdBy: String = String()
     var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
     var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
-    var _userPrompt: StoredPodcastUserPromptProto? = nil
+    var _userInput: StoredPodcastUserInputProto? = nil
     var _state: StoredPodcastStateProto = .unknown
     var _answer: PodcastPromptAnswerProto? = nil
     var _points: StoredPodcastPointsProto? = nil
@@ -619,7 +619,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       _createdBy = source._createdBy
       _createdAt = source._createdAt
       _updatedAt = source._updatedAt
-      _userPrompt = source._userPrompt
+      _userInput = source._userInput
       _state = source._state
       _answer = source._answer
       _points = source._points
@@ -653,7 +653,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         case 2: try { try decoder.decodeSingularStringField(value: &_storage._createdBy) }()
         case 3: try { try decoder.decodeSingularMessageField(value: &_storage._createdAt) }()
         case 4: try { try decoder.decodeSingularMessageField(value: &_storage._updatedAt) }()
-        case 5: try { try decoder.decodeSingularMessageField(value: &_storage._userPrompt) }()
+        case 5: try { try decoder.decodeSingularMessageField(value: &_storage._userInput) }()
         case 6: try { try decoder.decodeSingularEnumField(value: &_storage._state) }()
         case 7: try { try decoder.decodeSingularMessageField(value: &_storage._answer) }()
         case 8: try { try decoder.decodeSingularMessageField(value: &_storage._points) }()
@@ -689,7 +689,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       try { if let v = _storage._updatedAt {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
       } }()
-      try { if let v = _storage._userPrompt {
+      try { if let v = _storage._userInput {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
       } }()
       if _storage._state != .unknown {
@@ -738,7 +738,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         if _storage._createdBy != rhs_storage._createdBy {return false}
         if _storage._createdAt != rhs_storage._createdAt {return false}
         if _storage._updatedAt != rhs_storage._updatedAt {return false}
-        if _storage._userPrompt != rhs_storage._userPrompt {return false}
+        if _storage._userInput != rhs_storage._userInput {return false}
         if _storage._state != rhs_storage._state {return false}
         if _storage._answer != rhs_storage._answer {return false}
         if _storage._points != rhs_storage._points {return false}
@@ -759,10 +759,11 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
   }
 }
 
-extension StoredPodcastUserPromptProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "StoredPodcastUserPromptProto"
+extension StoredPodcastUserInputProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredPodcastUserInputProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "prompt"),
+    2: .standard(proto: "point_ids"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -772,6 +773,7 @@ extension StoredPodcastUserPromptProto: SwiftProtobuf.Message, SwiftProtobuf._Me
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.prompt) }()
+      case 2: try { try decoder.decodeRepeatedStringField(value: &self.pointIds) }()
       default: break
       }
     }
@@ -781,11 +783,15 @@ extension StoredPodcastUserPromptProto: SwiftProtobuf.Message, SwiftProtobuf._Me
     if !self.prompt.isEmpty {
       try visitor.visitSingularStringField(value: self.prompt, fieldNumber: 1)
     }
+    if !self.pointIds.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.pointIds, fieldNumber: 2)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: StoredPodcastUserPromptProto, rhs: StoredPodcastUserPromptProto) -> Bool {
+  static func ==(lhs: StoredPodcastUserInputProto, rhs: StoredPodcastUserInputProto) -> Bool {
     if lhs.prompt != rhs.prompt {return false}
+    if lhs.pointIds != rhs.pointIds {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -827,11 +833,10 @@ extension StoredPodcastPointProto: SwiftProtobuf.Message, SwiftProtobuf._Message
   static let protoMessageName: String = "StoredPodcastPointProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "point_id"),
-    2: .same(proto: "selected"),
-    3: .same(proto: "reasoning"),
-    4: .same(proto: "title"),
-    5: .standard(proto: "title_emoji"),
-    6: .same(proto: "outline"),
+    2: .same(proto: "reasoning"),
+    3: .same(proto: "title"),
+    4: .standard(proto: "title_emoji"),
+    5: .same(proto: "outline"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -841,11 +846,10 @@ extension StoredPodcastPointProto: SwiftProtobuf.Message, SwiftProtobuf._Message
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.pointID) }()
-      case 2: try { try decoder.decodeSingularBoolField(value: &self.selected) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.reasoning) }()
-      case 4: try { try decoder.decodeSingularStringField(value: &self.title) }()
-      case 5: try { try decoder.decodeSingularStringField(value: &self.titleEmoji) }()
-      case 6: try { try decoder.decodeSingularStringField(value: &self.outline) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.reasoning) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.title) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.titleEmoji) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.outline) }()
       default: break
       }
     }
@@ -855,27 +859,23 @@ extension StoredPodcastPointProto: SwiftProtobuf.Message, SwiftProtobuf._Message
     if !self.pointID.isEmpty {
       try visitor.visitSingularStringField(value: self.pointID, fieldNumber: 1)
     }
-    if self.selected != false {
-      try visitor.visitSingularBoolField(value: self.selected, fieldNumber: 2)
-    }
     if !self.reasoning.isEmpty {
-      try visitor.visitSingularStringField(value: self.reasoning, fieldNumber: 3)
+      try visitor.visitSingularStringField(value: self.reasoning, fieldNumber: 2)
     }
     if !self.title.isEmpty {
-      try visitor.visitSingularStringField(value: self.title, fieldNumber: 4)
+      try visitor.visitSingularStringField(value: self.title, fieldNumber: 3)
     }
     if !self.titleEmoji.isEmpty {
-      try visitor.visitSingularStringField(value: self.titleEmoji, fieldNumber: 5)
+      try visitor.visitSingularStringField(value: self.titleEmoji, fieldNumber: 4)
     }
     if !self.outline.isEmpty {
-      try visitor.visitSingularStringField(value: self.outline, fieldNumber: 6)
+      try visitor.visitSingularStringField(value: self.outline, fieldNumber: 5)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: StoredPodcastPointProto, rhs: StoredPodcastPointProto) -> Bool {
     if lhs.pointID != rhs.pointID {return false}
-    if lhs.selected != rhs.selected {return false}
     if lhs.reasoning != rhs.reasoning {return false}
     if lhs.title != rhs.title {return false}
     if lhs.titleEmoji != rhs.titleEmoji {return false}
