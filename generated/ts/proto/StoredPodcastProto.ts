@@ -145,7 +145,11 @@ export interface StoredPodcastPointProto {
  */
 export interface StoredPodcastPlanProto {
     /**
-     * @generated from protobuf field: string plan = 1;
+     * @generated from protobuf field: string title = 1;
+     */
+    title: string;
+    /**
+     * @generated from protobuf field: string plan = 2;
      */
     plan: string;
 }
@@ -668,11 +672,12 @@ export const StoredPodcastPointProto = new StoredPodcastPointProto$Type();
 class StoredPodcastPlanProto$Type extends MessageType<StoredPodcastPlanProto> {
     constructor() {
         super("StoredPodcastPlanProto", [
-            { no: 1, name: "plan", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "plan", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastPlanProto>): StoredPodcastPlanProto {
-        const message = { plan: "" };
+        const message = { title: "", plan: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastPlanProto>(this, message, value);
@@ -683,7 +688,10 @@ class StoredPodcastPlanProto$Type extends MessageType<StoredPodcastPlanProto> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string plan */ 1:
+                case /* string title */ 1:
+                    message.title = reader.string();
+                    break;
+                case /* string plan */ 2:
                     message.plan = reader.string();
                     break;
                 default:
@@ -698,9 +706,12 @@ class StoredPodcastPlanProto$Type extends MessageType<StoredPodcastPlanProto> {
         return message;
     }
     internalBinaryWrite(message: StoredPodcastPlanProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string plan = 1; */
+        /* string title = 1; */
+        if (message.title !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.title);
+        /* string plan = 2; */
         if (message.plan !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.plan);
+            writer.tag(2, WireType.LengthDelimited).string(message.plan);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

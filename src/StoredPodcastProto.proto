@@ -77,7 +77,8 @@ message StoredPodcastPointProto {
 }
 
 message StoredPodcastPlanProto {
-  string plan = 1;
+  string title = 1;
+  string plan = 2;
 }
 
 message StoredPodcastTranscriptProto {
