@@ -110,11 +110,11 @@ export interface PodcastStreamApiResponseDeltaProto {
          */
         generateDelta: GeneratePodcastResponseDeltaProto;
     } | {
-        oneofKind: "get";
+        oneofKind: "getDelta";
         /**
-         * @generated from protobuf field: GetPodcastResponseDeltaProto get = 3;
+         * @generated from protobuf field: GetPodcastResponseDeltaProto get_delta = 3;
          */
-        get: GetPodcastResponseDeltaProto;
+        getDelta: GetPodcastResponseDeltaProto;
     } | {
         oneofKind: undefined;
     };
@@ -853,7 +853,7 @@ class PodcastStreamApiResponseDeltaProto$Type extends MessageType<PodcastStreamA
         super("PodcastStreamApiResponseDeltaProto", [
             { no: 1, name: "create_delta", kind: "message", oneof: "responseDelta", T: () => CreatePodcastResponseDeltaProto },
             { no: 2, name: "generate_delta", kind: "message", oneof: "responseDelta", T: () => GeneratePodcastResponseDeltaProto },
-            { no: 3, name: "get", kind: "message", oneof: "responseDelta", T: () => GetPodcastResponseDeltaProto }
+            { no: 3, name: "get_delta", kind: "message", oneof: "responseDelta", T: () => GetPodcastResponseDeltaProto }
         ]);
     }
     create(value?: PartialMessage<PodcastStreamApiResponseDeltaProto>): PodcastStreamApiResponseDeltaProto {
@@ -880,10 +880,10 @@ class PodcastStreamApiResponseDeltaProto$Type extends MessageType<PodcastStreamA
                         generateDelta: GeneratePodcastResponseDeltaProto.internalBinaryRead(reader, reader.uint32(), options, (message.responseDelta as any).generateDelta)
                     };
                     break;
-                case /* GetPodcastResponseDeltaProto get */ 3:
+                case /* GetPodcastResponseDeltaProto get_delta */ 3:
                     message.responseDelta = {
-                        oneofKind: "get",
-                        get: GetPodcastResponseDeltaProto.internalBinaryRead(reader, reader.uint32(), options, (message.responseDelta as any).get)
+                        oneofKind: "getDelta",
+                        getDelta: GetPodcastResponseDeltaProto.internalBinaryRead(reader, reader.uint32(), options, (message.responseDelta as any).getDelta)
                     };
                     break;
                 default:
@@ -904,9 +904,9 @@ class PodcastStreamApiResponseDeltaProto$Type extends MessageType<PodcastStreamA
         /* GeneratePodcastResponseDeltaProto generate_delta = 2; */
         if (message.responseDelta.oneofKind === "generateDelta")
             GeneratePodcastResponseDeltaProto.internalBinaryWrite(message.responseDelta.generateDelta, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* GetPodcastResponseDeltaProto get = 3; */
-        if (message.responseDelta.oneofKind === "get")
-            GetPodcastResponseDeltaProto.internalBinaryWrite(message.responseDelta.get, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* GetPodcastResponseDeltaProto get_delta = 3; */
+        if (message.responseDelta.oneofKind === "getDelta")
+            GetPodcastResponseDeltaProto.internalBinaryWrite(message.responseDelta.getDelta, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
