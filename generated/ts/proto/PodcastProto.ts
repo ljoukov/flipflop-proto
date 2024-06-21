@@ -229,23 +229,27 @@ export interface GetPodcastResponseDeltaProto {
  */
 export interface PodcastProto {
     /**
-     * @generated from protobuf field: google.protobuf.Timestamp updated_at = 1;
+     * @generated from protobuf field: bool is_ready = 1;
+     */
+    isReady: boolean;
+    /**
+     * @generated from protobuf field: google.protobuf.Timestamp updated_at = 2;
      */
     updatedAt?: Timestamp;
     /**
-     * @generated from protobuf field: PodcastAudioProto audio = 2;
+     * @generated from protobuf field: PodcastAudioProto audio = 3;
      */
     audio?: PodcastAudioProto;
     /**
-     * @generated from protobuf field: PodcastVisualsProto visuals = 3;
+     * @generated from protobuf field: PodcastVisualsProto visuals = 4;
      */
     visuals?: PodcastVisualsProto;
     /**
-     * @generated from protobuf field: PodcastTranscriptProto transcript = 4;
+     * @generated from protobuf field: PodcastTranscriptProto transcript = 5;
      */
     transcript?: PodcastTranscriptProto;
     /**
-     * @generated from protobuf field: PodcastCardsProto cards = 5;
+     * @generated from protobuf field: PodcastCardsProto cards = 6;
      */
     cards?: PodcastCardsProto;
 }
@@ -1331,15 +1335,16 @@ export const GetPodcastResponseDeltaProto = new GetPodcastResponseDeltaProto$Typ
 class PodcastProto$Type extends MessageType<PodcastProto> {
     constructor() {
         super("PodcastProto", [
-            { no: 1, name: "updated_at", kind: "message", T: () => Timestamp },
-            { no: 2, name: "audio", kind: "message", T: () => PodcastAudioProto },
-            { no: 3, name: "visuals", kind: "message", T: () => PodcastVisualsProto },
-            { no: 4, name: "transcript", kind: "message", T: () => PodcastTranscriptProto },
-            { no: 5, name: "cards", kind: "message", T: () => PodcastCardsProto }
+            { no: 1, name: "is_ready", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 2, name: "updated_at", kind: "message", T: () => Timestamp },
+            { no: 3, name: "audio", kind: "message", T: () => PodcastAudioProto },
+            { no: 4, name: "visuals", kind: "message", T: () => PodcastVisualsProto },
+            { no: 5, name: "transcript", kind: "message", T: () => PodcastTranscriptProto },
+            { no: 6, name: "cards", kind: "message", T: () => PodcastCardsProto }
         ]);
     }
     create(value?: PartialMessage<PodcastProto>): PodcastProto {
-        const message = {};
+        const message = { isReady: false };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastProto>(this, message, value);
@@ -1350,19 +1355,22 @@ class PodcastProto$Type extends MessageType<PodcastProto> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* google.protobuf.Timestamp updated_at */ 1:
+                case /* bool is_ready */ 1:
+                    message.isReady = reader.bool();
+                    break;
+                case /* google.protobuf.Timestamp updated_at */ 2:
                     message.updatedAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.updatedAt);
                     break;
-                case /* PodcastAudioProto audio */ 2:
+                case /* PodcastAudioProto audio */ 3:
                     message.audio = PodcastAudioProto.internalBinaryRead(reader, reader.uint32(), options, message.audio);
                     break;
-                case /* PodcastVisualsProto visuals */ 3:
+                case /* PodcastVisualsProto visuals */ 4:
                     message.visuals = PodcastVisualsProto.internalBinaryRead(reader, reader.uint32(), options, message.visuals);
                     break;
-                case /* PodcastTranscriptProto transcript */ 4:
+                case /* PodcastTranscriptProto transcript */ 5:
                     message.transcript = PodcastTranscriptProto.internalBinaryRead(reader, reader.uint32(), options, message.transcript);
                     break;
-                case /* PodcastCardsProto cards */ 5:
+                case /* PodcastCardsProto cards */ 6:
                     message.cards = PodcastCardsProto.internalBinaryRead(reader, reader.uint32(), options, message.cards);
                     break;
                 default:
@@ -1377,21 +1385,24 @@ class PodcastProto$Type extends MessageType<PodcastProto> {
         return message;
     }
     internalBinaryWrite(message: PodcastProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* google.protobuf.Timestamp updated_at = 1; */
+        /* bool is_ready = 1; */
+        if (message.isReady !== false)
+            writer.tag(1, WireType.Varint).bool(message.isReady);
+        /* google.protobuf.Timestamp updated_at = 2; */
         if (message.updatedAt)
-            Timestamp.internalBinaryWrite(message.updatedAt, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* PodcastAudioProto audio = 2; */
+            Timestamp.internalBinaryWrite(message.updatedAt, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastAudioProto audio = 3; */
         if (message.audio)
-            PodcastAudioProto.internalBinaryWrite(message.audio, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* PodcastVisualsProto visuals = 3; */
+            PodcastAudioProto.internalBinaryWrite(message.audio, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastVisualsProto visuals = 4; */
         if (message.visuals)
-            PodcastVisualsProto.internalBinaryWrite(message.visuals, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* PodcastTranscriptProto transcript = 4; */
+            PodcastVisualsProto.internalBinaryWrite(message.visuals, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastTranscriptProto transcript = 5; */
         if (message.transcript)
-            PodcastTranscriptProto.internalBinaryWrite(message.transcript, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
-        /* PodcastCardsProto cards = 5; */
+            PodcastTranscriptProto.internalBinaryWrite(message.transcript, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastCardsProto cards = 6; */
         if (message.cards)
-            PodcastCardsProto.internalBinaryWrite(message.cards, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+            PodcastCardsProto.internalBinaryWrite(message.cards, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

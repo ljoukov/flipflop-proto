@@ -72,13 +72,14 @@ message GetPodcastResponseHeaderProto {
 message GetPodcastResponseDeltaProto {}
 
 message PodcastProto {
-  google.protobuf.Timestamp updated_at = 1;
+  bool is_ready = 1;
+  google.protobuf.Timestamp updated_at = 2;
 
-  PodcastAudioProto audio = 2;
-  PodcastVisualsProto visuals = 3;
-  PodcastTranscriptProto transcript = 4;
+  PodcastAudioProto audio = 3;
+  PodcastVisualsProto visuals = 4;
+  PodcastTranscriptProto transcript = 5;
 
-  PodcastCardsProto cards = 5;
+  PodcastCardsProto cards = 6;
 }
 
 message FirestorePodcastProto {
