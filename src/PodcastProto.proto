@@ -72,8 +72,9 @@ message GetPodcastResponseHeaderProto {
 message GetPodcastResponseDeltaProto {}
 
 message PodcastProto {
-  bool is_ready = 1;
-  google.protobuf.Timestamp updated_at = 2;
+  google.protobuf.Timestamp updated_at = 1;
+
+  PodcastThumbnailProto thumbnail = 2;
 
   PodcastAudioProto audio = 3;
   PodcastVisualsProto visuals = 4;
