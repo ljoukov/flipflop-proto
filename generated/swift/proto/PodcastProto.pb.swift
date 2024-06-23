@@ -20,6 +20,54 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
+enum PodcastStatusProto: SwiftProtobuf.Enum {
+  typealias RawValue = Int
+  case undefined // = 0
+  case generating // = 1
+  case ready // = 2
+  case failed // = 3
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .undefined
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .undefined
+    case 1: self = .generating
+    case 2: self = .ready
+    case 3: self = .failed
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .undefined: return 0
+    case .generating: return 1
+    case .ready: return 2
+    case .failed: return 3
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+}
+
+#if swift(>=4.2)
+
+extension PodcastStatusProto: CaseIterable {
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static var allCases: [PodcastStatusProto] = [
+    .undefined,
+    .generating,
+    .ready,
+    .failed,
+  ]
+}
+
+#endif  // swift(>=4.2)
+
 enum PodcastBadgeProto: SwiftProtobuf.Enum {
   typealias RawValue = Int
   case undefined // = 0
@@ -699,7 +747,7 @@ struct PodcastThumbnailProto {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var isPodcastReady: Bool = false
+  var status: PodcastStatusProto = .undefined
 
   var displayStatus: String = String()
 
@@ -1088,6 +1136,7 @@ struct PodcastPollOptionProto {
 }
 
 #if swift(>=5.5) && canImport(_Concurrency)
+extension PodcastStatusProto: @unchecked Sendable {}
 extension PodcastBadgeProto: @unchecked Sendable {}
 extension PodcastVisualTransitionProto: @unchecked Sendable {}
 extension PodcastHostProto: @unchecked Sendable {}
@@ -1133,6 +1182,15 @@ extension PodcastPollOptionProto: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
+
+extension PodcastStatusProto: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "PODCAST_STATUS_PROTO_UNDEFINED"),
+    1: .same(proto: "PODCAST_STATUS_PROTO_GENERATING"),
+    2: .same(proto: "PODCAST_STATUS_PROTO_READY"),
+    3: .same(proto: "PODCAST_STATUS_PROTO_FAILED"),
+  ]
+}
 
 extension PodcastBadgeProto: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -1984,7 +2042,7 @@ extension PodcastPointProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
 extension PodcastThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "PodcastThumbnailProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "is_podcast_ready"),
+    1: .same(proto: "status"),
     2: .standard(proto: "display_status"),
     3: .same(proto: "title"),
     4: .same(proto: "badge"),
@@ -1998,7 +2056,7 @@ extension PodcastThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularBoolField(value: &self.isPodcastReady) }()
+      case 1: try { try decoder.decodeSingularEnumField(value: &self.status) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.displayStatus) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.title) }()
       case 4: try { try decoder.decodeSingularEnumField(value: &self.badge) }()
@@ -2014,8 +2072,8 @@ extension PodcastThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    if self.isPodcastReady != false {
-      try visitor.visitSingularBoolField(value: self.isPodcastReady, fieldNumber: 1)
+    if self.status != .undefined {
+      try visitor.visitSingularEnumField(value: self.status, fieldNumber: 1)
     }
     if !self.displayStatus.isEmpty {
       try visitor.visitSingularStringField(value: self.displayStatus, fieldNumber: 2)
@@ -2036,7 +2094,7 @@ extension PodcastThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
   }
 
   static func ==(lhs: PodcastThumbnailProto, rhs: PodcastThumbnailProto) -> Bool {
-    if lhs.isPodcastReady != rhs.isPodcastReady {return false}
+    if lhs.status != rhs.status {return false}
     if lhs.displayStatus != rhs.displayStatus {return false}
     if lhs.title != rhs.title {return false}
     if lhs.badge != rhs.badge {return false}

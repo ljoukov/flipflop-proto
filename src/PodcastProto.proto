@@ -96,12 +96,19 @@ message PodcastPointProto {
 }
 
 message PodcastThumbnailProto {
-  bool is_podcast_ready = 1;
+  PodcastStatusProto status = 1;
   string display_status = 2;
   string title = 3;
   PodcastBadgeProto badge = 4;
   string path = 5;
   google.protobuf.Duration duration = 6;
+}
+
+enum PodcastStatusProto {
+  PODCAST_STATUS_PROTO_UNDEFINED = 0;
+  PODCAST_STATUS_PROTO_GENERATING = 1;
+  PODCAST_STATUS_PROTO_READY = 2;
+  PODCAST_STATUS_PROTO_FAILED = 3;
 }
 
 enum PodcastBadgeProto {

@@ -292,9 +292,9 @@ export interface PodcastPointProto {
  */
 export interface PodcastThumbnailProto {
     /**
-     * @generated from protobuf field: bool is_podcast_ready = 1;
+     * @generated from protobuf field: PodcastStatusProto status = 1;
      */
-    isPodcastReady: boolean;
+    status: PodcastStatusProto;
     /**
      * @generated from protobuf field: string display_status = 2;
      */
@@ -602,6 +602,27 @@ export interface PodcastPollOptionProto {
      * @generated from protobuf field: string text = 1;
      */
     text: string;
+}
+/**
+ * @generated from protobuf enum PodcastStatusProto
+ */
+export enum PodcastStatusProto {
+    /**
+     * @generated from protobuf enum value: PODCAST_STATUS_PROTO_UNDEFINED = 0;
+     */
+    UNDEFINED = 0,
+    /**
+     * @generated from protobuf enum value: PODCAST_STATUS_PROTO_GENERATING = 1;
+     */
+    GENERATING = 1,
+    /**
+     * @generated from protobuf enum value: PODCAST_STATUS_PROTO_READY = 2;
+     */
+    READY = 2,
+    /**
+     * @generated from protobuf enum value: PODCAST_STATUS_PROTO_FAILED = 3;
+     */
+    FAILED = 3
 }
 /**
  * @generated from protobuf enum PodcastBadgeProto
@@ -1539,7 +1560,7 @@ export const PodcastPointProto = new PodcastPointProto$Type();
 class PodcastThumbnailProto$Type extends MessageType<PodcastThumbnailProto> {
     constructor() {
         super("PodcastThumbnailProto", [
-            { no: 1, name: "is_podcast_ready", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 1, name: "status", kind: "enum", T: () => ["PodcastStatusProto", PodcastStatusProto, "PODCAST_STATUS_PROTO_"] },
             { no: 2, name: "display_status", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "badge", kind: "enum", T: () => ["PodcastBadgeProto", PodcastBadgeProto, "PODCAST_BADGE_PROTO_"] },
@@ -1548,7 +1569,7 @@ class PodcastThumbnailProto$Type extends MessageType<PodcastThumbnailProto> {
         ]);
     }
     create(value?: PartialMessage<PodcastThumbnailProto>): PodcastThumbnailProto {
-        const message = { isPodcastReady: false, displayStatus: "", title: "", badge: 0, path: "" };
+        const message = { status: 0, displayStatus: "", title: "", badge: 0, path: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastThumbnailProto>(this, message, value);
@@ -1559,8 +1580,8 @@ class PodcastThumbnailProto$Type extends MessageType<PodcastThumbnailProto> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* bool is_podcast_ready */ 1:
-                    message.isPodcastReady = reader.bool();
+                case /* PodcastStatusProto status */ 1:
+                    message.status = reader.int32();
                     break;
                 case /* string display_status */ 2:
                     message.displayStatus = reader.string();
@@ -1589,9 +1610,9 @@ class PodcastThumbnailProto$Type extends MessageType<PodcastThumbnailProto> {
         return message;
     }
     internalBinaryWrite(message: PodcastThumbnailProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* bool is_podcast_ready = 1; */
-        if (message.isPodcastReady !== false)
-            writer.tag(1, WireType.Varint).bool(message.isPodcastReady);
+        /* PodcastStatusProto status = 1; */
+        if (message.status !== 0)
+            writer.tag(1, WireType.Varint).int32(message.status);
         /* string display_status = 2; */
         if (message.displayStatus !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.displayStatus);
