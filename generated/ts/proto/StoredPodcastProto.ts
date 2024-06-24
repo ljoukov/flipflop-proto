@@ -285,9 +285,9 @@ export enum StoredPodcastStateProto {
      */
     GENERATING_AUDIO = 12,
     /**
-     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_GENERATING_PLANNING_VISUALS = 13;
+     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_GENERATING_VISUALS_PLAN = 13;
      */
-    GENERATING_PLANNING_VISUALS = 13,
+    GENERATING_VISUALS_PLAN = 13,
     /**
      * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_GENERATING_VISUALS = 14;
      */
