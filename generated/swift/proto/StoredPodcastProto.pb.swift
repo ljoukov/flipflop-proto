@@ -32,7 +32,8 @@ enum StoredPodcastStateProto: SwiftProtobuf.Enum {
   case generatingPlan // = 10
   case generatingTranscript // = 11
   case generatingAudio // = 12
-  case generatingVisuals // = 13
+  case generatingPlanningVisuals // = 13
+  case generatingVisuals // = 14
   case UNRECOGNIZED(Int)
 
   init() {
@@ -49,7 +50,8 @@ enum StoredPodcastStateProto: SwiftProtobuf.Enum {
     case 10: self = .generatingPlan
     case 11: self = .generatingTranscript
     case 12: self = .generatingAudio
-    case 13: self = .generatingVisuals
+    case 13: self = .generatingPlanningVisuals
+    case 14: self = .generatingVisuals
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -64,7 +66,8 @@ enum StoredPodcastStateProto: SwiftProtobuf.Enum {
     case .generatingPlan: return 10
     case .generatingTranscript: return 11
     case .generatingAudio: return 12
-    case .generatingVisuals: return 13
+    case .generatingPlanningVisuals: return 13
+    case .generatingVisuals: return 14
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -84,6 +87,7 @@ extension StoredPodcastStateProto: CaseIterable {
     .generatingPlan,
     .generatingTranscript,
     .generatingAudio,
+    .generatingPlanningVisuals,
     .generatingVisuals,
   ]
 }
@@ -507,7 +511,8 @@ extension StoredPodcastStateProto: SwiftProtobuf._ProtoNameProviding {
     10: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATING_PLAN"),
     11: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATING_TRANSCRIPT"),
     12: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATING_AUDIO"),
-    13: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATING_VISUALS"),
+    13: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATING_PLANNING_VISUALS"),
+    14: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATING_VISUALS"),
   ]
 }
 
