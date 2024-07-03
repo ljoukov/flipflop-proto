@@ -281,11 +281,15 @@ export interface StoredPodcastFollowupProto {
      */
     followupId: string;
     /**
-     * @generated from protobuf field: string emoji = 2;
+     * @generated from protobuf field: string reasoning = 2;
+     */
+    reasoning: string;
+    /**
+     * @generated from protobuf field: string emoji = 3;
      */
     emoji: string;
     /**
-     * @generated from protobuf field: string outline = 3;
+     * @generated from protobuf field: string outline = 4;
      */
     outline: string;
 }
@@ -1224,12 +1228,13 @@ class StoredPodcastFollowupProto$Type extends MessageType<StoredPodcastFollowupP
     constructor() {
         super("StoredPodcastFollowupProto", [
             { no: 1, name: "followup_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "outline", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "reasoning", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "outline", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastFollowupProto>): StoredPodcastFollowupProto {
-        const message = { followupId: "", emoji: "", outline: "" };
+        const message = { followupId: "", reasoning: "", emoji: "", outline: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastFollowupProto>(this, message, value);
@@ -1243,10 +1248,13 @@ class StoredPodcastFollowupProto$Type extends MessageType<StoredPodcastFollowupP
                 case /* string followup_id */ 1:
                     message.followupId = reader.string();
                     break;
-                case /* string emoji */ 2:
+                case /* string reasoning */ 2:
+                    message.reasoning = reader.string();
+                    break;
+                case /* string emoji */ 3:
                     message.emoji = reader.string();
                     break;
-                case /* string outline */ 3:
+                case /* string outline */ 4:
                     message.outline = reader.string();
                     break;
                 default:
@@ -1264,12 +1272,15 @@ class StoredPodcastFollowupProto$Type extends MessageType<StoredPodcastFollowupP
         /* string followup_id = 1; */
         if (message.followupId !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.followupId);
-        /* string emoji = 2; */
+        /* string reasoning = 2; */
+        if (message.reasoning !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.reasoning);
+        /* string emoji = 3; */
         if (message.emoji !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.emoji);
-        /* string outline = 3; */
+            writer.tag(3, WireType.LengthDelimited).string(message.emoji);
+        /* string outline = 4; */
         if (message.outline !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.outline);
+            writer.tag(4, WireType.LengthDelimited).string(message.outline);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

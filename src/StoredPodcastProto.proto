@@ -128,8 +128,9 @@ message StoredPodcastFollowupsProto {
 
 message StoredPodcastFollowupProto {
   string followup_id = 1;
-  string emoji = 2;
-  string outline = 3;
+  string reasoning = 2;
+  string emoji = 3;
+  string outline = 4;
 }
 
 message StoredPodcastKeyPointProto {
