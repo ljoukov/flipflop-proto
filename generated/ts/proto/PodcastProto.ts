@@ -651,15 +651,19 @@ export interface PodcastFollowupProto {
  */
 export interface PodcastKeyPointProto {
     /**
-     * @generated from protobuf field: string title = 1;
+     * @generated from protobuf field: string key_point_id = 1;
+     */
+    keyPointId: string;
+    /**
+     * @generated from protobuf field: string title = 2;
      */
     title: string;
     /**
-     * @generated from protobuf field: string title_emoji = 2;
+     * @generated from protobuf field: string title_emoji = 3;
      */
     titleEmoji: string;
     /**
-     * @generated from protobuf field: string outline = 3;
+     * @generated from protobuf field: string outline = 4;
      */
     outline: string;
 }
@@ -2875,13 +2879,14 @@ export const PodcastFollowupProto = new PodcastFollowupProto$Type();
 class PodcastKeyPointProto$Type extends MessageType<PodcastKeyPointProto> {
     constructor() {
         super("PodcastKeyPointProto", [
-            { no: 1, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "title_emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "outline", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "key_point_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "title_emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "outline", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PodcastKeyPointProto>): PodcastKeyPointProto {
-        const message = { title: "", titleEmoji: "", outline: "" };
+        const message = { keyPointId: "", title: "", titleEmoji: "", outline: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastKeyPointProto>(this, message, value);
@@ -2892,13 +2897,16 @@ class PodcastKeyPointProto$Type extends MessageType<PodcastKeyPointProto> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string title */ 1:
+                case /* string key_point_id */ 1:
+                    message.keyPointId = reader.string();
+                    break;
+                case /* string title */ 2:
                     message.title = reader.string();
                     break;
-                case /* string title_emoji */ 2:
+                case /* string title_emoji */ 3:
                     message.titleEmoji = reader.string();
                     break;
-                case /* string outline */ 3:
+                case /* string outline */ 4:
                     message.outline = reader.string();
                     break;
                 default:
@@ -2913,15 +2921,18 @@ class PodcastKeyPointProto$Type extends MessageType<PodcastKeyPointProto> {
         return message;
     }
     internalBinaryWrite(message: PodcastKeyPointProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string title = 1; */
+        /* string key_point_id = 1; */
+        if (message.keyPointId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.keyPointId);
+        /* string title = 2; */
         if (message.title !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.title);
-        /* string title_emoji = 2; */
+            writer.tag(2, WireType.LengthDelimited).string(message.title);
+        /* string title_emoji = 3; */
         if (message.titleEmoji !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.titleEmoji);
-        /* string outline = 3; */
+            writer.tag(3, WireType.LengthDelimited).string(message.titleEmoji);
+        /* string outline = 4; */
         if (message.outline !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.outline);
+            writer.tag(4, WireType.LengthDelimited).string(message.outline);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

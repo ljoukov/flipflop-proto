@@ -27,13 +27,6 @@ enum StoredPodcastStateProto: SwiftProtobuf.Enum {
   case pointsReady // = 2
   case generationStarted // = 3
   case generationFailed // = 4
-
-  /// IDs start at 10
-  case generatingPlan // = 10
-  case generatingTranscript // = 11
-  case generatingAudio // = 12
-  case generatingVisualsPlan // = 13
-  case generatingVisuals // = 14
   case UNRECOGNIZED(Int)
 
   init() {
@@ -47,11 +40,6 @@ enum StoredPodcastStateProto: SwiftProtobuf.Enum {
     case 2: self = .pointsReady
     case 3: self = .generationStarted
     case 4: self = .generationFailed
-    case 10: self = .generatingPlan
-    case 11: self = .generatingTranscript
-    case 12: self = .generatingAudio
-    case 13: self = .generatingVisualsPlan
-    case 14: self = .generatingVisuals
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -63,11 +51,6 @@ enum StoredPodcastStateProto: SwiftProtobuf.Enum {
     case .pointsReady: return 2
     case .generationStarted: return 3
     case .generationFailed: return 4
-    case .generatingPlan: return 10
-    case .generatingTranscript: return 11
-    case .generatingAudio: return 12
-    case .generatingVisualsPlan: return 13
-    case .generatingVisuals: return 14
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -84,11 +67,6 @@ extension StoredPodcastStateProto: CaseIterable {
     .pointsReady,
     .generationStarted,
     .generationFailed,
-    .generatingPlan,
-    .generatingTranscript,
-    .generatingAudio,
-    .generatingVisualsPlan,
-    .generatingVisuals,
   ]
 }
 
@@ -291,6 +269,24 @@ struct StoredPodcastProto {
   /// Clears the value of `visuals`. Subsequent reads from it will return its default value.
   mutating func clearVisuals() {_uniqueStorage()._visuals = nil}
 
+  var keyPoints: StoredPodcastKeyPointsProto {
+    get {return _storage._keyPoints ?? StoredPodcastKeyPointsProto()}
+    set {_uniqueStorage()._keyPoints = newValue}
+  }
+  /// Returns true if `keyPoints` has been explicitly set.
+  var hasKeyPoints: Bool {return _storage._keyPoints != nil}
+  /// Clears the value of `keyPoints`. Subsequent reads from it will return its default value.
+  mutating func clearKeyPoints() {_uniqueStorage()._keyPoints = nil}
+
+  var followups: StoredPodcastFollowupsProto {
+    get {return _storage._followups ?? StoredPodcastFollowupsProto()}
+    set {_uniqueStorage()._followups = newValue}
+  }
+  /// Returns true if `followups` has been explicitly set.
+  var hasFollowups: Bool {return _storage._followups != nil}
+  /// Clears the value of `followups`. Subsequent reads from it will return its default value.
+  mutating func clearFollowups() {_uniqueStorage()._followups = nil}
+
   /// Debug metadata
   var latencies: LatenciesProto {
     get {return _storage._latencies ?? LatenciesProto()}
@@ -482,6 +478,64 @@ struct StoredPodcastAudioProto {
   fileprivate var _audioDuration: SwiftProtobuf.Google_Protobuf_Duration? = nil
 }
 
+struct StoredPodcastKeyPointsProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var keyPoints: [StoredPodcastKeyPointProto] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct StoredPodcastFollowupsProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var followups: [StoredPodcastFollowupProto] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct StoredPodcastFollowupProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var followupID: String = String()
+
+  var emoji: String = String()
+
+  var outline: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct StoredPodcastKeyPointProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var keyPointID: String = String()
+
+  var title: String = String()
+
+  var titleEmoji: String = String()
+
+  var outline: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 #if swift(>=5.5) && canImport(_Concurrency)
 extension StoredPodcastStateProto: @unchecked Sendable {}
 extension StoredPodcastCardsStateProto: @unchecked Sendable {}
@@ -497,6 +551,10 @@ extension StoredPodcastTranscriptEntryProto: @unchecked Sendable {}
 extension StoredPodcastVisualsProto: @unchecked Sendable {}
 extension StoredPodcastVisualProto: @unchecked Sendable {}
 extension StoredPodcastAudioProto: @unchecked Sendable {}
+extension StoredPodcastKeyPointsProto: @unchecked Sendable {}
+extension StoredPodcastFollowupsProto: @unchecked Sendable {}
+extension StoredPodcastFollowupProto: @unchecked Sendable {}
+extension StoredPodcastKeyPointProto: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
@@ -508,11 +566,6 @@ extension StoredPodcastStateProto: SwiftProtobuf._ProtoNameProviding {
     2: .same(proto: "STORED_PODCAST_STATE_PROTO_POINTS_READY"),
     3: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATION_STARTED"),
     4: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATION_FAILED"),
-    10: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATING_PLAN"),
-    11: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATING_TRANSCRIPT"),
-    12: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATING_AUDIO"),
-    13: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATING_VISUALS_PLAN"),
-    14: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATING_VISUALS"),
   ]
 }
 
@@ -549,6 +602,8 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     10: .same(proto: "transcript"),
     11: .same(proto: "audio"),
     12: .same(proto: "visuals"),
+    13: .standard(proto: "key_points"),
+    14: .same(proto: "followups"),
     100: .same(proto: "latencies"),
     101: .same(proto: "log"),
   ]
@@ -566,6 +621,8 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     var _transcript: StoredPodcastTranscriptProto? = nil
     var _audio: StoredPodcastAudioProto? = nil
     var _visuals: StoredPodcastVisualsProto? = nil
+    var _keyPoints: StoredPodcastKeyPointsProto? = nil
+    var _followups: StoredPodcastFollowupsProto? = nil
     var _latencies: LatenciesProto? = nil
     var _log: LogProto? = nil
 
@@ -586,6 +643,8 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       _transcript = source._transcript
       _audio = source._audio
       _visuals = source._visuals
+      _keyPoints = source._keyPoints
+      _followups = source._followups
       _latencies = source._latencies
       _log = source._log
     }
@@ -618,6 +677,8 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         case 10: try { try decoder.decodeSingularMessageField(value: &_storage._transcript) }()
         case 11: try { try decoder.decodeSingularMessageField(value: &_storage._audio) }()
         case 12: try { try decoder.decodeSingularMessageField(value: &_storage._visuals) }()
+        case 13: try { try decoder.decodeSingularMessageField(value: &_storage._keyPoints) }()
+        case 14: try { try decoder.decodeSingularMessageField(value: &_storage._followups) }()
         case 100: try { try decoder.decodeSingularMessageField(value: &_storage._latencies) }()
         case 101: try { try decoder.decodeSingularMessageField(value: &_storage._log) }()
         default: break
@@ -668,6 +729,12 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       try { if let v = _storage._visuals {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 12)
       } }()
+      try { if let v = _storage._keyPoints {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 13)
+      } }()
+      try { if let v = _storage._followups {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 14)
+      } }()
       try { if let v = _storage._latencies {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 100)
       } }()
@@ -695,6 +762,8 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         if _storage._transcript != rhs_storage._transcript {return false}
         if _storage._audio != rhs_storage._audio {return false}
         if _storage._visuals != rhs_storage._visuals {return false}
+        if _storage._keyPoints != rhs_storage._keyPoints {return false}
+        if _storage._followups != rhs_storage._followups {return false}
         if _storage._latencies != rhs_storage._latencies {return false}
         if _storage._log != rhs_storage._log {return false}
         return true
@@ -1133,6 +1202,164 @@ extension StoredPodcastAudioProto: SwiftProtobuf.Message, SwiftProtobuf._Message
     if lhs.audioKey != rhs.audioKey {return false}
     if lhs._audioDuration != rhs._audioDuration {return false}
     if lhs.words != rhs.words {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension StoredPodcastKeyPointsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredPodcastKeyPointsProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "key_points"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.keyPoints) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.keyPoints.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.keyPoints, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: StoredPodcastKeyPointsProto, rhs: StoredPodcastKeyPointsProto) -> Bool {
+    if lhs.keyPoints != rhs.keyPoints {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension StoredPodcastFollowupsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredPodcastFollowupsProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "followups"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.followups) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.followups.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.followups, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: StoredPodcastFollowupsProto, rhs: StoredPodcastFollowupsProto) -> Bool {
+    if lhs.followups != rhs.followups {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension StoredPodcastFollowupProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredPodcastFollowupProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "followup_id"),
+    2: .same(proto: "emoji"),
+    3: .same(proto: "outline"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.followupID) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.emoji) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.outline) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.followupID.isEmpty {
+      try visitor.visitSingularStringField(value: self.followupID, fieldNumber: 1)
+    }
+    if !self.emoji.isEmpty {
+      try visitor.visitSingularStringField(value: self.emoji, fieldNumber: 2)
+    }
+    if !self.outline.isEmpty {
+      try visitor.visitSingularStringField(value: self.outline, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: StoredPodcastFollowupProto, rhs: StoredPodcastFollowupProto) -> Bool {
+    if lhs.followupID != rhs.followupID {return false}
+    if lhs.emoji != rhs.emoji {return false}
+    if lhs.outline != rhs.outline {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension StoredPodcastKeyPointProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredPodcastKeyPointProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "key_point_id"),
+    2: .same(proto: "title"),
+    3: .standard(proto: "title_emoji"),
+    4: .same(proto: "outline"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.keyPointID) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.title) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.titleEmoji) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.outline) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.keyPointID.isEmpty {
+      try visitor.visitSingularStringField(value: self.keyPointID, fieldNumber: 1)
+    }
+    if !self.title.isEmpty {
+      try visitor.visitSingularStringField(value: self.title, fieldNumber: 2)
+    }
+    if !self.titleEmoji.isEmpty {
+      try visitor.visitSingularStringField(value: self.titleEmoji, fieldNumber: 3)
+    }
+    if !self.outline.isEmpty {
+      try visitor.visitSingularStringField(value: self.outline, fieldNumber: 4)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: StoredPodcastKeyPointProto, rhs: StoredPodcastKeyPointProto) -> Bool {
+    if lhs.keyPointID != rhs.keyPointID {return false}
+    if lhs.title != rhs.title {return false}
+    if lhs.titleEmoji != rhs.titleEmoji {return false}
+    if lhs.outline != rhs.outline {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

@@ -263,7 +263,8 @@ message PodcastFollowupProto {
 }
 
 message PodcastKeyPointProto {
-  string title = 1;
-  string title_emoji = 2;
-  string outline = 3;
+  string key_point_id = 1;
+  string title = 2;
+  string title_emoji = 3;
+  string outline = 4;
 }

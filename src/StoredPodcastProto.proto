@@ -27,6 +27,9 @@ message StoredPodcastProto {
   StoredPodcastAudioProto audio = 11;
   StoredPodcastVisualsProto visuals = 12;
 
+  StoredPodcastKeyPointsProto key_points = 13;
+  StoredPodcastFollowupsProto followups = 14;
+
   // Debug metadata
   LatenciesProto latencies = 100;
   LogProto log = 101;
@@ -41,13 +44,6 @@ enum StoredPodcastStateProto {
 
   STORED_PODCAST_STATE_PROTO_GENERATION_STARTED = 3;
   STORED_PODCAST_STATE_PROTO_GENERATION_FAILED = 4;
-
-  // IDs start at 10
-  STORED_PODCAST_STATE_PROTO_GENERATING_PLAN = 10;
-  STORED_PODCAST_STATE_PROTO_GENERATING_TRANSCRIPT = 11;
-  STORED_PODCAST_STATE_PROTO_GENERATING_AUDIO = 12;
-  STORED_PODCAST_STATE_PROTO_GENERATING_VISUALS_PLAN = 13;
-  STORED_PODCAST_STATE_PROTO_GENERATING_VISUALS = 14;
 }
 
 enum StoredPodcastCardsStateProto {
@@ -120,4 +116,25 @@ message StoredPodcastAudioProto {
   string audio_key = 1;
   google.protobuf.Duration audio_duration = 2;
   repeated PodcastWordProto words = 3;
+}
+
+message StoredPodcastKeyPointsProto {
+  repeated StoredPodcastKeyPointProto key_points = 1;
+}
+
+message StoredPodcastFollowupsProto {
+  repeated StoredPodcastFollowupProto followups = 1;
+}
+
+message StoredPodcastFollowupProto {
+  string followup_id = 1;
+  string emoji = 2;
+  string outline = 3;
+}
+
+message StoredPodcastKeyPointProto {
+  string key_point_id = 1;
+  string title = 2;
+  string title_emoji = 3;
+  string outline = 4;
 }

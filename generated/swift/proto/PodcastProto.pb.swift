@@ -1182,6 +1182,8 @@ struct PodcastKeyPointProto {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  var keyPointID: String = String()
+
   var title: String = String()
 
   var titleEmoji: String = String()
@@ -3076,9 +3078,10 @@ extension PodcastFollowupProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
 extension PodcastKeyPointProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "PodcastKeyPointProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "title"),
-    2: .standard(proto: "title_emoji"),
-    3: .same(proto: "outline"),
+    1: .standard(proto: "key_point_id"),
+    2: .same(proto: "title"),
+    3: .standard(proto: "title_emoji"),
+    4: .same(proto: "outline"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3087,28 +3090,33 @@ extension PodcastKeyPointProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.title) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.titleEmoji) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.outline) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self.keyPointID) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.title) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.titleEmoji) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.outline) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.keyPointID.isEmpty {
+      try visitor.visitSingularStringField(value: self.keyPointID, fieldNumber: 1)
+    }
     if !self.title.isEmpty {
-      try visitor.visitSingularStringField(value: self.title, fieldNumber: 1)
+      try visitor.visitSingularStringField(value: self.title, fieldNumber: 2)
     }
     if !self.titleEmoji.isEmpty {
-      try visitor.visitSingularStringField(value: self.titleEmoji, fieldNumber: 2)
+      try visitor.visitSingularStringField(value: self.titleEmoji, fieldNumber: 3)
     }
     if !self.outline.isEmpty {
-      try visitor.visitSingularStringField(value: self.outline, fieldNumber: 3)
+      try visitor.visitSingularStringField(value: self.outline, fieldNumber: 4)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: PodcastKeyPointProto, rhs: PodcastKeyPointProto) -> Bool {
+    if lhs.keyPointID != rhs.keyPointID {return false}
     if lhs.title != rhs.title {return false}
     if lhs.titleEmoji != rhs.titleEmoji {return false}
     if lhs.outline != rhs.outline {return false}
