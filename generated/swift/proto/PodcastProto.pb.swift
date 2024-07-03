@@ -286,44 +286,35 @@ struct PodcastStreamApiResponseHeaderProto {
 
   /// If present the token was refreshed and the client should use this new one
   /// from now onwards.
-  var refreshedEncodedUserAuth: String {
-    get {return _storage._refreshedEncodedUserAuth}
-    set {_uniqueStorage()._refreshedEncodedUserAuth = newValue}
-  }
+  var refreshedEncodedUserAuth: String = String()
 
-  var header: OneOf_Header? {
-    get {return _storage._header}
-    set {_uniqueStorage()._header = newValue}
-  }
+  var header: PodcastStreamApiResponseHeaderProto.OneOf_Header? = nil
 
   var createHeader: CreatePodcastResponseHeaderProto {
     get {
-      if case .createHeader(let v)? = _storage._header {return v}
+      if case .createHeader(let v)? = header {return v}
       return CreatePodcastResponseHeaderProto()
     }
-    set {_uniqueStorage()._header = .createHeader(newValue)}
+    set {header = .createHeader(newValue)}
   }
 
   var generate: GeneratePodcastResponseHeaderProto {
     get {
-      if case .generate(let v)? = _storage._header {return v}
+      if case .generate(let v)? = header {return v}
       return GeneratePodcastResponseHeaderProto()
     }
-    set {_uniqueStorage()._header = .generate(newValue)}
+    set {header = .generate(newValue)}
   }
 
   var get: GetPodcastResponseHeaderProto {
     get {
-      if case .get(let v)? = _storage._header {return v}
+      if case .get(let v)? = header {return v}
       return GetPodcastResponseHeaderProto()
     }
-    set {_uniqueStorage()._header = .get(newValue)}
+    set {header = .get(newValue)}
   }
 
-  var latencies: Dictionary<String,SwiftProtobuf.Google_Protobuf_Duration> {
-    get {return _storage._latencies}
-    set {_uniqueStorage()._latencies = newValue}
-  }
+  var latencies: Dictionary<String,SwiftProtobuf.Google_Protobuf_Duration> = [:]
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -357,8 +348,6 @@ struct PodcastStreamApiResponseHeaderProto {
   }
 
   init() {}
-
-  fileprivate var _storage = _StorageClass.defaultInstance
 }
 
 struct PodcastStreamApiResponseDeltaProto {
@@ -628,69 +617,82 @@ struct PodcastProto {
   // methods supported on all messages.
 
   var updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {return _updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
-    set {_updatedAt = newValue}
+    get {return _storage._updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_uniqueStorage()._updatedAt = newValue}
   }
   /// Returns true if `updatedAt` has been explicitly set.
-  var hasUpdatedAt: Bool {return self._updatedAt != nil}
+  var hasUpdatedAt: Bool {return _storage._updatedAt != nil}
   /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
-  mutating func clearUpdatedAt() {self._updatedAt = nil}
+  mutating func clearUpdatedAt() {_uniqueStorage()._updatedAt = nil}
 
   var thumbnail: PodcastThumbnailProto {
-    get {return _thumbnail ?? PodcastThumbnailProto()}
-    set {_thumbnail = newValue}
+    get {return _storage._thumbnail ?? PodcastThumbnailProto()}
+    set {_uniqueStorage()._thumbnail = newValue}
   }
   /// Returns true if `thumbnail` has been explicitly set.
-  var hasThumbnail: Bool {return self._thumbnail != nil}
+  var hasThumbnail: Bool {return _storage._thumbnail != nil}
   /// Clears the value of `thumbnail`. Subsequent reads from it will return its default value.
-  mutating func clearThumbnail() {self._thumbnail = nil}
+  mutating func clearThumbnail() {_uniqueStorage()._thumbnail = nil}
 
   var audio: PodcastAudioProto {
-    get {return _audio ?? PodcastAudioProto()}
-    set {_audio = newValue}
+    get {return _storage._audio ?? PodcastAudioProto()}
+    set {_uniqueStorage()._audio = newValue}
   }
   /// Returns true if `audio` has been explicitly set.
-  var hasAudio: Bool {return self._audio != nil}
+  var hasAudio: Bool {return _storage._audio != nil}
   /// Clears the value of `audio`. Subsequent reads from it will return its default value.
-  mutating func clearAudio() {self._audio = nil}
+  mutating func clearAudio() {_uniqueStorage()._audio = nil}
 
   var visuals: PodcastVisualsProto {
-    get {return _visuals ?? PodcastVisualsProto()}
-    set {_visuals = newValue}
+    get {return _storage._visuals ?? PodcastVisualsProto()}
+    set {_uniqueStorage()._visuals = newValue}
   }
   /// Returns true if `visuals` has been explicitly set.
-  var hasVisuals: Bool {return self._visuals != nil}
+  var hasVisuals: Bool {return _storage._visuals != nil}
   /// Clears the value of `visuals`. Subsequent reads from it will return its default value.
-  mutating func clearVisuals() {self._visuals = nil}
+  mutating func clearVisuals() {_uniqueStorage()._visuals = nil}
 
   var transcript: PodcastTranscriptProto {
-    get {return _transcript ?? PodcastTranscriptProto()}
-    set {_transcript = newValue}
+    get {return _storage._transcript ?? PodcastTranscriptProto()}
+    set {_uniqueStorage()._transcript = newValue}
   }
   /// Returns true if `transcript` has been explicitly set.
-  var hasTranscript: Bool {return self._transcript != nil}
+  var hasTranscript: Bool {return _storage._transcript != nil}
   /// Clears the value of `transcript`. Subsequent reads from it will return its default value.
-  mutating func clearTranscript() {self._transcript = nil}
+  mutating func clearTranscript() {_uniqueStorage()._transcript = nil}
 
   var cards: PodcastCardsProto {
-    get {return _cards ?? PodcastCardsProto()}
-    set {_cards = newValue}
+    get {return _storage._cards ?? PodcastCardsProto()}
+    set {_uniqueStorage()._cards = newValue}
   }
   /// Returns true if `cards` has been explicitly set.
-  var hasCards: Bool {return self._cards != nil}
+  var hasCards: Bool {return _storage._cards != nil}
   /// Clears the value of `cards`. Subsequent reads from it will return its default value.
-  mutating func clearCards() {self._cards = nil}
+  mutating func clearCards() {_uniqueStorage()._cards = nil}
+
+  var keyPoints: PodcastKeyPointsProto {
+    get {return _storage._keyPoints ?? PodcastKeyPointsProto()}
+    set {_uniqueStorage()._keyPoints = newValue}
+  }
+  /// Returns true if `keyPoints` has been explicitly set.
+  var hasKeyPoints: Bool {return _storage._keyPoints != nil}
+  /// Clears the value of `keyPoints`. Subsequent reads from it will return its default value.
+  mutating func clearKeyPoints() {_uniqueStorage()._keyPoints = nil}
+
+  var followups: PodcastFollowupsProto {
+    get {return _storage._followups ?? PodcastFollowupsProto()}
+    set {_uniqueStorage()._followups = newValue}
+  }
+  /// Returns true if `followups` has been explicitly set.
+  var hasFollowups: Bool {return _storage._followups != nil}
+  /// Clears the value of `followups`. Subsequent reads from it will return its default value.
+  mutating func clearFollowups() {_uniqueStorage()._followups = nil}
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 
-  fileprivate var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
-  fileprivate var _thumbnail: PodcastThumbnailProto? = nil
-  fileprivate var _audio: PodcastAudioProto? = nil
-  fileprivate var _visuals: PodcastVisualsProto? = nil
-  fileprivate var _transcript: PodcastTranscriptProto? = nil
-  fileprivate var _cards: PodcastCardsProto? = nil
+  fileprivate var _storage = _StorageClass.defaultInstance
 }
 
 struct FirestorePodcastProto {
@@ -1135,6 +1137,62 @@ struct PodcastPollOptionProto {
   init() {}
 }
 
+struct PodcastKeyPointsProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var keyPoints: [PodcastKeyPointProto] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct PodcastFollowupsProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var followups: [PodcastFollowupProto] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct PodcastFollowupProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var followupID: String = String()
+
+  var emoji: String = String()
+
+  var outline: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct PodcastKeyPointProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var title: String = String()
+
+  var titleEmoji: String = String()
+
+  var outline: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 #if swift(>=5.5) && canImport(_Concurrency)
 extension PodcastStatusProto: @unchecked Sendable {}
 extension PodcastBadgeProto: @unchecked Sendable {}
@@ -1179,6 +1237,10 @@ extension PodcastPollCardProto: @unchecked Sendable {}
 extension PodcastCardHeroProto: @unchecked Sendable {}
 extension PodcastMultipleChoiceOptionProto: @unchecked Sendable {}
 extension PodcastPollOptionProto: @unchecked Sendable {}
+extension PodcastKeyPointsProto: @unchecked Sendable {}
+extension PodcastFollowupsProto: @unchecked Sendable {}
+extension PodcastFollowupProto: @unchecked Sendable {}
+extension PodcastKeyPointProto: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
@@ -1323,127 +1385,91 @@ extension PodcastStreamApiResponseHeaderProto: SwiftProtobuf.Message, SwiftProto
     100: .same(proto: "latencies"),
   ]
 
-  fileprivate class _StorageClass {
-    var _refreshedEncodedUserAuth: String = String()
-    var _header: PodcastStreamApiResponseHeaderProto.OneOf_Header?
-    var _latencies: Dictionary<String,SwiftProtobuf.Google_Protobuf_Duration> = [:]
-
-    static let defaultInstance = _StorageClass()
-
-    private init() {}
-
-    init(copying source: _StorageClass) {
-      _refreshedEncodedUserAuth = source._refreshedEncodedUserAuth
-      _header = source._header
-      _latencies = source._latencies
-    }
-  }
-
-  fileprivate mutating func _uniqueStorage() -> _StorageClass {
-    if !isKnownUniquelyReferenced(&_storage) {
-      _storage = _StorageClass(copying: _storage)
-    }
-    return _storage
-  }
-
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    _ = _uniqueStorage()
-    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
-      while let fieldNumber = try decoder.nextFieldNumber() {
-        // The use of inline closures is to circumvent an issue where the compiler
-        // allocates stack space for every case branch when no optimizations are
-        // enabled. https://github.com/apple/swift-protobuf/issues/1034
-        switch fieldNumber {
-        case 1: try { try decoder.decodeSingularStringField(value: &_storage._refreshedEncodedUserAuth) }()
-        case 2: try {
-          var v: CreatePodcastResponseHeaderProto?
-          var hadOneofValue = false
-          if let current = _storage._header {
-            hadOneofValue = true
-            if case .createHeader(let m) = current {v = m}
-          }
-          try decoder.decodeSingularMessageField(value: &v)
-          if let v = v {
-            if hadOneofValue {try decoder.handleConflictingOneOf()}
-            _storage._header = .createHeader(v)
-          }
-        }()
-        case 3: try {
-          var v: GeneratePodcastResponseHeaderProto?
-          var hadOneofValue = false
-          if let current = _storage._header {
-            hadOneofValue = true
-            if case .generate(let m) = current {v = m}
-          }
-          try decoder.decodeSingularMessageField(value: &v)
-          if let v = v {
-            if hadOneofValue {try decoder.handleConflictingOneOf()}
-            _storage._header = .generate(v)
-          }
-        }()
-        case 4: try {
-          var v: GetPodcastResponseHeaderProto?
-          var hadOneofValue = false
-          if let current = _storage._header {
-            hadOneofValue = true
-            if case .get(let m) = current {v = m}
-          }
-          try decoder.decodeSingularMessageField(value: &v)
-          if let v = v {
-            if hadOneofValue {try decoder.handleConflictingOneOf()}
-            _storage._header = .get(v)
-          }
-        }()
-        case 100: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.Google_Protobuf_Duration>.self, value: &_storage._latencies) }()
-        default: break
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.refreshedEncodedUserAuth) }()
+      case 2: try {
+        var v: CreatePodcastResponseHeaderProto?
+        var hadOneofValue = false
+        if let current = self.header {
+          hadOneofValue = true
+          if case .createHeader(let m) = current {v = m}
         }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.header = .createHeader(v)
+        }
+      }()
+      case 3: try {
+        var v: GeneratePodcastResponseHeaderProto?
+        var hadOneofValue = false
+        if let current = self.header {
+          hadOneofValue = true
+          if case .generate(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.header = .generate(v)
+        }
+      }()
+      case 4: try {
+        var v: GetPodcastResponseHeaderProto?
+        var hadOneofValue = false
+        if let current = self.header {
+          hadOneofValue = true
+          if case .get(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.header = .get(v)
+        }
+      }()
+      case 100: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.Google_Protobuf_Duration>.self, value: &self.latencies) }()
+      default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every if/case branch local when no optimizations
-      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-      // https://github.com/apple/swift-protobuf/issues/1182
-      if !_storage._refreshedEncodedUserAuth.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._refreshedEncodedUserAuth, fieldNumber: 1)
-      }
-      switch _storage._header {
-      case .createHeader?: try {
-        guard case .createHeader(let v)? = _storage._header else { preconditionFailure() }
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
-      }()
-      case .generate?: try {
-        guard case .generate(let v)? = _storage._header else { preconditionFailure() }
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
-      }()
-      case .get?: try {
-        guard case .get(let v)? = _storage._header else { preconditionFailure() }
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
-      }()
-      case nil: break
-      }
-      if !_storage._latencies.isEmpty {
-        try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.Google_Protobuf_Duration>.self, value: _storage._latencies, fieldNumber: 100)
-      }
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.refreshedEncodedUserAuth.isEmpty {
+      try visitor.visitSingularStringField(value: self.refreshedEncodedUserAuth, fieldNumber: 1)
+    }
+    switch self.header {
+    case .createHeader?: try {
+      guard case .createHeader(let v)? = self.header else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    }()
+    case .generate?: try {
+      guard case .generate(let v)? = self.header else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+    }()
+    case .get?: try {
+      guard case .get(let v)? = self.header else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+    }()
+    case nil: break
+    }
+    if !self.latencies.isEmpty {
+      try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.Google_Protobuf_Duration>.self, value: self.latencies, fieldNumber: 100)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: PodcastStreamApiResponseHeaderProto, rhs: PodcastStreamApiResponseHeaderProto) -> Bool {
-    if lhs._storage !== rhs._storage {
-      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
-        let _storage = _args.0
-        let rhs_storage = _args.1
-        if _storage._refreshedEncodedUserAuth != rhs_storage._refreshedEncodedUserAuth {return false}
-        if _storage._header != rhs_storage._header {return false}
-        if _storage._latencies != rhs_storage._latencies {return false}
-        return true
-      }
-      if !storagesAreEqual {return false}
-    }
+    if lhs.refreshedEncodedUserAuth != rhs.refreshedEncodedUserAuth {return false}
+    if lhs.header != rhs.header {return false}
+    if lhs.latencies != rhs.latencies {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -1890,58 +1916,116 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     4: .same(proto: "visuals"),
     5: .same(proto: "transcript"),
     6: .same(proto: "cards"),
+    7: .standard(proto: "key_points"),
+    8: .same(proto: "followups"),
   ]
 
+  fileprivate class _StorageClass {
+    var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+    var _thumbnail: PodcastThumbnailProto? = nil
+    var _audio: PodcastAudioProto? = nil
+    var _visuals: PodcastVisualsProto? = nil
+    var _transcript: PodcastTranscriptProto? = nil
+    var _cards: PodcastCardsProto? = nil
+    var _keyPoints: PodcastKeyPointsProto? = nil
+    var _followups: PodcastFollowupsProto? = nil
+
+    static let defaultInstance = _StorageClass()
+
+    private init() {}
+
+    init(copying source: _StorageClass) {
+      _updatedAt = source._updatedAt
+      _thumbnail = source._thumbnail
+      _audio = source._audio
+      _visuals = source._visuals
+      _transcript = source._transcript
+      _cards = source._cards
+      _keyPoints = source._keyPoints
+      _followups = source._followups
+    }
+  }
+
+  fileprivate mutating func _uniqueStorage() -> _StorageClass {
+    if !isKnownUniquelyReferenced(&_storage) {
+      _storage = _StorageClass(copying: _storage)
+    }
+    return _storage
+  }
+
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularMessageField(value: &self._updatedAt) }()
-      case 2: try { try decoder.decodeSingularMessageField(value: &self._thumbnail) }()
-      case 3: try { try decoder.decodeSingularMessageField(value: &self._audio) }()
-      case 4: try { try decoder.decodeSingularMessageField(value: &self._visuals) }()
-      case 5: try { try decoder.decodeSingularMessageField(value: &self._transcript) }()
-      case 6: try { try decoder.decodeSingularMessageField(value: &self._cards) }()
-      default: break
+    _ = _uniqueStorage()
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      while let fieldNumber = try decoder.nextFieldNumber() {
+        // The use of inline closures is to circumvent an issue where the compiler
+        // allocates stack space for every case branch when no optimizations are
+        // enabled. https://github.com/apple/swift-protobuf/issues/1034
+        switch fieldNumber {
+        case 1: try { try decoder.decodeSingularMessageField(value: &_storage._updatedAt) }()
+        case 2: try { try decoder.decodeSingularMessageField(value: &_storage._thumbnail) }()
+        case 3: try { try decoder.decodeSingularMessageField(value: &_storage._audio) }()
+        case 4: try { try decoder.decodeSingularMessageField(value: &_storage._visuals) }()
+        case 5: try { try decoder.decodeSingularMessageField(value: &_storage._transcript) }()
+        case 6: try { try decoder.decodeSingularMessageField(value: &_storage._cards) }()
+        case 7: try { try decoder.decodeSingularMessageField(value: &_storage._keyPoints) }()
+        case 8: try { try decoder.decodeSingularMessageField(value: &_storage._followups) }()
+        default: break
+        }
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every if/case branch local when no optimizations
-    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-    // https://github.com/apple/swift-protobuf/issues/1182
-    try { if let v = self._updatedAt {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    } }()
-    try { if let v = self._thumbnail {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
-    } }()
-    try { if let v = self._audio {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
-    } }()
-    try { if let v = self._visuals {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
-    } }()
-    try { if let v = self._transcript {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
-    } }()
-    try { if let v = self._cards {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
-    } }()
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every if/case branch local when no optimizations
+      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+      // https://github.com/apple/swift-protobuf/issues/1182
+      try { if let v = _storage._updatedAt {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+      } }()
+      try { if let v = _storage._thumbnail {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+      } }()
+      try { if let v = _storage._audio {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+      } }()
+      try { if let v = _storage._visuals {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+      } }()
+      try { if let v = _storage._transcript {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
+      } }()
+      try { if let v = _storage._cards {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
+      } }()
+      try { if let v = _storage._keyPoints {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
+      } }()
+      try { if let v = _storage._followups {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
+      } }()
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: PodcastProto, rhs: PodcastProto) -> Bool {
-    if lhs._updatedAt != rhs._updatedAt {return false}
-    if lhs._thumbnail != rhs._thumbnail {return false}
-    if lhs._audio != rhs._audio {return false}
-    if lhs._visuals != rhs._visuals {return false}
-    if lhs._transcript != rhs._transcript {return false}
-    if lhs._cards != rhs._cards {return false}
+    if lhs._storage !== rhs._storage {
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+        let _storage = _args.0
+        let rhs_storage = _args.1
+        if _storage._updatedAt != rhs_storage._updatedAt {return false}
+        if _storage._thumbnail != rhs_storage._thumbnail {return false}
+        if _storage._audio != rhs_storage._audio {return false}
+        if _storage._visuals != rhs_storage._visuals {return false}
+        if _storage._transcript != rhs_storage._transcript {return false}
+        if _storage._cards != rhs_storage._cards {return false}
+        if _storage._keyPoints != rhs_storage._keyPoints {return false}
+        if _storage._followups != rhs_storage._followups {return false}
+        return true
+      }
+      if !storagesAreEqual {return false}
+    }
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -2876,6 +2960,158 @@ extension PodcastPollOptionProto: SwiftProtobuf.Message, SwiftProtobuf._MessageI
 
   static func ==(lhs: PodcastPollOptionProto, rhs: PodcastPollOptionProto) -> Bool {
     if lhs.text != rhs.text {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension PodcastKeyPointsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastKeyPointsProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "key_points"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.keyPoints) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.keyPoints.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.keyPoints, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PodcastKeyPointsProto, rhs: PodcastKeyPointsProto) -> Bool {
+    if lhs.keyPoints != rhs.keyPoints {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension PodcastFollowupsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastFollowupsProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "followups"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.followups) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.followups.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.followups, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PodcastFollowupsProto, rhs: PodcastFollowupsProto) -> Bool {
+    if lhs.followups != rhs.followups {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension PodcastFollowupProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastFollowupProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "followup_id"),
+    2: .same(proto: "emoji"),
+    3: .same(proto: "outline"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.followupID) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.emoji) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.outline) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.followupID.isEmpty {
+      try visitor.visitSingularStringField(value: self.followupID, fieldNumber: 1)
+    }
+    if !self.emoji.isEmpty {
+      try visitor.visitSingularStringField(value: self.emoji, fieldNumber: 2)
+    }
+    if !self.outline.isEmpty {
+      try visitor.visitSingularStringField(value: self.outline, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PodcastFollowupProto, rhs: PodcastFollowupProto) -> Bool {
+    if lhs.followupID != rhs.followupID {return false}
+    if lhs.emoji != rhs.emoji {return false}
+    if lhs.outline != rhs.outline {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension PodcastKeyPointProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastKeyPointProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "title"),
+    2: .standard(proto: "title_emoji"),
+    3: .same(proto: "outline"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.title) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.titleEmoji) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.outline) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.title.isEmpty {
+      try visitor.visitSingularStringField(value: self.title, fieldNumber: 1)
+    }
+    if !self.titleEmoji.isEmpty {
+      try visitor.visitSingularStringField(value: self.titleEmoji, fieldNumber: 2)
+    }
+    if !self.outline.isEmpty {
+      try visitor.visitSingularStringField(value: self.outline, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PodcastKeyPointProto, rhs: PodcastKeyPointProto) -> Bool {
+    if lhs.title != rhs.title {return false}
+    if lhs.titleEmoji != rhs.titleEmoji {return false}
+    if lhs.outline != rhs.outline {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

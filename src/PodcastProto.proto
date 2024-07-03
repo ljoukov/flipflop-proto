@@ -81,6 +81,9 @@ message PodcastProto {
   PodcastTranscriptProto transcript = 5;
 
   PodcastCardsProto cards = 6;
+
+  PodcastKeyPointsProto key_points = 7;
+  PodcastFollowupsProto followups = 8;
 }
 
 message FirestorePodcastProto {
@@ -243,4 +246,24 @@ message PodcastPollOptionProto {
   string text = 1;
 
   // Fraction of votes this option received
+}
+
+message PodcastKeyPointsProto {
+  repeated PodcastKeyPointProto key_points = 1;
+}
+
+message PodcastFollowupsProto {
+  repeated PodcastFollowupProto followups = 1;
+}
+
+message PodcastFollowupProto {
+  string followup_id = 1;
+  string emoji = 2;
+  string outline = 3;
+}
+
+message PodcastKeyPointProto {
+  string title = 1;
+  string title_emoji = 2;
+  string outline = 3;
 }

@@ -252,6 +252,14 @@ export interface PodcastProto {
      * @generated from protobuf field: PodcastCardsProto cards = 6;
      */
     cards?: PodcastCardsProto;
+    /**
+     * @generated from protobuf field: PodcastKeyPointsProto key_points = 7;
+     */
+    keyPoints?: PodcastKeyPointsProto;
+    /**
+     * @generated from protobuf field: PodcastFollowupsProto followups = 8;
+     */
+    followups?: PodcastFollowupsProto;
 }
 /**
  * @generated from protobuf message FirestorePodcastProto
@@ -602,6 +610,58 @@ export interface PodcastPollOptionProto {
      * @generated from protobuf field: string text = 1;
      */
     text: string;
+}
+/**
+ * @generated from protobuf message PodcastKeyPointsProto
+ */
+export interface PodcastKeyPointsProto {
+    /**
+     * @generated from protobuf field: repeated PodcastKeyPointProto key_points = 1;
+     */
+    keyPoints: PodcastKeyPointProto[];
+}
+/**
+ * @generated from protobuf message PodcastFollowupsProto
+ */
+export interface PodcastFollowupsProto {
+    /**
+     * @generated from protobuf field: repeated PodcastFollowupProto followups = 1;
+     */
+    followups: PodcastFollowupProto[];
+}
+/**
+ * @generated from protobuf message PodcastFollowupProto
+ */
+export interface PodcastFollowupProto {
+    /**
+     * @generated from protobuf field: string followup_id = 1;
+     */
+    followupId: string;
+    /**
+     * @generated from protobuf field: string emoji = 2;
+     */
+    emoji: string;
+    /**
+     * @generated from protobuf field: string outline = 3;
+     */
+    outline: string;
+}
+/**
+ * @generated from protobuf message PodcastKeyPointProto
+ */
+export interface PodcastKeyPointProto {
+    /**
+     * @generated from protobuf field: string title = 1;
+     */
+    title: string;
+    /**
+     * @generated from protobuf field: string title_emoji = 2;
+     */
+    titleEmoji: string;
+    /**
+     * @generated from protobuf field: string outline = 3;
+     */
+    outline: string;
 }
 /**
  * @generated from protobuf enum PodcastStatusProto
@@ -1361,7 +1421,9 @@ class PodcastProto$Type extends MessageType<PodcastProto> {
             { no: 3, name: "audio", kind: "message", T: () => PodcastAudioProto },
             { no: 4, name: "visuals", kind: "message", T: () => PodcastVisualsProto },
             { no: 5, name: "transcript", kind: "message", T: () => PodcastTranscriptProto },
-            { no: 6, name: "cards", kind: "message", T: () => PodcastCardsProto }
+            { no: 6, name: "cards", kind: "message", T: () => PodcastCardsProto },
+            { no: 7, name: "key_points", kind: "message", T: () => PodcastKeyPointsProto },
+            { no: 8, name: "followups", kind: "message", T: () => PodcastFollowupsProto }
         ]);
     }
     create(value?: PartialMessage<PodcastProto>): PodcastProto {
@@ -1394,6 +1456,12 @@ class PodcastProto$Type extends MessageType<PodcastProto> {
                 case /* PodcastCardsProto cards */ 6:
                     message.cards = PodcastCardsProto.internalBinaryRead(reader, reader.uint32(), options, message.cards);
                     break;
+                case /* PodcastKeyPointsProto key_points */ 7:
+                    message.keyPoints = PodcastKeyPointsProto.internalBinaryRead(reader, reader.uint32(), options, message.keyPoints);
+                    break;
+                case /* PodcastFollowupsProto followups */ 8:
+                    message.followups = PodcastFollowupsProto.internalBinaryRead(reader, reader.uint32(), options, message.followups);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -1424,6 +1492,12 @@ class PodcastProto$Type extends MessageType<PodcastProto> {
         /* PodcastCardsProto cards = 6; */
         if (message.cards)
             PodcastCardsProto.internalBinaryWrite(message.cards, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastKeyPointsProto key_points = 7; */
+        if (message.keyPoints)
+            PodcastKeyPointsProto.internalBinaryWrite(message.keyPoints, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastFollowupsProto followups = 8; */
+        if (message.followups)
+            PodcastFollowupsProto.internalBinaryWrite(message.followups, writer.tag(8, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2642,3 +2716,219 @@ class PodcastPollOptionProto$Type extends MessageType<PodcastPollOptionProto> {
  * @generated MessageType for protobuf message PodcastPollOptionProto
  */
 export const PodcastPollOptionProto = new PodcastPollOptionProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PodcastKeyPointsProto$Type extends MessageType<PodcastKeyPointsProto> {
+    constructor() {
+        super("PodcastKeyPointsProto", [
+            { no: 1, name: "key_points", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastKeyPointProto }
+        ]);
+    }
+    create(value?: PartialMessage<PodcastKeyPointsProto>): PodcastKeyPointsProto {
+        const message = { keyPoints: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<PodcastKeyPointsProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastKeyPointsProto): PodcastKeyPointsProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated PodcastKeyPointProto key_points */ 1:
+                    message.keyPoints.push(PodcastKeyPointProto.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PodcastKeyPointsProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated PodcastKeyPointProto key_points = 1; */
+        for (let i = 0; i < message.keyPoints.length; i++)
+            PodcastKeyPointProto.internalBinaryWrite(message.keyPoints[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message PodcastKeyPointsProto
+ */
+export const PodcastKeyPointsProto = new PodcastKeyPointsProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PodcastFollowupsProto$Type extends MessageType<PodcastFollowupsProto> {
+    constructor() {
+        super("PodcastFollowupsProto", [
+            { no: 1, name: "followups", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastFollowupProto }
+        ]);
+    }
+    create(value?: PartialMessage<PodcastFollowupsProto>): PodcastFollowupsProto {
+        const message = { followups: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<PodcastFollowupsProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastFollowupsProto): PodcastFollowupsProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated PodcastFollowupProto followups */ 1:
+                    message.followups.push(PodcastFollowupProto.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PodcastFollowupsProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated PodcastFollowupProto followups = 1; */
+        for (let i = 0; i < message.followups.length; i++)
+            PodcastFollowupProto.internalBinaryWrite(message.followups[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message PodcastFollowupsProto
+ */
+export const PodcastFollowupsProto = new PodcastFollowupsProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PodcastFollowupProto$Type extends MessageType<PodcastFollowupProto> {
+    constructor() {
+        super("PodcastFollowupProto", [
+            { no: 1, name: "followup_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "outline", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PodcastFollowupProto>): PodcastFollowupProto {
+        const message = { followupId: "", emoji: "", outline: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<PodcastFollowupProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastFollowupProto): PodcastFollowupProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string followup_id */ 1:
+                    message.followupId = reader.string();
+                    break;
+                case /* string emoji */ 2:
+                    message.emoji = reader.string();
+                    break;
+                case /* string outline */ 3:
+                    message.outline = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PodcastFollowupProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string followup_id = 1; */
+        if (message.followupId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.followupId);
+        /* string emoji = 2; */
+        if (message.emoji !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.emoji);
+        /* string outline = 3; */
+        if (message.outline !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.outline);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message PodcastFollowupProto
+ */
+export const PodcastFollowupProto = new PodcastFollowupProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PodcastKeyPointProto$Type extends MessageType<PodcastKeyPointProto> {
+    constructor() {
+        super("PodcastKeyPointProto", [
+            { no: 1, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "title_emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "outline", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PodcastKeyPointProto>): PodcastKeyPointProto {
+        const message = { title: "", titleEmoji: "", outline: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<PodcastKeyPointProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastKeyPointProto): PodcastKeyPointProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string title */ 1:
+                    message.title = reader.string();
+                    break;
+                case /* string title_emoji */ 2:
+                    message.titleEmoji = reader.string();
+                    break;
+                case /* string outline */ 3:
+                    message.outline = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PodcastKeyPointProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string title = 1; */
+        if (message.title !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.title);
+        /* string title_emoji = 2; */
+        if (message.titleEmoji !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.titleEmoji);
+        /* string outline = 3; */
+        if (message.outline !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.outline);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message PodcastKeyPointProto
+ */
+export const PodcastKeyPointProto = new PodcastKeyPointProto$Type();
