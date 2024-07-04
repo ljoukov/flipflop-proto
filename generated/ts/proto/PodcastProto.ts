@@ -616,7 +616,11 @@ export interface PodcastPollOptionProto {
  */
 export interface PodcastKeyPointsProto {
     /**
-     * @generated from protobuf field: repeated PodcastKeyPointProto key_points = 1;
+     * @generated from protobuf field: string label = 1;
+     */
+    label: string;
+    /**
+     * @generated from protobuf field: repeated PodcastKeyPointProto key_points = 2;
      */
     keyPoints: PodcastKeyPointProto[];
 }
@@ -625,7 +629,11 @@ export interface PodcastKeyPointsProto {
  */
 export interface PodcastFollowupsProto {
     /**
-     * @generated from protobuf field: repeated PodcastFollowupProto followups = 1;
+     * @generated from protobuf field: string label = 1;
+     */
+    label: string;
+    /**
+     * @generated from protobuf field: repeated PodcastFollowupProto followups = 2;
      */
     followups: PodcastFollowupProto[];
 }
@@ -2724,11 +2732,12 @@ export const PodcastPollOptionProto = new PodcastPollOptionProto$Type();
 class PodcastKeyPointsProto$Type extends MessageType<PodcastKeyPointsProto> {
     constructor() {
         super("PodcastKeyPointsProto", [
-            { no: 1, name: "key_points", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastKeyPointProto }
+            { no: 1, name: "label", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "key_points", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastKeyPointProto }
         ]);
     }
     create(value?: PartialMessage<PodcastKeyPointsProto>): PodcastKeyPointsProto {
-        const message = { keyPoints: [] };
+        const message = { label: "", keyPoints: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastKeyPointsProto>(this, message, value);
@@ -2739,7 +2748,10 @@ class PodcastKeyPointsProto$Type extends MessageType<PodcastKeyPointsProto> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* repeated PodcastKeyPointProto key_points */ 1:
+                case /* string label */ 1:
+                    message.label = reader.string();
+                    break;
+                case /* repeated PodcastKeyPointProto key_points */ 2:
                     message.keyPoints.push(PodcastKeyPointProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
@@ -2754,9 +2766,12 @@ class PodcastKeyPointsProto$Type extends MessageType<PodcastKeyPointsProto> {
         return message;
     }
     internalBinaryWrite(message: PodcastKeyPointsProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated PodcastKeyPointProto key_points = 1; */
+        /* string label = 1; */
+        if (message.label !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.label);
+        /* repeated PodcastKeyPointProto key_points = 2; */
         for (let i = 0; i < message.keyPoints.length; i++)
-            PodcastKeyPointProto.internalBinaryWrite(message.keyPoints[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+            PodcastKeyPointProto.internalBinaryWrite(message.keyPoints[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2771,11 +2786,12 @@ export const PodcastKeyPointsProto = new PodcastKeyPointsProto$Type();
 class PodcastFollowupsProto$Type extends MessageType<PodcastFollowupsProto> {
     constructor() {
         super("PodcastFollowupsProto", [
-            { no: 1, name: "followups", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastFollowupProto }
+            { no: 1, name: "label", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "followups", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastFollowupProto }
         ]);
     }
     create(value?: PartialMessage<PodcastFollowupsProto>): PodcastFollowupsProto {
-        const message = { followups: [] };
+        const message = { label: "", followups: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastFollowupsProto>(this, message, value);
@@ -2786,7 +2802,10 @@ class PodcastFollowupsProto$Type extends MessageType<PodcastFollowupsProto> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* repeated PodcastFollowupProto followups */ 1:
+                case /* string label */ 1:
+                    message.label = reader.string();
+                    break;
+                case /* repeated PodcastFollowupProto followups */ 2:
                     message.followups.push(PodcastFollowupProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
@@ -2801,9 +2820,12 @@ class PodcastFollowupsProto$Type extends MessageType<PodcastFollowupsProto> {
         return message;
     }
     internalBinaryWrite(message: PodcastFollowupsProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated PodcastFollowupProto followups = 1; */
+        /* string label = 1; */
+        if (message.label !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.label);
+        /* repeated PodcastFollowupProto followups = 2; */
         for (let i = 0; i < message.followups.length; i++)
-            PodcastFollowupProto.internalBinaryWrite(message.followups[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+            PodcastFollowupProto.internalBinaryWrite(message.followups[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

@@ -259,7 +259,11 @@ export interface StoredPodcastAudioProto {
  */
 export interface StoredPodcastKeyPointsProto {
     /**
-     * @generated from protobuf field: repeated StoredPodcastKeyPointProto key_points = 1;
+     * @generated from protobuf field: string label = 1;
+     */
+    label: string;
+    /**
+     * @generated from protobuf field: repeated StoredPodcastKeyPointProto key_points = 2;
      */
     keyPoints: StoredPodcastKeyPointProto[];
 }
@@ -268,7 +272,11 @@ export interface StoredPodcastKeyPointsProto {
  */
 export interface StoredPodcastFollowupsProto {
     /**
-     * @generated from protobuf field: repeated StoredPodcastFollowupProto followups = 1;
+     * @generated from protobuf field: string label = 1;
+     */
+    label: string;
+    /**
+     * @generated from protobuf field: repeated StoredPodcastFollowupProto followups = 2;
      */
     followups: StoredPodcastFollowupProto[];
 }
@@ -1133,11 +1141,12 @@ export const StoredPodcastAudioProto = new StoredPodcastAudioProto$Type();
 class StoredPodcastKeyPointsProto$Type extends MessageType<StoredPodcastKeyPointsProto> {
     constructor() {
         super("StoredPodcastKeyPointsProto", [
-            { no: 1, name: "key_points", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastKeyPointProto }
+            { no: 1, name: "label", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "key_points", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastKeyPointProto }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastKeyPointsProto>): StoredPodcastKeyPointsProto {
-        const message = { keyPoints: [] };
+        const message = { label: "", keyPoints: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastKeyPointsProto>(this, message, value);
@@ -1148,7 +1157,10 @@ class StoredPodcastKeyPointsProto$Type extends MessageType<StoredPodcastKeyPoint
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* repeated StoredPodcastKeyPointProto key_points */ 1:
+                case /* string label */ 1:
+                    message.label = reader.string();
+                    break;
+                case /* repeated StoredPodcastKeyPointProto key_points */ 2:
                     message.keyPoints.push(StoredPodcastKeyPointProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
@@ -1163,9 +1175,12 @@ class StoredPodcastKeyPointsProto$Type extends MessageType<StoredPodcastKeyPoint
         return message;
     }
     internalBinaryWrite(message: StoredPodcastKeyPointsProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated StoredPodcastKeyPointProto key_points = 1; */
+        /* string label = 1; */
+        if (message.label !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.label);
+        /* repeated StoredPodcastKeyPointProto key_points = 2; */
         for (let i = 0; i < message.keyPoints.length; i++)
-            StoredPodcastKeyPointProto.internalBinaryWrite(message.keyPoints[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+            StoredPodcastKeyPointProto.internalBinaryWrite(message.keyPoints[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1180,11 +1195,12 @@ export const StoredPodcastKeyPointsProto = new StoredPodcastKeyPointsProto$Type(
 class StoredPodcastFollowupsProto$Type extends MessageType<StoredPodcastFollowupsProto> {
     constructor() {
         super("StoredPodcastFollowupsProto", [
-            { no: 1, name: "followups", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastFollowupProto }
+            { no: 1, name: "label", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "followups", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastFollowupProto }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastFollowupsProto>): StoredPodcastFollowupsProto {
-        const message = { followups: [] };
+        const message = { label: "", followups: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastFollowupsProto>(this, message, value);
@@ -1195,7 +1211,10 @@ class StoredPodcastFollowupsProto$Type extends MessageType<StoredPodcastFollowup
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* repeated StoredPodcastFollowupProto followups */ 1:
+                case /* string label */ 1:
+                    message.label = reader.string();
+                    break;
+                case /* repeated StoredPodcastFollowupProto followups */ 2:
                     message.followups.push(StoredPodcastFollowupProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
@@ -1210,9 +1229,12 @@ class StoredPodcastFollowupsProto$Type extends MessageType<StoredPodcastFollowup
         return message;
     }
     internalBinaryWrite(message: StoredPodcastFollowupsProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated StoredPodcastFollowupProto followups = 1; */
+        /* string label = 1; */
+        if (message.label !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.label);
+        /* repeated StoredPodcastFollowupProto followups = 2; */
         for (let i = 0; i < message.followups.length; i++)
-            StoredPodcastFollowupProto.internalBinaryWrite(message.followups[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+            StoredPodcastFollowupProto.internalBinaryWrite(message.followups[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

@@ -119,11 +119,13 @@ message StoredPodcastAudioProto {
 }
 
 message StoredPodcastKeyPointsProto {
-  repeated StoredPodcastKeyPointProto key_points = 1;
+  string label = 1;
+  repeated StoredPodcastKeyPointProto key_points = 2;
 }
 
 message StoredPodcastFollowupsProto {
-  repeated StoredPodcastFollowupProto followups = 1;
+  string label = 1;
+  repeated StoredPodcastFollowupProto followups = 2;
 }
 
 message StoredPodcastFollowupProto {

@@ -1142,6 +1142,8 @@ struct PodcastKeyPointsProto {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  var label: String = String()
+
   var keyPoints: [PodcastKeyPointProto] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -1153,6 +1155,8 @@ struct PodcastFollowupsProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
+
+  var label: String = String()
 
   var followups: [PodcastFollowupProto] = []
 
@@ -2970,7 +2974,8 @@ extension PodcastPollOptionProto: SwiftProtobuf.Message, SwiftProtobuf._MessageI
 extension PodcastKeyPointsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "PodcastKeyPointsProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "key_points"),
+    1: .same(proto: "label"),
+    2: .standard(proto: "key_points"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2979,20 +2984,25 @@ extension PodcastKeyPointsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.keyPoints) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self.label) }()
+      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.keyPoints) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.label.isEmpty {
+      try visitor.visitSingularStringField(value: self.label, fieldNumber: 1)
+    }
     if !self.keyPoints.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.keyPoints, fieldNumber: 1)
+      try visitor.visitRepeatedMessageField(value: self.keyPoints, fieldNumber: 2)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: PodcastKeyPointsProto, rhs: PodcastKeyPointsProto) -> Bool {
+    if lhs.label != rhs.label {return false}
     if lhs.keyPoints != rhs.keyPoints {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
@@ -3002,7 +3012,8 @@ extension PodcastKeyPointsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
 extension PodcastFollowupsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "PodcastFollowupsProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "followups"),
+    1: .same(proto: "label"),
+    2: .same(proto: "followups"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3011,20 +3022,25 @@ extension PodcastFollowupsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.followups) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self.label) }()
+      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.followups) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.label.isEmpty {
+      try visitor.visitSingularStringField(value: self.label, fieldNumber: 1)
+    }
     if !self.followups.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.followups, fieldNumber: 1)
+      try visitor.visitRepeatedMessageField(value: self.followups, fieldNumber: 2)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: PodcastFollowupsProto, rhs: PodcastFollowupsProto) -> Bool {
+    if lhs.label != rhs.label {return false}
     if lhs.followups != rhs.followups {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

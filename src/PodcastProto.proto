@@ -249,11 +249,13 @@ message PodcastPollOptionProto {
 }
 
 message PodcastKeyPointsProto {
-  repeated PodcastKeyPointProto key_points = 1;
+  string label = 1;
+  repeated PodcastKeyPointProto key_points = 2;
 }
 
 message PodcastFollowupsProto {
-  repeated PodcastFollowupProto followups = 1;
+  string label = 1;
+  repeated PodcastFollowupProto followups = 2;
 }
 
 message PodcastFollowupProto {
