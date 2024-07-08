@@ -563,9 +563,8 @@ struct StoredPodcastSuggestionsSectionProto {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// e.g. "do-right-now"
   var sectionID: String = String()
-
-  var label: String = String()
 
   var reasoning: String = String()
 
@@ -1496,10 +1495,9 @@ extension StoredPodcastSuggestionsSectionProto: SwiftProtobuf.Message, SwiftProt
   static let protoMessageName: String = "StoredPodcastSuggestionsSectionProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "section_id"),
-    2: .same(proto: "label"),
-    3: .same(proto: "reasoning"),
-    4: .same(proto: "title"),
-    5: .same(proto: "suggestions"),
+    2: .same(proto: "reasoning"),
+    3: .same(proto: "title"),
+    4: .same(proto: "suggestions"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1509,10 +1507,9 @@ extension StoredPodcastSuggestionsSectionProto: SwiftProtobuf.Message, SwiftProt
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.sectionID) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.label) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.reasoning) }()
-      case 4: try { try decoder.decodeSingularStringField(value: &self.title) }()
-      case 5: try { try decoder.decodeRepeatedMessageField(value: &self.suggestions) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.reasoning) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.title) }()
+      case 4: try { try decoder.decodeRepeatedMessageField(value: &self.suggestions) }()
       default: break
       }
     }
@@ -1522,24 +1519,20 @@ extension StoredPodcastSuggestionsSectionProto: SwiftProtobuf.Message, SwiftProt
     if !self.sectionID.isEmpty {
       try visitor.visitSingularStringField(value: self.sectionID, fieldNumber: 1)
     }
-    if !self.label.isEmpty {
-      try visitor.visitSingularStringField(value: self.label, fieldNumber: 2)
-    }
     if !self.reasoning.isEmpty {
-      try visitor.visitSingularStringField(value: self.reasoning, fieldNumber: 3)
+      try visitor.visitSingularStringField(value: self.reasoning, fieldNumber: 2)
     }
     if !self.title.isEmpty {
-      try visitor.visitSingularStringField(value: self.title, fieldNumber: 4)
+      try visitor.visitSingularStringField(value: self.title, fieldNumber: 3)
     }
     if !self.suggestions.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.suggestions, fieldNumber: 5)
+      try visitor.visitRepeatedMessageField(value: self.suggestions, fieldNumber: 4)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: StoredPodcastSuggestionsSectionProto, rhs: StoredPodcastSuggestionsSectionProto) -> Bool {
     if lhs.sectionID != rhs.sectionID {return false}
-    if lhs.label != rhs.label {return false}
     if lhs.reasoning != rhs.reasoning {return false}
     if lhs.title != rhs.title {return false}
     if lhs.suggestions != rhs.suggestions {return false}

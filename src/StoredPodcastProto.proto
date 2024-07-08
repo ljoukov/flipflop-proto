@@ -149,11 +149,10 @@ message StoredPodcastSuggestionsProto {
 }
 
 message StoredPodcastSuggestionsSectionProto {
-  string section_id = 1;
-  string label = 2;
-  string reasoning = 3;
-  string title = 4;
-  repeated StoredPodcastSuggestionProto suggestions = 5;
+  string section_id = 1;  // e.g. "do-right-now"
+  string reasoning = 2;
+  string title = 3;
+  repeated StoredPodcastSuggestionProto suggestions = 4;
 }
 
 message StoredPodcastSuggestionProto {

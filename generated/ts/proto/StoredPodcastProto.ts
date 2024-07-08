@@ -347,21 +347,17 @@ export interface StoredPodcastSuggestionsSectionProto {
     /**
      * @generated from protobuf field: string section_id = 1;
      */
-    sectionId: string;
+    sectionId: string; // e.g. "do-right-now"
     /**
-     * @generated from protobuf field: string label = 2;
-     */
-    label: string;
-    /**
-     * @generated from protobuf field: string reasoning = 3;
+     * @generated from protobuf field: string reasoning = 2;
      */
     reasoning: string;
     /**
-     * @generated from protobuf field: string title = 4;
+     * @generated from protobuf field: string title = 3;
      */
     title: string;
     /**
-     * @generated from protobuf field: repeated StoredPodcastSuggestionProto suggestions = 5;
+     * @generated from protobuf field: repeated StoredPodcastSuggestionProto suggestions = 4;
      */
     suggestions: StoredPodcastSuggestionProto[];
 }
@@ -1515,14 +1511,13 @@ class StoredPodcastSuggestionsSectionProto$Type extends MessageType<StoredPodcas
     constructor() {
         super("StoredPodcastSuggestionsSectionProto", [
             { no: 1, name: "section_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "label", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "reasoning", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "suggestions", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastSuggestionProto }
+            { no: 2, name: "reasoning", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "suggestions", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastSuggestionProto }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastSuggestionsSectionProto>): StoredPodcastSuggestionsSectionProto {
-        const message = { sectionId: "", label: "", reasoning: "", title: "", suggestions: [] };
+        const message = { sectionId: "", reasoning: "", title: "", suggestions: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastSuggestionsSectionProto>(this, message, value);
@@ -1536,16 +1531,13 @@ class StoredPodcastSuggestionsSectionProto$Type extends MessageType<StoredPodcas
                 case /* string section_id */ 1:
                     message.sectionId = reader.string();
                     break;
-                case /* string label */ 2:
-                    message.label = reader.string();
-                    break;
-                case /* string reasoning */ 3:
+                case /* string reasoning */ 2:
                     message.reasoning = reader.string();
                     break;
-                case /* string title */ 4:
+                case /* string title */ 3:
                     message.title = reader.string();
                     break;
-                case /* repeated StoredPodcastSuggestionProto suggestions */ 5:
+                case /* repeated StoredPodcastSuggestionProto suggestions */ 4:
                     message.suggestions.push(StoredPodcastSuggestionProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
@@ -1563,18 +1555,15 @@ class StoredPodcastSuggestionsSectionProto$Type extends MessageType<StoredPodcas
         /* string section_id = 1; */
         if (message.sectionId !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.sectionId);
-        /* string label = 2; */
-        if (message.label !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.label);
-        /* string reasoning = 3; */
+        /* string reasoning = 2; */
         if (message.reasoning !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.reasoning);
-        /* string title = 4; */
+            writer.tag(2, WireType.LengthDelimited).string(message.reasoning);
+        /* string title = 3; */
         if (message.title !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.title);
-        /* repeated StoredPodcastSuggestionProto suggestions = 5; */
+            writer.tag(3, WireType.LengthDelimited).string(message.title);
+        /* repeated StoredPodcastSuggestionProto suggestions = 4; */
         for (let i = 0; i < message.suggestions.length; i++)
-            StoredPodcastSuggestionProto.internalBinaryWrite(message.suggestions[i], writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+            StoredPodcastSuggestionProto.internalBinaryWrite(message.suggestions[i], writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
