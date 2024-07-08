@@ -569,6 +569,8 @@ struct StoredPodcastSuggestionsSectionProto {
 
   var reasoning: String = String()
 
+  var title: String = String()
+
   var suggestions: [StoredPodcastSuggestionProto] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -1496,7 +1498,8 @@ extension StoredPodcastSuggestionsSectionProto: SwiftProtobuf.Message, SwiftProt
     1: .standard(proto: "section_id"),
     2: .same(proto: "label"),
     3: .same(proto: "reasoning"),
-    4: .same(proto: "suggestions"),
+    4: .same(proto: "title"),
+    5: .same(proto: "suggestions"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1508,7 +1511,8 @@ extension StoredPodcastSuggestionsSectionProto: SwiftProtobuf.Message, SwiftProt
       case 1: try { try decoder.decodeSingularStringField(value: &self.sectionID) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.label) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.reasoning) }()
-      case 4: try { try decoder.decodeRepeatedMessageField(value: &self.suggestions) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.title) }()
+      case 5: try { try decoder.decodeRepeatedMessageField(value: &self.suggestions) }()
       default: break
       }
     }
@@ -1524,8 +1528,11 @@ extension StoredPodcastSuggestionsSectionProto: SwiftProtobuf.Message, SwiftProt
     if !self.reasoning.isEmpty {
       try visitor.visitSingularStringField(value: self.reasoning, fieldNumber: 3)
     }
+    if !self.title.isEmpty {
+      try visitor.visitSingularStringField(value: self.title, fieldNumber: 4)
+    }
     if !self.suggestions.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.suggestions, fieldNumber: 4)
+      try visitor.visitRepeatedMessageField(value: self.suggestions, fieldNumber: 5)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -1534,6 +1541,7 @@ extension StoredPodcastSuggestionsSectionProto: SwiftProtobuf.Message, SwiftProt
     if lhs.sectionID != rhs.sectionID {return false}
     if lhs.label != rhs.label {return false}
     if lhs.reasoning != rhs.reasoning {return false}
+    if lhs.title != rhs.title {return false}
     if lhs.suggestions != rhs.suggestions {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

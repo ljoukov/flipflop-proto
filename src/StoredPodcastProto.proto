@@ -152,7 +152,8 @@ message StoredPodcastSuggestionsSectionProto {
   string section_id = 1;
   string label = 2;
   string reasoning = 3;
-  repeated StoredPodcastSuggestionProto suggestions = 4;
+  string title = 4;
+  repeated StoredPodcastSuggestionProto suggestions = 5;
 }
 
 message StoredPodcastSuggestionProto {
