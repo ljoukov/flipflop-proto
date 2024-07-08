@@ -523,12 +523,33 @@ struct StoredPodcastSuggestionsProto {
 
   var sections: [StoredPodcastSuggestionsSectionProto] = []
 
+  /// Debug metadata
+  var latencies: LatenciesProto {
+    get {return _latencies ?? LatenciesProto()}
+    set {_latencies = newValue}
+  }
+  /// Returns true if `latencies` has been explicitly set.
+  var hasLatencies: Bool {return self._latencies != nil}
+  /// Clears the value of `latencies`. Subsequent reads from it will return its default value.
+  mutating func clearLatencies() {self._latencies = nil}
+
+  var log: LogProto {
+    get {return _log ?? LogProto()}
+    set {_log = newValue}
+  }
+  /// Returns true if `log` has been explicitly set.
+  var hasLog: Bool {return self._log != nil}
+  /// Clears the value of `log`. Subsequent reads from it will return its default value.
+  mutating func clearLog() {self._log = nil}
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 
   fileprivate var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
   fileprivate var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+  fileprivate var _latencies: LatenciesProto? = nil
+  fileprivate var _log: LogProto? = nil
 }
 
 struct StoredPodcastSuggestionsSectionProto {
@@ -1418,6 +1439,8 @@ extension StoredPodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf._M
     3: .same(proto: "reasoning"),
     4: .same(proto: "ranking"),
     5: .same(proto: "sections"),
+    100: .same(proto: "latencies"),
+    101: .same(proto: "log"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1431,6 +1454,8 @@ extension StoredPodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf._M
       case 3: try { try decoder.decodeSingularStringField(value: &self.reasoning) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self.ranking) }()
       case 5: try { try decoder.decodeRepeatedMessageField(value: &self.sections) }()
+      case 100: try { try decoder.decodeSingularMessageField(value: &self._latencies) }()
+      case 101: try { try decoder.decodeSingularMessageField(value: &self._log) }()
       default: break
       }
     }
@@ -1456,6 +1481,12 @@ extension StoredPodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf._M
     if !self.sections.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.sections, fieldNumber: 5)
     }
+    try { if let v = self._latencies {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 100)
+    } }()
+    try { if let v = self._log {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 101)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1465,6 +1496,8 @@ extension StoredPodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf._M
     if lhs.reasoning != rhs.reasoning {return false}
     if lhs.ranking != rhs.ranking {return false}
     if lhs.sections != rhs.sections {return false}
+    if lhs._latencies != rhs._latencies {return false}
+    if lhs._log != rhs._log {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

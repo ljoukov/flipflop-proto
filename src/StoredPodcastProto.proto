@@ -141,6 +141,10 @@ message StoredPodcastSuggestionsProto {
   string reasoning = 3;
   string ranking = 4;
   repeated StoredPodcastSuggestionsSectionProto sections = 5;
+
+  // Debug metadata
+  LatenciesProto latencies = 100;
+  LogProto log = 101;
 }
 
 message StoredPodcastSuggestionsSectionProto {
