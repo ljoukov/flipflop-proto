@@ -547,6 +547,10 @@ struct StoredPodcastSuggestionsProto {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  var reasoning: String = String()
+
+  var ranking: String = String()
+
   var sections: [StoredPodcastSuggestionsSectionProto] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -576,6 +580,8 @@ struct StoredPodcastSuggestionProto {
   // methods supported on all messages.
 
   var suggestionID: String = String()
+
+  var reasoning: String = String()
 
   var thumbnailSize: PodcastSuggestionThumbnailSizeProto = .podcastSuggestionThumbnailSizeUndefined
 
@@ -1443,7 +1449,9 @@ extension StoredPodcastKeyPointProto: SwiftProtobuf.Message, SwiftProtobuf._Mess
 extension StoredPodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "StoredPodcastSuggestionsProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "sections"),
+    1: .same(proto: "reasoning"),
+    2: .same(proto: "ranking"),
+    3: .same(proto: "sections"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1452,20 +1460,30 @@ extension StoredPodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf._M
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.sections) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self.reasoning) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.ranking) }()
+      case 3: try { try decoder.decodeRepeatedMessageField(value: &self.sections) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.reasoning.isEmpty {
+      try visitor.visitSingularStringField(value: self.reasoning, fieldNumber: 1)
+    }
+    if !self.ranking.isEmpty {
+      try visitor.visitSingularStringField(value: self.ranking, fieldNumber: 2)
+    }
     if !self.sections.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.sections, fieldNumber: 1)
+      try visitor.visitRepeatedMessageField(value: self.sections, fieldNumber: 3)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: StoredPodcastSuggestionsProto, rhs: StoredPodcastSuggestionsProto) -> Bool {
+    if lhs.reasoning != rhs.reasoning {return false}
+    if lhs.ranking != rhs.ranking {return false}
     if lhs.sections != rhs.sections {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
@@ -1520,10 +1538,11 @@ extension StoredPodcastSuggestionProto: SwiftProtobuf.Message, SwiftProtobuf._Me
   static let protoMessageName: String = "StoredPodcastSuggestionProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "suggestion_id"),
-    2: .standard(proto: "thumbnail_size"),
-    3: .same(proto: "title"),
-    4: .standard(proto: "thumbnail_prompt"),
-    5: .standard(proto: "thumbnail_key"),
+    2: .same(proto: "reasoning"),
+    3: .standard(proto: "thumbnail_size"),
+    4: .same(proto: "title"),
+    5: .standard(proto: "thumbnail_prompt"),
+    6: .standard(proto: "thumbnail_key"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1533,10 +1552,11 @@ extension StoredPodcastSuggestionProto: SwiftProtobuf.Message, SwiftProtobuf._Me
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.suggestionID) }()
-      case 2: try { try decoder.decodeSingularEnumField(value: &self.thumbnailSize) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.title) }()
-      case 4: try { try decoder.decodeSingularStringField(value: &self.thumbnailPrompt) }()
-      case 5: try { try decoder.decodeSingularStringField(value: &self.thumbnailKey) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.reasoning) }()
+      case 3: try { try decoder.decodeSingularEnumField(value: &self.thumbnailSize) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.title) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.thumbnailPrompt) }()
+      case 6: try { try decoder.decodeSingularStringField(value: &self.thumbnailKey) }()
       default: break
       }
     }
@@ -1546,23 +1566,27 @@ extension StoredPodcastSuggestionProto: SwiftProtobuf.Message, SwiftProtobuf._Me
     if !self.suggestionID.isEmpty {
       try visitor.visitSingularStringField(value: self.suggestionID, fieldNumber: 1)
     }
+    if !self.reasoning.isEmpty {
+      try visitor.visitSingularStringField(value: self.reasoning, fieldNumber: 2)
+    }
     if self.thumbnailSize != .podcastSuggestionThumbnailSizeUndefined {
-      try visitor.visitSingularEnumField(value: self.thumbnailSize, fieldNumber: 2)
+      try visitor.visitSingularEnumField(value: self.thumbnailSize, fieldNumber: 3)
     }
     if !self.title.isEmpty {
-      try visitor.visitSingularStringField(value: self.title, fieldNumber: 3)
+      try visitor.visitSingularStringField(value: self.title, fieldNumber: 4)
     }
     if !self.thumbnailPrompt.isEmpty {
-      try visitor.visitSingularStringField(value: self.thumbnailPrompt, fieldNumber: 4)
+      try visitor.visitSingularStringField(value: self.thumbnailPrompt, fieldNumber: 5)
     }
     if !self.thumbnailKey.isEmpty {
-      try visitor.visitSingularStringField(value: self.thumbnailKey, fieldNumber: 5)
+      try visitor.visitSingularStringField(value: self.thumbnailKey, fieldNumber: 6)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: StoredPodcastSuggestionProto, rhs: StoredPodcastSuggestionProto) -> Bool {
     if lhs.suggestionID != rhs.suggestionID {return false}
+    if lhs.reasoning != rhs.reasoning {return false}
     if lhs.thumbnailSize != rhs.thumbnailSize {return false}
     if lhs.title != rhs.title {return false}
     if lhs.thumbnailPrompt != rhs.thumbnailPrompt {return false}

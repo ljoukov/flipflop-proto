@@ -143,7 +143,9 @@ message StoredPodcastKeyPointProto {
 }
 
 message StoredPodcastSuggestionsProto {
-  repeated StoredPodcastSuggestionsSectionProto sections = 1;
+  string reasoning = 1;
+  string ranking = 2;
+  repeated StoredPodcastSuggestionsSectionProto sections = 3;
 }
 
 message StoredPodcastSuggestionsSectionProto {
@@ -154,8 +156,9 @@ message StoredPodcastSuggestionsSectionProto {
 
 message StoredPodcastSuggestionProto {
   string suggestion_id = 1;
-  PodcastSuggestionThumbnailSizeProto thumbnail_size = 2;
-  string title = 3;
-  string thumbnail_prompt = 4;
-  string thumbnail_key = 5;
+  string reasoning = 2;
+  PodcastSuggestionThumbnailSizeProto thumbnail_size = 3;
+  string title = 4;
+  string thumbnail_prompt = 5;
+  string thumbnail_key = 6;
 }
