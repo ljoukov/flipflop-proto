@@ -353,7 +353,11 @@ export interface StoredPodcastSuggestionsSectionProto {
      */
     label: string;
     /**
-     * @generated from protobuf field: repeated StoredPodcastSuggestionProto suggestions = 3;
+     * @generated from protobuf field: string reasoning = 3;
+     */
+    reasoning: string;
+    /**
+     * @generated from protobuf field: repeated StoredPodcastSuggestionProto suggestions = 4;
      */
     suggestions: StoredPodcastSuggestionProto[];
 }
@@ -366,23 +370,19 @@ export interface StoredPodcastSuggestionProto {
      */
     suggestionId: string;
     /**
-     * @generated from protobuf field: string reasoning = 2;
-     */
-    reasoning: string;
-    /**
-     * @generated from protobuf field: PodcastSuggestionThumbnailSizeProto thumbnail_size = 3;
+     * @generated from protobuf field: PodcastSuggestionThumbnailSizeProto thumbnail_size = 2;
      */
     thumbnailSize: PodcastSuggestionThumbnailSizeProto;
     /**
-     * @generated from protobuf field: string title = 4;
+     * @generated from protobuf field: string title = 3;
      */
     title: string;
     /**
-     * @generated from protobuf field: string thumbnail_prompt = 5;
+     * @generated from protobuf field: string thumbnail_prompt = 4;
      */
     thumbnailPrompt: string;
     /**
-     * @generated from protobuf field: string thumbnail_key = 6;
+     * @generated from protobuf field: string thumbnail_key = 5;
      */
     thumbnailKey: string;
 }
@@ -1512,11 +1512,12 @@ class StoredPodcastSuggestionsSectionProto$Type extends MessageType<StoredPodcas
         super("StoredPodcastSuggestionsSectionProto", [
             { no: 1, name: "section_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "label", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "suggestions", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastSuggestionProto }
+            { no: 3, name: "reasoning", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "suggestions", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastSuggestionProto }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastSuggestionsSectionProto>): StoredPodcastSuggestionsSectionProto {
-        const message = { sectionId: "", label: "", suggestions: [] };
+        const message = { sectionId: "", label: "", reasoning: "", suggestions: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastSuggestionsSectionProto>(this, message, value);
@@ -1533,7 +1534,10 @@ class StoredPodcastSuggestionsSectionProto$Type extends MessageType<StoredPodcas
                 case /* string label */ 2:
                     message.label = reader.string();
                     break;
-                case /* repeated StoredPodcastSuggestionProto suggestions */ 3:
+                case /* string reasoning */ 3:
+                    message.reasoning = reader.string();
+                    break;
+                case /* repeated StoredPodcastSuggestionProto suggestions */ 4:
                     message.suggestions.push(StoredPodcastSuggestionProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
@@ -1554,9 +1558,12 @@ class StoredPodcastSuggestionsSectionProto$Type extends MessageType<StoredPodcas
         /* string label = 2; */
         if (message.label !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.label);
-        /* repeated StoredPodcastSuggestionProto suggestions = 3; */
+        /* string reasoning = 3; */
+        if (message.reasoning !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.reasoning);
+        /* repeated StoredPodcastSuggestionProto suggestions = 4; */
         for (let i = 0; i < message.suggestions.length; i++)
-            StoredPodcastSuggestionProto.internalBinaryWrite(message.suggestions[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+            StoredPodcastSuggestionProto.internalBinaryWrite(message.suggestions[i], writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1572,15 +1579,14 @@ class StoredPodcastSuggestionProto$Type extends MessageType<StoredPodcastSuggest
     constructor() {
         super("StoredPodcastSuggestionProto", [
             { no: 1, name: "suggestion_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "reasoning", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "thumbnail_size", kind: "enum", T: () => ["PodcastSuggestionThumbnailSizeProto", PodcastSuggestionThumbnailSizeProto] },
-            { no: 4, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "thumbnail_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 6, name: "thumbnail_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "thumbnail_size", kind: "enum", T: () => ["PodcastSuggestionThumbnailSizeProto", PodcastSuggestionThumbnailSizeProto] },
+            { no: 3, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "thumbnail_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "thumbnail_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastSuggestionProto>): StoredPodcastSuggestionProto {
-        const message = { suggestionId: "", reasoning: "", thumbnailSize: 0, title: "", thumbnailPrompt: "", thumbnailKey: "" };
+        const message = { suggestionId: "", thumbnailSize: 0, title: "", thumbnailPrompt: "", thumbnailKey: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastSuggestionProto>(this, message, value);
@@ -1594,19 +1600,16 @@ class StoredPodcastSuggestionProto$Type extends MessageType<StoredPodcastSuggest
                 case /* string suggestion_id */ 1:
                     message.suggestionId = reader.string();
                     break;
-                case /* string reasoning */ 2:
-                    message.reasoning = reader.string();
-                    break;
-                case /* PodcastSuggestionThumbnailSizeProto thumbnail_size */ 3:
+                case /* PodcastSuggestionThumbnailSizeProto thumbnail_size */ 2:
                     message.thumbnailSize = reader.int32();
                     break;
-                case /* string title */ 4:
+                case /* string title */ 3:
                     message.title = reader.string();
                     break;
-                case /* string thumbnail_prompt */ 5:
+                case /* string thumbnail_prompt */ 4:
                     message.thumbnailPrompt = reader.string();
                     break;
-                case /* string thumbnail_key */ 6:
+                case /* string thumbnail_key */ 5:
                     message.thumbnailKey = reader.string();
                     break;
                 default:
@@ -1624,21 +1627,18 @@ class StoredPodcastSuggestionProto$Type extends MessageType<StoredPodcastSuggest
         /* string suggestion_id = 1; */
         if (message.suggestionId !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.suggestionId);
-        /* string reasoning = 2; */
-        if (message.reasoning !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.reasoning);
-        /* PodcastSuggestionThumbnailSizeProto thumbnail_size = 3; */
+        /* PodcastSuggestionThumbnailSizeProto thumbnail_size = 2; */
         if (message.thumbnailSize !== 0)
-            writer.tag(3, WireType.Varint).int32(message.thumbnailSize);
-        /* string title = 4; */
+            writer.tag(2, WireType.Varint).int32(message.thumbnailSize);
+        /* string title = 3; */
         if (message.title !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.title);
-        /* string thumbnail_prompt = 5; */
+            writer.tag(3, WireType.LengthDelimited).string(message.title);
+        /* string thumbnail_prompt = 4; */
         if (message.thumbnailPrompt !== "")
-            writer.tag(5, WireType.LengthDelimited).string(message.thumbnailPrompt);
-        /* string thumbnail_key = 6; */
+            writer.tag(4, WireType.LengthDelimited).string(message.thumbnailPrompt);
+        /* string thumbnail_key = 5; */
         if (message.thumbnailKey !== "")
-            writer.tag(6, WireType.LengthDelimited).string(message.thumbnailKey);
+            writer.tag(5, WireType.LengthDelimited).string(message.thumbnailKey);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

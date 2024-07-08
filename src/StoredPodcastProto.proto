@@ -151,14 +151,14 @@ message StoredPodcastSuggestionsProto {
 message StoredPodcastSuggestionsSectionProto {
   string section_id = 1;
   string label = 2;
-  repeated StoredPodcastSuggestionProto suggestions = 3;
+  string reasoning = 3;
+  repeated StoredPodcastSuggestionProto suggestions = 4;
 }
 
 message StoredPodcastSuggestionProto {
   string suggestion_id = 1;
-  string reasoning = 2;
-  PodcastSuggestionThumbnailSizeProto thumbnail_size = 3;
-  string title = 4;
-  string thumbnail_prompt = 5;
-  string thumbnail_key = 6;
+  PodcastSuggestionThumbnailSizeProto thumbnail_size = 2;
+  string title = 3;
+  string thumbnail_prompt = 4;
+  string thumbnail_key = 5;
 }
