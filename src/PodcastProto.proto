@@ -270,3 +270,27 @@ message PodcastKeyPointProto {
   string title_emoji = 3;
   string outline = 4;
 }
+
+message PodcastSuggestionsProto {
+  repeated PodcastSuggestionsSectionProto sections = 1;
+}
+
+message PodcastSuggestionsSectionProto {
+  string section_id = 1;
+  string label = 2;
+  repeated PodcastSuggestionProto suggestions = 3;
+}
+
+message PodcastSuggestionProto {
+  string suggestion_id = 1;
+  PodcastSuggestionThumbnailSizeProto thumbnail_size = 2;
+  string title = 3;
+  string thumbnail_path = 4;
+}
+
+enum PodcastSuggestionThumbnailSizeProto {
+  PODCAST_SUGGESTION_THUMBNAIL_SIZE_UNDEFINED = 0;
+  PODCAST_SUGGESTION_THUMBNAIL_SIZE_SMALL = 1;
+  PODCAST_SUGGESTION_THUMBNAIL_SIZE_WIDE = 2;
+  PODCAST_SUGGESTION_THUMBNAIL_SIZE_LARGE = 3;
+}

@@ -141,3 +141,21 @@ message StoredPodcastKeyPointProto {
   string title_emoji = 3;
   string outline = 4;
 }
+
+message StoredPodcastSuggestionsProto {
+  repeated StoredPodcastSuggestionsSectionProto sections = 1;
+}
+
+message StoredPodcastSuggestionsSectionProto {
+  string section_id = 1;
+  string label = 2;
+  repeated StoredPodcastSuggestionProto suggestions = 3;
+}
+
+message StoredPodcastSuggestionProto {
+  string suggestion_id = 1;
+  PodcastSuggestionThumbnailSizeProto thumbnail_size = 2;
+  string title = 3;
+  string thumbnail_prompt = 4;
+  string thumbnail_key = 5;
+}

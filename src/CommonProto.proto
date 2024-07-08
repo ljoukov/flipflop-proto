@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+message UserAgentProto {
+  string user_agent = 1;
+  DeviceProto device = 2;
+  LocaleProto locale = 3;
+  LocationProto location = 4;
+}
+
+message LocaleProto {
+  string language = 1;
+  string country = 2;
+  string time_zone = 3;
+}
+
+message LocationProto {
+  string region_code = 1;
+  string country = 2;
+  string city = 3;
+  string time_zone = 4;
+  double latitude = 5;
+  double longitude = 6;
+}
+
+message DeviceProto {
+  oneof type {
+    IOSDeviceProto ios = 1;
+  }
+}
+
+message IOSDeviceProto {
+  string device_model = 1;
+  string device_identifier = 2;
+  bool is_simulator = 3;
+
+  string os_name = 4;
+  string os_version = 5;
+
+  string app_bundle_name = 6;
+  string app_bundle_version = 7;
+  string app_build_number = 8;
+}

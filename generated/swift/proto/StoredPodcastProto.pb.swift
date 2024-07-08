@@ -542,6 +542,54 @@ struct StoredPodcastKeyPointProto {
   init() {}
 }
 
+struct StoredPodcastSuggestionsProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var sections: [StoredPodcastSuggestionsSectionProto] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct StoredPodcastSuggestionsSectionProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var sectionID: String = String()
+
+  var label: String = String()
+
+  var suggestions: [StoredPodcastSuggestionProto] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct StoredPodcastSuggestionProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var suggestionID: String = String()
+
+  var thumbnailSize: PodcastSuggestionThumbnailSizeProto = .podcastSuggestionThumbnailSizeUndefined
+
+  var title: String = String()
+
+  var thumbnailPrompt: String = String()
+
+  var thumbnailKey: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 #if swift(>=5.5) && canImport(_Concurrency)
 extension StoredPodcastStateProto: @unchecked Sendable {}
 extension StoredPodcastCardsStateProto: @unchecked Sendable {}
@@ -561,6 +609,9 @@ extension StoredPodcastKeyPointsProto: @unchecked Sendable {}
 extension StoredPodcastFollowupsProto: @unchecked Sendable {}
 extension StoredPodcastFollowupProto: @unchecked Sendable {}
 extension StoredPodcastKeyPointProto: @unchecked Sendable {}
+extension StoredPodcastSuggestionsProto: @unchecked Sendable {}
+extension StoredPodcastSuggestionsSectionProto: @unchecked Sendable {}
+extension StoredPodcastSuggestionProto: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
@@ -1384,6 +1435,138 @@ extension StoredPodcastKeyPointProto: SwiftProtobuf.Message, SwiftProtobuf._Mess
     if lhs.title != rhs.title {return false}
     if lhs.titleEmoji != rhs.titleEmoji {return false}
     if lhs.outline != rhs.outline {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension StoredPodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredPodcastSuggestionsProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "sections"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.sections) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.sections.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.sections, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: StoredPodcastSuggestionsProto, rhs: StoredPodcastSuggestionsProto) -> Bool {
+    if lhs.sections != rhs.sections {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension StoredPodcastSuggestionsSectionProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredPodcastSuggestionsSectionProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "section_id"),
+    2: .same(proto: "label"),
+    3: .same(proto: "suggestions"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.sectionID) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.label) }()
+      case 3: try { try decoder.decodeRepeatedMessageField(value: &self.suggestions) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.sectionID.isEmpty {
+      try visitor.visitSingularStringField(value: self.sectionID, fieldNumber: 1)
+    }
+    if !self.label.isEmpty {
+      try visitor.visitSingularStringField(value: self.label, fieldNumber: 2)
+    }
+    if !self.suggestions.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.suggestions, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: StoredPodcastSuggestionsSectionProto, rhs: StoredPodcastSuggestionsSectionProto) -> Bool {
+    if lhs.sectionID != rhs.sectionID {return false}
+    if lhs.label != rhs.label {return false}
+    if lhs.suggestions != rhs.suggestions {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension StoredPodcastSuggestionProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredPodcastSuggestionProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "suggestion_id"),
+    2: .standard(proto: "thumbnail_size"),
+    3: .same(proto: "title"),
+    4: .standard(proto: "thumbnail_prompt"),
+    5: .standard(proto: "thumbnail_key"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.suggestionID) }()
+      case 2: try { try decoder.decodeSingularEnumField(value: &self.thumbnailSize) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.title) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.thumbnailPrompt) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.thumbnailKey) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.suggestionID.isEmpty {
+      try visitor.visitSingularStringField(value: self.suggestionID, fieldNumber: 1)
+    }
+    if self.thumbnailSize != .podcastSuggestionThumbnailSizeUndefined {
+      try visitor.visitSingularEnumField(value: self.thumbnailSize, fieldNumber: 2)
+    }
+    if !self.title.isEmpty {
+      try visitor.visitSingularStringField(value: self.title, fieldNumber: 3)
+    }
+    if !self.thumbnailPrompt.isEmpty {
+      try visitor.visitSingularStringField(value: self.thumbnailPrompt, fieldNumber: 4)
+    }
+    if !self.thumbnailKey.isEmpty {
+      try visitor.visitSingularStringField(value: self.thumbnailKey, fieldNumber: 5)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: StoredPodcastSuggestionProto, rhs: StoredPodcastSuggestionProto) -> Bool {
+    if lhs.suggestionID != rhs.suggestionID {return false}
+    if lhs.thumbnailSize != rhs.thumbnailSize {return false}
+    if lhs.title != rhs.title {return false}
+    if lhs.thumbnailPrompt != rhs.thumbnailPrompt {return false}
+    if lhs.thumbnailKey != rhs.thumbnailKey {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
