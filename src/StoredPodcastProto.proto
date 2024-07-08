@@ -46,13 +46,6 @@ enum StoredPodcastStateProto {
   STORED_PODCAST_STATE_PROTO_GENERATION_FAILED = 4;
 }
 
-enum StoredPodcastCardsStateProto {
-  STORED_PODCAST_CARDS_STATE_PROTO_NOT_STARTED = 0;
-  STORED_PODCAST_CARDS_STATE_PROTO_GENERATING = 1;
-  STORED_PODCAST_CARDS_STATE_PROTO_READY = 2;
-  STORED_PODCAST_CARDS_STATE_PROTO_FAILED = 3;
-}
-
 message StoredPodcastUserInputProto {
   string prompt = 1;
   repeated string point_ids = 2;
@@ -143,9 +136,11 @@ message StoredPodcastKeyPointProto {
 }
 
 message StoredPodcastSuggestionsProto {
-  string reasoning = 1;
-  string ranking = 2;
-  repeated StoredPodcastSuggestionsSectionProto sections = 3;
+  google.protobuf.Timestamp created_at = 1;
+  google.protobuf.Timestamp updated_at = 2;
+  string reasoning = 3;
+  string ranking = 4;
+  repeated StoredPodcastSuggestionsSectionProto sections = 5;
 }
 
 message StoredPodcastSuggestionsSectionProto {

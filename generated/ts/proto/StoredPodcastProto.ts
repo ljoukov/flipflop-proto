@@ -328,15 +328,23 @@ export interface StoredPodcastKeyPointProto {
  */
 export interface StoredPodcastSuggestionsProto {
     /**
-     * @generated from protobuf field: string reasoning = 1;
+     * @generated from protobuf field: google.protobuf.Timestamp created_at = 1;
+     */
+    createdAt?: Timestamp;
+    /**
+     * @generated from protobuf field: google.protobuf.Timestamp updated_at = 2;
+     */
+    updatedAt?: Timestamp;
+    /**
+     * @generated from protobuf field: string reasoning = 3;
      */
     reasoning: string;
     /**
-     * @generated from protobuf field: string ranking = 2;
+     * @generated from protobuf field: string ranking = 4;
      */
     ranking: string;
     /**
-     * @generated from protobuf field: repeated StoredPodcastSuggestionsSectionProto sections = 3;
+     * @generated from protobuf field: repeated StoredPodcastSuggestionsSectionProto sections = 5;
      */
     sections: StoredPodcastSuggestionsSectionProto[];
 }
@@ -410,27 +418,6 @@ export enum StoredPodcastStateProto {
      * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_GENERATION_FAILED = 4;
      */
     GENERATION_FAILED = 4
-}
-/**
- * @generated from protobuf enum StoredPodcastCardsStateProto
- */
-export enum StoredPodcastCardsStateProto {
-    /**
-     * @generated from protobuf enum value: STORED_PODCAST_CARDS_STATE_PROTO_NOT_STARTED = 0;
-     */
-    NOT_STARTED = 0,
-    /**
-     * @generated from protobuf enum value: STORED_PODCAST_CARDS_STATE_PROTO_GENERATING = 1;
-     */
-    GENERATING = 1,
-    /**
-     * @generated from protobuf enum value: STORED_PODCAST_CARDS_STATE_PROTO_READY = 2;
-     */
-    READY = 2,
-    /**
-     * @generated from protobuf enum value: STORED_PODCAST_CARDS_STATE_PROTO_FAILED = 3;
-     */
-    FAILED = 3
 }
 /**
  * @generated from protobuf enum StoredPodcastSectionTypeProto
@@ -1449,9 +1436,11 @@ export const StoredPodcastKeyPointProto = new StoredPodcastKeyPointProto$Type();
 class StoredPodcastSuggestionsProto$Type extends MessageType<StoredPodcastSuggestionsProto> {
     constructor() {
         super("StoredPodcastSuggestionsProto", [
-            { no: 1, name: "reasoning", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "ranking", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "sections", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastSuggestionsSectionProto }
+            { no: 1, name: "created_at", kind: "message", T: () => Timestamp },
+            { no: 2, name: "updated_at", kind: "message", T: () => Timestamp },
+            { no: 3, name: "reasoning", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "ranking", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "sections", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastSuggestionsSectionProto }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastSuggestionsProto>): StoredPodcastSuggestionsProto {
@@ -1466,13 +1455,19 @@ class StoredPodcastSuggestionsProto$Type extends MessageType<StoredPodcastSugges
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string reasoning */ 1:
+                case /* google.protobuf.Timestamp created_at */ 1:
+                    message.createdAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.createdAt);
+                    break;
+                case /* google.protobuf.Timestamp updated_at */ 2:
+                    message.updatedAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.updatedAt);
+                    break;
+                case /* string reasoning */ 3:
                     message.reasoning = reader.string();
                     break;
-                case /* string ranking */ 2:
+                case /* string ranking */ 4:
                     message.ranking = reader.string();
                     break;
-                case /* repeated StoredPodcastSuggestionsSectionProto sections */ 3:
+                case /* repeated StoredPodcastSuggestionsSectionProto sections */ 5:
                     message.sections.push(StoredPodcastSuggestionsSectionProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
@@ -1487,15 +1482,21 @@ class StoredPodcastSuggestionsProto$Type extends MessageType<StoredPodcastSugges
         return message;
     }
     internalBinaryWrite(message: StoredPodcastSuggestionsProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string reasoning = 1; */
+        /* google.protobuf.Timestamp created_at = 1; */
+        if (message.createdAt)
+            Timestamp.internalBinaryWrite(message.createdAt, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.Timestamp updated_at = 2; */
+        if (message.updatedAt)
+            Timestamp.internalBinaryWrite(message.updatedAt, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* string reasoning = 3; */
         if (message.reasoning !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.reasoning);
-        /* string ranking = 2; */
+            writer.tag(3, WireType.LengthDelimited).string(message.reasoning);
+        /* string ranking = 4; */
         if (message.ranking !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.ranking);
-        /* repeated StoredPodcastSuggestionsSectionProto sections = 3; */
+            writer.tag(4, WireType.LengthDelimited).string(message.ranking);
+        /* repeated StoredPodcastSuggestionsSectionProto sections = 5; */
         for (let i = 0; i < message.sections.length; i++)
-            StoredPodcastSuggestionsSectionProto.internalBinaryWrite(message.sections[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+            StoredPodcastSuggestionsSectionProto.internalBinaryWrite(message.sections[i], writer.tag(5, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

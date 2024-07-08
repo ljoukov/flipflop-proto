@@ -72,54 +72,6 @@ extension StoredPodcastStateProto: CaseIterable {
 
 #endif  // swift(>=4.2)
 
-enum StoredPodcastCardsStateProto: SwiftProtobuf.Enum {
-  typealias RawValue = Int
-  case notStarted // = 0
-  case generating // = 1
-  case ready // = 2
-  case failed // = 3
-  case UNRECOGNIZED(Int)
-
-  init() {
-    self = .notStarted
-  }
-
-  init?(rawValue: Int) {
-    switch rawValue {
-    case 0: self = .notStarted
-    case 1: self = .generating
-    case 2: self = .ready
-    case 3: self = .failed
-    default: self = .UNRECOGNIZED(rawValue)
-    }
-  }
-
-  var rawValue: Int {
-    switch self {
-    case .notStarted: return 0
-    case .generating: return 1
-    case .ready: return 2
-    case .failed: return 3
-    case .UNRECOGNIZED(let i): return i
-    }
-  }
-
-}
-
-#if swift(>=4.2)
-
-extension StoredPodcastCardsStateProto: CaseIterable {
-  // The compiler won't synthesize support with the UNRECOGNIZED case.
-  static var allCases: [StoredPodcastCardsStateProto] = [
-    .notStarted,
-    .generating,
-    .ready,
-    .failed,
-  ]
-}
-
-#endif  // swift(>=4.2)
-
 enum StoredPodcastSectionTypeProto: SwiftProtobuf.Enum {
   typealias RawValue = Int
   case unknown // = 0
@@ -547,6 +499,24 @@ struct StoredPodcastSuggestionsProto {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_createdAt = newValue}
+  }
+  /// Returns true if `createdAt` has been explicitly set.
+  var hasCreatedAt: Bool {return self._createdAt != nil}
+  /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
+  mutating func clearCreatedAt() {self._createdAt = nil}
+
+  var updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_updatedAt = newValue}
+  }
+  /// Returns true if `updatedAt` has been explicitly set.
+  var hasUpdatedAt: Bool {return self._updatedAt != nil}
+  /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
+  mutating func clearUpdatedAt() {self._updatedAt = nil}
+
   var reasoning: String = String()
 
   var ranking: String = String()
@@ -556,6 +526,9 @@ struct StoredPodcastSuggestionsProto {
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
+
+  fileprivate var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+  fileprivate var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
 struct StoredPodcastSuggestionsSectionProto {
@@ -599,7 +572,6 @@ struct StoredPodcastSuggestionProto {
 
 #if swift(>=5.5) && canImport(_Concurrency)
 extension StoredPodcastStateProto: @unchecked Sendable {}
-extension StoredPodcastCardsStateProto: @unchecked Sendable {}
 extension StoredPodcastSectionTypeProto: @unchecked Sendable {}
 extension StoredPodcastProto: @unchecked Sendable {}
 extension StoredPodcastUserInputProto: @unchecked Sendable {}
@@ -630,15 +602,6 @@ extension StoredPodcastStateProto: SwiftProtobuf._ProtoNameProviding {
     2: .same(proto: "STORED_PODCAST_STATE_PROTO_POINTS_READY"),
     3: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATION_STARTED"),
     4: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATION_FAILED"),
-  ]
-}
-
-extension StoredPodcastCardsStateProto: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    0: .same(proto: "STORED_PODCAST_CARDS_STATE_PROTO_NOT_STARTED"),
-    1: .same(proto: "STORED_PODCAST_CARDS_STATE_PROTO_GENERATING"),
-    2: .same(proto: "STORED_PODCAST_CARDS_STATE_PROTO_READY"),
-    3: .same(proto: "STORED_PODCAST_CARDS_STATE_PROTO_FAILED"),
   ]
 }
 
@@ -1450,9 +1413,11 @@ extension StoredPodcastKeyPointProto: SwiftProtobuf.Message, SwiftProtobuf._Mess
 extension StoredPodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "StoredPodcastSuggestionsProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "reasoning"),
-    2: .same(proto: "ranking"),
-    3: .same(proto: "sections"),
+    1: .standard(proto: "created_at"),
+    2: .standard(proto: "updated_at"),
+    3: .same(proto: "reasoning"),
+    4: .same(proto: "ranking"),
+    5: .same(proto: "sections"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1461,28 +1426,42 @@ extension StoredPodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf._M
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.reasoning) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.ranking) }()
-      case 3: try { try decoder.decodeRepeatedMessageField(value: &self.sections) }()
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._createdAt) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._updatedAt) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.reasoning) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.ranking) }()
+      case 5: try { try decoder.decodeRepeatedMessageField(value: &self.sections) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._createdAt {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    try { if let v = self._updatedAt {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
     if !self.reasoning.isEmpty {
-      try visitor.visitSingularStringField(value: self.reasoning, fieldNumber: 1)
+      try visitor.visitSingularStringField(value: self.reasoning, fieldNumber: 3)
     }
     if !self.ranking.isEmpty {
-      try visitor.visitSingularStringField(value: self.ranking, fieldNumber: 2)
+      try visitor.visitSingularStringField(value: self.ranking, fieldNumber: 4)
     }
     if !self.sections.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.sections, fieldNumber: 3)
+      try visitor.visitRepeatedMessageField(value: self.sections, fieldNumber: 5)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: StoredPodcastSuggestionsProto, rhs: StoredPodcastSuggestionsProto) -> Bool {
+    if lhs._createdAt != rhs._createdAt {return false}
+    if lhs._updatedAt != rhs._updatedAt {return false}
     if lhs.reasoning != rhs.reasoning {return false}
     if lhs.ranking != rhs.ranking {return false}
     if lhs.sections != rhs.sections {return false}
