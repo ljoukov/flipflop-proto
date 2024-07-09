@@ -295,14 +295,7 @@ message PodcastSuggestionsSectionProto {
 
 message PodcastSuggestionProto {
   string suggestion_id = 1;
-  PodcastSuggestionThumbnailSizeProto thumbnail_size = 2;
   string title = 3;
-  string thumbnail_path = 4;
-}
-
-enum PodcastSuggestionThumbnailSizeProto {
-  PODCAST_SUGGESTION_THUMBNAIL_SIZE_UNDEFINED = 0;
-  PODCAST_SUGGESTION_THUMBNAIL_SIZE_SMALL = 1;
-  PODCAST_SUGGESTION_THUMBNAIL_SIZE_WIDE = 2;
-  PODCAST_SUGGESTION_THUMBNAIL_SIZE_LARGE = 3;
+  string badge = 4;  // Q&A, Explainer, ...
+  string thumbnail_path = 5;
 }

@@ -13,7 +13,6 @@ import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MESSAGE_TYPE } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
-import { PodcastSuggestionThumbnailSizeProto } from "./PodcastProto";
 import { PodcastWordProto } from "./PodcastProto";
 import { Duration } from "./google/protobuf/duration";
 import { PodcastVisualTransitionProto } from "./PodcastProto";
@@ -392,13 +391,13 @@ export interface StoredPodcastSuggestionProto {
      */
     suggestionId: string;
     /**
-     * @generated from protobuf field: PodcastSuggestionThumbnailSizeProto thumbnail_size = 2;
-     */
-    thumbnailSize: PodcastSuggestionThumbnailSizeProto;
-    /**
-     * @generated from protobuf field: string title = 3;
+     * @generated from protobuf field: string title = 2;
      */
     title: string;
+    /**
+     * @generated from protobuf field: string badge = 3;
+     */
+    badge: string; // Q&A, Explainer, ...
     /**
      * @generated from protobuf field: string thumbnail_prompt = 4;
      */
@@ -1615,14 +1614,14 @@ class StoredPodcastSuggestionProto$Type extends MessageType<StoredPodcastSuggest
     constructor() {
         super("StoredPodcastSuggestionProto", [
             { no: 1, name: "suggestion_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "thumbnail_size", kind: "enum", T: () => ["PodcastSuggestionThumbnailSizeProto", PodcastSuggestionThumbnailSizeProto] },
-            { no: 3, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "badge", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "thumbnail_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "thumbnail_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastSuggestionProto>): StoredPodcastSuggestionProto {
-        const message = { suggestionId: "", thumbnailSize: 0, title: "", thumbnailPrompt: "", thumbnailKey: "" };
+        const message = { suggestionId: "", title: "", badge: "", thumbnailPrompt: "", thumbnailKey: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastSuggestionProto>(this, message, value);
@@ -1636,11 +1635,11 @@ class StoredPodcastSuggestionProto$Type extends MessageType<StoredPodcastSuggest
                 case /* string suggestion_id */ 1:
                     message.suggestionId = reader.string();
                     break;
-                case /* PodcastSuggestionThumbnailSizeProto thumbnail_size */ 2:
-                    message.thumbnailSize = reader.int32();
-                    break;
-                case /* string title */ 3:
+                case /* string title */ 2:
                     message.title = reader.string();
+                    break;
+                case /* string badge */ 3:
+                    message.badge = reader.string();
                     break;
                 case /* string thumbnail_prompt */ 4:
                     message.thumbnailPrompt = reader.string();
@@ -1663,12 +1662,12 @@ class StoredPodcastSuggestionProto$Type extends MessageType<StoredPodcastSuggest
         /* string suggestion_id = 1; */
         if (message.suggestionId !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.suggestionId);
-        /* PodcastSuggestionThumbnailSizeProto thumbnail_size = 2; */
-        if (message.thumbnailSize !== 0)
-            writer.tag(2, WireType.Varint).int32(message.thumbnailSize);
-        /* string title = 3; */
+        /* string title = 2; */
         if (message.title !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.title);
+            writer.tag(2, WireType.LengthDelimited).string(message.title);
+        /* string badge = 3; */
+        if (message.badge !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.badge);
         /* string thumbnail_prompt = 4; */
         if (message.thumbnailPrompt !== "")
             writer.tag(4, WireType.LengthDelimited).string(message.thumbnailPrompt);

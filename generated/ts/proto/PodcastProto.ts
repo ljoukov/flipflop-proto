@@ -751,15 +751,15 @@ export interface PodcastSuggestionProto {
      */
     suggestionId: string;
     /**
-     * @generated from protobuf field: PodcastSuggestionThumbnailSizeProto thumbnail_size = 2;
-     */
-    thumbnailSize: PodcastSuggestionThumbnailSizeProto;
-    /**
      * @generated from protobuf field: string title = 3;
      */
     title: string;
     /**
-     * @generated from protobuf field: string thumbnail_path = 4;
+     * @generated from protobuf field: string badge = 4;
+     */
+    badge: string; // Q&A, Explainer, ...
+    /**
+     * @generated from protobuf field: string thumbnail_path = 5;
      */
     thumbnailPath: string;
 }
@@ -846,27 +846,6 @@ export enum PodcastHostProto {
      * @generated from protobuf enum value: PODCAST_HOST_PROTO_FEMALE = 2;
      */
     FEMALE = 2
-}
-/**
- * @generated from protobuf enum PodcastSuggestionThumbnailSizeProto
- */
-export enum PodcastSuggestionThumbnailSizeProto {
-    /**
-     * @generated from protobuf enum value: PODCAST_SUGGESTION_THUMBNAIL_SIZE_UNDEFINED = 0;
-     */
-    PODCAST_SUGGESTION_THUMBNAIL_SIZE_UNDEFINED = 0,
-    /**
-     * @generated from protobuf enum value: PODCAST_SUGGESTION_THUMBNAIL_SIZE_SMALL = 1;
-     */
-    PODCAST_SUGGESTION_THUMBNAIL_SIZE_SMALL = 1,
-    /**
-     * @generated from protobuf enum value: PODCAST_SUGGESTION_THUMBNAIL_SIZE_WIDE = 2;
-     */
-    PODCAST_SUGGESTION_THUMBNAIL_SIZE_WIDE = 2,
-    /**
-     * @generated from protobuf enum value: PODCAST_SUGGESTION_THUMBNAIL_SIZE_LARGE = 3;
-     */
-    PODCAST_SUGGESTION_THUMBNAIL_SIZE_LARGE = 3
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class PodcastStreamApiRequestProto$Type extends MessageType<PodcastStreamApiRequestProto> {
@@ -3323,13 +3302,13 @@ class PodcastSuggestionProto$Type extends MessageType<PodcastSuggestionProto> {
     constructor() {
         super("PodcastSuggestionProto", [
             { no: 1, name: "suggestion_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "thumbnail_size", kind: "enum", T: () => ["PodcastSuggestionThumbnailSizeProto", PodcastSuggestionThumbnailSizeProto] },
             { no: 3, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "thumbnail_path", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 4, name: "badge", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "thumbnail_path", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PodcastSuggestionProto>): PodcastSuggestionProto {
-        const message = { suggestionId: "", thumbnailSize: 0, title: "", thumbnailPath: "" };
+        const message = { suggestionId: "", title: "", badge: "", thumbnailPath: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastSuggestionProto>(this, message, value);
@@ -3343,13 +3322,13 @@ class PodcastSuggestionProto$Type extends MessageType<PodcastSuggestionProto> {
                 case /* string suggestion_id */ 1:
                     message.suggestionId = reader.string();
                     break;
-                case /* PodcastSuggestionThumbnailSizeProto thumbnail_size */ 2:
-                    message.thumbnailSize = reader.int32();
-                    break;
                 case /* string title */ 3:
                     message.title = reader.string();
                     break;
-                case /* string thumbnail_path */ 4:
+                case /* string badge */ 4:
+                    message.badge = reader.string();
+                    break;
+                case /* string thumbnail_path */ 5:
                     message.thumbnailPath = reader.string();
                     break;
                 default:
@@ -3367,15 +3346,15 @@ class PodcastSuggestionProto$Type extends MessageType<PodcastSuggestionProto> {
         /* string suggestion_id = 1; */
         if (message.suggestionId !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.suggestionId);
-        /* PodcastSuggestionThumbnailSizeProto thumbnail_size = 2; */
-        if (message.thumbnailSize !== 0)
-            writer.tag(2, WireType.Varint).int32(message.thumbnailSize);
         /* string title = 3; */
         if (message.title !== "")
             writer.tag(3, WireType.LengthDelimited).string(message.title);
-        /* string thumbnail_path = 4; */
+        /* string badge = 4; */
+        if (message.badge !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.badge);
+        /* string thumbnail_path = 5; */
         if (message.thumbnailPath !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.thumbnailPath);
+            writer.tag(5, WireType.LengthDelimited).string(message.thumbnailPath);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

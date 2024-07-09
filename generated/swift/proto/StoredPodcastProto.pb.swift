@@ -580,9 +580,10 @@ struct StoredPodcastSuggestionProto {
 
   var suggestionID: String = String()
 
-  var thumbnailSize: PodcastSuggestionThumbnailSizeProto = .podcastSuggestionThumbnailSizeUndefined
-
   var title: String = String()
+
+  /// Q&A, Explainer, ...
+  var badge: String = String()
 
   var thumbnailPrompt: String = String()
 
@@ -1565,8 +1566,8 @@ extension StoredPodcastSuggestionProto: SwiftProtobuf.Message, SwiftProtobuf._Me
   static let protoMessageName: String = "StoredPodcastSuggestionProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "suggestion_id"),
-    2: .standard(proto: "thumbnail_size"),
-    3: .same(proto: "title"),
+    2: .same(proto: "title"),
+    3: .same(proto: "badge"),
     4: .standard(proto: "thumbnail_prompt"),
     5: .standard(proto: "thumbnail_key"),
   ]
@@ -1578,8 +1579,8 @@ extension StoredPodcastSuggestionProto: SwiftProtobuf.Message, SwiftProtobuf._Me
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.suggestionID) }()
-      case 2: try { try decoder.decodeSingularEnumField(value: &self.thumbnailSize) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.title) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.title) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.badge) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self.thumbnailPrompt) }()
       case 5: try { try decoder.decodeSingularStringField(value: &self.thumbnailKey) }()
       default: break
@@ -1591,11 +1592,11 @@ extension StoredPodcastSuggestionProto: SwiftProtobuf.Message, SwiftProtobuf._Me
     if !self.suggestionID.isEmpty {
       try visitor.visitSingularStringField(value: self.suggestionID, fieldNumber: 1)
     }
-    if self.thumbnailSize != .podcastSuggestionThumbnailSizeUndefined {
-      try visitor.visitSingularEnumField(value: self.thumbnailSize, fieldNumber: 2)
-    }
     if !self.title.isEmpty {
-      try visitor.visitSingularStringField(value: self.title, fieldNumber: 3)
+      try visitor.visitSingularStringField(value: self.title, fieldNumber: 2)
+    }
+    if !self.badge.isEmpty {
+      try visitor.visitSingularStringField(value: self.badge, fieldNumber: 3)
     }
     if !self.thumbnailPrompt.isEmpty {
       try visitor.visitSingularStringField(value: self.thumbnailPrompt, fieldNumber: 4)
@@ -1608,8 +1609,8 @@ extension StoredPodcastSuggestionProto: SwiftProtobuf.Message, SwiftProtobuf._Me
 
   static func ==(lhs: StoredPodcastSuggestionProto, rhs: StoredPodcastSuggestionProto) -> Bool {
     if lhs.suggestionID != rhs.suggestionID {return false}
-    if lhs.thumbnailSize != rhs.thumbnailSize {return false}
     if lhs.title != rhs.title {return false}
+    if lhs.badge != rhs.badge {return false}
     if lhs.thumbnailPrompt != rhs.thumbnailPrompt {return false}
     if lhs.thumbnailKey != rhs.thumbnailKey {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
