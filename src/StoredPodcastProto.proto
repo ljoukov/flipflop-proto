@@ -151,7 +151,8 @@ message StoredPodcastSuggestionsSectionProto {
   string section_id = 1;  // e.g. "do-right-now"
   string reasoning = 2;
   string title = 3;
-  repeated StoredPodcastSuggestionProto suggestions = 4;
+  string style_prompt = 4;
+  repeated StoredPodcastSuggestionProto suggestions = 5;
 }
 
 message StoredPodcastSuggestionProto {
