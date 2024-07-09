@@ -9,6 +9,7 @@ message PodcastStreamApiRequestProto {
     CreatePodcastRequestProto create = 2;
     GeneratePodcastRequestProto generate = 3;
     GetPodcastRequestProto get = 4;
+    GetPodcastSuggestionsRequestProto suggestions = 5;
   }
 }
 
@@ -20,6 +21,7 @@ message PodcastStreamApiResponseHeaderProto {
     CreatePodcastResponseHeaderProto create_header = 2;
     GeneratePodcastResponseHeaderProto generate = 3;
     GetPodcastResponseHeaderProto get = 4;
+    GetPodcastSuggestionsResponseHeaderProto suggestions = 5;
   }
   map<string, google.protobuf.Duration> latencies = 100;
 }
@@ -29,6 +31,7 @@ message PodcastStreamApiResponseDeltaProto {
     CreatePodcastResponseDeltaProto create_delta = 1;
     GeneratePodcastResponseDeltaProto generate_delta = 2;
     GetPodcastResponseDeltaProto get_delta = 3;
+    GetPodcastSuggestionsResponseDeltaProto suggestions = 5;
   }
 }
 
@@ -70,6 +73,14 @@ message GetPodcastResponseHeaderProto {
 }
 
 message GetPodcastResponseDeltaProto {}
+
+message GetPodcastSuggestionsRequestProto {}
+
+message GetPodcastSuggestionsResponseHeaderProto {
+  PodcastSuggestionsProto suggestions = 1;
+}
+
+message GetPodcastSuggestionsResponseDeltaProto {}
 
 message PodcastProto {
   google.protobuf.Timestamp updated_at = 1;
@@ -272,7 +283,8 @@ message PodcastKeyPointProto {
 }
 
 message PodcastSuggestionsProto {
-  repeated PodcastSuggestionsSectionProto sections = 1;
+  google.protobuf.Timestamp created_at = 1;
+  repeated PodcastSuggestionsSectionProto sections = 2;
 }
 
 message PodcastSuggestionsSectionProto {
