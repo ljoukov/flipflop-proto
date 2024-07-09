@@ -31,7 +31,7 @@ message PodcastStreamApiResponseDeltaProto {
     CreatePodcastResponseDeltaProto create_delta = 1;
     GeneratePodcastResponseDeltaProto generate_delta = 2;
     GetPodcastResponseDeltaProto get_delta = 3;
-    GetPodcastSuggestionsResponseDeltaProto suggestions = 5;
+    GetPodcastSuggestionsResponseDeltaProto suggestions_delta = 5;
   }
 }
 

@@ -455,12 +455,12 @@ struct PodcastStreamApiResponseDeltaProto {
     set {responseDelta = .getDelta(newValue)}
   }
 
-  var suggestions: GetPodcastSuggestionsResponseDeltaProto {
+  var suggestionsDelta: GetPodcastSuggestionsResponseDeltaProto {
     get {
-      if case .suggestions(let v)? = responseDelta {return v}
+      if case .suggestionsDelta(let v)? = responseDelta {return v}
       return GetPodcastSuggestionsResponseDeltaProto()
     }
-    set {responseDelta = .suggestions(newValue)}
+    set {responseDelta = .suggestionsDelta(newValue)}
   }
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -469,7 +469,7 @@ struct PodcastStreamApiResponseDeltaProto {
     case createDelta(CreatePodcastResponseDeltaProto)
     case generateDelta(GeneratePodcastResponseDeltaProto)
     case getDelta(GetPodcastResponseDeltaProto)
-    case suggestions(GetPodcastSuggestionsResponseDeltaProto)
+    case suggestionsDelta(GetPodcastSuggestionsResponseDeltaProto)
 
   #if !swift(>=4.1)
     static func ==(lhs: PodcastStreamApiResponseDeltaProto.OneOf_ResponseDelta, rhs: PodcastStreamApiResponseDeltaProto.OneOf_ResponseDelta) -> Bool {
@@ -489,8 +489,8 @@ struct PodcastStreamApiResponseDeltaProto {
         guard case .getDelta(let l) = lhs, case .getDelta(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
-      case (.suggestions, .suggestions): return {
-        guard case .suggestions(let l) = lhs, case .suggestions(let r) = rhs else { preconditionFailure() }
+      case (.suggestionsDelta, .suggestionsDelta): return {
+        guard case .suggestionsDelta(let l) = lhs, case .suggestionsDelta(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       default: return false
@@ -1724,7 +1724,7 @@ extension PodcastStreamApiResponseDeltaProto: SwiftProtobuf.Message, SwiftProtob
     1: .standard(proto: "create_delta"),
     2: .standard(proto: "generate_delta"),
     3: .standard(proto: "get_delta"),
-    5: .same(proto: "suggestions"),
+    5: .standard(proto: "suggestions_delta"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1777,12 +1777,12 @@ extension PodcastStreamApiResponseDeltaProto: SwiftProtobuf.Message, SwiftProtob
         var hadOneofValue = false
         if let current = self.responseDelta {
           hadOneofValue = true
-          if case .suggestions(let m) = current {v = m}
+          if case .suggestionsDelta(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.responseDelta = .suggestions(v)
+          self.responseDelta = .suggestionsDelta(v)
         }
       }()
       default: break
@@ -1808,8 +1808,8 @@ extension PodcastStreamApiResponseDeltaProto: SwiftProtobuf.Message, SwiftProtob
       guard case .getDelta(let v)? = self.responseDelta else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
     }()
-    case .suggestions?: try {
-      guard case .suggestions(let v)? = self.responseDelta else { preconditionFailure() }
+    case .suggestionsDelta?: try {
+      guard case .suggestionsDelta(let v)? = self.responseDelta else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
     }()
     case nil: break
