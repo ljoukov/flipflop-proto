@@ -37,6 +37,12 @@ export interface TaskProto {
          */
         generatePodcast: GeneratePodcastTaskProto;
     } | {
+        oneofKind: "generateSuggestions";
+        /**
+         * @generated from protobuf field: GeneratePodcastSuggestionsTaskProto generate_suggestions = 11;
+         */
+        generateSuggestions: GeneratePodcastSuggestionsTaskProto;
+    } | {
         oneofKind: undefined;
     };
 }
@@ -53,13 +59,23 @@ export interface GeneratePodcastTaskProto {
      */
     request?: GeneratePodcastRequestProto;
 }
+/**
+ * @generated from protobuf message GeneratePodcastSuggestionsTaskProto
+ */
+export interface GeneratePodcastSuggestionsTaskProto {
+    /**
+     * @generated from protobuf field: string user_id = 1;
+     */
+    userId: string;
+}
 // @generated message type with reflection information, may provide speed optimized methods
 class TaskProto$Type extends MessageType<TaskProto> {
     constructor() {
         super("TaskProto", [
             { no: 1, name: "task_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "created_at", kind: "message", T: () => Timestamp },
-            { no: 10, name: "generate_podcast", kind: "message", oneof: "type", T: () => GeneratePodcastTaskProto }
+            { no: 10, name: "generate_podcast", kind: "message", oneof: "type", T: () => GeneratePodcastTaskProto },
+            { no: 11, name: "generate_suggestions", kind: "message", oneof: "type", T: () => GeneratePodcastSuggestionsTaskProto }
         ]);
     }
     create(value?: PartialMessage<TaskProto>): TaskProto {
@@ -86,6 +102,12 @@ class TaskProto$Type extends MessageType<TaskProto> {
                         generatePodcast: GeneratePodcastTaskProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).generatePodcast)
                     };
                     break;
+                case /* GeneratePodcastSuggestionsTaskProto generate_suggestions */ 11:
+                    message.type = {
+                        oneofKind: "generateSuggestions",
+                        generateSuggestions: GeneratePodcastSuggestionsTaskProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).generateSuggestions)
+                    };
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -107,6 +129,9 @@ class TaskProto$Type extends MessageType<TaskProto> {
         /* GeneratePodcastTaskProto generate_podcast = 10; */
         if (message.type.oneofKind === "generatePodcast")
             GeneratePodcastTaskProto.internalBinaryWrite(message.type.generatePodcast, writer.tag(10, WireType.LengthDelimited).fork(), options).join();
+        /* GeneratePodcastSuggestionsTaskProto generate_suggestions = 11; */
+        if (message.type.oneofKind === "generateSuggestions")
+            GeneratePodcastSuggestionsTaskProto.internalBinaryWrite(message.type.generateSuggestions, writer.tag(11, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -171,3 +196,50 @@ class GeneratePodcastTaskProto$Type extends MessageType<GeneratePodcastTaskProto
  * @generated MessageType for protobuf message GeneratePodcastTaskProto
  */
 export const GeneratePodcastTaskProto = new GeneratePodcastTaskProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class GeneratePodcastSuggestionsTaskProto$Type extends MessageType<GeneratePodcastSuggestionsTaskProto> {
+    constructor() {
+        super("GeneratePodcastSuggestionsTaskProto", [
+            { no: 1, name: "user_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<GeneratePodcastSuggestionsTaskProto>): GeneratePodcastSuggestionsTaskProto {
+        const message = { userId: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<GeneratePodcastSuggestionsTaskProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GeneratePodcastSuggestionsTaskProto): GeneratePodcastSuggestionsTaskProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string user_id */ 1:
+                    message.userId = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: GeneratePodcastSuggestionsTaskProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string user_id = 1; */
+        if (message.userId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.userId);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message GeneratePodcastSuggestionsTaskProto
+ */
+export const GeneratePodcastSuggestionsTaskProto = new GeneratePodcastSuggestionsTaskProto$Type();
