@@ -499,6 +499,8 @@ struct StoredPodcastSuggestionsProto {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  var suggestionsID: String = String()
+
   var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
     get {return _createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_createdAt = newValue}
@@ -1437,11 +1439,12 @@ extension StoredPodcastKeyPointProto: SwiftProtobuf.Message, SwiftProtobuf._Mess
 extension StoredPodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "StoredPodcastSuggestionsProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "created_at"),
-    2: .standard(proto: "updated_at"),
-    3: .same(proto: "reasoning"),
-    4: .same(proto: "ranking"),
-    5: .same(proto: "sections"),
+    1: .standard(proto: "suggestions_id"),
+    2: .standard(proto: "created_at"),
+    3: .standard(proto: "updated_at"),
+    4: .same(proto: "reasoning"),
+    5: .same(proto: "ranking"),
+    6: .same(proto: "sections"),
     100: .same(proto: "latencies"),
     101: .same(proto: "log"),
   ]
@@ -1452,11 +1455,12 @@ extension StoredPodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf._M
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularMessageField(value: &self._createdAt) }()
-      case 2: try { try decoder.decodeSingularMessageField(value: &self._updatedAt) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.reasoning) }()
-      case 4: try { try decoder.decodeSingularStringField(value: &self.ranking) }()
-      case 5: try { try decoder.decodeRepeatedMessageField(value: &self.sections) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self.suggestionsID) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._createdAt) }()
+      case 3: try { try decoder.decodeSingularMessageField(value: &self._updatedAt) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.reasoning) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.ranking) }()
+      case 6: try { try decoder.decodeRepeatedMessageField(value: &self.sections) }()
       case 100: try { try decoder.decodeSingularMessageField(value: &self._latencies) }()
       case 101: try { try decoder.decodeSingularMessageField(value: &self._log) }()
       default: break
@@ -1469,20 +1473,23 @@ extension StoredPodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf._M
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.suggestionsID.isEmpty {
+      try visitor.visitSingularStringField(value: self.suggestionsID, fieldNumber: 1)
+    }
     try { if let v = self._createdAt {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    } }()
-    try { if let v = self._updatedAt {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     } }()
+    try { if let v = self._updatedAt {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+    } }()
     if !self.reasoning.isEmpty {
-      try visitor.visitSingularStringField(value: self.reasoning, fieldNumber: 3)
+      try visitor.visitSingularStringField(value: self.reasoning, fieldNumber: 4)
     }
     if !self.ranking.isEmpty {
-      try visitor.visitSingularStringField(value: self.ranking, fieldNumber: 4)
+      try visitor.visitSingularStringField(value: self.ranking, fieldNumber: 5)
     }
     if !self.sections.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.sections, fieldNumber: 5)
+      try visitor.visitRepeatedMessageField(value: self.sections, fieldNumber: 6)
     }
     try { if let v = self._latencies {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 100)
@@ -1494,6 +1501,7 @@ extension StoredPodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf._M
   }
 
   static func ==(lhs: StoredPodcastSuggestionsProto, rhs: StoredPodcastSuggestionsProto) -> Bool {
+    if lhs.suggestionsID != rhs.suggestionsID {return false}
     if lhs._createdAt != rhs._createdAt {return false}
     if lhs._updatedAt != rhs._updatedAt {return false}
     if lhs.reasoning != rhs.reasoning {return false}

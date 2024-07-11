@@ -136,11 +136,12 @@ message StoredPodcastKeyPointProto {
 }
 
 message StoredPodcastSuggestionsProto {
-  google.protobuf.Timestamp created_at = 1;
-  google.protobuf.Timestamp updated_at = 2;
-  string reasoning = 3;
-  string ranking = 4;
-  repeated StoredPodcastSuggestionsSectionProto sections = 5;
+  string suggestions_id = 1;
+  google.protobuf.Timestamp created_at = 2;
+  google.protobuf.Timestamp updated_at = 3;
+  string reasoning = 4;
+  string ranking = 5;
+  repeated StoredPodcastSuggestionsSectionProto sections = 6;
 
   // Debug metadata
   LatenciesProto latencies = 100;

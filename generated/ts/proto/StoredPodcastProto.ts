@@ -327,23 +327,27 @@ export interface StoredPodcastKeyPointProto {
  */
 export interface StoredPodcastSuggestionsProto {
     /**
-     * @generated from protobuf field: google.protobuf.Timestamp created_at = 1;
+     * @generated from protobuf field: string suggestions_id = 1;
+     */
+    suggestionsId: string;
+    /**
+     * @generated from protobuf field: google.protobuf.Timestamp created_at = 2;
      */
     createdAt?: Timestamp;
     /**
-     * @generated from protobuf field: google.protobuf.Timestamp updated_at = 2;
+     * @generated from protobuf field: google.protobuf.Timestamp updated_at = 3;
      */
     updatedAt?: Timestamp;
     /**
-     * @generated from protobuf field: string reasoning = 3;
+     * @generated from protobuf field: string reasoning = 4;
      */
     reasoning: string;
     /**
-     * @generated from protobuf field: string ranking = 4;
+     * @generated from protobuf field: string ranking = 5;
      */
     ranking: string;
     /**
-     * @generated from protobuf field: repeated StoredPodcastSuggestionsSectionProto sections = 5;
+     * @generated from protobuf field: repeated StoredPodcastSuggestionsSectionProto sections = 6;
      */
     sections: StoredPodcastSuggestionsSectionProto[];
     /**
@@ -1449,17 +1453,18 @@ export const StoredPodcastKeyPointProto = new StoredPodcastKeyPointProto$Type();
 class StoredPodcastSuggestionsProto$Type extends MessageType<StoredPodcastSuggestionsProto> {
     constructor() {
         super("StoredPodcastSuggestionsProto", [
-            { no: 1, name: "created_at", kind: "message", T: () => Timestamp },
-            { no: 2, name: "updated_at", kind: "message", T: () => Timestamp },
-            { no: 3, name: "reasoning", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "ranking", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "sections", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastSuggestionsSectionProto },
+            { no: 1, name: "suggestions_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "created_at", kind: "message", T: () => Timestamp },
+            { no: 3, name: "updated_at", kind: "message", T: () => Timestamp },
+            { no: 4, name: "reasoning", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "ranking", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "sections", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastSuggestionsSectionProto },
             { no: 100, name: "latencies", kind: "message", T: () => LatenciesProto },
             { no: 101, name: "log", kind: "message", T: () => LogProto }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastSuggestionsProto>): StoredPodcastSuggestionsProto {
-        const message = { reasoning: "", ranking: "", sections: [] };
+        const message = { suggestionsId: "", reasoning: "", ranking: "", sections: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastSuggestionsProto>(this, message, value);
@@ -1470,19 +1475,22 @@ class StoredPodcastSuggestionsProto$Type extends MessageType<StoredPodcastSugges
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* google.protobuf.Timestamp created_at */ 1:
+                case /* string suggestions_id */ 1:
+                    message.suggestionsId = reader.string();
+                    break;
+                case /* google.protobuf.Timestamp created_at */ 2:
                     message.createdAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.createdAt);
                     break;
-                case /* google.protobuf.Timestamp updated_at */ 2:
+                case /* google.protobuf.Timestamp updated_at */ 3:
                     message.updatedAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.updatedAt);
                     break;
-                case /* string reasoning */ 3:
+                case /* string reasoning */ 4:
                     message.reasoning = reader.string();
                     break;
-                case /* string ranking */ 4:
+                case /* string ranking */ 5:
                     message.ranking = reader.string();
                     break;
-                case /* repeated StoredPodcastSuggestionsSectionProto sections */ 5:
+                case /* repeated StoredPodcastSuggestionsSectionProto sections */ 6:
                     message.sections.push(StoredPodcastSuggestionsSectionProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 case /* LatenciesProto latencies */ 100:
@@ -1503,21 +1511,24 @@ class StoredPodcastSuggestionsProto$Type extends MessageType<StoredPodcastSugges
         return message;
     }
     internalBinaryWrite(message: StoredPodcastSuggestionsProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* google.protobuf.Timestamp created_at = 1; */
+        /* string suggestions_id = 1; */
+        if (message.suggestionsId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.suggestionsId);
+        /* google.protobuf.Timestamp created_at = 2; */
         if (message.createdAt)
-            Timestamp.internalBinaryWrite(message.createdAt, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* google.protobuf.Timestamp updated_at = 2; */
+            Timestamp.internalBinaryWrite(message.createdAt, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.Timestamp updated_at = 3; */
         if (message.updatedAt)
-            Timestamp.internalBinaryWrite(message.updatedAt, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* string reasoning = 3; */
+            Timestamp.internalBinaryWrite(message.updatedAt, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* string reasoning = 4; */
         if (message.reasoning !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.reasoning);
-        /* string ranking = 4; */
+            writer.tag(4, WireType.LengthDelimited).string(message.reasoning);
+        /* string ranking = 5; */
         if (message.ranking !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.ranking);
-        /* repeated StoredPodcastSuggestionsSectionProto sections = 5; */
+            writer.tag(5, WireType.LengthDelimited).string(message.ranking);
+        /* repeated StoredPodcastSuggestionsSectionProto sections = 6; */
         for (let i = 0; i < message.sections.length; i++)
-            StoredPodcastSuggestionsSectionProto.internalBinaryWrite(message.sections[i], writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+            StoredPodcastSuggestionsSectionProto.internalBinaryWrite(message.sections[i], writer.tag(6, WireType.LengthDelimited).fork(), options).join();
         /* LatenciesProto latencies = 100; */
         if (message.latencies)
             LatenciesProto.internalBinaryWrite(message.latencies, writer.tag(100, WireType.LengthDelimited).fork(), options).join();

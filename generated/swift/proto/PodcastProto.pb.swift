@@ -550,9 +550,75 @@ struct GeneratePodcastRequestProto {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  var type: GeneratePodcastRequestProto.OneOf_Type? = nil
+
+  var points: GeneratePodcastFromPointsProto {
+    get {
+      if case .points(let v)? = type {return v}
+      return GeneratePodcastFromPointsProto()
+    }
+    set {type = .points(newValue)}
+  }
+
+  var suggestion: GeneratePodcastFromSuggestionProto {
+    get {
+      if case .suggestion(let v)? = type {return v}
+      return GeneratePodcastFromSuggestionProto()
+    }
+    set {type = .suggestion(newValue)}
+  }
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  enum OneOf_Type: Equatable {
+    case points(GeneratePodcastFromPointsProto)
+    case suggestion(GeneratePodcastFromSuggestionProto)
+
+  #if !swift(>=4.1)
+    static func ==(lhs: GeneratePodcastRequestProto.OneOf_Type, rhs: GeneratePodcastRequestProto.OneOf_Type) -> Bool {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch (lhs, rhs) {
+      case (.points, .points): return {
+        guard case .points(let l) = lhs, case .points(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.suggestion, .suggestion): return {
+        guard case .suggestion(let l) = lhs, case .suggestion(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      default: return false
+      }
+    }
+  #endif
+  }
+
+  init() {}
+}
+
+struct GeneratePodcastFromPointsProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
   var podcastID: String = String()
 
   var pointIds: [String] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct GeneratePodcastFromSuggestionProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var suggestionsID: String = String()
+
+  var suggestionID: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -1284,6 +1350,8 @@ struct PodcastSuggestionsProto {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  var suggestionsID: String = String()
+
   var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
     get {return _createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_createdAt = newValue}
@@ -1353,6 +1421,9 @@ extension CreatePodcastResponseHeaderProto: @unchecked Sendable {}
 extension CreatePodcastResponseDeltaProto: @unchecked Sendable {}
 extension CreatePodcastResponseDeltaProto.OneOf_Type: @unchecked Sendable {}
 extension GeneratePodcastRequestProto: @unchecked Sendable {}
+extension GeneratePodcastRequestProto.OneOf_Type: @unchecked Sendable {}
+extension GeneratePodcastFromPointsProto: @unchecked Sendable {}
+extension GeneratePodcastFromSuggestionProto: @unchecked Sendable {}
 extension GeneratePodcastResponseHeaderProto: @unchecked Sendable {}
 extension GeneratePodcastResponseDeltaProto: @unchecked Sendable {}
 extension GeneratePodcastResponseDeltaProto.OneOf_Type: @unchecked Sendable {}
@@ -1922,6 +1993,76 @@ extension CreatePodcastResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf.
 extension GeneratePodcastRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "GeneratePodcastRequestProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "points"),
+    2: .same(proto: "suggestion"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try {
+        var v: GeneratePodcastFromPointsProto?
+        var hadOneofValue = false
+        if let current = self.type {
+          hadOneofValue = true
+          if case .points(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.type = .points(v)
+        }
+      }()
+      case 2: try {
+        var v: GeneratePodcastFromSuggestionProto?
+        var hadOneofValue = false
+        if let current = self.type {
+          hadOneofValue = true
+          if case .suggestion(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.type = .suggestion(v)
+        }
+      }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    switch self.type {
+    case .points?: try {
+      guard case .points(let v)? = self.type else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    }()
+    case .suggestion?: try {
+      guard case .suggestion(let v)? = self.type else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    }()
+    case nil: break
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: GeneratePodcastRequestProto, rhs: GeneratePodcastRequestProto) -> Bool {
+    if lhs.type != rhs.type {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension GeneratePodcastFromPointsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "GeneratePodcastFromPointsProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "podcast_id"),
     2: .standard(proto: "point_ids"),
   ]
@@ -1949,9 +2090,47 @@ extension GeneratePodcastRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: GeneratePodcastRequestProto, rhs: GeneratePodcastRequestProto) -> Bool {
+  static func ==(lhs: GeneratePodcastFromPointsProto, rhs: GeneratePodcastFromPointsProto) -> Bool {
     if lhs.podcastID != rhs.podcastID {return false}
     if lhs.pointIds != rhs.pointIds {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension GeneratePodcastFromSuggestionProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "GeneratePodcastFromSuggestionProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "suggestions_id"),
+    2: .standard(proto: "suggestion_id"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.suggestionsID) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.suggestionID) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.suggestionsID.isEmpty {
+      try visitor.visitSingularStringField(value: self.suggestionsID, fieldNumber: 1)
+    }
+    if !self.suggestionID.isEmpty {
+      try visitor.visitSingularStringField(value: self.suggestionID, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: GeneratePodcastFromSuggestionProto, rhs: GeneratePodcastFromSuggestionProto) -> Bool {
+    if lhs.suggestionsID != rhs.suggestionsID {return false}
+    if lhs.suggestionID != rhs.suggestionID {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -3416,8 +3595,9 @@ extension PodcastKeyPointProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
 extension PodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "PodcastSuggestionsProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "created_at"),
-    2: .same(proto: "sections"),
+    1: .standard(proto: "suggestions_id"),
+    2: .standard(proto: "created_at"),
+    3: .same(proto: "sections"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3426,8 +3606,9 @@ extension PodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf._Message
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularMessageField(value: &self._createdAt) }()
-      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.sections) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self.suggestionsID) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._createdAt) }()
+      case 3: try { try decoder.decodeRepeatedMessageField(value: &self.sections) }()
       default: break
       }
     }
@@ -3438,16 +3619,20 @@ extension PodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf._Message
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.suggestionsID.isEmpty {
+      try visitor.visitSingularStringField(value: self.suggestionsID, fieldNumber: 1)
+    }
     try { if let v = self._createdAt {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     } }()
     if !self.sections.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.sections, fieldNumber: 2)
+      try visitor.visitRepeatedMessageField(value: self.sections, fieldNumber: 3)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: PodcastSuggestionsProto, rhs: PodcastSuggestionsProto) -> Bool {
+    if lhs.suggestionsID != rhs.suggestionsID {return false}
     if lhs._createdAt != rhs._createdAt {return false}
     if lhs.sections != rhs.sections {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
