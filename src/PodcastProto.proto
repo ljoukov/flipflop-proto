@@ -307,7 +307,7 @@ message PodcastSuggestionsSectionProto {
 }
 
 message PodcastSuggestionProto {
-  string podcast_id = 1;
+  string suggested_podcast_id = 1;
   string title = 3;
   string badge = 4;  // Q&A, Explainer, ...
   string thumbnail_path = 5;

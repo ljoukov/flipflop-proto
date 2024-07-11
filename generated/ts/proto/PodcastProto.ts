@@ -787,9 +787,9 @@ export interface PodcastSuggestionsSectionProto {
  */
 export interface PodcastSuggestionProto {
     /**
-     * @generated from protobuf field: string podcast_id = 1;
+     * @generated from protobuf field: string suggested_podcast_id = 1;
      */
-    podcastId: string;
+    suggestedPodcastId: string;
     /**
      * @generated from protobuf field: string title = 3;
      */
@@ -3462,14 +3462,14 @@ export const PodcastSuggestionsSectionProto = new PodcastSuggestionsSectionProto
 class PodcastSuggestionProto$Type extends MessageType<PodcastSuggestionProto> {
     constructor() {
         super("PodcastSuggestionProto", [
-            { no: 1, name: "podcast_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 1, name: "suggested_podcast_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "badge", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "thumbnail_path", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PodcastSuggestionProto>): PodcastSuggestionProto {
-        const message = { podcastId: "", title: "", badge: "", thumbnailPath: "" };
+        const message = { suggestedPodcastId: "", title: "", badge: "", thumbnailPath: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastSuggestionProto>(this, message, value);
@@ -3480,8 +3480,8 @@ class PodcastSuggestionProto$Type extends MessageType<PodcastSuggestionProto> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string podcast_id */ 1:
-                    message.podcastId = reader.string();
+                case /* string suggested_podcast_id */ 1:
+                    message.suggestedPodcastId = reader.string();
                     break;
                 case /* string title */ 3:
                     message.title = reader.string();
@@ -3504,9 +3504,9 @@ class PodcastSuggestionProto$Type extends MessageType<PodcastSuggestionProto> {
         return message;
     }
     internalBinaryWrite(message: PodcastSuggestionProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string podcast_id = 1; */
-        if (message.podcastId !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.podcastId);
+        /* string suggested_podcast_id = 1; */
+        if (message.suggestedPodcastId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.suggestedPodcastId);
         /* string title = 3; */
         if (message.title !== "")
             writer.tag(3, WireType.LengthDelimited).string(message.title);
