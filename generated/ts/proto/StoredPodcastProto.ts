@@ -331,23 +331,27 @@ export interface StoredPodcastSuggestionsProto {
      */
     suggestionsId: string;
     /**
-     * @generated from protobuf field: google.protobuf.Timestamp created_at = 2;
+     * @generated from protobuf field: StoredPodcastSuggestionsStateProto state = 2;
+     */
+    state: StoredPodcastSuggestionsStateProto;
+    /**
+     * @generated from protobuf field: google.protobuf.Timestamp created_at = 3;
      */
     createdAt?: Timestamp;
     /**
-     * @generated from protobuf field: google.protobuf.Timestamp updated_at = 3;
+     * @generated from protobuf field: google.protobuf.Timestamp updated_at = 4;
      */
     updatedAt?: Timestamp;
     /**
-     * @generated from protobuf field: string reasoning = 4;
+     * @generated from protobuf field: string reasoning = 5;
      */
     reasoning: string;
     /**
-     * @generated from protobuf field: string ranking = 5;
+     * @generated from protobuf field: string ranking = 6;
      */
     ranking: string;
     /**
-     * @generated from protobuf field: repeated StoredPodcastSuggestionsSectionProto sections = 6;
+     * @generated from protobuf field: repeated StoredPodcastSuggestionsSectionProto sections = 7;
      */
     sections: StoredPodcastSuggestionsSectionProto[];
     /**
@@ -456,6 +460,27 @@ export enum StoredPodcastSectionTypeProto {
      * @generated from protobuf enum value: STORED_PODCAST_SECTION_TYPE_PROTO_CONCLUSION = 3;
      */
     CONCLUSION = 3
+}
+/**
+ * @generated from protobuf enum StoredPodcastSuggestionsStateProto
+ */
+export enum StoredPodcastSuggestionsStateProto {
+    /**
+     * @generated from protobuf enum value: STORED_PODCAST_SUGGESTIONS_STATE_PROTO_UNDEFINED = 0;
+     */
+    UNDEFINED = 0,
+    /**
+     * @generated from protobuf enum value: STORED_PODCAST_SUGGESTIONS_STATE_PROTO_GENERATING = 1;
+     */
+    GENERATING = 1,
+    /**
+     * @generated from protobuf enum value: STORED_PODCAST_SUGGESTIONS_STATE_PROTO_READY = 2;
+     */
+    READY = 2,
+    /**
+     * @generated from protobuf enum value: STORED_PODCAST_SUGGESTIONS_STATE_PROTO_FAILED = 3;
+     */
+    FAILED = 3
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
@@ -1454,17 +1479,18 @@ class StoredPodcastSuggestionsProto$Type extends MessageType<StoredPodcastSugges
     constructor() {
         super("StoredPodcastSuggestionsProto", [
             { no: 1, name: "suggestions_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "created_at", kind: "message", T: () => Timestamp },
-            { no: 3, name: "updated_at", kind: "message", T: () => Timestamp },
-            { no: 4, name: "reasoning", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "ranking", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 6, name: "sections", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastSuggestionsSectionProto },
+            { no: 2, name: "state", kind: "enum", T: () => ["StoredPodcastSuggestionsStateProto", StoredPodcastSuggestionsStateProto, "STORED_PODCAST_SUGGESTIONS_STATE_PROTO_"] },
+            { no: 3, name: "created_at", kind: "message", T: () => Timestamp },
+            { no: 4, name: "updated_at", kind: "message", T: () => Timestamp },
+            { no: 5, name: "reasoning", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "ranking", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 7, name: "sections", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastSuggestionsSectionProto },
             { no: 100, name: "latencies", kind: "message", T: () => LatenciesProto },
             { no: 101, name: "log", kind: "message", T: () => LogProto }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastSuggestionsProto>): StoredPodcastSuggestionsProto {
-        const message = { suggestionsId: "", reasoning: "", ranking: "", sections: [] };
+        const message = { suggestionsId: "", state: 0, reasoning: "", ranking: "", sections: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastSuggestionsProto>(this, message, value);
@@ -1478,19 +1504,22 @@ class StoredPodcastSuggestionsProto$Type extends MessageType<StoredPodcastSugges
                 case /* string suggestions_id */ 1:
                     message.suggestionsId = reader.string();
                     break;
-                case /* google.protobuf.Timestamp created_at */ 2:
+                case /* StoredPodcastSuggestionsStateProto state */ 2:
+                    message.state = reader.int32();
+                    break;
+                case /* google.protobuf.Timestamp created_at */ 3:
                     message.createdAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.createdAt);
                     break;
-                case /* google.protobuf.Timestamp updated_at */ 3:
+                case /* google.protobuf.Timestamp updated_at */ 4:
                     message.updatedAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.updatedAt);
                     break;
-                case /* string reasoning */ 4:
+                case /* string reasoning */ 5:
                     message.reasoning = reader.string();
                     break;
-                case /* string ranking */ 5:
+                case /* string ranking */ 6:
                     message.ranking = reader.string();
                     break;
-                case /* repeated StoredPodcastSuggestionsSectionProto sections */ 6:
+                case /* repeated StoredPodcastSuggestionsSectionProto sections */ 7:
                     message.sections.push(StoredPodcastSuggestionsSectionProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 case /* LatenciesProto latencies */ 100:
@@ -1514,21 +1543,24 @@ class StoredPodcastSuggestionsProto$Type extends MessageType<StoredPodcastSugges
         /* string suggestions_id = 1; */
         if (message.suggestionsId !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.suggestionsId);
-        /* google.protobuf.Timestamp created_at = 2; */
+        /* StoredPodcastSuggestionsStateProto state = 2; */
+        if (message.state !== 0)
+            writer.tag(2, WireType.Varint).int32(message.state);
+        /* google.protobuf.Timestamp created_at = 3; */
         if (message.createdAt)
-            Timestamp.internalBinaryWrite(message.createdAt, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* google.protobuf.Timestamp updated_at = 3; */
+            Timestamp.internalBinaryWrite(message.createdAt, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.Timestamp updated_at = 4; */
         if (message.updatedAt)
-            Timestamp.internalBinaryWrite(message.updatedAt, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* string reasoning = 4; */
+            Timestamp.internalBinaryWrite(message.updatedAt, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* string reasoning = 5; */
         if (message.reasoning !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.reasoning);
-        /* string ranking = 5; */
+            writer.tag(5, WireType.LengthDelimited).string(message.reasoning);
+        /* string ranking = 6; */
         if (message.ranking !== "")
-            writer.tag(5, WireType.LengthDelimited).string(message.ranking);
-        /* repeated StoredPodcastSuggestionsSectionProto sections = 6; */
+            writer.tag(6, WireType.LengthDelimited).string(message.ranking);
+        /* repeated StoredPodcastSuggestionsSectionProto sections = 7; */
         for (let i = 0; i < message.sections.length; i++)
-            StoredPodcastSuggestionsSectionProto.internalBinaryWrite(message.sections[i], writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+            StoredPodcastSuggestionsSectionProto.internalBinaryWrite(message.sections[i], writer.tag(7, WireType.LengthDelimited).fork(), options).join();
         /* LatenciesProto latencies = 100; */
         if (message.latencies)
             LatenciesProto.internalBinaryWrite(message.latencies, writer.tag(100, WireType.LengthDelimited).fork(), options).join();

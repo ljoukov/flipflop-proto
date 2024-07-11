@@ -137,15 +137,23 @@ message StoredPodcastKeyPointProto {
 
 message StoredPodcastSuggestionsProto {
   string suggestions_id = 1;
-  google.protobuf.Timestamp created_at = 2;
-  google.protobuf.Timestamp updated_at = 3;
-  string reasoning = 4;
-  string ranking = 5;
-  repeated StoredPodcastSuggestionsSectionProto sections = 6;
+  StoredPodcastSuggestionsStateProto state = 2;
+  google.protobuf.Timestamp created_at = 3;
+  google.protobuf.Timestamp updated_at = 4;
+  string reasoning = 5;
+  string ranking = 6;
+  repeated StoredPodcastSuggestionsSectionProto sections = 7;
 
   // Debug metadata
   LatenciesProto latencies = 100;
   LogProto log = 101;
+}
+
+enum StoredPodcastSuggestionsStateProto {
+  STORED_PODCAST_SUGGESTIONS_STATE_PROTO_UNDEFINED = 0;
+  STORED_PODCAST_SUGGESTIONS_STATE_PROTO_GENERATING = 1;
+  STORED_PODCAST_SUGGESTIONS_STATE_PROTO_READY = 2;
+  STORED_PODCAST_SUGGESTIONS_STATE_PROTO_FAILED = 3;
 }
 
 message StoredPodcastSuggestionsSectionProto {
