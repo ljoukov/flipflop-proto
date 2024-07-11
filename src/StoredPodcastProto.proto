@@ -165,7 +165,7 @@ message StoredPodcastSuggestionsSectionProto {
 }
 
 message StoredPodcastSuggestionProto {
-  string suggestion_id = 1;
+  string suggested_podcast_id = 1;
   string title = 2;
   string badge = 3;  // Q&A, Explainer, ...
   string thumbnail_prompt = 4;

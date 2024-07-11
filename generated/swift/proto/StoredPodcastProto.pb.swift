@@ -630,7 +630,7 @@ struct StoredPodcastSuggestionProto {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var suggestionID: String = String()
+  var suggestedPodcastID: String = String()
 
   var title: String = String()
 
@@ -1639,7 +1639,7 @@ extension StoredPodcastSuggestionsSectionProto: SwiftProtobuf.Message, SwiftProt
 extension StoredPodcastSuggestionProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "StoredPodcastSuggestionProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "suggestion_id"),
+    1: .standard(proto: "suggested_podcast_id"),
     2: .same(proto: "title"),
     3: .same(proto: "badge"),
     4: .standard(proto: "thumbnail_prompt"),
@@ -1652,7 +1652,7 @@ extension StoredPodcastSuggestionProto: SwiftProtobuf.Message, SwiftProtobuf._Me
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.suggestionID) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self.suggestedPodcastID) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.title) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.badge) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self.thumbnailPrompt) }()
@@ -1663,8 +1663,8 @@ extension StoredPodcastSuggestionProto: SwiftProtobuf.Message, SwiftProtobuf._Me
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.suggestionID.isEmpty {
-      try visitor.visitSingularStringField(value: self.suggestionID, fieldNumber: 1)
+    if !self.suggestedPodcastID.isEmpty {
+      try visitor.visitSingularStringField(value: self.suggestedPodcastID, fieldNumber: 1)
     }
     if !self.title.isEmpty {
       try visitor.visitSingularStringField(value: self.title, fieldNumber: 2)
@@ -1682,7 +1682,7 @@ extension StoredPodcastSuggestionProto: SwiftProtobuf.Message, SwiftProtobuf._Me
   }
 
   static func ==(lhs: StoredPodcastSuggestionProto, rhs: StoredPodcastSuggestionProto) -> Bool {
-    if lhs.suggestionID != rhs.suggestionID {return false}
+    if lhs.suggestedPodcastID != rhs.suggestedPodcastID {return false}
     if lhs.title != rhs.title {return false}
     if lhs.badge != rhs.badge {return false}
     if lhs.thumbnailPrompt != rhs.thumbnailPrompt {return false}

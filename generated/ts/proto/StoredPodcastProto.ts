@@ -395,9 +395,9 @@ export interface StoredPodcastSuggestionsSectionProto {
  */
 export interface StoredPodcastSuggestionProto {
     /**
-     * @generated from protobuf field: string suggestion_id = 1;
+     * @generated from protobuf field: string suggested_podcast_id = 1;
      */
-    suggestionId: string;
+    suggestedPodcastId: string;
     /**
      * @generated from protobuf field: string title = 2;
      */
@@ -1656,7 +1656,7 @@ export const StoredPodcastSuggestionsSectionProto = new StoredPodcastSuggestions
 class StoredPodcastSuggestionProto$Type extends MessageType<StoredPodcastSuggestionProto> {
     constructor() {
         super("StoredPodcastSuggestionProto", [
-            { no: 1, name: "suggestion_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 1, name: "suggested_podcast_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "badge", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "thumbnail_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
@@ -1664,7 +1664,7 @@ class StoredPodcastSuggestionProto$Type extends MessageType<StoredPodcastSuggest
         ]);
     }
     create(value?: PartialMessage<StoredPodcastSuggestionProto>): StoredPodcastSuggestionProto {
-        const message = { suggestionId: "", title: "", badge: "", thumbnailPrompt: "", thumbnailKey: "" };
+        const message = { suggestedPodcastId: "", title: "", badge: "", thumbnailPrompt: "", thumbnailKey: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastSuggestionProto>(this, message, value);
@@ -1675,8 +1675,8 @@ class StoredPodcastSuggestionProto$Type extends MessageType<StoredPodcastSuggest
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string suggestion_id */ 1:
-                    message.suggestionId = reader.string();
+                case /* string suggested_podcast_id */ 1:
+                    message.suggestedPodcastId = reader.string();
                     break;
                 case /* string title */ 2:
                     message.title = reader.string();
@@ -1702,9 +1702,9 @@ class StoredPodcastSuggestionProto$Type extends MessageType<StoredPodcastSuggest
         return message;
     }
     internalBinaryWrite(message: StoredPodcastSuggestionProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string suggestion_id = 1; */
-        if (message.suggestionId !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.suggestionId);
+        /* string suggested_podcast_id = 1; */
+        if (message.suggestedPodcastId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.suggestedPodcastId);
         /* string title = 2; */
         if (message.title !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.title);

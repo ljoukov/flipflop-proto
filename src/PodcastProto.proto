@@ -65,7 +65,7 @@ message GeneratePodcastFromPointsProto {
 
 message GeneratePodcastFromSuggestionProto {
   string suggestions_id = 1;
-  string suggestion_id = 2;
+  string suggested_podcast_id = 2;
 }
 
 message GeneratePodcastResponseHeaderProto {}
@@ -307,7 +307,7 @@ message PodcastSuggestionsSectionProto {
 }
 
 message PodcastSuggestionProto {
-  string suggestion_id = 1;
+  string podcast_id = 1;
   string title = 3;
   string badge = 4;  // Q&A, Explainer, ...
   string thumbnail_path = 5;

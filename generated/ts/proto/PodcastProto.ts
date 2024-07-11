@@ -229,9 +229,9 @@ export interface GeneratePodcastFromSuggestionProto {
      */
     suggestionsId: string;
     /**
-     * @generated from protobuf field: string suggestion_id = 2;
+     * @generated from protobuf field: string suggested_podcast_id = 2;
      */
-    suggestionId: string;
+    suggestedPodcastId: string;
 }
 /**
  * @generated from protobuf message GeneratePodcastResponseHeaderProto
@@ -787,9 +787,9 @@ export interface PodcastSuggestionsSectionProto {
  */
 export interface PodcastSuggestionProto {
     /**
-     * @generated from protobuf field: string suggestion_id = 1;
+     * @generated from protobuf field: string podcast_id = 1;
      */
-    suggestionId: string;
+    podcastId: string;
     /**
      * @generated from protobuf field: string title = 3;
      */
@@ -1451,11 +1451,11 @@ class GeneratePodcastFromSuggestionProto$Type extends MessageType<GeneratePodcas
     constructor() {
         super("GeneratePodcastFromSuggestionProto", [
             { no: 1, name: "suggestions_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "suggestion_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "suggested_podcast_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<GeneratePodcastFromSuggestionProto>): GeneratePodcastFromSuggestionProto {
-        const message = { suggestionsId: "", suggestionId: "" };
+        const message = { suggestionsId: "", suggestedPodcastId: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<GeneratePodcastFromSuggestionProto>(this, message, value);
@@ -1469,8 +1469,8 @@ class GeneratePodcastFromSuggestionProto$Type extends MessageType<GeneratePodcas
                 case /* string suggestions_id */ 1:
                     message.suggestionsId = reader.string();
                     break;
-                case /* string suggestion_id */ 2:
-                    message.suggestionId = reader.string();
+                case /* string suggested_podcast_id */ 2:
+                    message.suggestedPodcastId = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1487,9 +1487,9 @@ class GeneratePodcastFromSuggestionProto$Type extends MessageType<GeneratePodcas
         /* string suggestions_id = 1; */
         if (message.suggestionsId !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.suggestionsId);
-        /* string suggestion_id = 2; */
-        if (message.suggestionId !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.suggestionId);
+        /* string suggested_podcast_id = 2; */
+        if (message.suggestedPodcastId !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.suggestedPodcastId);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -3462,14 +3462,14 @@ export const PodcastSuggestionsSectionProto = new PodcastSuggestionsSectionProto
 class PodcastSuggestionProto$Type extends MessageType<PodcastSuggestionProto> {
     constructor() {
         super("PodcastSuggestionProto", [
-            { no: 1, name: "suggestion_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 1, name: "podcast_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "badge", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "thumbnail_path", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PodcastSuggestionProto>): PodcastSuggestionProto {
-        const message = { suggestionId: "", title: "", badge: "", thumbnailPath: "" };
+        const message = { podcastId: "", title: "", badge: "", thumbnailPath: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastSuggestionProto>(this, message, value);
@@ -3480,8 +3480,8 @@ class PodcastSuggestionProto$Type extends MessageType<PodcastSuggestionProto> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string suggestion_id */ 1:
-                    message.suggestionId = reader.string();
+                case /* string podcast_id */ 1:
+                    message.podcastId = reader.string();
                     break;
                 case /* string title */ 3:
                     message.title = reader.string();
@@ -3504,9 +3504,9 @@ class PodcastSuggestionProto$Type extends MessageType<PodcastSuggestionProto> {
         return message;
     }
     internalBinaryWrite(message: PodcastSuggestionProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string suggestion_id = 1; */
-        if (message.suggestionId !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.suggestionId);
+        /* string podcast_id = 1; */
+        if (message.podcastId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.podcastId);
         /* string title = 3; */
         if (message.title !== "")
             writer.tag(3, WireType.LengthDelimited).string(message.title);
