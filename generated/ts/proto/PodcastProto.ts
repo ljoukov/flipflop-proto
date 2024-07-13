@@ -385,15 +385,11 @@ export interface PodcastThumbnailProto {
      */
     title: string;
     /**
-     * @generated from protobuf field: PodcastBadgeProto badge = 4;
-     */
-    badge: PodcastBadgeProto;
-    /**
-     * @generated from protobuf field: string path = 5;
+     * @generated from protobuf field: string path = 4;
      */
     path: string;
     /**
-     * @generated from protobuf field: google.protobuf.Duration duration = 6;
+     * @generated from protobuf field: google.protobuf.Duration duration = 5;
      */
     duration?: Duration;
 }
@@ -823,27 +819,6 @@ export enum PodcastStatusProto {
      * @generated from protobuf enum value: PODCAST_STATUS_PROTO_FAILED = 3;
      */
     FAILED = 3
-}
-/**
- * @generated from protobuf enum PodcastBadgeProto
- */
-export enum PodcastBadgeProto {
-    /**
-     * @generated from protobuf enum value: PODCAST_BADGE_PROTO_UNDEFINED = 0;
-     */
-    UNDEFINED = 0,
-    /**
-     * @generated from protobuf enum value: PODCAST_BADGE_PROTO_NONE = 1;
-     */
-    NONE = 1,
-    /**
-     * @generated from protobuf enum value: PODCAST_BADGE_PROTO_LISTEN = 2;
-     */
-    LISTEN = 2,
-    /**
-     * @generated from protobuf enum value: PODCAST_BADGE_PROTO_POLL = 3;
-     */
-    POLL = 3
 }
 /**
  * @generated from protobuf enum PodcastVisualTransitionProto
@@ -2020,13 +1995,12 @@ class PodcastThumbnailProto$Type extends MessageType<PodcastThumbnailProto> {
             { no: 1, name: "status", kind: "enum", T: () => ["PodcastStatusProto", PodcastStatusProto, "PODCAST_STATUS_PROTO_"] },
             { no: 2, name: "display_status", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "badge", kind: "enum", T: () => ["PodcastBadgeProto", PodcastBadgeProto, "PODCAST_BADGE_PROTO_"] },
-            { no: 5, name: "path", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 6, name: "duration", kind: "message", T: () => Duration }
+            { no: 4, name: "path", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "duration", kind: "message", T: () => Duration }
         ]);
     }
     create(value?: PartialMessage<PodcastThumbnailProto>): PodcastThumbnailProto {
-        const message = { status: 0, displayStatus: "", title: "", badge: 0, path: "" };
+        const message = { status: 0, displayStatus: "", title: "", path: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastThumbnailProto>(this, message, value);
@@ -2046,13 +2020,10 @@ class PodcastThumbnailProto$Type extends MessageType<PodcastThumbnailProto> {
                 case /* string title */ 3:
                     message.title = reader.string();
                     break;
-                case /* PodcastBadgeProto badge */ 4:
-                    message.badge = reader.int32();
-                    break;
-                case /* string path */ 5:
+                case /* string path */ 4:
                     message.path = reader.string();
                     break;
-                case /* google.protobuf.Duration duration */ 6:
+                case /* google.protobuf.Duration duration */ 5:
                     message.duration = Duration.internalBinaryRead(reader, reader.uint32(), options, message.duration);
                     break;
                 default:
@@ -2076,15 +2047,12 @@ class PodcastThumbnailProto$Type extends MessageType<PodcastThumbnailProto> {
         /* string title = 3; */
         if (message.title !== "")
             writer.tag(3, WireType.LengthDelimited).string(message.title);
-        /* PodcastBadgeProto badge = 4; */
-        if (message.badge !== 0)
-            writer.tag(4, WireType.Varint).int32(message.badge);
-        /* string path = 5; */
+        /* string path = 4; */
         if (message.path !== "")
-            writer.tag(5, WireType.LengthDelimited).string(message.path);
-        /* google.protobuf.Duration duration = 6; */
+            writer.tag(4, WireType.LengthDelimited).string(message.path);
+        /* google.protobuf.Duration duration = 5; */
         if (message.duration)
-            Duration.internalBinaryWrite(message.duration, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+            Duration.internalBinaryWrite(message.duration, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

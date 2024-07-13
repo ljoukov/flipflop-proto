@@ -68,54 +68,6 @@ extension PodcastStatusProto: CaseIterable {
 
 #endif  // swift(>=4.2)
 
-enum PodcastBadgeProto: SwiftProtobuf.Enum {
-  typealias RawValue = Int
-  case undefined // = 0
-  case none // = 1
-  case listen // = 2
-  case poll // = 3
-  case UNRECOGNIZED(Int)
-
-  init() {
-    self = .undefined
-  }
-
-  init?(rawValue: Int) {
-    switch rawValue {
-    case 0: self = .undefined
-    case 1: self = .none
-    case 2: self = .listen
-    case 3: self = .poll
-    default: self = .UNRECOGNIZED(rawValue)
-    }
-  }
-
-  var rawValue: Int {
-    switch self {
-    case .undefined: return 0
-    case .none: return 1
-    case .listen: return 2
-    case .poll: return 3
-    case .UNRECOGNIZED(let i): return i
-    }
-  }
-
-}
-
-#if swift(>=4.2)
-
-extension PodcastBadgeProto: CaseIterable {
-  // The compiler won't synthesize support with the UNRECOGNIZED case.
-  static var allCases: [PodcastBadgeProto] = [
-    .undefined,
-    .none,
-    .listen,
-    .poll,
-  ]
-}
-
-#endif  // swift(>=4.2)
-
 enum PodcastVisualTransitionProto: SwiftProtobuf.Enum {
   typealias RawValue = Int
   case undefined // = 0
@@ -901,8 +853,6 @@ struct PodcastThumbnailProto {
 
   var title: String = String()
 
-  var badge: PodcastBadgeProto = .undefined
-
   var path: String = String()
 
   var duration: SwiftProtobuf.Google_Protobuf_Duration {
@@ -1407,7 +1357,6 @@ struct PodcastSuggestionProto {
 
 #if swift(>=5.5) && canImport(_Concurrency)
 extension PodcastStatusProto: @unchecked Sendable {}
-extension PodcastBadgeProto: @unchecked Sendable {}
 extension PodcastVisualTransitionProto: @unchecked Sendable {}
 extension PodcastHostProto: @unchecked Sendable {}
 extension PodcastStreamApiRequestProto: @unchecked Sendable {}
@@ -1472,15 +1421,6 @@ extension PodcastStatusProto: SwiftProtobuf._ProtoNameProviding {
     1: .same(proto: "PODCAST_STATUS_PROTO_GENERATING"),
     2: .same(proto: "PODCAST_STATUS_PROTO_READY"),
     3: .same(proto: "PODCAST_STATUS_PROTO_FAILED"),
-  ]
-}
-
-extension PodcastBadgeProto: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    0: .same(proto: "PODCAST_BADGE_PROTO_UNDEFINED"),
-    1: .same(proto: "PODCAST_BADGE_PROTO_NONE"),
-    2: .same(proto: "PODCAST_BADGE_PROTO_LISTEN"),
-    3: .same(proto: "PODCAST_BADGE_PROTO_POLL"),
   ]
 }
 
@@ -2586,9 +2526,8 @@ extension PodcastThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     1: .same(proto: "status"),
     2: .standard(proto: "display_status"),
     3: .same(proto: "title"),
-    4: .same(proto: "badge"),
-    5: .same(proto: "path"),
-    6: .same(proto: "duration"),
+    4: .same(proto: "path"),
+    5: .same(proto: "duration"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2600,9 +2539,8 @@ extension PodcastThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
       case 1: try { try decoder.decodeSingularEnumField(value: &self.status) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.displayStatus) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.title) }()
-      case 4: try { try decoder.decodeSingularEnumField(value: &self.badge) }()
-      case 5: try { try decoder.decodeSingularStringField(value: &self.path) }()
-      case 6: try { try decoder.decodeSingularMessageField(value: &self._duration) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.path) }()
+      case 5: try { try decoder.decodeSingularMessageField(value: &self._duration) }()
       default: break
       }
     }
@@ -2622,14 +2560,11 @@ extension PodcastThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     if !self.title.isEmpty {
       try visitor.visitSingularStringField(value: self.title, fieldNumber: 3)
     }
-    if self.badge != .undefined {
-      try visitor.visitSingularEnumField(value: self.badge, fieldNumber: 4)
-    }
     if !self.path.isEmpty {
-      try visitor.visitSingularStringField(value: self.path, fieldNumber: 5)
+      try visitor.visitSingularStringField(value: self.path, fieldNumber: 4)
     }
     try { if let v = self._duration {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
     } }()
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -2638,7 +2573,6 @@ extension PodcastThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     if lhs.status != rhs.status {return false}
     if lhs.displayStatus != rhs.displayStatus {return false}
     if lhs.title != rhs.title {return false}
-    if lhs.badge != rhs.badge {return false}
     if lhs.path != rhs.path {return false}
     if lhs._duration != rhs._duration {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
