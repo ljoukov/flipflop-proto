@@ -610,19 +610,67 @@ struct StoredPodcastSuggestionsSectionProto {
   // methods supported on all messages.
 
   /// e.g. "do-right-now"
-  var sectionID: String = String()
+  var sectionID: String {
+    get {return _storage._sectionID}
+    set {_uniqueStorage()._sectionID = newValue}
+  }
 
-  var reasoning: String = String()
+  var reasoning: String {
+    get {return _storage._reasoning}
+    set {_uniqueStorage()._reasoning = newValue}
+  }
 
-  var title: String = String()
+  var title: String {
+    get {return _storage._title}
+    set {_uniqueStorage()._title = newValue}
+  }
 
-  var stylePrompt: String = String()
+  var stylePrompt: String {
+    get {return _storage._stylePrompt}
+    set {_uniqueStorage()._stylePrompt = newValue}
+  }
 
-  var suggestions: [StoredPodcastSuggestionProto] = []
+  var bannerSuggestion: StoredPodcastSuggestionProto {
+    get {return _storage._bannerSuggestion ?? StoredPodcastSuggestionProto()}
+    set {_uniqueStorage()._bannerSuggestion = newValue}
+  }
+  /// Returns true if `bannerSuggestion` has been explicitly set.
+  var hasBannerSuggestion: Bool {return _storage._bannerSuggestion != nil}
+  /// Clears the value of `bannerSuggestion`. Subsequent reads from it will return its default value.
+  mutating func clearBannerSuggestion() {_uniqueStorage()._bannerSuggestion = nil}
+
+  var footerSuggestion: StoredPodcastSuggestionProto {
+    get {return _storage._footerSuggestion ?? StoredPodcastSuggestionProto()}
+    set {_uniqueStorage()._footerSuggestion = newValue}
+  }
+  /// Returns true if `footerSuggestion` has been explicitly set.
+  var hasFooterSuggestion: Bool {return _storage._footerSuggestion != nil}
+  /// Clears the value of `footerSuggestion`. Subsequent reads from it will return its default value.
+  mutating func clearFooterSuggestion() {_uniqueStorage()._footerSuggestion = nil}
+
+  var story1: StoredPodcastStoryProto {
+    get {return _storage._story1 ?? StoredPodcastStoryProto()}
+    set {_uniqueStorage()._story1 = newValue}
+  }
+  /// Returns true if `story1` has been explicitly set.
+  var hasStory1: Bool {return _storage._story1 != nil}
+  /// Clears the value of `story1`. Subsequent reads from it will return its default value.
+  mutating func clearStory1() {_uniqueStorage()._story1 = nil}
+
+  var story2: StoredPodcastStoryProto {
+    get {return _storage._story2 ?? StoredPodcastStoryProto()}
+    set {_uniqueStorage()._story2 = newValue}
+  }
+  /// Returns true if `story2` has been explicitly set.
+  var hasStory2: Bool {return _storage._story2 != nil}
+  /// Clears the value of `story2`. Subsequent reads from it will return its default value.
+  mutating func clearStory2() {_uniqueStorage()._story2 = nil}
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
+
+  fileprivate var _storage = _StorageClass.defaultInstance
 }
 
 struct StoredPodcastSuggestionProto {
@@ -636,6 +684,24 @@ struct StoredPodcastSuggestionProto {
 
   /// Q&A, Explainer, ...
   var badge: String = String()
+
+  var thumbnailPrompt: String = String()
+
+  var thumbnailKey: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct StoredPodcastStoryProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var podcastStoryID: String = String()
+
+  var title: String = String()
 
   var thumbnailPrompt: String = String()
 
@@ -668,6 +734,7 @@ extension StoredPodcastKeyPointProto: @unchecked Sendable {}
 extension StoredPodcastSuggestionsProto: @unchecked Sendable {}
 extension StoredPodcastSuggestionsSectionProto: @unchecked Sendable {}
 extension StoredPodcastSuggestionProto: @unchecked Sendable {}
+extension StoredPodcastStoryProto: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
@@ -1587,50 +1654,118 @@ extension StoredPodcastSuggestionsSectionProto: SwiftProtobuf.Message, SwiftProt
     2: .same(proto: "reasoning"),
     3: .same(proto: "title"),
     4: .standard(proto: "style_prompt"),
-    5: .same(proto: "suggestions"),
+    5: .standard(proto: "banner_suggestion"),
+    6: .standard(proto: "footer_suggestion"),
+    7: .same(proto: "story1"),
+    8: .same(proto: "story2"),
   ]
 
+  fileprivate class _StorageClass {
+    var _sectionID: String = String()
+    var _reasoning: String = String()
+    var _title: String = String()
+    var _stylePrompt: String = String()
+    var _bannerSuggestion: StoredPodcastSuggestionProto? = nil
+    var _footerSuggestion: StoredPodcastSuggestionProto? = nil
+    var _story1: StoredPodcastStoryProto? = nil
+    var _story2: StoredPodcastStoryProto? = nil
+
+    static let defaultInstance = _StorageClass()
+
+    private init() {}
+
+    init(copying source: _StorageClass) {
+      _sectionID = source._sectionID
+      _reasoning = source._reasoning
+      _title = source._title
+      _stylePrompt = source._stylePrompt
+      _bannerSuggestion = source._bannerSuggestion
+      _footerSuggestion = source._footerSuggestion
+      _story1 = source._story1
+      _story2 = source._story2
+    }
+  }
+
+  fileprivate mutating func _uniqueStorage() -> _StorageClass {
+    if !isKnownUniquelyReferenced(&_storage) {
+      _storage = _StorageClass(copying: _storage)
+    }
+    return _storage
+  }
+
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.sectionID) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.reasoning) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.title) }()
-      case 4: try { try decoder.decodeSingularStringField(value: &self.stylePrompt) }()
-      case 5: try { try decoder.decodeRepeatedMessageField(value: &self.suggestions) }()
-      default: break
+    _ = _uniqueStorage()
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      while let fieldNumber = try decoder.nextFieldNumber() {
+        // The use of inline closures is to circumvent an issue where the compiler
+        // allocates stack space for every case branch when no optimizations are
+        // enabled. https://github.com/apple/swift-protobuf/issues/1034
+        switch fieldNumber {
+        case 1: try { try decoder.decodeSingularStringField(value: &_storage._sectionID) }()
+        case 2: try { try decoder.decodeSingularStringField(value: &_storage._reasoning) }()
+        case 3: try { try decoder.decodeSingularStringField(value: &_storage._title) }()
+        case 4: try { try decoder.decodeSingularStringField(value: &_storage._stylePrompt) }()
+        case 5: try { try decoder.decodeSingularMessageField(value: &_storage._bannerSuggestion) }()
+        case 6: try { try decoder.decodeSingularMessageField(value: &_storage._footerSuggestion) }()
+        case 7: try { try decoder.decodeSingularMessageField(value: &_storage._story1) }()
+        case 8: try { try decoder.decodeSingularMessageField(value: &_storage._story2) }()
+        default: break
+        }
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.sectionID.isEmpty {
-      try visitor.visitSingularStringField(value: self.sectionID, fieldNumber: 1)
-    }
-    if !self.reasoning.isEmpty {
-      try visitor.visitSingularStringField(value: self.reasoning, fieldNumber: 2)
-    }
-    if !self.title.isEmpty {
-      try visitor.visitSingularStringField(value: self.title, fieldNumber: 3)
-    }
-    if !self.stylePrompt.isEmpty {
-      try visitor.visitSingularStringField(value: self.stylePrompt, fieldNumber: 4)
-    }
-    if !self.suggestions.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.suggestions, fieldNumber: 5)
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every if/case branch local when no optimizations
+      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+      // https://github.com/apple/swift-protobuf/issues/1182
+      if !_storage._sectionID.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._sectionID, fieldNumber: 1)
+      }
+      if !_storage._reasoning.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._reasoning, fieldNumber: 2)
+      }
+      if !_storage._title.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._title, fieldNumber: 3)
+      }
+      if !_storage._stylePrompt.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._stylePrompt, fieldNumber: 4)
+      }
+      try { if let v = _storage._bannerSuggestion {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
+      } }()
+      try { if let v = _storage._footerSuggestion {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
+      } }()
+      try { if let v = _storage._story1 {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
+      } }()
+      try { if let v = _storage._story2 {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
+      } }()
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: StoredPodcastSuggestionsSectionProto, rhs: StoredPodcastSuggestionsSectionProto) -> Bool {
-    if lhs.sectionID != rhs.sectionID {return false}
-    if lhs.reasoning != rhs.reasoning {return false}
-    if lhs.title != rhs.title {return false}
-    if lhs.stylePrompt != rhs.stylePrompt {return false}
-    if lhs.suggestions != rhs.suggestions {return false}
+    if lhs._storage !== rhs._storage {
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+        let _storage = _args.0
+        let rhs_storage = _args.1
+        if _storage._sectionID != rhs_storage._sectionID {return false}
+        if _storage._reasoning != rhs_storage._reasoning {return false}
+        if _storage._title != rhs_storage._title {return false}
+        if _storage._stylePrompt != rhs_storage._stylePrompt {return false}
+        if _storage._bannerSuggestion != rhs_storage._bannerSuggestion {return false}
+        if _storage._footerSuggestion != rhs_storage._footerSuggestion {return false}
+        if _storage._story1 != rhs_storage._story1 {return false}
+        if _storage._story2 != rhs_storage._story2 {return false}
+        return true
+      }
+      if !storagesAreEqual {return false}
+    }
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -1685,6 +1820,56 @@ extension StoredPodcastSuggestionProto: SwiftProtobuf.Message, SwiftProtobuf._Me
     if lhs.suggestedPodcastID != rhs.suggestedPodcastID {return false}
     if lhs.title != rhs.title {return false}
     if lhs.badge != rhs.badge {return false}
+    if lhs.thumbnailPrompt != rhs.thumbnailPrompt {return false}
+    if lhs.thumbnailKey != rhs.thumbnailKey {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension StoredPodcastStoryProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredPodcastStoryProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "podcast_story_id"),
+    2: .same(proto: "title"),
+    3: .standard(proto: "thumbnail_prompt"),
+    4: .standard(proto: "thumbnail_key"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.podcastStoryID) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.title) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.thumbnailPrompt) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.thumbnailKey) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.podcastStoryID.isEmpty {
+      try visitor.visitSingularStringField(value: self.podcastStoryID, fieldNumber: 1)
+    }
+    if !self.title.isEmpty {
+      try visitor.visitSingularStringField(value: self.title, fieldNumber: 2)
+    }
+    if !self.thumbnailPrompt.isEmpty {
+      try visitor.visitSingularStringField(value: self.thumbnailPrompt, fieldNumber: 3)
+    }
+    if !self.thumbnailKey.isEmpty {
+      try visitor.visitSingularStringField(value: self.thumbnailKey, fieldNumber: 4)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: StoredPodcastStoryProto, rhs: StoredPodcastStoryProto) -> Bool {
+    if lhs.podcastStoryID != rhs.podcastStoryID {return false}
+    if lhs.title != rhs.title {return false}
     if lhs.thumbnailPrompt != rhs.thumbnailPrompt {return false}
     if lhs.thumbnailKey != rhs.thumbnailKey {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}

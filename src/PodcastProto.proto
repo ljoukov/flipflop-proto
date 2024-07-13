@@ -9,7 +9,6 @@ message PodcastStreamApiRequestProto {
     CreatePodcastRequestProto create = 2;
     GeneratePodcastRequestProto generate = 3;
     GetPodcastRequestProto get = 4;
-    GetPodcastSuggestionsRequestProto suggestions = 5;
   }
 }
 
@@ -21,7 +20,6 @@ message PodcastStreamApiResponseHeaderProto {
     CreatePodcastResponseHeaderProto create_header = 2;
     GeneratePodcastResponseHeaderProto generate = 3;
     GetPodcastResponseHeaderProto get = 4;
-    GetPodcastSuggestionsResponseHeaderProto suggestions = 5;
   }
   map<string, google.protobuf.Duration> latencies = 100;
 }
@@ -31,7 +29,6 @@ message PodcastStreamApiResponseDeltaProto {
     CreatePodcastResponseDeltaProto create_delta = 1;
     GeneratePodcastResponseDeltaProto generate_delta = 2;
     GetPodcastResponseDeltaProto get_delta = 3;
-    GetPodcastSuggestionsResponseDeltaProto suggestions_delta = 5;
   }
 }
 
@@ -86,14 +83,6 @@ message GetPodcastResponseHeaderProto {
 
 message GetPodcastResponseDeltaProto {}
 
-message GetPodcastSuggestionsRequestProto {}
-
-message GetPodcastSuggestionsResponseHeaderProto {
-  PodcastSuggestionsProto suggestions = 1;
-}
-
-message GetPodcastSuggestionsResponseDeltaProto {}
-
 message PodcastProto {
   google.protobuf.Timestamp updated_at = 1;
 
@@ -114,6 +103,16 @@ message FirestorePodcastProto {
   PodcastThumbnailProto thumbnail = 2;
 }
 
+message FirestorePodcastsHomeProto {
+  google.protobuf.Timestamp updated_at = 1;
+  YourPodcastsShelfProto your_podcasts_shelf = 2;
+  PodcastSuggestionsProto suggestions = 3;
+}
+
+message YourPodcastsShelfProto {
+  repeated PodcastThumbnailProto thumbnails = 1;
+}
+
 message PodcastPointProto {
   string point_id = 1;
   string title = 2;
@@ -122,11 +121,13 @@ message PodcastPointProto {
 }
 
 message PodcastThumbnailProto {
-  PodcastStatusProto status = 1;
-  string display_status = 2;
-  string title = 3;
-  string path = 4;
-  google.protobuf.Duration duration = 5;
+  string podcast_id = 1;
+  PodcastStatusProto status = 2;
+  string display_status = 3;
+  string title = 4;
+  string badge = 5;  // May be empty or Q&A, Debate, ...
+  string path = 6;
+  google.protobuf.Duration duration = 7;
 }
 
 enum PodcastStatusProto {
@@ -294,13 +295,19 @@ message PodcastSuggestionsProto {
 
 message PodcastSuggestionsSectionProto {
   string section_id = 1;
-  string label = 2;
-  repeated PodcastSuggestionProto suggestions = 3;
+  string section_title = 2;
+
+  PodcastThumbnailProto banner_suggestion = 3;
+  PodcastThumbnailProto footer_suggestion = 4;
+
+  PodcastStoryProto story1 = 5;
+  PodcastStoryProto story2 = 6;
 }
 
-message PodcastSuggestionProto {
-  string suggested_podcast_id = 1;
-  string title = 3;
-  string badge = 4;  // Q&A, Explainer, ...
-  string thumbnail_path = 5;
+message PodcastStoryProto {
+  string podcast_story_id = 1;
+  string title = 2;
+  string thumbnail_path = 3;
+
+  // what to show
 }

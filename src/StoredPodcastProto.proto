@@ -161,7 +161,12 @@ message StoredPodcastSuggestionsSectionProto {
   string reasoning = 2;
   string title = 3;
   string style_prompt = 4;
-  repeated StoredPodcastSuggestionProto suggestions = 5;
+
+  StoredPodcastSuggestionProto banner_suggestion = 5;
+  StoredPodcastSuggestionProto footer_suggestion = 6;
+
+  StoredPodcastStoryProto story1 = 7;
+  StoredPodcastStoryProto story2 = 8;
 }
 
 message StoredPodcastSuggestionProto {
@@ -170,4 +175,11 @@ message StoredPodcastSuggestionProto {
   string badge = 3;  // Q&A, Explainer, ...
   string thumbnail_prompt = 4;
   string thumbnail_key = 5;
+}
+
+message StoredPodcastStoryProto {
+  string podcast_story_id = 1;
+  string title = 2;
+  string thumbnail_prompt = 3;
+  string thumbnail_key = 4;
 }
