@@ -110,7 +110,7 @@ message FirestorePodcastSuggestionsProto {
 }
 
 message YourPodcastsShelfProto {
-  repeated PodcastThumbnailProto thumbnails = 1;
+  map<string, PodcastThumbnailProto> thumbnails = 1;
 }
 
 message PodcastPointProto {
@@ -128,6 +128,7 @@ message PodcastThumbnailProto {
   string badge = 5;  // May be empty or Q&A, Debate, ...
   string path = 6;
   google.protobuf.Duration duration = 7;
+  google.protobuf.Timestamp updated_at = 8;
 }
 
 enum PodcastStatusProto {

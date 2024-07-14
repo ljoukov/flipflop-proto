@@ -790,7 +790,7 @@ struct YourPodcastsShelfProto {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var thumbnails: [PodcastThumbnailProto] = []
+  var thumbnails: Dictionary<String,PodcastThumbnailProto> = [:]
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -842,11 +842,21 @@ struct PodcastThumbnailProto {
   /// Clears the value of `duration`. Subsequent reads from it will return its default value.
   mutating func clearDuration() {self._duration = nil}
 
+  var updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_updatedAt = newValue}
+  }
+  /// Returns true if `updatedAt` has been explicitly set.
+  var hasUpdatedAt: Bool {return self._updatedAt != nil}
+  /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
+  mutating func clearUpdatedAt() {self._updatedAt = nil}
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 
   fileprivate var _duration: SwiftProtobuf.Google_Protobuf_Duration? = nil
+  fileprivate var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
 struct PodcastAudioProto {
@@ -2418,7 +2428,7 @@ extension YourPodcastsShelfProto: SwiftProtobuf.Message, SwiftProtobuf._MessageI
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.thumbnails) }()
+      case 1: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,PodcastThumbnailProto>.self, value: &self.thumbnails) }()
       default: break
       }
     }
@@ -2426,7 +2436,7 @@ extension YourPodcastsShelfProto: SwiftProtobuf.Message, SwiftProtobuf._MessageI
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     if !self.thumbnails.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.thumbnails, fieldNumber: 1)
+      try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,PodcastThumbnailProto>.self, value: self.thumbnails, fieldNumber: 1)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -2498,6 +2508,7 @@ extension PodcastThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     5: .same(proto: "badge"),
     6: .same(proto: "path"),
     7: .same(proto: "duration"),
+    8: .standard(proto: "updated_at"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2513,6 +2524,7 @@ extension PodcastThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
       case 5: try { try decoder.decodeSingularStringField(value: &self.badge) }()
       case 6: try { try decoder.decodeSingularStringField(value: &self.path) }()
       case 7: try { try decoder.decodeSingularMessageField(value: &self._duration) }()
+      case 8: try { try decoder.decodeSingularMessageField(value: &self._updatedAt) }()
       default: break
       }
     }
@@ -2544,6 +2556,9 @@ extension PodcastThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     try { if let v = self._duration {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
     } }()
+    try { if let v = self._updatedAt {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -2555,6 +2570,7 @@ extension PodcastThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     if lhs.badge != rhs.badge {return false}
     if lhs.path != rhs.path {return false}
     if lhs._duration != rhs._duration {return false}
+    if lhs._updatedAt != rhs._updatedAt {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

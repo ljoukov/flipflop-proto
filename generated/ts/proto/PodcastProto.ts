@@ -332,9 +332,11 @@ export interface FirestorePodcastSuggestionsProto {
  */
 export interface YourPodcastsShelfProto {
     /**
-     * @generated from protobuf field: repeated PodcastThumbnailProto thumbnails = 1;
+     * @generated from protobuf field: map<string, PodcastThumbnailProto> thumbnails = 1;
      */
-    thumbnails: PodcastThumbnailProto[];
+    thumbnails: {
+        [key: string]: PodcastThumbnailProto;
+    };
 }
 /**
  * @generated from protobuf message PodcastPointProto
@@ -389,6 +391,10 @@ export interface PodcastThumbnailProto {
      * @generated from protobuf field: google.protobuf.Duration duration = 7;
      */
     duration?: Duration;
+    /**
+     * @generated from protobuf field: google.protobuf.Timestamp updated_at = 8;
+     */
+    updatedAt?: Timestamp;
 }
 /**
  * @generated from protobuf message PodcastAudioProto
@@ -1861,11 +1867,11 @@ export const FirestorePodcastSuggestionsProto = new FirestorePodcastSuggestionsP
 class YourPodcastsShelfProto$Type extends MessageType<YourPodcastsShelfProto> {
     constructor() {
         super("YourPodcastsShelfProto", [
-            { no: 1, name: "thumbnails", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastThumbnailProto }
+            { no: 1, name: "thumbnails", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => PodcastThumbnailProto } }
         ]);
     }
     create(value?: PartialMessage<YourPodcastsShelfProto>): YourPodcastsShelfProto {
-        const message = { thumbnails: [] };
+        const message = { thumbnails: {} };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<YourPodcastsShelfProto>(this, message, value);
@@ -1876,8 +1882,8 @@ class YourPodcastsShelfProto$Type extends MessageType<YourPodcastsShelfProto> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* repeated PodcastThumbnailProto thumbnails */ 1:
-                    message.thumbnails.push(PodcastThumbnailProto.internalBinaryRead(reader, reader.uint32(), options));
+                case /* map<string, PodcastThumbnailProto> thumbnails */ 1:
+                    this.binaryReadMap1(message.thumbnails, reader, options);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1890,10 +1896,30 @@ class YourPodcastsShelfProto$Type extends MessageType<YourPodcastsShelfProto> {
         }
         return message;
     }
+    private binaryReadMap1(map: YourPodcastsShelfProto["thumbnails"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof YourPodcastsShelfProto["thumbnails"] | undefined, val: YourPodcastsShelfProto["thumbnails"][any] | undefined;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case 1:
+                    key = reader.string();
+                    break;
+                case 2:
+                    val = PodcastThumbnailProto.internalBinaryRead(reader, reader.uint32(), options);
+                    break;
+                default: throw new globalThis.Error("unknown map entry field for field YourPodcastsShelfProto.thumbnails");
+            }
+        }
+        map[key ?? ""] = val ?? PodcastThumbnailProto.create();
+    }
     internalBinaryWrite(message: YourPodcastsShelfProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated PodcastThumbnailProto thumbnails = 1; */
-        for (let i = 0; i < message.thumbnails.length; i++)
-            PodcastThumbnailProto.internalBinaryWrite(message.thumbnails[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* map<string, PodcastThumbnailProto> thumbnails = 1; */
+        for (let k of Object.keys(message.thumbnails)) {
+            writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k);
+            writer.tag(2, WireType.LengthDelimited).fork();
+            PodcastThumbnailProto.internalBinaryWrite(message.thumbnails[k], writer, options);
+            writer.join().join();
+        }
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1982,7 +2008,8 @@ class PodcastThumbnailProto$Type extends MessageType<PodcastThumbnailProto> {
             { no: 4, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "badge", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 6, name: "path", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 7, name: "duration", kind: "message", T: () => Duration }
+            { no: 7, name: "duration", kind: "message", T: () => Duration },
+            { no: 8, name: "updated_at", kind: "message", T: () => Timestamp }
         ]);
     }
     create(value?: PartialMessage<PodcastThumbnailProto>): PodcastThumbnailProto {
@@ -2018,6 +2045,9 @@ class PodcastThumbnailProto$Type extends MessageType<PodcastThumbnailProto> {
                 case /* google.protobuf.Duration duration */ 7:
                     message.duration = Duration.internalBinaryRead(reader, reader.uint32(), options, message.duration);
                     break;
+                case /* google.protobuf.Timestamp updated_at */ 8:
+                    message.updatedAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.updatedAt);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -2051,6 +2081,9 @@ class PodcastThumbnailProto$Type extends MessageType<PodcastThumbnailProto> {
         /* google.protobuf.Duration duration = 7; */
         if (message.duration)
             Duration.internalBinaryWrite(message.duration, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.Timestamp updated_at = 8; */
+        if (message.updatedAt)
+            Timestamp.internalBinaryWrite(message.updatedAt, writer.tag(8, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
