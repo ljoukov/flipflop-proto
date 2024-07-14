@@ -15,6 +15,7 @@ message StoredPodcastProto {
   google.protobuf.Timestamp updated_at = 4;
 
   StoredPodcastUserInputProto user_input = 5;
+  StoredPodcastSuggestionInputProto usuggestion_input = 15;
 
   StoredPodcastStateProto state = 6;
 
@@ -49,6 +50,13 @@ enum StoredPodcastStateProto {
 message StoredPodcastUserInputProto {
   string prompt = 1;
   repeated string point_ids = 2;
+}
+
+message StoredPodcastSuggestionInputProto {
+  string suggestion_section_id = 1;
+  string suggestion_section_reasoning = 2;
+  string suggestion_title = 3;
+  string suggestion_thumbnail_prompt = 4;
 }
 
 message StoredPodcastPointsProto {

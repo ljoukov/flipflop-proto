@@ -46,6 +46,10 @@ export interface StoredPodcastProto {
      */
     userInput?: StoredPodcastUserInputProto;
     /**
+     * @generated from protobuf field: StoredPodcastSuggestionInputProto usuggestion_input = 15;
+     */
+    usuggestionInput?: StoredPodcastSuggestionInputProto;
+    /**
      * @generated from protobuf field: StoredPodcastStateProto state = 6;
      */
     state: StoredPodcastStateProto;
@@ -104,6 +108,27 @@ export interface StoredPodcastUserInputProto {
      * @generated from protobuf field: repeated string point_ids = 2;
      */
     pointIds: string[];
+}
+/**
+ * @generated from protobuf message StoredPodcastSuggestionInputProto
+ */
+export interface StoredPodcastSuggestionInputProto {
+    /**
+     * @generated from protobuf field: string suggestion_section_id = 1;
+     */
+    suggestionSectionId: string;
+    /**
+     * @generated from protobuf field: string suggestion_section_reasoning = 2;
+     */
+    suggestionSectionReasoning: string;
+    /**
+     * @generated from protobuf field: string suggestion_title = 3;
+     */
+    suggestionTitle: string;
+    /**
+     * @generated from protobuf field: string suggestion_thumbnail_prompt = 4;
+     */
+    suggestionThumbnailPrompt: string;
 }
 /**
  * @generated from protobuf message StoredPodcastPointsProto
@@ -524,6 +549,7 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
             { no: 3, name: "created_at", kind: "message", T: () => Timestamp },
             { no: 4, name: "updated_at", kind: "message", T: () => Timestamp },
             { no: 5, name: "user_input", kind: "message", T: () => StoredPodcastUserInputProto },
+            { no: 15, name: "usuggestion_input", kind: "message", T: () => StoredPodcastSuggestionInputProto },
             { no: 6, name: "state", kind: "enum", T: () => ["StoredPodcastStateProto", StoredPodcastStateProto, "STORED_PODCAST_STATE_PROTO_"] },
             { no: 7, name: "answer", kind: "message", T: () => PodcastPromptAnswerProto },
             { no: 8, name: "points", kind: "message", T: () => StoredPodcastPointsProto },
@@ -563,6 +589,9 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
                     break;
                 case /* StoredPodcastUserInputProto user_input */ 5:
                     message.userInput = StoredPodcastUserInputProto.internalBinaryRead(reader, reader.uint32(), options, message.userInput);
+                    break;
+                case /* StoredPodcastSuggestionInputProto usuggestion_input */ 15:
+                    message.usuggestionInput = StoredPodcastSuggestionInputProto.internalBinaryRead(reader, reader.uint32(), options, message.usuggestionInput);
                     break;
                 case /* StoredPodcastStateProto state */ 6:
                     message.state = reader.int32();
@@ -624,6 +653,9 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
         /* StoredPodcastUserInputProto user_input = 5; */
         if (message.userInput)
             StoredPodcastUserInputProto.internalBinaryWrite(message.userInput, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        /* StoredPodcastSuggestionInputProto usuggestion_input = 15; */
+        if (message.usuggestionInput)
+            StoredPodcastSuggestionInputProto.internalBinaryWrite(message.usuggestionInput, writer.tag(15, WireType.LengthDelimited).fork(), options).join();
         /* StoredPodcastStateProto state = 6; */
         if (message.state !== 0)
             writer.tag(6, WireType.Varint).int32(message.state);
@@ -721,6 +753,74 @@ class StoredPodcastUserInputProto$Type extends MessageType<StoredPodcastUserInpu
  * @generated MessageType for protobuf message StoredPodcastUserInputProto
  */
 export const StoredPodcastUserInputProto = new StoredPodcastUserInputProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class StoredPodcastSuggestionInputProto$Type extends MessageType<StoredPodcastSuggestionInputProto> {
+    constructor() {
+        super("StoredPodcastSuggestionInputProto", [
+            { no: 1, name: "suggestion_section_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "suggestion_section_reasoning", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "suggestion_title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "suggestion_thumbnail_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<StoredPodcastSuggestionInputProto>): StoredPodcastSuggestionInputProto {
+        const message = { suggestionSectionId: "", suggestionSectionReasoning: "", suggestionTitle: "", suggestionThumbnailPrompt: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<StoredPodcastSuggestionInputProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredPodcastSuggestionInputProto): StoredPodcastSuggestionInputProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string suggestion_section_id */ 1:
+                    message.suggestionSectionId = reader.string();
+                    break;
+                case /* string suggestion_section_reasoning */ 2:
+                    message.suggestionSectionReasoning = reader.string();
+                    break;
+                case /* string suggestion_title */ 3:
+                    message.suggestionTitle = reader.string();
+                    break;
+                case /* string suggestion_thumbnail_prompt */ 4:
+                    message.suggestionThumbnailPrompt = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: StoredPodcastSuggestionInputProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string suggestion_section_id = 1; */
+        if (message.suggestionSectionId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.suggestionSectionId);
+        /* string suggestion_section_reasoning = 2; */
+        if (message.suggestionSectionReasoning !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.suggestionSectionReasoning);
+        /* string suggestion_title = 3; */
+        if (message.suggestionTitle !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.suggestionTitle);
+        /* string suggestion_thumbnail_prompt = 4; */
+        if (message.suggestionThumbnailPrompt !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.suggestionThumbnailPrompt);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message StoredPodcastSuggestionInputProto
+ */
+export const StoredPodcastSuggestionInputProto = new StoredPodcastSuggestionInputProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class StoredPodcastPointsProto$Type extends MessageType<StoredPodcastPointsProto> {
     constructor() {
