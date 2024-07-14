@@ -103,7 +103,7 @@ message FirestorePodcastProto {
   PodcastThumbnailProto thumbnail = 2;
 }
 
-message FirestorePodcastsHomeProto {
+message FirestorePodcastSuggestionsProto {
   google.protobuf.Timestamp updated_at = 1;
   YourPodcastsShelfProto your_podcasts_shelf = 2;
   PodcastSuggestionsProto suggestions = 3;

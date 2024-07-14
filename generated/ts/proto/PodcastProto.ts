@@ -311,9 +311,9 @@ export interface FirestorePodcastProto {
     thumbnail?: PodcastThumbnailProto;
 }
 /**
- * @generated from protobuf message FirestorePodcastsHomeProto
+ * @generated from protobuf message FirestorePodcastSuggestionsProto
  */
-export interface FirestorePodcastsHomeProto {
+export interface FirestorePodcastSuggestionsProto {
     /**
      * @generated from protobuf field: google.protobuf.Timestamp updated_at = 1;
      */
@@ -1797,22 +1797,22 @@ class FirestorePodcastProto$Type extends MessageType<FirestorePodcastProto> {
  */
 export const FirestorePodcastProto = new FirestorePodcastProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class FirestorePodcastsHomeProto$Type extends MessageType<FirestorePodcastsHomeProto> {
+class FirestorePodcastSuggestionsProto$Type extends MessageType<FirestorePodcastSuggestionsProto> {
     constructor() {
-        super("FirestorePodcastsHomeProto", [
+        super("FirestorePodcastSuggestionsProto", [
             { no: 1, name: "updated_at", kind: "message", T: () => Timestamp },
             { no: 2, name: "your_podcasts_shelf", kind: "message", T: () => YourPodcastsShelfProto },
             { no: 3, name: "suggestions", kind: "message", T: () => PodcastSuggestionsProto }
         ]);
     }
-    create(value?: PartialMessage<FirestorePodcastsHomeProto>): FirestorePodcastsHomeProto {
+    create(value?: PartialMessage<FirestorePodcastSuggestionsProto>): FirestorePodcastSuggestionsProto {
         const message = {};
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<FirestorePodcastsHomeProto>(this, message, value);
+            reflectionMergePartial<FirestorePodcastSuggestionsProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: FirestorePodcastsHomeProto): FirestorePodcastsHomeProto {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: FirestorePodcastSuggestionsProto): FirestorePodcastSuggestionsProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -1837,7 +1837,7 @@ class FirestorePodcastsHomeProto$Type extends MessageType<FirestorePodcastsHomeP
         }
         return message;
     }
-    internalBinaryWrite(message: FirestorePodcastsHomeProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: FirestorePodcastSuggestionsProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* google.protobuf.Timestamp updated_at = 1; */
         if (message.updatedAt)
             Timestamp.internalBinaryWrite(message.updatedAt, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
@@ -1854,9 +1854,9 @@ class FirestorePodcastsHomeProto$Type extends MessageType<FirestorePodcastsHomeP
     }
 }
 /**
- * @generated MessageType for protobuf message FirestorePodcastsHomeProto
+ * @generated MessageType for protobuf message FirestorePodcastSuggestionsProto
  */
-export const FirestorePodcastsHomeProto = new FirestorePodcastsHomeProto$Type();
+export const FirestorePodcastSuggestionsProto = new FirestorePodcastSuggestionsProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class YourPodcastsShelfProto$Type extends MessageType<YourPodcastsShelfProto> {
     constructor() {

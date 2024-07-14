@@ -744,7 +744,7 @@ struct FirestorePodcastProto {
   fileprivate var _thumbnail: PodcastThumbnailProto? = nil
 }
 
-struct FirestorePodcastsHomeProto {
+struct FirestorePodcastSuggestionsProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1398,7 +1398,7 @@ extension GetPodcastResponseHeaderProto: @unchecked Sendable {}
 extension GetPodcastResponseDeltaProto: @unchecked Sendable {}
 extension PodcastProto: @unchecked Sendable {}
 extension FirestorePodcastProto: @unchecked Sendable {}
-extension FirestorePodcastsHomeProto: @unchecked Sendable {}
+extension FirestorePodcastSuggestionsProto: @unchecked Sendable {}
 extension YourPodcastsShelfProto: @unchecked Sendable {}
 extension PodcastPointProto: @unchecked Sendable {}
 extension PodcastThumbnailProto: @unchecked Sendable {}
@@ -2358,8 +2358,8 @@ extension FirestorePodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
   }
 }
 
-extension FirestorePodcastsHomeProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "FirestorePodcastsHomeProto"
+extension FirestorePodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "FirestorePodcastSuggestionsProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "updated_at"),
     2: .standard(proto: "your_podcasts_shelf"),
@@ -2397,7 +2397,7 @@ extension FirestorePodcastsHomeProto: SwiftProtobuf.Message, SwiftProtobuf._Mess
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: FirestorePodcastsHomeProto, rhs: FirestorePodcastsHomeProto) -> Bool {
+  static func ==(lhs: FirestorePodcastSuggestionsProto, rhs: FirestorePodcastSuggestionsProto) -> Bool {
     if lhs._updatedAt != rhs._updatedAt {return false}
     if lhs._yourPodcastsShelf != rhs._yourPodcastsShelf {return false}
     if lhs._suggestions != rhs._suggestions {return false}
