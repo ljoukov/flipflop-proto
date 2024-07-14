@@ -24,7 +24,7 @@ enum StoredPodcastStateProto: SwiftProtobuf.Enum {
   typealias RawValue = Int
   case unknown // = 0
   case ready // = 1
-  case pointsReady // = 2
+  case inputReady // = 2
   case generationStarted // = 3
   case generationFailed // = 4
   case UNRECOGNIZED(Int)
@@ -37,7 +37,7 @@ enum StoredPodcastStateProto: SwiftProtobuf.Enum {
     switch rawValue {
     case 0: self = .unknown
     case 1: self = .ready
-    case 2: self = .pointsReady
+    case 2: self = .inputReady
     case 3: self = .generationStarted
     case 4: self = .generationFailed
     default: self = .UNRECOGNIZED(rawValue)
@@ -48,7 +48,7 @@ enum StoredPodcastStateProto: SwiftProtobuf.Enum {
     switch self {
     case .unknown: return 0
     case .ready: return 1
-    case .pointsReady: return 2
+    case .inputReady: return 2
     case .generationStarted: return 3
     case .generationFailed: return 4
     case .UNRECOGNIZED(let i): return i
@@ -64,7 +64,7 @@ extension StoredPodcastStateProto: CaseIterable {
   static var allCases: [StoredPodcastStateProto] = [
     .unknown,
     .ready,
-    .pointsReady,
+    .inputReady,
     .generationStarted,
     .generationFailed,
   ]
@@ -771,7 +771,7 @@ extension StoredPodcastStateProto: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     0: .same(proto: "STORED_PODCAST_STATE_PROTO_UNKNOWN"),
     1: .same(proto: "STORED_PODCAST_STATE_PROTO_READY"),
-    2: .same(proto: "STORED_PODCAST_STATE_PROTO_POINTS_READY"),
+    2: .same(proto: "STORED_PODCAST_STATE_PROTO_INPUT_READY"),
     3: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATION_STARTED"),
     4: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATION_FAILED"),
   ]

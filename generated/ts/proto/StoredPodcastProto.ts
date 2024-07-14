@@ -486,9 +486,9 @@ export enum StoredPodcastStateProto {
      */
     READY = 1,
     /**
-     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_POINTS_READY = 2;
+     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_INPUT_READY = 2;
      */
-    POINTS_READY = 2,
+    INPUT_READY = 2,
     /**
      * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_GENERATION_STARTED = 3;
      */
