@@ -210,14 +210,14 @@ struct StoredPodcastProto {
   /// Clears the value of `userInput`. Subsequent reads from it will return its default value.
   mutating func clearUserInput() {_uniqueStorage()._userInput = nil}
 
-  var usuggestionInput: StoredPodcastSuggestionInputProto {
-    get {return _storage._usuggestionInput ?? StoredPodcastSuggestionInputProto()}
-    set {_uniqueStorage()._usuggestionInput = newValue}
+  var suggestionInput: StoredPodcastSuggestionInputProto {
+    get {return _storage._suggestionInput ?? StoredPodcastSuggestionInputProto()}
+    set {_uniqueStorage()._suggestionInput = newValue}
   }
-  /// Returns true if `usuggestionInput` has been explicitly set.
-  var hasUsuggestionInput: Bool {return _storage._usuggestionInput != nil}
-  /// Clears the value of `usuggestionInput`. Subsequent reads from it will return its default value.
-  mutating func clearUsuggestionInput() {_uniqueStorage()._usuggestionInput = nil}
+  /// Returns true if `suggestionInput` has been explicitly set.
+  var hasSuggestionInput: Bool {return _storage._suggestionInput != nil}
+  /// Clears the value of `suggestionInput`. Subsequent reads from it will return its default value.
+  mutating func clearSuggestionInput() {_uniqueStorage()._suggestionInput = nil}
 
   var state: StoredPodcastStateProto {
     get {return _storage._state}
@@ -803,7 +803,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     3: .standard(proto: "created_at"),
     4: .standard(proto: "updated_at"),
     5: .standard(proto: "user_input"),
-    15: .standard(proto: "usuggestion_input"),
+    15: .standard(proto: "suggestion_input"),
     6: .same(proto: "state"),
     7: .same(proto: "answer"),
     8: .same(proto: "points"),
@@ -823,7 +823,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
     var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
     var _userInput: StoredPodcastUserInputProto? = nil
-    var _usuggestionInput: StoredPodcastSuggestionInputProto? = nil
+    var _suggestionInput: StoredPodcastSuggestionInputProto? = nil
     var _state: StoredPodcastStateProto = .unknown
     var _answer: PodcastPromptAnswerProto? = nil
     var _points: StoredPodcastPointsProto? = nil
@@ -846,7 +846,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       _createdAt = source._createdAt
       _updatedAt = source._updatedAt
       _userInput = source._userInput
-      _usuggestionInput = source._usuggestionInput
+      _suggestionInput = source._suggestionInput
       _state = source._state
       _answer = source._answer
       _points = source._points
@@ -890,7 +890,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         case 12: try { try decoder.decodeSingularMessageField(value: &_storage._visuals) }()
         case 13: try { try decoder.decodeSingularMessageField(value: &_storage._keyPoints) }()
         case 14: try { try decoder.decodeSingularMessageField(value: &_storage._followups) }()
-        case 15: try { try decoder.decodeSingularMessageField(value: &_storage._usuggestionInput) }()
+        case 15: try { try decoder.decodeSingularMessageField(value: &_storage._suggestionInput) }()
         case 100: try { try decoder.decodeSingularMessageField(value: &_storage._latencies) }()
         case 101: try { try decoder.decodeSingularMessageField(value: &_storage._log) }()
         default: break
@@ -947,7 +947,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       try { if let v = _storage._followups {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 14)
       } }()
-      try { if let v = _storage._usuggestionInput {
+      try { if let v = _storage._suggestionInput {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
       } }()
       try { if let v = _storage._latencies {
@@ -970,7 +970,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         if _storage._createdAt != rhs_storage._createdAt {return false}
         if _storage._updatedAt != rhs_storage._updatedAt {return false}
         if _storage._userInput != rhs_storage._userInput {return false}
-        if _storage._usuggestionInput != rhs_storage._usuggestionInput {return false}
+        if _storage._suggestionInput != rhs_storage._suggestionInput {return false}
         if _storage._state != rhs_storage._state {return false}
         if _storage._answer != rhs_storage._answer {return false}
         if _storage._points != rhs_storage._points {return false}

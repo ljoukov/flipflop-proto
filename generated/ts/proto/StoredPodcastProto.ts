@@ -46,9 +46,9 @@ export interface StoredPodcastProto {
      */
     userInput?: StoredPodcastUserInputProto;
     /**
-     * @generated from protobuf field: StoredPodcastSuggestionInputProto usuggestion_input = 15;
+     * @generated from protobuf field: StoredPodcastSuggestionInputProto suggestion_input = 15;
      */
-    usuggestionInput?: StoredPodcastSuggestionInputProto;
+    suggestionInput?: StoredPodcastSuggestionInputProto;
     /**
      * @generated from protobuf field: StoredPodcastStateProto state = 6;
      */
@@ -549,7 +549,7 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
             { no: 3, name: "created_at", kind: "message", T: () => Timestamp },
             { no: 4, name: "updated_at", kind: "message", T: () => Timestamp },
             { no: 5, name: "user_input", kind: "message", T: () => StoredPodcastUserInputProto },
-            { no: 15, name: "usuggestion_input", kind: "message", T: () => StoredPodcastSuggestionInputProto },
+            { no: 15, name: "suggestion_input", kind: "message", T: () => StoredPodcastSuggestionInputProto },
             { no: 6, name: "state", kind: "enum", T: () => ["StoredPodcastStateProto", StoredPodcastStateProto, "STORED_PODCAST_STATE_PROTO_"] },
             { no: 7, name: "answer", kind: "message", T: () => PodcastPromptAnswerProto },
             { no: 8, name: "points", kind: "message", T: () => StoredPodcastPointsProto },
@@ -590,8 +590,8 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
                 case /* StoredPodcastUserInputProto user_input */ 5:
                     message.userInput = StoredPodcastUserInputProto.internalBinaryRead(reader, reader.uint32(), options, message.userInput);
                     break;
-                case /* StoredPodcastSuggestionInputProto usuggestion_input */ 15:
-                    message.usuggestionInput = StoredPodcastSuggestionInputProto.internalBinaryRead(reader, reader.uint32(), options, message.usuggestionInput);
+                case /* StoredPodcastSuggestionInputProto suggestion_input */ 15:
+                    message.suggestionInput = StoredPodcastSuggestionInputProto.internalBinaryRead(reader, reader.uint32(), options, message.suggestionInput);
                     break;
                 case /* StoredPodcastStateProto state */ 6:
                     message.state = reader.int32();
@@ -653,9 +653,9 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
         /* StoredPodcastUserInputProto user_input = 5; */
         if (message.userInput)
             StoredPodcastUserInputProto.internalBinaryWrite(message.userInput, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
-        /* StoredPodcastSuggestionInputProto usuggestion_input = 15; */
-        if (message.usuggestionInput)
-            StoredPodcastSuggestionInputProto.internalBinaryWrite(message.usuggestionInput, writer.tag(15, WireType.LengthDelimited).fork(), options).join();
+        /* StoredPodcastSuggestionInputProto suggestion_input = 15; */
+        if (message.suggestionInput)
+            StoredPodcastSuggestionInputProto.internalBinaryWrite(message.suggestionInput, writer.tag(15, WireType.LengthDelimited).fork(), options).join();
         /* StoredPodcastStateProto state = 6; */
         if (message.state !== 0)
             writer.tag(6, WireType.Varint).int32(message.state);
