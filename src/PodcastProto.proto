@@ -98,11 +98,6 @@ message PodcastProto {
   PodcastFollowupsProto followups = 8;
 }
 
-message FirestorePodcastProto {
-  google.protobuf.Timestamp updated_at = 1;
-  PodcastThumbnailProto thumbnail = 2;
-}
-
 message FirestorePodcastSuggestionsProto {
   google.protobuf.Timestamp updated_at = 1;
   YourPodcastsShelfProto your_podcasts_shelf = 2;

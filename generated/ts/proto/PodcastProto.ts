@@ -298,19 +298,6 @@ export interface PodcastProto {
     followups?: PodcastFollowupsProto;
 }
 /**
- * @generated from protobuf message FirestorePodcastProto
- */
-export interface FirestorePodcastProto {
-    /**
-     * @generated from protobuf field: google.protobuf.Timestamp updated_at = 1;
-     */
-    updatedAt?: Timestamp;
-    /**
-     * @generated from protobuf field: PodcastThumbnailProto thumbnail = 2;
-     */
-    thumbnail?: PodcastThumbnailProto;
-}
-/**
  * @generated from protobuf message FirestorePodcastSuggestionsProto
  */
 export interface FirestorePodcastSuggestionsProto {
@@ -1748,60 +1735,6 @@ class PodcastProto$Type extends MessageType<PodcastProto> {
  * @generated MessageType for protobuf message PodcastProto
  */
 export const PodcastProto = new PodcastProto$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class FirestorePodcastProto$Type extends MessageType<FirestorePodcastProto> {
-    constructor() {
-        super("FirestorePodcastProto", [
-            { no: 1, name: "updated_at", kind: "message", T: () => Timestamp },
-            { no: 2, name: "thumbnail", kind: "message", T: () => PodcastThumbnailProto }
-        ]);
-    }
-    create(value?: PartialMessage<FirestorePodcastProto>): FirestorePodcastProto {
-        const message = {};
-        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
-        if (value !== undefined)
-            reflectionMergePartial<FirestorePodcastProto>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: FirestorePodcastProto): FirestorePodcastProto {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* google.protobuf.Timestamp updated_at */ 1:
-                    message.updatedAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.updatedAt);
-                    break;
-                case /* PodcastThumbnailProto thumbnail */ 2:
-                    message.thumbnail = PodcastThumbnailProto.internalBinaryRead(reader, reader.uint32(), options, message.thumbnail);
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: FirestorePodcastProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* google.protobuf.Timestamp updated_at = 1; */
-        if (message.updatedAt)
-            Timestamp.internalBinaryWrite(message.updatedAt, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* PodcastThumbnailProto thumbnail = 2; */
-        if (message.thumbnail)
-            PodcastThumbnailProto.internalBinaryWrite(message.thumbnail, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message FirestorePodcastProto
- */
-export const FirestorePodcastProto = new FirestorePodcastProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class FirestorePodcastSuggestionsProto$Type extends MessageType<FirestorePodcastSuggestionsProto> {
     constructor() {
