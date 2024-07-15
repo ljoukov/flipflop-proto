@@ -495,6 +495,79 @@ export interface Write {
     } | {
         oneofKind: undefined;
     };
+    // The fields to update in this write.
+    // 
+    // This field can be set only when the operation is `update`.
+    // If the mask is not set for an `update` and the document exists, any
+    // existing data will be overwritten.
+    // If the mask is set and the document on the server has fields not covered by
+    // the mask, they are left unchanged.
+    // Fields referenced in the mask, but not present in the input document, are
+    // deleted from the document on the server.
+    // The field paths in this mask must not contain a reserved field name.
+
+    /**
+     * @generated from protobuf field: google.firestore.v1.DocumentMask update_mask = 3;
+     */
+    updateMask?: DocumentMask;
+    // The transforms to perform after update.
+    // 
+    // This field can be set only when the operation is `update`. If present, this
+    // write is equivalent to performing `update` and `transform` to the same
+    // document atomically and in order.
+    // [NOT IMPLEMENTED] repeated DocumentTransform.FieldTransform
+    // update_transforms = 7;
+
+    /**
+     * An optional precondition on the document.
+     *
+     * The write will fail if this is set and not met by the target document.
+     *
+     * @generated from protobuf field: google.firestore.v1.Precondition current_document = 4;
+     */
+    currentDocument?: Precondition;
+}
+/**
+ * @generated from protobuf message google.firestore.v1.DocumentMask
+ */
+export interface DocumentMask {
+    /**
+     * The list of field paths in the mask. See
+     * [Document.fields][google.firestore.v1.Document.fields] for a field path
+     * syntax reference.
+     *
+     * @generated from protobuf field: repeated string field_paths = 1;
+     */
+    fieldPaths: string[];
+}
+/**
+ * @generated from protobuf message google.firestore.v1.Precondition
+ */
+export interface Precondition {
+    /**
+     * @generated from protobuf oneof: condition_type
+     */
+    conditionType: {
+        oneofKind: "exists";
+        /**
+         * When set to `true`, the target document must exist.
+         * When set to `false`, the target document must not exist.
+         *
+         * @generated from protobuf field: bool exists = 1;
+         */
+        exists: boolean;
+    } | {
+        oneofKind: "updateTime";
+        /**
+         * When set, the target document must exist and have been last updated at
+         * that time. Timestamp must be microsecond aligned.
+         *
+         * @generated from protobuf field: google.protobuf.Timestamp update_time = 2;
+         */
+        updateTime: Timestamp;
+    } | {
+        oneofKind: undefined;
+    };
 }
 /**
  * @generated from protobuf enum google.firestore.v1.StatusCode
@@ -1409,7 +1482,9 @@ class Write$Type extends MessageType<Write> {
     constructor() {
         super("google.firestore.v1.Write", [
             { no: 1, name: "update", kind: "message", oneof: "operation", T: () => Document },
-            { no: 2, name: "delete", kind: "scalar", oneof: "operation", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "delete", kind: "scalar", oneof: "operation", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "update_mask", kind: "message", T: () => DocumentMask },
+            { no: 4, name: "current_document", kind: "message", T: () => Precondition }
         ]);
     }
     create(value?: PartialMessage<Write>): Write {
@@ -1436,6 +1511,12 @@ class Write$Type extends MessageType<Write> {
                         delete: reader.string()
                     };
                     break;
+                case /* google.firestore.v1.DocumentMask update_mask */ 3:
+                    message.updateMask = DocumentMask.internalBinaryRead(reader, reader.uint32(), options, message.updateMask);
+                    break;
+                case /* google.firestore.v1.Precondition current_document */ 4:
+                    message.currentDocument = Precondition.internalBinaryRead(reader, reader.uint32(), options, message.currentDocument);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -1454,6 +1535,12 @@ class Write$Type extends MessageType<Write> {
         /* string delete = 2; */
         if (message.operation.oneofKind === "delete")
             writer.tag(2, WireType.LengthDelimited).string(message.operation.delete);
+        /* google.firestore.v1.DocumentMask update_mask = 3; */
+        if (message.updateMask)
+            DocumentMask.internalBinaryWrite(message.updateMask, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* google.firestore.v1.Precondition current_document = 4; */
+        if (message.currentDocument)
+            Precondition.internalBinaryWrite(message.currentDocument, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1464,3 +1551,110 @@ class Write$Type extends MessageType<Write> {
  * @generated MessageType for protobuf message google.firestore.v1.Write
  */
 export const Write = new Write$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class DocumentMask$Type extends MessageType<DocumentMask> {
+    constructor() {
+        super("google.firestore.v1.DocumentMask", [
+            { no: 1, name: "field_paths", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<DocumentMask>): DocumentMask {
+        const message = { fieldPaths: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<DocumentMask>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: DocumentMask): DocumentMask {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated string field_paths */ 1:
+                    message.fieldPaths.push(reader.string());
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: DocumentMask, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated string field_paths = 1; */
+        for (let i = 0; i < message.fieldPaths.length; i++)
+            writer.tag(1, WireType.LengthDelimited).string(message.fieldPaths[i]);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message google.firestore.v1.DocumentMask
+ */
+export const DocumentMask = new DocumentMask$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Precondition$Type extends MessageType<Precondition> {
+    constructor() {
+        super("google.firestore.v1.Precondition", [
+            { no: 1, name: "exists", kind: "scalar", oneof: "conditionType", T: 8 /*ScalarType.BOOL*/ },
+            { no: 2, name: "update_time", kind: "message", oneof: "conditionType", T: () => Timestamp }
+        ]);
+    }
+    create(value?: PartialMessage<Precondition>): Precondition {
+        const message = { conditionType: { oneofKind: undefined } };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<Precondition>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: Precondition): Precondition {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* bool exists */ 1:
+                    message.conditionType = {
+                        oneofKind: "exists",
+                        exists: reader.bool()
+                    };
+                    break;
+                case /* google.protobuf.Timestamp update_time */ 2:
+                    message.conditionType = {
+                        oneofKind: "updateTime",
+                        updateTime: Timestamp.internalBinaryRead(reader, reader.uint32(), options, (message.conditionType as any).updateTime)
+                    };
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: Precondition, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* bool exists = 1; */
+        if (message.conditionType.oneofKind === "exists")
+            writer.tag(1, WireType.Varint).bool(message.conditionType.exists);
+        /* google.protobuf.Timestamp update_time = 2; */
+        if (message.conditionType.oneofKind === "updateTime")
+            Timestamp.internalBinaryWrite(message.conditionType.updateTime, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message google.firestore.v1.Precondition
+ */
+export const Precondition = new Precondition$Type();

@@ -318,7 +318,7 @@ message Write {
   // deleted from the document on the server.
   // The field paths in this mask must not contain a reserved field name.
 
-  // [NOT IMPLEMENTED] DocumentMask update_mask = 3;
+  DocumentMask update_mask = 3;
 
   // The transforms to perform after update.
   //
@@ -331,5 +331,25 @@ message Write {
   // An optional precondition on the document.
   //
   // The write will fail if this is set and not met by the target document.
-  // [NOT IMPLEMENTED] Precondition current_document = 4;
+  Precondition current_document = 4;
+}
+
+message DocumentMask {
+  // The list of field paths in the mask. See
+  // [Document.fields][google.firestore.v1.Document.fields] for a field path
+  // syntax reference.
+  repeated string field_paths = 1;
+}
+
+message Precondition {
+  // The type of precondition.
+  oneof condition_type {
+    // When set to `true`, the target document must exist.
+    // When set to `false`, the target document must not exist.
+    bool exists = 1;
+
+    // When set, the target document must exist and have been last updated at
+    // that time. Timestamp must be microsecond aligned.
+    google.protobuf.Timestamp update_time = 2;
+  }
 }

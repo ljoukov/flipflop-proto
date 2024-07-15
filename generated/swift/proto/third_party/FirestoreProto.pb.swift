@@ -723,6 +723,27 @@ struct Google_Firestore_V1_Write {
     set {operation = .delete(newValue)}
   }
 
+  var updateMask: Google_Firestore_V1_DocumentMask {
+    get {return _updateMask ?? Google_Firestore_V1_DocumentMask()}
+    set {_updateMask = newValue}
+  }
+  /// Returns true if `updateMask` has been explicitly set.
+  var hasUpdateMask: Bool {return self._updateMask != nil}
+  /// Clears the value of `updateMask`. Subsequent reads from it will return its default value.
+  mutating func clearUpdateMask() {self._updateMask = nil}
+
+  /// An optional precondition on the document.
+  ///
+  /// The write will fail if this is set and not met by the target document.
+  var currentDocument: Google_Firestore_V1_Precondition {
+    get {return _currentDocument ?? Google_Firestore_V1_Precondition()}
+    set {_currentDocument = newValue}
+  }
+  /// Returns true if `currentDocument` has been explicitly set.
+  var hasCurrentDocument: Bool {return self._currentDocument != nil}
+  /// Clears the value of `currentDocument`. Subsequent reads from it will return its default value.
+  mutating func clearCurrentDocument() {self._currentDocument = nil}
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   /// The operation to execute.
@@ -754,6 +775,86 @@ struct Google_Firestore_V1_Write {
   }
 
   init() {}
+
+  fileprivate var _updateMask: Google_Firestore_V1_DocumentMask? = nil
+  fileprivate var _currentDocument: Google_Firestore_V1_Precondition? = nil
+}
+
+struct Google_Firestore_V1_DocumentMask {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// The list of field paths in the mask. See
+  /// [Document.fields][google.firestore.v1.Document.fields] for a field path
+  /// syntax reference.
+  var fieldPaths: [String] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct Google_Firestore_V1_Precondition {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// The type of precondition.
+  var conditionType: Google_Firestore_V1_Precondition.OneOf_ConditionType? = nil
+
+  /// When set to `true`, the target document must exist.
+  /// When set to `false`, the target document must not exist.
+  var exists: Bool {
+    get {
+      if case .exists(let v)? = conditionType {return v}
+      return false
+    }
+    set {conditionType = .exists(newValue)}
+  }
+
+  /// When set, the target document must exist and have been last updated at
+  /// that time. Timestamp must be microsecond aligned.
+  var updateTime: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {
+      if case .updateTime(let v)? = conditionType {return v}
+      return SwiftProtobuf.Google_Protobuf_Timestamp()
+    }
+    set {conditionType = .updateTime(newValue)}
+  }
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  /// The type of precondition.
+  enum OneOf_ConditionType: Equatable {
+    /// When set to `true`, the target document must exist.
+    /// When set to `false`, the target document must not exist.
+    case exists(Bool)
+    /// When set, the target document must exist and have been last updated at
+    /// that time. Timestamp must be microsecond aligned.
+    case updateTime(SwiftProtobuf.Google_Protobuf_Timestamp)
+
+  #if !swift(>=4.1)
+    static func ==(lhs: Google_Firestore_V1_Precondition.OneOf_ConditionType, rhs: Google_Firestore_V1_Precondition.OneOf_ConditionType) -> Bool {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch (lhs, rhs) {
+      case (.exists, .exists): return {
+        guard case .exists(let l) = lhs, case .exists(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.updateTime, .updateTime): return {
+        guard case .updateTime(let l) = lhs, case .updateTime(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      default: return false
+      }
+    }
+  #endif
+  }
+
+  init() {}
 }
 
 #if swift(>=5.5) && canImport(_Concurrency)
@@ -773,6 +874,9 @@ extension Google_Firestore_V1_CommitRequest: @unchecked Sendable {}
 extension Google_Firestore_V1_CommitResponse: @unchecked Sendable {}
 extension Google_Firestore_V1_Write: @unchecked Sendable {}
 extension Google_Firestore_V1_Write.OneOf_Operation: @unchecked Sendable {}
+extension Google_Firestore_V1_DocumentMask: @unchecked Sendable {}
+extension Google_Firestore_V1_Precondition: @unchecked Sendable {}
+extension Google_Firestore_V1_Precondition.OneOf_ConditionType: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
@@ -1471,6 +1575,8 @@ extension Google_Firestore_V1_Write: SwiftProtobuf.Message, SwiftProtobuf._Messa
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "update"),
     2: .same(proto: "delete"),
+    3: .standard(proto: "update_mask"),
+    4: .standard(proto: "current_document"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1500,6 +1606,8 @@ extension Google_Firestore_V1_Write: SwiftProtobuf.Message, SwiftProtobuf._Messa
           self.operation = .delete(v)
         }
       }()
+      case 3: try { try decoder.decodeSingularMessageField(value: &self._updateMask) }()
+      case 4: try { try decoder.decodeSingularMessageField(value: &self._currentDocument) }()
       default: break
       }
     }
@@ -1521,11 +1629,116 @@ extension Google_Firestore_V1_Write: SwiftProtobuf.Message, SwiftProtobuf._Messa
     }()
     case nil: break
     }
+    try { if let v = self._updateMask {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+    } }()
+    try { if let v = self._currentDocument {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: Google_Firestore_V1_Write, rhs: Google_Firestore_V1_Write) -> Bool {
     if lhs.operation != rhs.operation {return false}
+    if lhs._updateMask != rhs._updateMask {return false}
+    if lhs._currentDocument != rhs._currentDocument {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Google_Firestore_V1_DocumentMask: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".DocumentMask"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "field_paths"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedStringField(value: &self.fieldPaths) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.fieldPaths.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.fieldPaths, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Google_Firestore_V1_DocumentMask, rhs: Google_Firestore_V1_DocumentMask) -> Bool {
+    if lhs.fieldPaths != rhs.fieldPaths {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Google_Firestore_V1_Precondition: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".Precondition"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "exists"),
+    2: .standard(proto: "update_time"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try {
+        var v: Bool?
+        try decoder.decodeSingularBoolField(value: &v)
+        if let v = v {
+          if self.conditionType != nil {try decoder.handleConflictingOneOf()}
+          self.conditionType = .exists(v)
+        }
+      }()
+      case 2: try {
+        var v: SwiftProtobuf.Google_Protobuf_Timestamp?
+        var hadOneofValue = false
+        if let current = self.conditionType {
+          hadOneofValue = true
+          if case .updateTime(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.conditionType = .updateTime(v)
+        }
+      }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    switch self.conditionType {
+    case .exists?: try {
+      guard case .exists(let v)? = self.conditionType else { preconditionFailure() }
+      try visitor.visitSingularBoolField(value: v, fieldNumber: 1)
+    }()
+    case .updateTime?: try {
+      guard case .updateTime(let v)? = self.conditionType else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    }()
+    case nil: break
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Google_Firestore_V1_Precondition, rhs: Google_Firestore_V1_Precondition) -> Bool {
+    if lhs.conditionType != rhs.conditionType {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
