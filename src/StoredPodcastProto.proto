@@ -190,4 +190,7 @@ message StoredPodcastStoryProto {
   string title = 2;
   string thumbnail_prompt = 3;
   string thumbnail_key = 4;
+  // Suggestion context
+  string suggestion_section_id = 5;
+  string suggestion_section_reasoning = 6;
 }

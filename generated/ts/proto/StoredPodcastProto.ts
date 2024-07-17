@@ -472,6 +472,16 @@ export interface StoredPodcastStoryProto {
      * @generated from protobuf field: string thumbnail_key = 4;
      */
     thumbnailKey: string;
+    /**
+     * Suggestion context
+     *
+     * @generated from protobuf field: string suggestion_section_id = 5;
+     */
+    suggestionSectionId: string;
+    /**
+     * @generated from protobuf field: string suggestion_section_reasoning = 6;
+     */
+    suggestionSectionReasoning: string;
 }
 /**
  * @generated from protobuf enum StoredPodcastStateProto
@@ -1888,11 +1898,13 @@ class StoredPodcastStoryProto$Type extends MessageType<StoredPodcastStoryProto> 
             { no: 1, name: "podcast_story_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "thumbnail_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "thumbnail_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 4, name: "thumbnail_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "suggestion_section_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "suggestion_section_reasoning", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastStoryProto>): StoredPodcastStoryProto {
-        const message = { podcastStoryId: "", title: "", thumbnailPrompt: "", thumbnailKey: "" };
+        const message = { podcastStoryId: "", title: "", thumbnailPrompt: "", thumbnailKey: "", suggestionSectionId: "", suggestionSectionReasoning: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastStoryProto>(this, message, value);
@@ -1914,6 +1926,12 @@ class StoredPodcastStoryProto$Type extends MessageType<StoredPodcastStoryProto> 
                     break;
                 case /* string thumbnail_key */ 4:
                     message.thumbnailKey = reader.string();
+                    break;
+                case /* string suggestion_section_id */ 5:
+                    message.suggestionSectionId = reader.string();
+                    break;
+                case /* string suggestion_section_reasoning */ 6:
+                    message.suggestionSectionReasoning = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1939,6 +1957,12 @@ class StoredPodcastStoryProto$Type extends MessageType<StoredPodcastStoryProto> 
         /* string thumbnail_key = 4; */
         if (message.thumbnailKey !== "")
             writer.tag(4, WireType.LengthDelimited).string(message.thumbnailKey);
+        /* string suggestion_section_id = 5; */
+        if (message.suggestionSectionId !== "")
+            writer.tag(5, WireType.LengthDelimited).string(message.suggestionSectionId);
+        /* string suggestion_section_reasoning = 6; */
+        if (message.suggestionSectionReasoning !== "")
+            writer.tag(6, WireType.LengthDelimited).string(message.suggestionSectionReasoning);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

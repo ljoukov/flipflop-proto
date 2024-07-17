@@ -734,6 +734,11 @@ struct StoredPodcastStoryProto {
 
   var thumbnailKey: String = String()
 
+  /// Suggestion context
+  var suggestionSectionID: String = String()
+
+  var suggestionSectionReasoning: String = String()
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -1920,6 +1925,8 @@ extension StoredPodcastStoryProto: SwiftProtobuf.Message, SwiftProtobuf._Message
     2: .same(proto: "title"),
     3: .standard(proto: "thumbnail_prompt"),
     4: .standard(proto: "thumbnail_key"),
+    5: .standard(proto: "suggestion_section_id"),
+    6: .standard(proto: "suggestion_section_reasoning"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1932,6 +1939,8 @@ extension StoredPodcastStoryProto: SwiftProtobuf.Message, SwiftProtobuf._Message
       case 2: try { try decoder.decodeSingularStringField(value: &self.title) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.thumbnailPrompt) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self.thumbnailKey) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.suggestionSectionID) }()
+      case 6: try { try decoder.decodeSingularStringField(value: &self.suggestionSectionReasoning) }()
       default: break
       }
     }
@@ -1950,6 +1959,12 @@ extension StoredPodcastStoryProto: SwiftProtobuf.Message, SwiftProtobuf._Message
     if !self.thumbnailKey.isEmpty {
       try visitor.visitSingularStringField(value: self.thumbnailKey, fieldNumber: 4)
     }
+    if !self.suggestionSectionID.isEmpty {
+      try visitor.visitSingularStringField(value: self.suggestionSectionID, fieldNumber: 5)
+    }
+    if !self.suggestionSectionReasoning.isEmpty {
+      try visitor.visitSingularStringField(value: self.suggestionSectionReasoning, fieldNumber: 6)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1958,6 +1973,8 @@ extension StoredPodcastStoryProto: SwiftProtobuf.Message, SwiftProtobuf._Message
     if lhs.title != rhs.title {return false}
     if lhs.thumbnailPrompt != rhs.thumbnailPrompt {return false}
     if lhs.thumbnailKey != rhs.thumbnailKey {return false}
+    if lhs.suggestionSectionID != rhs.suggestionSectionID {return false}
+    if lhs.suggestionSectionReasoning != rhs.suggestionSectionReasoning {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
