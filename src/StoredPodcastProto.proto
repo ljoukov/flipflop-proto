@@ -13,6 +13,7 @@ message StoredPodcastProto {
   string created_by = 2;
   google.protobuf.Timestamp created_at = 3;
   google.protobuf.Timestamp updated_at = 4;
+  google.protobuf.Timestamp deleted_at = 16;
 
   StoredPodcastUserInputProto user_input = 5;
   StoredPodcastSuggestionInputProto suggestion_input = 15;

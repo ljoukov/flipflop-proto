@@ -42,6 +42,10 @@ export interface StoredPodcastProto {
      */
     updatedAt?: Timestamp;
     /**
+     * @generated from protobuf field: google.protobuf.Timestamp deleted_at = 16;
+     */
+    deletedAt?: Timestamp;
+    /**
      * @generated from protobuf field: StoredPodcastUserInputProto user_input = 5;
      */
     userInput?: StoredPodcastUserInputProto;
@@ -558,6 +562,7 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
             { no: 2, name: "created_by", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "created_at", kind: "message", T: () => Timestamp },
             { no: 4, name: "updated_at", kind: "message", T: () => Timestamp },
+            { no: 16, name: "deleted_at", kind: "message", T: () => Timestamp },
             { no: 5, name: "user_input", kind: "message", T: () => StoredPodcastUserInputProto },
             { no: 15, name: "suggestion_input", kind: "message", T: () => StoredPodcastSuggestionInputProto },
             { no: 6, name: "state", kind: "enum", T: () => ["StoredPodcastStateProto", StoredPodcastStateProto, "STORED_PODCAST_STATE_PROTO_"] },
@@ -596,6 +601,9 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
                     break;
                 case /* google.protobuf.Timestamp updated_at */ 4:
                     message.updatedAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.updatedAt);
+                    break;
+                case /* google.protobuf.Timestamp deleted_at */ 16:
+                    message.deletedAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.deletedAt);
                     break;
                 case /* StoredPodcastUserInputProto user_input */ 5:
                     message.userInput = StoredPodcastUserInputProto.internalBinaryRead(reader, reader.uint32(), options, message.userInput);
@@ -660,6 +668,9 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
         /* google.protobuf.Timestamp updated_at = 4; */
         if (message.updatedAt)
             Timestamp.internalBinaryWrite(message.updatedAt, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.Timestamp deleted_at = 16; */
+        if (message.deletedAt)
+            Timestamp.internalBinaryWrite(message.deletedAt, writer.tag(16, WireType.LengthDelimited).fork(), options).join();
         /* StoredPodcastUserInputProto user_input = 5; */
         if (message.userInput)
             StoredPodcastUserInputProto.internalBinaryWrite(message.userInput, writer.tag(5, WireType.LengthDelimited).fork(), options).join();

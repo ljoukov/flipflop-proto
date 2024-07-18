@@ -201,6 +201,15 @@ struct StoredPodcastProto {
   /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
   mutating func clearUpdatedAt() {_uniqueStorage()._updatedAt = nil}
 
+  var deletedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _storage._deletedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_uniqueStorage()._deletedAt = newValue}
+  }
+  /// Returns true if `deletedAt` has been explicitly set.
+  var hasDeletedAt: Bool {return _storage._deletedAt != nil}
+  /// Clears the value of `deletedAt`. Subsequent reads from it will return its default value.
+  mutating func clearDeletedAt() {_uniqueStorage()._deletedAt = nil}
+
   var userInput: StoredPodcastUserInputProto {
     get {return _storage._userInput ?? StoredPodcastUserInputProto()}
     set {_uniqueStorage()._userInput = newValue}
@@ -807,6 +816,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     2: .standard(proto: "created_by"),
     3: .standard(proto: "created_at"),
     4: .standard(proto: "updated_at"),
+    16: .standard(proto: "deleted_at"),
     5: .standard(proto: "user_input"),
     15: .standard(proto: "suggestion_input"),
     6: .same(proto: "state"),
@@ -827,6 +837,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     var _createdBy: String = String()
     var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
     var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+    var _deletedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
     var _userInput: StoredPodcastUserInputProto? = nil
     var _suggestionInput: StoredPodcastSuggestionInputProto? = nil
     var _state: StoredPodcastStateProto = .unknown
@@ -850,6 +861,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       _createdBy = source._createdBy
       _createdAt = source._createdAt
       _updatedAt = source._updatedAt
+      _deletedAt = source._deletedAt
       _userInput = source._userInput
       _suggestionInput = source._suggestionInput
       _state = source._state
@@ -896,6 +908,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         case 13: try { try decoder.decodeSingularMessageField(value: &_storage._keyPoints) }()
         case 14: try { try decoder.decodeSingularMessageField(value: &_storage._followups) }()
         case 15: try { try decoder.decodeSingularMessageField(value: &_storage._suggestionInput) }()
+        case 16: try { try decoder.decodeSingularMessageField(value: &_storage._deletedAt) }()
         case 100: try { try decoder.decodeSingularMessageField(value: &_storage._latencies) }()
         case 101: try { try decoder.decodeSingularMessageField(value: &_storage._log) }()
         default: break
@@ -955,6 +968,9 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       try { if let v = _storage._suggestionInput {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
       } }()
+      try { if let v = _storage._deletedAt {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 16)
+      } }()
       try { if let v = _storage._latencies {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 100)
       } }()
@@ -974,6 +990,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         if _storage._createdBy != rhs_storage._createdBy {return false}
         if _storage._createdAt != rhs_storage._createdAt {return false}
         if _storage._updatedAt != rhs_storage._updatedAt {return false}
+        if _storage._deletedAt != rhs_storage._deletedAt {return false}
         if _storage._userInput != rhs_storage._userInput {return false}
         if _storage._suggestionInput != rhs_storage._suggestionInput {return false}
         if _storage._state != rhs_storage._state {return false}
