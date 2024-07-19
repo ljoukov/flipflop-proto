@@ -174,8 +174,8 @@ message StoredPodcastSuggestionsSectionProto {
   StoredPodcastSuggestionProto banner_suggestion = 5;
   StoredPodcastSuggestionProto footer_suggestion = 6;
 
-  StoredPodcastStoryProto story1 = 7;
-  StoredPodcastStoryProto story2 = 8;
+  StoredPodcastStorySuggestionProto story1 = 7;
+  StoredPodcastStorySuggestionProto story2 = 8;
 }
 
 message StoredPodcastSuggestionProto {
@@ -186,12 +186,37 @@ message StoredPodcastSuggestionProto {
   string thumbnail_key = 5;
 }
 
-message StoredPodcastStoryProto {
-  string story_id = 1;
+message StoredPodcastStorySuggestionProto {
+  string suggested_story_id = 1;
   string title = 2;
   string thumbnail_prompt = 3;
   string thumbnail_key = 4;
+}
+
+message StoredPodcastStoryProto {
+  string story_id = 1;
+  StoredPodcastStoryStateProto state = 2;
+
   // Suggestion context
-  string suggestion_section_id = 5;
-  string suggestion_section_reasoning = 6;
+  string suggestion_section_id = 3;
+  string suggestion_section_reasoning = 4;
+
+  StoredPodcastStorySuggestionProto suggestion = 6;
+
+  repeated StoredPodcastStorySlideProto slides = 7;
+}
+
+enum StoredPodcastStoryStateProto {
+  STORED_PODCAST_STORY_STATE_PROTO_UNDEFINED = 0;
+  STORED_PODCAST_STORY_STATE_PROTO_GENERATING = 1;
+  STORED_PODCAST_STORY_STATE_PROTO_READY = 2;
+  STORED_PODCAST_STORY_STATE_PROTO_FAILED = 3;
+}
+
+message StoredPodcastStorySlideProto {
+  string slide_id = 1;
+  bool is_ready = 2;
+
+  string title = 3;
+  string text = 4;
 }

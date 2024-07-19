@@ -168,6 +168,54 @@ extension StoredPodcastSuggestionsStateProto: CaseIterable {
 
 #endif  // swift(>=4.2)
 
+enum StoredPodcastStoryStateProto: SwiftProtobuf.Enum {
+  typealias RawValue = Int
+  case undefined // = 0
+  case generating // = 1
+  case ready // = 2
+  case failed // = 3
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .undefined
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .undefined
+    case 1: self = .generating
+    case 2: self = .ready
+    case 3: self = .failed
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .undefined: return 0
+    case .generating: return 1
+    case .ready: return 2
+    case .failed: return 3
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+}
+
+#if swift(>=4.2)
+
+extension StoredPodcastStoryStateProto: CaseIterable {
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static var allCases: [StoredPodcastStoryStateProto] = [
+    .undefined,
+    .generating,
+    .ready,
+    .failed,
+  ]
+}
+
+#endif  // swift(>=4.2)
+
 struct StoredPodcastProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -684,8 +732,8 @@ struct StoredPodcastSuggestionsSectionProto {
   /// Clears the value of `footerSuggestion`. Subsequent reads from it will return its default value.
   mutating func clearFooterSuggestion() {_uniqueStorage()._footerSuggestion = nil}
 
-  var story1: StoredPodcastStoryProto {
-    get {return _storage._story1 ?? StoredPodcastStoryProto()}
+  var story1: StoredPodcastStorySuggestionProto {
+    get {return _storage._story1 ?? StoredPodcastStorySuggestionProto()}
     set {_uniqueStorage()._story1 = newValue}
   }
   /// Returns true if `story1` has been explicitly set.
@@ -693,8 +741,8 @@ struct StoredPodcastSuggestionsSectionProto {
   /// Clears the value of `story1`. Subsequent reads from it will return its default value.
   mutating func clearStory1() {_uniqueStorage()._story1 = nil}
 
-  var story2: StoredPodcastStoryProto {
-    get {return _storage._story2 ?? StoredPodcastStoryProto()}
+  var story2: StoredPodcastStorySuggestionProto {
+    get {return _storage._story2 ?? StoredPodcastStorySuggestionProto()}
     set {_uniqueStorage()._story2 = newValue}
   }
   /// Returns true if `story2` has been explicitly set.
@@ -730,12 +778,12 @@ struct StoredPodcastSuggestionProto {
   init() {}
 }
 
-struct StoredPodcastStoryProto {
+struct StoredPodcastStorySuggestionProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var storyID: String = String()
+  var suggestedStoryID: String = String()
 
   var title: String = String()
 
@@ -743,10 +791,55 @@ struct StoredPodcastStoryProto {
 
   var thumbnailKey: String = String()
 
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct StoredPodcastStoryProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var storyID: String = String()
+
+  var state: StoredPodcastStoryStateProto = .undefined
+
   /// Suggestion context
   var suggestionSectionID: String = String()
 
   var suggestionSectionReasoning: String = String()
+
+  var suggestion: StoredPodcastStorySuggestionProto {
+    get {return _suggestion ?? StoredPodcastStorySuggestionProto()}
+    set {_suggestion = newValue}
+  }
+  /// Returns true if `suggestion` has been explicitly set.
+  var hasSuggestion: Bool {return self._suggestion != nil}
+  /// Clears the value of `suggestion`. Subsequent reads from it will return its default value.
+  mutating func clearSuggestion() {self._suggestion = nil}
+
+  var slides: [StoredPodcastStorySlideProto] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+
+  fileprivate var _suggestion: StoredPodcastStorySuggestionProto? = nil
+}
+
+struct StoredPodcastStorySlideProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var slideID: String = String()
+
+  var isReady: Bool = false
+
+  var title: String = String()
+
+  var text: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -757,6 +850,7 @@ struct StoredPodcastStoryProto {
 extension StoredPodcastStateProto: @unchecked Sendable {}
 extension StoredPodcastSectionTypeProto: @unchecked Sendable {}
 extension StoredPodcastSuggestionsStateProto: @unchecked Sendable {}
+extension StoredPodcastStoryStateProto: @unchecked Sendable {}
 extension StoredPodcastProto: @unchecked Sendable {}
 extension StoredPodcastUserInputProto: @unchecked Sendable {}
 extension StoredPodcastSuggestionInputProto: @unchecked Sendable {}
@@ -776,7 +870,9 @@ extension StoredPodcastKeyPointProto: @unchecked Sendable {}
 extension StoredPodcastSuggestionsProto: @unchecked Sendable {}
 extension StoredPodcastSuggestionsSectionProto: @unchecked Sendable {}
 extension StoredPodcastSuggestionProto: @unchecked Sendable {}
+extension StoredPodcastStorySuggestionProto: @unchecked Sendable {}
 extension StoredPodcastStoryProto: @unchecked Sendable {}
+extension StoredPodcastStorySlideProto: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
@@ -806,6 +902,15 @@ extension StoredPodcastSuggestionsStateProto: SwiftProtobuf._ProtoNameProviding 
     1: .same(proto: "STORED_PODCAST_SUGGESTIONS_STATE_PROTO_GENERATING"),
     2: .same(proto: "STORED_PODCAST_SUGGESTIONS_STATE_PROTO_READY"),
     3: .same(proto: "STORED_PODCAST_SUGGESTIONS_STATE_PROTO_FAILED"),
+  ]
+}
+
+extension StoredPodcastStoryStateProto: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "STORED_PODCAST_STORY_STATE_PROTO_UNDEFINED"),
+    1: .same(proto: "STORED_PODCAST_STORY_STATE_PROTO_GENERATING"),
+    2: .same(proto: "STORED_PODCAST_STORY_STATE_PROTO_READY"),
+    3: .same(proto: "STORED_PODCAST_STORY_STATE_PROTO_FAILED"),
   ]
 }
 
@@ -1775,8 +1880,8 @@ extension StoredPodcastSuggestionsSectionProto: SwiftProtobuf.Message, SwiftProt
     var _stylePrompt: String = String()
     var _bannerSuggestion: StoredPodcastSuggestionProto? = nil
     var _footerSuggestion: StoredPodcastSuggestionProto? = nil
-    var _story1: StoredPodcastStoryProto? = nil
-    var _story2: StoredPodcastStoryProto? = nil
+    var _story1: StoredPodcastStorySuggestionProto? = nil
+    var _story2: StoredPodcastStorySuggestionProto? = nil
 
     static let defaultInstance = _StorageClass()
 
@@ -1935,15 +2040,13 @@ extension StoredPodcastSuggestionProto: SwiftProtobuf.Message, SwiftProtobuf._Me
   }
 }
 
-extension StoredPodcastStoryProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "StoredPodcastStoryProto"
+extension StoredPodcastStorySuggestionProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredPodcastStorySuggestionProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "story_id"),
+    1: .standard(proto: "suggested_story_id"),
     2: .same(proto: "title"),
     3: .standard(proto: "thumbnail_prompt"),
     4: .standard(proto: "thumbnail_key"),
-    5: .standard(proto: "suggestion_section_id"),
-    6: .standard(proto: "suggestion_section_reasoning"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1952,20 +2055,18 @@ extension StoredPodcastStoryProto: SwiftProtobuf.Message, SwiftProtobuf._Message
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.storyID) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self.suggestedStoryID) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.title) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.thumbnailPrompt) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self.thumbnailKey) }()
-      case 5: try { try decoder.decodeSingularStringField(value: &self.suggestionSectionID) }()
-      case 6: try { try decoder.decodeSingularStringField(value: &self.suggestionSectionReasoning) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.storyID.isEmpty {
-      try visitor.visitSingularStringField(value: self.storyID, fieldNumber: 1)
+    if !self.suggestedStoryID.isEmpty {
+      try visitor.visitSingularStringField(value: self.suggestedStoryID, fieldNumber: 1)
     }
     if !self.title.isEmpty {
       try visitor.visitSingularStringField(value: self.title, fieldNumber: 2)
@@ -1976,22 +2077,130 @@ extension StoredPodcastStoryProto: SwiftProtobuf.Message, SwiftProtobuf._Message
     if !self.thumbnailKey.isEmpty {
       try visitor.visitSingularStringField(value: self.thumbnailKey, fieldNumber: 4)
     }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: StoredPodcastStorySuggestionProto, rhs: StoredPodcastStorySuggestionProto) -> Bool {
+    if lhs.suggestedStoryID != rhs.suggestedStoryID {return false}
+    if lhs.title != rhs.title {return false}
+    if lhs.thumbnailPrompt != rhs.thumbnailPrompt {return false}
+    if lhs.thumbnailKey != rhs.thumbnailKey {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension StoredPodcastStoryProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredPodcastStoryProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "story_id"),
+    2: .same(proto: "state"),
+    3: .standard(proto: "suggestion_section_id"),
+    4: .standard(proto: "suggestion_section_reasoning"),
+    6: .same(proto: "suggestion"),
+    7: .same(proto: "slides"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.storyID) }()
+      case 2: try { try decoder.decodeSingularEnumField(value: &self.state) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.suggestionSectionID) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.suggestionSectionReasoning) }()
+      case 6: try { try decoder.decodeSingularMessageField(value: &self._suggestion) }()
+      case 7: try { try decoder.decodeRepeatedMessageField(value: &self.slides) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.storyID.isEmpty {
+      try visitor.visitSingularStringField(value: self.storyID, fieldNumber: 1)
+    }
+    if self.state != .undefined {
+      try visitor.visitSingularEnumField(value: self.state, fieldNumber: 2)
+    }
     if !self.suggestionSectionID.isEmpty {
-      try visitor.visitSingularStringField(value: self.suggestionSectionID, fieldNumber: 5)
+      try visitor.visitSingularStringField(value: self.suggestionSectionID, fieldNumber: 3)
     }
     if !self.suggestionSectionReasoning.isEmpty {
-      try visitor.visitSingularStringField(value: self.suggestionSectionReasoning, fieldNumber: 6)
+      try visitor.visitSingularStringField(value: self.suggestionSectionReasoning, fieldNumber: 4)
+    }
+    try { if let v = self._suggestion {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
+    } }()
+    if !self.slides.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.slides, fieldNumber: 7)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: StoredPodcastStoryProto, rhs: StoredPodcastStoryProto) -> Bool {
     if lhs.storyID != rhs.storyID {return false}
-    if lhs.title != rhs.title {return false}
-    if lhs.thumbnailPrompt != rhs.thumbnailPrompt {return false}
-    if lhs.thumbnailKey != rhs.thumbnailKey {return false}
+    if lhs.state != rhs.state {return false}
     if lhs.suggestionSectionID != rhs.suggestionSectionID {return false}
     if lhs.suggestionSectionReasoning != rhs.suggestionSectionReasoning {return false}
+    if lhs._suggestion != rhs._suggestion {return false}
+    if lhs.slides != rhs.slides {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension StoredPodcastStorySlideProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredPodcastStorySlideProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "slide_id"),
+    2: .standard(proto: "is_ready"),
+    3: .same(proto: "title"),
+    4: .same(proto: "text"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.slideID) }()
+      case 2: try { try decoder.decodeSingularBoolField(value: &self.isReady) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.title) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.text) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.slideID.isEmpty {
+      try visitor.visitSingularStringField(value: self.slideID, fieldNumber: 1)
+    }
+    if self.isReady != false {
+      try visitor.visitSingularBoolField(value: self.isReady, fieldNumber: 2)
+    }
+    if !self.title.isEmpty {
+      try visitor.visitSingularStringField(value: self.title, fieldNumber: 3)
+    }
+    if !self.text.isEmpty {
+      try visitor.visitSingularStringField(value: self.text, fieldNumber: 4)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: StoredPodcastStorySlideProto, rhs: StoredPodcastStorySlideProto) -> Bool {
+    if lhs.slideID != rhs.slideID {return false}
+    if lhs.isReady != rhs.isReady {return false}
+    if lhs.title != rhs.title {return false}
+    if lhs.text != rhs.text {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
