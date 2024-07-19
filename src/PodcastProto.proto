@@ -9,7 +9,7 @@ message PodcastStreamApiRequestProto {
     CreatePodcastRequestProto create = 2;
     GeneratePodcastRequestProto generate = 3;
     GetPodcastRequestProto get = 4;
-    CreatePodcastStoryRequestProto story = 5;
+    GetPodcastStoryRequestProto story = 5;
   }
 }
 
@@ -21,7 +21,7 @@ message PodcastStreamApiResponseHeaderProto {
     CreatePodcastResponseHeaderProto create_header = 2;
     GeneratePodcastResponseHeaderProto generate = 3;
     GetPodcastResponseHeaderProto get = 4;
-    CreatePodcastStoryResponseHeaderProto story_header = 5;
+    GetPodcastStoryResponseHeaderProto story_header = 5;
   }
   map<string, google.protobuf.Duration> latencies = 100;
 }
@@ -31,7 +31,7 @@ message PodcastStreamApiResponseDeltaProto {
     CreatePodcastResponseDeltaProto create_delta = 1;
     GeneratePodcastResponseDeltaProto generate_delta = 2;
     GetPodcastResponseDeltaProto get_delta = 3;
-    CreatePodcastStoryResponseDeltaProto story_delta = 4;
+    GetPodcastStoryResponseDeltaProto story_delta = 4;
   }
 }
 
@@ -86,13 +86,13 @@ message GetPodcastResponseHeaderProto {
 
 message GetPodcastResponseDeltaProto {}
 
-message CreatePodcastStoryRequestProto {
+message GetPodcastStoryRequestProto {
   string story_id = 1;
 }
 
-message CreatePodcastStoryResponseHeaderProto {}
+message GetPodcastStoryResponseHeaderProto {}
 
-message CreatePodcastStoryResponseDeltaProto {
+message GetPodcastStoryResponseDeltaProto {
   PodcastStoryProto story = 1;
 }
 
