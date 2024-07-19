@@ -735,7 +735,7 @@ struct StoredPodcastStoryProto {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var podcastStoryID: String = String()
+  var storyID: String = String()
 
   var title: String = String()
 
@@ -1938,7 +1938,7 @@ extension StoredPodcastSuggestionProto: SwiftProtobuf.Message, SwiftProtobuf._Me
 extension StoredPodcastStoryProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "StoredPodcastStoryProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "podcast_story_id"),
+    1: .standard(proto: "story_id"),
     2: .same(proto: "title"),
     3: .standard(proto: "thumbnail_prompt"),
     4: .standard(proto: "thumbnail_key"),
@@ -1952,7 +1952,7 @@ extension StoredPodcastStoryProto: SwiftProtobuf.Message, SwiftProtobuf._Message
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.podcastStoryID) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self.storyID) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.title) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.thumbnailPrompt) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self.thumbnailKey) }()
@@ -1964,8 +1964,8 @@ extension StoredPodcastStoryProto: SwiftProtobuf.Message, SwiftProtobuf._Message
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.podcastStoryID.isEmpty {
-      try visitor.visitSingularStringField(value: self.podcastStoryID, fieldNumber: 1)
+    if !self.storyID.isEmpty {
+      try visitor.visitSingularStringField(value: self.storyID, fieldNumber: 1)
     }
     if !self.title.isEmpty {
       try visitor.visitSingularStringField(value: self.title, fieldNumber: 2)
@@ -1986,7 +1986,7 @@ extension StoredPodcastStoryProto: SwiftProtobuf.Message, SwiftProtobuf._Message
   }
 
   static func ==(lhs: StoredPodcastStoryProto, rhs: StoredPodcastStoryProto) -> Bool {
-    if lhs.podcastStoryID != rhs.podcastStoryID {return false}
+    if lhs.storyID != rhs.storyID {return false}
     if lhs.title != rhs.title {return false}
     if lhs.thumbnailPrompt != rhs.thumbnailPrompt {return false}
     if lhs.thumbnailKey != rhs.thumbnailKey {return false}

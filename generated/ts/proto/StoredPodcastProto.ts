@@ -461,9 +461,9 @@ export interface StoredPodcastSuggestionProto {
  */
 export interface StoredPodcastStoryProto {
     /**
-     * @generated from protobuf field: string podcast_story_id = 1;
+     * @generated from protobuf field: string story_id = 1;
      */
-    podcastStoryId: string;
+    storyId: string;
     /**
      * @generated from protobuf field: string title = 2;
      */
@@ -1906,7 +1906,7 @@ export const StoredPodcastSuggestionProto = new StoredPodcastSuggestionProto$Typ
 class StoredPodcastStoryProto$Type extends MessageType<StoredPodcastStoryProto> {
     constructor() {
         super("StoredPodcastStoryProto", [
-            { no: 1, name: "podcast_story_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 1, name: "story_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "thumbnail_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "thumbnail_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
@@ -1915,7 +1915,7 @@ class StoredPodcastStoryProto$Type extends MessageType<StoredPodcastStoryProto> 
         ]);
     }
     create(value?: PartialMessage<StoredPodcastStoryProto>): StoredPodcastStoryProto {
-        const message = { podcastStoryId: "", title: "", thumbnailPrompt: "", thumbnailKey: "", suggestionSectionId: "", suggestionSectionReasoning: "" };
+        const message = { storyId: "", title: "", thumbnailPrompt: "", thumbnailKey: "", suggestionSectionId: "", suggestionSectionReasoning: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastStoryProto>(this, message, value);
@@ -1926,8 +1926,8 @@ class StoredPodcastStoryProto$Type extends MessageType<StoredPodcastStoryProto> 
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string podcast_story_id */ 1:
-                    message.podcastStoryId = reader.string();
+                case /* string story_id */ 1:
+                    message.storyId = reader.string();
                     break;
                 case /* string title */ 2:
                     message.title = reader.string();
@@ -1956,9 +1956,9 @@ class StoredPodcastStoryProto$Type extends MessageType<StoredPodcastStoryProto> 
         return message;
     }
     internalBinaryWrite(message: StoredPodcastStoryProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string podcast_story_id = 1; */
-        if (message.podcastStoryId !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.podcastStoryId);
+        /* string story_id = 1; */
+        if (message.storyId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.storyId);
         /* string title = 2; */
         if (message.title !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.title);
