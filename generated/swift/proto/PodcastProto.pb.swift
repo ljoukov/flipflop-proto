@@ -197,10 +197,10 @@ struct PodcastStreamApiRequestProto {
     set {request = .get(newValue)}
   }
 
-  var story: GetStoryRequestProto {
+  var story: CreatePodcastStoryRequestProto {
     get {
       if case .story(let v)? = request {return v}
-      return GetStoryRequestProto()
+      return CreatePodcastStoryRequestProto()
     }
     set {request = .story(newValue)}
   }
@@ -211,7 +211,7 @@ struct PodcastStreamApiRequestProto {
     case create(CreatePodcastRequestProto)
     case generate(GeneratePodcastRequestProto)
     case get(GetPodcastRequestProto)
-    case story(GetStoryRequestProto)
+    case story(CreatePodcastStoryRequestProto)
 
   #if !swift(>=4.1)
     static func ==(lhs: PodcastStreamApiRequestProto.OneOf_Request, rhs: PodcastStreamApiRequestProto.OneOf_Request) -> Bool {
@@ -279,12 +279,12 @@ struct PodcastStreamApiResponseHeaderProto {
     set {header = .get(newValue)}
   }
 
-  var story: GetStoryResponseHeaderProto {
+  var storyHeader: CreatePodcastStoryResponseHeaderProto {
     get {
-      if case .story(let v)? = header {return v}
-      return GetStoryResponseHeaderProto()
+      if case .storyHeader(let v)? = header {return v}
+      return CreatePodcastStoryResponseHeaderProto()
     }
-    set {header = .story(newValue)}
+    set {header = .storyHeader(newValue)}
   }
 
   var latencies: Dictionary<String,SwiftProtobuf.Google_Protobuf_Duration> = [:]
@@ -295,7 +295,7 @@ struct PodcastStreamApiResponseHeaderProto {
     case createHeader(CreatePodcastResponseHeaderProto)
     case generate(GeneratePodcastResponseHeaderProto)
     case get(GetPodcastResponseHeaderProto)
-    case story(GetStoryResponseHeaderProto)
+    case storyHeader(CreatePodcastStoryResponseHeaderProto)
 
   #if !swift(>=4.1)
     static func ==(lhs: PodcastStreamApiResponseHeaderProto.OneOf_Header, rhs: PodcastStreamApiResponseHeaderProto.OneOf_Header) -> Bool {
@@ -315,8 +315,8 @@ struct PodcastStreamApiResponseHeaderProto {
         guard case .get(let l) = lhs, case .get(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
-      case (.story, .story): return {
-        guard case .story(let l) = lhs, case .story(let r) = rhs else { preconditionFailure() }
+      case (.storyHeader, .storyHeader): return {
+        guard case .storyHeader(let l) = lhs, case .storyHeader(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       default: return false
@@ -359,10 +359,10 @@ struct PodcastStreamApiResponseDeltaProto {
     set {responseDelta = .getDelta(newValue)}
   }
 
-  var storyDelta: GetStoryResponseDeltaProto {
+  var storyDelta: CreatePodcastStoryResponseDeltaProto {
     get {
       if case .storyDelta(let v)? = responseDelta {return v}
-      return GetStoryResponseDeltaProto()
+      return CreatePodcastStoryResponseDeltaProto()
     }
     set {responseDelta = .storyDelta(newValue)}
   }
@@ -373,7 +373,7 @@ struct PodcastStreamApiResponseDeltaProto {
     case createDelta(CreatePodcastResponseDeltaProto)
     case generateDelta(GeneratePodcastResponseDeltaProto)
     case getDelta(GetPodcastResponseDeltaProto)
-    case storyDelta(GetStoryResponseDeltaProto)
+    case storyDelta(CreatePodcastStoryResponseDeltaProto)
 
   #if !swift(>=4.1)
     static func ==(lhs: PodcastStreamApiResponseDeltaProto.OneOf_ResponseDelta, rhs: PodcastStreamApiResponseDeltaProto.OneOf_ResponseDelta) -> Bool {
@@ -668,19 +668,19 @@ struct GetPodcastResponseDeltaProto {
   init() {}
 }
 
-struct GetStoryRequestProto {
+struct CreatePodcastStoryRequestProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var podcastStoryID: String = String()
+  var storyID: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 }
 
-struct GetStoryResponseHeaderProto {
+struct CreatePodcastStoryResponseHeaderProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -690,7 +690,7 @@ struct GetStoryResponseHeaderProto {
   init() {}
 }
 
-struct GetStoryResponseDeltaProto {
+struct CreatePodcastStoryResponseDeltaProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1479,9 +1479,9 @@ extension GeneratePodcastResponseDeltaProto.OneOf_Type: @unchecked Sendable {}
 extension GetPodcastRequestProto: @unchecked Sendable {}
 extension GetPodcastResponseHeaderProto: @unchecked Sendable {}
 extension GetPodcastResponseDeltaProto: @unchecked Sendable {}
-extension GetStoryRequestProto: @unchecked Sendable {}
-extension GetStoryResponseHeaderProto: @unchecked Sendable {}
-extension GetStoryResponseDeltaProto: @unchecked Sendable {}
+extension CreatePodcastStoryRequestProto: @unchecked Sendable {}
+extension CreatePodcastStoryResponseHeaderProto: @unchecked Sendable {}
+extension CreatePodcastStoryResponseDeltaProto: @unchecked Sendable {}
 extension PodcastProto: @unchecked Sendable {}
 extension FirestorePodcastSuggestionsProto: @unchecked Sendable {}
 extension YourPodcastsShelfProto: @unchecked Sendable {}
@@ -1601,7 +1601,7 @@ extension PodcastStreamApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Me
         }
       }()
       case 5: try {
-        var v: GetStoryRequestProto?
+        var v: CreatePodcastStoryRequestProto?
         var hadOneofValue = false
         if let current = self.request {
           hadOneofValue = true
@@ -1663,7 +1663,7 @@ extension PodcastStreamApiResponseHeaderProto: SwiftProtobuf.Message, SwiftProto
     2: .standard(proto: "create_header"),
     3: .same(proto: "generate"),
     4: .same(proto: "get"),
-    5: .same(proto: "story"),
+    5: .standard(proto: "story_header"),
     100: .same(proto: "latencies"),
   ]
 
@@ -1714,16 +1714,16 @@ extension PodcastStreamApiResponseHeaderProto: SwiftProtobuf.Message, SwiftProto
         }
       }()
       case 5: try {
-        var v: GetStoryResponseHeaderProto?
+        var v: CreatePodcastStoryResponseHeaderProto?
         var hadOneofValue = false
         if let current = self.header {
           hadOneofValue = true
-          if case .story(let m) = current {v = m}
+          if case .storyHeader(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.header = .story(v)
+          self.header = .storyHeader(v)
         }
       }()
       case 100: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.Google_Protobuf_Duration>.self, value: &self.latencies) }()
@@ -1753,8 +1753,8 @@ extension PodcastStreamApiResponseHeaderProto: SwiftProtobuf.Message, SwiftProto
       guard case .get(let v)? = self.header else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
     }()
-    case .story?: try {
-      guard case .story(let v)? = self.header else { preconditionFailure() }
+    case .storyHeader?: try {
+      guard case .storyHeader(let v)? = self.header else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
     }()
     case nil: break
@@ -1829,7 +1829,7 @@ extension PodcastStreamApiResponseDeltaProto: SwiftProtobuf.Message, SwiftProtob
         }
       }()
       case 4: try {
-        var v: GetStoryResponseDeltaProto?
+        var v: CreatePodcastStoryResponseDeltaProto?
         var hadOneofValue = false
         if let current = self.responseDelta {
           hadOneofValue = true
@@ -2332,10 +2332,10 @@ extension GetPodcastResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf._Me
   }
 }
 
-extension GetStoryRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "GetStoryRequestProto"
+extension CreatePodcastStoryRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "CreatePodcastStoryRequestProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "podcast_story_id"),
+    1: .standard(proto: "story_id"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2344,28 +2344,28 @@ extension GetStoryRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.podcastStoryID) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self.storyID) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.podcastStoryID.isEmpty {
-      try visitor.visitSingularStringField(value: self.podcastStoryID, fieldNumber: 1)
+    if !self.storyID.isEmpty {
+      try visitor.visitSingularStringField(value: self.storyID, fieldNumber: 1)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: GetStoryRequestProto, rhs: GetStoryRequestProto) -> Bool {
-    if lhs.podcastStoryID != rhs.podcastStoryID {return false}
+  static func ==(lhs: CreatePodcastStoryRequestProto, rhs: CreatePodcastStoryRequestProto) -> Bool {
+    if lhs.storyID != rhs.storyID {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
-extension GetStoryResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "GetStoryResponseHeaderProto"
+extension CreatePodcastStoryResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "CreatePodcastStoryResponseHeaderProto"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2377,14 +2377,14 @@ extension GetStoryResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: GetStoryResponseHeaderProto, rhs: GetStoryResponseHeaderProto) -> Bool {
+  static func ==(lhs: CreatePodcastStoryResponseHeaderProto, rhs: CreatePodcastStoryResponseHeaderProto) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
-extension GetStoryResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "GetStoryResponseDeltaProto"
+extension CreatePodcastStoryResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "CreatePodcastStoryResponseDeltaProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "story"),
   ]
@@ -2412,7 +2412,7 @@ extension GetStoryResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf._Mess
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: GetStoryResponseDeltaProto, rhs: GetStoryResponseDeltaProto) -> Bool {
+  static func ==(lhs: CreatePodcastStoryResponseDeltaProto, rhs: CreatePodcastStoryResponseDeltaProto) -> Bool {
     if lhs._story != rhs._story {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
