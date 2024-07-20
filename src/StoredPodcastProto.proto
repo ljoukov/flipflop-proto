@@ -200,10 +200,8 @@ message StoredPodcastStoryProto {
   google.protobuf.Timestamp deleted_at = 4;
   StoredPodcastStoryStateProto state = 5;
 
-  StoredPodcastStorySuggestionContextProto suggestion_context = 6;
-  StoredPodcastStorySuggestionProto suggestion = 7;
-
-  StoredPodcastStorySlidesProto slides = 8;
+  StoredPodcastStoryInputProto input = 6;
+  StoredPodcastStorySlidesProto slides = 7;
 
   // Debug metadata
   LogProto log = 100;
@@ -217,14 +215,22 @@ enum StoredPodcastStoryStateProto {
   STORED_PODCAST_STORY_STATE_PROTO_FAILED = 4;
 }
 
+message StoredPodcastStoryInputProto {
+  oneof type {
+    StoredPodcastStorySuggestionInputProto suggestion = 1;
+  }
+}
+
+message StoredPodcastStorySuggestionInputProto {
+  string suggestion_section_id = 1;
+  string suggestion_section_reasoning = 2;
+  string suggestion_title = 3;
+  string suggestion_thumbnail_prompt = 4;
+}
+
 message StoredPodcastStorySlidesProto {
   bool is_ready = 1;
   repeated StoredPodcastStorySlideProto slides = 2;
-}
-
-message StoredPodcastStorySuggestionContextProto {
-  string suggestion_section_id = 1;
-  string suggestion_section_reasoning = 2;
 }
 
 message StoredPodcastStorySlideProto {
