@@ -225,7 +225,9 @@ message StoredPodcastStorySuggestionInputProto {
   string suggestion_section_id = 1;
   string suggestion_section_reasoning = 2;
   string suggestion_title = 3;
-  string suggestion_thumbnail_prompt = 4;
+  string suggestion_style_prompt = 4;
+  string suggestion_thumbnail_prompt = 5;
+  string suggestion_thumbnail_key = 6;
 }
 
 message StoredPodcastStorySlidesProto {

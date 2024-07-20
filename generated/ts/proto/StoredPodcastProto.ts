@@ -537,9 +537,17 @@ export interface StoredPodcastStorySuggestionInputProto {
      */
     suggestionTitle: string;
     /**
-     * @generated from protobuf field: string suggestion_thumbnail_prompt = 4;
+     * @generated from protobuf field: string suggestion_style_prompt = 4;
+     */
+    suggestionStylePrompt: string;
+    /**
+     * @generated from protobuf field: string suggestion_thumbnail_prompt = 5;
      */
     suggestionThumbnailPrompt: string;
+    /**
+     * @generated from protobuf field: string suggestion_thumbnail_key = 6;
+     */
+    suggestionThumbnailKey: string;
 }
 /**
  * @generated from protobuf message StoredPodcastStorySlidesProto
@@ -2222,11 +2230,13 @@ class StoredPodcastStorySuggestionInputProto$Type extends MessageType<StoredPodc
             { no: 1, name: "suggestion_section_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "suggestion_section_reasoning", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "suggestion_title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "suggestion_thumbnail_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 4, name: "suggestion_style_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "suggestion_thumbnail_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "suggestion_thumbnail_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastStorySuggestionInputProto>): StoredPodcastStorySuggestionInputProto {
-        const message = { suggestionSectionId: "", suggestionSectionReasoning: "", suggestionTitle: "", suggestionThumbnailPrompt: "" };
+        const message = { suggestionSectionId: "", suggestionSectionReasoning: "", suggestionTitle: "", suggestionStylePrompt: "", suggestionThumbnailPrompt: "", suggestionThumbnailKey: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastStorySuggestionInputProto>(this, message, value);
@@ -2246,8 +2256,14 @@ class StoredPodcastStorySuggestionInputProto$Type extends MessageType<StoredPodc
                 case /* string suggestion_title */ 3:
                     message.suggestionTitle = reader.string();
                     break;
-                case /* string suggestion_thumbnail_prompt */ 4:
+                case /* string suggestion_style_prompt */ 4:
+                    message.suggestionStylePrompt = reader.string();
+                    break;
+                case /* string suggestion_thumbnail_prompt */ 5:
                     message.suggestionThumbnailPrompt = reader.string();
+                    break;
+                case /* string suggestion_thumbnail_key */ 6:
+                    message.suggestionThumbnailKey = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2270,9 +2286,15 @@ class StoredPodcastStorySuggestionInputProto$Type extends MessageType<StoredPodc
         /* string suggestion_title = 3; */
         if (message.suggestionTitle !== "")
             writer.tag(3, WireType.LengthDelimited).string(message.suggestionTitle);
-        /* string suggestion_thumbnail_prompt = 4; */
+        /* string suggestion_style_prompt = 4; */
+        if (message.suggestionStylePrompt !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.suggestionStylePrompt);
+        /* string suggestion_thumbnail_prompt = 5; */
         if (message.suggestionThumbnailPrompt !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.suggestionThumbnailPrompt);
+            writer.tag(5, WireType.LengthDelimited).string(message.suggestionThumbnailPrompt);
+        /* string suggestion_thumbnail_key = 6; */
+        if (message.suggestionThumbnailKey !== "")
+            writer.tag(6, WireType.LengthDelimited).string(message.suggestionThumbnailKey);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
