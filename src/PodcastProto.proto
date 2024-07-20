@@ -309,15 +309,20 @@ message PodcastSuggestionsSectionProto {
   PodcastThumbnailProto banner_suggestion = 3;
   PodcastThumbnailProto footer_suggestion = 4;
 
-  PodcastStoryProto story1 = 5;
-  PodcastStoryProto story2 = 6;
+  PodcastStoryThumbnailProto story1 = 5;
+  PodcastStoryThumbnailProto story2 = 6;
+}
+
+message PodcastStoryThumbnailProto {
+  string story_id = 1;
+  string title = 2;
+  string thumbnail_path = 3;
 }
 
 message PodcastStoryProto {
   string story_id = 1;
   string title = 2;
   string thumbnail_path = 3;
-
   bool is_ready = 4;
   repeated PodcastStorySlideProto slides = 5;
 }

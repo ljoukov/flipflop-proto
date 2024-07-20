@@ -813,13 +813,30 @@ export interface PodcastSuggestionsSectionProto {
      */
     footerSuggestion?: PodcastThumbnailProto;
     /**
-     * @generated from protobuf field: PodcastStoryProto story1 = 5;
+     * @generated from protobuf field: PodcastStoryThumbnailProto story1 = 5;
      */
-    story1?: PodcastStoryProto;
+    story1?: PodcastStoryThumbnailProto;
     /**
-     * @generated from protobuf field: PodcastStoryProto story2 = 6;
+     * @generated from protobuf field: PodcastStoryThumbnailProto story2 = 6;
      */
-    story2?: PodcastStoryProto;
+    story2?: PodcastStoryThumbnailProto;
+}
+/**
+ * @generated from protobuf message PodcastStoryThumbnailProto
+ */
+export interface PodcastStoryThumbnailProto {
+    /**
+     * @generated from protobuf field: string story_id = 1;
+     */
+    storyId: string;
+    /**
+     * @generated from protobuf field: string title = 2;
+     */
+    title: string;
+    /**
+     * @generated from protobuf field: string thumbnail_path = 3;
+     */
+    thumbnailPath: string;
 }
 /**
  * @generated from protobuf message PodcastStoryProto
@@ -3557,8 +3574,8 @@ class PodcastSuggestionsSectionProto$Type extends MessageType<PodcastSuggestions
             { no: 2, name: "section_title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "banner_suggestion", kind: "message", T: () => PodcastThumbnailProto },
             { no: 4, name: "footer_suggestion", kind: "message", T: () => PodcastThumbnailProto },
-            { no: 5, name: "story1", kind: "message", T: () => PodcastStoryProto },
-            { no: 6, name: "story2", kind: "message", T: () => PodcastStoryProto }
+            { no: 5, name: "story1", kind: "message", T: () => PodcastStoryThumbnailProto },
+            { no: 6, name: "story2", kind: "message", T: () => PodcastStoryThumbnailProto }
         ]);
     }
     create(value?: PartialMessage<PodcastSuggestionsSectionProto>): PodcastSuggestionsSectionProto {
@@ -3585,11 +3602,11 @@ class PodcastSuggestionsSectionProto$Type extends MessageType<PodcastSuggestions
                 case /* PodcastThumbnailProto footer_suggestion */ 4:
                     message.footerSuggestion = PodcastThumbnailProto.internalBinaryRead(reader, reader.uint32(), options, message.footerSuggestion);
                     break;
-                case /* PodcastStoryProto story1 */ 5:
-                    message.story1 = PodcastStoryProto.internalBinaryRead(reader, reader.uint32(), options, message.story1);
+                case /* PodcastStoryThumbnailProto story1 */ 5:
+                    message.story1 = PodcastStoryThumbnailProto.internalBinaryRead(reader, reader.uint32(), options, message.story1);
                     break;
-                case /* PodcastStoryProto story2 */ 6:
-                    message.story2 = PodcastStoryProto.internalBinaryRead(reader, reader.uint32(), options, message.story2);
+                case /* PodcastStoryThumbnailProto story2 */ 6:
+                    message.story2 = PodcastStoryThumbnailProto.internalBinaryRead(reader, reader.uint32(), options, message.story2);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -3615,12 +3632,12 @@ class PodcastSuggestionsSectionProto$Type extends MessageType<PodcastSuggestions
         /* PodcastThumbnailProto footer_suggestion = 4; */
         if (message.footerSuggestion)
             PodcastThumbnailProto.internalBinaryWrite(message.footerSuggestion, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
-        /* PodcastStoryProto story1 = 5; */
+        /* PodcastStoryThumbnailProto story1 = 5; */
         if (message.story1)
-            PodcastStoryProto.internalBinaryWrite(message.story1, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
-        /* PodcastStoryProto story2 = 6; */
+            PodcastStoryThumbnailProto.internalBinaryWrite(message.story1, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastStoryThumbnailProto story2 = 6; */
         if (message.story2)
-            PodcastStoryProto.internalBinaryWrite(message.story2, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+            PodcastStoryThumbnailProto.internalBinaryWrite(message.story2, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -3631,6 +3648,67 @@ class PodcastSuggestionsSectionProto$Type extends MessageType<PodcastSuggestions
  * @generated MessageType for protobuf message PodcastSuggestionsSectionProto
  */
 export const PodcastSuggestionsSectionProto = new PodcastSuggestionsSectionProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PodcastStoryThumbnailProto$Type extends MessageType<PodcastStoryThumbnailProto> {
+    constructor() {
+        super("PodcastStoryThumbnailProto", [
+            { no: 1, name: "story_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "thumbnail_path", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PodcastStoryThumbnailProto>): PodcastStoryThumbnailProto {
+        const message = { storyId: "", title: "", thumbnailPath: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<PodcastStoryThumbnailProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastStoryThumbnailProto): PodcastStoryThumbnailProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string story_id */ 1:
+                    message.storyId = reader.string();
+                    break;
+                case /* string title */ 2:
+                    message.title = reader.string();
+                    break;
+                case /* string thumbnail_path */ 3:
+                    message.thumbnailPath = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PodcastStoryThumbnailProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string story_id = 1; */
+        if (message.storyId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.storyId);
+        /* string title = 2; */
+        if (message.title !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.title);
+        /* string thumbnail_path = 3; */
+        if (message.thumbnailPath !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.thumbnailPath);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message PodcastStoryThumbnailProto
+ */
+export const PodcastStoryThumbnailProto = new PodcastStoryThumbnailProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class PodcastStoryProto$Type extends MessageType<PodcastStoryProto> {
     constructor() {
