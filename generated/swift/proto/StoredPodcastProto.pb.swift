@@ -789,6 +789,11 @@ struct StoredPodcastStoryProto {
     set {_uniqueStorage()._storyID = newValue}
   }
 
+  var userID: String {
+    get {return _storage._userID}
+    set {_uniqueStorage()._userID = newValue}
+  }
+
   var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
     get {return _storage._createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
     set {_uniqueStorage()._createdAt = newValue}
@@ -2187,17 +2192,19 @@ extension StoredPodcastStoryProto: SwiftProtobuf.Message, SwiftProtobuf._Message
   static let protoMessageName: String = "StoredPodcastStoryProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "story_id"),
-    2: .standard(proto: "created_at"),
-    3: .standard(proto: "updated_at"),
-    4: .standard(proto: "deleted_at"),
-    5: .same(proto: "state"),
-    6: .same(proto: "input"),
-    7: .same(proto: "slides"),
+    2: .standard(proto: "user_id"),
+    3: .standard(proto: "created_at"),
+    4: .standard(proto: "updated_at"),
+    5: .standard(proto: "deleted_at"),
+    6: .same(proto: "state"),
+    7: .same(proto: "input"),
+    8: .same(proto: "slides"),
     100: .same(proto: "log"),
   ]
 
   fileprivate class _StorageClass {
     var _storyID: String = String()
+    var _userID: String = String()
     var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
     var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
     var _deletedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
@@ -2212,6 +2219,7 @@ extension StoredPodcastStoryProto: SwiftProtobuf.Message, SwiftProtobuf._Message
 
     init(copying source: _StorageClass) {
       _storyID = source._storyID
+      _userID = source._userID
       _createdAt = source._createdAt
       _updatedAt = source._updatedAt
       _deletedAt = source._deletedAt
@@ -2238,12 +2246,13 @@ extension StoredPodcastStoryProto: SwiftProtobuf.Message, SwiftProtobuf._Message
         // enabled. https://github.com/apple/swift-protobuf/issues/1034
         switch fieldNumber {
         case 1: try { try decoder.decodeSingularStringField(value: &_storage._storyID) }()
-        case 2: try { try decoder.decodeSingularMessageField(value: &_storage._createdAt) }()
-        case 3: try { try decoder.decodeSingularMessageField(value: &_storage._updatedAt) }()
-        case 4: try { try decoder.decodeSingularMessageField(value: &_storage._deletedAt) }()
-        case 5: try { try decoder.decodeSingularEnumField(value: &_storage._state) }()
-        case 6: try { try decoder.decodeSingularMessageField(value: &_storage._input) }()
-        case 7: try { try decoder.decodeSingularMessageField(value: &_storage._slides) }()
+        case 2: try { try decoder.decodeSingularStringField(value: &_storage._userID) }()
+        case 3: try { try decoder.decodeSingularMessageField(value: &_storage._createdAt) }()
+        case 4: try { try decoder.decodeSingularMessageField(value: &_storage._updatedAt) }()
+        case 5: try { try decoder.decodeSingularMessageField(value: &_storage._deletedAt) }()
+        case 6: try { try decoder.decodeSingularEnumField(value: &_storage._state) }()
+        case 7: try { try decoder.decodeSingularMessageField(value: &_storage._input) }()
+        case 8: try { try decoder.decodeSingularMessageField(value: &_storage._slides) }()
         case 100: try { try decoder.decodeSingularMessageField(value: &_storage._log) }()
         default: break
         }
@@ -2260,23 +2269,26 @@ extension StoredPodcastStoryProto: SwiftProtobuf.Message, SwiftProtobuf._Message
       if !_storage._storyID.isEmpty {
         try visitor.visitSingularStringField(value: _storage._storyID, fieldNumber: 1)
       }
+      if !_storage._userID.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._userID, fieldNumber: 2)
+      }
       try { if let v = _storage._createdAt {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
-      } }()
-      try { if let v = _storage._updatedAt {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
       } }()
-      try { if let v = _storage._deletedAt {
+      try { if let v = _storage._updatedAt {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
       } }()
+      try { if let v = _storage._deletedAt {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
+      } }()
       if _storage._state != .undefined {
-        try visitor.visitSingularEnumField(value: _storage._state, fieldNumber: 5)
+        try visitor.visitSingularEnumField(value: _storage._state, fieldNumber: 6)
       }
       try { if let v = _storage._input {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
       } }()
       try { if let v = _storage._slides {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
       } }()
       try { if let v = _storage._log {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 100)
@@ -2291,6 +2303,7 @@ extension StoredPodcastStoryProto: SwiftProtobuf.Message, SwiftProtobuf._Message
         let _storage = _args.0
         let rhs_storage = _args.1
         if _storage._storyID != rhs_storage._storyID {return false}
+        if _storage._userID != rhs_storage._userID {return false}
         if _storage._createdAt != rhs_storage._createdAt {return false}
         if _storage._updatedAt != rhs_storage._updatedAt {return false}
         if _storage._deletedAt != rhs_storage._deletedAt {return false}

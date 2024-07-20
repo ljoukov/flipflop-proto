@@ -473,27 +473,31 @@ export interface StoredPodcastStoryProto {
      */
     storyId: string;
     /**
-     * @generated from protobuf field: google.protobuf.Timestamp created_at = 2;
+     * @generated from protobuf field: string user_id = 2;
+     */
+    userId: string;
+    /**
+     * @generated from protobuf field: google.protobuf.Timestamp created_at = 3;
      */
     createdAt?: Timestamp;
     /**
-     * @generated from protobuf field: google.protobuf.Timestamp updated_at = 3;
+     * @generated from protobuf field: google.protobuf.Timestamp updated_at = 4;
      */
     updatedAt?: Timestamp;
     /**
-     * @generated from protobuf field: google.protobuf.Timestamp deleted_at = 4;
+     * @generated from protobuf field: google.protobuf.Timestamp deleted_at = 5;
      */
     deletedAt?: Timestamp;
     /**
-     * @generated from protobuf field: StoredPodcastStoryStateProto state = 5;
+     * @generated from protobuf field: StoredPodcastStoryStateProto state = 6;
      */
     state: StoredPodcastStoryStateProto;
     /**
-     * @generated from protobuf field: StoredPodcastStoryInputProto input = 6;
+     * @generated from protobuf field: StoredPodcastStoryInputProto input = 7;
      */
     input?: StoredPodcastStoryInputProto;
     /**
-     * @generated from protobuf field: StoredPodcastStorySlidesProto slides = 7;
+     * @generated from protobuf field: StoredPodcastStorySlidesProto slides = 8;
      */
     slides?: StoredPodcastStorySlidesProto;
     /**
@@ -2082,17 +2086,18 @@ class StoredPodcastStoryProto$Type extends MessageType<StoredPodcastStoryProto> 
     constructor() {
         super("StoredPodcastStoryProto", [
             { no: 1, name: "story_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "created_at", kind: "message", T: () => Timestamp },
-            { no: 3, name: "updated_at", kind: "message", T: () => Timestamp },
-            { no: 4, name: "deleted_at", kind: "message", T: () => Timestamp },
-            { no: 5, name: "state", kind: "enum", T: () => ["StoredPodcastStoryStateProto", StoredPodcastStoryStateProto, "STORED_PODCAST_STORY_STATE_PROTO_"] },
-            { no: 6, name: "input", kind: "message", T: () => StoredPodcastStoryInputProto },
-            { no: 7, name: "slides", kind: "message", T: () => StoredPodcastStorySlidesProto },
+            { no: 2, name: "user_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "created_at", kind: "message", T: () => Timestamp },
+            { no: 4, name: "updated_at", kind: "message", T: () => Timestamp },
+            { no: 5, name: "deleted_at", kind: "message", T: () => Timestamp },
+            { no: 6, name: "state", kind: "enum", T: () => ["StoredPodcastStoryStateProto", StoredPodcastStoryStateProto, "STORED_PODCAST_STORY_STATE_PROTO_"] },
+            { no: 7, name: "input", kind: "message", T: () => StoredPodcastStoryInputProto },
+            { no: 8, name: "slides", kind: "message", T: () => StoredPodcastStorySlidesProto },
             { no: 100, name: "log", kind: "message", T: () => LogProto }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastStoryProto>): StoredPodcastStoryProto {
-        const message = { storyId: "", state: 0 };
+        const message = { storyId: "", userId: "", state: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastStoryProto>(this, message, value);
@@ -2106,22 +2111,25 @@ class StoredPodcastStoryProto$Type extends MessageType<StoredPodcastStoryProto> 
                 case /* string story_id */ 1:
                     message.storyId = reader.string();
                     break;
-                case /* google.protobuf.Timestamp created_at */ 2:
+                case /* string user_id */ 2:
+                    message.userId = reader.string();
+                    break;
+                case /* google.protobuf.Timestamp created_at */ 3:
                     message.createdAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.createdAt);
                     break;
-                case /* google.protobuf.Timestamp updated_at */ 3:
+                case /* google.protobuf.Timestamp updated_at */ 4:
                     message.updatedAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.updatedAt);
                     break;
-                case /* google.protobuf.Timestamp deleted_at */ 4:
+                case /* google.protobuf.Timestamp deleted_at */ 5:
                     message.deletedAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.deletedAt);
                     break;
-                case /* StoredPodcastStoryStateProto state */ 5:
+                case /* StoredPodcastStoryStateProto state */ 6:
                     message.state = reader.int32();
                     break;
-                case /* StoredPodcastStoryInputProto input */ 6:
+                case /* StoredPodcastStoryInputProto input */ 7:
                     message.input = StoredPodcastStoryInputProto.internalBinaryRead(reader, reader.uint32(), options, message.input);
                     break;
-                case /* StoredPodcastStorySlidesProto slides */ 7:
+                case /* StoredPodcastStorySlidesProto slides */ 8:
                     message.slides = StoredPodcastStorySlidesProto.internalBinaryRead(reader, reader.uint32(), options, message.slides);
                     break;
                 case /* LogProto log */ 100:
@@ -2142,24 +2150,27 @@ class StoredPodcastStoryProto$Type extends MessageType<StoredPodcastStoryProto> 
         /* string story_id = 1; */
         if (message.storyId !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.storyId);
-        /* google.protobuf.Timestamp created_at = 2; */
+        /* string user_id = 2; */
+        if (message.userId !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.userId);
+        /* google.protobuf.Timestamp created_at = 3; */
         if (message.createdAt)
-            Timestamp.internalBinaryWrite(message.createdAt, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* google.protobuf.Timestamp updated_at = 3; */
+            Timestamp.internalBinaryWrite(message.createdAt, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.Timestamp updated_at = 4; */
         if (message.updatedAt)
-            Timestamp.internalBinaryWrite(message.updatedAt, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* google.protobuf.Timestamp deleted_at = 4; */
+            Timestamp.internalBinaryWrite(message.updatedAt, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.Timestamp deleted_at = 5; */
         if (message.deletedAt)
-            Timestamp.internalBinaryWrite(message.deletedAt, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
-        /* StoredPodcastStoryStateProto state = 5; */
+            Timestamp.internalBinaryWrite(message.deletedAt, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        /* StoredPodcastStoryStateProto state = 6; */
         if (message.state !== 0)
-            writer.tag(5, WireType.Varint).int32(message.state);
-        /* StoredPodcastStoryInputProto input = 6; */
+            writer.tag(6, WireType.Varint).int32(message.state);
+        /* StoredPodcastStoryInputProto input = 7; */
         if (message.input)
-            StoredPodcastStoryInputProto.internalBinaryWrite(message.input, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
-        /* StoredPodcastStorySlidesProto slides = 7; */
+            StoredPodcastStoryInputProto.internalBinaryWrite(message.input, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+        /* StoredPodcastStorySlidesProto slides = 8; */
         if (message.slides)
-            StoredPodcastStorySlidesProto.internalBinaryWrite(message.slides, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+            StoredPodcastStorySlidesProto.internalBinaryWrite(message.slides, writer.tag(8, WireType.LengthDelimited).fork(), options).join();
         /* LogProto log = 100; */
         if (message.log)
             LogProto.internalBinaryWrite(message.log, writer.tag(100, WireType.LengthDelimited).fork(), options).join();

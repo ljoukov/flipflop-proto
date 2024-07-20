@@ -194,14 +194,15 @@ message StoredPodcastStorySuggestionProto {
 
 message StoredPodcastStoryProto {
   string story_id = 1;
+  string user_id = 2;
 
-  google.protobuf.Timestamp created_at = 2;
-  google.protobuf.Timestamp updated_at = 3;
-  google.protobuf.Timestamp deleted_at = 4;
-  StoredPodcastStoryStateProto state = 5;
+  google.protobuf.Timestamp created_at = 3;
+  google.protobuf.Timestamp updated_at = 4;
+  google.protobuf.Timestamp deleted_at = 5;
+  StoredPodcastStoryStateProto state = 6;
 
-  StoredPodcastStoryInputProto input = 6;
-  StoredPodcastStorySlidesProto slides = 7;
+  StoredPodcastStoryInputProto input = 7;
+  StoredPodcastStorySlidesProto slides = 8;
 
   // Debug metadata
   LogProto log = 100;
