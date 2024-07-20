@@ -497,15 +497,28 @@ export interface StoredPodcastStoryProto {
      */
     suggestion?: StoredPodcastStorySuggestionProto;
     /**
-     * @generated from protobuf field: repeated StoredPodcastStorySlideProto slides = 8;
+     * @generated from protobuf field: StoredPodcastStorySlidesProto slides = 8;
      */
-    slides: StoredPodcastStorySlideProto[];
+    slides?: StoredPodcastStorySlidesProto;
     /**
      * Debug metadata
      *
      * @generated from protobuf field: LogProto log = 100;
      */
     log?: LogProto;
+}
+/**
+ * @generated from protobuf message StoredPodcastStorySlidesProto
+ */
+export interface StoredPodcastStorySlidesProto {
+    /**
+     * @generated from protobuf field: bool is_ready = 1;
+     */
+    isReady: boolean;
+    /**
+     * @generated from protobuf field: repeated StoredPodcastStorySlideProto slides = 2;
+     */
+    slides: StoredPodcastStorySlideProto[];
 }
 /**
  * @generated from protobuf message StoredPodcastStorySuggestionContextProto
@@ -2046,12 +2059,12 @@ class StoredPodcastStoryProto$Type extends MessageType<StoredPodcastStoryProto> 
             { no: 5, name: "state", kind: "enum", T: () => ["StoredPodcastStoryStateProto", StoredPodcastStoryStateProto, "STORED_PODCAST_STORY_STATE_PROTO_"] },
             { no: 6, name: "suggestion_context", kind: "message", T: () => StoredPodcastStorySuggestionContextProto },
             { no: 7, name: "suggestion", kind: "message", T: () => StoredPodcastStorySuggestionProto },
-            { no: 8, name: "slides", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastStorySlideProto },
+            { no: 8, name: "slides", kind: "message", T: () => StoredPodcastStorySlidesProto },
             { no: 100, name: "log", kind: "message", T: () => LogProto }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastStoryProto>): StoredPodcastStoryProto {
-        const message = { storyId: "", state: 0, slides: [] };
+        const message = { storyId: "", state: 0 };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastStoryProto>(this, message, value);
@@ -2083,8 +2096,8 @@ class StoredPodcastStoryProto$Type extends MessageType<StoredPodcastStoryProto> 
                 case /* StoredPodcastStorySuggestionProto suggestion */ 7:
                     message.suggestion = StoredPodcastStorySuggestionProto.internalBinaryRead(reader, reader.uint32(), options, message.suggestion);
                     break;
-                case /* repeated StoredPodcastStorySlideProto slides */ 8:
-                    message.slides.push(StoredPodcastStorySlideProto.internalBinaryRead(reader, reader.uint32(), options));
+                case /* StoredPodcastStorySlidesProto slides */ 8:
+                    message.slides = StoredPodcastStorySlidesProto.internalBinaryRead(reader, reader.uint32(), options, message.slides);
                     break;
                 case /* LogProto log */ 100:
                     message.log = LogProto.internalBinaryRead(reader, reader.uint32(), options, message.log);
@@ -2122,9 +2135,9 @@ class StoredPodcastStoryProto$Type extends MessageType<StoredPodcastStoryProto> 
         /* StoredPodcastStorySuggestionProto suggestion = 7; */
         if (message.suggestion)
             StoredPodcastStorySuggestionProto.internalBinaryWrite(message.suggestion, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
-        /* repeated StoredPodcastStorySlideProto slides = 8; */
-        for (let i = 0; i < message.slides.length; i++)
-            StoredPodcastStorySlideProto.internalBinaryWrite(message.slides[i], writer.tag(8, WireType.LengthDelimited).fork(), options).join();
+        /* StoredPodcastStorySlidesProto slides = 8; */
+        if (message.slides)
+            StoredPodcastStorySlidesProto.internalBinaryWrite(message.slides, writer.tag(8, WireType.LengthDelimited).fork(), options).join();
         /* LogProto log = 100; */
         if (message.log)
             LogProto.internalBinaryWrite(message.log, writer.tag(100, WireType.LengthDelimited).fork(), options).join();
@@ -2138,6 +2151,60 @@ class StoredPodcastStoryProto$Type extends MessageType<StoredPodcastStoryProto> 
  * @generated MessageType for protobuf message StoredPodcastStoryProto
  */
 export const StoredPodcastStoryProto = new StoredPodcastStoryProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class StoredPodcastStorySlidesProto$Type extends MessageType<StoredPodcastStorySlidesProto> {
+    constructor() {
+        super("StoredPodcastStorySlidesProto", [
+            { no: 1, name: "is_ready", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 2, name: "slides", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastStorySlideProto }
+        ]);
+    }
+    create(value?: PartialMessage<StoredPodcastStorySlidesProto>): StoredPodcastStorySlidesProto {
+        const message = { isReady: false, slides: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<StoredPodcastStorySlidesProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredPodcastStorySlidesProto): StoredPodcastStorySlidesProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* bool is_ready */ 1:
+                    message.isReady = reader.bool();
+                    break;
+                case /* repeated StoredPodcastStorySlideProto slides */ 2:
+                    message.slides.push(StoredPodcastStorySlideProto.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: StoredPodcastStorySlidesProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* bool is_ready = 1; */
+        if (message.isReady !== false)
+            writer.tag(1, WireType.Varint).bool(message.isReady);
+        /* repeated StoredPodcastStorySlideProto slides = 2; */
+        for (let i = 0; i < message.slides.length; i++)
+            StoredPodcastStorySlideProto.internalBinaryWrite(message.slides[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message StoredPodcastStorySlidesProto
+ */
+export const StoredPodcastStorySlidesProto = new StoredPodcastStorySlidesProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class StoredPodcastStorySuggestionContextProto$Type extends MessageType<StoredPodcastStorySuggestionContextProto> {
     constructor() {
