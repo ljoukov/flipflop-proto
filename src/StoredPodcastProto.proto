@@ -196,14 +196,9 @@ message StoredPodcastStorySuggestionProto {
 message StoredPodcastStoryProto {
   string story_id = 1;
   StoredPodcastStoryStateProto state = 2;
-
-  // Suggestion context
-  string suggestion_section_id = 3;
-  string suggestion_section_reasoning = 4;
-
-  StoredPodcastStorySuggestionProto suggestion = 6;
-
-  repeated StoredPodcastStorySlideProto slides = 7;
+  StoredPodcastStorySuggestionContextProto suggestion_context = 3;
+  StoredPodcastStorySuggestionProto suggestion = 4;
+  repeated StoredPodcastStorySlideProto slides = 5;
 }
 
 enum StoredPodcastStoryStateProto {
@@ -211,6 +206,11 @@ enum StoredPodcastStoryStateProto {
   STORED_PODCAST_STORY_STATE_PROTO_GENERATING = 1;
   STORED_PODCAST_STORY_STATE_PROTO_READY = 2;
   STORED_PODCAST_STORY_STATE_PROTO_FAILED = 3;
+}
+
+message StoredPodcastStorySuggestionContextProto {
+  string suggestion_section_id = 1;
+  string suggestion_section_reasoning = 2;
 }
 
 message StoredPodcastStorySlideProto {
