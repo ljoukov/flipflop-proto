@@ -33,7 +33,7 @@ message StoredPodcastProto {
   StoredPodcastFollowupsProto followups = 14;
 
   // Debug metadata
-  LatenciesProto latencies = 100;
+  reserved 100;
   LogProto log = 101;
 }
 
@@ -154,7 +154,7 @@ message StoredPodcastSuggestionsProto {
   repeated StoredPodcastSuggestionsSectionProto sections = 7;
 
   // Debug metadata
-  LatenciesProto latencies = 100;
+  reserved 100;
   LogProto log = 101;
 }
 
@@ -207,8 +207,7 @@ message StoredPodcastStoryProto {
   repeated StoredPodcastStorySlideProto slides = 8;
 
   // Debug metadata
-  LatenciesProto latencies = 100;
-  LogProto log = 101;
+  LogProto log = 100;
 }
 
 enum StoredPodcastStoryStateProto {

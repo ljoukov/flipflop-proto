@@ -357,16 +357,6 @@ struct StoredPodcastProto {
   /// Clears the value of `followups`. Subsequent reads from it will return its default value.
   mutating func clearFollowups() {_uniqueStorage()._followups = nil}
 
-  /// Debug metadata
-  var latencies: LatenciesProto {
-    get {return _storage._latencies ?? LatenciesProto()}
-    set {_uniqueStorage()._latencies = newValue}
-  }
-  /// Returns true if `latencies` has been explicitly set.
-  var hasLatencies: Bool {return _storage._latencies != nil}
-  /// Clears the value of `latencies`. Subsequent reads from it will return its default value.
-  mutating func clearLatencies() {_uniqueStorage()._latencies = nil}
-
   var log: LogProto {
     get {return _storage._log ?? LogProto()}
     set {_uniqueStorage()._log = newValue}
@@ -663,16 +653,6 @@ struct StoredPodcastSuggestionsProto {
 
   var sections: [StoredPodcastSuggestionsSectionProto] = []
 
-  /// Debug metadata
-  var latencies: LatenciesProto {
-    get {return _latencies ?? LatenciesProto()}
-    set {_latencies = newValue}
-  }
-  /// Returns true if `latencies` has been explicitly set.
-  var hasLatencies: Bool {return self._latencies != nil}
-  /// Clears the value of `latencies`. Subsequent reads from it will return its default value.
-  mutating func clearLatencies() {self._latencies = nil}
-
   var log: LogProto {
     get {return _log ?? LogProto()}
     set {_log = newValue}
@@ -688,7 +668,6 @@ struct StoredPodcastSuggestionsProto {
 
   fileprivate var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
   fileprivate var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
-  fileprivate var _latencies: LatenciesProto? = nil
   fileprivate var _log: LogProto? = nil
 }
 
@@ -805,90 +784,77 @@ struct StoredPodcastStoryProto {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var storyID: String {
-    get {return _storage._storyID}
-    set {_uniqueStorage()._storyID = newValue}
-  }
+  var storyID: String = String()
 
   var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {return _storage._createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
-    set {_uniqueStorage()._createdAt = newValue}
+    get {return _createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_createdAt = newValue}
   }
   /// Returns true if `createdAt` has been explicitly set.
-  var hasCreatedAt: Bool {return _storage._createdAt != nil}
+  var hasCreatedAt: Bool {return self._createdAt != nil}
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
-  mutating func clearCreatedAt() {_uniqueStorage()._createdAt = nil}
+  mutating func clearCreatedAt() {self._createdAt = nil}
 
   var updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {return _storage._updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
-    set {_uniqueStorage()._updatedAt = newValue}
+    get {return _updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_updatedAt = newValue}
   }
   /// Returns true if `updatedAt` has been explicitly set.
-  var hasUpdatedAt: Bool {return _storage._updatedAt != nil}
+  var hasUpdatedAt: Bool {return self._updatedAt != nil}
   /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
-  mutating func clearUpdatedAt() {_uniqueStorage()._updatedAt = nil}
+  mutating func clearUpdatedAt() {self._updatedAt = nil}
 
   var deletedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {return _storage._deletedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
-    set {_uniqueStorage()._deletedAt = newValue}
+    get {return _deletedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_deletedAt = newValue}
   }
   /// Returns true if `deletedAt` has been explicitly set.
-  var hasDeletedAt: Bool {return _storage._deletedAt != nil}
+  var hasDeletedAt: Bool {return self._deletedAt != nil}
   /// Clears the value of `deletedAt`. Subsequent reads from it will return its default value.
-  mutating func clearDeletedAt() {_uniqueStorage()._deletedAt = nil}
+  mutating func clearDeletedAt() {self._deletedAt = nil}
 
-  var state: StoredPodcastStoryStateProto {
-    get {return _storage._state}
-    set {_uniqueStorage()._state = newValue}
-  }
+  var state: StoredPodcastStoryStateProto = .undefined
 
   var suggestionContext: StoredPodcastStorySuggestionContextProto {
-    get {return _storage._suggestionContext ?? StoredPodcastStorySuggestionContextProto()}
-    set {_uniqueStorage()._suggestionContext = newValue}
+    get {return _suggestionContext ?? StoredPodcastStorySuggestionContextProto()}
+    set {_suggestionContext = newValue}
   }
   /// Returns true if `suggestionContext` has been explicitly set.
-  var hasSuggestionContext: Bool {return _storage._suggestionContext != nil}
+  var hasSuggestionContext: Bool {return self._suggestionContext != nil}
   /// Clears the value of `suggestionContext`. Subsequent reads from it will return its default value.
-  mutating func clearSuggestionContext() {_uniqueStorage()._suggestionContext = nil}
+  mutating func clearSuggestionContext() {self._suggestionContext = nil}
 
   var suggestion: StoredPodcastStorySuggestionProto {
-    get {return _storage._suggestion ?? StoredPodcastStorySuggestionProto()}
-    set {_uniqueStorage()._suggestion = newValue}
+    get {return _suggestion ?? StoredPodcastStorySuggestionProto()}
+    set {_suggestion = newValue}
   }
   /// Returns true if `suggestion` has been explicitly set.
-  var hasSuggestion: Bool {return _storage._suggestion != nil}
+  var hasSuggestion: Bool {return self._suggestion != nil}
   /// Clears the value of `suggestion`. Subsequent reads from it will return its default value.
-  mutating func clearSuggestion() {_uniqueStorage()._suggestion = nil}
+  mutating func clearSuggestion() {self._suggestion = nil}
 
-  var slides: [StoredPodcastStorySlideProto] {
-    get {return _storage._slides}
-    set {_uniqueStorage()._slides = newValue}
-  }
+  var slides: [StoredPodcastStorySlideProto] = []
 
   /// Debug metadata
-  var latencies: LatenciesProto {
-    get {return _storage._latencies ?? LatenciesProto()}
-    set {_uniqueStorage()._latencies = newValue}
-  }
-  /// Returns true if `latencies` has been explicitly set.
-  var hasLatencies: Bool {return _storage._latencies != nil}
-  /// Clears the value of `latencies`. Subsequent reads from it will return its default value.
-  mutating func clearLatencies() {_uniqueStorage()._latencies = nil}
-
   var log: LogProto {
-    get {return _storage._log ?? LogProto()}
-    set {_uniqueStorage()._log = newValue}
+    get {return _log ?? LogProto()}
+    set {_log = newValue}
   }
   /// Returns true if `log` has been explicitly set.
-  var hasLog: Bool {return _storage._log != nil}
+  var hasLog: Bool {return self._log != nil}
   /// Clears the value of `log`. Subsequent reads from it will return its default value.
-  mutating func clearLog() {_uniqueStorage()._log = nil}
+  mutating func clearLog() {self._log = nil}
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 
-  fileprivate var _storage = _StorageClass.defaultInstance
+  fileprivate var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+  fileprivate var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+  fileprivate var _deletedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+  fileprivate var _suggestionContext: StoredPodcastStorySuggestionContextProto? = nil
+  fileprivate var _suggestion: StoredPodcastStorySuggestionProto? = nil
+  fileprivate var _log: LogProto? = nil
 }
 
 struct StoredPodcastStorySuggestionContextProto {
@@ -1012,7 +978,6 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     12: .same(proto: "visuals"),
     13: .standard(proto: "key_points"),
     14: .same(proto: "followups"),
-    100: .same(proto: "latencies"),
     101: .same(proto: "log"),
   ]
 
@@ -1033,7 +998,6 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     var _visuals: StoredPodcastVisualsProto? = nil
     var _keyPoints: StoredPodcastKeyPointsProto? = nil
     var _followups: StoredPodcastFollowupsProto? = nil
-    var _latencies: LatenciesProto? = nil
     var _log: LogProto? = nil
 
     static let defaultInstance = _StorageClass()
@@ -1057,7 +1021,6 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       _visuals = source._visuals
       _keyPoints = source._keyPoints
       _followups = source._followups
-      _latencies = source._latencies
       _log = source._log
     }
   }
@@ -1093,7 +1056,6 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         case 14: try { try decoder.decodeSingularMessageField(value: &_storage._followups) }()
         case 15: try { try decoder.decodeSingularMessageField(value: &_storage._suggestionInput) }()
         case 16: try { try decoder.decodeSingularMessageField(value: &_storage._deletedAt) }()
-        case 100: try { try decoder.decodeSingularMessageField(value: &_storage._latencies) }()
         case 101: try { try decoder.decodeSingularMessageField(value: &_storage._log) }()
         default: break
         }
@@ -1155,9 +1117,6 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       try { if let v = _storage._deletedAt {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 16)
       } }()
-      try { if let v = _storage._latencies {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 100)
-      } }()
       try { if let v = _storage._log {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 101)
       } }()
@@ -1186,7 +1145,6 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         if _storage._visuals != rhs_storage._visuals {return false}
         if _storage._keyPoints != rhs_storage._keyPoints {return false}
         if _storage._followups != rhs_storage._followups {return false}
-        if _storage._latencies != rhs_storage._latencies {return false}
         if _storage._log != rhs_storage._log {return false}
         return true
       }
@@ -1865,7 +1823,6 @@ extension StoredPodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf._M
     5: .same(proto: "reasoning"),
     6: .same(proto: "ranking"),
     7: .same(proto: "sections"),
-    100: .same(proto: "latencies"),
     101: .same(proto: "log"),
   ]
 
@@ -1882,7 +1839,6 @@ extension StoredPodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf._M
       case 5: try { try decoder.decodeSingularStringField(value: &self.reasoning) }()
       case 6: try { try decoder.decodeSingularStringField(value: &self.ranking) }()
       case 7: try { try decoder.decodeRepeatedMessageField(value: &self.sections) }()
-      case 100: try { try decoder.decodeSingularMessageField(value: &self._latencies) }()
       case 101: try { try decoder.decodeSingularMessageField(value: &self._log) }()
       default: break
       }
@@ -1915,9 +1871,6 @@ extension StoredPodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf._M
     if !self.sections.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.sections, fieldNumber: 7)
     }
-    try { if let v = self._latencies {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 100)
-    } }()
     try { if let v = self._log {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 101)
     } }()
@@ -1932,7 +1885,6 @@ extension StoredPodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf._M
     if lhs.reasoning != rhs.reasoning {return false}
     if lhs.ranking != rhs.ranking {return false}
     if lhs.sections != rhs.sections {return false}
-    if lhs._latencies != rhs._latencies {return false}
     if lhs._log != rhs._log {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
@@ -2180,130 +2132,74 @@ extension StoredPodcastStoryProto: SwiftProtobuf.Message, SwiftProtobuf._Message
     6: .standard(proto: "suggestion_context"),
     7: .same(proto: "suggestion"),
     8: .same(proto: "slides"),
-    100: .same(proto: "latencies"),
-    101: .same(proto: "log"),
+    100: .same(proto: "log"),
   ]
 
-  fileprivate class _StorageClass {
-    var _storyID: String = String()
-    var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
-    var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
-    var _deletedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
-    var _state: StoredPodcastStoryStateProto = .undefined
-    var _suggestionContext: StoredPodcastStorySuggestionContextProto? = nil
-    var _suggestion: StoredPodcastStorySuggestionProto? = nil
-    var _slides: [StoredPodcastStorySlideProto] = []
-    var _latencies: LatenciesProto? = nil
-    var _log: LogProto? = nil
-
-    static let defaultInstance = _StorageClass()
-
-    private init() {}
-
-    init(copying source: _StorageClass) {
-      _storyID = source._storyID
-      _createdAt = source._createdAt
-      _updatedAt = source._updatedAt
-      _deletedAt = source._deletedAt
-      _state = source._state
-      _suggestionContext = source._suggestionContext
-      _suggestion = source._suggestion
-      _slides = source._slides
-      _latencies = source._latencies
-      _log = source._log
-    }
-  }
-
-  fileprivate mutating func _uniqueStorage() -> _StorageClass {
-    if !isKnownUniquelyReferenced(&_storage) {
-      _storage = _StorageClass(copying: _storage)
-    }
-    return _storage
-  }
-
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    _ = _uniqueStorage()
-    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
-      while let fieldNumber = try decoder.nextFieldNumber() {
-        // The use of inline closures is to circumvent an issue where the compiler
-        // allocates stack space for every case branch when no optimizations are
-        // enabled. https://github.com/apple/swift-protobuf/issues/1034
-        switch fieldNumber {
-        case 1: try { try decoder.decodeSingularStringField(value: &_storage._storyID) }()
-        case 2: try { try decoder.decodeSingularMessageField(value: &_storage._createdAt) }()
-        case 3: try { try decoder.decodeSingularMessageField(value: &_storage._updatedAt) }()
-        case 4: try { try decoder.decodeSingularMessageField(value: &_storage._deletedAt) }()
-        case 5: try { try decoder.decodeSingularEnumField(value: &_storage._state) }()
-        case 6: try { try decoder.decodeSingularMessageField(value: &_storage._suggestionContext) }()
-        case 7: try { try decoder.decodeSingularMessageField(value: &_storage._suggestion) }()
-        case 8: try { try decoder.decodeRepeatedMessageField(value: &_storage._slides) }()
-        case 100: try { try decoder.decodeSingularMessageField(value: &_storage._latencies) }()
-        case 101: try { try decoder.decodeSingularMessageField(value: &_storage._log) }()
-        default: break
-        }
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.storyID) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._createdAt) }()
+      case 3: try { try decoder.decodeSingularMessageField(value: &self._updatedAt) }()
+      case 4: try { try decoder.decodeSingularMessageField(value: &self._deletedAt) }()
+      case 5: try { try decoder.decodeSingularEnumField(value: &self.state) }()
+      case 6: try { try decoder.decodeSingularMessageField(value: &self._suggestionContext) }()
+      case 7: try { try decoder.decodeSingularMessageField(value: &self._suggestion) }()
+      case 8: try { try decoder.decodeRepeatedMessageField(value: &self.slides) }()
+      case 100: try { try decoder.decodeSingularMessageField(value: &self._log) }()
+      default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every if/case branch local when no optimizations
-      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-      // https://github.com/apple/swift-protobuf/issues/1182
-      if !_storage._storyID.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._storyID, fieldNumber: 1)
-      }
-      try { if let v = _storage._createdAt {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
-      } }()
-      try { if let v = _storage._updatedAt {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
-      } }()
-      try { if let v = _storage._deletedAt {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
-      } }()
-      if _storage._state != .undefined {
-        try visitor.visitSingularEnumField(value: _storage._state, fieldNumber: 5)
-      }
-      try { if let v = _storage._suggestionContext {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
-      } }()
-      try { if let v = _storage._suggestion {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
-      } }()
-      if !_storage._slides.isEmpty {
-        try visitor.visitRepeatedMessageField(value: _storage._slides, fieldNumber: 8)
-      }
-      try { if let v = _storage._latencies {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 100)
-      } }()
-      try { if let v = _storage._log {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 101)
-      } }()
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.storyID.isEmpty {
+      try visitor.visitSingularStringField(value: self.storyID, fieldNumber: 1)
     }
+    try { if let v = self._createdAt {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
+    try { if let v = self._updatedAt {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+    } }()
+    try { if let v = self._deletedAt {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+    } }()
+    if self.state != .undefined {
+      try visitor.visitSingularEnumField(value: self.state, fieldNumber: 5)
+    }
+    try { if let v = self._suggestionContext {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
+    } }()
+    try { if let v = self._suggestion {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
+    } }()
+    if !self.slides.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.slides, fieldNumber: 8)
+    }
+    try { if let v = self._log {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 100)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: StoredPodcastStoryProto, rhs: StoredPodcastStoryProto) -> Bool {
-    if lhs._storage !== rhs._storage {
-      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
-        let _storage = _args.0
-        let rhs_storage = _args.1
-        if _storage._storyID != rhs_storage._storyID {return false}
-        if _storage._createdAt != rhs_storage._createdAt {return false}
-        if _storage._updatedAt != rhs_storage._updatedAt {return false}
-        if _storage._deletedAt != rhs_storage._deletedAt {return false}
-        if _storage._state != rhs_storage._state {return false}
-        if _storage._suggestionContext != rhs_storage._suggestionContext {return false}
-        if _storage._suggestion != rhs_storage._suggestion {return false}
-        if _storage._slides != rhs_storage._slides {return false}
-        if _storage._latencies != rhs_storage._latencies {return false}
-        if _storage._log != rhs_storage._log {return false}
-        return true
-      }
-      if !storagesAreEqual {return false}
-    }
+    if lhs.storyID != rhs.storyID {return false}
+    if lhs._createdAt != rhs._createdAt {return false}
+    if lhs._updatedAt != rhs._updatedAt {return false}
+    if lhs._deletedAt != rhs._deletedAt {return false}
+    if lhs.state != rhs.state {return false}
+    if lhs._suggestionContext != rhs._suggestionContext {return false}
+    if lhs._suggestion != rhs._suggestion {return false}
+    if lhs.slides != rhs.slides {return false}
+    if lhs._log != rhs._log {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

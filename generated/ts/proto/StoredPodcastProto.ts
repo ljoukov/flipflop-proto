@@ -18,7 +18,6 @@ import { Duration } from "./google/protobuf/duration";
 import { PodcastVisualTransitionProto } from "./PodcastProto";
 import { PodcastHostProto } from "./PodcastProto";
 import { LogProto } from "./LogProto";
-import { LatenciesProto } from "./LatencyProto";
 import { PodcastPromptAnswerProto } from "./PodcastProto";
 import { Timestamp } from "./google/protobuf/timestamp";
 /**
@@ -89,12 +88,6 @@ export interface StoredPodcastProto {
      * @generated from protobuf field: StoredPodcastFollowupsProto followups = 14;
      */
     followups?: StoredPodcastFollowupsProto;
-    /**
-     * Debug metadata
-     *
-     * @generated from protobuf field: LatenciesProto latencies = 100;
-     */
-    latencies?: LatenciesProto;
     /**
      * @generated from protobuf field: LogProto log = 101;
      */
@@ -384,12 +377,6 @@ export interface StoredPodcastSuggestionsProto {
      */
     sections: StoredPodcastSuggestionsSectionProto[];
     /**
-     * Debug metadata
-     *
-     * @generated from protobuf field: LatenciesProto latencies = 100;
-     */
-    latencies?: LatenciesProto;
-    /**
      * @generated from protobuf field: LogProto log = 101;
      */
     log?: LogProto;
@@ -516,11 +503,7 @@ export interface StoredPodcastStoryProto {
     /**
      * Debug metadata
      *
-     * @generated from protobuf field: LatenciesProto latencies = 100;
-     */
-    latencies?: LatenciesProto;
-    /**
-     * @generated from protobuf field: LogProto log = 101;
+     * @generated from protobuf field: LogProto log = 100;
      */
     log?: LogProto;
 }
@@ -670,7 +653,6 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
             { no: 12, name: "visuals", kind: "message", T: () => StoredPodcastVisualsProto },
             { no: 13, name: "key_points", kind: "message", T: () => StoredPodcastKeyPointsProto },
             { no: 14, name: "followups", kind: "message", T: () => StoredPodcastFollowupsProto },
-            { no: 100, name: "latencies", kind: "message", T: () => LatenciesProto },
             { no: 101, name: "log", kind: "message", T: () => LogProto }
         ]);
     }
@@ -733,9 +715,6 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
                     break;
                 case /* StoredPodcastFollowupsProto followups */ 14:
                     message.followups = StoredPodcastFollowupsProto.internalBinaryRead(reader, reader.uint32(), options, message.followups);
-                    break;
-                case /* LatenciesProto latencies */ 100:
-                    message.latencies = LatenciesProto.internalBinaryRead(reader, reader.uint32(), options, message.latencies);
                     break;
                 case /* LogProto log */ 101:
                     message.log = LogProto.internalBinaryRead(reader, reader.uint32(), options, message.log);
@@ -800,9 +779,6 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
         /* StoredPodcastFollowupsProto followups = 14; */
         if (message.followups)
             StoredPodcastFollowupsProto.internalBinaryWrite(message.followups, writer.tag(14, WireType.LengthDelimited).fork(), options).join();
-        /* LatenciesProto latencies = 100; */
-        if (message.latencies)
-            LatenciesProto.internalBinaryWrite(message.latencies, writer.tag(100, WireType.LengthDelimited).fork(), options).join();
         /* LogProto log = 101; */
         if (message.log)
             LogProto.internalBinaryWrite(message.log, writer.tag(101, WireType.LengthDelimited).fork(), options).join();
@@ -1735,7 +1711,6 @@ class StoredPodcastSuggestionsProto$Type extends MessageType<StoredPodcastSugges
             { no: 5, name: "reasoning", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 6, name: "ranking", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 7, name: "sections", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastSuggestionsSectionProto },
-            { no: 100, name: "latencies", kind: "message", T: () => LatenciesProto },
             { no: 101, name: "log", kind: "message", T: () => LogProto }
         ]);
     }
@@ -1771,9 +1746,6 @@ class StoredPodcastSuggestionsProto$Type extends MessageType<StoredPodcastSugges
                     break;
                 case /* repeated StoredPodcastSuggestionsSectionProto sections */ 7:
                     message.sections.push(StoredPodcastSuggestionsSectionProto.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                case /* LatenciesProto latencies */ 100:
-                    message.latencies = LatenciesProto.internalBinaryRead(reader, reader.uint32(), options, message.latencies);
                     break;
                 case /* LogProto log */ 101:
                     message.log = LogProto.internalBinaryRead(reader, reader.uint32(), options, message.log);
@@ -1811,9 +1783,6 @@ class StoredPodcastSuggestionsProto$Type extends MessageType<StoredPodcastSugges
         /* repeated StoredPodcastSuggestionsSectionProto sections = 7; */
         for (let i = 0; i < message.sections.length; i++)
             StoredPodcastSuggestionsSectionProto.internalBinaryWrite(message.sections[i], writer.tag(7, WireType.LengthDelimited).fork(), options).join();
-        /* LatenciesProto latencies = 100; */
-        if (message.latencies)
-            LatenciesProto.internalBinaryWrite(message.latencies, writer.tag(100, WireType.LengthDelimited).fork(), options).join();
         /* LogProto log = 101; */
         if (message.log)
             LogProto.internalBinaryWrite(message.log, writer.tag(101, WireType.LengthDelimited).fork(), options).join();
@@ -2078,8 +2047,7 @@ class StoredPodcastStoryProto$Type extends MessageType<StoredPodcastStoryProto> 
             { no: 6, name: "suggestion_context", kind: "message", T: () => StoredPodcastStorySuggestionContextProto },
             { no: 7, name: "suggestion", kind: "message", T: () => StoredPodcastStorySuggestionProto },
             { no: 8, name: "slides", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastStorySlideProto },
-            { no: 100, name: "latencies", kind: "message", T: () => LatenciesProto },
-            { no: 101, name: "log", kind: "message", T: () => LogProto }
+            { no: 100, name: "log", kind: "message", T: () => LogProto }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastStoryProto>): StoredPodcastStoryProto {
@@ -2118,10 +2086,7 @@ class StoredPodcastStoryProto$Type extends MessageType<StoredPodcastStoryProto> 
                 case /* repeated StoredPodcastStorySlideProto slides */ 8:
                     message.slides.push(StoredPodcastStorySlideProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
-                case /* LatenciesProto latencies */ 100:
-                    message.latencies = LatenciesProto.internalBinaryRead(reader, reader.uint32(), options, message.latencies);
-                    break;
-                case /* LogProto log */ 101:
+                case /* LogProto log */ 100:
                     message.log = LogProto.internalBinaryRead(reader, reader.uint32(), options, message.log);
                     break;
                 default:
@@ -2160,12 +2125,9 @@ class StoredPodcastStoryProto$Type extends MessageType<StoredPodcastStoryProto> 
         /* repeated StoredPodcastStorySlideProto slides = 8; */
         for (let i = 0; i < message.slides.length; i++)
             StoredPodcastStorySlideProto.internalBinaryWrite(message.slides[i], writer.tag(8, WireType.LengthDelimited).fork(), options).join();
-        /* LatenciesProto latencies = 100; */
-        if (message.latencies)
-            LatenciesProto.internalBinaryWrite(message.latencies, writer.tag(100, WireType.LengthDelimited).fork(), options).join();
-        /* LogProto log = 101; */
+        /* LogProto log = 100; */
         if (message.log)
-            LogProto.internalBinaryWrite(message.log, writer.tag(101, WireType.LengthDelimited).fork(), options).join();
+            LogProto.internalBinaryWrite(message.log, writer.tag(100, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
