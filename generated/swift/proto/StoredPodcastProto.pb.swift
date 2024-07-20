@@ -171,9 +171,10 @@ extension StoredPodcastSuggestionsStateProto: CaseIterable {
 enum StoredPodcastStoryStateProto: SwiftProtobuf.Enum {
   typealias RawValue = Int
   case undefined // = 0
-  case generating // = 1
-  case ready // = 2
-  case failed // = 3
+  case inputReady // = 1
+  case generating // = 2
+  case ready // = 3
+  case failed // = 4
   case UNRECOGNIZED(Int)
 
   init() {
@@ -183,9 +184,10 @@ enum StoredPodcastStoryStateProto: SwiftProtobuf.Enum {
   init?(rawValue: Int) {
     switch rawValue {
     case 0: self = .undefined
-    case 1: self = .generating
-    case 2: self = .ready
-    case 3: self = .failed
+    case 1: self = .inputReady
+    case 2: self = .generating
+    case 3: self = .ready
+    case 4: self = .failed
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -193,9 +195,10 @@ enum StoredPodcastStoryStateProto: SwiftProtobuf.Enum {
   var rawValue: Int {
     switch self {
     case .undefined: return 0
-    case .generating: return 1
-    case .ready: return 2
-    case .failed: return 3
+    case .inputReady: return 1
+    case .generating: return 2
+    case .ready: return 3
+    case .failed: return 4
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -208,6 +211,7 @@ extension StoredPodcastStoryStateProto: CaseIterable {
   // The compiler won't synthesize support with the UNRECOGNIZED case.
   static var allCases: [StoredPodcastStoryStateProto] = [
     .undefined,
+    .inputReady,
     .generating,
     .ready,
     .failed,
@@ -958,9 +962,10 @@ extension StoredPodcastSuggestionsStateProto: SwiftProtobuf._ProtoNameProviding 
 extension StoredPodcastStoryStateProto: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     0: .same(proto: "STORED_PODCAST_STORY_STATE_PROTO_UNDEFINED"),
-    1: .same(proto: "STORED_PODCAST_STORY_STATE_PROTO_GENERATING"),
-    2: .same(proto: "STORED_PODCAST_STORY_STATE_PROTO_READY"),
-    3: .same(proto: "STORED_PODCAST_STORY_STATE_PROTO_FAILED"),
+    1: .same(proto: "STORED_PODCAST_STORY_STATE_PROTO_INPUT_READY"),
+    2: .same(proto: "STORED_PODCAST_STORY_STATE_PROTO_GENERATING"),
+    3: .same(proto: "STORED_PODCAST_STORY_STATE_PROTO_READY"),
+    4: .same(proto: "STORED_PODCAST_STORY_STATE_PROTO_FAILED"),
   ]
 }
 

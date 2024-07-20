@@ -624,17 +624,21 @@ export enum StoredPodcastStoryStateProto {
      */
     UNDEFINED = 0,
     /**
-     * @generated from protobuf enum value: STORED_PODCAST_STORY_STATE_PROTO_GENERATING = 1;
+     * @generated from protobuf enum value: STORED_PODCAST_STORY_STATE_PROTO_INPUT_READY = 1;
      */
-    GENERATING = 1,
+    INPUT_READY = 1,
     /**
-     * @generated from protobuf enum value: STORED_PODCAST_STORY_STATE_PROTO_READY = 2;
+     * @generated from protobuf enum value: STORED_PODCAST_STORY_STATE_PROTO_GENERATING = 2;
      */
-    READY = 2,
+    GENERATING = 2,
     /**
-     * @generated from protobuf enum value: STORED_PODCAST_STORY_STATE_PROTO_FAILED = 3;
+     * @generated from protobuf enum value: STORED_PODCAST_STORY_STATE_PROTO_READY = 3;
      */
-    FAILED = 3
+    READY = 3,
+    /**
+     * @generated from protobuf enum value: STORED_PODCAST_STORY_STATE_PROTO_FAILED = 4;
+     */
+    FAILED = 4
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
