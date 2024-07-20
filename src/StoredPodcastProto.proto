@@ -205,6 +205,10 @@ message StoredPodcastStoryProto {
   StoredPodcastStorySuggestionProto suggestion = 7;
 
   repeated StoredPodcastStorySlideProto slides = 8;
+
+  // Debug metadata
+  LatenciesProto latencies = 100;
+  LogProto log = 101;
 }
 
 enum StoredPodcastStoryStateProto {

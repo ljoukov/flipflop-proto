@@ -513,6 +513,16 @@ export interface StoredPodcastStoryProto {
      * @generated from protobuf field: repeated StoredPodcastStorySlideProto slides = 8;
      */
     slides: StoredPodcastStorySlideProto[];
+    /**
+     * Debug metadata
+     *
+     * @generated from protobuf field: LatenciesProto latencies = 100;
+     */
+    latencies?: LatenciesProto;
+    /**
+     * @generated from protobuf field: LogProto log = 101;
+     */
+    log?: LogProto;
 }
 /**
  * @generated from protobuf message StoredPodcastStorySuggestionContextProto
@@ -2067,7 +2077,9 @@ class StoredPodcastStoryProto$Type extends MessageType<StoredPodcastStoryProto> 
             { no: 5, name: "state", kind: "enum", T: () => ["StoredPodcastStoryStateProto", StoredPodcastStoryStateProto, "STORED_PODCAST_STORY_STATE_PROTO_"] },
             { no: 6, name: "suggestion_context", kind: "message", T: () => StoredPodcastStorySuggestionContextProto },
             { no: 7, name: "suggestion", kind: "message", T: () => StoredPodcastStorySuggestionProto },
-            { no: 8, name: "slides", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastStorySlideProto }
+            { no: 8, name: "slides", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastStorySlideProto },
+            { no: 100, name: "latencies", kind: "message", T: () => LatenciesProto },
+            { no: 101, name: "log", kind: "message", T: () => LogProto }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastStoryProto>): StoredPodcastStoryProto {
@@ -2106,6 +2118,12 @@ class StoredPodcastStoryProto$Type extends MessageType<StoredPodcastStoryProto> 
                 case /* repeated StoredPodcastStorySlideProto slides */ 8:
                     message.slides.push(StoredPodcastStorySlideProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
+                case /* LatenciesProto latencies */ 100:
+                    message.latencies = LatenciesProto.internalBinaryRead(reader, reader.uint32(), options, message.latencies);
+                    break;
+                case /* LogProto log */ 101:
+                    message.log = LogProto.internalBinaryRead(reader, reader.uint32(), options, message.log);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -2142,6 +2160,12 @@ class StoredPodcastStoryProto$Type extends MessageType<StoredPodcastStoryProto> 
         /* repeated StoredPodcastStorySlideProto slides = 8; */
         for (let i = 0; i < message.slides.length; i++)
             StoredPodcastStorySlideProto.internalBinaryWrite(message.slides[i], writer.tag(8, WireType.LengthDelimited).fork(), options).join();
+        /* LatenciesProto latencies = 100; */
+        if (message.latencies)
+            LatenciesProto.internalBinaryWrite(message.latencies, writer.tag(100, WireType.LengthDelimited).fork(), options).join();
+        /* LogProto log = 101; */
+        if (message.log)
+            LogProto.internalBinaryWrite(message.log, writer.tag(101, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
