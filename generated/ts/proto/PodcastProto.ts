@@ -903,7 +903,11 @@ export enum PodcastStatusProto {
     /**
      * @generated from protobuf enum value: PODCAST_STATUS_PROTO_FAILED = 3;
      */
-    FAILED = 3
+    FAILED = 3,
+    /**
+     * @generated from protobuf enum value: PODCAST_STATUS_PROTO_READY_FOR_GENERATION = 4;
+     */
+    READY_FOR_GENERATION = 4
 }
 /**
  * @generated from protobuf enum PodcastVisualTransitionProto

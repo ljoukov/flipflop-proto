@@ -26,6 +26,7 @@ enum PodcastStatusProto: SwiftProtobuf.Enum {
   case generating // = 1
   case ready // = 2
   case failed // = 3
+  case readyForGeneration // = 4
   case UNRECOGNIZED(Int)
 
   init() {
@@ -38,6 +39,7 @@ enum PodcastStatusProto: SwiftProtobuf.Enum {
     case 1: self = .generating
     case 2: self = .ready
     case 3: self = .failed
+    case 4: self = .readyForGeneration
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -48,6 +50,7 @@ enum PodcastStatusProto: SwiftProtobuf.Enum {
     case .generating: return 1
     case .ready: return 2
     case .failed: return 3
+    case .readyForGeneration: return 4
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -63,6 +66,7 @@ extension PodcastStatusProto: CaseIterable {
     .generating,
     .ready,
     .failed,
+    .readyForGeneration,
   ]
 }
 
@@ -1540,6 +1544,7 @@ extension PodcastStatusProto: SwiftProtobuf._ProtoNameProviding {
     1: .same(proto: "PODCAST_STATUS_PROTO_GENERATING"),
     2: .same(proto: "PODCAST_STATUS_PROTO_READY"),
     3: .same(proto: "PODCAST_STATUS_PROTO_FAILED"),
+    4: .same(proto: "PODCAST_STATUS_PROTO_READY_FOR_GENERATION"),
   ]
 }
 
