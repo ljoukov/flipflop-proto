@@ -486,19 +486,31 @@ export interface StoredPodcastStoryProto {
      */
     storyId: string;
     /**
-     * @generated from protobuf field: StoredPodcastStoryStateProto state = 2;
+     * @generated from protobuf field: google.protobuf.Timestamp created_at = 2;
+     */
+    createdAt?: Timestamp;
+    /**
+     * @generated from protobuf field: google.protobuf.Timestamp updated_at = 3;
+     */
+    updatedAt?: Timestamp;
+    /**
+     * @generated from protobuf field: google.protobuf.Timestamp deleted_at = 4;
+     */
+    deletedAt?: Timestamp;
+    /**
+     * @generated from protobuf field: StoredPodcastStoryStateProto state = 5;
      */
     state: StoredPodcastStoryStateProto;
     /**
-     * @generated from protobuf field: StoredPodcastStorySuggestionContextProto suggestion_context = 3;
+     * @generated from protobuf field: StoredPodcastStorySuggestionContextProto suggestion_context = 6;
      */
     suggestionContext?: StoredPodcastStorySuggestionContextProto;
     /**
-     * @generated from protobuf field: StoredPodcastStorySuggestionProto suggestion = 4;
+     * @generated from protobuf field: StoredPodcastStorySuggestionProto suggestion = 7;
      */
     suggestion?: StoredPodcastStorySuggestionProto;
     /**
-     * @generated from protobuf field: repeated StoredPodcastStorySlideProto slides = 5;
+     * @generated from protobuf field: repeated StoredPodcastStorySlideProto slides = 8;
      */
     slides: StoredPodcastStorySlideProto[];
 }
@@ -2045,10 +2057,13 @@ class StoredPodcastStoryProto$Type extends MessageType<StoredPodcastStoryProto> 
     constructor() {
         super("StoredPodcastStoryProto", [
             { no: 1, name: "story_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "state", kind: "enum", T: () => ["StoredPodcastStoryStateProto", StoredPodcastStoryStateProto, "STORED_PODCAST_STORY_STATE_PROTO_"] },
-            { no: 3, name: "suggestion_context", kind: "message", T: () => StoredPodcastStorySuggestionContextProto },
-            { no: 4, name: "suggestion", kind: "message", T: () => StoredPodcastStorySuggestionProto },
-            { no: 5, name: "slides", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastStorySlideProto }
+            { no: 2, name: "created_at", kind: "message", T: () => Timestamp },
+            { no: 3, name: "updated_at", kind: "message", T: () => Timestamp },
+            { no: 4, name: "deleted_at", kind: "message", T: () => Timestamp },
+            { no: 5, name: "state", kind: "enum", T: () => ["StoredPodcastStoryStateProto", StoredPodcastStoryStateProto, "STORED_PODCAST_STORY_STATE_PROTO_"] },
+            { no: 6, name: "suggestion_context", kind: "message", T: () => StoredPodcastStorySuggestionContextProto },
+            { no: 7, name: "suggestion", kind: "message", T: () => StoredPodcastStorySuggestionProto },
+            { no: 8, name: "slides", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastStorySlideProto }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastStoryProto>): StoredPodcastStoryProto {
@@ -2066,16 +2081,25 @@ class StoredPodcastStoryProto$Type extends MessageType<StoredPodcastStoryProto> 
                 case /* string story_id */ 1:
                     message.storyId = reader.string();
                     break;
-                case /* StoredPodcastStoryStateProto state */ 2:
+                case /* google.protobuf.Timestamp created_at */ 2:
+                    message.createdAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.createdAt);
+                    break;
+                case /* google.protobuf.Timestamp updated_at */ 3:
+                    message.updatedAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.updatedAt);
+                    break;
+                case /* google.protobuf.Timestamp deleted_at */ 4:
+                    message.deletedAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.deletedAt);
+                    break;
+                case /* StoredPodcastStoryStateProto state */ 5:
                     message.state = reader.int32();
                     break;
-                case /* StoredPodcastStorySuggestionContextProto suggestion_context */ 3:
+                case /* StoredPodcastStorySuggestionContextProto suggestion_context */ 6:
                     message.suggestionContext = StoredPodcastStorySuggestionContextProto.internalBinaryRead(reader, reader.uint32(), options, message.suggestionContext);
                     break;
-                case /* StoredPodcastStorySuggestionProto suggestion */ 4:
+                case /* StoredPodcastStorySuggestionProto suggestion */ 7:
                     message.suggestion = StoredPodcastStorySuggestionProto.internalBinaryRead(reader, reader.uint32(), options, message.suggestion);
                     break;
-                case /* repeated StoredPodcastStorySlideProto slides */ 5:
+                case /* repeated StoredPodcastStorySlideProto slides */ 8:
                     message.slides.push(StoredPodcastStorySlideProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
@@ -2093,18 +2117,27 @@ class StoredPodcastStoryProto$Type extends MessageType<StoredPodcastStoryProto> 
         /* string story_id = 1; */
         if (message.storyId !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.storyId);
-        /* StoredPodcastStoryStateProto state = 2; */
+        /* google.protobuf.Timestamp created_at = 2; */
+        if (message.createdAt)
+            Timestamp.internalBinaryWrite(message.createdAt, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.Timestamp updated_at = 3; */
+        if (message.updatedAt)
+            Timestamp.internalBinaryWrite(message.updatedAt, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.Timestamp deleted_at = 4; */
+        if (message.deletedAt)
+            Timestamp.internalBinaryWrite(message.deletedAt, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* StoredPodcastStoryStateProto state = 5; */
         if (message.state !== 0)
-            writer.tag(2, WireType.Varint).int32(message.state);
-        /* StoredPodcastStorySuggestionContextProto suggestion_context = 3; */
+            writer.tag(5, WireType.Varint).int32(message.state);
+        /* StoredPodcastStorySuggestionContextProto suggestion_context = 6; */
         if (message.suggestionContext)
-            StoredPodcastStorySuggestionContextProto.internalBinaryWrite(message.suggestionContext, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* StoredPodcastStorySuggestionProto suggestion = 4; */
+            StoredPodcastStorySuggestionContextProto.internalBinaryWrite(message.suggestionContext, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+        /* StoredPodcastStorySuggestionProto suggestion = 7; */
         if (message.suggestion)
-            StoredPodcastStorySuggestionProto.internalBinaryWrite(message.suggestion, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
-        /* repeated StoredPodcastStorySlideProto slides = 5; */
+            StoredPodcastStorySuggestionProto.internalBinaryWrite(message.suggestion, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+        /* repeated StoredPodcastStorySlideProto slides = 8; */
         for (let i = 0; i < message.slides.length; i++)
-            StoredPodcastStorySlideProto.internalBinaryWrite(message.slides[i], writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+            StoredPodcastStorySlideProto.internalBinaryWrite(message.slides[i], writer.tag(8, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

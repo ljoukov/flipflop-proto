@@ -803,6 +803,33 @@ struct StoredPodcastStoryProto {
 
   var storyID: String = String()
 
+  var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_createdAt = newValue}
+  }
+  /// Returns true if `createdAt` has been explicitly set.
+  var hasCreatedAt: Bool {return self._createdAt != nil}
+  /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
+  mutating func clearCreatedAt() {self._createdAt = nil}
+
+  var updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_updatedAt = newValue}
+  }
+  /// Returns true if `updatedAt` has been explicitly set.
+  var hasUpdatedAt: Bool {return self._updatedAt != nil}
+  /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
+  mutating func clearUpdatedAt() {self._updatedAt = nil}
+
+  var deletedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _deletedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_deletedAt = newValue}
+  }
+  /// Returns true if `deletedAt` has been explicitly set.
+  var hasDeletedAt: Bool {return self._deletedAt != nil}
+  /// Clears the value of `deletedAt`. Subsequent reads from it will return its default value.
+  mutating func clearDeletedAt() {self._deletedAt = nil}
+
   var state: StoredPodcastStoryStateProto = .undefined
 
   var suggestionContext: StoredPodcastStorySuggestionContextProto {
@@ -829,6 +856,9 @@ struct StoredPodcastStoryProto {
 
   init() {}
 
+  fileprivate var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+  fileprivate var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+  fileprivate var _deletedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
   fileprivate var _suggestionContext: StoredPodcastStorySuggestionContextProto? = nil
   fileprivate var _suggestion: StoredPodcastStorySuggestionProto? = nil
 }
@@ -2114,10 +2144,13 @@ extension StoredPodcastStoryProto: SwiftProtobuf.Message, SwiftProtobuf._Message
   static let protoMessageName: String = "StoredPodcastStoryProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "story_id"),
-    2: .same(proto: "state"),
-    3: .standard(proto: "suggestion_context"),
-    4: .same(proto: "suggestion"),
-    5: .same(proto: "slides"),
+    2: .standard(proto: "created_at"),
+    3: .standard(proto: "updated_at"),
+    4: .standard(proto: "deleted_at"),
+    5: .same(proto: "state"),
+    6: .standard(proto: "suggestion_context"),
+    7: .same(proto: "suggestion"),
+    8: .same(proto: "slides"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2127,10 +2160,13 @@ extension StoredPodcastStoryProto: SwiftProtobuf.Message, SwiftProtobuf._Message
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.storyID) }()
-      case 2: try { try decoder.decodeSingularEnumField(value: &self.state) }()
-      case 3: try { try decoder.decodeSingularMessageField(value: &self._suggestionContext) }()
-      case 4: try { try decoder.decodeSingularMessageField(value: &self._suggestion) }()
-      case 5: try { try decoder.decodeRepeatedMessageField(value: &self.slides) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._createdAt) }()
+      case 3: try { try decoder.decodeSingularMessageField(value: &self._updatedAt) }()
+      case 4: try { try decoder.decodeSingularMessageField(value: &self._deletedAt) }()
+      case 5: try { try decoder.decodeSingularEnumField(value: &self.state) }()
+      case 6: try { try decoder.decodeSingularMessageField(value: &self._suggestionContext) }()
+      case 7: try { try decoder.decodeSingularMessageField(value: &self._suggestion) }()
+      case 8: try { try decoder.decodeRepeatedMessageField(value: &self.slides) }()
       default: break
       }
     }
@@ -2144,23 +2180,35 @@ extension StoredPodcastStoryProto: SwiftProtobuf.Message, SwiftProtobuf._Message
     if !self.storyID.isEmpty {
       try visitor.visitSingularStringField(value: self.storyID, fieldNumber: 1)
     }
-    if self.state != .undefined {
-      try visitor.visitSingularEnumField(value: self.state, fieldNumber: 2)
-    }
-    try { if let v = self._suggestionContext {
+    try { if let v = self._createdAt {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
+    try { if let v = self._updatedAt {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
     } }()
-    try { if let v = self._suggestion {
+    try { if let v = self._deletedAt {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
     } }()
+    if self.state != .undefined {
+      try visitor.visitSingularEnumField(value: self.state, fieldNumber: 5)
+    }
+    try { if let v = self._suggestionContext {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
+    } }()
+    try { if let v = self._suggestion {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
+    } }()
     if !self.slides.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.slides, fieldNumber: 5)
+      try visitor.visitRepeatedMessageField(value: self.slides, fieldNumber: 8)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: StoredPodcastStoryProto, rhs: StoredPodcastStoryProto) -> Bool {
     if lhs.storyID != rhs.storyID {return false}
+    if lhs._createdAt != rhs._createdAt {return false}
+    if lhs._updatedAt != rhs._updatedAt {return false}
+    if lhs._deletedAt != rhs._deletedAt {return false}
     if lhs.state != rhs.state {return false}
     if lhs._suggestionContext != rhs._suggestionContext {return false}
     if lhs._suggestion != rhs._suggestion {return false}

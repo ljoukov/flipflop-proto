@@ -195,10 +195,16 @@ message StoredPodcastStorySuggestionProto {
 
 message StoredPodcastStoryProto {
   string story_id = 1;
-  StoredPodcastStoryStateProto state = 2;
-  StoredPodcastStorySuggestionContextProto suggestion_context = 3;
-  StoredPodcastStorySuggestionProto suggestion = 4;
-  repeated StoredPodcastStorySlideProto slides = 5;
+
+  google.protobuf.Timestamp created_at = 2;
+  google.protobuf.Timestamp updated_at = 3;
+  google.protobuf.Timestamp deleted_at = 4;
+  StoredPodcastStoryStateProto state = 5;
+
+  StoredPodcastStorySuggestionContextProto suggestion_context = 6;
+  StoredPodcastStorySuggestionProto suggestion = 7;
+
+  repeated StoredPodcastStorySlideProto slides = 8;
 }
 
 enum StoredPodcastStoryStateProto {
