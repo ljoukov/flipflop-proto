@@ -928,6 +928,10 @@ struct StoredPodcastStorySlidesProto {
 
   var isReady: Bool = false
 
+  var reasoning: String = String()
+
+  var structure: String = String()
+
   var slides: [StoredPodcastStorySlideProto] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -2434,7 +2438,9 @@ extension StoredPodcastStorySlidesProto: SwiftProtobuf.Message, SwiftProtobuf._M
   static let protoMessageName: String = "StoredPodcastStorySlidesProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "is_ready"),
-    2: .same(proto: "slides"),
+    2: .same(proto: "reasoning"),
+    3: .same(proto: "structure"),
+    4: .same(proto: "slides"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2444,7 +2450,9 @@ extension StoredPodcastStorySlidesProto: SwiftProtobuf.Message, SwiftProtobuf._M
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularBoolField(value: &self.isReady) }()
-      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.slides) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.reasoning) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.structure) }()
+      case 4: try { try decoder.decodeRepeatedMessageField(value: &self.slides) }()
       default: break
       }
     }
@@ -2454,14 +2462,22 @@ extension StoredPodcastStorySlidesProto: SwiftProtobuf.Message, SwiftProtobuf._M
     if self.isReady != false {
       try visitor.visitSingularBoolField(value: self.isReady, fieldNumber: 1)
     }
+    if !self.reasoning.isEmpty {
+      try visitor.visitSingularStringField(value: self.reasoning, fieldNumber: 2)
+    }
+    if !self.structure.isEmpty {
+      try visitor.visitSingularStringField(value: self.structure, fieldNumber: 3)
+    }
     if !self.slides.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.slides, fieldNumber: 2)
+      try visitor.visitRepeatedMessageField(value: self.slides, fieldNumber: 4)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: StoredPodcastStorySlidesProto, rhs: StoredPodcastStorySlidesProto) -> Bool {
     if lhs.isReady != rhs.isReady {return false}
+    if lhs.reasoning != rhs.reasoning {return false}
+    if lhs.structure != rhs.structure {return false}
     if lhs.slides != rhs.slides {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

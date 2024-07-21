@@ -562,7 +562,15 @@ export interface StoredPodcastStorySlidesProto {
      */
     isReady: boolean;
     /**
-     * @generated from protobuf field: repeated StoredPodcastStorySlideProto slides = 2;
+     * @generated from protobuf field: string reasoning = 2;
+     */
+    reasoning: string;
+    /**
+     * @generated from protobuf field: string structure = 3;
+     */
+    structure: string;
+    /**
+     * @generated from protobuf field: repeated StoredPodcastStorySlideProto slides = 4;
      */
     slides: StoredPodcastStorySlideProto[];
 }
@@ -2321,11 +2329,13 @@ class StoredPodcastStorySlidesProto$Type extends MessageType<StoredPodcastStoryS
     constructor() {
         super("StoredPodcastStorySlidesProto", [
             { no: 1, name: "is_ready", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 2, name: "slides", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastStorySlideProto }
+            { no: 2, name: "reasoning", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "structure", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "slides", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastStorySlideProto }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastStorySlidesProto>): StoredPodcastStorySlidesProto {
-        const message = { isReady: false, slides: [] };
+        const message = { isReady: false, reasoning: "", structure: "", slides: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastStorySlidesProto>(this, message, value);
@@ -2339,7 +2349,13 @@ class StoredPodcastStorySlidesProto$Type extends MessageType<StoredPodcastStoryS
                 case /* bool is_ready */ 1:
                     message.isReady = reader.bool();
                     break;
-                case /* repeated StoredPodcastStorySlideProto slides */ 2:
+                case /* string reasoning */ 2:
+                    message.reasoning = reader.string();
+                    break;
+                case /* string structure */ 3:
+                    message.structure = reader.string();
+                    break;
+                case /* repeated StoredPodcastStorySlideProto slides */ 4:
                     message.slides.push(StoredPodcastStorySlideProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
@@ -2357,9 +2373,15 @@ class StoredPodcastStorySlidesProto$Type extends MessageType<StoredPodcastStoryS
         /* bool is_ready = 1; */
         if (message.isReady !== false)
             writer.tag(1, WireType.Varint).bool(message.isReady);
-        /* repeated StoredPodcastStorySlideProto slides = 2; */
+        /* string reasoning = 2; */
+        if (message.reasoning !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.reasoning);
+        /* string structure = 3; */
+        if (message.structure !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.structure);
+        /* repeated StoredPodcastStorySlideProto slides = 4; */
         for (let i = 0; i < message.slides.length; i++)
-            StoredPodcastStorySlideProto.internalBinaryWrite(message.slides[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+            StoredPodcastStorySlideProto.internalBinaryWrite(message.slides[i], writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

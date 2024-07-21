@@ -233,7 +233,11 @@ message StoredPodcastStorySuggestionInputProto {
 
 message StoredPodcastStorySlidesProto {
   bool is_ready = 1;
-  repeated StoredPodcastStorySlideProto slides = 2;
+
+  string reasoning = 2;
+  string structure = 3;
+
+  repeated StoredPodcastStorySlideProto slides = 4;
 }
 
 message StoredPodcastStorySlideProto {
