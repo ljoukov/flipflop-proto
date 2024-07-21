@@ -8,7 +8,7 @@ message PodcastStreamApiRequestProto {
   oneof request {
     CreatePodcastRequestProto create = 2;
     GeneratePodcastRequestProto generate = 3;
-    GetPodcastRequestProto get = 4;
+    GetPodcastRequestProto podcast = 4;
     GetPodcastStoryRequestProto story = 5;
   }
 }
@@ -20,7 +20,7 @@ message PodcastStreamApiResponseHeaderProto {
   oneof header {
     CreatePodcastResponseHeaderProto create_header = 2;
     GeneratePodcastResponseHeaderProto generate = 3;
-    GetPodcastResponseHeaderProto get = 4;
+    GetPodcastResponseHeaderProto podcast = 4;
     GetPodcastStoryResponseHeaderProto story_header = 5;
   }
   map<string, google.protobuf.Duration> latencies = 100;
@@ -30,7 +30,7 @@ message PodcastStreamApiResponseDeltaProto {
   oneof response_delta {
     CreatePodcastResponseDeltaProto create_delta = 1;
     GeneratePodcastResponseDeltaProto generate_delta = 2;
-    GetPodcastResponseDeltaProto get_delta = 3;
+    GetPodcastResponseDeltaProto podcast_delta = 3;
     GetPodcastStoryResponseDeltaProto story_delta = 4;
   }
 }

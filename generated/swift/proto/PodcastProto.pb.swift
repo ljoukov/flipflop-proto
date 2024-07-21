@@ -193,12 +193,12 @@ struct PodcastStreamApiRequestProto {
     set {request = .generate(newValue)}
   }
 
-  var get: GetPodcastRequestProto {
+  var podcast: GetPodcastRequestProto {
     get {
-      if case .get(let v)? = request {return v}
+      if case .podcast(let v)? = request {return v}
       return GetPodcastRequestProto()
     }
-    set {request = .get(newValue)}
+    set {request = .podcast(newValue)}
   }
 
   var story: GetPodcastStoryRequestProto {
@@ -214,7 +214,7 @@ struct PodcastStreamApiRequestProto {
   enum OneOf_Request: Equatable {
     case create(CreatePodcastRequestProto)
     case generate(GeneratePodcastRequestProto)
-    case get(GetPodcastRequestProto)
+    case podcast(GetPodcastRequestProto)
     case story(GetPodcastStoryRequestProto)
 
   #if !swift(>=4.1)
@@ -231,8 +231,8 @@ struct PodcastStreamApiRequestProto {
         guard case .generate(let l) = lhs, case .generate(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
-      case (.get, .get): return {
-        guard case .get(let l) = lhs, case .get(let r) = rhs else { preconditionFailure() }
+      case (.podcast, .podcast): return {
+        guard case .podcast(let l) = lhs, case .podcast(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       case (.story, .story): return {
@@ -275,12 +275,12 @@ struct PodcastStreamApiResponseHeaderProto {
     set {header = .generate(newValue)}
   }
 
-  var get: GetPodcastResponseHeaderProto {
+  var podcast: GetPodcastResponseHeaderProto {
     get {
-      if case .get(let v)? = header {return v}
+      if case .podcast(let v)? = header {return v}
       return GetPodcastResponseHeaderProto()
     }
-    set {header = .get(newValue)}
+    set {header = .podcast(newValue)}
   }
 
   var storyHeader: GetPodcastStoryResponseHeaderProto {
@@ -298,7 +298,7 @@ struct PodcastStreamApiResponseHeaderProto {
   enum OneOf_Header: Equatable {
     case createHeader(CreatePodcastResponseHeaderProto)
     case generate(GeneratePodcastResponseHeaderProto)
-    case get(GetPodcastResponseHeaderProto)
+    case podcast(GetPodcastResponseHeaderProto)
     case storyHeader(GetPodcastStoryResponseHeaderProto)
 
   #if !swift(>=4.1)
@@ -315,8 +315,8 @@ struct PodcastStreamApiResponseHeaderProto {
         guard case .generate(let l) = lhs, case .generate(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
-      case (.get, .get): return {
-        guard case .get(let l) = lhs, case .get(let r) = rhs else { preconditionFailure() }
+      case (.podcast, .podcast): return {
+        guard case .podcast(let l) = lhs, case .podcast(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       case (.storyHeader, .storyHeader): return {
@@ -355,12 +355,12 @@ struct PodcastStreamApiResponseDeltaProto {
     set {responseDelta = .generateDelta(newValue)}
   }
 
-  var getDelta: GetPodcastResponseDeltaProto {
+  var podcastDelta: GetPodcastResponseDeltaProto {
     get {
-      if case .getDelta(let v)? = responseDelta {return v}
+      if case .podcastDelta(let v)? = responseDelta {return v}
       return GetPodcastResponseDeltaProto()
     }
-    set {responseDelta = .getDelta(newValue)}
+    set {responseDelta = .podcastDelta(newValue)}
   }
 
   var storyDelta: GetPodcastStoryResponseDeltaProto {
@@ -376,7 +376,7 @@ struct PodcastStreamApiResponseDeltaProto {
   enum OneOf_ResponseDelta: Equatable {
     case createDelta(CreatePodcastResponseDeltaProto)
     case generateDelta(GeneratePodcastResponseDeltaProto)
-    case getDelta(GetPodcastResponseDeltaProto)
+    case podcastDelta(GetPodcastResponseDeltaProto)
     case storyDelta(GetPodcastStoryResponseDeltaProto)
 
   #if !swift(>=4.1)
@@ -393,8 +393,8 @@ struct PodcastStreamApiResponseDeltaProto {
         guard case .generateDelta(let l) = lhs, case .generateDelta(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
-      case (.getDelta, .getDelta): return {
-        guard case .getDelta(let l) = lhs, case .getDelta(let r) = rhs else { preconditionFailure() }
+      case (.podcastDelta, .podcastDelta): return {
+        guard case .podcastDelta(let l) = lhs, case .podcastDelta(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       case (.storyDelta, .storyDelta): return {
@@ -1572,7 +1572,7 @@ extension PodcastStreamApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Me
     1: .standard(proto: "encoded_user_auth"),
     2: .same(proto: "create"),
     3: .same(proto: "generate"),
-    4: .same(proto: "get"),
+    4: .same(proto: "podcast"),
     5: .same(proto: "story"),
   ]
 
@@ -1614,12 +1614,12 @@ extension PodcastStreamApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Me
         var hadOneofValue = false
         if let current = self.request {
           hadOneofValue = true
-          if case .get(let m) = current {v = m}
+          if case .podcast(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.request = .get(v)
+          self.request = .podcast(v)
         }
       }()
       case 5: try {
@@ -1657,8 +1657,8 @@ extension PodcastStreamApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Me
       guard case .generate(let v)? = self.request else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
     }()
-    case .get?: try {
-      guard case .get(let v)? = self.request else { preconditionFailure() }
+    case .podcast?: try {
+      guard case .podcast(let v)? = self.request else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
     }()
     case .story?: try {
@@ -1684,7 +1684,7 @@ extension PodcastStreamApiResponseHeaderProto: SwiftProtobuf.Message, SwiftProto
     1: .standard(proto: "refreshed_encoded_user_auth"),
     2: .standard(proto: "create_header"),
     3: .same(proto: "generate"),
-    4: .same(proto: "get"),
+    4: .same(proto: "podcast"),
     5: .standard(proto: "story_header"),
     100: .same(proto: "latencies"),
   ]
@@ -1727,12 +1727,12 @@ extension PodcastStreamApiResponseHeaderProto: SwiftProtobuf.Message, SwiftProto
         var hadOneofValue = false
         if let current = self.header {
           hadOneofValue = true
-          if case .get(let m) = current {v = m}
+          if case .podcast(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.header = .get(v)
+          self.header = .podcast(v)
         }
       }()
       case 5: try {
@@ -1771,8 +1771,8 @@ extension PodcastStreamApiResponseHeaderProto: SwiftProtobuf.Message, SwiftProto
       guard case .generate(let v)? = self.header else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
     }()
-    case .get?: try {
-      guard case .get(let v)? = self.header else { preconditionFailure() }
+    case .podcast?: try {
+      guard case .podcast(let v)? = self.header else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
     }()
     case .storyHeader?: try {
@@ -1801,7 +1801,7 @@ extension PodcastStreamApiResponseDeltaProto: SwiftProtobuf.Message, SwiftProtob
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "create_delta"),
     2: .standard(proto: "generate_delta"),
-    3: .standard(proto: "get_delta"),
+    3: .standard(proto: "podcast_delta"),
     4: .standard(proto: "story_delta"),
   ]
 
@@ -1842,12 +1842,12 @@ extension PodcastStreamApiResponseDeltaProto: SwiftProtobuf.Message, SwiftProtob
         var hadOneofValue = false
         if let current = self.responseDelta {
           hadOneofValue = true
-          if case .getDelta(let m) = current {v = m}
+          if case .podcastDelta(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.responseDelta = .getDelta(v)
+          self.responseDelta = .podcastDelta(v)
         }
       }()
       case 4: try {
@@ -1882,8 +1882,8 @@ extension PodcastStreamApiResponseDeltaProto: SwiftProtobuf.Message, SwiftProtob
       guard case .generateDelta(let v)? = self.responseDelta else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     }()
-    case .getDelta?: try {
-      guard case .getDelta(let v)? = self.responseDelta else { preconditionFailure() }
+    case .podcastDelta?: try {
+      guard case .podcastDelta(let v)? = self.responseDelta else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
     }()
     case .storyDelta?: try {

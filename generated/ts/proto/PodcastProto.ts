@@ -39,11 +39,11 @@ export interface PodcastStreamApiRequestProto {
          */
         generate: GeneratePodcastRequestProto;
     } | {
-        oneofKind: "get";
+        oneofKind: "podcast";
         /**
-         * @generated from protobuf field: GetPodcastRequestProto get = 4;
+         * @generated from protobuf field: GetPodcastRequestProto podcast = 4;
          */
-        get: GetPodcastRequestProto;
+        podcast: GetPodcastRequestProto;
     } | {
         oneofKind: "story";
         /**
@@ -81,11 +81,11 @@ export interface PodcastStreamApiResponseHeaderProto {
          */
         generate: GeneratePodcastResponseHeaderProto;
     } | {
-        oneofKind: "get";
+        oneofKind: "podcast";
         /**
-         * @generated from protobuf field: GetPodcastResponseHeaderProto get = 4;
+         * @generated from protobuf field: GetPodcastResponseHeaderProto podcast = 4;
          */
-        get: GetPodcastResponseHeaderProto;
+        podcast: GetPodcastResponseHeaderProto;
     } | {
         oneofKind: "storyHeader";
         /**
@@ -122,11 +122,11 @@ export interface PodcastStreamApiResponseDeltaProto {
          */
         generateDelta: GeneratePodcastResponseDeltaProto;
     } | {
-        oneofKind: "getDelta";
+        oneofKind: "podcastDelta";
         /**
-         * @generated from protobuf field: GetPodcastResponseDeltaProto get_delta = 3;
+         * @generated from protobuf field: GetPodcastResponseDeltaProto podcast_delta = 3;
          */
-        getDelta: GetPodcastResponseDeltaProto;
+        podcastDelta: GetPodcastResponseDeltaProto;
     } | {
         oneofKind: "storyDelta";
         /**
@@ -958,7 +958,7 @@ class PodcastStreamApiRequestProto$Type extends MessageType<PodcastStreamApiRequ
             { no: 1, name: "encoded_user_auth", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "create", kind: "message", oneof: "request", T: () => CreatePodcastRequestProto },
             { no: 3, name: "generate", kind: "message", oneof: "request", T: () => GeneratePodcastRequestProto },
-            { no: 4, name: "get", kind: "message", oneof: "request", T: () => GetPodcastRequestProto },
+            { no: 4, name: "podcast", kind: "message", oneof: "request", T: () => GetPodcastRequestProto },
             { no: 5, name: "story", kind: "message", oneof: "request", T: () => GetPodcastStoryRequestProto }
         ]);
     }
@@ -989,10 +989,10 @@ class PodcastStreamApiRequestProto$Type extends MessageType<PodcastStreamApiRequ
                         generate: GeneratePodcastRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).generate)
                     };
                     break;
-                case /* GetPodcastRequestProto get */ 4:
+                case /* GetPodcastRequestProto podcast */ 4:
                     message.request = {
-                        oneofKind: "get",
-                        get: GetPodcastRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).get)
+                        oneofKind: "podcast",
+                        podcast: GetPodcastRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).podcast)
                     };
                     break;
                 case /* GetPodcastStoryRequestProto story */ 5:
@@ -1022,9 +1022,9 @@ class PodcastStreamApiRequestProto$Type extends MessageType<PodcastStreamApiRequ
         /* GeneratePodcastRequestProto generate = 3; */
         if (message.request.oneofKind === "generate")
             GeneratePodcastRequestProto.internalBinaryWrite(message.request.generate, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* GetPodcastRequestProto get = 4; */
-        if (message.request.oneofKind === "get")
-            GetPodcastRequestProto.internalBinaryWrite(message.request.get, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* GetPodcastRequestProto podcast = 4; */
+        if (message.request.oneofKind === "podcast")
+            GetPodcastRequestProto.internalBinaryWrite(message.request.podcast, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         /* GetPodcastStoryRequestProto story = 5; */
         if (message.request.oneofKind === "story")
             GetPodcastStoryRequestProto.internalBinaryWrite(message.request.story, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
@@ -1045,7 +1045,7 @@ class PodcastStreamApiResponseHeaderProto$Type extends MessageType<PodcastStream
             { no: 1, name: "refreshed_encoded_user_auth", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "create_header", kind: "message", oneof: "header", T: () => CreatePodcastResponseHeaderProto },
             { no: 3, name: "generate", kind: "message", oneof: "header", T: () => GeneratePodcastResponseHeaderProto },
-            { no: 4, name: "get", kind: "message", oneof: "header", T: () => GetPodcastResponseHeaderProto },
+            { no: 4, name: "podcast", kind: "message", oneof: "header", T: () => GetPodcastResponseHeaderProto },
             { no: 5, name: "story_header", kind: "message", oneof: "header", T: () => GetPodcastStoryResponseHeaderProto },
             { no: 100, name: "latencies", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => Duration } }
         ]);
@@ -1077,10 +1077,10 @@ class PodcastStreamApiResponseHeaderProto$Type extends MessageType<PodcastStream
                         generate: GeneratePodcastResponseHeaderProto.internalBinaryRead(reader, reader.uint32(), options, (message.header as any).generate)
                     };
                     break;
-                case /* GetPodcastResponseHeaderProto get */ 4:
+                case /* GetPodcastResponseHeaderProto podcast */ 4:
                     message.header = {
-                        oneofKind: "get",
-                        get: GetPodcastResponseHeaderProto.internalBinaryRead(reader, reader.uint32(), options, (message.header as any).get)
+                        oneofKind: "podcast",
+                        podcast: GetPodcastResponseHeaderProto.internalBinaryRead(reader, reader.uint32(), options, (message.header as any).podcast)
                     };
                     break;
                 case /* GetPodcastStoryResponseHeaderProto story_header */ 5:
@@ -1129,9 +1129,9 @@ class PodcastStreamApiResponseHeaderProto$Type extends MessageType<PodcastStream
         /* GeneratePodcastResponseHeaderProto generate = 3; */
         if (message.header.oneofKind === "generate")
             GeneratePodcastResponseHeaderProto.internalBinaryWrite(message.header.generate, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* GetPodcastResponseHeaderProto get = 4; */
-        if (message.header.oneofKind === "get")
-            GetPodcastResponseHeaderProto.internalBinaryWrite(message.header.get, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* GetPodcastResponseHeaderProto podcast = 4; */
+        if (message.header.oneofKind === "podcast")
+            GetPodcastResponseHeaderProto.internalBinaryWrite(message.header.podcast, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         /* GetPodcastStoryResponseHeaderProto story_header = 5; */
         if (message.header.oneofKind === "storyHeader")
             GetPodcastStoryResponseHeaderProto.internalBinaryWrite(message.header.storyHeader, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
@@ -1158,7 +1158,7 @@ class PodcastStreamApiResponseDeltaProto$Type extends MessageType<PodcastStreamA
         super("PodcastStreamApiResponseDeltaProto", [
             { no: 1, name: "create_delta", kind: "message", oneof: "responseDelta", T: () => CreatePodcastResponseDeltaProto },
             { no: 2, name: "generate_delta", kind: "message", oneof: "responseDelta", T: () => GeneratePodcastResponseDeltaProto },
-            { no: 3, name: "get_delta", kind: "message", oneof: "responseDelta", T: () => GetPodcastResponseDeltaProto },
+            { no: 3, name: "podcast_delta", kind: "message", oneof: "responseDelta", T: () => GetPodcastResponseDeltaProto },
             { no: 4, name: "story_delta", kind: "message", oneof: "responseDelta", T: () => GetPodcastStoryResponseDeltaProto }
         ]);
     }
@@ -1186,10 +1186,10 @@ class PodcastStreamApiResponseDeltaProto$Type extends MessageType<PodcastStreamA
                         generateDelta: GeneratePodcastResponseDeltaProto.internalBinaryRead(reader, reader.uint32(), options, (message.responseDelta as any).generateDelta)
                     };
                     break;
-                case /* GetPodcastResponseDeltaProto get_delta */ 3:
+                case /* GetPodcastResponseDeltaProto podcast_delta */ 3:
                     message.responseDelta = {
-                        oneofKind: "getDelta",
-                        getDelta: GetPodcastResponseDeltaProto.internalBinaryRead(reader, reader.uint32(), options, (message.responseDelta as any).getDelta)
+                        oneofKind: "podcastDelta",
+                        podcastDelta: GetPodcastResponseDeltaProto.internalBinaryRead(reader, reader.uint32(), options, (message.responseDelta as any).podcastDelta)
                     };
                     break;
                 case /* GetPodcastStoryResponseDeltaProto story_delta */ 4:
@@ -1216,9 +1216,9 @@ class PodcastStreamApiResponseDeltaProto$Type extends MessageType<PodcastStreamA
         /* GeneratePodcastResponseDeltaProto generate_delta = 2; */
         if (message.responseDelta.oneofKind === "generateDelta")
             GeneratePodcastResponseDeltaProto.internalBinaryWrite(message.responseDelta.generateDelta, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* GetPodcastResponseDeltaProto get_delta = 3; */
-        if (message.responseDelta.oneofKind === "getDelta")
-            GetPodcastResponseDeltaProto.internalBinaryWrite(message.responseDelta.getDelta, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* GetPodcastResponseDeltaProto podcast_delta = 3; */
+        if (message.responseDelta.oneofKind === "podcastDelta")
+            GetPodcastResponseDeltaProto.internalBinaryWrite(message.responseDelta.podcastDelta, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
         /* GetPodcastStoryResponseDeltaProto story_delta = 4; */
         if (message.responseDelta.oneofKind === "storyDelta")
             GetPodcastStoryResponseDeltaProto.internalBinaryWrite(message.responseDelta.storyDelta, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
