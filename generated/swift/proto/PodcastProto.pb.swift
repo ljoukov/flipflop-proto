@@ -699,20 +699,37 @@ struct GetPodcastStoryResponseDeltaProto {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var story: PodcastStoryProto {
-    get {return _story ?? PodcastStoryProto()}
-    set {_story = newValue}
+  var type: GetPodcastStoryResponseDeltaProto.OneOf_Type? = nil
+
+  var slide: PodcastStorySlideProto {
+    get {
+      if case .slide(let v)? = type {return v}
+      return PodcastStorySlideProto()
+    }
+    set {type = .slide(newValue)}
   }
-  /// Returns true if `story` has been explicitly set.
-  var hasStory: Bool {return self._story != nil}
-  /// Clears the value of `story`. Subsequent reads from it will return its default value.
-  mutating func clearStory() {self._story = nil}
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  init() {}
+  enum OneOf_Type: Equatable {
+    case slide(PodcastStorySlideProto)
 
-  fileprivate var _story: PodcastStoryProto? = nil
+  #if !swift(>=4.1)
+    static func ==(lhs: GetPodcastStoryResponseDeltaProto.OneOf_Type, rhs: GetPodcastStoryResponseDeltaProto.OneOf_Type) -> Bool {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch (lhs, rhs) {
+      case (.slide, .slide): return {
+        guard case .slide(let l) = lhs, case .slide(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      }
+    }
+  #endif
+  }
+
+  init() {}
 }
 
 struct PodcastProto {
@@ -1437,26 +1454,6 @@ struct PodcastStoryThumbnailProto {
   init() {}
 }
 
-struct PodcastStoryProto {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  var storyID: String = String()
-
-  var title: String = String()
-
-  var thumbnailPath: String = String()
-
-  var isReady: Bool = false
-
-  var slides: [PodcastStorySlideProto] = []
-
-  var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  init() {}
-}
-
 struct PodcastStorySlideProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -1502,6 +1499,7 @@ extension GetPodcastResponseDeltaProto: @unchecked Sendable {}
 extension GetPodcastStoryRequestProto: @unchecked Sendable {}
 extension GetPodcastStoryResponseHeaderProto: @unchecked Sendable {}
 extension GetPodcastStoryResponseDeltaProto: @unchecked Sendable {}
+extension GetPodcastStoryResponseDeltaProto.OneOf_Type: @unchecked Sendable {}
 extension PodcastProto: @unchecked Sendable {}
 extension FirestorePodcastSuggestionsProto: @unchecked Sendable {}
 extension YourPodcastsShelfProto: @unchecked Sendable {}
@@ -1532,7 +1530,6 @@ extension PodcastKeyPointProto: @unchecked Sendable {}
 extension PodcastSuggestionsProto: @unchecked Sendable {}
 extension PodcastSuggestionsSectionProto: @unchecked Sendable {}
 extension PodcastStoryThumbnailProto: @unchecked Sendable {}
-extension PodcastStoryProto: @unchecked Sendable {}
 extension PodcastStorySlideProto: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
 
@@ -2408,7 +2405,7 @@ extension GetPodcastStoryResponseHeaderProto: SwiftProtobuf.Message, SwiftProtob
 extension GetPodcastStoryResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "GetPodcastStoryResponseDeltaProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "story"),
+    1: .same(proto: "slide"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2417,7 +2414,19 @@ extension GetPodcastStoryResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobu
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularMessageField(value: &self._story) }()
+      case 1: try {
+        var v: PodcastStorySlideProto?
+        var hadOneofValue = false
+        if let current = self.type {
+          hadOneofValue = true
+          if case .slide(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.type = .slide(v)
+        }
+      }()
       default: break
       }
     }
@@ -2428,14 +2437,14 @@ extension GetPodcastStoryResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobu
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    try { if let v = self._story {
+    try { if case .slide(let v)? = self.type {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
     } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: GetPodcastStoryResponseDeltaProto, rhs: GetPodcastStoryResponseDeltaProto) -> Bool {
-    if lhs._story != rhs._story {return false}
+    if lhs.type != rhs.type {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -3914,62 +3923,6 @@ extension PodcastStoryThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._Mess
     if lhs.storyID != rhs.storyID {return false}
     if lhs.title != rhs.title {return false}
     if lhs.thumbnailPath != rhs.thumbnailPath {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension PodcastStoryProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "PodcastStoryProto"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "story_id"),
-    2: .same(proto: "title"),
-    3: .standard(proto: "thumbnail_path"),
-    4: .standard(proto: "is_ready"),
-    5: .same(proto: "slides"),
-  ]
-
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.storyID) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.title) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.thumbnailPath) }()
-      case 4: try { try decoder.decodeSingularBoolField(value: &self.isReady) }()
-      case 5: try { try decoder.decodeRepeatedMessageField(value: &self.slides) }()
-      default: break
-      }
-    }
-  }
-
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.storyID.isEmpty {
-      try visitor.visitSingularStringField(value: self.storyID, fieldNumber: 1)
-    }
-    if !self.title.isEmpty {
-      try visitor.visitSingularStringField(value: self.title, fieldNumber: 2)
-    }
-    if !self.thumbnailPath.isEmpty {
-      try visitor.visitSingularStringField(value: self.thumbnailPath, fieldNumber: 3)
-    }
-    if self.isReady != false {
-      try visitor.visitSingularBoolField(value: self.isReady, fieldNumber: 4)
-    }
-    if !self.slides.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.slides, fieldNumber: 5)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  static func ==(lhs: PodcastStoryProto, rhs: PodcastStoryProto) -> Bool {
-    if lhs.storyID != rhs.storyID {return false}
-    if lhs.title != rhs.title {return false}
-    if lhs.thumbnailPath != rhs.thumbnailPath {return false}
-    if lhs.isReady != rhs.isReady {return false}
-    if lhs.slides != rhs.slides {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
