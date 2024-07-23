@@ -126,6 +126,10 @@ export interface StoredPodcastSuggestionInputProto {
      * @generated from protobuf field: string suggestion_thumbnail_prompt = 4;
      */
     suggestionThumbnailPrompt: string;
+    /**
+     * @generated from protobuf field: string suggestion_badge = 5;
+     */
+    suggestionBadge: string;
 }
 /**
  * @generated from protobuf message StoredPodcastPointsProto
@@ -907,11 +911,12 @@ class StoredPodcastSuggestionInputProto$Type extends MessageType<StoredPodcastSu
             { no: 1, name: "suggestion_section_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "suggestion_section_reasoning", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "suggestion_title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "suggestion_thumbnail_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 4, name: "suggestion_thumbnail_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "suggestion_badge", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastSuggestionInputProto>): StoredPodcastSuggestionInputProto {
-        const message = { suggestionSectionId: "", suggestionSectionReasoning: "", suggestionTitle: "", suggestionThumbnailPrompt: "" };
+        const message = { suggestionSectionId: "", suggestionSectionReasoning: "", suggestionTitle: "", suggestionThumbnailPrompt: "", suggestionBadge: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastSuggestionInputProto>(this, message, value);
@@ -933,6 +938,9 @@ class StoredPodcastSuggestionInputProto$Type extends MessageType<StoredPodcastSu
                     break;
                 case /* string suggestion_thumbnail_prompt */ 4:
                     message.suggestionThumbnailPrompt = reader.string();
+                    break;
+                case /* string suggestion_badge */ 5:
+                    message.suggestionBadge = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -958,6 +966,9 @@ class StoredPodcastSuggestionInputProto$Type extends MessageType<StoredPodcastSu
         /* string suggestion_thumbnail_prompt = 4; */
         if (message.suggestionThumbnailPrompt !== "")
             writer.tag(4, WireType.LengthDelimited).string(message.suggestionThumbnailPrompt);
+        /* string suggestion_badge = 5; */
+        if (message.suggestionBadge !== "")
+            writer.tag(5, WireType.LengthDelimited).string(message.suggestionBadge);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

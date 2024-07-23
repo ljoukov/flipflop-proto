@@ -57,6 +57,7 @@ message StoredPodcastSuggestionInputProto {
   string suggestion_section_reasoning = 2;
   string suggestion_title = 3;
   string suggestion_thumbnail_prompt = 4;
+  string suggestion_badge = 5;
 }
 
 message StoredPodcastPointsProto {

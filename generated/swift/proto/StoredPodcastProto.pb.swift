@@ -400,6 +400,8 @@ struct StoredPodcastSuggestionInputProto {
 
   var suggestionThumbnailPrompt: String = String()
 
+  var suggestionBadge: String = String()
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -1271,6 +1273,7 @@ extension StoredPodcastSuggestionInputProto: SwiftProtobuf.Message, SwiftProtobu
     2: .standard(proto: "suggestion_section_reasoning"),
     3: .standard(proto: "suggestion_title"),
     4: .standard(proto: "suggestion_thumbnail_prompt"),
+    5: .standard(proto: "suggestion_badge"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1283,6 +1286,7 @@ extension StoredPodcastSuggestionInputProto: SwiftProtobuf.Message, SwiftProtobu
       case 2: try { try decoder.decodeSingularStringField(value: &self.suggestionSectionReasoning) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.suggestionTitle) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self.suggestionThumbnailPrompt) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.suggestionBadge) }()
       default: break
       }
     }
@@ -1301,6 +1305,9 @@ extension StoredPodcastSuggestionInputProto: SwiftProtobuf.Message, SwiftProtobu
     if !self.suggestionThumbnailPrompt.isEmpty {
       try visitor.visitSingularStringField(value: self.suggestionThumbnailPrompt, fieldNumber: 4)
     }
+    if !self.suggestionBadge.isEmpty {
+      try visitor.visitSingularStringField(value: self.suggestionBadge, fieldNumber: 5)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1309,6 +1316,7 @@ extension StoredPodcastSuggestionInputProto: SwiftProtobuf.Message, SwiftProtobu
     if lhs.suggestionSectionReasoning != rhs.suggestionSectionReasoning {return false}
     if lhs.suggestionTitle != rhs.suggestionTitle {return false}
     if lhs.suggestionThumbnailPrompt != rhs.suggestionThumbnailPrompt {return false}
+    if lhs.suggestionBadge != rhs.suggestionBadge {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
