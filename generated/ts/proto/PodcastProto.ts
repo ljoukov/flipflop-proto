@@ -300,9 +300,15 @@ export interface GetPodcastStoryResponseDeltaProto {
      * @generated from protobuf oneof: type
      */
     type: {
+        oneofKind: "header";
+        /**
+         * @generated from protobuf field: PodcastStoryHeaderProto header = 1;
+         */
+        header: PodcastStoryHeaderProto;
+    } | {
         oneofKind: "slide";
         /**
-         * @generated from protobuf field: PodcastStorySlideProto slide = 1;
+         * @generated from protobuf field: PodcastStorySlideProto slide = 2;
          */
         slide: PodcastStorySlideProto;
     } | {
@@ -845,6 +851,15 @@ export interface PodcastStoryThumbnailProto {
      * @generated from protobuf field: string thumbnail_path = 3;
      */
     thumbnailPath: string;
+}
+/**
+ * @generated from protobuf message PodcastStoryHeaderProto
+ */
+export interface PodcastStoryHeaderProto {
+    /**
+     * @generated from protobuf field: string badge = 1;
+     */
+    badge: string;
 }
 /**
  * @generated from protobuf message PodcastStorySlideProto
@@ -1824,7 +1839,8 @@ export const GetPodcastStoryResponseHeaderProto = new GetPodcastStoryResponseHea
 class GetPodcastStoryResponseDeltaProto$Type extends MessageType<GetPodcastStoryResponseDeltaProto> {
     constructor() {
         super("GetPodcastStoryResponseDeltaProto", [
-            { no: 1, name: "slide", kind: "message", oneof: "type", T: () => PodcastStorySlideProto }
+            { no: 1, name: "header", kind: "message", oneof: "type", T: () => PodcastStoryHeaderProto },
+            { no: 2, name: "slide", kind: "message", oneof: "type", T: () => PodcastStorySlideProto }
         ]);
     }
     create(value?: PartialMessage<GetPodcastStoryResponseDeltaProto>): GetPodcastStoryResponseDeltaProto {
@@ -1839,7 +1855,13 @@ class GetPodcastStoryResponseDeltaProto$Type extends MessageType<GetPodcastStory
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* PodcastStorySlideProto slide */ 1:
+                case /* PodcastStoryHeaderProto header */ 1:
+                    message.type = {
+                        oneofKind: "header",
+                        header: PodcastStoryHeaderProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).header)
+                    };
+                    break;
+                case /* PodcastStorySlideProto slide */ 2:
                     message.type = {
                         oneofKind: "slide",
                         slide: PodcastStorySlideProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).slide)
@@ -1857,9 +1879,12 @@ class GetPodcastStoryResponseDeltaProto$Type extends MessageType<GetPodcastStory
         return message;
     }
     internalBinaryWrite(message: GetPodcastStoryResponseDeltaProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* PodcastStorySlideProto slide = 1; */
+        /* PodcastStoryHeaderProto header = 1; */
+        if (message.type.oneofKind === "header")
+            PodcastStoryHeaderProto.internalBinaryWrite(message.type.header, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastStorySlideProto slide = 2; */
         if (message.type.oneofKind === "slide")
-            PodcastStorySlideProto.internalBinaryWrite(message.type.slide, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+            PodcastStorySlideProto.internalBinaryWrite(message.type.slide, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -3703,6 +3728,53 @@ class PodcastStoryThumbnailProto$Type extends MessageType<PodcastStoryThumbnailP
  * @generated MessageType for protobuf message PodcastStoryThumbnailProto
  */
 export const PodcastStoryThumbnailProto = new PodcastStoryThumbnailProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PodcastStoryHeaderProto$Type extends MessageType<PodcastStoryHeaderProto> {
+    constructor() {
+        super("PodcastStoryHeaderProto", [
+            { no: 1, name: "badge", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PodcastStoryHeaderProto>): PodcastStoryHeaderProto {
+        const message = { badge: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<PodcastStoryHeaderProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastStoryHeaderProto): PodcastStoryHeaderProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string badge */ 1:
+                    message.badge = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PodcastStoryHeaderProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string badge = 1; */
+        if (message.badge !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.badge);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message PodcastStoryHeaderProto
+ */
+export const PodcastStoryHeaderProto = new PodcastStoryHeaderProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class PodcastStorySlideProto$Type extends MessageType<PodcastStorySlideProto> {
     constructor() {

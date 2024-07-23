@@ -94,7 +94,8 @@ message GetPodcastStoryResponseHeaderProto {}
 
 message GetPodcastStoryResponseDeltaProto {
   oneof type {
-    PodcastStorySlideProto slide = 1;
+    PodcastStoryHeaderProto header = 1;
+    PodcastStorySlideProto slide = 2;
   }
 }
 
@@ -320,6 +321,10 @@ message PodcastStoryThumbnailProto {
   string story_id = 1;
   string title = 2;
   string thumbnail_path = 3;
+}
+
+message PodcastStoryHeaderProto {
+  string badge = 1;
 }
 
 message PodcastStorySlideProto {
