@@ -952,6 +952,8 @@ struct StoredPodcastStorySlideProto {
 
   var title: String = String()
 
+  var titleEmoji: String = String()
+
   var text: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -2498,7 +2500,8 @@ extension StoredPodcastStorySlideProto: SwiftProtobuf.Message, SwiftProtobuf._Me
     1: .standard(proto: "slide_id"),
     2: .standard(proto: "is_ready"),
     3: .same(proto: "title"),
-    4: .same(proto: "text"),
+    4: .standard(proto: "title_emoji"),
+    5: .same(proto: "text"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2510,7 +2513,8 @@ extension StoredPodcastStorySlideProto: SwiftProtobuf.Message, SwiftProtobuf._Me
       case 1: try { try decoder.decodeSingularStringField(value: &self.slideID) }()
       case 2: try { try decoder.decodeSingularBoolField(value: &self.isReady) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.title) }()
-      case 4: try { try decoder.decodeSingularStringField(value: &self.text) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.titleEmoji) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.text) }()
       default: break
       }
     }
@@ -2526,8 +2530,11 @@ extension StoredPodcastStorySlideProto: SwiftProtobuf.Message, SwiftProtobuf._Me
     if !self.title.isEmpty {
       try visitor.visitSingularStringField(value: self.title, fieldNumber: 3)
     }
+    if !self.titleEmoji.isEmpty {
+      try visitor.visitSingularStringField(value: self.titleEmoji, fieldNumber: 4)
+    }
     if !self.text.isEmpty {
-      try visitor.visitSingularStringField(value: self.text, fieldNumber: 4)
+      try visitor.visitSingularStringField(value: self.text, fieldNumber: 5)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -2536,6 +2543,7 @@ extension StoredPodcastStorySlideProto: SwiftProtobuf.Message, SwiftProtobuf._Me
     if lhs.slideID != rhs.slideID {return false}
     if lhs.isReady != rhs.isReady {return false}
     if lhs.title != rhs.title {return false}
+    if lhs.titleEmoji != rhs.titleEmoji {return false}
     if lhs.text != rhs.text {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

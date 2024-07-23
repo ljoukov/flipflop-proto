@@ -246,5 +246,6 @@ message StoredPodcastStorySlideProto {
   bool is_ready = 2;
 
   string title = 3;
-  string text = 4;
+  string title_emoji = 4;
+  string text = 5;
 }

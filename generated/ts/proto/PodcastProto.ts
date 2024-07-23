@@ -863,7 +863,11 @@ export interface PodcastStorySlideProto {
      */
     title: string;
     /**
-     * @generated from protobuf field: string text = 4;
+     * @generated from protobuf field: string title_emoji = 4;
+     */
+    titleEmoji: string;
+    /**
+     * @generated from protobuf field: string text = 5;
      */
     text: string;
 }
@@ -3706,11 +3710,12 @@ class PodcastStorySlideProto$Type extends MessageType<PodcastStorySlideProto> {
             { no: 1, name: "slide_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "is_ready", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
             { no: 3, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 4, name: "title_emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PodcastStorySlideProto>): PodcastStorySlideProto {
-        const message = { slideId: "", isReady: false, title: "", text: "" };
+        const message = { slideId: "", isReady: false, title: "", titleEmoji: "", text: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastStorySlideProto>(this, message, value);
@@ -3730,7 +3735,10 @@ class PodcastStorySlideProto$Type extends MessageType<PodcastStorySlideProto> {
                 case /* string title */ 3:
                     message.title = reader.string();
                     break;
-                case /* string text */ 4:
+                case /* string title_emoji */ 4:
+                    message.titleEmoji = reader.string();
+                    break;
+                case /* string text */ 5:
                     message.text = reader.string();
                     break;
                 default:
@@ -3754,9 +3762,12 @@ class PodcastStorySlideProto$Type extends MessageType<PodcastStorySlideProto> {
         /* string title = 3; */
         if (message.title !== "")
             writer.tag(3, WireType.LengthDelimited).string(message.title);
-        /* string text = 4; */
+        /* string title_emoji = 4; */
+        if (message.titleEmoji !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.titleEmoji);
+        /* string text = 5; */
         if (message.text !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.text);
+            writer.tag(5, WireType.LengthDelimited).string(message.text);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
