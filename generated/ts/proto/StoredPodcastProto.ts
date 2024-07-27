@@ -130,6 +130,14 @@ export interface StoredPodcastSuggestionInputProto {
      * @generated from protobuf field: string suggestion_badge = 5;
      */
     suggestionBadge: string;
+    /**
+     * @generated from protobuf field: StoredPodcastPointsProto suggestion_points = 6;
+     */
+    suggestionPoints?: StoredPodcastPointsProto;
+    /**
+     * @generated from protobuf field: repeated string user_selected_point_ids = 7;
+     */
+    userSelectedPointIds: string[];
 }
 /**
  * @generated from protobuf message StoredPodcastPointsProto
@@ -604,6 +612,33 @@ export interface StoredPodcastStorySlideProto {
     text: string;
 }
 /**
+ * @generated from protobuf message StoredPodcastQueryCompletionsProto
+ */
+export interface StoredPodcastQueryCompletionsProto {
+    /**
+     * @generated from protobuf field: repeated StoredPodcastQueryCompletionsSectionProto section = 1;
+     */
+    section: StoredPodcastQueryCompletionsSectionProto[];
+}
+/**
+ * @generated from protobuf message StoredPodcastQueryCompletionsSectionProto
+ */
+export interface StoredPodcastQueryCompletionsSectionProto {
+    /**
+     * @generated from protobuf field: repeated StoredPodcastQueryCompletionProto query_completions = 1;
+     */
+    queryCompletions: StoredPodcastQueryCompletionProto[];
+}
+/**
+ * @generated from protobuf message StoredPodcastQueryCompletionProto
+ */
+export interface StoredPodcastQueryCompletionProto {
+    /**
+     * @generated from protobuf field: string query = 1;
+     */
+    query: string;
+}
+/**
  * @generated from protobuf enum StoredPodcastStateProto
  */
 export enum StoredPodcastStateProto {
@@ -916,11 +951,13 @@ class StoredPodcastSuggestionInputProto$Type extends MessageType<StoredPodcastSu
             { no: 2, name: "suggestion_section_reasoning", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "suggestion_title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "suggestion_thumbnail_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "suggestion_badge", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 5, name: "suggestion_badge", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "suggestion_points", kind: "message", T: () => StoredPodcastPointsProto },
+            { no: 7, name: "user_selected_point_ids", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastSuggestionInputProto>): StoredPodcastSuggestionInputProto {
-        const message = { suggestionSectionId: "", suggestionSectionReasoning: "", suggestionTitle: "", suggestionThumbnailPrompt: "", suggestionBadge: "" };
+        const message = { suggestionSectionId: "", suggestionSectionReasoning: "", suggestionTitle: "", suggestionThumbnailPrompt: "", suggestionBadge: "", userSelectedPointIds: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastSuggestionInputProto>(this, message, value);
@@ -945,6 +982,12 @@ class StoredPodcastSuggestionInputProto$Type extends MessageType<StoredPodcastSu
                     break;
                 case /* string suggestion_badge */ 5:
                     message.suggestionBadge = reader.string();
+                    break;
+                case /* StoredPodcastPointsProto suggestion_points */ 6:
+                    message.suggestionPoints = StoredPodcastPointsProto.internalBinaryRead(reader, reader.uint32(), options, message.suggestionPoints);
+                    break;
+                case /* repeated string user_selected_point_ids */ 7:
+                    message.userSelectedPointIds.push(reader.string());
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -973,6 +1016,12 @@ class StoredPodcastSuggestionInputProto$Type extends MessageType<StoredPodcastSu
         /* string suggestion_badge = 5; */
         if (message.suggestionBadge !== "")
             writer.tag(5, WireType.LengthDelimited).string(message.suggestionBadge);
+        /* StoredPodcastPointsProto suggestion_points = 6; */
+        if (message.suggestionPoints)
+            StoredPodcastPointsProto.internalBinaryWrite(message.suggestionPoints, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+        /* repeated string user_selected_point_ids = 7; */
+        for (let i = 0; i < message.userSelectedPointIds.length; i++)
+            writer.tag(7, WireType.LengthDelimited).string(message.userSelectedPointIds[i]);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2482,3 +2531,144 @@ class StoredPodcastStorySlideProto$Type extends MessageType<StoredPodcastStorySl
  * @generated MessageType for protobuf message StoredPodcastStorySlideProto
  */
 export const StoredPodcastStorySlideProto = new StoredPodcastStorySlideProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class StoredPodcastQueryCompletionsProto$Type extends MessageType<StoredPodcastQueryCompletionsProto> {
+    constructor() {
+        super("StoredPodcastQueryCompletionsProto", [
+            { no: 1, name: "section", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastQueryCompletionsSectionProto }
+        ]);
+    }
+    create(value?: PartialMessage<StoredPodcastQueryCompletionsProto>): StoredPodcastQueryCompletionsProto {
+        const message = { section: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<StoredPodcastQueryCompletionsProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredPodcastQueryCompletionsProto): StoredPodcastQueryCompletionsProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated StoredPodcastQueryCompletionsSectionProto section */ 1:
+                    message.section.push(StoredPodcastQueryCompletionsSectionProto.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: StoredPodcastQueryCompletionsProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated StoredPodcastQueryCompletionsSectionProto section = 1; */
+        for (let i = 0; i < message.section.length; i++)
+            StoredPodcastQueryCompletionsSectionProto.internalBinaryWrite(message.section[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message StoredPodcastQueryCompletionsProto
+ */
+export const StoredPodcastQueryCompletionsProto = new StoredPodcastQueryCompletionsProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class StoredPodcastQueryCompletionsSectionProto$Type extends MessageType<StoredPodcastQueryCompletionsSectionProto> {
+    constructor() {
+        super("StoredPodcastQueryCompletionsSectionProto", [
+            { no: 1, name: "query_completions", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastQueryCompletionProto }
+        ]);
+    }
+    create(value?: PartialMessage<StoredPodcastQueryCompletionsSectionProto>): StoredPodcastQueryCompletionsSectionProto {
+        const message = { queryCompletions: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<StoredPodcastQueryCompletionsSectionProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredPodcastQueryCompletionsSectionProto): StoredPodcastQueryCompletionsSectionProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated StoredPodcastQueryCompletionProto query_completions */ 1:
+                    message.queryCompletions.push(StoredPodcastQueryCompletionProto.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: StoredPodcastQueryCompletionsSectionProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated StoredPodcastQueryCompletionProto query_completions = 1; */
+        for (let i = 0; i < message.queryCompletions.length; i++)
+            StoredPodcastQueryCompletionProto.internalBinaryWrite(message.queryCompletions[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message StoredPodcastQueryCompletionsSectionProto
+ */
+export const StoredPodcastQueryCompletionsSectionProto = new StoredPodcastQueryCompletionsSectionProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class StoredPodcastQueryCompletionProto$Type extends MessageType<StoredPodcastQueryCompletionProto> {
+    constructor() {
+        super("StoredPodcastQueryCompletionProto", [
+            { no: 1, name: "query", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<StoredPodcastQueryCompletionProto>): StoredPodcastQueryCompletionProto {
+        const message = { query: "" };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<StoredPodcastQueryCompletionProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredPodcastQueryCompletionProto): StoredPodcastQueryCompletionProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string query */ 1:
+                    message.query = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: StoredPodcastQueryCompletionProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string query = 1; */
+        if (message.query !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.query);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message StoredPodcastQueryCompletionProto
+ */
+export const StoredPodcastQueryCompletionProto = new StoredPodcastQueryCompletionProto$Type();

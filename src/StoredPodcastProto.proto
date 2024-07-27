@@ -58,6 +58,8 @@ message StoredPodcastSuggestionInputProto {
   string suggestion_title = 3;
   string suggestion_thumbnail_prompt = 4;
   string suggestion_badge = 5;
+  StoredPodcastPointsProto suggestion_points = 6;
+  repeated string user_selected_point_ids = 7;
 }
 
 message StoredPodcastPointsProto {
@@ -248,4 +250,16 @@ message StoredPodcastStorySlideProto {
   string title = 3;
   string title_emoji = 4;
   string text = 5;
+}
+
+message StoredPodcastQueryCompletionsProto {
+  repeated StoredPodcastQueryCompletionsSectionProto section = 1;
+}
+
+message StoredPodcastQueryCompletionsSectionProto {
+  repeated StoredPodcastQueryCompletionProto query_completions = 1;
+}
+
+message StoredPodcastQueryCompletionProto {
+  string query = 1;
 }

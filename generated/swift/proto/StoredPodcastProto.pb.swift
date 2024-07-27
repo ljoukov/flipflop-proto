@@ -402,9 +402,22 @@ struct StoredPodcastSuggestionInputProto {
 
   var suggestionBadge: String = String()
 
+  var suggestionPoints: StoredPodcastPointsProto {
+    get {return _suggestionPoints ?? StoredPodcastPointsProto()}
+    set {_suggestionPoints = newValue}
+  }
+  /// Returns true if `suggestionPoints` has been explicitly set.
+  var hasSuggestionPoints: Bool {return self._suggestionPoints != nil}
+  /// Clears the value of `suggestionPoints`. Subsequent reads from it will return its default value.
+  mutating func clearSuggestionPoints() {self._suggestionPoints = nil}
+
+  var userSelectedPointIds: [String] = []
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
+
+  fileprivate var _suggestionPoints: StoredPodcastPointsProto? = nil
 }
 
 struct StoredPodcastPointsProto {
@@ -961,6 +974,42 @@ struct StoredPodcastStorySlideProto {
   init() {}
 }
 
+struct StoredPodcastQueryCompletionsProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var section: [StoredPodcastQueryCompletionsSectionProto] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct StoredPodcastQueryCompletionsSectionProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var queryCompletions: [StoredPodcastQueryCompletionProto] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct StoredPodcastQueryCompletionProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var query: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 #if swift(>=5.5) && canImport(_Concurrency)
 extension StoredPodcastStateProto: @unchecked Sendable {}
 extension StoredPodcastSectionTypeProto: @unchecked Sendable {}
@@ -992,6 +1041,9 @@ extension StoredPodcastStoryInputProto.OneOf_Type: @unchecked Sendable {}
 extension StoredPodcastStorySuggestionInputProto: @unchecked Sendable {}
 extension StoredPodcastStorySlidesProto: @unchecked Sendable {}
 extension StoredPodcastStorySlideProto: @unchecked Sendable {}
+extension StoredPodcastQueryCompletionsProto: @unchecked Sendable {}
+extension StoredPodcastQueryCompletionsSectionProto: @unchecked Sendable {}
+extension StoredPodcastQueryCompletionProto: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
@@ -1276,6 +1328,8 @@ extension StoredPodcastSuggestionInputProto: SwiftProtobuf.Message, SwiftProtobu
     3: .standard(proto: "suggestion_title"),
     4: .standard(proto: "suggestion_thumbnail_prompt"),
     5: .standard(proto: "suggestion_badge"),
+    6: .standard(proto: "suggestion_points"),
+    7: .standard(proto: "user_selected_point_ids"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1289,12 +1343,18 @@ extension StoredPodcastSuggestionInputProto: SwiftProtobuf.Message, SwiftProtobu
       case 3: try { try decoder.decodeSingularStringField(value: &self.suggestionTitle) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self.suggestionThumbnailPrompt) }()
       case 5: try { try decoder.decodeSingularStringField(value: &self.suggestionBadge) }()
+      case 6: try { try decoder.decodeSingularMessageField(value: &self._suggestionPoints) }()
+      case 7: try { try decoder.decodeRepeatedStringField(value: &self.userSelectedPointIds) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.suggestionSectionID.isEmpty {
       try visitor.visitSingularStringField(value: self.suggestionSectionID, fieldNumber: 1)
     }
@@ -1310,6 +1370,12 @@ extension StoredPodcastSuggestionInputProto: SwiftProtobuf.Message, SwiftProtobu
     if !self.suggestionBadge.isEmpty {
       try visitor.visitSingularStringField(value: self.suggestionBadge, fieldNumber: 5)
     }
+    try { if let v = self._suggestionPoints {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
+    } }()
+    if !self.userSelectedPointIds.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.userSelectedPointIds, fieldNumber: 7)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1319,6 +1385,8 @@ extension StoredPodcastSuggestionInputProto: SwiftProtobuf.Message, SwiftProtobu
     if lhs.suggestionTitle != rhs.suggestionTitle {return false}
     if lhs.suggestionThumbnailPrompt != rhs.suggestionThumbnailPrompt {return false}
     if lhs.suggestionBadge != rhs.suggestionBadge {return false}
+    if lhs._suggestionPoints != rhs._suggestionPoints {return false}
+    if lhs.userSelectedPointIds != rhs.userSelectedPointIds {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -2545,6 +2613,102 @@ extension StoredPodcastStorySlideProto: SwiftProtobuf.Message, SwiftProtobuf._Me
     if lhs.title != rhs.title {return false}
     if lhs.titleEmoji != rhs.titleEmoji {return false}
     if lhs.text != rhs.text {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension StoredPodcastQueryCompletionsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredPodcastQueryCompletionsProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "section"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.section) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.section.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.section, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: StoredPodcastQueryCompletionsProto, rhs: StoredPodcastQueryCompletionsProto) -> Bool {
+    if lhs.section != rhs.section {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension StoredPodcastQueryCompletionsSectionProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredPodcastQueryCompletionsSectionProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "query_completions"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.queryCompletions) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.queryCompletions.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.queryCompletions, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: StoredPodcastQueryCompletionsSectionProto, rhs: StoredPodcastQueryCompletionsSectionProto) -> Bool {
+    if lhs.queryCompletions != rhs.queryCompletions {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension StoredPodcastQueryCompletionProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredPodcastQueryCompletionProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "query"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.query) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.query.isEmpty {
+      try visitor.visitSingularStringField(value: self.query, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: StoredPodcastQueryCompletionProto, rhs: StoredPodcastQueryCompletionProto) -> Bool {
+    if lhs.query != rhs.query {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

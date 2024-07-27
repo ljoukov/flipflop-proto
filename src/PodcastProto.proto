@@ -10,6 +10,7 @@ message PodcastStreamApiRequestProto {
     GeneratePodcastRequestProto generate = 3;
     GetPodcastRequestProto podcast = 4;
     GetPodcastStoryRequestProto story = 5;
+    GetPodcastSuggestionPointsProto suggestion_points = 6;
   }
 }
 
@@ -22,6 +23,7 @@ message PodcastStreamApiResponseHeaderProto {
     GeneratePodcastResponseHeaderProto generate = 3;
     GetPodcastResponseHeaderProto podcast = 4;
     GetPodcastStoryResponseHeaderProto story_header = 5;
+    GetPodcastSuggestionPointsResponseHeaderProto suggestion_points_header = 6;
   }
   map<string, google.protobuf.Duration> latencies = 100;
 }
@@ -32,6 +34,7 @@ message PodcastStreamApiResponseDeltaProto {
     GeneratePodcastResponseDeltaProto generate_delta = 2;
     GetPodcastResponseDeltaProto podcast_delta = 3;
     GetPodcastStoryResponseDeltaProto story_delta = 4;
+    GetPodcastSuggestionPointsResponseDeltaProto suggestion_points_delta = 6;
   }
 }
 
@@ -64,8 +67,8 @@ message GeneratePodcastFromPointsProto {
 }
 
 message GeneratePodcastFromSuggestionProto {
-  string suggestions_id = 1;
-  string suggested_podcast_id = 2;
+  string podcast_id = 1;
+  repeated string point_ids = 2;
 }
 
 message GeneratePodcastResponseHeaderProto {}
@@ -99,6 +102,18 @@ message GetPodcastStoryResponseDeltaProto {
   }
 }
 
+message GetPodcastSuggestionPointsProto {
+  string podcast_id = 1;
+}
+
+message GetPodcastSuggestionPointsResponseHeaderProto {}
+
+message GetPodcastSuggestionPointsResponseDeltaProto {
+  oneof type {
+    PodcastPointProto point = 1;
+  }
+}
+
 message PodcastProto {
   google.protobuf.Timestamp updated_at = 1;
 
@@ -118,6 +133,7 @@ message FirestorePodcastSuggestionsProto {
   google.protobuf.Timestamp updated_at = 1;
   YourPodcastsShelfProto your_podcasts_shelf = 2;
   PodcastSuggestionsProto suggestions = 3;
+  PodcastQueryCompletionsProto query_completions = 4;
 }
 
 message YourPodcastsShelfProto {
@@ -315,6 +331,14 @@ message PodcastSuggestionsSectionProto {
 
   PodcastStoryThumbnailProto story1 = 5;
   PodcastStoryThumbnailProto story2 = 6;
+}
+
+message PodcastQueryCompletionsProto {
+  repeated PodcastQueryCompletionProto query_completions = 1;
+}
+
+message PodcastQueryCompletionProto {
+  string query = 1;
 }
 
 message PodcastStoryThumbnailProto {
