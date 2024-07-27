@@ -660,6 +660,24 @@ export enum StoredPodcastStateProto {
      */
     READY = 1,
     /**
+     * User created with prompt
+     * user_prompted -> (user selected points) input_ready
+     *
+     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_USER_PROMPTED = 10;
+     */
+    USER_PROMPTED = 10,
+    /**
+     * Automatically suggested
+     * suggested -> suggested_points -> (user selected points) input_ready
+     *
+     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_SUGGESTED = 20;
+     */
+    SUGGESTED = 20,
+    /**
+     * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_SUGGESTED_POINTS = 21;
+     */
+    SUGGESTED_POINTS = 21,
+    /**
      * @generated from protobuf enum value: STORED_PODCAST_STATE_PROTO_INPUT_READY = 2;
      */
     INPUT_READY = 2,

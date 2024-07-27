@@ -24,6 +24,15 @@ enum StoredPodcastStateProto: SwiftProtobuf.Enum {
   typealias RawValue = Int
   case unknown // = 0
   case ready // = 1
+
+  /// User created with prompt
+  /// user_prompted -> (user selected points) input_ready
+  case userPrompted // = 10
+
+  /// Automatically suggested
+  /// suggested -> suggested_points -> (user selected points) input_ready
+  case suggested // = 20
+  case suggestedPoints // = 21
   case inputReady // = 2
   case generationStarted // = 3
   case generationFailed // = 4
@@ -40,6 +49,9 @@ enum StoredPodcastStateProto: SwiftProtobuf.Enum {
     case 2: self = .inputReady
     case 3: self = .generationStarted
     case 4: self = .generationFailed
+    case 10: self = .userPrompted
+    case 20: self = .suggested
+    case 21: self = .suggestedPoints
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -51,6 +63,9 @@ enum StoredPodcastStateProto: SwiftProtobuf.Enum {
     case .inputReady: return 2
     case .generationStarted: return 3
     case .generationFailed: return 4
+    case .userPrompted: return 10
+    case .suggested: return 20
+    case .suggestedPoints: return 21
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -64,6 +79,9 @@ extension StoredPodcastStateProto: CaseIterable {
   static var allCases: [StoredPodcastStateProto] = [
     .unknown,
     .ready,
+    .userPrompted,
+    .suggested,
+    .suggestedPoints,
     .inputReady,
     .generationStarted,
     .generationFailed,
@@ -1076,6 +1094,9 @@ extension StoredPodcastStateProto: SwiftProtobuf._ProtoNameProviding {
     2: .same(proto: "STORED_PODCAST_STATE_PROTO_INPUT_READY"),
     3: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATION_STARTED"),
     4: .same(proto: "STORED_PODCAST_STATE_PROTO_GENERATION_FAILED"),
+    10: .same(proto: "STORED_PODCAST_STATE_PROTO_USER_PROMPTED"),
+    20: .same(proto: "STORED_PODCAST_STATE_PROTO_SUGGESTED"),
+    21: .same(proto: "STORED_PODCAST_STATE_PROTO_SUGGESTED_POINTS"),
   ]
 }
 
