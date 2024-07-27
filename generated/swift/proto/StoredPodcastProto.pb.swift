@@ -411,13 +411,33 @@ struct StoredPodcastSuggestionInputProto {
   /// Clears the value of `suggestionPoints`. Subsequent reads from it will return its default value.
   mutating func clearSuggestionPoints() {self._suggestionPoints = nil}
 
-  var userSelectedPointIds: [String] = []
+  var userInput: StoredPodcastSuggestionUserInputProto {
+    get {return _userInput ?? StoredPodcastSuggestionUserInputProto()}
+    set {_userInput = newValue}
+  }
+  /// Returns true if `userInput` has been explicitly set.
+  var hasUserInput: Bool {return self._userInput != nil}
+  /// Clears the value of `userInput`. Subsequent reads from it will return its default value.
+  mutating func clearUserInput() {self._userInput = nil}
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 
   fileprivate var _suggestionPoints: StoredPodcastPointsProto? = nil
+  fileprivate var _userInput: StoredPodcastSuggestionUserInputProto? = nil
+}
+
+struct StoredPodcastSuggestionUserInputProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var pointIds: [String] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
 }
 
 struct StoredPodcastPointsProto {
@@ -1018,6 +1038,7 @@ extension StoredPodcastStoryStateProto: @unchecked Sendable {}
 extension StoredPodcastProto: @unchecked Sendable {}
 extension StoredPodcastUserInputProto: @unchecked Sendable {}
 extension StoredPodcastSuggestionInputProto: @unchecked Sendable {}
+extension StoredPodcastSuggestionUserInputProto: @unchecked Sendable {}
 extension StoredPodcastPointsProto: @unchecked Sendable {}
 extension StoredPodcastPointProto: @unchecked Sendable {}
 extension StoredPodcastPlanProto: @unchecked Sendable {}
@@ -1329,7 +1350,7 @@ extension StoredPodcastSuggestionInputProto: SwiftProtobuf.Message, SwiftProtobu
     4: .standard(proto: "suggestion_thumbnail_prompt"),
     5: .standard(proto: "suggestion_badge"),
     6: .standard(proto: "suggestion_points"),
-    7: .standard(proto: "user_selected_point_ids"),
+    7: .standard(proto: "user_input"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1344,7 +1365,7 @@ extension StoredPodcastSuggestionInputProto: SwiftProtobuf.Message, SwiftProtobu
       case 4: try { try decoder.decodeSingularStringField(value: &self.suggestionThumbnailPrompt) }()
       case 5: try { try decoder.decodeSingularStringField(value: &self.suggestionBadge) }()
       case 6: try { try decoder.decodeSingularMessageField(value: &self._suggestionPoints) }()
-      case 7: try { try decoder.decodeRepeatedStringField(value: &self.userSelectedPointIds) }()
+      case 7: try { try decoder.decodeSingularMessageField(value: &self._userInput) }()
       default: break
       }
     }
@@ -1373,9 +1394,9 @@ extension StoredPodcastSuggestionInputProto: SwiftProtobuf.Message, SwiftProtobu
     try { if let v = self._suggestionPoints {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
     } }()
-    if !self.userSelectedPointIds.isEmpty {
-      try visitor.visitRepeatedStringField(value: self.userSelectedPointIds, fieldNumber: 7)
-    }
+    try { if let v = self._userInput {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1386,7 +1407,39 @@ extension StoredPodcastSuggestionInputProto: SwiftProtobuf.Message, SwiftProtobu
     if lhs.suggestionThumbnailPrompt != rhs.suggestionThumbnailPrompt {return false}
     if lhs.suggestionBadge != rhs.suggestionBadge {return false}
     if lhs._suggestionPoints != rhs._suggestionPoints {return false}
-    if lhs.userSelectedPointIds != rhs.userSelectedPointIds {return false}
+    if lhs._userInput != rhs._userInput {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension StoredPodcastSuggestionUserInputProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredPodcastSuggestionUserInputProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "point_ids"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedStringField(value: &self.pointIds) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.pointIds.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.pointIds, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: StoredPodcastSuggestionUserInputProto, rhs: StoredPodcastSuggestionUserInputProto) -> Bool {
+    if lhs.pointIds != rhs.pointIds {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

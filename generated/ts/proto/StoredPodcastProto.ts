@@ -135,9 +135,18 @@ export interface StoredPodcastSuggestionInputProto {
      */
     suggestionPoints?: StoredPodcastPointsProto;
     /**
-     * @generated from protobuf field: repeated string user_selected_point_ids = 7;
+     * @generated from protobuf field: StoredPodcastSuggestionUserInputProto user_input = 7;
      */
-    userSelectedPointIds: string[];
+    userInput?: StoredPodcastSuggestionUserInputProto;
+}
+/**
+ * @generated from protobuf message StoredPodcastSuggestionUserInputProto
+ */
+export interface StoredPodcastSuggestionUserInputProto {
+    /**
+     * @generated from protobuf field: repeated string point_ids = 1;
+     */
+    pointIds: string[];
 }
 /**
  * @generated from protobuf message StoredPodcastPointsProto
@@ -953,11 +962,11 @@ class StoredPodcastSuggestionInputProto$Type extends MessageType<StoredPodcastSu
             { no: 4, name: "suggestion_thumbnail_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "suggestion_badge", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 6, name: "suggestion_points", kind: "message", T: () => StoredPodcastPointsProto },
-            { no: 7, name: "user_selected_point_ids", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+            { no: 7, name: "user_input", kind: "message", T: () => StoredPodcastSuggestionUserInputProto }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastSuggestionInputProto>): StoredPodcastSuggestionInputProto {
-        const message = { suggestionSectionId: "", suggestionSectionReasoning: "", suggestionTitle: "", suggestionThumbnailPrompt: "", suggestionBadge: "", userSelectedPointIds: [] };
+        const message = { suggestionSectionId: "", suggestionSectionReasoning: "", suggestionTitle: "", suggestionThumbnailPrompt: "", suggestionBadge: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastSuggestionInputProto>(this, message, value);
@@ -986,8 +995,8 @@ class StoredPodcastSuggestionInputProto$Type extends MessageType<StoredPodcastSu
                 case /* StoredPodcastPointsProto suggestion_points */ 6:
                     message.suggestionPoints = StoredPodcastPointsProto.internalBinaryRead(reader, reader.uint32(), options, message.suggestionPoints);
                     break;
-                case /* repeated string user_selected_point_ids */ 7:
-                    message.userSelectedPointIds.push(reader.string());
+                case /* StoredPodcastSuggestionUserInputProto user_input */ 7:
+                    message.userInput = StoredPodcastSuggestionUserInputProto.internalBinaryRead(reader, reader.uint32(), options, message.userInput);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1019,9 +1028,9 @@ class StoredPodcastSuggestionInputProto$Type extends MessageType<StoredPodcastSu
         /* StoredPodcastPointsProto suggestion_points = 6; */
         if (message.suggestionPoints)
             StoredPodcastPointsProto.internalBinaryWrite(message.suggestionPoints, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
-        /* repeated string user_selected_point_ids = 7; */
-        for (let i = 0; i < message.userSelectedPointIds.length; i++)
-            writer.tag(7, WireType.LengthDelimited).string(message.userSelectedPointIds[i]);
+        /* StoredPodcastSuggestionUserInputProto user_input = 7; */
+        if (message.userInput)
+            StoredPodcastSuggestionUserInputProto.internalBinaryWrite(message.userInput, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1032,6 +1041,53 @@ class StoredPodcastSuggestionInputProto$Type extends MessageType<StoredPodcastSu
  * @generated MessageType for protobuf message StoredPodcastSuggestionInputProto
  */
 export const StoredPodcastSuggestionInputProto = new StoredPodcastSuggestionInputProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class StoredPodcastSuggestionUserInputProto$Type extends MessageType<StoredPodcastSuggestionUserInputProto> {
+    constructor() {
+        super("StoredPodcastSuggestionUserInputProto", [
+            { no: 1, name: "point_ids", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<StoredPodcastSuggestionUserInputProto>): StoredPodcastSuggestionUserInputProto {
+        const message = { pointIds: [] };
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<StoredPodcastSuggestionUserInputProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredPodcastSuggestionUserInputProto): StoredPodcastSuggestionUserInputProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated string point_ids */ 1:
+                    message.pointIds.push(reader.string());
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: StoredPodcastSuggestionUserInputProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated string point_ids = 1; */
+        for (let i = 0; i < message.pointIds.length; i++)
+            writer.tag(1, WireType.LengthDelimited).string(message.pointIds[i]);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message StoredPodcastSuggestionUserInputProto
+ */
+export const StoredPodcastSuggestionUserInputProto = new StoredPodcastSuggestionUserInputProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class StoredPodcastPointsProto$Type extends MessageType<StoredPodcastPointsProto> {
     constructor() {

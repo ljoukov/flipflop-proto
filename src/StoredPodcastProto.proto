@@ -59,7 +59,11 @@ message StoredPodcastSuggestionInputProto {
   string suggestion_thumbnail_prompt = 4;
   string suggestion_badge = 5;
   StoredPodcastPointsProto suggestion_points = 6;
-  repeated string user_selected_point_ids = 7;
+  StoredPodcastSuggestionUserInputProto user_input = 7;
+}
+
+message StoredPodcastSuggestionUserInputProto {
+  repeated string point_ids = 1;
 }
 
 message StoredPodcastPointsProto {
