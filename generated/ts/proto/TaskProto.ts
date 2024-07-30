@@ -57,10 +57,6 @@ export interface GeneratePodcastTaskProto {
      * @generated from protobuf field: string podcast_id = 2;
      */
     podcastId: string;
-    /**
-     * @generated from protobuf field: repeated string point_ids = 3;
-     */
-    pointIds: string[];
 }
 /**
  * @generated from protobuf message GeneratePodcastSuggestionsTaskProto
@@ -150,12 +146,11 @@ class GeneratePodcastTaskProto$Type extends MessageType<GeneratePodcastTaskProto
     constructor() {
         super("GeneratePodcastTaskProto", [
             { no: 1, name: "user_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "podcast_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "point_ids", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "podcast_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<GeneratePodcastTaskProto>): GeneratePodcastTaskProto {
-        const message = { userId: "", podcastId: "", pointIds: [] };
+        const message = { userId: "", podcastId: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<GeneratePodcastTaskProto>(this, message, value);
@@ -171,9 +166,6 @@ class GeneratePodcastTaskProto$Type extends MessageType<GeneratePodcastTaskProto
                     break;
                 case /* string podcast_id */ 2:
                     message.podcastId = reader.string();
-                    break;
-                case /* repeated string point_ids */ 3:
-                    message.pointIds.push(reader.string());
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -193,9 +185,6 @@ class GeneratePodcastTaskProto$Type extends MessageType<GeneratePodcastTaskProto
         /* string podcast_id = 2; */
         if (message.podcastId !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.podcastId);
-        /* repeated string point_ids = 3; */
-        for (let i = 0; i < message.pointIds.length; i++)
-            writer.tag(3, WireType.LengthDelimited).string(message.pointIds[i]);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

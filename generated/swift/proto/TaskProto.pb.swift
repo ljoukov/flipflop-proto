@@ -96,8 +96,6 @@ struct GeneratePodcastTaskProto {
 
   var podcastID: String = String()
 
-  var pointIds: [String] = []
-
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -211,7 +209,6 @@ extension GeneratePodcastTaskProto: SwiftProtobuf.Message, SwiftProtobuf._Messag
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "user_id"),
     2: .standard(proto: "podcast_id"),
-    3: .standard(proto: "point_ids"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -222,7 +219,6 @@ extension GeneratePodcastTaskProto: SwiftProtobuf.Message, SwiftProtobuf._Messag
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.userID) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.podcastID) }()
-      case 3: try { try decoder.decodeRepeatedStringField(value: &self.pointIds) }()
       default: break
       }
     }
@@ -235,16 +231,12 @@ extension GeneratePodcastTaskProto: SwiftProtobuf.Message, SwiftProtobuf._Messag
     if !self.podcastID.isEmpty {
       try visitor.visitSingularStringField(value: self.podcastID, fieldNumber: 2)
     }
-    if !self.pointIds.isEmpty {
-      try visitor.visitRepeatedStringField(value: self.pointIds, fieldNumber: 3)
-    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: GeneratePodcastTaskProto, rhs: GeneratePodcastTaskProto) -> Bool {
     if lhs.userID != rhs.userID {return false}
     if lhs.podcastID != rhs.podcastID {return false}
-    if lhs.pointIds != rhs.pointIds {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

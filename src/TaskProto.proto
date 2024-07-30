@@ -16,7 +16,6 @@ message TaskProto {
 message GeneratePodcastTaskProto {
   string user_id = 1;
   string podcast_id = 2;
-  repeated string point_ids = 3;
 }
 
 message GeneratePodcastSuggestionsTaskProto {
