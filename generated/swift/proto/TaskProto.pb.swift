@@ -94,20 +94,13 @@ struct GeneratePodcastTaskProto {
 
   var userID: String = String()
 
-  var request: GeneratePodcastRequestProto {
-    get {return _request ?? GeneratePodcastRequestProto()}
-    set {_request = newValue}
-  }
-  /// Returns true if `request` has been explicitly set.
-  var hasRequest: Bool {return self._request != nil}
-  /// Clears the value of `request`. Subsequent reads from it will return its default value.
-  mutating func clearRequest() {self._request = nil}
+  var podcastID: String = String()
+
+  var pointIds: [String] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
-
-  fileprivate var _request: GeneratePodcastRequestProto? = nil
 }
 
 struct GeneratePodcastSuggestionsTaskProto {
@@ -217,7 +210,8 @@ extension GeneratePodcastTaskProto: SwiftProtobuf.Message, SwiftProtobuf._Messag
   static let protoMessageName: String = "GeneratePodcastTaskProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "user_id"),
-    2: .same(proto: "request"),
+    2: .standard(proto: "podcast_id"),
+    3: .standard(proto: "point_ids"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -227,29 +221,30 @@ extension GeneratePodcastTaskProto: SwiftProtobuf.Message, SwiftProtobuf._Messag
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.userID) }()
-      case 2: try { try decoder.decodeSingularMessageField(value: &self._request) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.podcastID) }()
+      case 3: try { try decoder.decodeRepeatedStringField(value: &self.pointIds) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every if/case branch local when no optimizations
-    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.userID.isEmpty {
       try visitor.visitSingularStringField(value: self.userID, fieldNumber: 1)
     }
-    try { if let v = self._request {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
-    } }()
+    if !self.podcastID.isEmpty {
+      try visitor.visitSingularStringField(value: self.podcastID, fieldNumber: 2)
+    }
+    if !self.pointIds.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.pointIds, fieldNumber: 3)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: GeneratePodcastTaskProto, rhs: GeneratePodcastTaskProto) -> Bool {
     if lhs.userID != rhs.userID {return false}
-    if lhs._request != rhs._request {return false}
+    if lhs.podcastID != rhs.podcastID {return false}
+    if lhs.pointIds != rhs.pointIds {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
