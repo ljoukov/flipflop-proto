@@ -115,8 +115,21 @@ message StoredPodcastTranscriptEntryProto {
   int32 end_millis = 4;
 }
 
+enum StoredPodcastImageStyleProto {
+  STORED_PODCAST_IMAGE_STYLE_PROTO_UNDEFINED = 0;
+  STORED_PODCAST_IMAGE_STYLE_PROTO_STORYBOOK = 1;
+  STORED_PODCAST_IMAGE_STYLE_PROTO_DIGITAL_ARTWORK = 2;
+  STORED_PODCAST_IMAGE_STYLE_PROTO_OIL_PAINTING = 3;
+  STORED_PODCAST_IMAGE_STYLE_PROTO_JAPANESE_ANIMATION = 4;
+}
+
+message StoredPodcastStyleProto {
+  StoredPodcastImageStyleProto image_style = 1;
+}
+
 message StoredPodcastVisualsProto {
-  string style_prompt = 1;
+  reserved 1;  // deprecated style_prompt
+  StoredPodcastStyleProto style = 5;
   string thumbnail_prompt = 2;
   string thumbnail_key = 3;
   repeated StoredPodcastVisualProto visuals = 4;
@@ -184,7 +197,8 @@ message StoredPodcastSuggestionsSectionProto {
   string section_id = 1;  // e.g. "do-right-now"
   string reasoning = 2;
   string title = 3;
-  string style_prompt = 4;
+  reserved 4;  // deprecated style_prompt
+  StoredPodcastStyleProto style = 9;
 
   StoredPodcastSuggestionProto banner_suggestion = 5;
   StoredPodcastSuggestionProto footer_suggestion = 6;
@@ -242,7 +256,8 @@ message StoredPodcastStorySuggestionInputProto {
   string suggestion_section_id = 1;
   string suggestion_section_reasoning = 2;
   string suggestion_title = 3;
-  string suggestion_style_prompt = 4;
+  reserved 4;  // deprecated suggestion_style_prompt
+  StoredPodcastStyleProto suggestion_style = 7;
   string suggestion_thumbnail_prompt = 5;
   string suggestion_thumbnail_key = 6;
 }

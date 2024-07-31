@@ -138,6 +138,58 @@ extension StoredPodcastSectionTypeProto: CaseIterable {
 
 #endif  // swift(>=4.2)
 
+enum StoredPodcastImageStyleProto: SwiftProtobuf.Enum {
+  typealias RawValue = Int
+  case undefined // = 0
+  case storybook // = 1
+  case digitalArtwork // = 2
+  case oilPainting // = 3
+  case japaneseAnimation // = 4
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .undefined
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .undefined
+    case 1: self = .storybook
+    case 2: self = .digitalArtwork
+    case 3: self = .oilPainting
+    case 4: self = .japaneseAnimation
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .undefined: return 0
+    case .storybook: return 1
+    case .digitalArtwork: return 2
+    case .oilPainting: return 3
+    case .japaneseAnimation: return 4
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+}
+
+#if swift(>=4.2)
+
+extension StoredPodcastImageStyleProto: CaseIterable {
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static var allCases: [StoredPodcastImageStyleProto] = [
+    .undefined,
+    .storybook,
+    .digitalArtwork,
+    .oilPainting,
+    .japaneseAnimation,
+  ]
+}
+
+#endif  // swift(>=4.2)
+
 enum StoredPodcastSuggestionsStateProto: SwiftProtobuf.Enum {
   typealias RawValue = Int
   case undefined // = 0
@@ -548,12 +600,31 @@ struct StoredPodcastTranscriptEntryProto {
   init() {}
 }
 
+struct StoredPodcastStyleProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var imageStyle: StoredPodcastImageStyleProto = .undefined
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 struct StoredPodcastVisualsProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var stylePrompt: String = String()
+  var style: StoredPodcastStyleProto {
+    get {return _style ?? StoredPodcastStyleProto()}
+    set {_style = newValue}
+  }
+  /// Returns true if `style` has been explicitly set.
+  var hasStyle: Bool {return self._style != nil}
+  /// Clears the value of `style`. Subsequent reads from it will return its default value.
+  mutating func clearStyle() {self._style = nil}
 
   var thumbnailPrompt: String = String()
 
@@ -564,6 +635,8 @@ struct StoredPodcastVisualsProto {
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
+
+  fileprivate var _style: StoredPodcastStyleProto? = nil
 }
 
 struct StoredPodcastVisualProto {
@@ -745,10 +818,14 @@ struct StoredPodcastSuggestionsSectionProto {
     set {_uniqueStorage()._title = newValue}
   }
 
-  var stylePrompt: String {
-    get {return _storage._stylePrompt}
-    set {_uniqueStorage()._stylePrompt = newValue}
+  var style: StoredPodcastStyleProto {
+    get {return _storage._style ?? StoredPodcastStyleProto()}
+    set {_uniqueStorage()._style = newValue}
   }
+  /// Returns true if `style` has been explicitly set.
+  var hasStyle: Bool {return _storage._style != nil}
+  /// Clears the value of `style`. Subsequent reads from it will return its default value.
+  mutating func clearStyle() {_uniqueStorage()._style = nil}
 
   var bannerSuggestion: StoredPodcastSuggestionProto {
     get {return _storage._bannerSuggestion ?? StoredPodcastSuggestionProto()}
@@ -963,7 +1040,14 @@ struct StoredPodcastStorySuggestionInputProto {
 
   var suggestionTitle: String = String()
 
-  var suggestionStylePrompt: String = String()
+  var suggestionStyle: StoredPodcastStyleProto {
+    get {return _suggestionStyle ?? StoredPodcastStyleProto()}
+    set {_suggestionStyle = newValue}
+  }
+  /// Returns true if `suggestionStyle` has been explicitly set.
+  var hasSuggestionStyle: Bool {return self._suggestionStyle != nil}
+  /// Clears the value of `suggestionStyle`. Subsequent reads from it will return its default value.
+  mutating func clearSuggestionStyle() {self._suggestionStyle = nil}
 
   var suggestionThumbnailPrompt: String = String()
 
@@ -972,6 +1056,8 @@ struct StoredPodcastStorySuggestionInputProto {
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
+
+  fileprivate var _suggestionStyle: StoredPodcastStyleProto? = nil
 }
 
 struct StoredPodcastStorySlidesProto {
@@ -1051,6 +1137,7 @@ struct StoredPodcastQueryCompletionProto {
 #if swift(>=5.5) && canImport(_Concurrency)
 extension StoredPodcastStateProto: @unchecked Sendable {}
 extension StoredPodcastSectionTypeProto: @unchecked Sendable {}
+extension StoredPodcastImageStyleProto: @unchecked Sendable {}
 extension StoredPodcastSuggestionsStateProto: @unchecked Sendable {}
 extension StoredPodcastStoryStateProto: @unchecked Sendable {}
 extension StoredPodcastProto: @unchecked Sendable {}
@@ -1063,6 +1150,7 @@ extension StoredPodcastPlanProto: @unchecked Sendable {}
 extension StoredPodcastTranscriptProto: @unchecked Sendable {}
 extension StoredPodcastSectionTranscriptProto: @unchecked Sendable {}
 extension StoredPodcastTranscriptEntryProto: @unchecked Sendable {}
+extension StoredPodcastStyleProto: @unchecked Sendable {}
 extension StoredPodcastVisualsProto: @unchecked Sendable {}
 extension StoredPodcastVisualProto: @unchecked Sendable {}
 extension StoredPodcastAudioProto: @unchecked Sendable {}
@@ -1106,6 +1194,16 @@ extension StoredPodcastSectionTypeProto: SwiftProtobuf._ProtoNameProviding {
     1: .same(proto: "STORED_PODCAST_SECTION_TYPE_PROTO_INTRODUCTION"),
     2: .same(proto: "STORED_PODCAST_SECTION_TYPE_PROTO_SECTION"),
     3: .same(proto: "STORED_PODCAST_SECTION_TYPE_PROTO_CONCLUSION"),
+  ]
+}
+
+extension StoredPodcastImageStyleProto: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "STORED_PODCAST_IMAGE_STYLE_PROTO_UNDEFINED"),
+    1: .same(proto: "STORED_PODCAST_IMAGE_STYLE_PROTO_STORYBOOK"),
+    2: .same(proto: "STORED_PODCAST_IMAGE_STYLE_PROTO_DIGITAL_ARTWORK"),
+    3: .same(proto: "STORED_PODCAST_IMAGE_STYLE_PROTO_OIL_PAINTING"),
+    4: .same(proto: "STORED_PODCAST_IMAGE_STYLE_PROTO_JAPANESE_ANIMATION"),
   ]
 }
 
@@ -1712,10 +1810,42 @@ extension StoredPodcastTranscriptEntryProto: SwiftProtobuf.Message, SwiftProtobu
   }
 }
 
+extension StoredPodcastStyleProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredPodcastStyleProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "image_style"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularEnumField(value: &self.imageStyle) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.imageStyle != .undefined {
+      try visitor.visitSingularEnumField(value: self.imageStyle, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: StoredPodcastStyleProto, rhs: StoredPodcastStyleProto) -> Bool {
+    if lhs.imageStyle != rhs.imageStyle {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
 extension StoredPodcastVisualsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "StoredPodcastVisualsProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "style_prompt"),
+    5: .same(proto: "style"),
     2: .standard(proto: "thumbnail_prompt"),
     3: .standard(proto: "thumbnail_key"),
     4: .same(proto: "visuals"),
@@ -1727,19 +1857,20 @@ extension StoredPodcastVisualsProto: SwiftProtobuf.Message, SwiftProtobuf._Messa
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.stylePrompt) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.thumbnailPrompt) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.thumbnailKey) }()
       case 4: try { try decoder.decodeRepeatedMessageField(value: &self.visuals) }()
+      case 5: try { try decoder.decodeSingularMessageField(value: &self._style) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.stylePrompt.isEmpty {
-      try visitor.visitSingularStringField(value: self.stylePrompt, fieldNumber: 1)
-    }
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.thumbnailPrompt.isEmpty {
       try visitor.visitSingularStringField(value: self.thumbnailPrompt, fieldNumber: 2)
     }
@@ -1749,11 +1880,14 @@ extension StoredPodcastVisualsProto: SwiftProtobuf.Message, SwiftProtobuf._Messa
     if !self.visuals.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.visuals, fieldNumber: 4)
     }
+    try { if let v = self._style {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: StoredPodcastVisualsProto, rhs: StoredPodcastVisualsProto) -> Bool {
-    if lhs.stylePrompt != rhs.stylePrompt {return false}
+    if lhs._style != rhs._style {return false}
     if lhs.thumbnailPrompt != rhs.thumbnailPrompt {return false}
     if lhs.thumbnailKey != rhs.thumbnailKey {return false}
     if lhs.visuals != rhs.visuals {return false}
@@ -2120,7 +2254,7 @@ extension StoredPodcastSuggestionsSectionProto: SwiftProtobuf.Message, SwiftProt
     1: .standard(proto: "section_id"),
     2: .same(proto: "reasoning"),
     3: .same(proto: "title"),
-    4: .standard(proto: "style_prompt"),
+    9: .same(proto: "style"),
     5: .standard(proto: "banner_suggestion"),
     6: .standard(proto: "footer_suggestion"),
     7: .same(proto: "story1"),
@@ -2131,7 +2265,7 @@ extension StoredPodcastSuggestionsSectionProto: SwiftProtobuf.Message, SwiftProt
     var _sectionID: String = String()
     var _reasoning: String = String()
     var _title: String = String()
-    var _stylePrompt: String = String()
+    var _style: StoredPodcastStyleProto? = nil
     var _bannerSuggestion: StoredPodcastSuggestionProto? = nil
     var _footerSuggestion: StoredPodcastSuggestionProto? = nil
     var _story1: StoredPodcastStorySuggestionProto? = nil
@@ -2145,7 +2279,7 @@ extension StoredPodcastSuggestionsSectionProto: SwiftProtobuf.Message, SwiftProt
       _sectionID = source._sectionID
       _reasoning = source._reasoning
       _title = source._title
-      _stylePrompt = source._stylePrompt
+      _style = source._style
       _bannerSuggestion = source._bannerSuggestion
       _footerSuggestion = source._footerSuggestion
       _story1 = source._story1
@@ -2171,11 +2305,11 @@ extension StoredPodcastSuggestionsSectionProto: SwiftProtobuf.Message, SwiftProt
         case 1: try { try decoder.decodeSingularStringField(value: &_storage._sectionID) }()
         case 2: try { try decoder.decodeSingularStringField(value: &_storage._reasoning) }()
         case 3: try { try decoder.decodeSingularStringField(value: &_storage._title) }()
-        case 4: try { try decoder.decodeSingularStringField(value: &_storage._stylePrompt) }()
         case 5: try { try decoder.decodeSingularMessageField(value: &_storage._bannerSuggestion) }()
         case 6: try { try decoder.decodeSingularMessageField(value: &_storage._footerSuggestion) }()
         case 7: try { try decoder.decodeSingularMessageField(value: &_storage._story1) }()
         case 8: try { try decoder.decodeSingularMessageField(value: &_storage._story2) }()
+        case 9: try { try decoder.decodeSingularMessageField(value: &_storage._style) }()
         default: break
         }
       }
@@ -2197,9 +2331,6 @@ extension StoredPodcastSuggestionsSectionProto: SwiftProtobuf.Message, SwiftProt
       if !_storage._title.isEmpty {
         try visitor.visitSingularStringField(value: _storage._title, fieldNumber: 3)
       }
-      if !_storage._stylePrompt.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._stylePrompt, fieldNumber: 4)
-      }
       try { if let v = _storage._bannerSuggestion {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
       } }()
@@ -2211,6 +2342,9 @@ extension StoredPodcastSuggestionsSectionProto: SwiftProtobuf.Message, SwiftProt
       } }()
       try { if let v = _storage._story2 {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
+      } }()
+      try { if let v = _storage._style {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 9)
       } }()
     }
     try unknownFields.traverse(visitor: &visitor)
@@ -2224,7 +2358,7 @@ extension StoredPodcastSuggestionsSectionProto: SwiftProtobuf.Message, SwiftProt
         if _storage._sectionID != rhs_storage._sectionID {return false}
         if _storage._reasoning != rhs_storage._reasoning {return false}
         if _storage._title != rhs_storage._title {return false}
-        if _storage._stylePrompt != rhs_storage._stylePrompt {return false}
+        if _storage._style != rhs_storage._style {return false}
         if _storage._bannerSuggestion != rhs_storage._bannerSuggestion {return false}
         if _storage._footerSuggestion != rhs_storage._footerSuggestion {return false}
         if _storage._story1 != rhs_storage._story1 {return false}
@@ -2530,7 +2664,7 @@ extension StoredPodcastStorySuggestionInputProto: SwiftProtobuf.Message, SwiftPr
     1: .standard(proto: "suggestion_section_id"),
     2: .standard(proto: "suggestion_section_reasoning"),
     3: .standard(proto: "suggestion_title"),
-    4: .standard(proto: "suggestion_style_prompt"),
+    7: .standard(proto: "suggestion_style"),
     5: .standard(proto: "suggestion_thumbnail_prompt"),
     6: .standard(proto: "suggestion_thumbnail_key"),
   ]
@@ -2544,15 +2678,19 @@ extension StoredPodcastStorySuggestionInputProto: SwiftProtobuf.Message, SwiftPr
       case 1: try { try decoder.decodeSingularStringField(value: &self.suggestionSectionID) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.suggestionSectionReasoning) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.suggestionTitle) }()
-      case 4: try { try decoder.decodeSingularStringField(value: &self.suggestionStylePrompt) }()
       case 5: try { try decoder.decodeSingularStringField(value: &self.suggestionThumbnailPrompt) }()
       case 6: try { try decoder.decodeSingularStringField(value: &self.suggestionThumbnailKey) }()
+      case 7: try { try decoder.decodeSingularMessageField(value: &self._suggestionStyle) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.suggestionSectionID.isEmpty {
       try visitor.visitSingularStringField(value: self.suggestionSectionID, fieldNumber: 1)
     }
@@ -2562,15 +2700,15 @@ extension StoredPodcastStorySuggestionInputProto: SwiftProtobuf.Message, SwiftPr
     if !self.suggestionTitle.isEmpty {
       try visitor.visitSingularStringField(value: self.suggestionTitle, fieldNumber: 3)
     }
-    if !self.suggestionStylePrompt.isEmpty {
-      try visitor.visitSingularStringField(value: self.suggestionStylePrompt, fieldNumber: 4)
-    }
     if !self.suggestionThumbnailPrompt.isEmpty {
       try visitor.visitSingularStringField(value: self.suggestionThumbnailPrompt, fieldNumber: 5)
     }
     if !self.suggestionThumbnailKey.isEmpty {
       try visitor.visitSingularStringField(value: self.suggestionThumbnailKey, fieldNumber: 6)
     }
+    try { if let v = self._suggestionStyle {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -2578,7 +2716,7 @@ extension StoredPodcastStorySuggestionInputProto: SwiftProtobuf.Message, SwiftPr
     if lhs.suggestionSectionID != rhs.suggestionSectionID {return false}
     if lhs.suggestionSectionReasoning != rhs.suggestionSectionReasoning {return false}
     if lhs.suggestionTitle != rhs.suggestionTitle {return false}
-    if lhs.suggestionStylePrompt != rhs.suggestionStylePrompt {return false}
+    if lhs._suggestionStyle != rhs._suggestionStyle {return false}
     if lhs.suggestionThumbnailPrompt != rhs.suggestionThumbnailPrompt {return false}
     if lhs.suggestionThumbnailKey != rhs.suggestionThumbnailKey {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
