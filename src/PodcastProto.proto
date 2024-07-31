@@ -152,7 +152,8 @@ message PodcastThumbnailProto {
   PodcastStatusProto status = 2;
   string display_status = 3;
   string title = 4;
-  string badge = 5;  // May be empty or Q&A, Debate, ...
+  string long_title = 9;  // used for large suggested thumbnails
+  string badge = 5;       // May be empty or Q&A, Debate, ...
   string path = 6;
   google.protobuf.Duration duration = 7;
   google.protobuf.Timestamp updated_at = 8;

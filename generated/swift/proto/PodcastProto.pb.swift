@@ -1019,6 +1019,9 @@ struct PodcastThumbnailProto {
 
   var title: String = String()
 
+  /// used for large suggested thumbnails
+  var longTitle: String = String()
+
   /// May be empty or Q&A, Debate, ...
   var badge: String = String()
 
@@ -3055,6 +3058,7 @@ extension PodcastThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     2: .same(proto: "status"),
     3: .standard(proto: "display_status"),
     4: .same(proto: "title"),
+    9: .standard(proto: "long_title"),
     5: .same(proto: "badge"),
     6: .same(proto: "path"),
     7: .same(proto: "duration"),
@@ -3075,6 +3079,7 @@ extension PodcastThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
       case 6: try { try decoder.decodeSingularStringField(value: &self.path) }()
       case 7: try { try decoder.decodeSingularMessageField(value: &self._duration) }()
       case 8: try { try decoder.decodeSingularMessageField(value: &self._updatedAt) }()
+      case 9: try { try decoder.decodeSingularStringField(value: &self.longTitle) }()
       default: break
       }
     }
@@ -3109,6 +3114,9 @@ extension PodcastThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     try { if let v = self._updatedAt {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
     } }()
+    if !self.longTitle.isEmpty {
+      try visitor.visitSingularStringField(value: self.longTitle, fieldNumber: 9)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -3117,6 +3125,7 @@ extension PodcastThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     if lhs.status != rhs.status {return false}
     if lhs.displayStatus != rhs.displayStatus {return false}
     if lhs.title != rhs.title {return false}
+    if lhs.longTitle != rhs.longTitle {return false}
     if lhs.badge != rhs.badge {return false}
     if lhs.path != rhs.path {return false}
     if lhs._duration != rhs._duration {return false}

@@ -475,6 +475,10 @@ export interface PodcastThumbnailProto {
      */
     title: string;
     /**
+     * @generated from protobuf field: string long_title = 9;
+     */
+    longTitle: string; // used for large suggested thumbnails
+    /**
      * @generated from protobuf field: string badge = 5;
      */
     badge: string; // May be empty or Q&A, Debate, ...
@@ -2422,6 +2426,7 @@ class PodcastThumbnailProto$Type extends MessageType<PodcastThumbnailProto> {
             { no: 2, name: "status", kind: "enum", T: () => ["PodcastStatusProto", PodcastStatusProto, "PODCAST_STATUS_PROTO_"] },
             { no: 3, name: "display_status", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 9, name: "long_title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "badge", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 6, name: "path", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 7, name: "duration", kind: "message", T: () => Duration },
@@ -2429,7 +2434,7 @@ class PodcastThumbnailProto$Type extends MessageType<PodcastThumbnailProto> {
         ]);
     }
     create(value?: PartialMessage<PodcastThumbnailProto>): PodcastThumbnailProto {
-        const message = { podcastId: "", status: 0, displayStatus: "", title: "", badge: "", path: "" };
+        const message = { podcastId: "", status: 0, displayStatus: "", title: "", longTitle: "", badge: "", path: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastThumbnailProto>(this, message, value);
@@ -2451,6 +2456,9 @@ class PodcastThumbnailProto$Type extends MessageType<PodcastThumbnailProto> {
                     break;
                 case /* string title */ 4:
                     message.title = reader.string();
+                    break;
+                case /* string long_title */ 9:
+                    message.longTitle = reader.string();
                     break;
                 case /* string badge */ 5:
                     message.badge = reader.string();
@@ -2488,6 +2496,9 @@ class PodcastThumbnailProto$Type extends MessageType<PodcastThumbnailProto> {
         /* string title = 4; */
         if (message.title !== "")
             writer.tag(4, WireType.LengthDelimited).string(message.title);
+        /* string long_title = 9; */
+        if (message.longTitle !== "")
+            writer.tag(9, WireType.LengthDelimited).string(message.longTitle);
         /* string badge = 5; */
         if (message.badge !== "")
             writer.tag(5, WireType.LengthDelimited).string(message.badge);
