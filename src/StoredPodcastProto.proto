@@ -276,8 +276,10 @@ message StoredPodcastStorySlideProto {
   bool is_ready = 2;
 
   string title = 3;
-  string image_path = 4;
+  string image_prompt = 4;
   string text = 5;
+
+  string image_key = 6;
 }
 
 message StoredPodcastQueryCompletionsProto {

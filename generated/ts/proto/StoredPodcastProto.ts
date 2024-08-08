@@ -621,13 +621,17 @@ export interface StoredPodcastStorySlideProto {
      */
     title: string;
     /**
-     * @generated from protobuf field: string image_path = 4;
+     * @generated from protobuf field: string image_prompt = 4;
      */
-    imagePath: string;
+    imagePrompt: string;
     /**
      * @generated from protobuf field: string text = 5;
      */
     text: string;
+    /**
+     * @generated from protobuf field: string image_key = 6;
+     */
+    imageKey: string;
 }
 /**
  * @generated from protobuf message StoredPodcastQueryCompletionsProto
@@ -2618,12 +2622,13 @@ class StoredPodcastStorySlideProto$Type extends MessageType<StoredPodcastStorySl
             { no: 1, name: "slide_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "is_ready", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
             { no: 3, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "image_path", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 4, name: "image_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "image_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastStorySlideProto>): StoredPodcastStorySlideProto {
-        const message = { slideId: "", isReady: false, title: "", imagePath: "", text: "" };
+        const message = { slideId: "", isReady: false, title: "", imagePrompt: "", text: "", imageKey: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastStorySlideProto>(this, message, value);
@@ -2643,11 +2648,14 @@ class StoredPodcastStorySlideProto$Type extends MessageType<StoredPodcastStorySl
                 case /* string title */ 3:
                     message.title = reader.string();
                     break;
-                case /* string image_path */ 4:
-                    message.imagePath = reader.string();
+                case /* string image_prompt */ 4:
+                    message.imagePrompt = reader.string();
                     break;
                 case /* string text */ 5:
                     message.text = reader.string();
+                    break;
+                case /* string image_key */ 6:
+                    message.imageKey = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2670,12 +2678,15 @@ class StoredPodcastStorySlideProto$Type extends MessageType<StoredPodcastStorySl
         /* string title = 3; */
         if (message.title !== "")
             writer.tag(3, WireType.LengthDelimited).string(message.title);
-        /* string image_path = 4; */
-        if (message.imagePath !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.imagePath);
+        /* string image_prompt = 4; */
+        if (message.imagePrompt !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.imagePrompt);
         /* string text = 5; */
         if (message.text !== "")
             writer.tag(5, WireType.LengthDelimited).string(message.text);
+        /* string image_key = 6; */
+        if (message.imageKey !== "")
+            writer.tag(6, WireType.LengthDelimited).string(message.imageKey);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
