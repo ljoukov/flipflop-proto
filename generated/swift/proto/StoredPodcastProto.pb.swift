@@ -1089,7 +1089,7 @@ struct StoredPodcastStorySlideProto {
 
   var title: String = String()
 
-  var titleEmoji: String = String()
+  var imagePath: String = String()
 
   var text: String = String()
 
@@ -2780,7 +2780,7 @@ extension StoredPodcastStorySlideProto: SwiftProtobuf.Message, SwiftProtobuf._Me
     1: .standard(proto: "slide_id"),
     2: .standard(proto: "is_ready"),
     3: .same(proto: "title"),
-    4: .standard(proto: "title_emoji"),
+    4: .standard(proto: "image_path"),
     5: .same(proto: "text"),
   ]
 
@@ -2793,7 +2793,7 @@ extension StoredPodcastStorySlideProto: SwiftProtobuf.Message, SwiftProtobuf._Me
       case 1: try { try decoder.decodeSingularStringField(value: &self.slideID) }()
       case 2: try { try decoder.decodeSingularBoolField(value: &self.isReady) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.title) }()
-      case 4: try { try decoder.decodeSingularStringField(value: &self.titleEmoji) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.imagePath) }()
       case 5: try { try decoder.decodeSingularStringField(value: &self.text) }()
       default: break
       }
@@ -2810,8 +2810,8 @@ extension StoredPodcastStorySlideProto: SwiftProtobuf.Message, SwiftProtobuf._Me
     if !self.title.isEmpty {
       try visitor.visitSingularStringField(value: self.title, fieldNumber: 3)
     }
-    if !self.titleEmoji.isEmpty {
-      try visitor.visitSingularStringField(value: self.titleEmoji, fieldNumber: 4)
+    if !self.imagePath.isEmpty {
+      try visitor.visitSingularStringField(value: self.imagePath, fieldNumber: 4)
     }
     if !self.text.isEmpty {
       try visitor.visitSingularStringField(value: self.text, fieldNumber: 5)
@@ -2823,7 +2823,7 @@ extension StoredPodcastStorySlideProto: SwiftProtobuf.Message, SwiftProtobuf._Me
     if lhs.slideID != rhs.slideID {return false}
     if lhs.isReady != rhs.isReady {return false}
     if lhs.title != rhs.title {return false}
-    if lhs.titleEmoji != rhs.titleEmoji {return false}
+    if lhs.imagePath != rhs.imagePath {return false}
     if lhs.text != rhs.text {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

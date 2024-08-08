@@ -276,7 +276,7 @@ message StoredPodcastStorySlideProto {
   bool is_ready = 2;
 
   string title = 3;
-  string title_emoji = 4;
+  string image_path = 4;
   string text = 5;
 }
 
