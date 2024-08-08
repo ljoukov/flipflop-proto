@@ -273,7 +273,7 @@ message StoredPodcastStorySlidesProto {
 
 message StoredPodcastStorySlideProto {
   string slide_id = 1;
-  bool is_ready = 2;
+  bool is_text_ready = 2;
 
   string title = 3;
   string image_prompt = 4;

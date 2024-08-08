@@ -353,7 +353,7 @@ message PodcastStoryHeaderProto {
 
 message PodcastStorySlideProto {
   string slide_id = 1;
-  bool is_ready = 2;
+  bool is_text_ready = 2;
 
   string title = 3;
   string image_path = 4;

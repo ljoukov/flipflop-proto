@@ -945,9 +945,9 @@ export interface PodcastStorySlideProto {
      */
     slideId: string;
     /**
-     * @generated from protobuf field: bool is_ready = 2;
+     * @generated from protobuf field: bool is_text_ready = 2;
      */
-    isReady: boolean;
+    isTextReady: boolean;
     /**
      * @generated from protobuf field: string title = 3;
      */
@@ -4112,14 +4112,14 @@ class PodcastStorySlideProto$Type extends MessageType<PodcastStorySlideProto> {
     constructor() {
         super("PodcastStorySlideProto", [
             { no: 1, name: "slide_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "is_ready", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 2, name: "is_text_ready", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
             { no: 3, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "image_path", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PodcastStorySlideProto>): PodcastStorySlideProto {
-        const message = { slideId: "", isReady: false, title: "", imagePath: "", text: "" };
+        const message = { slideId: "", isTextReady: false, title: "", imagePath: "", text: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastStorySlideProto>(this, message, value);
@@ -4133,8 +4133,8 @@ class PodcastStorySlideProto$Type extends MessageType<PodcastStorySlideProto> {
                 case /* string slide_id */ 1:
                     message.slideId = reader.string();
                     break;
-                case /* bool is_ready */ 2:
-                    message.isReady = reader.bool();
+                case /* bool is_text_ready */ 2:
+                    message.isTextReady = reader.bool();
                     break;
                 case /* string title */ 3:
                     message.title = reader.string();
@@ -4160,9 +4160,9 @@ class PodcastStorySlideProto$Type extends MessageType<PodcastStorySlideProto> {
         /* string slide_id = 1; */
         if (message.slideId !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.slideId);
-        /* bool is_ready = 2; */
-        if (message.isReady !== false)
-            writer.tag(2, WireType.Varint).bool(message.isReady);
+        /* bool is_text_ready = 2; */
+        if (message.isTextReady !== false)
+            writer.tag(2, WireType.Varint).bool(message.isTextReady);
         /* string title = 3; */
         if (message.title !== "")
             writer.tag(3, WireType.LengthDelimited).string(message.title);

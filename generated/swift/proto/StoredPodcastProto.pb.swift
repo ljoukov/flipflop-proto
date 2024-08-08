@@ -1085,7 +1085,7 @@ struct StoredPodcastStorySlideProto {
 
   var slideID: String = String()
 
-  var isReady: Bool = false
+  var isTextReady: Bool = false
 
   var title: String = String()
 
@@ -2780,7 +2780,7 @@ extension StoredPodcastStorySlideProto: SwiftProtobuf.Message, SwiftProtobuf._Me
   static let protoMessageName: String = "StoredPodcastStorySlideProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "slide_id"),
-    2: .standard(proto: "is_ready"),
+    2: .standard(proto: "is_text_ready"),
     3: .same(proto: "title"),
     4: .standard(proto: "image_prompt"),
     5: .same(proto: "text"),
@@ -2794,7 +2794,7 @@ extension StoredPodcastStorySlideProto: SwiftProtobuf.Message, SwiftProtobuf._Me
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.slideID) }()
-      case 2: try { try decoder.decodeSingularBoolField(value: &self.isReady) }()
+      case 2: try { try decoder.decodeSingularBoolField(value: &self.isTextReady) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.title) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self.imagePrompt) }()
       case 5: try { try decoder.decodeSingularStringField(value: &self.text) }()
@@ -2808,8 +2808,8 @@ extension StoredPodcastStorySlideProto: SwiftProtobuf.Message, SwiftProtobuf._Me
     if !self.slideID.isEmpty {
       try visitor.visitSingularStringField(value: self.slideID, fieldNumber: 1)
     }
-    if self.isReady != false {
-      try visitor.visitSingularBoolField(value: self.isReady, fieldNumber: 2)
+    if self.isTextReady != false {
+      try visitor.visitSingularBoolField(value: self.isTextReady, fieldNumber: 2)
     }
     if !self.title.isEmpty {
       try visitor.visitSingularStringField(value: self.title, fieldNumber: 3)
@@ -2828,7 +2828,7 @@ extension StoredPodcastStorySlideProto: SwiftProtobuf.Message, SwiftProtobuf._Me
 
   static func ==(lhs: StoredPodcastStorySlideProto, rhs: StoredPodcastStorySlideProto) -> Bool {
     if lhs.slideID != rhs.slideID {return false}
-    if lhs.isReady != rhs.isReady {return false}
+    if lhs.isTextReady != rhs.isTextReady {return false}
     if lhs.title != rhs.title {return false}
     if lhs.imagePrompt != rhs.imagePrompt {return false}
     if lhs.text != rhs.text {return false}

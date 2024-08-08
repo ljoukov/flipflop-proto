@@ -1619,7 +1619,7 @@ struct PodcastStorySlideProto {
 
   var slideID: String = String()
 
-  var isReady: Bool = false
+  var isTextReady: Bool = false
 
   var title: String = String()
 
@@ -4381,7 +4381,7 @@ extension PodcastStorySlideProto: SwiftProtobuf.Message, SwiftProtobuf._MessageI
   static let protoMessageName: String = "PodcastStorySlideProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "slide_id"),
-    2: .standard(proto: "is_ready"),
+    2: .standard(proto: "is_text_ready"),
     3: .same(proto: "title"),
     4: .standard(proto: "image_path"),
     5: .same(proto: "text"),
@@ -4394,7 +4394,7 @@ extension PodcastStorySlideProto: SwiftProtobuf.Message, SwiftProtobuf._MessageI
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.slideID) }()
-      case 2: try { try decoder.decodeSingularBoolField(value: &self.isReady) }()
+      case 2: try { try decoder.decodeSingularBoolField(value: &self.isTextReady) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.title) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self.imagePath) }()
       case 5: try { try decoder.decodeSingularStringField(value: &self.text) }()
@@ -4407,8 +4407,8 @@ extension PodcastStorySlideProto: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     if !self.slideID.isEmpty {
       try visitor.visitSingularStringField(value: self.slideID, fieldNumber: 1)
     }
-    if self.isReady != false {
-      try visitor.visitSingularBoolField(value: self.isReady, fieldNumber: 2)
+    if self.isTextReady != false {
+      try visitor.visitSingularBoolField(value: self.isTextReady, fieldNumber: 2)
     }
     if !self.title.isEmpty {
       try visitor.visitSingularStringField(value: self.title, fieldNumber: 3)
@@ -4424,7 +4424,7 @@ extension PodcastStorySlideProto: SwiftProtobuf.Message, SwiftProtobuf._MessageI
 
   static func ==(lhs: PodcastStorySlideProto, rhs: PodcastStorySlideProto) -> Bool {
     if lhs.slideID != rhs.slideID {return false}
-    if lhs.isReady != rhs.isReady {return false}
+    if lhs.isTextReady != rhs.isTextReady {return false}
     if lhs.title != rhs.title {return false}
     if lhs.imagePath != rhs.imagePath {return false}
     if lhs.text != rhs.text {return false}
