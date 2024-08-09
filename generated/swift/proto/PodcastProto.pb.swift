@@ -213,6 +213,14 @@ struct PodcastStreamApiRequestProto {
     set {request = .suggestionPoints(newValue)}
   }
 
+  var refreshSuggestions: RefreshPodcastSuggestionsRequestProto {
+    get {
+      if case .refreshSuggestions(let v)? = request {return v}
+      return RefreshPodcastSuggestionsRequestProto()
+    }
+    set {request = .refreshSuggestions(newValue)}
+  }
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_Request: Equatable {
@@ -221,6 +229,7 @@ struct PodcastStreamApiRequestProto {
     case podcast(GetPodcastRequestProto)
     case story(GetPodcastStoryRequestProto)
     case suggestionPoints(GetPodcastSuggestionPointsProto)
+    case refreshSuggestions(RefreshPodcastSuggestionsRequestProto)
 
   #if !swift(>=4.1)
     static func ==(lhs: PodcastStreamApiRequestProto.OneOf_Request, rhs: PodcastStreamApiRequestProto.OneOf_Request) -> Bool {
@@ -246,6 +255,10 @@ struct PodcastStreamApiRequestProto {
       }()
       case (.suggestionPoints, .suggestionPoints): return {
         guard case .suggestionPoints(let l) = lhs, case .suggestionPoints(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.refreshSuggestions, .refreshSuggestions): return {
+        guard case .refreshSuggestions(let l) = lhs, case .refreshSuggestions(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       default: return false
@@ -308,6 +321,14 @@ struct PodcastStreamApiResponseHeaderProto {
     set {header = .suggestionPointsHeader(newValue)}
   }
 
+  var refreshSuggestions: RefreshPodcastSuggestionsResponseProto {
+    get {
+      if case .refreshSuggestions(let v)? = header {return v}
+      return RefreshPodcastSuggestionsResponseProto()
+    }
+    set {header = .refreshSuggestions(newValue)}
+  }
+
   var latencies: Dictionary<String,SwiftProtobuf.Google_Protobuf_Duration> = [:]
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -318,6 +339,7 @@ struct PodcastStreamApiResponseHeaderProto {
     case podcast(GetPodcastResponseHeaderProto)
     case storyHeader(GetPodcastStoryResponseHeaderProto)
     case suggestionPointsHeader(GetPodcastSuggestionPointsResponseHeaderProto)
+    case refreshSuggestions(RefreshPodcastSuggestionsResponseProto)
 
   #if !swift(>=4.1)
     static func ==(lhs: PodcastStreamApiResponseHeaderProto.OneOf_Header, rhs: PodcastStreamApiResponseHeaderProto.OneOf_Header) -> Bool {
@@ -343,6 +365,10 @@ struct PodcastStreamApiResponseHeaderProto {
       }()
       case (.suggestionPointsHeader, .suggestionPointsHeader): return {
         guard case .suggestionPointsHeader(let l) = lhs, case .suggestionPointsHeader(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.refreshSuggestions, .refreshSuggestions): return {
+        guard case .refreshSuggestions(let l) = lhs, case .refreshSuggestions(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       default: return false
@@ -401,6 +427,14 @@ struct PodcastStreamApiResponseDeltaProto {
     set {responseDelta = .suggestionPointsDelta(newValue)}
   }
 
+  var refreshSuggestions: RefreshPodcastSuggestionsResponseDeltaProto {
+    get {
+      if case .refreshSuggestions(let v)? = responseDelta {return v}
+      return RefreshPodcastSuggestionsResponseDeltaProto()
+    }
+    set {responseDelta = .refreshSuggestions(newValue)}
+  }
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_ResponseDelta: Equatable {
@@ -409,6 +443,7 @@ struct PodcastStreamApiResponseDeltaProto {
     case podcastDelta(GetPodcastResponseDeltaProto)
     case storyDelta(GetPodcastStoryResponseDeltaProto)
     case suggestionPointsDelta(GetPodcastSuggestionPointsResponseDeltaProto)
+    case refreshSuggestions(RefreshPodcastSuggestionsResponseDeltaProto)
 
   #if !swift(>=4.1)
     static func ==(lhs: PodcastStreamApiResponseDeltaProto.OneOf_ResponseDelta, rhs: PodcastStreamApiResponseDeltaProto.OneOf_ResponseDelta) -> Bool {
@@ -434,6 +469,10 @@ struct PodcastStreamApiResponseDeltaProto {
       }()
       case (.suggestionPointsDelta, .suggestionPointsDelta): return {
         guard case .suggestionPointsDelta(let l) = lhs, case .suggestionPointsDelta(let r) = rhs else { preconditionFailure() }
+        return l == r
+      }()
+      case (.refreshSuggestions, .refreshSuggestions): return {
+        guard case .refreshSuggestions(let l) = lhs, case .refreshSuggestions(let r) = rhs else { preconditionFailure() }
         return l == r
       }()
       default: return false
@@ -837,6 +876,36 @@ struct GetPodcastSuggestionPointsResponseDeltaProto {
     }
   #endif
   }
+
+  init() {}
+}
+
+struct RefreshPodcastSuggestionsRequestProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct RefreshPodcastSuggestionsResponseProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct RefreshPodcastSuggestionsResponseDeltaProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 }
@@ -1664,6 +1733,9 @@ extension GetPodcastSuggestionPointsProto: @unchecked Sendable {}
 extension GetPodcastSuggestionPointsResponseHeaderProto: @unchecked Sendable {}
 extension GetPodcastSuggestionPointsResponseDeltaProto: @unchecked Sendable {}
 extension GetPodcastSuggestionPointsResponseDeltaProto.OneOf_Type: @unchecked Sendable {}
+extension RefreshPodcastSuggestionsRequestProto: @unchecked Sendable {}
+extension RefreshPodcastSuggestionsResponseProto: @unchecked Sendable {}
+extension RefreshPodcastSuggestionsResponseDeltaProto: @unchecked Sendable {}
 extension PodcastProto: @unchecked Sendable {}
 extension FirestorePodcastSuggestionsProto: @unchecked Sendable {}
 extension YourPodcastsShelfProto: @unchecked Sendable {}
@@ -1738,6 +1810,7 @@ extension PodcastStreamApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Me
     4: .same(proto: "podcast"),
     5: .same(proto: "story"),
     6: .standard(proto: "suggestion_points"),
+    7: .standard(proto: "refresh_suggestions"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1812,6 +1885,19 @@ extension PodcastStreamApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Me
           self.request = .suggestionPoints(v)
         }
       }()
+      case 7: try {
+        var v: RefreshPodcastSuggestionsRequestProto?
+        var hadOneofValue = false
+        if let current = self.request {
+          hadOneofValue = true
+          if case .refreshSuggestions(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.request = .refreshSuggestions(v)
+        }
+      }()
       default: break
       }
     }
@@ -1846,6 +1932,10 @@ extension PodcastStreamApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Me
       guard case .suggestionPoints(let v)? = self.request else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
     }()
+    case .refreshSuggestions?: try {
+      guard case .refreshSuggestions(let v)? = self.request else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
+    }()
     case nil: break
     }
     try unknownFields.traverse(visitor: &visitor)
@@ -1868,6 +1958,7 @@ extension PodcastStreamApiResponseHeaderProto: SwiftProtobuf.Message, SwiftProto
     4: .same(proto: "podcast"),
     5: .standard(proto: "story_header"),
     6: .standard(proto: "suggestion_points_header"),
+    7: .standard(proto: "refresh_suggestions"),
     100: .same(proto: "latencies"),
   ]
 
@@ -1943,6 +2034,19 @@ extension PodcastStreamApiResponseHeaderProto: SwiftProtobuf.Message, SwiftProto
           self.header = .suggestionPointsHeader(v)
         }
       }()
+      case 7: try {
+        var v: RefreshPodcastSuggestionsResponseProto?
+        var hadOneofValue = false
+        if let current = self.header {
+          hadOneofValue = true
+          if case .refreshSuggestions(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.header = .refreshSuggestions(v)
+        }
+      }()
       case 100: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.Google_Protobuf_Duration>.self, value: &self.latencies) }()
       default: break
       }
@@ -1978,6 +2082,10 @@ extension PodcastStreamApiResponseHeaderProto: SwiftProtobuf.Message, SwiftProto
       guard case .suggestionPointsHeader(let v)? = self.header else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
     }()
+    case .refreshSuggestions?: try {
+      guard case .refreshSuggestions(let v)? = self.header else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
+    }()
     case nil: break
     }
     if !self.latencies.isEmpty {
@@ -2003,6 +2111,7 @@ extension PodcastStreamApiResponseDeltaProto: SwiftProtobuf.Message, SwiftProtob
     3: .standard(proto: "podcast_delta"),
     4: .standard(proto: "story_delta"),
     6: .standard(proto: "suggestion_points_delta"),
+    7: .standard(proto: "refresh_suggestions"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2076,6 +2185,19 @@ extension PodcastStreamApiResponseDeltaProto: SwiftProtobuf.Message, SwiftProtob
           self.responseDelta = .suggestionPointsDelta(v)
         }
       }()
+      case 7: try {
+        var v: RefreshPodcastSuggestionsResponseDeltaProto?
+        var hadOneofValue = false
+        if let current = self.responseDelta {
+          hadOneofValue = true
+          if case .refreshSuggestions(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.responseDelta = .refreshSuggestions(v)
+        }
+      }()
       default: break
       }
     }
@@ -2106,6 +2228,10 @@ extension PodcastStreamApiResponseDeltaProto: SwiftProtobuf.Message, SwiftProtob
     case .suggestionPointsDelta?: try {
       guard case .suggestionPointsDelta(let v)? = self.responseDelta else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
+    }()
+    case .refreshSuggestions?: try {
+      guard case .refreshSuggestions(let v)? = self.responseDelta else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
     }()
     case nil: break
     }
@@ -2786,6 +2912,63 @@ extension GetPodcastSuggestionPointsResponseDeltaProto: SwiftProtobuf.Message, S
 
   static func ==(lhs: GetPodcastSuggestionPointsResponseDeltaProto, rhs: GetPodcastSuggestionPointsResponseDeltaProto) -> Bool {
     if lhs.type != rhs.type {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension RefreshPodcastSuggestionsRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "RefreshPodcastSuggestionsRequestProto"
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let _ = try decoder.nextFieldNumber() {
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: RefreshPodcastSuggestionsRequestProto, rhs: RefreshPodcastSuggestionsRequestProto) -> Bool {
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension RefreshPodcastSuggestionsResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "RefreshPodcastSuggestionsResponseProto"
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let _ = try decoder.nextFieldNumber() {
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: RefreshPodcastSuggestionsResponseProto, rhs: RefreshPodcastSuggestionsResponseProto) -> Bool {
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension RefreshPodcastSuggestionsResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "RefreshPodcastSuggestionsResponseDeltaProto"
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let _ = try decoder.nextFieldNumber() {
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: RefreshPodcastSuggestionsResponseDeltaProto, rhs: RefreshPodcastSuggestionsResponseDeltaProto) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

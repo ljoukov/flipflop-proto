@@ -57,6 +57,12 @@ export interface PodcastStreamApiRequestProto {
          */
         suggestionPoints: GetPodcastSuggestionPointsProto;
     } | {
+        oneofKind: "refreshSuggestions";
+        /**
+         * @generated from protobuf field: RefreshPodcastSuggestionsRequestProto refresh_suggestions = 7;
+         */
+        refreshSuggestions: RefreshPodcastSuggestionsRequestProto;
+    } | {
         oneofKind: undefined;
     };
 }
@@ -105,6 +111,12 @@ export interface PodcastStreamApiResponseHeaderProto {
          */
         suggestionPointsHeader: GetPodcastSuggestionPointsResponseHeaderProto;
     } | {
+        oneofKind: "refreshSuggestions";
+        /**
+         * @generated from protobuf field: RefreshPodcastSuggestionsResponseProto refresh_suggestions = 7;
+         */
+        refreshSuggestions: RefreshPodcastSuggestionsResponseProto;
+    } | {
         oneofKind: undefined;
     };
     /**
@@ -151,6 +163,12 @@ export interface PodcastStreamApiResponseDeltaProto {
          * @generated from protobuf field: GetPodcastSuggestionPointsResponseDeltaProto suggestion_points_delta = 6;
          */
         suggestionPointsDelta: GetPodcastSuggestionPointsResponseDeltaProto;
+    } | {
+        oneofKind: "refreshSuggestions";
+        /**
+         * @generated from protobuf field: RefreshPodcastSuggestionsResponseDeltaProto refresh_suggestions = 7;
+         */
+        refreshSuggestions: RefreshPodcastSuggestionsResponseDeltaProto;
     } | {
         oneofKind: undefined;
     };
@@ -363,6 +381,21 @@ export interface GetPodcastSuggestionPointsResponseDeltaProto {
     } | {
         oneofKind: undefined;
     };
+}
+/**
+ * @generated from protobuf message RefreshPodcastSuggestionsRequestProto
+ */
+export interface RefreshPodcastSuggestionsRequestProto {
+}
+/**
+ * @generated from protobuf message RefreshPodcastSuggestionsResponseProto
+ */
+export interface RefreshPodcastSuggestionsResponseProto {
+}
+/**
+ * @generated from protobuf message RefreshPodcastSuggestionsResponseDeltaProto
+ */
+export interface RefreshPodcastSuggestionsResponseDeltaProto {
 }
 /**
  * @generated from protobuf message PodcastProto
@@ -1033,7 +1066,8 @@ class PodcastStreamApiRequestProto$Type extends MessageType<PodcastStreamApiRequ
             { no: 3, name: "generate", kind: "message", oneof: "request", T: () => GeneratePodcastRequestProto },
             { no: 4, name: "podcast", kind: "message", oneof: "request", T: () => GetPodcastRequestProto },
             { no: 5, name: "story", kind: "message", oneof: "request", T: () => GetPodcastStoryRequestProto },
-            { no: 6, name: "suggestion_points", kind: "message", oneof: "request", T: () => GetPodcastSuggestionPointsProto }
+            { no: 6, name: "suggestion_points", kind: "message", oneof: "request", T: () => GetPodcastSuggestionPointsProto },
+            { no: 7, name: "refresh_suggestions", kind: "message", oneof: "request", T: () => RefreshPodcastSuggestionsRequestProto }
         ]);
     }
     create(value?: PartialMessage<PodcastStreamApiRequestProto>): PodcastStreamApiRequestProto {
@@ -1081,6 +1115,12 @@ class PodcastStreamApiRequestProto$Type extends MessageType<PodcastStreamApiRequ
                         suggestionPoints: GetPodcastSuggestionPointsProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).suggestionPoints)
                     };
                     break;
+                case /* RefreshPodcastSuggestionsRequestProto refresh_suggestions */ 7:
+                    message.request = {
+                        oneofKind: "refreshSuggestions",
+                        refreshSuggestions: RefreshPodcastSuggestionsRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).refreshSuggestions)
+                    };
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -1111,6 +1151,9 @@ class PodcastStreamApiRequestProto$Type extends MessageType<PodcastStreamApiRequ
         /* GetPodcastSuggestionPointsProto suggestion_points = 6; */
         if (message.request.oneofKind === "suggestionPoints")
             GetPodcastSuggestionPointsProto.internalBinaryWrite(message.request.suggestionPoints, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+        /* RefreshPodcastSuggestionsRequestProto refresh_suggestions = 7; */
+        if (message.request.oneofKind === "refreshSuggestions")
+            RefreshPodcastSuggestionsRequestProto.internalBinaryWrite(message.request.refreshSuggestions, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1131,6 +1174,7 @@ class PodcastStreamApiResponseHeaderProto$Type extends MessageType<PodcastStream
             { no: 4, name: "podcast", kind: "message", oneof: "header", T: () => GetPodcastResponseHeaderProto },
             { no: 5, name: "story_header", kind: "message", oneof: "header", T: () => GetPodcastStoryResponseHeaderProto },
             { no: 6, name: "suggestion_points_header", kind: "message", oneof: "header", T: () => GetPodcastSuggestionPointsResponseHeaderProto },
+            { no: 7, name: "refresh_suggestions", kind: "message", oneof: "header", T: () => RefreshPodcastSuggestionsResponseProto },
             { no: 100, name: "latencies", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => Duration } }
         ]);
     }
@@ -1177,6 +1221,12 @@ class PodcastStreamApiResponseHeaderProto$Type extends MessageType<PodcastStream
                     message.header = {
                         oneofKind: "suggestionPointsHeader",
                         suggestionPointsHeader: GetPodcastSuggestionPointsResponseHeaderProto.internalBinaryRead(reader, reader.uint32(), options, (message.header as any).suggestionPointsHeader)
+                    };
+                    break;
+                case /* RefreshPodcastSuggestionsResponseProto refresh_suggestions */ 7:
+                    message.header = {
+                        oneofKind: "refreshSuggestions",
+                        refreshSuggestions: RefreshPodcastSuggestionsResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.header as any).refreshSuggestions)
                     };
                     break;
                 case /* map<string, google.protobuf.Duration> latencies */ 100:
@@ -1228,6 +1278,9 @@ class PodcastStreamApiResponseHeaderProto$Type extends MessageType<PodcastStream
         /* GetPodcastSuggestionPointsResponseHeaderProto suggestion_points_header = 6; */
         if (message.header.oneofKind === "suggestionPointsHeader")
             GetPodcastSuggestionPointsResponseHeaderProto.internalBinaryWrite(message.header.suggestionPointsHeader, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+        /* RefreshPodcastSuggestionsResponseProto refresh_suggestions = 7; */
+        if (message.header.oneofKind === "refreshSuggestions")
+            RefreshPodcastSuggestionsResponseProto.internalBinaryWrite(message.header.refreshSuggestions, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
         /* map<string, google.protobuf.Duration> latencies = 100; */
         for (let k of Object.keys(message.latencies)) {
             writer.tag(100, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k);
@@ -1253,7 +1306,8 @@ class PodcastStreamApiResponseDeltaProto$Type extends MessageType<PodcastStreamA
             { no: 2, name: "generate_delta", kind: "message", oneof: "responseDelta", T: () => GeneratePodcastResponseDeltaProto },
             { no: 3, name: "podcast_delta", kind: "message", oneof: "responseDelta", T: () => GetPodcastResponseDeltaProto },
             { no: 4, name: "story_delta", kind: "message", oneof: "responseDelta", T: () => GetPodcastStoryResponseDeltaProto },
-            { no: 6, name: "suggestion_points_delta", kind: "message", oneof: "responseDelta", T: () => GetPodcastSuggestionPointsResponseDeltaProto }
+            { no: 6, name: "suggestion_points_delta", kind: "message", oneof: "responseDelta", T: () => GetPodcastSuggestionPointsResponseDeltaProto },
+            { no: 7, name: "refresh_suggestions", kind: "message", oneof: "responseDelta", T: () => RefreshPodcastSuggestionsResponseDeltaProto }
         ]);
     }
     create(value?: PartialMessage<PodcastStreamApiResponseDeltaProto>): PodcastStreamApiResponseDeltaProto {
@@ -1298,6 +1352,12 @@ class PodcastStreamApiResponseDeltaProto$Type extends MessageType<PodcastStreamA
                         suggestionPointsDelta: GetPodcastSuggestionPointsResponseDeltaProto.internalBinaryRead(reader, reader.uint32(), options, (message.responseDelta as any).suggestionPointsDelta)
                     };
                     break;
+                case /* RefreshPodcastSuggestionsResponseDeltaProto refresh_suggestions */ 7:
+                    message.responseDelta = {
+                        oneofKind: "refreshSuggestions",
+                        refreshSuggestions: RefreshPodcastSuggestionsResponseDeltaProto.internalBinaryRead(reader, reader.uint32(), options, (message.responseDelta as any).refreshSuggestions)
+                    };
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -1325,6 +1385,9 @@ class PodcastStreamApiResponseDeltaProto$Type extends MessageType<PodcastStreamA
         /* GetPodcastSuggestionPointsResponseDeltaProto suggestion_points_delta = 6; */
         if (message.responseDelta.oneofKind === "suggestionPointsDelta")
             GetPodcastSuggestionPointsResponseDeltaProto.internalBinaryWrite(message.responseDelta.suggestionPointsDelta, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+        /* RefreshPodcastSuggestionsResponseDeltaProto refresh_suggestions = 7; */
+        if (message.responseDelta.oneofKind === "refreshSuggestions")
+            RefreshPodcastSuggestionsResponseDeltaProto.internalBinaryWrite(message.responseDelta.refreshSuggestions, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2119,6 +2182,84 @@ class GetPodcastSuggestionPointsResponseDeltaProto$Type extends MessageType<GetP
  * @generated MessageType for protobuf message GetPodcastSuggestionPointsResponseDeltaProto
  */
 export const GetPodcastSuggestionPointsResponseDeltaProto = new GetPodcastSuggestionPointsResponseDeltaProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class RefreshPodcastSuggestionsRequestProto$Type extends MessageType<RefreshPodcastSuggestionsRequestProto> {
+    constructor() {
+        super("RefreshPodcastSuggestionsRequestProto", []);
+    }
+    create(value?: PartialMessage<RefreshPodcastSuggestionsRequestProto>): RefreshPodcastSuggestionsRequestProto {
+        const message = {};
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<RefreshPodcastSuggestionsRequestProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: RefreshPodcastSuggestionsRequestProto): RefreshPodcastSuggestionsRequestProto {
+        return target ?? this.create();
+    }
+    internalBinaryWrite(message: RefreshPodcastSuggestionsRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message RefreshPodcastSuggestionsRequestProto
+ */
+export const RefreshPodcastSuggestionsRequestProto = new RefreshPodcastSuggestionsRequestProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class RefreshPodcastSuggestionsResponseProto$Type extends MessageType<RefreshPodcastSuggestionsResponseProto> {
+    constructor() {
+        super("RefreshPodcastSuggestionsResponseProto", []);
+    }
+    create(value?: PartialMessage<RefreshPodcastSuggestionsResponseProto>): RefreshPodcastSuggestionsResponseProto {
+        const message = {};
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<RefreshPodcastSuggestionsResponseProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: RefreshPodcastSuggestionsResponseProto): RefreshPodcastSuggestionsResponseProto {
+        return target ?? this.create();
+    }
+    internalBinaryWrite(message: RefreshPodcastSuggestionsResponseProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message RefreshPodcastSuggestionsResponseProto
+ */
+export const RefreshPodcastSuggestionsResponseProto = new RefreshPodcastSuggestionsResponseProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class RefreshPodcastSuggestionsResponseDeltaProto$Type extends MessageType<RefreshPodcastSuggestionsResponseDeltaProto> {
+    constructor() {
+        super("RefreshPodcastSuggestionsResponseDeltaProto", []);
+    }
+    create(value?: PartialMessage<RefreshPodcastSuggestionsResponseDeltaProto>): RefreshPodcastSuggestionsResponseDeltaProto {
+        const message = {};
+        globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
+        if (value !== undefined)
+            reflectionMergePartial<RefreshPodcastSuggestionsResponseDeltaProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: RefreshPodcastSuggestionsResponseDeltaProto): RefreshPodcastSuggestionsResponseDeltaProto {
+        return target ?? this.create();
+    }
+    internalBinaryWrite(message: RefreshPodcastSuggestionsResponseDeltaProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message RefreshPodcastSuggestionsResponseDeltaProto
+ */
+export const RefreshPodcastSuggestionsResponseDeltaProto = new RefreshPodcastSuggestionsResponseDeltaProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class PodcastProto$Type extends MessageType<PodcastProto> {
     constructor() {
