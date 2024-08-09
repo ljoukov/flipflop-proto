@@ -321,10 +321,10 @@ struct PodcastStreamApiResponseHeaderProto {
     set {header = .suggestionPointsHeader(newValue)}
   }
 
-  var refreshSuggestions: RefreshPodcastSuggestionsResponseProto {
+  var refreshSuggestions: RefreshPodcastSuggestionsResponseHeaderProto {
     get {
       if case .refreshSuggestions(let v)? = header {return v}
-      return RefreshPodcastSuggestionsResponseProto()
+      return RefreshPodcastSuggestionsResponseHeaderProto()
     }
     set {header = .refreshSuggestions(newValue)}
   }
@@ -339,7 +339,7 @@ struct PodcastStreamApiResponseHeaderProto {
     case podcast(GetPodcastResponseHeaderProto)
     case storyHeader(GetPodcastStoryResponseHeaderProto)
     case suggestionPointsHeader(GetPodcastSuggestionPointsResponseHeaderProto)
-    case refreshSuggestions(RefreshPodcastSuggestionsResponseProto)
+    case refreshSuggestions(RefreshPodcastSuggestionsResponseHeaderProto)
 
   #if !swift(>=4.1)
     static func ==(lhs: PodcastStreamApiResponseHeaderProto.OneOf_Header, rhs: PodcastStreamApiResponseHeaderProto.OneOf_Header) -> Bool {
@@ -890,7 +890,7 @@ struct RefreshPodcastSuggestionsRequestProto {
   init() {}
 }
 
-struct RefreshPodcastSuggestionsResponseProto {
+struct RefreshPodcastSuggestionsResponseHeaderProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1734,7 +1734,7 @@ extension GetPodcastSuggestionPointsResponseHeaderProto: @unchecked Sendable {}
 extension GetPodcastSuggestionPointsResponseDeltaProto: @unchecked Sendable {}
 extension GetPodcastSuggestionPointsResponseDeltaProto.OneOf_Type: @unchecked Sendable {}
 extension RefreshPodcastSuggestionsRequestProto: @unchecked Sendable {}
-extension RefreshPodcastSuggestionsResponseProto: @unchecked Sendable {}
+extension RefreshPodcastSuggestionsResponseHeaderProto: @unchecked Sendable {}
 extension RefreshPodcastSuggestionsResponseDeltaProto: @unchecked Sendable {}
 extension PodcastProto: @unchecked Sendable {}
 extension FirestorePodcastSuggestionsProto: @unchecked Sendable {}
@@ -2035,7 +2035,7 @@ extension PodcastStreamApiResponseHeaderProto: SwiftProtobuf.Message, SwiftProto
         }
       }()
       case 7: try {
-        var v: RefreshPodcastSuggestionsResponseProto?
+        var v: RefreshPodcastSuggestionsResponseHeaderProto?
         var hadOneofValue = false
         if let current = self.header {
           hadOneofValue = true
@@ -2936,8 +2936,8 @@ extension RefreshPodcastSuggestionsRequestProto: SwiftProtobuf.Message, SwiftPro
   }
 }
 
-extension RefreshPodcastSuggestionsResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "RefreshPodcastSuggestionsResponseProto"
+extension RefreshPodcastSuggestionsResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "RefreshPodcastSuggestionsResponseHeaderProto"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2949,7 +2949,7 @@ extension RefreshPodcastSuggestionsResponseProto: SwiftProtobuf.Message, SwiftPr
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: RefreshPodcastSuggestionsResponseProto, rhs: RefreshPodcastSuggestionsResponseProto) -> Bool {
+  static func ==(lhs: RefreshPodcastSuggestionsResponseHeaderProto, rhs: RefreshPodcastSuggestionsResponseHeaderProto) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

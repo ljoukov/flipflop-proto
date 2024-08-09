@@ -113,9 +113,9 @@ export interface PodcastStreamApiResponseHeaderProto {
     } | {
         oneofKind: "refreshSuggestions";
         /**
-         * @generated from protobuf field: RefreshPodcastSuggestionsResponseProto refresh_suggestions = 7;
+         * @generated from protobuf field: RefreshPodcastSuggestionsResponseHeaderProto refresh_suggestions = 7;
          */
-        refreshSuggestions: RefreshPodcastSuggestionsResponseProto;
+        refreshSuggestions: RefreshPodcastSuggestionsResponseHeaderProto;
     } | {
         oneofKind: undefined;
     };
@@ -388,9 +388,9 @@ export interface GetPodcastSuggestionPointsResponseDeltaProto {
 export interface RefreshPodcastSuggestionsRequestProto {
 }
 /**
- * @generated from protobuf message RefreshPodcastSuggestionsResponseProto
+ * @generated from protobuf message RefreshPodcastSuggestionsResponseHeaderProto
  */
-export interface RefreshPodcastSuggestionsResponseProto {
+export interface RefreshPodcastSuggestionsResponseHeaderProto {
 }
 /**
  * @generated from protobuf message RefreshPodcastSuggestionsResponseDeltaProto
@@ -1174,7 +1174,7 @@ class PodcastStreamApiResponseHeaderProto$Type extends MessageType<PodcastStream
             { no: 4, name: "podcast", kind: "message", oneof: "header", T: () => GetPodcastResponseHeaderProto },
             { no: 5, name: "story_header", kind: "message", oneof: "header", T: () => GetPodcastStoryResponseHeaderProto },
             { no: 6, name: "suggestion_points_header", kind: "message", oneof: "header", T: () => GetPodcastSuggestionPointsResponseHeaderProto },
-            { no: 7, name: "refresh_suggestions", kind: "message", oneof: "header", T: () => RefreshPodcastSuggestionsResponseProto },
+            { no: 7, name: "refresh_suggestions", kind: "message", oneof: "header", T: () => RefreshPodcastSuggestionsResponseHeaderProto },
             { no: 100, name: "latencies", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => Duration } }
         ]);
     }
@@ -1223,10 +1223,10 @@ class PodcastStreamApiResponseHeaderProto$Type extends MessageType<PodcastStream
                         suggestionPointsHeader: GetPodcastSuggestionPointsResponseHeaderProto.internalBinaryRead(reader, reader.uint32(), options, (message.header as any).suggestionPointsHeader)
                     };
                     break;
-                case /* RefreshPodcastSuggestionsResponseProto refresh_suggestions */ 7:
+                case /* RefreshPodcastSuggestionsResponseHeaderProto refresh_suggestions */ 7:
                     message.header = {
                         oneofKind: "refreshSuggestions",
-                        refreshSuggestions: RefreshPodcastSuggestionsResponseProto.internalBinaryRead(reader, reader.uint32(), options, (message.header as any).refreshSuggestions)
+                        refreshSuggestions: RefreshPodcastSuggestionsResponseHeaderProto.internalBinaryRead(reader, reader.uint32(), options, (message.header as any).refreshSuggestions)
                     };
                     break;
                 case /* map<string, google.protobuf.Duration> latencies */ 100:
@@ -1278,9 +1278,9 @@ class PodcastStreamApiResponseHeaderProto$Type extends MessageType<PodcastStream
         /* GetPodcastSuggestionPointsResponseHeaderProto suggestion_points_header = 6; */
         if (message.header.oneofKind === "suggestionPointsHeader")
             GetPodcastSuggestionPointsResponseHeaderProto.internalBinaryWrite(message.header.suggestionPointsHeader, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
-        /* RefreshPodcastSuggestionsResponseProto refresh_suggestions = 7; */
+        /* RefreshPodcastSuggestionsResponseHeaderProto refresh_suggestions = 7; */
         if (message.header.oneofKind === "refreshSuggestions")
-            RefreshPodcastSuggestionsResponseProto.internalBinaryWrite(message.header.refreshSuggestions, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+            RefreshPodcastSuggestionsResponseHeaderProto.internalBinaryWrite(message.header.refreshSuggestions, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
         /* map<string, google.protobuf.Duration> latencies = 100; */
         for (let k of Object.keys(message.latencies)) {
             writer.tag(100, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k);
@@ -2209,21 +2209,21 @@ class RefreshPodcastSuggestionsRequestProto$Type extends MessageType<RefreshPodc
  */
 export const RefreshPodcastSuggestionsRequestProto = new RefreshPodcastSuggestionsRequestProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class RefreshPodcastSuggestionsResponseProto$Type extends MessageType<RefreshPodcastSuggestionsResponseProto> {
+class RefreshPodcastSuggestionsResponseHeaderProto$Type extends MessageType<RefreshPodcastSuggestionsResponseHeaderProto> {
     constructor() {
-        super("RefreshPodcastSuggestionsResponseProto", []);
+        super("RefreshPodcastSuggestionsResponseHeaderProto", []);
     }
-    create(value?: PartialMessage<RefreshPodcastSuggestionsResponseProto>): RefreshPodcastSuggestionsResponseProto {
+    create(value?: PartialMessage<RefreshPodcastSuggestionsResponseHeaderProto>): RefreshPodcastSuggestionsResponseHeaderProto {
         const message = {};
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
-            reflectionMergePartial<RefreshPodcastSuggestionsResponseProto>(this, message, value);
+            reflectionMergePartial<RefreshPodcastSuggestionsResponseHeaderProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: RefreshPodcastSuggestionsResponseProto): RefreshPodcastSuggestionsResponseProto {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: RefreshPodcastSuggestionsResponseHeaderProto): RefreshPodcastSuggestionsResponseHeaderProto {
         return target ?? this.create();
     }
-    internalBinaryWrite(message: RefreshPodcastSuggestionsResponseProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: RefreshPodcastSuggestionsResponseHeaderProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2231,9 +2231,9 @@ class RefreshPodcastSuggestionsResponseProto$Type extends MessageType<RefreshPod
     }
 }
 /**
- * @generated MessageType for protobuf message RefreshPodcastSuggestionsResponseProto
+ * @generated MessageType for protobuf message RefreshPodcastSuggestionsResponseHeaderProto
  */
-export const RefreshPodcastSuggestionsResponseProto = new RefreshPodcastSuggestionsResponseProto$Type();
+export const RefreshPodcastSuggestionsResponseHeaderProto = new RefreshPodcastSuggestionsResponseHeaderProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class RefreshPodcastSuggestionsResponseDeltaProto$Type extends MessageType<RefreshPodcastSuggestionsResponseDeltaProto> {
     constructor() {
