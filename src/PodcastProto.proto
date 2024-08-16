@@ -329,6 +329,7 @@ message PodcastSuggestionsProto {
   string suggestions_id = 1;
   google.protobuf.Timestamp created_at = 2;
   repeated PodcastSuggestionsSectionProto sections = 3;
+  PodcastRoutineProto routine = 4;
 }
 
 message PodcastSuggestionsSectionProto {
@@ -367,4 +368,18 @@ message PodcastStorySlideProto {
   string title = 3;
   string image_path = 4;
   string text = 5;
+}
+
+message PodcastRoutineProto {
+  repeated PodcastRoutineSegmentProto segments = 1;
+}
+
+message PodcastRoutineSegmentProto {
+  string title = 1;
+  repeated PodcastRoutineStepProto steps = 2;
+}
+
+message PodcastRoutineStepProto {
+  string title = 1;
+  string description = 2;
 }
