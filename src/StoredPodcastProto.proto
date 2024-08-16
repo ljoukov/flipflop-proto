@@ -310,8 +310,7 @@ message StoredPodcastRoutineSegmentProto {
 message StoredPodcastRoutineStepProto {
   StoredPodcastTypeProto type = 1;
   string title = 2;
-  int32 duration_sec = 3;
-  string description = 4;
+  string description = 3;
 }
 
 enum StoredPodcastTypeProto {

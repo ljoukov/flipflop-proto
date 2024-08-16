@@ -1235,8 +1235,6 @@ struct StoredPodcastRoutineStepProto {
 
   var title: String = String()
 
-  var durationSec: Int32 = 0
-
   var description_p: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -3154,8 +3152,7 @@ extension StoredPodcastRoutineStepProto: SwiftProtobuf.Message, SwiftProtobuf._M
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "type"),
     2: .same(proto: "title"),
-    3: .standard(proto: "duration_sec"),
-    4: .same(proto: "description"),
+    3: .same(proto: "description"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3166,8 +3163,7 @@ extension StoredPodcastRoutineStepProto: SwiftProtobuf.Message, SwiftProtobuf._M
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularEnumField(value: &self.type) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.title) }()
-      case 3: try { try decoder.decodeSingularInt32Field(value: &self.durationSec) }()
-      case 4: try { try decoder.decodeSingularStringField(value: &self.description_p) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.description_p) }()
       default: break
       }
     }
@@ -3180,11 +3176,8 @@ extension StoredPodcastRoutineStepProto: SwiftProtobuf.Message, SwiftProtobuf._M
     if !self.title.isEmpty {
       try visitor.visitSingularStringField(value: self.title, fieldNumber: 2)
     }
-    if self.durationSec != 0 {
-      try visitor.visitSingularInt32Field(value: self.durationSec, fieldNumber: 3)
-    }
     if !self.description_p.isEmpty {
-      try visitor.visitSingularStringField(value: self.description_p, fieldNumber: 4)
+      try visitor.visitSingularStringField(value: self.description_p, fieldNumber: 3)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -3192,7 +3185,6 @@ extension StoredPodcastRoutineStepProto: SwiftProtobuf.Message, SwiftProtobuf._M
   static func ==(lhs: StoredPodcastRoutineStepProto, rhs: StoredPodcastRoutineStepProto) -> Bool {
     if lhs.type != rhs.type {return false}
     if lhs.title != rhs.title {return false}
-    if lhs.durationSec != rhs.durationSec {return false}
     if lhs.description_p != rhs.description_p {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

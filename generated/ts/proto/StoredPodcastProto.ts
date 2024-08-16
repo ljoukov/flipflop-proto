@@ -711,11 +711,7 @@ export interface StoredPodcastRoutineStepProto {
      */
     title: string;
     /**
-     * @generated from protobuf field: int32 duration_sec = 3;
-     */
-    durationSec: number;
-    /**
-     * @generated from protobuf field: string description = 4;
+     * @generated from protobuf field: string description = 3;
      */
     description: string;
 }
@@ -3053,12 +3049,11 @@ class StoredPodcastRoutineStepProto$Type extends MessageType<StoredPodcastRoutin
         super("StoredPodcastRoutineStepProto", [
             { no: 1, name: "type", kind: "enum", T: () => ["StoredPodcastTypeProto", StoredPodcastTypeProto, "STORED_PODCAST_TYPE_PROTO_"] },
             { no: 2, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "duration_sec", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 4, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 3, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastRoutineStepProto>): StoredPodcastRoutineStepProto {
-        const message = { type: 0, title: "", durationSec: 0, description: "" };
+        const message = { type: 0, title: "", description: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastRoutineStepProto>(this, message, value);
@@ -3075,10 +3070,7 @@ class StoredPodcastRoutineStepProto$Type extends MessageType<StoredPodcastRoutin
                 case /* string title */ 2:
                     message.title = reader.string();
                     break;
-                case /* int32 duration_sec */ 3:
-                    message.durationSec = reader.int32();
-                    break;
-                case /* string description */ 4:
+                case /* string description */ 3:
                     message.description = reader.string();
                     break;
                 default:
@@ -3099,12 +3091,9 @@ class StoredPodcastRoutineStepProto$Type extends MessageType<StoredPodcastRoutin
         /* string title = 2; */
         if (message.title !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.title);
-        /* int32 duration_sec = 3; */
-        if (message.durationSec !== 0)
-            writer.tag(3, WireType.Varint).int32(message.durationSec);
-        /* string description = 4; */
+        /* string description = 3; */
         if (message.description !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.description);
+            writer.tag(3, WireType.LengthDelimited).string(message.description);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
