@@ -375,8 +375,9 @@ message PodcastRoutineProto {
 }
 
 message PodcastRoutineSegmentProto {
-  string title = 1;
-  repeated PodcastRoutineStepProto steps = 2;
+  string segment_id = 1;
+  string title = 2;
+  repeated PodcastRoutineStepProto steps = 3;
 }
 
 message PodcastRoutineStepProto {

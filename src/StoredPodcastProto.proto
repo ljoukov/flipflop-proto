@@ -301,9 +301,10 @@ message StoredPodcastRoutineProto {
 }
 
 message StoredPodcastRoutineSegmentProto {
-  string reasoning = 1;
-  string title = 2;
-  repeated StoredPodcastRoutineStepProto steps = 3;
+  string segment_id = 1;
+  string reasoning = 2;
+  string title = 3;
+  repeated StoredPodcastRoutineStepProto steps = 4;
 }
 
 message StoredPodcastRoutineStepProto {

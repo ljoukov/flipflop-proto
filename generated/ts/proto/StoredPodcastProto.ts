@@ -682,15 +682,19 @@ export interface StoredPodcastRoutineProto {
  */
 export interface StoredPodcastRoutineSegmentProto {
     /**
-     * @generated from protobuf field: string reasoning = 1;
+     * @generated from protobuf field: string segment_id = 1;
+     */
+    segmentId: string;
+    /**
+     * @generated from protobuf field: string reasoning = 2;
      */
     reasoning: string;
     /**
-     * @generated from protobuf field: string title = 2;
+     * @generated from protobuf field: string title = 3;
      */
     title: string;
     /**
-     * @generated from protobuf field: repeated StoredPodcastRoutineStepProto steps = 3;
+     * @generated from protobuf field: repeated StoredPodcastRoutineStepProto steps = 4;
      */
     steps: StoredPodcastRoutineStepProto[];
 }
@@ -2979,13 +2983,14 @@ export const StoredPodcastRoutineProto = new StoredPodcastRoutineProto$Type();
 class StoredPodcastRoutineSegmentProto$Type extends MessageType<StoredPodcastRoutineSegmentProto> {
     constructor() {
         super("StoredPodcastRoutineSegmentProto", [
-            { no: 1, name: "reasoning", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "steps", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastRoutineStepProto }
+            { no: 1, name: "segment_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "reasoning", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "steps", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastRoutineStepProto }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastRoutineSegmentProto>): StoredPodcastRoutineSegmentProto {
-        const message = { reasoning: "", title: "", steps: [] };
+        const message = { segmentId: "", reasoning: "", title: "", steps: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastRoutineSegmentProto>(this, message, value);
@@ -2996,13 +3001,16 @@ class StoredPodcastRoutineSegmentProto$Type extends MessageType<StoredPodcastRou
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string reasoning */ 1:
+                case /* string segment_id */ 1:
+                    message.segmentId = reader.string();
+                    break;
+                case /* string reasoning */ 2:
                     message.reasoning = reader.string();
                     break;
-                case /* string title */ 2:
+                case /* string title */ 3:
                     message.title = reader.string();
                     break;
-                case /* repeated StoredPodcastRoutineStepProto steps */ 3:
+                case /* repeated StoredPodcastRoutineStepProto steps */ 4:
                     message.steps.push(StoredPodcastRoutineStepProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
@@ -3017,15 +3025,18 @@ class StoredPodcastRoutineSegmentProto$Type extends MessageType<StoredPodcastRou
         return message;
     }
     internalBinaryWrite(message: StoredPodcastRoutineSegmentProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string reasoning = 1; */
+        /* string segment_id = 1; */
+        if (message.segmentId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.segmentId);
+        /* string reasoning = 2; */
         if (message.reasoning !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.reasoning);
-        /* string title = 2; */
+            writer.tag(2, WireType.LengthDelimited).string(message.reasoning);
+        /* string title = 3; */
         if (message.title !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.title);
-        /* repeated StoredPodcastRoutineStepProto steps = 3; */
+            writer.tag(3, WireType.LengthDelimited).string(message.title);
+        /* repeated StoredPodcastRoutineStepProto steps = 4; */
         for (let i = 0; i < message.steps.length; i++)
-            StoredPodcastRoutineStepProto.internalBinaryWrite(message.steps[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+            StoredPodcastRoutineStepProto.internalBinaryWrite(message.steps[i], writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

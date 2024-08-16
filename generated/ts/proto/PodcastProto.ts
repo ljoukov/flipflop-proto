@@ -1012,11 +1012,15 @@ export interface PodcastRoutineProto {
  */
 export interface PodcastRoutineSegmentProto {
     /**
-     * @generated from protobuf field: string title = 1;
+     * @generated from protobuf field: string segment_id = 1;
+     */
+    segmentId: string;
+    /**
+     * @generated from protobuf field: string title = 2;
      */
     title: string;
     /**
-     * @generated from protobuf field: repeated PodcastRoutineStepProto steps = 2;
+     * @generated from protobuf field: repeated PodcastRoutineStepProto steps = 3;
      */
     steps: PodcastRoutineStepProto[];
 }
@@ -4420,12 +4424,13 @@ export const PodcastRoutineProto = new PodcastRoutineProto$Type();
 class PodcastRoutineSegmentProto$Type extends MessageType<PodcastRoutineSegmentProto> {
     constructor() {
         super("PodcastRoutineSegmentProto", [
-            { no: 1, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "steps", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastRoutineStepProto }
+            { no: 1, name: "segment_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "steps", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastRoutineStepProto }
         ]);
     }
     create(value?: PartialMessage<PodcastRoutineSegmentProto>): PodcastRoutineSegmentProto {
-        const message = { title: "", steps: [] };
+        const message = { segmentId: "", title: "", steps: [] };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastRoutineSegmentProto>(this, message, value);
@@ -4436,10 +4441,13 @@ class PodcastRoutineSegmentProto$Type extends MessageType<PodcastRoutineSegmentP
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string title */ 1:
+                case /* string segment_id */ 1:
+                    message.segmentId = reader.string();
+                    break;
+                case /* string title */ 2:
                     message.title = reader.string();
                     break;
-                case /* repeated PodcastRoutineStepProto steps */ 2:
+                case /* repeated PodcastRoutineStepProto steps */ 3:
                     message.steps.push(PodcastRoutineStepProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
@@ -4454,12 +4462,15 @@ class PodcastRoutineSegmentProto$Type extends MessageType<PodcastRoutineSegmentP
         return message;
     }
     internalBinaryWrite(message: PodcastRoutineSegmentProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string title = 1; */
+        /* string segment_id = 1; */
+        if (message.segmentId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.segmentId);
+        /* string title = 2; */
         if (message.title !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.title);
-        /* repeated PodcastRoutineStepProto steps = 2; */
+            writer.tag(2, WireType.LengthDelimited).string(message.title);
+        /* repeated PodcastRoutineStepProto steps = 3; */
         for (let i = 0; i < message.steps.length; i++)
-            PodcastRoutineStepProto.internalBinaryWrite(message.steps[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+            PodcastRoutineStepProto.internalBinaryWrite(message.steps[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
