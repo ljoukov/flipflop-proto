@@ -180,6 +180,7 @@ message StoredPodcastSuggestionsProto {
   string reasoning = 5;
   string ranking = 6;
   repeated StoredPodcastSuggestionsSectionProto sections = 7;
+  StoredPodcastRoutineProto routine = 8;
 
   // Debug metadata
   reserved 100;
@@ -292,4 +293,29 @@ message StoredPodcastQueryCompletionsSectionProto {
 
 message StoredPodcastQueryCompletionProto {
   string query = 1;
+}
+
+message StoredPodcastRoutineProto {
+  string reasoning = 1;
+  repeated StoredPodcastRoutineSegmentProto segments = 2;
+}
+
+message StoredPodcastRoutineSegmentProto {
+  string reasoning = 1;
+  string title = 2;
+  repeated StoredPodcastRoutineStepProto steps = 3;
+}
+
+message StoredPodcastRoutineStepProto {
+  StoredPodcastTypeProto type = 1;
+  string title = 2;
+  int32 duration_sec = 3;
+  string description = 4;
+}
+
+enum StoredPodcastTypeProto {
+  STORED_PODCAST_TYPE_PROTO_UNDEFINED = 0;
+  STORED_PODCAST_TYPE_PROTO_EXPLAINER = 1;
+  STORED_PODCAST_TYPE_PROTO_EXERCISE = 2;
+  STORED_PODCAST_TYPE_PROTO_MEDITATION = 3;
 }

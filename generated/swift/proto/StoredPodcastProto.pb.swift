@@ -290,6 +290,54 @@ extension StoredPodcastStoryStateProto: CaseIterable {
 
 #endif  // swift(>=4.2)
 
+enum StoredPodcastTypeProto: SwiftProtobuf.Enum {
+  typealias RawValue = Int
+  case undefined // = 0
+  case explainer // = 1
+  case exercise // = 2
+  case meditation // = 3
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .undefined
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .undefined
+    case 1: self = .explainer
+    case 2: self = .exercise
+    case 3: self = .meditation
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .undefined: return 0
+    case .explainer: return 1
+    case .exercise: return 2
+    case .meditation: return 3
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+}
+
+#if swift(>=4.2)
+
+extension StoredPodcastTypeProto: CaseIterable {
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static var allCases: [StoredPodcastTypeProto] = [
+    .undefined,
+    .explainer,
+    .exercise,
+    .meditation,
+  ]
+}
+
+#endif  // swift(>=4.2)
+
 struct StoredPodcastProto {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -779,6 +827,15 @@ struct StoredPodcastSuggestionsProto {
 
   var sections: [StoredPodcastSuggestionsSectionProto] = []
 
+  var routine: StoredPodcastRoutineProto {
+    get {return _routine ?? StoredPodcastRoutineProto()}
+    set {_routine = newValue}
+  }
+  /// Returns true if `routine` has been explicitly set.
+  var hasRoutine: Bool {return self._routine != nil}
+  /// Clears the value of `routine`. Subsequent reads from it will return its default value.
+  mutating func clearRoutine() {self._routine = nil}
+
   var log: LogProto {
     get {return _log ?? LogProto()}
     set {_log = newValue}
@@ -794,6 +851,7 @@ struct StoredPodcastSuggestionsProto {
 
   fileprivate var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
   fileprivate var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+  fileprivate var _routine: StoredPodcastRoutineProto? = nil
   fileprivate var _log: LogProto? = nil
 }
 
@@ -1136,12 +1194,61 @@ struct StoredPodcastQueryCompletionProto {
   init() {}
 }
 
+struct StoredPodcastRoutineProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var reasoning: String = String()
+
+  var segments: [StoredPodcastRoutineSegmentProto] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct StoredPodcastRoutineSegmentProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var reasoning: String = String()
+
+  var title: String = String()
+
+  var steps: [StoredPodcastRoutineStepProto] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct StoredPodcastRoutineStepProto {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var type: StoredPodcastTypeProto = .undefined
+
+  var title: String = String()
+
+  var durationSec: Int32 = 0
+
+  var description_p: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 #if swift(>=5.5) && canImport(_Concurrency)
 extension StoredPodcastStateProto: @unchecked Sendable {}
 extension StoredPodcastSectionTypeProto: @unchecked Sendable {}
 extension StoredPodcastImageStyleProto: @unchecked Sendable {}
 extension StoredPodcastSuggestionsStateProto: @unchecked Sendable {}
 extension StoredPodcastStoryStateProto: @unchecked Sendable {}
+extension StoredPodcastTypeProto: @unchecked Sendable {}
 extension StoredPodcastProto: @unchecked Sendable {}
 extension StoredPodcastUserInputProto: @unchecked Sendable {}
 extension StoredPodcastSuggestionInputProto: @unchecked Sendable {}
@@ -1173,6 +1280,9 @@ extension StoredPodcastStorySlideProto: @unchecked Sendable {}
 extension StoredPodcastQueryCompletionsProto: @unchecked Sendable {}
 extension StoredPodcastQueryCompletionsSectionProto: @unchecked Sendable {}
 extension StoredPodcastQueryCompletionProto: @unchecked Sendable {}
+extension StoredPodcastRoutineProto: @unchecked Sendable {}
+extension StoredPodcastRoutineSegmentProto: @unchecked Sendable {}
+extension StoredPodcastRoutineStepProto: @unchecked Sendable {}
 #endif  // swift(>=5.5) && canImport(_Concurrency)
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
@@ -1225,6 +1335,15 @@ extension StoredPodcastStoryStateProto: SwiftProtobuf._ProtoNameProviding {
     2: .same(proto: "STORED_PODCAST_STORY_STATE_PROTO_GENERATING"),
     3: .same(proto: "STORED_PODCAST_STORY_STATE_PROTO_READY"),
     4: .same(proto: "STORED_PODCAST_STORY_STATE_PROTO_FAILED"),
+  ]
+}
+
+extension StoredPodcastTypeProto: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "STORED_PODCAST_TYPE_PROTO_UNDEFINED"),
+    1: .same(proto: "STORED_PODCAST_TYPE_PROTO_EXPLAINER"),
+    2: .same(proto: "STORED_PODCAST_TYPE_PROTO_EXERCISE"),
+    3: .same(proto: "STORED_PODCAST_TYPE_PROTO_MEDITATION"),
   ]
 }
 
@@ -2182,6 +2301,7 @@ extension StoredPodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf._M
     5: .same(proto: "reasoning"),
     6: .same(proto: "ranking"),
     7: .same(proto: "sections"),
+    8: .same(proto: "routine"),
     101: .same(proto: "log"),
   ]
 
@@ -2198,6 +2318,7 @@ extension StoredPodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf._M
       case 5: try { try decoder.decodeSingularStringField(value: &self.reasoning) }()
       case 6: try { try decoder.decodeSingularStringField(value: &self.ranking) }()
       case 7: try { try decoder.decodeRepeatedMessageField(value: &self.sections) }()
+      case 8: try { try decoder.decodeSingularMessageField(value: &self._routine) }()
       case 101: try { try decoder.decodeSingularMessageField(value: &self._log) }()
       default: break
       }
@@ -2230,6 +2351,9 @@ extension StoredPodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf._M
     if !self.sections.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.sections, fieldNumber: 7)
     }
+    try { if let v = self._routine {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
+    } }()
     try { if let v = self._log {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 101)
     } }()
@@ -2244,6 +2368,7 @@ extension StoredPodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf._M
     if lhs.reasoning != rhs.reasoning {return false}
     if lhs.ranking != rhs.ranking {return false}
     if lhs.sections != rhs.sections {return false}
+    if lhs._routine != rhs._routine {return false}
     if lhs._log != rhs._log {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
@@ -2929,6 +3054,138 @@ extension StoredPodcastQueryCompletionProto: SwiftProtobuf.Message, SwiftProtobu
 
   static func ==(lhs: StoredPodcastQueryCompletionProto, rhs: StoredPodcastQueryCompletionProto) -> Bool {
     if lhs.query != rhs.query {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension StoredPodcastRoutineProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredPodcastRoutineProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "reasoning"),
+    2: .same(proto: "segments"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.reasoning) }()
+      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.segments) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.reasoning.isEmpty {
+      try visitor.visitSingularStringField(value: self.reasoning, fieldNumber: 1)
+    }
+    if !self.segments.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.segments, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: StoredPodcastRoutineProto, rhs: StoredPodcastRoutineProto) -> Bool {
+    if lhs.reasoning != rhs.reasoning {return false}
+    if lhs.segments != rhs.segments {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension StoredPodcastRoutineSegmentProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredPodcastRoutineSegmentProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "reasoning"),
+    2: .same(proto: "title"),
+    3: .same(proto: "steps"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.reasoning) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.title) }()
+      case 3: try { try decoder.decodeRepeatedMessageField(value: &self.steps) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.reasoning.isEmpty {
+      try visitor.visitSingularStringField(value: self.reasoning, fieldNumber: 1)
+    }
+    if !self.title.isEmpty {
+      try visitor.visitSingularStringField(value: self.title, fieldNumber: 2)
+    }
+    if !self.steps.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.steps, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: StoredPodcastRoutineSegmentProto, rhs: StoredPodcastRoutineSegmentProto) -> Bool {
+    if lhs.reasoning != rhs.reasoning {return false}
+    if lhs.title != rhs.title {return false}
+    if lhs.steps != rhs.steps {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension StoredPodcastRoutineStepProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredPodcastRoutineStepProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "type"),
+    2: .same(proto: "title"),
+    3: .standard(proto: "duration_sec"),
+    4: .same(proto: "description"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularEnumField(value: &self.type) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.title) }()
+      case 3: try { try decoder.decodeSingularInt32Field(value: &self.durationSec) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.description_p) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.type != .undefined {
+      try visitor.visitSingularEnumField(value: self.type, fieldNumber: 1)
+    }
+    if !self.title.isEmpty {
+      try visitor.visitSingularStringField(value: self.title, fieldNumber: 2)
+    }
+    if self.durationSec != 0 {
+      try visitor.visitSingularInt32Field(value: self.durationSec, fieldNumber: 3)
+    }
+    if !self.description_p.isEmpty {
+      try visitor.visitSingularStringField(value: self.description_p, fieldNumber: 4)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: StoredPodcastRoutineStepProto, rhs: StoredPodcastRoutineStepProto) -> Bool {
+    if lhs.type != rhs.type {return false}
+    if lhs.title != rhs.title {return false}
+    if lhs.durationSec != rhs.durationSec {return false}
+    if lhs.description_p != rhs.description_p {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
