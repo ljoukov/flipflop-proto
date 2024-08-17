@@ -715,9 +715,9 @@ export interface StoredPodcastRoutineStepProto {
      */
     title: string;
     /**
-     * @generated from protobuf field: string description = 3;
+     * @generated from protobuf field: string outline = 3;
      */
-    description: string;
+    outline: string;
     /**
      * @generated from protobuf field: string thumbnail_prompt = 4;
      */
@@ -3068,13 +3068,13 @@ class StoredPodcastRoutineStepProto$Type extends MessageType<StoredPodcastRoutin
         super("StoredPodcastRoutineStepProto", [
             { no: 1, name: "type", kind: "enum", T: () => ["StoredPodcastTypeProto", StoredPodcastTypeProto, "STORED_PODCAST_TYPE_PROTO_"] },
             { no: 2, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "outline", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "thumbnail_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "thumbnail_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastRoutineStepProto>): StoredPodcastRoutineStepProto {
-        const message = { type: 0, title: "", description: "", thumbnailPrompt: "", thumbnailKey: "" };
+        const message = { type: 0, title: "", outline: "", thumbnailPrompt: "", thumbnailKey: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastRoutineStepProto>(this, message, value);
@@ -3091,8 +3091,8 @@ class StoredPodcastRoutineStepProto$Type extends MessageType<StoredPodcastRoutin
                 case /* string title */ 2:
                     message.title = reader.string();
                     break;
-                case /* string description */ 3:
-                    message.description = reader.string();
+                case /* string outline */ 3:
+                    message.outline = reader.string();
                     break;
                 case /* string thumbnail_prompt */ 4:
                     message.thumbnailPrompt = reader.string();
@@ -3118,9 +3118,9 @@ class StoredPodcastRoutineStepProto$Type extends MessageType<StoredPodcastRoutin
         /* string title = 2; */
         if (message.title !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.title);
-        /* string description = 3; */
-        if (message.description !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.description);
+        /* string outline = 3; */
+        if (message.outline !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.outline);
         /* string thumbnail_prompt = 4; */
         if (message.thumbnailPrompt !== "")
             writer.tag(4, WireType.LengthDelimited).string(message.thumbnailPrompt);

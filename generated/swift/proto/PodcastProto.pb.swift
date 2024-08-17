@@ -1746,7 +1746,7 @@ struct PodcastRoutineStepProto {
 
   var title: String = String()
 
-  var description_p: String = String()
+  var outline: String = String()
 
   var thumbnailPath: String = String()
 
@@ -4759,7 +4759,7 @@ extension PodcastRoutineStepProto: SwiftProtobuf.Message, SwiftProtobuf._Message
   static let protoMessageName: String = "PodcastRoutineStepProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "title"),
-    2: .same(proto: "description"),
+    2: .same(proto: "outline"),
     3: .standard(proto: "thumbnail_path"),
   ]
 
@@ -4770,7 +4770,7 @@ extension PodcastRoutineStepProto: SwiftProtobuf.Message, SwiftProtobuf._Message
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.title) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.description_p) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.outline) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.thumbnailPath) }()
       default: break
       }
@@ -4781,8 +4781,8 @@ extension PodcastRoutineStepProto: SwiftProtobuf.Message, SwiftProtobuf._Message
     if !self.title.isEmpty {
       try visitor.visitSingularStringField(value: self.title, fieldNumber: 1)
     }
-    if !self.description_p.isEmpty {
-      try visitor.visitSingularStringField(value: self.description_p, fieldNumber: 2)
+    if !self.outline.isEmpty {
+      try visitor.visitSingularStringField(value: self.outline, fieldNumber: 2)
     }
     if !self.thumbnailPath.isEmpty {
       try visitor.visitSingularStringField(value: self.thumbnailPath, fieldNumber: 3)
@@ -4792,7 +4792,7 @@ extension PodcastRoutineStepProto: SwiftProtobuf.Message, SwiftProtobuf._Message
 
   static func ==(lhs: PodcastRoutineStepProto, rhs: PodcastRoutineStepProto) -> Bool {
     if lhs.title != rhs.title {return false}
-    if lhs.description_p != rhs.description_p {return false}
+    if lhs.outline != rhs.outline {return false}
     if lhs.thumbnailPath != rhs.thumbnailPath {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

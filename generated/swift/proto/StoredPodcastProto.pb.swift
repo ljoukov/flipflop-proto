@@ -1246,7 +1246,7 @@ struct StoredPodcastRoutineStepProto {
 
   var title: String = String()
 
-  var description_p: String = String()
+  var outline: String = String()
 
   var thumbnailPrompt: String = String()
 
@@ -3177,7 +3177,7 @@ extension StoredPodcastRoutineStepProto: SwiftProtobuf.Message, SwiftProtobuf._M
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "type"),
     2: .same(proto: "title"),
-    3: .same(proto: "description"),
+    3: .same(proto: "outline"),
     4: .standard(proto: "thumbnail_prompt"),
     5: .standard(proto: "thumbnail_key"),
   ]
@@ -3190,7 +3190,7 @@ extension StoredPodcastRoutineStepProto: SwiftProtobuf.Message, SwiftProtobuf._M
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularEnumField(value: &self.type) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.title) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.description_p) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.outline) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self.thumbnailPrompt) }()
       case 5: try { try decoder.decodeSingularStringField(value: &self.thumbnailKey) }()
       default: break
@@ -3205,8 +3205,8 @@ extension StoredPodcastRoutineStepProto: SwiftProtobuf.Message, SwiftProtobuf._M
     if !self.title.isEmpty {
       try visitor.visitSingularStringField(value: self.title, fieldNumber: 2)
     }
-    if !self.description_p.isEmpty {
-      try visitor.visitSingularStringField(value: self.description_p, fieldNumber: 3)
+    if !self.outline.isEmpty {
+      try visitor.visitSingularStringField(value: self.outline, fieldNumber: 3)
     }
     if !self.thumbnailPrompt.isEmpty {
       try visitor.visitSingularStringField(value: self.thumbnailPrompt, fieldNumber: 4)
@@ -3220,7 +3220,7 @@ extension StoredPodcastRoutineStepProto: SwiftProtobuf.Message, SwiftProtobuf._M
   static func ==(lhs: StoredPodcastRoutineStepProto, rhs: StoredPodcastRoutineStepProto) -> Bool {
     if lhs.type != rhs.type {return false}
     if lhs.title != rhs.title {return false}
-    if lhs.description_p != rhs.description_p {return false}
+    if lhs.outline != rhs.outline {return false}
     if lhs.thumbnailPrompt != rhs.thumbnailPrompt {return false}
     if lhs.thumbnailKey != rhs.thumbnailKey {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}

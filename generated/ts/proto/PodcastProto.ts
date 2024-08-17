@@ -1033,9 +1033,9 @@ export interface PodcastRoutineStepProto {
      */
     title: string;
     /**
-     * @generated from protobuf field: string description = 2;
+     * @generated from protobuf field: string outline = 2;
      */
-    description: string;
+    outline: string;
     /**
      * @generated from protobuf field: string thumbnail_path = 3;
      */
@@ -4490,12 +4490,12 @@ class PodcastRoutineStepProto$Type extends MessageType<PodcastRoutineStepProto> 
     constructor() {
         super("PodcastRoutineStepProto", [
             { no: 1, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "outline", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "thumbnail_path", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PodcastRoutineStepProto>): PodcastRoutineStepProto {
-        const message = { title: "", description: "", thumbnailPath: "" };
+        const message = { title: "", outline: "", thumbnailPath: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastRoutineStepProto>(this, message, value);
@@ -4509,8 +4509,8 @@ class PodcastRoutineStepProto$Type extends MessageType<PodcastRoutineStepProto> 
                 case /* string title */ 1:
                     message.title = reader.string();
                     break;
-                case /* string description */ 2:
-                    message.description = reader.string();
+                case /* string outline */ 2:
+                    message.outline = reader.string();
                     break;
                 case /* string thumbnail_path */ 3:
                     message.thumbnailPath = reader.string();
@@ -4530,9 +4530,9 @@ class PodcastRoutineStepProto$Type extends MessageType<PodcastRoutineStepProto> 
         /* string title = 1; */
         if (message.title !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.title);
-        /* string description = 2; */
-        if (message.description !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.description);
+        /* string outline = 2; */
+        if (message.outline !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.outline);
         /* string thumbnail_path = 3; */
         if (message.thumbnailPath !== "")
             writer.tag(3, WireType.LengthDelimited).string(message.thumbnailPath);
