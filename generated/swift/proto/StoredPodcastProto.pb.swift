@@ -1203,9 +1203,20 @@ struct StoredPodcastRoutineProto {
 
   var segments: [StoredPodcastRoutineSegmentProto] = []
 
+  var style: StoredPodcastStyleProto {
+    get {return _style ?? StoredPodcastStyleProto()}
+    set {_style = newValue}
+  }
+  /// Returns true if `style` has been explicitly set.
+  var hasStyle: Bool {return self._style != nil}
+  /// Clears the value of `style`. Subsequent reads from it will return its default value.
+  mutating func clearStyle() {self._style = nil}
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
+
+  fileprivate var _style: StoredPodcastStyleProto? = nil
 }
 
 struct StoredPodcastRoutineSegmentProto {
@@ -1236,6 +1247,10 @@ struct StoredPodcastRoutineStepProto {
   var title: String = String()
 
   var description_p: String = String()
+
+  var thumbnailPrompt: String = String()
+
+  var thumbnailKey: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -3064,6 +3079,7 @@ extension StoredPodcastRoutineProto: SwiftProtobuf.Message, SwiftProtobuf._Messa
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "reasoning"),
     2: .same(proto: "segments"),
+    3: .same(proto: "style"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3074,24 +3090,33 @@ extension StoredPodcastRoutineProto: SwiftProtobuf.Message, SwiftProtobuf._Messa
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.reasoning) }()
       case 2: try { try decoder.decodeRepeatedMessageField(value: &self.segments) }()
+      case 3: try { try decoder.decodeSingularMessageField(value: &self._style) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.reasoning.isEmpty {
       try visitor.visitSingularStringField(value: self.reasoning, fieldNumber: 1)
     }
     if !self.segments.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.segments, fieldNumber: 2)
     }
+    try { if let v = self._style {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: StoredPodcastRoutineProto, rhs: StoredPodcastRoutineProto) -> Bool {
     if lhs.reasoning != rhs.reasoning {return false}
     if lhs.segments != rhs.segments {return false}
+    if lhs._style != rhs._style {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -3153,6 +3178,8 @@ extension StoredPodcastRoutineStepProto: SwiftProtobuf.Message, SwiftProtobuf._M
     1: .same(proto: "type"),
     2: .same(proto: "title"),
     3: .same(proto: "description"),
+    4: .standard(proto: "thumbnail_prompt"),
+    5: .standard(proto: "thumbnail_key"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3164,6 +3191,8 @@ extension StoredPodcastRoutineStepProto: SwiftProtobuf.Message, SwiftProtobuf._M
       case 1: try { try decoder.decodeSingularEnumField(value: &self.type) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.title) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.description_p) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.thumbnailPrompt) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.thumbnailKey) }()
       default: break
       }
     }
@@ -3179,6 +3208,12 @@ extension StoredPodcastRoutineStepProto: SwiftProtobuf.Message, SwiftProtobuf._M
     if !self.description_p.isEmpty {
       try visitor.visitSingularStringField(value: self.description_p, fieldNumber: 3)
     }
+    if !self.thumbnailPrompt.isEmpty {
+      try visitor.visitSingularStringField(value: self.thumbnailPrompt, fieldNumber: 4)
+    }
+    if !self.thumbnailKey.isEmpty {
+      try visitor.visitSingularStringField(value: self.thumbnailKey, fieldNumber: 5)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -3186,6 +3221,8 @@ extension StoredPodcastRoutineStepProto: SwiftProtobuf.Message, SwiftProtobuf._M
     if lhs.type != rhs.type {return false}
     if lhs.title != rhs.title {return false}
     if lhs.description_p != rhs.description_p {return false}
+    if lhs.thumbnailPrompt != rhs.thumbnailPrompt {return false}
+    if lhs.thumbnailKey != rhs.thumbnailKey {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

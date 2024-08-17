@@ -1748,6 +1748,8 @@ struct PodcastRoutineStepProto {
 
   var description_p: String = String()
 
+  var thumbnailPath: String = String()
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -4758,6 +4760,7 @@ extension PodcastRoutineStepProto: SwiftProtobuf.Message, SwiftProtobuf._Message
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "title"),
     2: .same(proto: "description"),
+    3: .standard(proto: "thumbnail_path"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -4768,6 +4771,7 @@ extension PodcastRoutineStepProto: SwiftProtobuf.Message, SwiftProtobuf._Message
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.title) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.description_p) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.thumbnailPath) }()
       default: break
       }
     }
@@ -4780,12 +4784,16 @@ extension PodcastRoutineStepProto: SwiftProtobuf.Message, SwiftProtobuf._Message
     if !self.description_p.isEmpty {
       try visitor.visitSingularStringField(value: self.description_p, fieldNumber: 2)
     }
+    if !self.thumbnailPath.isEmpty {
+      try visitor.visitSingularStringField(value: self.thumbnailPath, fieldNumber: 3)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: PodcastRoutineStepProto, rhs: PodcastRoutineStepProto) -> Bool {
     if lhs.title != rhs.title {return false}
     if lhs.description_p != rhs.description_p {return false}
+    if lhs.thumbnailPath != rhs.thumbnailPath {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

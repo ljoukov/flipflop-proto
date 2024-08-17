@@ -298,6 +298,7 @@ message StoredPodcastQueryCompletionProto {
 message StoredPodcastRoutineProto {
   string reasoning = 1;
   repeated StoredPodcastRoutineSegmentProto segments = 2;
+  StoredPodcastStyleProto style = 3;
 }
 
 message StoredPodcastRoutineSegmentProto {
@@ -311,6 +312,8 @@ message StoredPodcastRoutineStepProto {
   StoredPodcastTypeProto type = 1;
   string title = 2;
   string description = 3;
+  string thumbnail_prompt = 4;
+  string thumbnail_key = 5;
 }
 
 enum StoredPodcastTypeProto {

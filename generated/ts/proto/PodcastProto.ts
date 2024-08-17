@@ -1036,6 +1036,10 @@ export interface PodcastRoutineStepProto {
      * @generated from protobuf field: string description = 2;
      */
     description: string;
+    /**
+     * @generated from protobuf field: string thumbnail_path = 3;
+     */
+    thumbnailPath: string;
 }
 /**
  * @generated from protobuf enum PodcastStatusProto
@@ -4486,11 +4490,12 @@ class PodcastRoutineStepProto$Type extends MessageType<PodcastRoutineStepProto> 
     constructor() {
         super("PodcastRoutineStepProto", [
             { no: 1, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "thumbnail_path", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PodcastRoutineStepProto>): PodcastRoutineStepProto {
-        const message = { title: "", description: "" };
+        const message = { title: "", description: "", thumbnailPath: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<PodcastRoutineStepProto>(this, message, value);
@@ -4506,6 +4511,9 @@ class PodcastRoutineStepProto$Type extends MessageType<PodcastRoutineStepProto> 
                     break;
                 case /* string description */ 2:
                     message.description = reader.string();
+                    break;
+                case /* string thumbnail_path */ 3:
+                    message.thumbnailPath = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -4525,6 +4533,9 @@ class PodcastRoutineStepProto$Type extends MessageType<PodcastRoutineStepProto> 
         /* string description = 2; */
         if (message.description !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.description);
+        /* string thumbnail_path = 3; */
+        if (message.thumbnailPath !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.thumbnailPath);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

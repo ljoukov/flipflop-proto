@@ -383,4 +383,5 @@ message PodcastRoutineSegmentProto {
 message PodcastRoutineStepProto {
   string title = 1;
   string description = 2;
+  string thumbnail_path = 3;
 }

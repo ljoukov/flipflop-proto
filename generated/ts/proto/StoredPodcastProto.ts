@@ -676,6 +676,10 @@ export interface StoredPodcastRoutineProto {
      * @generated from protobuf field: repeated StoredPodcastRoutineSegmentProto segments = 2;
      */
     segments: StoredPodcastRoutineSegmentProto[];
+    /**
+     * @generated from protobuf field: StoredPodcastStyleProto style = 3;
+     */
+    style?: StoredPodcastStyleProto;
 }
 /**
  * @generated from protobuf message StoredPodcastRoutineSegmentProto
@@ -714,6 +718,14 @@ export interface StoredPodcastRoutineStepProto {
      * @generated from protobuf field: string description = 3;
      */
     description: string;
+    /**
+     * @generated from protobuf field: string thumbnail_prompt = 4;
+     */
+    thumbnailPrompt: string;
+    /**
+     * @generated from protobuf field: string thumbnail_key = 5;
+     */
+    thumbnailKey: string;
 }
 /**
  * @generated from protobuf enum StoredPodcastStateProto
@@ -2926,7 +2938,8 @@ class StoredPodcastRoutineProto$Type extends MessageType<StoredPodcastRoutinePro
     constructor() {
         super("StoredPodcastRoutineProto", [
             { no: 1, name: "reasoning", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "segments", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastRoutineSegmentProto }
+            { no: 2, name: "segments", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastRoutineSegmentProto },
+            { no: 3, name: "style", kind: "message", T: () => StoredPodcastStyleProto }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastRoutineProto>): StoredPodcastRoutineProto {
@@ -2947,6 +2960,9 @@ class StoredPodcastRoutineProto$Type extends MessageType<StoredPodcastRoutinePro
                 case /* repeated StoredPodcastRoutineSegmentProto segments */ 2:
                     message.segments.push(StoredPodcastRoutineSegmentProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
+                case /* StoredPodcastStyleProto style */ 3:
+                    message.style = StoredPodcastStyleProto.internalBinaryRead(reader, reader.uint32(), options, message.style);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -2965,6 +2981,9 @@ class StoredPodcastRoutineProto$Type extends MessageType<StoredPodcastRoutinePro
         /* repeated StoredPodcastRoutineSegmentProto segments = 2; */
         for (let i = 0; i < message.segments.length; i++)
             StoredPodcastRoutineSegmentProto.internalBinaryWrite(message.segments[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* StoredPodcastStyleProto style = 3; */
+        if (message.style)
+            StoredPodcastStyleProto.internalBinaryWrite(message.style, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -3049,11 +3068,13 @@ class StoredPodcastRoutineStepProto$Type extends MessageType<StoredPodcastRoutin
         super("StoredPodcastRoutineStepProto", [
             { no: 1, name: "type", kind: "enum", T: () => ["StoredPodcastTypeProto", StoredPodcastTypeProto, "STORED_PODCAST_TYPE_PROTO_"] },
             { no: 2, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 3, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "thumbnail_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "thumbnail_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastRoutineStepProto>): StoredPodcastRoutineStepProto {
-        const message = { type: 0, title: "", description: "" };
+        const message = { type: 0, title: "", description: "", thumbnailPrompt: "", thumbnailKey: "" };
         globalThis.Object.defineProperty(message, MESSAGE_TYPE, { enumerable: false, value: this });
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastRoutineStepProto>(this, message, value);
@@ -3072,6 +3093,12 @@ class StoredPodcastRoutineStepProto$Type extends MessageType<StoredPodcastRoutin
                     break;
                 case /* string description */ 3:
                     message.description = reader.string();
+                    break;
+                case /* string thumbnail_prompt */ 4:
+                    message.thumbnailPrompt = reader.string();
+                    break;
+                case /* string thumbnail_key */ 5:
+                    message.thumbnailKey = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -3094,6 +3121,12 @@ class StoredPodcastRoutineStepProto$Type extends MessageType<StoredPodcastRoutin
         /* string description = 3; */
         if (message.description !== "")
             writer.tag(3, WireType.LengthDelimited).string(message.description);
+        /* string thumbnail_prompt = 4; */
+        if (message.thumbnailPrompt !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.thumbnailPrompt);
+        /* string thumbnail_key = 5; */
+        if (message.thumbnailKey !== "")
+            writer.tag(5, WireType.LengthDelimited).string(message.thumbnailKey);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
