@@ -35,17 +35,17 @@ message WeatherProto {
   WeatherConditionProto condition = 8;
   int32 open_weather_condition_id = 9;
 
-  float temperature = 10;  // Celcius
+  float temperature = 10;             // Celcius
   float temperature_feels_like = 11;  // Celcius
-  float temperature_min = 12;  // Celcius
-  float temperature_max = 13;  // Celcius
+  float temperature_min = 12;         // Celcius
+  float temperature_max = 13;         // Celcius
 
-  int32 pressure = 14; // Atmospheric pressure on the sea level, hPa
-  int32 humidity = 15; // Humidity, %
-  int32 visibility = 16; // Visibility, meter.
-  
-  float wind_speed = 17; // Wind speed, meter/sec.
-  int32 wind_degrees = 18; // Wind direction, degrees (meteorological)
+  int32 pressure = 14;    // Atmospheric pressure on the sea level, hPa
+  int32 humidity = 15;    // Humidity, %
+  int32 visibility = 16;  // Visibility, meter.
+
+  float wind_speed = 17;    // Wind speed, meter/sec.
+  int32 wind_degrees = 18;  // Wind direction, degrees (meteorological)
 }
 
 message WeatherCacheProto {

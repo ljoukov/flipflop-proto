@@ -29,15 +29,13 @@ message UpdateStoryRequestProto {
   repeated CardProto cards = 2;
 }
 
-message UpdateStoryResponseProto {
-}
+message UpdateStoryResponseProto {}
 
 message DeleteStoryRequestProto {
   string story_id = 1;
 }
 
-message DeleteStoryResponseProto {
-}
+message DeleteStoryResponseProto {}
 
 message SuggestTextRequestProto {
   string text = 1;
@@ -81,7 +79,8 @@ message StoryApiRequestProto {
 }
 
 message StoryApiResponseProto {
-  // If present the token was refreshed and the client should use this new one from now onwards.
+  // If present the token was refreshed and the client should use this new one
+  // from now onwards.
   string refreshed_encoded_user_auth = 1;
   oneof response {
     GetStoriesResponseProto get_stories = 2;
@@ -116,7 +115,7 @@ message CardDataProto {
   string id = 1;
 
   CardTypeProto card_type = 2;
- 
+
   string title = 3;
   string body = 4;
 
@@ -125,7 +124,7 @@ message CardDataProto {
 
   // For ABC or voting cards
   repeated string options = 6;
-  int32 correct_option_index = 7; // for ABC card
+  int32 correct_option_index = 7;  // for ABC card
 
   string explanation = 8;
 
@@ -152,7 +151,7 @@ message DeletedStoryProto {
 
 message StoryProto {
   string id = 1;
-  
+
   string created_by = 2;
   google.protobuf.Timestamp created_at = 3;
   string last_modified_by = 4;
