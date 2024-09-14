@@ -6,6 +6,6 @@
     "format": "clang-format --style=google -i src/*.proto"
   },
   "dependencies": {
-    "@protobuf-ts/plugin": "^2.9.3"
+    "@protobuf-ts/plugin": "^2.9.4"
   }
 }
