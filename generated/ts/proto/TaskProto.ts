@@ -76,6 +76,14 @@ export interface GeneratePodcastSuggestionsTaskProto {
  * @generated from protobuf message GeneratePodcastGlobalSuggestionsTaskProto
  */
 export interface GeneratePodcastGlobalSuggestionsTaskProto {
+    /**
+     * @generated from protobuf field: bool ignore_recently_generated = 1;
+     */
+    ignoreRecentlyGenerated: boolean;
+    /**
+     * @generated from protobuf field: bool ignore_partially_generated = 2;
+     */
+    ignorePartiallyGenerated: boolean;
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class TaskProto$Type extends MessageType<TaskProto> {
@@ -267,18 +275,48 @@ export const GeneratePodcastSuggestionsTaskProto = new GeneratePodcastSuggestion
 // @generated message type with reflection information, may provide speed optimized methods
 class GeneratePodcastGlobalSuggestionsTaskProto$Type extends MessageType<GeneratePodcastGlobalSuggestionsTaskProto> {
     constructor() {
-        super("GeneratePodcastGlobalSuggestionsTaskProto", []);
+        super("GeneratePodcastGlobalSuggestionsTaskProto", [
+            { no: 1, name: "ignore_recently_generated", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 2, name: "ignore_partially_generated", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+        ]);
     }
     create(value?: PartialMessage<GeneratePodcastGlobalSuggestionsTaskProto>): GeneratePodcastGlobalSuggestionsTaskProto {
         const message = globalThis.Object.create((this.messagePrototype!));
+        message.ignoreRecentlyGenerated = false;
+        message.ignorePartiallyGenerated = false;
         if (value !== undefined)
             reflectionMergePartial<GeneratePodcastGlobalSuggestionsTaskProto>(this, message, value);
         return message;
     }
     internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GeneratePodcastGlobalSuggestionsTaskProto): GeneratePodcastGlobalSuggestionsTaskProto {
-        return target ?? this.create();
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* bool ignore_recently_generated */ 1:
+                    message.ignoreRecentlyGenerated = reader.bool();
+                    break;
+                case /* bool ignore_partially_generated */ 2:
+                    message.ignorePartiallyGenerated = reader.bool();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
     }
     internalBinaryWrite(message: GeneratePodcastGlobalSuggestionsTaskProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* bool ignore_recently_generated = 1; */
+        if (message.ignoreRecentlyGenerated !== false)
+            writer.tag(1, WireType.Varint).bool(message.ignoreRecentlyGenerated);
+        /* bool ignore_partially_generated = 2; */
+        if (message.ignorePartiallyGenerated !== false)
+            writer.tag(2, WireType.Varint).bool(message.ignorePartiallyGenerated);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

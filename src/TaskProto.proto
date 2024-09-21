@@ -23,4 +23,7 @@ message GeneratePodcastSuggestionsTaskProto {
   string user_id = 1;
 }
 
-message GeneratePodcastGlobalSuggestionsTaskProto {}
+message GeneratePodcastGlobalSuggestionsTaskProto {
+  bool ignore_recently_generated = 1;
+  bool ignore_partially_generated = 2;
+}
