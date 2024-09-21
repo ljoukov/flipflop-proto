@@ -10,6 +10,7 @@ message TaskProto {
   oneof type {
     GeneratePodcastTaskProto generate_podcast = 10;
     GeneratePodcastSuggestionsTaskProto generate_suggestions = 11;
+    GeneratePodcastGlobalSuggestionsTaskProto generate_global_suggestions = 12;
   }
 }
 
@@ -21,3 +22,5 @@ message GeneratePodcastTaskProto {
 message GeneratePodcastSuggestionsTaskProto {
   string user_id = 1;
 }
+
+message GeneratePodcastGlobalSuggestionsTaskProto {}

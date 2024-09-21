@@ -55,12 +55,21 @@ struct TaskProto: Sendable {
     set {type = .generateSuggestions(newValue)}
   }
 
+  var generateGlobalSuggestions: GeneratePodcastGlobalSuggestionsTaskProto {
+    get {
+      if case .generateGlobalSuggestions(let v)? = type {return v}
+      return GeneratePodcastGlobalSuggestionsTaskProto()
+    }
+    set {type = .generateGlobalSuggestions(newValue)}
+  }
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   /// IDs start at 10
   enum OneOf_Type: Equatable, Sendable {
     case generatePodcast(GeneratePodcastTaskProto)
     case generateSuggestions(GeneratePodcastSuggestionsTaskProto)
+    case generateGlobalSuggestions(GeneratePodcastGlobalSuggestionsTaskProto)
 
   }
 
@@ -95,6 +104,16 @@ struct GeneratePodcastSuggestionsTaskProto: Sendable {
   init() {}
 }
 
+struct GeneratePodcastGlobalSuggestionsTaskProto: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 extension TaskProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
@@ -104,6 +123,7 @@ extension TaskProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementation
     2: .standard(proto: "created_at"),
     10: .standard(proto: "generate_podcast"),
     11: .standard(proto: "generate_suggestions"),
+    12: .standard(proto: "generate_global_suggestions"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -140,6 +160,19 @@ extension TaskProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementation
           self.type = .generateSuggestions(v)
         }
       }()
+      case 12: try {
+        var v: GeneratePodcastGlobalSuggestionsTaskProto?
+        var hadOneofValue = false
+        if let current = self.type {
+          hadOneofValue = true
+          if case .generateGlobalSuggestions(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.type = .generateGlobalSuggestions(v)
+        }
+      }()
       default: break
       }
     }
@@ -164,6 +197,10 @@ extension TaskProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementation
     case .generateSuggestions?: try {
       guard case .generateSuggestions(let v)? = self.type else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 11)
+    }()
+    case .generateGlobalSuggestions?: try {
+      guard case .generateGlobalSuggestions(let v)? = self.type else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 12)
     }()
     case nil: break
     }
@@ -244,6 +281,25 @@ extension GeneratePodcastSuggestionsTaskProto: SwiftProtobuf.Message, SwiftProto
 
   static func ==(lhs: GeneratePodcastSuggestionsTaskProto, rhs: GeneratePodcastSuggestionsTaskProto) -> Bool {
     if lhs.userID != rhs.userID {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension GeneratePodcastGlobalSuggestionsTaskProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "GeneratePodcastGlobalSuggestionsTaskProto"
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    // Load everything into unknown fields
+    while try decoder.nextFieldNumber() != nil {}
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: GeneratePodcastGlobalSuggestionsTaskProto, rhs: GeneratePodcastGlobalSuggestionsTaskProto) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
