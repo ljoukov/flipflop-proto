@@ -113,8 +113,6 @@ struct GeneratePodcastGlobalSuggestionsTaskProto: Sendable {
 
   var ignorePartiallyGenerated: Bool = false
 
-  var ignoreInProgress: Bool = false
-
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -297,7 +295,6 @@ extension GeneratePodcastGlobalSuggestionsTaskProto: SwiftProtobuf.Message, Swif
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "ignore_recently_generated"),
     2: .standard(proto: "ignore_partially_generated"),
-    3: .standard(proto: "ignore_in_progress"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -308,7 +305,6 @@ extension GeneratePodcastGlobalSuggestionsTaskProto: SwiftProtobuf.Message, Swif
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularBoolField(value: &self.ignoreRecentlyGenerated) }()
       case 2: try { try decoder.decodeSingularBoolField(value: &self.ignorePartiallyGenerated) }()
-      case 3: try { try decoder.decodeSingularBoolField(value: &self.ignoreInProgress) }()
       default: break
       }
     }
@@ -321,16 +317,12 @@ extension GeneratePodcastGlobalSuggestionsTaskProto: SwiftProtobuf.Message, Swif
     if self.ignorePartiallyGenerated != false {
       try visitor.visitSingularBoolField(value: self.ignorePartiallyGenerated, fieldNumber: 2)
     }
-    if self.ignoreInProgress != false {
-      try visitor.visitSingularBoolField(value: self.ignoreInProgress, fieldNumber: 3)
-    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: GeneratePodcastGlobalSuggestionsTaskProto, rhs: GeneratePodcastGlobalSuggestionsTaskProto) -> Bool {
     if lhs.ignoreRecentlyGenerated != rhs.ignoreRecentlyGenerated {return false}
     if lhs.ignorePartiallyGenerated != rhs.ignorePartiallyGenerated {return false}
-    if lhs.ignoreInProgress != rhs.ignoreInProgress {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
