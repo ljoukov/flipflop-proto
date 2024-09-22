@@ -26,4 +26,5 @@ message GeneratePodcastSuggestionsTaskProto {
 message GeneratePodcastGlobalSuggestionsTaskProto {
   bool ignore_recently_generated = 1;
   bool ignore_partially_generated = 2;
+  bool ignore_in_progress = 3;
 }

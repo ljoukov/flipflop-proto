@@ -84,6 +84,10 @@ export interface GeneratePodcastGlobalSuggestionsTaskProto {
      * @generated from protobuf field: bool ignore_partially_generated = 2;
      */
     ignorePartiallyGenerated: boolean;
+    /**
+     * @generated from protobuf field: bool ignore_in_progress = 3;
+     */
+    ignoreInProgress: boolean;
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class TaskProto$Type extends MessageType<TaskProto> {
@@ -277,13 +281,15 @@ class GeneratePodcastGlobalSuggestionsTaskProto$Type extends MessageType<Generat
     constructor() {
         super("GeneratePodcastGlobalSuggestionsTaskProto", [
             { no: 1, name: "ignore_recently_generated", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 2, name: "ignore_partially_generated", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+            { no: 2, name: "ignore_partially_generated", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 3, name: "ignore_in_progress", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
     create(value?: PartialMessage<GeneratePodcastGlobalSuggestionsTaskProto>): GeneratePodcastGlobalSuggestionsTaskProto {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.ignoreRecentlyGenerated = false;
         message.ignorePartiallyGenerated = false;
+        message.ignoreInProgress = false;
         if (value !== undefined)
             reflectionMergePartial<GeneratePodcastGlobalSuggestionsTaskProto>(this, message, value);
         return message;
@@ -298,6 +304,9 @@ class GeneratePodcastGlobalSuggestionsTaskProto$Type extends MessageType<Generat
                     break;
                 case /* bool ignore_partially_generated */ 2:
                     message.ignorePartiallyGenerated = reader.bool();
+                    break;
+                case /* bool ignore_in_progress */ 3:
+                    message.ignoreInProgress = reader.bool();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -317,6 +326,9 @@ class GeneratePodcastGlobalSuggestionsTaskProto$Type extends MessageType<Generat
         /* bool ignore_partially_generated = 2; */
         if (message.ignorePartiallyGenerated !== false)
             writer.tag(2, WireType.Varint).bool(message.ignorePartiallyGenerated);
+        /* bool ignore_in_progress = 3; */
+        if (message.ignoreInProgress !== false)
+            writer.tag(3, WireType.Varint).bool(message.ignoreInProgress);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
