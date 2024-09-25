@@ -1,0 +1,111 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+message AppStoreTransactionProto {
+  string original_transaction_id = 1;
+  string transaction_id = 2;
+  string web_order_line_item_id = 3;
+  string bundle_id = 4;
+  string product_id = 5;
+  string subscription_group_identifier = 6;
+  google.protobuf.Timestamp purchase_date = 7;
+  google.protobuf.Timestamp original_purchase_date = 8;
+  google.protobuf.Timestamp expires_date = 9; // an auto-renewable subscription expires or renews.
+  int32 quantity = 10; // The number of consumable products purchased.
+  AppStorePurchaseTypeProto type = 11;
+
+  // The UUID that an app optionally generates to map a customer’s in-app purchase with its resulting App Store transaction.
+  string app_account_token = 12;
+
+  // A string that describes whether the transaction was purchased by the user, or is available to them through Family Sharing.
+  AppStoreInAppOwnershipTypeProto in_app_ownership_type = 13;
+
+  // The time when the App Store signed the JSON Web Signature data.
+  google.protobuf.Timestamp signed_date = 14;
+
+  // The reason that the App Store refunded the transaction or revoked it from family sharing.
+  AppStoreRevocationReasonProto revocation_reason = 15;
+
+  // The time when Apple Support refunded a transaction.
+  google.protobuf.Timestamp revocation_date = 16;
+
+  // The Boolean value that indicates whether the user upgraded to another subscription.
+  bool is_upgraded = 17;
+
+  // A value that represents the promotional offer type.
+  AppStoreOfferTypeProto offer_type = 18;
+
+  // The identifier that contains the promo code or the promotional offer identifier.
+  string offer_identifier = 19;
+
+  // The server environment, either sandbox or production.
+  AppStoreEnvironmentProto environment = 20;
+
+  // The three-letter code that represents the country or region associated with the App Store storefront for the purchase.
+  string storefront = 21;
+
+  // An Apple-defined value that uniquely identifies the App Store storefront associated with the purchase.
+  string storefront_id = 22;
+
+  // The reason for the purchase transaction, which indicates whether it’s a customer’s purchase or a renewal for an auto-renewable subscription that the system initiates.
+  AppStoreTransactionReasonProto transaction_reason = 23;
+
+  // The three-letter ISO 4217 currency code for the price of the product.
+  string currency = 24;
+
+  // The price, in milliunits, of the in-app purchase or subscription offer that you configured in App Store Connect.
+  int64 price = 25;
+
+  // The payment mode you configure for an introductory offer, promotional offer, or offer code on an auto-renewable subscription.
+  AppStoreOfferDiscountTypeProto offer_discount_type = 26;
+}
+
+enum AppStorePurchaseTypeProto {
+  APP_STORE_PURCHASE_TYPE_PROTO_UNSPECIFIED = 0;
+  APP_STORE_PURCHASE_TYPE_PROTO_AUTO_RENEWABLE_SUBSCRIPTION = 1;
+  APP_STORE_PURCHASE_TYPE_PROTO_NON_CONSUMABLE = 2;
+  APP_STORE_PURCHASE_TYPE_PROTO_CONSUMABLE = 3;
+  APP_STORE_PURCHASE_TYPE_PROTO_NON_RENEWING_SUBSCRIPTION = 4;
+}
+
+enum AppStoreInAppOwnershipTypeProto {
+  APP_STORE_IN_APP_OWNERSHIP_TYPE_PROTO_UNSPECIFIED = 0;
+  APP_STORE_IN_APP_OWNERSHIP_TYPE_PROTO_PURCHASED = 1;
+  APP_STORE_IN_APP_OWNERSHIP_TYPE_PROTO_FAMILY_SHARED = 2;
+}
+
+enum AppStoreRevocationReasonProto {
+  APP_STORE_REVOCATION_REASON_PROTO_UNSPECIFIED = 0;
+  APP_STORE_REVOCATION_REASON_PROTO_REFUNDED_FOR_OTHER_REASON = 1;
+  APP_STORE_REVOCATION_REASON_PROTO_REFUNDED_DUE_TO_ISSUE = 2;
+}
+
+enum AppStoreOfferTypeProto {
+  APP_STORE_OFFER_TYPE_PROTO_UNSPECIFIED = 0;
+  APP_STORE_OFFER_TYPE_PROTO_INTRODUCTORY_OFFER = 1;
+  APP_STORE_OFFER_TYPE_PROTO_PROMOTIONAL_OFFER = 2;
+  APP_STORE_OFFER_TYPE_PROTO_SUBSCRIPTION_OFFER_CODE = 3;
+  APP_STORE_OFFER_TYPE_PROTO_WIN_BACK_OFFER = 4;
+}
+
+enum AppStoreEnvironmentProto {
+  APP_STORE_ENVIRONMENT_PROTO_UNSPECIFIED = 0;
+  APP_STORE_ENVIRONMENT_PROTO_SANDBOX = 1;
+  APP_STORE_ENVIRONMENT_PROTO_PRODUCTION = 2;
+  APP_STORE_ENVIRONMENT_PROTO_XCODE = 3;
+  APP_STORE_ENVIRONMENT_PROTO_LOCAL_TESTING = 4;
+}
+
+enum AppStoreTransactionReasonProto {
+  APP_STORE_TRANSACTION_REASON_PROTO_UNSPECIFIED = 0;
+  APP_STORE_TRANSACTION_REASON_PROTO_PURCHASE = 1;
+  APP_STORE_TRANSACTION_REASON_PROTO_RENEWAL = 2;
+}
+
+enum AppStoreOfferDiscountTypeProto {
+  APP_STORE_OFFER_DISCOUNT_TYPE_PROTO_UNSPECIFIED = 0;
+  APP_STORE_OFFER_DISCOUNT_TYPE_PROTO_FREE_TRIAL = 1;
+  APP_STORE_OFFER_DISCOUNT_TYPE_PROTO_PAY_AS_YOU_GO = 2;
+  APP_STORE_OFFER_DISCOUNT_TYPE_PROTO_PAY_UP_FRONT = 3;
+}
