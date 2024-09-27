@@ -2,6 +2,8 @@ syntax = "proto3";
 
 import "google/protobuf/timestamp.proto";
 
+// Docs:
+// https://developer.apple.com/documentation/appstoreserverapi/jwstransactiondecodedpayload
 message AppStoreTransactionProto {
   string original_transaction_id = 1;
   string transaction_id = 2;

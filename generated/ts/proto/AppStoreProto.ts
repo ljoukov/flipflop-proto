@@ -14,6 +14,9 @@ import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
 import { Timestamp } from "./google/protobuf/timestamp";
 /**
+ * Docs:
+ * https://developer.apple.com/documentation/appstoreserverapi/jwstransactiondecodedpayload
+ *
  * @generated from protobuf message AppStoreTransactionProto
  */
 export interface AppStoreTransactionProto {
