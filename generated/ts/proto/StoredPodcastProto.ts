@@ -727,6 +727,65 @@ export interface StoredPodcastRoutineStepProto {
     thumbnailKey: string;
 }
 /**
+ * @generated from protobuf message StoredPodcastUserProto
+ */
+export interface StoredPodcastUserProto {
+    /**
+     * @generated from protobuf field: string user_id = 1;
+     */
+    userId: string;
+    /**
+     * @generated from protobuf field: google.protobuf.Timestamp created_at = 2;
+     */
+    createdAt?: Timestamp;
+    /**
+     * @generated from protobuf field: google.protobuf.Timestamp updated_at = 3;
+     */
+    updatedAt?: Timestamp;
+    /**
+     * @generated from protobuf field: StoredPodcastSubscriptionProto subscription = 4;
+     */
+    subscription?: StoredPodcastSubscriptionProto;
+}
+/**
+ * @generated from protobuf message StoredPodcastSubscriptionProto
+ */
+export interface StoredPodcastSubscriptionProto {
+    /**
+     * @generated from protobuf field: StoredPodcastSubscriptionTypeProto subscription_type = 1;
+     */
+    subscriptionType: StoredPodcastSubscriptionTypeProto;
+    /**
+     * @generated from protobuf field: google.protobuf.Timestamp subscription_purchased_at = 2;
+     */
+    subscriptionPurchasedAt?: Timestamp;
+    /**
+     * @generated from protobuf field: google.protobuf.Timestamp subscription_expires_at = 3;
+     */
+    subscriptionExpiresAt?: Timestamp;
+    /**
+     * @generated from protobuf field: StoredPodcastUserAppStoreStateProto appstore_state = 4;
+     */
+    appstoreState?: StoredPodcastUserAppStoreStateProto;
+}
+/**
+ * @generated from protobuf message StoredPodcastUserAppStoreStateProto
+ */
+export interface StoredPodcastUserAppStoreStateProto {
+    /**
+     * @generated from protobuf field: string original_transaction_id = 1;
+     */
+    originalTransactionId: string;
+    /**
+     * @generated from protobuf field: string latest_transaction_id = 2;
+     */
+    latestTransactionId: string;
+    /**
+     * @generated from protobuf field: google.protobuf.Timestamp latest_transaction_timestamp = 3;
+     */
+    latestTransactionTimestamp?: Timestamp;
+}
+/**
  * @generated from protobuf enum StoredPodcastStateProto
  */
 export enum StoredPodcastStateProto {
@@ -881,6 +940,31 @@ export enum StoredPodcastTypeProto {
      * @generated from protobuf enum value: STORED_PODCAST_TYPE_PROTO_MEDITATION = 3;
      */
     MEDITATION = 3
+}
+/**
+ * @generated from protobuf enum StoredPodcastSubscriptionTypeProto
+ */
+export enum StoredPodcastSubscriptionTypeProto {
+    /**
+     * @generated from protobuf enum value: STORED_PODCAST_SUBSCRIPTION_TYPE_PROTO_UNDEFINED = 0;
+     */
+    UNDEFINED = 0,
+    /**
+     * @generated from protobuf enum value: STORED_PODCAST_SUBSCRIPTION_TYPE_PROTO_FREE = 1;
+     */
+    FREE = 1,
+    /**
+     * @generated from protobuf enum value: STORED_PODCAST_SUBSCRIPTION_TYPE_PROTO_WEEKLY = 2;
+     */
+    WEEKLY = 2,
+    /**
+     * @generated from protobuf enum value: STORED_PODCAST_SUBSCRIPTION_TYPE_PROTO_MONTHLY = 3;
+     */
+    MONTHLY = 3,
+    /**
+     * @generated from protobuf enum value: STORED_PODCAST_SUBSCRIPTION_TYPE_PROTO_ANNUAL = 4;
+     */
+    ANNUAL = 4
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
@@ -3201,3 +3285,201 @@ class StoredPodcastRoutineStepProto$Type extends MessageType<StoredPodcastRoutin
  * @generated MessageType for protobuf message StoredPodcastRoutineStepProto
  */
 export const StoredPodcastRoutineStepProto = new StoredPodcastRoutineStepProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class StoredPodcastUserProto$Type extends MessageType<StoredPodcastUserProto> {
+    constructor() {
+        super("StoredPodcastUserProto", [
+            { no: 1, name: "user_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "created_at", kind: "message", T: () => Timestamp },
+            { no: 3, name: "updated_at", kind: "message", T: () => Timestamp },
+            { no: 4, name: "subscription", kind: "message", T: () => StoredPodcastSubscriptionProto }
+        ]);
+    }
+    create(value?: PartialMessage<StoredPodcastUserProto>): StoredPodcastUserProto {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.userId = "";
+        if (value !== undefined)
+            reflectionMergePartial<StoredPodcastUserProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredPodcastUserProto): StoredPodcastUserProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string user_id */ 1:
+                    message.userId = reader.string();
+                    break;
+                case /* google.protobuf.Timestamp created_at */ 2:
+                    message.createdAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.createdAt);
+                    break;
+                case /* google.protobuf.Timestamp updated_at */ 3:
+                    message.updatedAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.updatedAt);
+                    break;
+                case /* StoredPodcastSubscriptionProto subscription */ 4:
+                    message.subscription = StoredPodcastSubscriptionProto.internalBinaryRead(reader, reader.uint32(), options, message.subscription);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: StoredPodcastUserProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string user_id = 1; */
+        if (message.userId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.userId);
+        /* google.protobuf.Timestamp created_at = 2; */
+        if (message.createdAt)
+            Timestamp.internalBinaryWrite(message.createdAt, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.Timestamp updated_at = 3; */
+        if (message.updatedAt)
+            Timestamp.internalBinaryWrite(message.updatedAt, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* StoredPodcastSubscriptionProto subscription = 4; */
+        if (message.subscription)
+            StoredPodcastSubscriptionProto.internalBinaryWrite(message.subscription, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message StoredPodcastUserProto
+ */
+export const StoredPodcastUserProto = new StoredPodcastUserProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class StoredPodcastSubscriptionProto$Type extends MessageType<StoredPodcastSubscriptionProto> {
+    constructor() {
+        super("StoredPodcastSubscriptionProto", [
+            { no: 1, name: "subscription_type", kind: "enum", T: () => ["StoredPodcastSubscriptionTypeProto", StoredPodcastSubscriptionTypeProto, "STORED_PODCAST_SUBSCRIPTION_TYPE_PROTO_"] },
+            { no: 2, name: "subscription_purchased_at", kind: "message", T: () => Timestamp },
+            { no: 3, name: "subscription_expires_at", kind: "message", T: () => Timestamp },
+            { no: 4, name: "appstore_state", kind: "message", T: () => StoredPodcastUserAppStoreStateProto }
+        ]);
+    }
+    create(value?: PartialMessage<StoredPodcastSubscriptionProto>): StoredPodcastSubscriptionProto {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.subscriptionType = 0;
+        if (value !== undefined)
+            reflectionMergePartial<StoredPodcastSubscriptionProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredPodcastSubscriptionProto): StoredPodcastSubscriptionProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* StoredPodcastSubscriptionTypeProto subscription_type */ 1:
+                    message.subscriptionType = reader.int32();
+                    break;
+                case /* google.protobuf.Timestamp subscription_purchased_at */ 2:
+                    message.subscriptionPurchasedAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.subscriptionPurchasedAt);
+                    break;
+                case /* google.protobuf.Timestamp subscription_expires_at */ 3:
+                    message.subscriptionExpiresAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.subscriptionExpiresAt);
+                    break;
+                case /* StoredPodcastUserAppStoreStateProto appstore_state */ 4:
+                    message.appstoreState = StoredPodcastUserAppStoreStateProto.internalBinaryRead(reader, reader.uint32(), options, message.appstoreState);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: StoredPodcastSubscriptionProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* StoredPodcastSubscriptionTypeProto subscription_type = 1; */
+        if (message.subscriptionType !== 0)
+            writer.tag(1, WireType.Varint).int32(message.subscriptionType);
+        /* google.protobuf.Timestamp subscription_purchased_at = 2; */
+        if (message.subscriptionPurchasedAt)
+            Timestamp.internalBinaryWrite(message.subscriptionPurchasedAt, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.Timestamp subscription_expires_at = 3; */
+        if (message.subscriptionExpiresAt)
+            Timestamp.internalBinaryWrite(message.subscriptionExpiresAt, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* StoredPodcastUserAppStoreStateProto appstore_state = 4; */
+        if (message.appstoreState)
+            StoredPodcastUserAppStoreStateProto.internalBinaryWrite(message.appstoreState, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message StoredPodcastSubscriptionProto
+ */
+export const StoredPodcastSubscriptionProto = new StoredPodcastSubscriptionProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class StoredPodcastUserAppStoreStateProto$Type extends MessageType<StoredPodcastUserAppStoreStateProto> {
+    constructor() {
+        super("StoredPodcastUserAppStoreStateProto", [
+            { no: 1, name: "original_transaction_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "latest_transaction_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "latest_transaction_timestamp", kind: "message", T: () => Timestamp }
+        ]);
+    }
+    create(value?: PartialMessage<StoredPodcastUserAppStoreStateProto>): StoredPodcastUserAppStoreStateProto {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.originalTransactionId = "";
+        message.latestTransactionId = "";
+        if (value !== undefined)
+            reflectionMergePartial<StoredPodcastUserAppStoreStateProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredPodcastUserAppStoreStateProto): StoredPodcastUserAppStoreStateProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string original_transaction_id */ 1:
+                    message.originalTransactionId = reader.string();
+                    break;
+                case /* string latest_transaction_id */ 2:
+                    message.latestTransactionId = reader.string();
+                    break;
+                case /* google.protobuf.Timestamp latest_transaction_timestamp */ 3:
+                    message.latestTransactionTimestamp = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.latestTransactionTimestamp);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: StoredPodcastUserAppStoreStateProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string original_transaction_id = 1; */
+        if (message.originalTransactionId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.originalTransactionId);
+        /* string latest_transaction_id = 2; */
+        if (message.latestTransactionId !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.latestTransactionId);
+        /* google.protobuf.Timestamp latest_transaction_timestamp = 3; */
+        if (message.latestTransactionTimestamp)
+            Timestamp.internalBinaryWrite(message.latestTransactionTimestamp, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message StoredPodcastUserAppStoreStateProto
+ */
+export const StoredPodcastUserAppStoreStateProto = new StoredPodcastUserAppStoreStateProto$Type();
