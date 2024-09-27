@@ -50,25 +50,31 @@ export interface AppStoreTransactionProto {
      */
     originalPurchaseDate?: Timestamp;
     /**
+     * an auto-renewable subscription expires or renews.
+     *
      * @generated from protobuf field: google.protobuf.Timestamp expires_date = 9;
      */
-    expiresDate?: Timestamp; // an auto-renewable subscription expires or renews.
+    expiresDate?: Timestamp;
     /**
+     * The number of consumable products purchased.
+     *
      * @generated from protobuf field: int32 quantity = 10;
      */
-    quantity: number; // The number of consumable products purchased.
+    quantity: number;
     /**
      * @generated from protobuf field: AppStorePurchaseTypeProto type = 11;
      */
     type: AppStorePurchaseTypeProto;
     /**
-     * The UUID that an app optionally generates to map a customer’s in-app purchase with its resulting App Store transaction.
+     * The UUID that an app optionally generates to map a customer’s in-app
+     * purchase with its resulting App Store transaction.
      *
      * @generated from protobuf field: string app_account_token = 12;
      */
     appAccountToken: string;
     /**
-     * A string that describes whether the transaction was purchased by the user, or is available to them through Family Sharing.
+     * A string that describes whether the transaction was purchased by the user,
+     * or is available to them through Family Sharing.
      *
      * @generated from protobuf field: AppStoreInAppOwnershipTypeProto in_app_ownership_type = 13;
      */
@@ -80,7 +86,8 @@ export interface AppStoreTransactionProto {
      */
     signedDate?: Timestamp;
     /**
-     * The reason that the App Store refunded the transaction or revoked it from family sharing.
+     * The reason that the App Store refunded the transaction or revoked it from
+     * family sharing.
      *
      * @generated from protobuf field: AppStoreRevocationReasonProto revocation_reason = 15;
      */
@@ -92,7 +99,8 @@ export interface AppStoreTransactionProto {
      */
     revocationDate?: Timestamp;
     /**
-     * The Boolean value that indicates whether the user upgraded to another subscription.
+     * The Boolean value that indicates whether the user upgraded to another
+     * subscription.
      *
      * @generated from protobuf field: bool is_upgraded = 17;
      */
@@ -104,7 +112,8 @@ export interface AppStoreTransactionProto {
      */
     offerType: AppStoreOfferTypeProto;
     /**
-     * The identifier that contains the promo code or the promotional offer identifier.
+     * The identifier that contains the promo code or the promotional offer
+     * identifier.
      *
      * @generated from protobuf field: string offer_identifier = 19;
      */
@@ -116,19 +125,23 @@ export interface AppStoreTransactionProto {
      */
     environment: AppStoreEnvironmentProto;
     /**
-     * The three-letter code that represents the country or region associated with the App Store storefront for the purchase.
+     * The three-letter code that represents the country or region associated with
+     * the App Store storefront for the purchase.
      *
      * @generated from protobuf field: string storefront = 21;
      */
     storefront: string;
     /**
-     * An Apple-defined value that uniquely identifies the App Store storefront associated with the purchase.
+     * An Apple-defined value that uniquely identifies the App Store storefront
+     * associated with the purchase.
      *
      * @generated from protobuf field: string storefront_id = 22;
      */
     storefrontId: string;
     /**
-     * The reason for the purchase transaction, which indicates whether it’s a customer’s purchase or a renewal for an auto-renewable subscription that the system initiates.
+     * The reason for the purchase transaction, which indicates whether it’s a
+     * customer’s purchase or a renewal for an auto-renewable subscription that
+     * the system initiates.
      *
      * @generated from protobuf field: AppStoreTransactionReasonProto transaction_reason = 23;
      */
@@ -140,23 +153,21 @@ export interface AppStoreTransactionProto {
      */
     currency: string;
     /**
-     * The price, in milliunits, of the in-app purchase or subscription offer that you configured in App Store Connect.
+     * The price, in milliunits, of the in-app purchase or subscription offer that
+     * you configured in App Store Connect.
      *
      * @generated from protobuf field: int64 price = 25;
      */
     price: string;
     /**
-     * The payment mode you configure for an introductory offer, promotional offer, or offer code on an auto-renewable subscription.
+     * The payment mode you configure for an introductory offer, promotional
+     * offer, or offer code on an auto-renewable subscription.
      *
      * @generated from protobuf field: AppStoreOfferDiscountTypeProto offer_discount_type = 26;
      */
     offerDiscountType: AppStoreOfferDiscountTypeProto;
 }
-// Enums corresponding to various types and reasons
-
 /**
- * The type of the in-app purchase.
- *
  * @generated from protobuf enum AppStorePurchaseTypeProto
  */
 export enum AppStorePurchaseTypeProto {
@@ -182,8 +193,6 @@ export enum AppStorePurchaseTypeProto {
     NON_RENEWING_SUBSCRIPTION = 4
 }
 /**
- * Describes whether the transaction was purchased by the user, or is available to them through Family Sharing.
- *
  * @generated from protobuf enum AppStoreInAppOwnershipTypeProto
  */
 export enum AppStoreInAppOwnershipTypeProto {
@@ -201,8 +210,6 @@ export enum AppStoreInAppOwnershipTypeProto {
     FAMILY_SHARED = 2
 }
 /**
- * The reason that the App Store refunded the transaction or revoked it from family sharing.
- *
  * @generated from protobuf enum AppStoreRevocationReasonProto
  */
 export enum AppStoreRevocationReasonProto {
@@ -220,8 +227,6 @@ export enum AppStoreRevocationReasonProto {
     REFUNDED_DUE_TO_ISSUE = 2
 }
 /**
- * A value that represents the promotional offer type.
- *
  * @generated from protobuf enum AppStoreOfferTypeProto
  */
 export enum AppStoreOfferTypeProto {
@@ -247,8 +252,6 @@ export enum AppStoreOfferTypeProto {
     WIN_BACK_OFFER = 4
 }
 /**
- * The server environment, either sandbox or production.
- *
  * @generated from protobuf enum AppStoreEnvironmentProto
  */
 export enum AppStoreEnvironmentProto {
@@ -274,8 +277,6 @@ export enum AppStoreEnvironmentProto {
     LOCAL_TESTING = 4
 }
 /**
- * The reason for the purchase transaction.
- *
  * @generated from protobuf enum AppStoreTransactionReasonProto
  */
 export enum AppStoreTransactionReasonProto {
@@ -293,8 +294,6 @@ export enum AppStoreTransactionReasonProto {
     RENEWAL = 2
 }
 /**
- * The payment mode you configure for an introductory offer, promotional offer, or offer code.
- *
  * @generated from protobuf enum AppStoreOfferDiscountTypeProto
  */
 export enum AppStoreOfferDiscountTypeProto {

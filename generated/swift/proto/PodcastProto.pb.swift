@@ -203,6 +203,14 @@ struct PodcastStreamApiRequestProto: Sendable {
     set {request = .refreshSuggestions(newValue)}
   }
 
+  var applyTransaction: ApplyPodcastTransactionRequestProto {
+    get {
+      if case .applyTransaction(let v)? = request {return v}
+      return ApplyPodcastTransactionRequestProto()
+    }
+    set {request = .applyTransaction(newValue)}
+  }
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_Request: Equatable, Sendable {
@@ -212,6 +220,7 @@ struct PodcastStreamApiRequestProto: Sendable {
     case story(GetPodcastStoryRequestProto)
     case suggestionPoints(GetPodcastSuggestionPointsProto)
     case refreshSuggestions(RefreshPodcastSuggestionsRequestProto)
+    case applyTransaction(ApplyPodcastTransactionRequestProto)
 
   }
 
@@ -277,6 +286,14 @@ struct PodcastStreamApiResponseHeaderProto: Sendable {
     set {header = .refreshSuggestions(newValue)}
   }
 
+  var applyTransaction: ApplyPodcastTransactionResponseHeaderProto {
+    get {
+      if case .applyTransaction(let v)? = header {return v}
+      return ApplyPodcastTransactionResponseHeaderProto()
+    }
+    set {header = .applyTransaction(newValue)}
+  }
+
   var latencies: Dictionary<String,SwiftProtobuf.Google_Protobuf_Duration> = [:]
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -288,6 +305,7 @@ struct PodcastStreamApiResponseHeaderProto: Sendable {
     case storyHeader(GetPodcastStoryResponseHeaderProto)
     case suggestionPointsHeader(GetPodcastSuggestionPointsResponseHeaderProto)
     case refreshSuggestions(RefreshPodcastSuggestionsResponseHeaderProto)
+    case applyTransaction(ApplyPodcastTransactionResponseHeaderProto)
 
   }
 
@@ -349,6 +367,14 @@ struct PodcastStreamApiResponseDeltaProto: Sendable {
     set {responseDelta = .refreshSuggestions(newValue)}
   }
 
+  var applyTransaction: ApplyPodcastTransactionResponseDeltaProto {
+    get {
+      if case .applyTransaction(let v)? = responseDelta {return v}
+      return ApplyPodcastTransactionResponseDeltaProto()
+    }
+    set {responseDelta = .applyTransaction(newValue)}
+  }
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_ResponseDelta: Equatable, Sendable {
@@ -358,6 +384,7 @@ struct PodcastStreamApiResponseDeltaProto: Sendable {
     case storyDelta(GetPodcastStoryResponseDeltaProto)
     case suggestionPointsDelta(GetPodcastSuggestionPointsResponseDeltaProto)
     case refreshSuggestions(RefreshPodcastSuggestionsResponseDeltaProto)
+    case applyTransaction(ApplyPodcastTransactionResponseDeltaProto)
 
   }
 
@@ -697,6 +724,51 @@ struct RefreshPodcastSuggestionsResponseHeaderProto: Sendable {
 }
 
 struct RefreshPodcastSuggestionsResponseDeltaProto: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct ApplyPodcastTransactionRequestProto: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var type: ApplyPodcastTransactionRequestProto.OneOf_Type? = nil
+
+  var appStoreTransaction: PodcastAppStoreTransactionProto {
+    get {
+      if case .appStoreTransaction(let v)? = type {return v}
+      return PodcastAppStoreTransactionProto()
+    }
+    set {type = .appStoreTransaction(newValue)}
+  }
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  enum OneOf_Type: Equatable, Sendable {
+    case appStoreTransaction(PodcastAppStoreTransactionProto)
+
+  }
+
+  init() {}
+}
+
+struct ApplyPodcastTransactionResponseHeaderProto: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct ApplyPodcastTransactionResponseDeltaProto: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1529,6 +1601,18 @@ struct PodcastRoutineStepProto: Sendable {
   init() {}
 }
 
+struct PodcastAppStoreTransactionProto: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var jws: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 extension PodcastStatusProto: SwiftProtobuf._ProtoNameProviding {
@@ -1568,6 +1652,7 @@ extension PodcastStreamApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Me
     5: .same(proto: "story"),
     6: .standard(proto: "suggestion_points"),
     7: .standard(proto: "refresh_suggestions"),
+    8: .standard(proto: "apply_transaction"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1655,6 +1740,19 @@ extension PodcastStreamApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Me
           self.request = .refreshSuggestions(v)
         }
       }()
+      case 8: try {
+        var v: ApplyPodcastTransactionRequestProto?
+        var hadOneofValue = false
+        if let current = self.request {
+          hadOneofValue = true
+          if case .applyTransaction(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.request = .applyTransaction(v)
+        }
+      }()
       default: break
       }
     }
@@ -1693,6 +1791,10 @@ extension PodcastStreamApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Me
       guard case .refreshSuggestions(let v)? = self.request else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
     }()
+    case .applyTransaction?: try {
+      guard case .applyTransaction(let v)? = self.request else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
+    }()
     case nil: break
     }
     try unknownFields.traverse(visitor: &visitor)
@@ -1716,6 +1818,7 @@ extension PodcastStreamApiResponseHeaderProto: SwiftProtobuf.Message, SwiftProto
     5: .standard(proto: "story_header"),
     6: .standard(proto: "suggestion_points_header"),
     7: .standard(proto: "refresh_suggestions"),
+    8: .standard(proto: "apply_transaction"),
     100: .same(proto: "latencies"),
   ]
 
@@ -1804,6 +1907,19 @@ extension PodcastStreamApiResponseHeaderProto: SwiftProtobuf.Message, SwiftProto
           self.header = .refreshSuggestions(v)
         }
       }()
+      case 8: try {
+        var v: ApplyPodcastTransactionResponseHeaderProto?
+        var hadOneofValue = false
+        if let current = self.header {
+          hadOneofValue = true
+          if case .applyTransaction(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.header = .applyTransaction(v)
+        }
+      }()
       case 100: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.Google_Protobuf_Duration>.self, value: &self.latencies) }()
       default: break
       }
@@ -1843,6 +1959,10 @@ extension PodcastStreamApiResponseHeaderProto: SwiftProtobuf.Message, SwiftProto
       guard case .refreshSuggestions(let v)? = self.header else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
     }()
+    case .applyTransaction?: try {
+      guard case .applyTransaction(let v)? = self.header else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
+    }()
     case nil: break
     }
     if !self.latencies.isEmpty {
@@ -1869,6 +1989,7 @@ extension PodcastStreamApiResponseDeltaProto: SwiftProtobuf.Message, SwiftProtob
     4: .standard(proto: "story_delta"),
     6: .standard(proto: "suggestion_points_delta"),
     7: .standard(proto: "refresh_suggestions"),
+    8: .standard(proto: "apply_transaction"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1955,6 +2076,19 @@ extension PodcastStreamApiResponseDeltaProto: SwiftProtobuf.Message, SwiftProtob
           self.responseDelta = .refreshSuggestions(v)
         }
       }()
+      case 8: try {
+        var v: ApplyPodcastTransactionResponseDeltaProto?
+        var hadOneofValue = false
+        if let current = self.responseDelta {
+          hadOneofValue = true
+          if case .applyTransaction(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.responseDelta = .applyTransaction(v)
+        }
+      }()
       default: break
       }
     }
@@ -1989,6 +2123,10 @@ extension PodcastStreamApiResponseDeltaProto: SwiftProtobuf.Message, SwiftProtob
     case .refreshSuggestions?: try {
       guard case .refreshSuggestions(let v)? = self.responseDelta else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
+    }()
+    case .applyTransaction?: try {
+      guard case .applyTransaction(let v)? = self.responseDelta else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
     }()
     case nil: break
     }
@@ -2726,6 +2864,92 @@ extension RefreshPodcastSuggestionsResponseDeltaProto: SwiftProtobuf.Message, Sw
   }
 
   static func ==(lhs: RefreshPodcastSuggestionsResponseDeltaProto, rhs: RefreshPodcastSuggestionsResponseDeltaProto) -> Bool {
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension ApplyPodcastTransactionRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "ApplyPodcastTransactionRequestProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "app_store_transaction"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try {
+        var v: PodcastAppStoreTransactionProto?
+        var hadOneofValue = false
+        if let current = self.type {
+          hadOneofValue = true
+          if case .appStoreTransaction(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.type = .appStoreTransaction(v)
+        }
+      }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if case .appStoreTransaction(let v)? = self.type {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: ApplyPodcastTransactionRequestProto, rhs: ApplyPodcastTransactionRequestProto) -> Bool {
+    if lhs.type != rhs.type {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension ApplyPodcastTransactionResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "ApplyPodcastTransactionResponseHeaderProto"
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    // Load everything into unknown fields
+    while try decoder.nextFieldNumber() != nil {}
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: ApplyPodcastTransactionResponseHeaderProto, rhs: ApplyPodcastTransactionResponseHeaderProto) -> Bool {
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension ApplyPodcastTransactionResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "ApplyPodcastTransactionResponseDeltaProto"
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    // Load everything into unknown fields
+    while try decoder.nextFieldNumber() != nil {}
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: ApplyPodcastTransactionResponseDeltaProto, rhs: ApplyPodcastTransactionResponseDeltaProto) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -4510,6 +4734,38 @@ extension PodcastRoutineStepProto: SwiftProtobuf.Message, SwiftProtobuf._Message
     if lhs.title != rhs.title {return false}
     if lhs.outline != rhs.outline {return false}
     if lhs.thumbnailPath != rhs.thumbnailPath {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension PodcastAppStoreTransactionProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastAppStoreTransactionProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "jws"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.jws) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.jws.isEmpty {
+      try visitor.visitSingularStringField(value: self.jws, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PodcastAppStoreTransactionProto, rhs: PodcastAppStoreTransactionProto) -> Bool {
+    if lhs.jws != rhs.jws {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

@@ -12,6 +12,7 @@ message PodcastStreamApiRequestProto {
     GetPodcastStoryRequestProto story = 5;
     GetPodcastSuggestionPointsProto suggestion_points = 6;
     RefreshPodcastSuggestionsRequestProto refresh_suggestions = 7;
+    ApplyPodcastTransactionRequestProto apply_transaction = 8;
   }
 }
 
@@ -26,6 +27,7 @@ message PodcastStreamApiResponseHeaderProto {
     GetPodcastStoryResponseHeaderProto story_header = 5;
     GetPodcastSuggestionPointsResponseHeaderProto suggestion_points_header = 6;
     RefreshPodcastSuggestionsResponseHeaderProto refresh_suggestions = 7;
+    ApplyPodcastTransactionResponseHeaderProto apply_transaction = 8;
   }
   map<string, google.protobuf.Duration> latencies = 100;
 }
@@ -38,6 +40,7 @@ message PodcastStreamApiResponseDeltaProto {
     GetPodcastStoryResponseDeltaProto story_delta = 4;
     GetPodcastSuggestionPointsResponseDeltaProto suggestion_points_delta = 6;
     RefreshPodcastSuggestionsResponseDeltaProto refresh_suggestions = 7;
+    ApplyPodcastTransactionResponseDeltaProto apply_transaction = 8;
   }
 }
 
@@ -122,6 +125,16 @@ message RefreshPodcastSuggestionsRequestProto {}
 message RefreshPodcastSuggestionsResponseHeaderProto {}
 
 message RefreshPodcastSuggestionsResponseDeltaProto {}
+
+message ApplyPodcastTransactionRequestProto {
+  oneof type {
+    PodcastAppStoreTransactionProto app_store_transaction = 1;
+  }
+}
+
+message ApplyPodcastTransactionResponseHeaderProto {}
+
+message ApplyPodcastTransactionResponseDeltaProto {}
 
 message PodcastProto {
   google.protobuf.Timestamp updated_at = 1;
@@ -384,4 +397,8 @@ message PodcastRoutineStepProto {
   string title = 1;
   string outline = 2;
   string thumbnail_path = 3;
+}
+
+message PodcastAppStoreTransactionProto {
+  string jws = 1;
 }

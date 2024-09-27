@@ -62,6 +62,12 @@ export interface PodcastStreamApiRequestProto {
          */
         refreshSuggestions: RefreshPodcastSuggestionsRequestProto;
     } | {
+        oneofKind: "applyTransaction";
+        /**
+         * @generated from protobuf field: ApplyPodcastTransactionRequestProto apply_transaction = 8;
+         */
+        applyTransaction: ApplyPodcastTransactionRequestProto;
+    } | {
         oneofKind: undefined;
     };
 }
@@ -116,6 +122,12 @@ export interface PodcastStreamApiResponseHeaderProto {
          */
         refreshSuggestions: RefreshPodcastSuggestionsResponseHeaderProto;
     } | {
+        oneofKind: "applyTransaction";
+        /**
+         * @generated from protobuf field: ApplyPodcastTransactionResponseHeaderProto apply_transaction = 8;
+         */
+        applyTransaction: ApplyPodcastTransactionResponseHeaderProto;
+    } | {
         oneofKind: undefined;
     };
     /**
@@ -168,6 +180,12 @@ export interface PodcastStreamApiResponseDeltaProto {
          * @generated from protobuf field: RefreshPodcastSuggestionsResponseDeltaProto refresh_suggestions = 7;
          */
         refreshSuggestions: RefreshPodcastSuggestionsResponseDeltaProto;
+    } | {
+        oneofKind: "applyTransaction";
+        /**
+         * @generated from protobuf field: ApplyPodcastTransactionResponseDeltaProto apply_transaction = 8;
+         */
+        applyTransaction: ApplyPodcastTransactionResponseDeltaProto;
     } | {
         oneofKind: undefined;
     };
@@ -395,6 +413,33 @@ export interface RefreshPodcastSuggestionsResponseHeaderProto {
  * @generated from protobuf message RefreshPodcastSuggestionsResponseDeltaProto
  */
 export interface RefreshPodcastSuggestionsResponseDeltaProto {
+}
+/**
+ * @generated from protobuf message ApplyPodcastTransactionRequestProto
+ */
+export interface ApplyPodcastTransactionRequestProto {
+    /**
+     * @generated from protobuf oneof: type
+     */
+    type: {
+        oneofKind: "appStoreTransaction";
+        /**
+         * @generated from protobuf field: PodcastAppStoreTransactionProto app_store_transaction = 1;
+         */
+        appStoreTransaction: PodcastAppStoreTransactionProto;
+    } | {
+        oneofKind: undefined;
+    };
+}
+/**
+ * @generated from protobuf message ApplyPodcastTransactionResponseHeaderProto
+ */
+export interface ApplyPodcastTransactionResponseHeaderProto {
+}
+/**
+ * @generated from protobuf message ApplyPodcastTransactionResponseDeltaProto
+ */
+export interface ApplyPodcastTransactionResponseDeltaProto {
 }
 /**
  * @generated from protobuf message PodcastProto
@@ -1041,6 +1086,15 @@ export interface PodcastRoutineStepProto {
     thumbnailPath: string;
 }
 /**
+ * @generated from protobuf message PodcastAppStoreTransactionProto
+ */
+export interface PodcastAppStoreTransactionProto {
+    /**
+     * @generated from protobuf field: string jws = 1;
+     */
+    jws: string;
+}
+/**
  * @generated from protobuf enum PodcastStatusProto
  */
 export enum PodcastStatusProto {
@@ -1113,7 +1167,8 @@ class PodcastStreamApiRequestProto$Type extends MessageType<PodcastStreamApiRequ
             { no: 4, name: "podcast", kind: "message", oneof: "request", T: () => GetPodcastRequestProto },
             { no: 5, name: "story", kind: "message", oneof: "request", T: () => GetPodcastStoryRequestProto },
             { no: 6, name: "suggestion_points", kind: "message", oneof: "request", T: () => GetPodcastSuggestionPointsProto },
-            { no: 7, name: "refresh_suggestions", kind: "message", oneof: "request", T: () => RefreshPodcastSuggestionsRequestProto }
+            { no: 7, name: "refresh_suggestions", kind: "message", oneof: "request", T: () => RefreshPodcastSuggestionsRequestProto },
+            { no: 8, name: "apply_transaction", kind: "message", oneof: "request", T: () => ApplyPodcastTransactionRequestProto }
         ]);
     }
     create(value?: PartialMessage<PodcastStreamApiRequestProto>): PodcastStreamApiRequestProto {
@@ -1168,6 +1223,12 @@ class PodcastStreamApiRequestProto$Type extends MessageType<PodcastStreamApiRequ
                         refreshSuggestions: RefreshPodcastSuggestionsRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).refreshSuggestions)
                     };
                     break;
+                case /* ApplyPodcastTransactionRequestProto apply_transaction */ 8:
+                    message.request = {
+                        oneofKind: "applyTransaction",
+                        applyTransaction: ApplyPodcastTransactionRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).applyTransaction)
+                    };
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -1201,6 +1262,9 @@ class PodcastStreamApiRequestProto$Type extends MessageType<PodcastStreamApiRequ
         /* RefreshPodcastSuggestionsRequestProto refresh_suggestions = 7; */
         if (message.request.oneofKind === "refreshSuggestions")
             RefreshPodcastSuggestionsRequestProto.internalBinaryWrite(message.request.refreshSuggestions, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+        /* ApplyPodcastTransactionRequestProto apply_transaction = 8; */
+        if (message.request.oneofKind === "applyTransaction")
+            ApplyPodcastTransactionRequestProto.internalBinaryWrite(message.request.applyTransaction, writer.tag(8, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1222,6 +1286,7 @@ class PodcastStreamApiResponseHeaderProto$Type extends MessageType<PodcastStream
             { no: 5, name: "story_header", kind: "message", oneof: "header", T: () => GetPodcastStoryResponseHeaderProto },
             { no: 6, name: "suggestion_points_header", kind: "message", oneof: "header", T: () => GetPodcastSuggestionPointsResponseHeaderProto },
             { no: 7, name: "refresh_suggestions", kind: "message", oneof: "header", T: () => RefreshPodcastSuggestionsResponseHeaderProto },
+            { no: 8, name: "apply_transaction", kind: "message", oneof: "header", T: () => ApplyPodcastTransactionResponseHeaderProto },
             { no: 100, name: "latencies", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => Duration } }
         ]);
     }
@@ -1278,6 +1343,12 @@ class PodcastStreamApiResponseHeaderProto$Type extends MessageType<PodcastStream
                         refreshSuggestions: RefreshPodcastSuggestionsResponseHeaderProto.internalBinaryRead(reader, reader.uint32(), options, (message.header as any).refreshSuggestions)
                     };
                     break;
+                case /* ApplyPodcastTransactionResponseHeaderProto apply_transaction */ 8:
+                    message.header = {
+                        oneofKind: "applyTransaction",
+                        applyTransaction: ApplyPodcastTransactionResponseHeaderProto.internalBinaryRead(reader, reader.uint32(), options, (message.header as any).applyTransaction)
+                    };
+                    break;
                 case /* map<string, google.protobuf.Duration> latencies */ 100:
                     this.binaryReadMap100(message.latencies, reader, options);
                     break;
@@ -1330,6 +1401,9 @@ class PodcastStreamApiResponseHeaderProto$Type extends MessageType<PodcastStream
         /* RefreshPodcastSuggestionsResponseHeaderProto refresh_suggestions = 7; */
         if (message.header.oneofKind === "refreshSuggestions")
             RefreshPodcastSuggestionsResponseHeaderProto.internalBinaryWrite(message.header.refreshSuggestions, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+        /* ApplyPodcastTransactionResponseHeaderProto apply_transaction = 8; */
+        if (message.header.oneofKind === "applyTransaction")
+            ApplyPodcastTransactionResponseHeaderProto.internalBinaryWrite(message.header.applyTransaction, writer.tag(8, WireType.LengthDelimited).fork(), options).join();
         /* map<string, google.protobuf.Duration> latencies = 100; */
         for (let k of globalThis.Object.keys(message.latencies)) {
             writer.tag(100, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k);
@@ -1356,7 +1430,8 @@ class PodcastStreamApiResponseDeltaProto$Type extends MessageType<PodcastStreamA
             { no: 3, name: "podcast_delta", kind: "message", oneof: "responseDelta", T: () => GetPodcastResponseDeltaProto },
             { no: 4, name: "story_delta", kind: "message", oneof: "responseDelta", T: () => GetPodcastStoryResponseDeltaProto },
             { no: 6, name: "suggestion_points_delta", kind: "message", oneof: "responseDelta", T: () => GetPodcastSuggestionPointsResponseDeltaProto },
-            { no: 7, name: "refresh_suggestions", kind: "message", oneof: "responseDelta", T: () => RefreshPodcastSuggestionsResponseDeltaProto }
+            { no: 7, name: "refresh_suggestions", kind: "message", oneof: "responseDelta", T: () => RefreshPodcastSuggestionsResponseDeltaProto },
+            { no: 8, name: "apply_transaction", kind: "message", oneof: "responseDelta", T: () => ApplyPodcastTransactionResponseDeltaProto }
         ]);
     }
     create(value?: PartialMessage<PodcastStreamApiResponseDeltaProto>): PodcastStreamApiResponseDeltaProto {
@@ -1407,6 +1482,12 @@ class PodcastStreamApiResponseDeltaProto$Type extends MessageType<PodcastStreamA
                         refreshSuggestions: RefreshPodcastSuggestionsResponseDeltaProto.internalBinaryRead(reader, reader.uint32(), options, (message.responseDelta as any).refreshSuggestions)
                     };
                     break;
+                case /* ApplyPodcastTransactionResponseDeltaProto apply_transaction */ 8:
+                    message.responseDelta = {
+                        oneofKind: "applyTransaction",
+                        applyTransaction: ApplyPodcastTransactionResponseDeltaProto.internalBinaryRead(reader, reader.uint32(), options, (message.responseDelta as any).applyTransaction)
+                    };
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -1437,6 +1518,9 @@ class PodcastStreamApiResponseDeltaProto$Type extends MessageType<PodcastStreamA
         /* RefreshPodcastSuggestionsResponseDeltaProto refresh_suggestions = 7; */
         if (message.responseDelta.oneofKind === "refreshSuggestions")
             RefreshPodcastSuggestionsResponseDeltaProto.internalBinaryWrite(message.responseDelta.refreshSuggestions, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+        /* ApplyPodcastTransactionResponseDeltaProto apply_transaction = 8; */
+        if (message.responseDelta.oneofKind === "applyTransaction")
+            ApplyPodcastTransactionResponseDeltaProto.internalBinaryWrite(message.responseDelta.applyTransaction, writer.tag(8, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2303,6 +2387,106 @@ class RefreshPodcastSuggestionsResponseDeltaProto$Type extends MessageType<Refre
  * @generated MessageType for protobuf message RefreshPodcastSuggestionsResponseDeltaProto
  */
 export const RefreshPodcastSuggestionsResponseDeltaProto = new RefreshPodcastSuggestionsResponseDeltaProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ApplyPodcastTransactionRequestProto$Type extends MessageType<ApplyPodcastTransactionRequestProto> {
+    constructor() {
+        super("ApplyPodcastTransactionRequestProto", [
+            { no: 1, name: "app_store_transaction", kind: "message", oneof: "type", T: () => PodcastAppStoreTransactionProto }
+        ]);
+    }
+    create(value?: PartialMessage<ApplyPodcastTransactionRequestProto>): ApplyPodcastTransactionRequestProto {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.type = { oneofKind: undefined };
+        if (value !== undefined)
+            reflectionMergePartial<ApplyPodcastTransactionRequestProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ApplyPodcastTransactionRequestProto): ApplyPodcastTransactionRequestProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* PodcastAppStoreTransactionProto app_store_transaction */ 1:
+                    message.type = {
+                        oneofKind: "appStoreTransaction",
+                        appStoreTransaction: PodcastAppStoreTransactionProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).appStoreTransaction)
+                    };
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: ApplyPodcastTransactionRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* PodcastAppStoreTransactionProto app_store_transaction = 1; */
+        if (message.type.oneofKind === "appStoreTransaction")
+            PodcastAppStoreTransactionProto.internalBinaryWrite(message.type.appStoreTransaction, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message ApplyPodcastTransactionRequestProto
+ */
+export const ApplyPodcastTransactionRequestProto = new ApplyPodcastTransactionRequestProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ApplyPodcastTransactionResponseHeaderProto$Type extends MessageType<ApplyPodcastTransactionResponseHeaderProto> {
+    constructor() {
+        super("ApplyPodcastTransactionResponseHeaderProto", []);
+    }
+    create(value?: PartialMessage<ApplyPodcastTransactionResponseHeaderProto>): ApplyPodcastTransactionResponseHeaderProto {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        if (value !== undefined)
+            reflectionMergePartial<ApplyPodcastTransactionResponseHeaderProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ApplyPodcastTransactionResponseHeaderProto): ApplyPodcastTransactionResponseHeaderProto {
+        return target ?? this.create();
+    }
+    internalBinaryWrite(message: ApplyPodcastTransactionResponseHeaderProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message ApplyPodcastTransactionResponseHeaderProto
+ */
+export const ApplyPodcastTransactionResponseHeaderProto = new ApplyPodcastTransactionResponseHeaderProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ApplyPodcastTransactionResponseDeltaProto$Type extends MessageType<ApplyPodcastTransactionResponseDeltaProto> {
+    constructor() {
+        super("ApplyPodcastTransactionResponseDeltaProto", []);
+    }
+    create(value?: PartialMessage<ApplyPodcastTransactionResponseDeltaProto>): ApplyPodcastTransactionResponseDeltaProto {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        if (value !== undefined)
+            reflectionMergePartial<ApplyPodcastTransactionResponseDeltaProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ApplyPodcastTransactionResponseDeltaProto): ApplyPodcastTransactionResponseDeltaProto {
+        return target ?? this.create();
+    }
+    internalBinaryWrite(message: ApplyPodcastTransactionResponseDeltaProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message ApplyPodcastTransactionResponseDeltaProto
+ */
+export const ApplyPodcastTransactionResponseDeltaProto = new ApplyPodcastTransactionResponseDeltaProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class PodcastProto$Type extends MessageType<PodcastProto> {
     constructor() {
@@ -4589,3 +4773,50 @@ class PodcastRoutineStepProto$Type extends MessageType<PodcastRoutineStepProto> 
  * @generated MessageType for protobuf message PodcastRoutineStepProto
  */
 export const PodcastRoutineStepProto = new PodcastRoutineStepProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PodcastAppStoreTransactionProto$Type extends MessageType<PodcastAppStoreTransactionProto> {
+    constructor() {
+        super("PodcastAppStoreTransactionProto", [
+            { no: 1, name: "jws", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PodcastAppStoreTransactionProto>): PodcastAppStoreTransactionProto {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.jws = "";
+        if (value !== undefined)
+            reflectionMergePartial<PodcastAppStoreTransactionProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastAppStoreTransactionProto): PodcastAppStoreTransactionProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string jws */ 1:
+                    message.jws = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PodcastAppStoreTransactionProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string jws = 1; */
+        if (message.jws !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.jws);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message PodcastAppStoreTransactionProto
+ */
+export const PodcastAppStoreTransactionProto = new PodcastAppStoreTransactionProto$Type();

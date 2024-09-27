@@ -20,7 +20,6 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
-/// The type of the in-app purchase.
 enum AppStorePurchaseTypeProto: SwiftProtobuf.Enum, Swift.CaseIterable {
   typealias RawValue = Int
   case unspecified // = 0
@@ -67,7 +66,6 @@ enum AppStorePurchaseTypeProto: SwiftProtobuf.Enum, Swift.CaseIterable {
 
 }
 
-/// Describes whether the transaction was purchased by the user, or is available to them through Family Sharing.
 enum AppStoreInAppOwnershipTypeProto: SwiftProtobuf.Enum, Swift.CaseIterable {
   typealias RawValue = Int
   case unspecified // = 0
@@ -106,7 +104,6 @@ enum AppStoreInAppOwnershipTypeProto: SwiftProtobuf.Enum, Swift.CaseIterable {
 
 }
 
-/// The reason that the App Store refunded the transaction or revoked it from family sharing.
 enum AppStoreRevocationReasonProto: SwiftProtobuf.Enum, Swift.CaseIterable {
   typealias RawValue = Int
   case unspecified // = 0
@@ -145,7 +142,6 @@ enum AppStoreRevocationReasonProto: SwiftProtobuf.Enum, Swift.CaseIterable {
 
 }
 
-/// A value that represents the promotional offer type.
 enum AppStoreOfferTypeProto: SwiftProtobuf.Enum, Swift.CaseIterable {
   typealias RawValue = Int
   case unspecified // = 0
@@ -192,7 +188,6 @@ enum AppStoreOfferTypeProto: SwiftProtobuf.Enum, Swift.CaseIterable {
 
 }
 
-/// The server environment, either sandbox or production.
 enum AppStoreEnvironmentProto: SwiftProtobuf.Enum, Swift.CaseIterable {
   typealias RawValue = Int
   case unspecified // = 0
@@ -239,7 +234,6 @@ enum AppStoreEnvironmentProto: SwiftProtobuf.Enum, Swift.CaseIterable {
 
 }
 
-/// The reason for the purchase transaction.
 enum AppStoreTransactionReasonProto: SwiftProtobuf.Enum, Swift.CaseIterable {
   typealias RawValue = Int
   case unspecified // = 0
@@ -278,7 +272,6 @@ enum AppStoreTransactionReasonProto: SwiftProtobuf.Enum, Swift.CaseIterable {
 
 }
 
-/// The payment mode you configure for an introductory offer, promotional offer, or offer code.
 enum AppStoreOfferDiscountTypeProto: SwiftProtobuf.Enum, Swift.CaseIterable {
   typealias RawValue = Int
   case unspecified // = 0
@@ -395,13 +388,15 @@ struct AppStoreTransactionProto: @unchecked Sendable {
     set {_uniqueStorage()._type = newValue}
   }
 
-  /// The UUID that an app optionally generates to map a customer’s in-app purchase with its resulting App Store transaction.
+  /// The UUID that an app optionally generates to map a customer’s in-app
+  /// purchase with its resulting App Store transaction.
   var appAccountToken: String {
     get {return _storage._appAccountToken}
     set {_uniqueStorage()._appAccountToken = newValue}
   }
 
-  /// A string that describes whether the transaction was purchased by the user, or is available to them through Family Sharing.
+  /// A string that describes whether the transaction was purchased by the user,
+  /// or is available to them through Family Sharing.
   var inAppOwnershipType: AppStoreInAppOwnershipTypeProto {
     get {return _storage._inAppOwnershipType}
     set {_uniqueStorage()._inAppOwnershipType = newValue}
@@ -417,7 +412,8 @@ struct AppStoreTransactionProto: @unchecked Sendable {
   /// Clears the value of `signedDate`. Subsequent reads from it will return its default value.
   mutating func clearSignedDate() {_uniqueStorage()._signedDate = nil}
 
-  /// The reason that the App Store refunded the transaction or revoked it from family sharing.
+  /// The reason that the App Store refunded the transaction or revoked it from
+  /// family sharing.
   var revocationReason: AppStoreRevocationReasonProto {
     get {return _storage._revocationReason}
     set {_uniqueStorage()._revocationReason = newValue}
@@ -433,7 +429,8 @@ struct AppStoreTransactionProto: @unchecked Sendable {
   /// Clears the value of `revocationDate`. Subsequent reads from it will return its default value.
   mutating func clearRevocationDate() {_uniqueStorage()._revocationDate = nil}
 
-  /// The Boolean value that indicates whether the user upgraded to another subscription.
+  /// The Boolean value that indicates whether the user upgraded to another
+  /// subscription.
   var isUpgraded: Bool {
     get {return _storage._isUpgraded}
     set {_uniqueStorage()._isUpgraded = newValue}
@@ -445,7 +442,8 @@ struct AppStoreTransactionProto: @unchecked Sendable {
     set {_uniqueStorage()._offerType = newValue}
   }
 
-  /// The identifier that contains the promo code or the promotional offer identifier.
+  /// The identifier that contains the promo code or the promotional offer
+  /// identifier.
   var offerIdentifier: String {
     get {return _storage._offerIdentifier}
     set {_uniqueStorage()._offerIdentifier = newValue}
@@ -457,19 +455,23 @@ struct AppStoreTransactionProto: @unchecked Sendable {
     set {_uniqueStorage()._environment = newValue}
   }
 
-  /// The three-letter code that represents the country or region associated with the App Store storefront for the purchase.
+  /// The three-letter code that represents the country or region associated with
+  /// the App Store storefront for the purchase.
   var storefront: String {
     get {return _storage._storefront}
     set {_uniqueStorage()._storefront = newValue}
   }
 
-  /// An Apple-defined value that uniquely identifies the App Store storefront associated with the purchase.
+  /// An Apple-defined value that uniquely identifies the App Store storefront
+  /// associated with the purchase.
   var storefrontID: String {
     get {return _storage._storefrontID}
     set {_uniqueStorage()._storefrontID = newValue}
   }
 
-  /// The reason for the purchase transaction, which indicates whether it’s a customer’s purchase or a renewal for an auto-renewable subscription that the system initiates.
+  /// The reason for the purchase transaction, which indicates whether it’s a
+  /// customer’s purchase or a renewal for an auto-renewable subscription that
+  /// the system initiates.
   var transactionReason: AppStoreTransactionReasonProto {
     get {return _storage._transactionReason}
     set {_uniqueStorage()._transactionReason = newValue}
@@ -481,13 +483,15 @@ struct AppStoreTransactionProto: @unchecked Sendable {
     set {_uniqueStorage()._currency = newValue}
   }
 
-  /// The price, in milliunits, of the in-app purchase or subscription offer that you configured in App Store Connect.
+  /// The price, in milliunits, of the in-app purchase or subscription offer that
+  /// you configured in App Store Connect.
   var price: Int64 {
     get {return _storage._price}
     set {_uniqueStorage()._price = newValue}
   }
 
-  /// The payment mode you configure for an introductory offer, promotional offer, or offer code on an auto-renewable subscription.
+  /// The payment mode you configure for an introductory offer, promotional
+  /// offer, or offer code on an auto-renewable subscription.
   var offerDiscountType: AppStoreOfferDiscountTypeProto {
     get {return _storage._offerDiscountType}
     set {_uniqueStorage()._offerDiscountType = newValue}
