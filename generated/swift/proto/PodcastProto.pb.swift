@@ -146,12 +146,35 @@ enum PodcastHostProto: SwiftProtobuf.Enum, Swift.CaseIterable {
 
 }
 
+struct PodcastRequestAuthProto: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var firebaseIDToken: String = String()
+
+  var appcheckToken: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 struct PodcastStreamApiRequestProto: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   var encodedUserAuth: String = String()
+
+  var requestAuth: PodcastRequestAuthProto {
+    get {return _requestAuth ?? PodcastRequestAuthProto()}
+    set {_requestAuth = newValue}
+  }
+  /// Returns true if `requestAuth` has been explicitly set.
+  var hasRequestAuth: Bool {return self._requestAuth != nil}
+  /// Clears the value of `requestAuth`. Subsequent reads from it will return its default value.
+  mutating func clearRequestAuth() {self._requestAuth = nil}
 
   var request: PodcastStreamApiRequestProto.OneOf_Request? = nil
 
@@ -225,6 +248,8 @@ struct PodcastStreamApiRequestProto: Sendable {
   }
 
   init() {}
+
+  fileprivate var _requestAuth: PodcastRequestAuthProto? = nil
 }
 
 struct PodcastStreamApiResponseHeaderProto: Sendable {
@@ -1642,10 +1667,49 @@ extension PodcastHostProto: SwiftProtobuf._ProtoNameProviding {
   ]
 }
 
+extension PodcastRequestAuthProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastRequestAuthProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "firebase_id_token"),
+    2: .standard(proto: "appcheck_token"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.firebaseIDToken) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.appcheckToken) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.firebaseIDToken.isEmpty {
+      try visitor.visitSingularStringField(value: self.firebaseIDToken, fieldNumber: 1)
+    }
+    if !self.appcheckToken.isEmpty {
+      try visitor.visitSingularStringField(value: self.appcheckToken, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PodcastRequestAuthProto, rhs: PodcastRequestAuthProto) -> Bool {
+    if lhs.firebaseIDToken != rhs.firebaseIDToken {return false}
+    if lhs.appcheckToken != rhs.appcheckToken {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
 extension PodcastStreamApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "PodcastStreamApiRequestProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "encoded_user_auth"),
+    100: .standard(proto: "request_auth"),
     2: .same(proto: "create"),
     3: .same(proto: "generate"),
     4: .same(proto: "podcast"),
@@ -1753,6 +1817,7 @@ extension PodcastStreamApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Me
           self.request = .applyTransaction(v)
         }
       }()
+      case 100: try { try decoder.decodeSingularMessageField(value: &self._requestAuth) }()
       default: break
       }
     }
@@ -1797,11 +1862,15 @@ extension PodcastStreamApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Me
     }()
     case nil: break
     }
+    try { if let v = self._requestAuth {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 100)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: PodcastStreamApiRequestProto, rhs: PodcastStreamApiRequestProto) -> Bool {
     if lhs.encodedUserAuth != rhs.encodedUserAuth {return false}
+    if lhs._requestAuth != rhs._requestAuth {return false}
     if lhs.request != rhs.request {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

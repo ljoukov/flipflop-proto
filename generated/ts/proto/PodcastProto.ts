@@ -15,6 +15,19 @@ import { MessageType } from "@protobuf-ts/runtime";
 import { Timestamp } from "./google/protobuf/timestamp";
 import { Duration } from "./google/protobuf/duration";
 /**
+ * @generated from protobuf message PodcastRequestAuthProto
+ */
+export interface PodcastRequestAuthProto {
+    /**
+     * @generated from protobuf field: string firebase_id_token = 1;
+     */
+    firebaseIdToken: string;
+    /**
+     * @generated from protobuf field: string appcheck_token = 2;
+     */
+    appcheckToken: string;
+}
+/**
  * @generated from protobuf message PodcastStreamApiRequestProto
  */
 export interface PodcastStreamApiRequestProto {
@@ -22,6 +35,10 @@ export interface PodcastStreamApiRequestProto {
      * @generated from protobuf field: string encoded_user_auth = 1;
      */
     encodedUserAuth: string;
+    /**
+     * @generated from protobuf field: PodcastRequestAuthProto request_auth = 100;
+     */
+    requestAuth?: PodcastRequestAuthProto;
     /**
      * @generated from protobuf oneof: request
      */
@@ -1158,10 +1175,66 @@ export enum PodcastHostProto {
     FEMALE = 2
 }
 // @generated message type with reflection information, may provide speed optimized methods
+class PodcastRequestAuthProto$Type extends MessageType<PodcastRequestAuthProto> {
+    constructor() {
+        super("PodcastRequestAuthProto", [
+            { no: 1, name: "firebase_id_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "appcheck_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PodcastRequestAuthProto>): PodcastRequestAuthProto {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.firebaseIdToken = "";
+        message.appcheckToken = "";
+        if (value !== undefined)
+            reflectionMergePartial<PodcastRequestAuthProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastRequestAuthProto): PodcastRequestAuthProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string firebase_id_token */ 1:
+                    message.firebaseIdToken = reader.string();
+                    break;
+                case /* string appcheck_token */ 2:
+                    message.appcheckToken = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PodcastRequestAuthProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string firebase_id_token = 1; */
+        if (message.firebaseIdToken !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.firebaseIdToken);
+        /* string appcheck_token = 2; */
+        if (message.appcheckToken !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.appcheckToken);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message PodcastRequestAuthProto
+ */
+export const PodcastRequestAuthProto = new PodcastRequestAuthProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class PodcastStreamApiRequestProto$Type extends MessageType<PodcastStreamApiRequestProto> {
     constructor() {
         super("PodcastStreamApiRequestProto", [
             { no: 1, name: "encoded_user_auth", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 100, name: "request_auth", kind: "message", T: () => PodcastRequestAuthProto },
             { no: 2, name: "create", kind: "message", oneof: "request", T: () => CreatePodcastRequestProto },
             { no: 3, name: "generate", kind: "message", oneof: "request", T: () => GeneratePodcastRequestProto },
             { no: 4, name: "podcast", kind: "message", oneof: "request", T: () => GetPodcastRequestProto },
@@ -1186,6 +1259,9 @@ class PodcastStreamApiRequestProto$Type extends MessageType<PodcastStreamApiRequ
             switch (fieldNo) {
                 case /* string encoded_user_auth */ 1:
                     message.encodedUserAuth = reader.string();
+                    break;
+                case /* PodcastRequestAuthProto request_auth */ 100:
+                    message.requestAuth = PodcastRequestAuthProto.internalBinaryRead(reader, reader.uint32(), options, message.requestAuth);
                     break;
                 case /* CreatePodcastRequestProto create */ 2:
                     message.request = {
@@ -1244,6 +1320,9 @@ class PodcastStreamApiRequestProto$Type extends MessageType<PodcastStreamApiRequ
         /* string encoded_user_auth = 1; */
         if (message.encodedUserAuth !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.encodedUserAuth);
+        /* PodcastRequestAuthProto request_auth = 100; */
+        if (message.requestAuth)
+            PodcastRequestAuthProto.internalBinaryWrite(message.requestAuth, writer.tag(100, WireType.LengthDelimited).fork(), options).join();
         /* CreatePodcastRequestProto create = 2; */
         if (message.request.oneofKind === "create")
             CreatePodcastRequestProto.internalBinaryWrite(message.request.create, writer.tag(2, WireType.LengthDelimited).fork(), options).join();

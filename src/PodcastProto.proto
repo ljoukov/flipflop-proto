@@ -3,8 +3,14 @@ syntax = "proto3";
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 
+message PodcastRequestAuthProto {
+  string firebase_id_token = 1;
+  string appcheck_token = 2;
+}
+
 message PodcastStreamApiRequestProto {
   string encoded_user_auth = 1;
+  PodcastRequestAuthProto request_auth = 100;
   oneof request {
     CreatePodcastRequestProto create = 2;
     GeneratePodcastRequestProto generate = 3;
