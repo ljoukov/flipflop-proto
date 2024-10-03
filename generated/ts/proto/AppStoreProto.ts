@@ -282,9 +282,9 @@ export interface AppStoreRenewalInfoProto {
      * The renewal price, in milliunits, of the auto-renewable subscription that
      * renews at the next billing period.
      *
-     * @generated from protobuf field: int64 renewal_price = 17;
+     * @generated from protobuf field: int32 renewal_price = 17;
      */
-    renewalPrice: string;
+    renewalPrice: number;
     /**
      * The time when the App Store signed the JSON Web Signature (JWS) data.
      *
@@ -801,7 +801,7 @@ class AppStoreRenewalInfoProto$Type extends MessageType<AppStoreRenewalInfoProto
             { no: 14, name: "product_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 15, name: "recent_subscription_start_date", kind: "message", T: () => Timestamp },
             { no: 16, name: "renewal_date", kind: "message", T: () => Timestamp },
-            { no: 17, name: "renewal_price", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
+            { no: 17, name: "renewal_price", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 18, name: "signed_date", kind: "message", T: () => Timestamp }
         ]);
     }
@@ -820,7 +820,7 @@ class AppStoreRenewalInfoProto$Type extends MessageType<AppStoreRenewalInfoProto
         message.originalTransactionId = "";
         message.priceIncreaseStatus = 0;
         message.productId = "";
-        message.renewalPrice = "0";
+        message.renewalPrice = 0;
         if (value !== undefined)
             reflectionMergePartial<AppStoreRenewalInfoProto>(this, message, value);
         return message;
@@ -878,8 +878,8 @@ class AppStoreRenewalInfoProto$Type extends MessageType<AppStoreRenewalInfoProto
                 case /* google.protobuf.Timestamp renewal_date */ 16:
                     message.renewalDate = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.renewalDate);
                     break;
-                case /* int64 renewal_price */ 17:
-                    message.renewalPrice = reader.int64().toString();
+                case /* int32 renewal_price */ 17:
+                    message.renewalPrice = reader.int32();
                     break;
                 case /* google.protobuf.Timestamp signed_date */ 18:
                     message.signedDate = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.signedDate);
@@ -944,9 +944,9 @@ class AppStoreRenewalInfoProto$Type extends MessageType<AppStoreRenewalInfoProto
         /* google.protobuf.Timestamp renewal_date = 16; */
         if (message.renewalDate)
             Timestamp.internalBinaryWrite(message.renewalDate, writer.tag(16, WireType.LengthDelimited).fork(), options).join();
-        /* int64 renewal_price = 17; */
-        if (message.renewalPrice !== "0")
-            writer.tag(17, WireType.Varint).int64(message.renewalPrice);
+        /* int32 renewal_price = 17; */
+        if (message.renewalPrice !== 0)
+            writer.tag(17, WireType.Varint).int32(message.renewalPrice);
         /* google.protobuf.Timestamp signed_date = 18; */
         if (message.signedDate)
             Timestamp.internalBinaryWrite(message.signedDate, writer.tag(18, WireType.LengthDelimited).fork(), options).join();

@@ -788,7 +788,7 @@ struct AppStoreRenewalInfoProto: @unchecked Sendable {
 
   /// The renewal price, in milliunits, of the auto-renewable subscription that
   /// renews at the next billing period.
-  var renewalPrice: Int64 {
+  var renewalPrice: Int32 {
     get {return _storage._renewalPrice}
     set {_uniqueStorage()._renewalPrice = newValue}
   }
@@ -1219,7 +1219,7 @@ extension AppStoreRenewalInfoProto: SwiftProtobuf.Message, SwiftProtobuf._Messag
     var _productID: String = String()
     var _recentSubscriptionStartDate: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
     var _renewalDate: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
-    var _renewalPrice: Int64 = 0
+    var _renewalPrice: Int32 = 0
     var _signedDate: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 
     #if swift(>=5.10)
@@ -1287,7 +1287,7 @@ extension AppStoreRenewalInfoProto: SwiftProtobuf.Message, SwiftProtobuf._Messag
         case 14: try { try decoder.decodeSingularStringField(value: &_storage._productID) }()
         case 15: try { try decoder.decodeSingularMessageField(value: &_storage._recentSubscriptionStartDate) }()
         case 16: try { try decoder.decodeSingularMessageField(value: &_storage._renewalDate) }()
-        case 17: try { try decoder.decodeSingularInt64Field(value: &_storage._renewalPrice) }()
+        case 17: try { try decoder.decodeSingularInt32Field(value: &_storage._renewalPrice) }()
         case 18: try { try decoder.decodeSingularMessageField(value: &_storage._signedDate) }()
         default: break
         }
@@ -1350,7 +1350,7 @@ extension AppStoreRenewalInfoProto: SwiftProtobuf.Message, SwiftProtobuf._Messag
         try visitor.visitSingularMessageField(value: v, fieldNumber: 16)
       } }()
       if _storage._renewalPrice != 0 {
-        try visitor.visitSingularInt64Field(value: _storage._renewalPrice, fieldNumber: 17)
+        try visitor.visitSingularInt32Field(value: _storage._renewalPrice, fieldNumber: 17)
       }
       try { if let v = _storage._signedDate {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 18)

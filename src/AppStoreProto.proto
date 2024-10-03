@@ -136,7 +136,7 @@ message AppStoreRenewalInfoProto {
 
   // The renewal price, in milliunits, of the auto-renewable subscription that
   // renews at the next billing period.
-  int64 renewal_price = 17;
+  int32 renewal_price = 17;
 
   // The time when the App Store signed the JSON Web Signature (JWS) data.
   google.protobuf.Timestamp signed_date = 18;
