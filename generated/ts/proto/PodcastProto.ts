@@ -1137,9 +1137,9 @@ export interface PodcastSubscriptionTransactionProto {
  */
 export interface PodcastSubscriptionTransactionsProto {
     /**
-     * @generated from protobuf field: PodcastSubscriptionTransactionProto subscriptions = 1;
+     * @generated from protobuf field: repeated PodcastSubscriptionTransactionProto subscriptions = 1;
      */
-    subscriptions?: PodcastSubscriptionTransactionProto;
+    subscriptions: PodcastSubscriptionTransactionProto[];
 }
 /**
  * @generated from protobuf enum PodcastStatusProto
@@ -5024,11 +5024,12 @@ export const PodcastSubscriptionTransactionProto = new PodcastSubscriptionTransa
 class PodcastSubscriptionTransactionsProto$Type extends MessageType<PodcastSubscriptionTransactionsProto> {
     constructor() {
         super("PodcastSubscriptionTransactionsProto", [
-            { no: 1, name: "subscriptions", kind: "message", T: () => PodcastSubscriptionTransactionProto }
+            { no: 1, name: "subscriptions", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastSubscriptionTransactionProto }
         ]);
     }
     create(value?: PartialMessage<PodcastSubscriptionTransactionsProto>): PodcastSubscriptionTransactionsProto {
         const message = globalThis.Object.create((this.messagePrototype!));
+        message.subscriptions = [];
         if (value !== undefined)
             reflectionMergePartial<PodcastSubscriptionTransactionsProto>(this, message, value);
         return message;
@@ -5038,8 +5039,8 @@ class PodcastSubscriptionTransactionsProto$Type extends MessageType<PodcastSubsc
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* PodcastSubscriptionTransactionProto subscriptions */ 1:
-                    message.subscriptions = PodcastSubscriptionTransactionProto.internalBinaryRead(reader, reader.uint32(), options, message.subscriptions);
+                case /* repeated PodcastSubscriptionTransactionProto subscriptions */ 1:
+                    message.subscriptions.push(PodcastSubscriptionTransactionProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -5053,9 +5054,9 @@ class PodcastSubscriptionTransactionsProto$Type extends MessageType<PodcastSubsc
         return message;
     }
     internalBinaryWrite(message: PodcastSubscriptionTransactionsProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* PodcastSubscriptionTransactionProto subscriptions = 1; */
-        if (message.subscriptions)
-            PodcastSubscriptionTransactionProto.internalBinaryWrite(message.subscriptions, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* repeated PodcastSubscriptionTransactionProto subscriptions = 1; */
+        for (let i = 0; i < message.subscriptions.length; i++)
+            PodcastSubscriptionTransactionProto.internalBinaryWrite(message.subscriptions[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

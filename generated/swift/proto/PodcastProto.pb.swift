@@ -1712,20 +1712,11 @@ struct PodcastSubscriptionTransactionsProto: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var subscriptions: PodcastSubscriptionTransactionProto {
-    get {return _subscriptions ?? PodcastSubscriptionTransactionProto()}
-    set {_subscriptions = newValue}
-  }
-  /// Returns true if `subscriptions` has been explicitly set.
-  var hasSubscriptions: Bool {return self._subscriptions != nil}
-  /// Clears the value of `subscriptions`. Subsequent reads from it will return its default value.
-  mutating func clearSubscriptions() {self._subscriptions = nil}
+  var subscriptions: [PodcastSubscriptionTransactionProto] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
-
-  fileprivate var _subscriptions: PodcastSubscriptionTransactionProto? = nil
 }
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
@@ -5005,25 +4996,21 @@ extension PodcastSubscriptionTransactionsProto: SwiftProtobuf.Message, SwiftProt
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularMessageField(value: &self._subscriptions) }()
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.subscriptions) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every if/case branch local when no optimizations
-    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-    // https://github.com/apple/swift-protobuf/issues/1182
-    try { if let v = self._subscriptions {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    } }()
+    if !self.subscriptions.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.subscriptions, fieldNumber: 1)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: PodcastSubscriptionTransactionsProto, rhs: PodcastSubscriptionTransactionsProto) -> Bool {
-    if lhs._subscriptions != rhs._subscriptions {return false}
+    if lhs.subscriptions != rhs.subscriptions {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

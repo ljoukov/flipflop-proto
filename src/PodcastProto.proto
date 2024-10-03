@@ -424,5 +424,5 @@ message PodcastSubscriptionTransactionProto {
 }
 
 message PodcastSubscriptionTransactionsProto {
-  PodcastSubscriptionTransactionProto subscriptions = 1;
+  repeated PodcastSubscriptionTransactionProto subscriptions = 1;
 }
