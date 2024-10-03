@@ -31,9 +31,9 @@ export interface PodcastRequestAuthProto {
      */
     isAnonomous: boolean;
     /**
-     * @generated from protobuf field: repeated string appstore_current_entitlements = 4;
+     * @generated from protobuf field: repeated PodcastAppStoreTransactionProto appstore_current_entitlements = 4;
      */
-    appstoreCurrentEntitlements: string[];
+    appstoreCurrentEntitlements: PodcastAppStoreTransactionProto[];
 }
 /**
  * @generated from protobuf message PodcastStreamApiRequestProto
@@ -1115,9 +1115,13 @@ export interface PodcastRoutineStepProto {
  */
 export interface PodcastAppStoreTransactionProto {
     /**
-     * @generated from protobuf field: string jws = 1;
+     * @generated from protobuf field: string transaction_jws = 1;
      */
-    jws: string;
+    transactionJws: string;
+    /**
+     * @generated from protobuf field: string renewal_info_jws = 2;
+     */
+    renewalInfoJws: string;
 }
 /**
  * @generated from protobuf enum PodcastStatusProto
@@ -1189,7 +1193,7 @@ class PodcastRequestAuthProto$Type extends MessageType<PodcastRequestAuthProto> 
             { no: 1, name: "firebase_id_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "appcheck_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "is_anonomous", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 4, name: "appstore_current_entitlements", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+            { no: 4, name: "appstore_current_entitlements", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastAppStoreTransactionProto }
         ]);
     }
     create(value?: PartialMessage<PodcastRequestAuthProto>): PodcastRequestAuthProto {
@@ -1216,8 +1220,8 @@ class PodcastRequestAuthProto$Type extends MessageType<PodcastRequestAuthProto> 
                 case /* bool is_anonomous */ 3:
                     message.isAnonomous = reader.bool();
                     break;
-                case /* repeated string appstore_current_entitlements */ 4:
-                    message.appstoreCurrentEntitlements.push(reader.string());
+                case /* repeated PodcastAppStoreTransactionProto appstore_current_entitlements */ 4:
+                    message.appstoreCurrentEntitlements.push(PodcastAppStoreTransactionProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1240,9 +1244,9 @@ class PodcastRequestAuthProto$Type extends MessageType<PodcastRequestAuthProto> 
         /* bool is_anonomous = 3; */
         if (message.isAnonomous !== false)
             writer.tag(3, WireType.Varint).bool(message.isAnonomous);
-        /* repeated string appstore_current_entitlements = 4; */
+        /* repeated PodcastAppStoreTransactionProto appstore_current_entitlements = 4; */
         for (let i = 0; i < message.appstoreCurrentEntitlements.length; i++)
-            writer.tag(4, WireType.LengthDelimited).string(message.appstoreCurrentEntitlements[i]);
+            PodcastAppStoreTransactionProto.internalBinaryWrite(message.appstoreCurrentEntitlements[i], writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -4880,12 +4884,14 @@ export const PodcastRoutineStepProto = new PodcastRoutineStepProto$Type();
 class PodcastAppStoreTransactionProto$Type extends MessageType<PodcastAppStoreTransactionProto> {
     constructor() {
         super("PodcastAppStoreTransactionProto", [
-            { no: 1, name: "jws", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "transaction_jws", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "renewal_info_jws", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PodcastAppStoreTransactionProto>): PodcastAppStoreTransactionProto {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.jws = "";
+        message.transactionJws = "";
+        message.renewalInfoJws = "";
         if (value !== undefined)
             reflectionMergePartial<PodcastAppStoreTransactionProto>(this, message, value);
         return message;
@@ -4895,8 +4901,11 @@ class PodcastAppStoreTransactionProto$Type extends MessageType<PodcastAppStoreTr
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string jws */ 1:
-                    message.jws = reader.string();
+                case /* string transaction_jws */ 1:
+                    message.transactionJws = reader.string();
+                    break;
+                case /* string renewal_info_jws */ 2:
+                    message.renewalInfoJws = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -4910,9 +4919,12 @@ class PodcastAppStoreTransactionProto$Type extends MessageType<PodcastAppStoreTr
         return message;
     }
     internalBinaryWrite(message: PodcastAppStoreTransactionProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string jws = 1; */
-        if (message.jws !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.jws);
+        /* string transaction_jws = 1; */
+        if (message.transactionJws !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.transactionJws);
+        /* string renewal_info_jws = 2; */
+        if (message.renewalInfoJws !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.renewalInfoJws);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

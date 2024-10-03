@@ -157,7 +157,7 @@ struct PodcastRequestAuthProto: Sendable {
 
   var isAnonomous: Bool = false
 
-  var appstoreCurrentEntitlements: [String] = []
+  var appstoreCurrentEntitlements: [PodcastAppStoreTransactionProto] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -1635,7 +1635,9 @@ struct PodcastAppStoreTransactionProto: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var jws: String = String()
+  var transactionJws: String = String()
+
+  var renewalInfoJws: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -1689,7 +1691,7 @@ extension PodcastRequestAuthProto: SwiftProtobuf.Message, SwiftProtobuf._Message
       case 1: try { try decoder.decodeSingularStringField(value: &self.firebaseIDToken) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.appcheckToken) }()
       case 3: try { try decoder.decodeSingularBoolField(value: &self.isAnonomous) }()
-      case 4: try { try decoder.decodeRepeatedStringField(value: &self.appstoreCurrentEntitlements) }()
+      case 4: try { try decoder.decodeRepeatedMessageField(value: &self.appstoreCurrentEntitlements) }()
       default: break
       }
     }
@@ -1706,7 +1708,7 @@ extension PodcastRequestAuthProto: SwiftProtobuf.Message, SwiftProtobuf._Message
       try visitor.visitSingularBoolField(value: self.isAnonomous, fieldNumber: 3)
     }
     if !self.appstoreCurrentEntitlements.isEmpty {
-      try visitor.visitRepeatedStringField(value: self.appstoreCurrentEntitlements, fieldNumber: 4)
+      try visitor.visitRepeatedMessageField(value: self.appstoreCurrentEntitlements, fieldNumber: 4)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -4827,7 +4829,8 @@ extension PodcastRoutineStepProto: SwiftProtobuf.Message, SwiftProtobuf._Message
 extension PodcastAppStoreTransactionProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "PodcastAppStoreTransactionProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "jws"),
+    1: .standard(proto: "transaction_jws"),
+    2: .standard(proto: "renewal_info_jws"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -4836,21 +4839,26 @@ extension PodcastAppStoreTransactionProto: SwiftProtobuf.Message, SwiftProtobuf.
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.jws) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self.transactionJws) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.renewalInfoJws) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.jws.isEmpty {
-      try visitor.visitSingularStringField(value: self.jws, fieldNumber: 1)
+    if !self.transactionJws.isEmpty {
+      try visitor.visitSingularStringField(value: self.transactionJws, fieldNumber: 1)
+    }
+    if !self.renewalInfoJws.isEmpty {
+      try visitor.visitSingularStringField(value: self.renewalInfoJws, fieldNumber: 2)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: PodcastAppStoreTransactionProto, rhs: PodcastAppStoreTransactionProto) -> Bool {
-    if lhs.jws != rhs.jws {return false}
+    if lhs.transactionJws != rhs.transactionJws {return false}
+    if lhs.renewalInfoJws != rhs.renewalInfoJws {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

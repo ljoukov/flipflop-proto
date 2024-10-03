@@ -7,7 +7,7 @@ message PodcastRequestAuthProto {
   string firebase_id_token = 1;
   string appcheck_token = 2;
   bool is_anonomous = 3;
-  repeated string appstore_current_entitlements = 4;
+  repeated PodcastAppStoreTransactionProto appstore_current_entitlements = 4;
 }
 
 message PodcastStreamApiRequestProto {
@@ -408,5 +408,6 @@ message PodcastRoutineStepProto {
 }
 
 message PodcastAppStoreTransactionProto {
-  string jws = 1;
+  string transaction_jws = 1;
+  string renewal_info_jws = 2;
 }
