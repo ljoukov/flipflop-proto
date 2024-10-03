@@ -6,6 +6,8 @@ import "google/protobuf/timestamp.proto";
 message PodcastRequestAuthProto {
   string firebase_id_token = 1;
   string appcheck_token = 2;
+  bool is_anonomous = 3;
+  PodcastSubscriptionTransactionsProto subscriptions = 4;
 }
 
 message PodcastStreamApiRequestProto {
@@ -407,4 +409,13 @@ message PodcastRoutineStepProto {
 
 message PodcastAppStoreTransactionProto {
   string jws = 1;
+}
+
+message PodcastSubscriptionTransactionProto {
+  string product_id = 1;
+  string appstore_token = 2;
+}
+
+message PodcastSubscriptionTransactionsProto {
+  PodcastSubscriptionTransactionProto subscriptions = 1;
 }
