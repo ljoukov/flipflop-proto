@@ -31,9 +31,9 @@ export interface PodcastRequestAuthProto {
      */
     isAnonomous: boolean;
     /**
-     * @generated from protobuf field: PodcastSubscriptionTransactionsProto subscriptions = 4;
+     * @generated from protobuf field: repeated string appstore_current_entitlements = 4;
      */
-    subscriptions?: PodcastSubscriptionTransactionsProto;
+    appstoreCurrentEntitlements: string[];
 }
 /**
  * @generated from protobuf message PodcastStreamApiRequestProto
@@ -1120,28 +1120,6 @@ export interface PodcastAppStoreTransactionProto {
     jws: string;
 }
 /**
- * @generated from protobuf message PodcastSubscriptionTransactionProto
- */
-export interface PodcastSubscriptionTransactionProto {
-    /**
-     * @generated from protobuf field: PodcastSubscriptionTypeProto subscription_type = 1;
-     */
-    subscriptionType: PodcastSubscriptionTypeProto;
-    /**
-     * @generated from protobuf field: string appstore_token = 2;
-     */
-    appstoreToken: string;
-}
-/**
- * @generated from protobuf message PodcastSubscriptionTransactionsProto
- */
-export interface PodcastSubscriptionTransactionsProto {
-    /**
-     * @generated from protobuf field: repeated PodcastSubscriptionTransactionProto subscriptions = 1;
-     */
-    subscriptions: PodcastSubscriptionTransactionProto[];
-}
-/**
  * @generated from protobuf enum PodcastStatusProto
  */
 export enum PodcastStatusProto {
@@ -1204,27 +1182,6 @@ export enum PodcastHostProto {
      */
     FEMALE = 2
 }
-/**
- * @generated from protobuf enum PodcastSubscriptionTypeProto
- */
-export enum PodcastSubscriptionTypeProto {
-    /**
-     * @generated from protobuf enum value: PODCAST_SUBSCRIPTION_TYPE_PROTO_UNDEFINED = 0;
-     */
-    UNDEFINED = 0,
-    /**
-     * @generated from protobuf enum value: PODCAST_SUBSCRIPTION_TYPE_PROTO_WEEKLY = 1;
-     */
-    WEEKLY = 1,
-    /**
-     * @generated from protobuf enum value: PODCAST_SUBSCRIPTION_TYPE_PROTO_MONTHLY = 2;
-     */
-    MONTHLY = 2,
-    /**
-     * @generated from protobuf enum value: PODCAST_SUBSCRIPTION_TYPE_PROTO_ANNUAL = 3;
-     */
-    ANNUAL = 3
-}
 // @generated message type with reflection information, may provide speed optimized methods
 class PodcastRequestAuthProto$Type extends MessageType<PodcastRequestAuthProto> {
     constructor() {
@@ -1232,7 +1189,7 @@ class PodcastRequestAuthProto$Type extends MessageType<PodcastRequestAuthProto> 
             { no: 1, name: "firebase_id_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "appcheck_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "is_anonomous", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 4, name: "subscriptions", kind: "message", T: () => PodcastSubscriptionTransactionsProto }
+            { no: 4, name: "appstore_current_entitlements", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PodcastRequestAuthProto>): PodcastRequestAuthProto {
@@ -1240,6 +1197,7 @@ class PodcastRequestAuthProto$Type extends MessageType<PodcastRequestAuthProto> 
         message.firebaseIdToken = "";
         message.appcheckToken = "";
         message.isAnonomous = false;
+        message.appstoreCurrentEntitlements = [];
         if (value !== undefined)
             reflectionMergePartial<PodcastRequestAuthProto>(this, message, value);
         return message;
@@ -1258,8 +1216,8 @@ class PodcastRequestAuthProto$Type extends MessageType<PodcastRequestAuthProto> 
                 case /* bool is_anonomous */ 3:
                     message.isAnonomous = reader.bool();
                     break;
-                case /* PodcastSubscriptionTransactionsProto subscriptions */ 4:
-                    message.subscriptions = PodcastSubscriptionTransactionsProto.internalBinaryRead(reader, reader.uint32(), options, message.subscriptions);
+                case /* repeated string appstore_current_entitlements */ 4:
+                    message.appstoreCurrentEntitlements.push(reader.string());
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1282,9 +1240,9 @@ class PodcastRequestAuthProto$Type extends MessageType<PodcastRequestAuthProto> 
         /* bool is_anonomous = 3; */
         if (message.isAnonomous !== false)
             writer.tag(3, WireType.Varint).bool(message.isAnonomous);
-        /* PodcastSubscriptionTransactionsProto subscriptions = 4; */
-        if (message.subscriptions)
-            PodcastSubscriptionTransactionsProto.internalBinaryWrite(message.subscriptions, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* repeated string appstore_current_entitlements = 4; */
+        for (let i = 0; i < message.appstoreCurrentEntitlements.length; i++)
+            writer.tag(4, WireType.LengthDelimited).string(message.appstoreCurrentEntitlements[i]);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -4965,105 +4923,3 @@ class PodcastAppStoreTransactionProto$Type extends MessageType<PodcastAppStoreTr
  * @generated MessageType for protobuf message PodcastAppStoreTransactionProto
  */
 export const PodcastAppStoreTransactionProto = new PodcastAppStoreTransactionProto$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class PodcastSubscriptionTransactionProto$Type extends MessageType<PodcastSubscriptionTransactionProto> {
-    constructor() {
-        super("PodcastSubscriptionTransactionProto", [
-            { no: 1, name: "subscription_type", kind: "enum", T: () => ["PodcastSubscriptionTypeProto", PodcastSubscriptionTypeProto, "PODCAST_SUBSCRIPTION_TYPE_PROTO_"] },
-            { no: 2, name: "appstore_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
-        ]);
-    }
-    create(value?: PartialMessage<PodcastSubscriptionTransactionProto>): PodcastSubscriptionTransactionProto {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.subscriptionType = 0;
-        message.appstoreToken = "";
-        if (value !== undefined)
-            reflectionMergePartial<PodcastSubscriptionTransactionProto>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastSubscriptionTransactionProto): PodcastSubscriptionTransactionProto {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* PodcastSubscriptionTypeProto subscription_type */ 1:
-                    message.subscriptionType = reader.int32();
-                    break;
-                case /* string appstore_token */ 2:
-                    message.appstoreToken = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: PodcastSubscriptionTransactionProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* PodcastSubscriptionTypeProto subscription_type = 1; */
-        if (message.subscriptionType !== 0)
-            writer.tag(1, WireType.Varint).int32(message.subscriptionType);
-        /* string appstore_token = 2; */
-        if (message.appstoreToken !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.appstoreToken);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message PodcastSubscriptionTransactionProto
- */
-export const PodcastSubscriptionTransactionProto = new PodcastSubscriptionTransactionProto$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class PodcastSubscriptionTransactionsProto$Type extends MessageType<PodcastSubscriptionTransactionsProto> {
-    constructor() {
-        super("PodcastSubscriptionTransactionsProto", [
-            { no: 1, name: "subscriptions", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastSubscriptionTransactionProto }
-        ]);
-    }
-    create(value?: PartialMessage<PodcastSubscriptionTransactionsProto>): PodcastSubscriptionTransactionsProto {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.subscriptions = [];
-        if (value !== undefined)
-            reflectionMergePartial<PodcastSubscriptionTransactionsProto>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastSubscriptionTransactionsProto): PodcastSubscriptionTransactionsProto {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* repeated PodcastSubscriptionTransactionProto subscriptions */ 1:
-                    message.subscriptions.push(PodcastSubscriptionTransactionProto.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: PodcastSubscriptionTransactionsProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated PodcastSubscriptionTransactionProto subscriptions = 1; */
-        for (let i = 0; i < message.subscriptions.length; i++)
-            PodcastSubscriptionTransactionProto.internalBinaryWrite(message.subscriptions[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message PodcastSubscriptionTransactionsProto
- */
-export const PodcastSubscriptionTransactionsProto = new PodcastSubscriptionTransactionsProto$Type();

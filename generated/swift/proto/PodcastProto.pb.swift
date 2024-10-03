@@ -146,48 +146,6 @@ enum PodcastHostProto: SwiftProtobuf.Enum, Swift.CaseIterable {
 
 }
 
-enum PodcastSubscriptionTypeProto: SwiftProtobuf.Enum, Swift.CaseIterable {
-  typealias RawValue = Int
-  case undefined // = 0
-  case weekly // = 1
-  case monthly // = 2
-  case annual // = 3
-  case UNRECOGNIZED(Int)
-
-  init() {
-    self = .undefined
-  }
-
-  init?(rawValue: Int) {
-    switch rawValue {
-    case 0: self = .undefined
-    case 1: self = .weekly
-    case 2: self = .monthly
-    case 3: self = .annual
-    default: self = .UNRECOGNIZED(rawValue)
-    }
-  }
-
-  var rawValue: Int {
-    switch self {
-    case .undefined: return 0
-    case .weekly: return 1
-    case .monthly: return 2
-    case .annual: return 3
-    case .UNRECOGNIZED(let i): return i
-    }
-  }
-
-  // The compiler won't synthesize support with the UNRECOGNIZED case.
-  static let allCases: [PodcastSubscriptionTypeProto] = [
-    .undefined,
-    .weekly,
-    .monthly,
-    .annual,
-  ]
-
-}
-
 struct PodcastRequestAuthProto: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -199,20 +157,11 @@ struct PodcastRequestAuthProto: Sendable {
 
   var isAnonomous: Bool = false
 
-  var subscriptions: PodcastSubscriptionTransactionsProto {
-    get {return _subscriptions ?? PodcastSubscriptionTransactionsProto()}
-    set {_subscriptions = newValue}
-  }
-  /// Returns true if `subscriptions` has been explicitly set.
-  var hasSubscriptions: Bool {return self._subscriptions != nil}
-  /// Clears the value of `subscriptions`. Subsequent reads from it will return its default value.
-  mutating func clearSubscriptions() {self._subscriptions = nil}
+  var appstoreCurrentEntitlements: [String] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
-
-  fileprivate var _subscriptions: PodcastSubscriptionTransactionsProto? = nil
 }
 
 struct PodcastStreamApiRequestProto: Sendable {
@@ -1693,32 +1642,6 @@ struct PodcastAppStoreTransactionProto: Sendable {
   init() {}
 }
 
-struct PodcastSubscriptionTransactionProto: Sendable {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  var subscriptionType: PodcastSubscriptionTypeProto = .undefined
-
-  var appstoreToken: String = String()
-
-  var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  init() {}
-}
-
-struct PodcastSubscriptionTransactionsProto: Sendable {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  var subscriptions: [PodcastSubscriptionTransactionProto] = []
-
-  var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  init() {}
-}
-
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 extension PodcastStatusProto: SwiftProtobuf._ProtoNameProviding {
@@ -1748,22 +1671,13 @@ extension PodcastHostProto: SwiftProtobuf._ProtoNameProviding {
   ]
 }
 
-extension PodcastSubscriptionTypeProto: SwiftProtobuf._ProtoNameProviding {
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    0: .same(proto: "PODCAST_SUBSCRIPTION_TYPE_PROTO_UNDEFINED"),
-    1: .same(proto: "PODCAST_SUBSCRIPTION_TYPE_PROTO_WEEKLY"),
-    2: .same(proto: "PODCAST_SUBSCRIPTION_TYPE_PROTO_MONTHLY"),
-    3: .same(proto: "PODCAST_SUBSCRIPTION_TYPE_PROTO_ANNUAL"),
-  ]
-}
-
 extension PodcastRequestAuthProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "PodcastRequestAuthProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "firebase_id_token"),
     2: .standard(proto: "appcheck_token"),
     3: .standard(proto: "is_anonomous"),
-    4: .same(proto: "subscriptions"),
+    4: .standard(proto: "appstore_current_entitlements"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1775,17 +1689,13 @@ extension PodcastRequestAuthProto: SwiftProtobuf.Message, SwiftProtobuf._Message
       case 1: try { try decoder.decodeSingularStringField(value: &self.firebaseIDToken) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.appcheckToken) }()
       case 3: try { try decoder.decodeSingularBoolField(value: &self.isAnonomous) }()
-      case 4: try { try decoder.decodeSingularMessageField(value: &self._subscriptions) }()
+      case 4: try { try decoder.decodeRepeatedStringField(value: &self.appstoreCurrentEntitlements) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every if/case branch local when no optimizations
-    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.firebaseIDToken.isEmpty {
       try visitor.visitSingularStringField(value: self.firebaseIDToken, fieldNumber: 1)
     }
@@ -1795,9 +1705,9 @@ extension PodcastRequestAuthProto: SwiftProtobuf.Message, SwiftProtobuf._Message
     if self.isAnonomous != false {
       try visitor.visitSingularBoolField(value: self.isAnonomous, fieldNumber: 3)
     }
-    try { if let v = self._subscriptions {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
-    } }()
+    if !self.appstoreCurrentEntitlements.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.appstoreCurrentEntitlements, fieldNumber: 4)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1805,7 +1715,7 @@ extension PodcastRequestAuthProto: SwiftProtobuf.Message, SwiftProtobuf._Message
     if lhs.firebaseIDToken != rhs.firebaseIDToken {return false}
     if lhs.appcheckToken != rhs.appcheckToken {return false}
     if lhs.isAnonomous != rhs.isAnonomous {return false}
-    if lhs._subscriptions != rhs._subscriptions {return false}
+    if lhs.appstoreCurrentEntitlements != rhs.appstoreCurrentEntitlements {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -4941,76 +4851,6 @@ extension PodcastAppStoreTransactionProto: SwiftProtobuf.Message, SwiftProtobuf.
 
   static func ==(lhs: PodcastAppStoreTransactionProto, rhs: PodcastAppStoreTransactionProto) -> Bool {
     if lhs.jws != rhs.jws {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension PodcastSubscriptionTransactionProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "PodcastSubscriptionTransactionProto"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "subscription_type"),
-    2: .standard(proto: "appstore_token"),
-  ]
-
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularEnumField(value: &self.subscriptionType) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.appstoreToken) }()
-      default: break
-      }
-    }
-  }
-
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if self.subscriptionType != .undefined {
-      try visitor.visitSingularEnumField(value: self.subscriptionType, fieldNumber: 1)
-    }
-    if !self.appstoreToken.isEmpty {
-      try visitor.visitSingularStringField(value: self.appstoreToken, fieldNumber: 2)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  static func ==(lhs: PodcastSubscriptionTransactionProto, rhs: PodcastSubscriptionTransactionProto) -> Bool {
-    if lhs.subscriptionType != rhs.subscriptionType {return false}
-    if lhs.appstoreToken != rhs.appstoreToken {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension PodcastSubscriptionTransactionsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "PodcastSubscriptionTransactionsProto"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "subscriptions"),
-  ]
-
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.subscriptions) }()
-      default: break
-      }
-    }
-  }
-
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.subscriptions.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.subscriptions, fieldNumber: 1)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  static func ==(lhs: PodcastSubscriptionTransactionsProto, rhs: PodcastSubscriptionTransactionsProto) -> Bool {
-    if lhs.subscriptions != rhs.subscriptions {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

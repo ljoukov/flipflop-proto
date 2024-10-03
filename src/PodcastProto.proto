@@ -7,7 +7,7 @@ message PodcastRequestAuthProto {
   string firebase_id_token = 1;
   string appcheck_token = 2;
   bool is_anonomous = 3;
-  PodcastSubscriptionTransactionsProto subscriptions = 4;
+  repeated string appstore_current_entitlements = 4;
 }
 
 message PodcastStreamApiRequestProto {
@@ -409,20 +409,4 @@ message PodcastRoutineStepProto {
 
 message PodcastAppStoreTransactionProto {
   string jws = 1;
-}
-
-enum PodcastSubscriptionTypeProto {
-  PODCAST_SUBSCRIPTION_TYPE_PROTO_UNDEFINED = 0;
-  PODCAST_SUBSCRIPTION_TYPE_PROTO_WEEKLY = 1;
-  PODCAST_SUBSCRIPTION_TYPE_PROTO_MONTHLY = 2;
-  PODCAST_SUBSCRIPTION_TYPE_PROTO_ANNUAL = 3;
-}
-
-message PodcastSubscriptionTransactionProto {
-  PodcastSubscriptionTypeProto subscription_type = 1;
-  string appstore_token = 2;
-}
-
-message PodcastSubscriptionTransactionsProto {
-  repeated PodcastSubscriptionTransactionProto subscriptions = 1;
 }
