@@ -404,6 +404,10 @@ export interface RefreshPodcastSuggestionsRequestProto {
  * @generated from protobuf message RefreshPodcastSuggestionsResponseHeaderProto
  */
 export interface RefreshPodcastSuggestionsResponseHeaderProto {
+    /**
+     * @generated from protobuf field: PodcastSuggestionsProto suggestions = 1;
+     */
+    suggestions?: PodcastSuggestionsProto;
 }
 /**
  * @generated from protobuf message RefreshPodcastSuggestionsResponseDeltaProto
@@ -2323,7 +2327,9 @@ export const RefreshPodcastSuggestionsRequestProto = new RefreshPodcastSuggestio
 // @generated message type with reflection information, may provide speed optimized methods
 class RefreshPodcastSuggestionsResponseHeaderProto$Type extends MessageType<RefreshPodcastSuggestionsResponseHeaderProto> {
     constructor() {
-        super("RefreshPodcastSuggestionsResponseHeaderProto", []);
+        super("RefreshPodcastSuggestionsResponseHeaderProto", [
+            { no: 1, name: "suggestions", kind: "message", T: () => PodcastSuggestionsProto }
+        ]);
     }
     create(value?: PartialMessage<RefreshPodcastSuggestionsResponseHeaderProto>): RefreshPodcastSuggestionsResponseHeaderProto {
         const message = globalThis.Object.create((this.messagePrototype!));
@@ -2332,9 +2338,28 @@ class RefreshPodcastSuggestionsResponseHeaderProto$Type extends MessageType<Refr
         return message;
     }
     internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: RefreshPodcastSuggestionsResponseHeaderProto): RefreshPodcastSuggestionsResponseHeaderProto {
-        return target ?? this.create();
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* PodcastSuggestionsProto suggestions */ 1:
+                    message.suggestions = PodcastSuggestionsProto.internalBinaryRead(reader, reader.uint32(), options, message.suggestions);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
     }
     internalBinaryWrite(message: RefreshPodcastSuggestionsResponseHeaderProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* PodcastSuggestionsProto suggestions = 1; */
+        if (message.suggestions)
+            PodcastSuggestionsProto.internalBinaryWrite(message.suggestions, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

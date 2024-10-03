@@ -125,7 +125,9 @@ message GetPodcastSuggestionPointsResponseDeltaProto {
 
 message RefreshPodcastSuggestionsRequestProto {}
 
-message RefreshPodcastSuggestionsResponseHeaderProto {}
+message RefreshPodcastSuggestionsResponseHeaderProto {
+  PodcastSuggestionsProto suggestions = 1;
+}
 
 message RefreshPodcastSuggestionsResponseDeltaProto {}
 

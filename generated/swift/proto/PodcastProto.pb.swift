@@ -714,9 +714,20 @@ struct RefreshPodcastSuggestionsResponseHeaderProto: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  var suggestions: PodcastSuggestionsProto {
+    get {return _suggestions ?? PodcastSuggestionsProto()}
+    set {_suggestions = newValue}
+  }
+  /// Returns true if `suggestions` has been explicitly set.
+  var hasSuggestions: Bool {return self._suggestions != nil}
+  /// Clears the value of `suggestions`. Subsequent reads from it will return its default value.
+  mutating func clearSuggestions() {self._suggestions = nil}
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
+
+  fileprivate var _suggestions: PodcastSuggestionsProto? = nil
 }
 
 struct RefreshPodcastSuggestionsResponseDeltaProto: Sendable {
@@ -2742,18 +2753,35 @@ extension RefreshPodcastSuggestionsRequestProto: SwiftProtobuf.Message, SwiftPro
 
 extension RefreshPodcastSuggestionsResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "RefreshPodcastSuggestionsResponseHeaderProto"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "suggestions"),
+  ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    // Load everything into unknown fields
-    while try decoder.nextFieldNumber() != nil {}
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._suggestions) }()
+      default: break
+      }
+    }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._suggestions {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: RefreshPodcastSuggestionsResponseHeaderProto, rhs: RefreshPodcastSuggestionsResponseHeaderProto) -> Bool {
+    if lhs._suggestions != rhs._suggestions {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
