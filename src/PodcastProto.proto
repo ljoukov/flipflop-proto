@@ -11,7 +11,7 @@ message PodcastRequestAuthProto {
 }
 
 message PodcastStreamApiRequestProto {
-  string encoded_user_auth = 1;
+  reserved 1;
   PodcastRequestAuthProto request_auth = 100;
   oneof request {
     CreatePodcastRequestProto create = 2;
@@ -25,9 +25,7 @@ message PodcastStreamApiRequestProto {
 }
 
 message PodcastStreamApiResponseHeaderProto {
-  // If present the token was refreshed and the client should use this new one
-  // from now onwards.
-  string refreshed_encoded_user_auth = 1;
+  reserved 1;
   oneof header {
     CreatePodcastResponseHeaderProto create_header = 2;
     GeneratePodcastResponseHeaderProto generate = 3;

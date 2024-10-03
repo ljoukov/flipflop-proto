@@ -169,8 +169,6 @@ struct PodcastStreamApiRequestProto: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var encodedUserAuth: String = String()
-
   var requestAuth: PodcastRequestAuthProto {
     get {return _requestAuth ?? PodcastRequestAuthProto()}
     set {_requestAuth = newValue}
@@ -260,10 +258,6 @@ struct PodcastStreamApiResponseHeaderProto: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
-
-  /// If present the token was refreshed and the client should use this new one
-  /// from now onwards.
-  var refreshedEncodedUserAuth: String = String()
 
   var header: PodcastStreamApiResponseHeaderProto.OneOf_Header? = nil
 
@@ -1726,7 +1720,6 @@ extension PodcastRequestAuthProto: SwiftProtobuf.Message, SwiftProtobuf._Message
 extension PodcastStreamApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "PodcastStreamApiRequestProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "encoded_user_auth"),
     100: .standard(proto: "request_auth"),
     2: .same(proto: "create"),
     3: .same(proto: "generate"),
@@ -1743,7 +1736,6 @@ extension PodcastStreamApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Me
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.encodedUserAuth) }()
       case 2: try {
         var v: CreatePodcastRequestProto?
         var hadOneofValue = false
@@ -1846,9 +1838,6 @@ extension PodcastStreamApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Me
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    if !self.encodedUserAuth.isEmpty {
-      try visitor.visitSingularStringField(value: self.encodedUserAuth, fieldNumber: 1)
-    }
     switch self.request {
     case .create?: try {
       guard case .create(let v)? = self.request else { preconditionFailure() }
@@ -1887,7 +1876,6 @@ extension PodcastStreamApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Me
   }
 
   static func ==(lhs: PodcastStreamApiRequestProto, rhs: PodcastStreamApiRequestProto) -> Bool {
-    if lhs.encodedUserAuth != rhs.encodedUserAuth {return false}
     if lhs._requestAuth != rhs._requestAuth {return false}
     if lhs.request != rhs.request {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
@@ -1898,7 +1886,6 @@ extension PodcastStreamApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Me
 extension PodcastStreamApiResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "PodcastStreamApiResponseHeaderProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "refreshed_encoded_user_auth"),
     2: .standard(proto: "create_header"),
     3: .same(proto: "generate"),
     4: .same(proto: "podcast"),
@@ -1915,7 +1902,6 @@ extension PodcastStreamApiResponseHeaderProto: SwiftProtobuf.Message, SwiftProto
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.refreshedEncodedUserAuth) }()
       case 2: try {
         var v: CreatePodcastResponseHeaderProto?
         var hadOneofValue = false
@@ -2018,9 +2004,6 @@ extension PodcastStreamApiResponseHeaderProto: SwiftProtobuf.Message, SwiftProto
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    if !self.refreshedEncodedUserAuth.isEmpty {
-      try visitor.visitSingularStringField(value: self.refreshedEncodedUserAuth, fieldNumber: 1)
-    }
     switch self.header {
     case .createHeader?: try {
       guard case .createHeader(let v)? = self.header else { preconditionFailure() }
@@ -2059,7 +2042,6 @@ extension PodcastStreamApiResponseHeaderProto: SwiftProtobuf.Message, SwiftProto
   }
 
   static func ==(lhs: PodcastStreamApiResponseHeaderProto, rhs: PodcastStreamApiResponseHeaderProto) -> Bool {
-    if lhs.refreshedEncodedUserAuth != rhs.refreshedEncodedUserAuth {return false}
     if lhs.header != rhs.header {return false}
     if lhs.latencies != rhs.latencies {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}

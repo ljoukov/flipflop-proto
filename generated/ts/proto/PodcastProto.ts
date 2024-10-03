@@ -40,10 +40,6 @@ export interface PodcastRequestAuthProto {
  */
 export interface PodcastStreamApiRequestProto {
     /**
-     * @generated from protobuf field: string encoded_user_auth = 1;
-     */
-    encodedUserAuth: string;
-    /**
      * @generated from protobuf field: PodcastRequestAuthProto request_auth = 100;
      */
     requestAuth?: PodcastRequestAuthProto;
@@ -100,13 +96,6 @@ export interface PodcastStreamApiRequestProto {
  * @generated from protobuf message PodcastStreamApiResponseHeaderProto
  */
 export interface PodcastStreamApiResponseHeaderProto {
-    /**
-     * If present the token was refreshed and the client should use this new one
-     * from now onwards.
-     *
-     * @generated from protobuf field: string refreshed_encoded_user_auth = 1;
-     */
-    refreshedEncodedUserAuth: string;
     /**
      * @generated from protobuf oneof: header
      */
@@ -1261,7 +1250,6 @@ export const PodcastRequestAuthProto = new PodcastRequestAuthProto$Type();
 class PodcastStreamApiRequestProto$Type extends MessageType<PodcastStreamApiRequestProto> {
     constructor() {
         super("PodcastStreamApiRequestProto", [
-            { no: 1, name: "encoded_user_auth", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 100, name: "request_auth", kind: "message", T: () => PodcastRequestAuthProto },
             { no: 2, name: "create", kind: "message", oneof: "request", T: () => CreatePodcastRequestProto },
             { no: 3, name: "generate", kind: "message", oneof: "request", T: () => GeneratePodcastRequestProto },
@@ -1274,7 +1262,6 @@ class PodcastStreamApiRequestProto$Type extends MessageType<PodcastStreamApiRequ
     }
     create(value?: PartialMessage<PodcastStreamApiRequestProto>): PodcastStreamApiRequestProto {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.encodedUserAuth = "";
         message.request = { oneofKind: undefined };
         if (value !== undefined)
             reflectionMergePartial<PodcastStreamApiRequestProto>(this, message, value);
@@ -1285,9 +1272,6 @@ class PodcastStreamApiRequestProto$Type extends MessageType<PodcastStreamApiRequ
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string encoded_user_auth */ 1:
-                    message.encodedUserAuth = reader.string();
-                    break;
                 case /* PodcastRequestAuthProto request_auth */ 100:
                     message.requestAuth = PodcastRequestAuthProto.internalBinaryRead(reader, reader.uint32(), options, message.requestAuth);
                     break;
@@ -1345,9 +1329,6 @@ class PodcastStreamApiRequestProto$Type extends MessageType<PodcastStreamApiRequ
         return message;
     }
     internalBinaryWrite(message: PodcastStreamApiRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string encoded_user_auth = 1; */
-        if (message.encodedUserAuth !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.encodedUserAuth);
         /* PodcastRequestAuthProto request_auth = 100; */
         if (message.requestAuth)
             PodcastRequestAuthProto.internalBinaryWrite(message.requestAuth, writer.tag(100, WireType.LengthDelimited).fork(), options).join();
@@ -1386,7 +1367,6 @@ export const PodcastStreamApiRequestProto = new PodcastStreamApiRequestProto$Typ
 class PodcastStreamApiResponseHeaderProto$Type extends MessageType<PodcastStreamApiResponseHeaderProto> {
     constructor() {
         super("PodcastStreamApiResponseHeaderProto", [
-            { no: 1, name: "refreshed_encoded_user_auth", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "create_header", kind: "message", oneof: "header", T: () => CreatePodcastResponseHeaderProto },
             { no: 3, name: "generate", kind: "message", oneof: "header", T: () => GeneratePodcastResponseHeaderProto },
             { no: 4, name: "podcast", kind: "message", oneof: "header", T: () => GetPodcastResponseHeaderProto },
@@ -1399,7 +1379,6 @@ class PodcastStreamApiResponseHeaderProto$Type extends MessageType<PodcastStream
     }
     create(value?: PartialMessage<PodcastStreamApiResponseHeaderProto>): PodcastStreamApiResponseHeaderProto {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.refreshedEncodedUserAuth = "";
         message.header = { oneofKind: undefined };
         message.latencies = {};
         if (value !== undefined)
@@ -1411,9 +1390,6 @@ class PodcastStreamApiResponseHeaderProto$Type extends MessageType<PodcastStream
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string refreshed_encoded_user_auth */ 1:
-                    message.refreshedEncodedUserAuth = reader.string();
-                    break;
                 case /* CreatePodcastResponseHeaderProto create_header */ 2:
                     message.header = {
                         oneofKind: "createHeader",
@@ -1487,9 +1463,6 @@ class PodcastStreamApiResponseHeaderProto$Type extends MessageType<PodcastStream
         map[key ?? ""] = val ?? Duration.create();
     }
     internalBinaryWrite(message: PodcastStreamApiResponseHeaderProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string refreshed_encoded_user_auth = 1; */
-        if (message.refreshedEncodedUserAuth !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.refreshedEncodedUserAuth);
         /* CreatePodcastResponseHeaderProto create_header = 2; */
         if (message.header.oneofKind === "createHeader")
             CreatePodcastResponseHeaderProto.internalBinaryWrite(message.header.createHeader, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
