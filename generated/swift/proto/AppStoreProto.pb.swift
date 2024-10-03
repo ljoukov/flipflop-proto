@@ -321,11 +321,14 @@ enum AppStoreAutoRenewStatusProto: SwiftProtobuf.Enum, Swift.CaseIterable {
   /// Default value, should not be used.
   case unspecified // = 0
 
-  /// Auto-renew is enabled.
-  case active // = 1
+  /// Automatic renewal is off. The customer has turned off automatic renewal for
+  /// the subscription, and it won’t renew at the end of the current subscription
+  /// period.
+  case off // = 1
 
-  /// Auto-renew is disabled.
-  case off // = 2
+  /// Automatic renewal is on. The subscription renews at the end of the current
+  /// subscription period.
+  case active // = 2
   case UNRECOGNIZED(Int)
 
   init() {
@@ -335,8 +338,8 @@ enum AppStoreAutoRenewStatusProto: SwiftProtobuf.Enum, Swift.CaseIterable {
   init?(rawValue: Int) {
     switch rawValue {
     case 0: self = .unspecified
-    case 1: self = .active
-    case 2: self = .off
+    case 1: self = .off
+    case 2: self = .active
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -344,8 +347,8 @@ enum AppStoreAutoRenewStatusProto: SwiftProtobuf.Enum, Swift.CaseIterable {
   var rawValue: Int {
     switch self {
     case .unspecified: return 0
-    case .active: return 1
-    case .off: return 2
+    case .off: return 1
+    case .active: return 2
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -353,30 +356,35 @@ enum AppStoreAutoRenewStatusProto: SwiftProtobuf.Enum, Swift.CaseIterable {
   // The compiler won't synthesize support with the UNRECOGNIZED case.
   static let allCases: [AppStoreAutoRenewStatusProto] = [
     .unspecified,
-    .active,
     .off,
+    .active,
   ]
 
 }
 
-/// The reason the subscription expired.
 enum AppStoreExpirationIntentProto: SwiftProtobuf.Enum, Swift.CaseIterable {
   typealias RawValue = Int
 
   /// Default value, should not be used.
   case unspecified // = 0
 
-  /// The reason for expiration is unknown.
-  case unknown // = 1
+  /// The customer canceled their subscription.
+  case customerCancel // = 1
 
-  /// The subscription was revoked by the App Store.
-  case revoke // = 2
+  /// Billing error; for example, the customer’s payment information is no longer
+  /// valid.
+  case billingError // = 2
 
-  /// The subscription expired due to a price increase.
+  /// The customer didn’t consent to an auto-renewable subscription price
+  /// increase that requires customer consent, allowing the subscription to
+  /// expire.
   case priceIncrease // = 3
 
-  /// The developer canceled the subscription.
-  case developerCancel // = 4
+  /// The product wasn’t available for purchase at the time of renewal.
+  case productUnavailable // = 4
+
+  /// The subscription expired for some other reason.
+  case other // = 5
   case UNRECOGNIZED(Int)
 
   init() {
@@ -386,10 +394,11 @@ enum AppStoreExpirationIntentProto: SwiftProtobuf.Enum, Swift.CaseIterable {
   init?(rawValue: Int) {
     switch rawValue {
     case 0: self = .unspecified
-    case 1: self = .unknown
-    case 2: self = .revoke
+    case 1: self = .customerCancel
+    case 2: self = .billingError
     case 3: self = .priceIncrease
-    case 4: self = .developerCancel
+    case 4: self = .productUnavailable
+    case 5: self = .other
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -397,10 +406,11 @@ enum AppStoreExpirationIntentProto: SwiftProtobuf.Enum, Swift.CaseIterable {
   var rawValue: Int {
     switch self {
     case .unspecified: return 0
-    case .unknown: return 1
-    case .revoke: return 2
+    case .customerCancel: return 1
+    case .billingError: return 2
     case .priceIncrease: return 3
-    case .developerCancel: return 4
+    case .productUnavailable: return 4
+    case .other: return 5
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -408,33 +418,30 @@ enum AppStoreExpirationIntentProto: SwiftProtobuf.Enum, Swift.CaseIterable {
   // The compiler won't synthesize support with the UNRECOGNIZED case.
   static let allCases: [AppStoreExpirationIntentProto] = [
     .unspecified,
-    .unknown,
-    .revoke,
+    .customerCancel,
+    .billingError,
     .priceIncrease,
-    .developerCancel,
+    .productUnavailable,
+    .other,
   ]
 
 }
 
-/// The status that indicates whether the auto-renewable subscription is subject
-/// to a price increase.
 enum AppStorePriceIncreaseStatusProto: SwiftProtobuf.Enum, Swift.CaseIterable {
   typealias RawValue = Int
 
   /// Default value, should not be used.
   case unspecified // = 0
 
-  /// No price increase has been set.
-  case noChange // = 1
+  /// The customer hasn’t yet responded to an auto-renewable subscription price
+  /// increase that requires customer consent.
+  case pendingResponse // = 1
 
-  /// A price increase is pending approval.
-  case pending // = 2
-
-  /// The price increase has been accepted.
-  case accepted // = 3
-
-  /// The price increase has been declined.
-  case declined // = 4
+  /// The customer consented to an auto-renewable subscription price increase
+  /// that requires customer consent, or the App Store has notified the customer
+  /// of an auto-renewable subscription price increase that doesn’t require
+  /// consent.
+  case consented // = 2
   case UNRECOGNIZED(Int)
 
   init() {
@@ -444,10 +451,8 @@ enum AppStorePriceIncreaseStatusProto: SwiftProtobuf.Enum, Swift.CaseIterable {
   init?(rawValue: Int) {
     switch rawValue {
     case 0: self = .unspecified
-    case 1: self = .noChange
-    case 2: self = .pending
-    case 3: self = .accepted
-    case 4: self = .declined
+    case 1: self = .pendingResponse
+    case 2: self = .consented
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -455,10 +460,8 @@ enum AppStorePriceIncreaseStatusProto: SwiftProtobuf.Enum, Swift.CaseIterable {
   var rawValue: Int {
     switch self {
     case .unspecified: return 0
-    case .noChange: return 1
-    case .pending: return 2
-    case .accepted: return 3
-    case .declined: return 4
+    case .pendingResponse: return 1
+    case .consented: return 2
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -466,10 +469,8 @@ enum AppStorePriceIncreaseStatusProto: SwiftProtobuf.Enum, Swift.CaseIterable {
   // The compiler won't synthesize support with the UNRECOGNIZED case.
   static let allCases: [AppStorePriceIncreaseStatusProto] = [
     .unspecified,
-    .noChange,
-    .pending,
-    .accepted,
-    .declined,
+    .pendingResponse,
+    .consented,
   ]
 
 }
@@ -878,28 +879,27 @@ extension AppStoreOfferDiscountTypeProto: SwiftProtobuf._ProtoNameProviding {
 extension AppStoreAutoRenewStatusProto: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     0: .same(proto: "APP_STORE_AUTO_RENEW_STATUS_PROTO_UNSPECIFIED"),
-    1: .same(proto: "APP_STORE_AUTO_RENEW_STATUS_PROTO_ACTIVE"),
-    2: .same(proto: "APP_STORE_AUTO_RENEW_STATUS_PROTO_OFF"),
+    1: .same(proto: "APP_STORE_AUTO_RENEW_STATUS_PROTO_OFF"),
+    2: .same(proto: "APP_STORE_AUTO_RENEW_STATUS_PROTO_ACTIVE"),
   ]
 }
 
 extension AppStoreExpirationIntentProto: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     0: .same(proto: "APP_STORE_EXPIRATION_INTENT_PROTO_UNSPECIFIED"),
-    1: .same(proto: "APP_STORE_EXPIRATION_INTENT_PROTO_UNKNOWN"),
-    2: .same(proto: "APP_STORE_EXPIRATION_INTENT_PROTO_REVOKE"),
+    1: .same(proto: "APP_STORE_EXPIRATION_INTENT_PROTO_CUSTOMER_CANCEL"),
+    2: .same(proto: "APP_STORE_EXPIRATION_INTENT_PROTO_BILLING_ERROR"),
     3: .same(proto: "APP_STORE_EXPIRATION_INTENT_PROTO_PRICE_INCREASE"),
-    4: .same(proto: "APP_STORE_EXPIRATION_INTENT_PROTO_DEVELOPER_CANCEL"),
+    4: .same(proto: "APP_STORE_EXPIRATION_INTENT_PROTO_PRODUCT_UNAVAILABLE"),
+    5: .same(proto: "APP_STORE_EXPIRATION_INTENT_PROTO_OTHER"),
   ]
 }
 
 extension AppStorePriceIncreaseStatusProto: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     0: .same(proto: "APP_STORE_PRICE_INCREASE_STATUS_PROTO_UNSPECIFIED"),
-    1: .same(proto: "APP_STORE_PRICE_INCREASE_STATUS_PROTO_NO_CHANGE"),
-    2: .same(proto: "APP_STORE_PRICE_INCREASE_STATUS_PROTO_PENDING"),
-    3: .same(proto: "APP_STORE_PRICE_INCREASE_STATUS_PROTO_ACCEPTED"),
-    4: .same(proto: "APP_STORE_PRICE_INCREASE_STATUS_PROTO_DECLINED"),
+    1: .same(proto: "APP_STORE_PRICE_INCREASE_STATUS_PROTO_PENDING_RESPONSE"),
+    2: .same(proto: "APP_STORE_PRICE_INCREASE_STATUS_PROTO_CONSENTED"),
   ]
 }
 

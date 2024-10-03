@@ -193,37 +193,53 @@ enum AppStoreOfferDiscountTypeProto {
 
 // The renewal status of the auto-renewable subscription.
 enum AppStoreAutoRenewStatusProto {
-  APP_STORE_AUTO_RENEW_STATUS_PROTO_UNSPECIFIED =
-      0;  // Default value, should not be used.
-  APP_STORE_AUTO_RENEW_STATUS_PROTO_ACTIVE = 1;  // Auto-renew is enabled.
-  APP_STORE_AUTO_RENEW_STATUS_PROTO_OFF = 2;     // Auto-renew is disabled.
+  // Default value, should not be used.
+  APP_STORE_AUTO_RENEW_STATUS_PROTO_UNSPECIFIED = 0;
+
+  // Automatic renewal is off. The customer has turned off automatic renewal for
+  // the subscription, and it won’t renew at the end of the current subscription
+  // period.
+  APP_STORE_AUTO_RENEW_STATUS_PROTO_OFF = 1;
+
+  // Automatic renewal is on. The subscription renews at the end of the current
+  // subscription period.
+  APP_STORE_AUTO_RENEW_STATUS_PROTO_ACTIVE = 2;
 }
 
-// The reason the subscription expired.
 enum AppStoreExpirationIntentProto {
-  APP_STORE_EXPIRATION_INTENT_PROTO_UNSPECIFIED =
-      0;  // Default value, should not be used.
-  APP_STORE_EXPIRATION_INTENT_PROTO_UNKNOWN =
-      1;  // The reason for expiration is unknown.
-  APP_STORE_EXPIRATION_INTENT_PROTO_REVOKE =
-      2;  // The subscription was revoked by the App Store.
-  APP_STORE_EXPIRATION_INTENT_PROTO_PRICE_INCREASE =
-      3;  // The subscription expired due to a price increase.
-  APP_STORE_EXPIRATION_INTENT_PROTO_DEVELOPER_CANCEL =
-      4;  // The developer canceled the subscription.
+  // Default value, should not be used.
+  APP_STORE_EXPIRATION_INTENT_PROTO_UNSPECIFIED = 0;
+
+  // The customer canceled their subscription.
+  APP_STORE_EXPIRATION_INTENT_PROTO_CUSTOMER_CANCEL = 1;
+
+  // Billing error; for example, the customer’s payment information is no longer
+  // valid.
+  APP_STORE_EXPIRATION_INTENT_PROTO_BILLING_ERROR = 2;
+
+  // The customer didn’t consent to an auto-renewable subscription price
+  // increase that requires customer consent, allowing the subscription to
+  // expire.
+  APP_STORE_EXPIRATION_INTENT_PROTO_PRICE_INCREASE = 3;
+
+  // The product wasn’t available for purchase at the time of renewal.
+  APP_STORE_EXPIRATION_INTENT_PROTO_PRODUCT_UNAVAILABLE = 4;
+
+  // The subscription expired for some other reason.
+  APP_STORE_EXPIRATION_INTENT_PROTO_OTHER = 5;
 }
 
-// The status that indicates whether the auto-renewable subscription is subject
-// to a price increase.
 enum AppStorePriceIncreaseStatusProto {
-  APP_STORE_PRICE_INCREASE_STATUS_PROTO_UNSPECIFIED =
-      0;  // Default value, should not be used.
-  APP_STORE_PRICE_INCREASE_STATUS_PROTO_NO_CHANGE =
-      1;  // No price increase has been set.
-  APP_STORE_PRICE_INCREASE_STATUS_PROTO_PENDING =
-      2;  // A price increase is pending approval.
-  APP_STORE_PRICE_INCREASE_STATUS_PROTO_ACCEPTED =
-      3;  // The price increase has been accepted.
-  APP_STORE_PRICE_INCREASE_STATUS_PROTO_DECLINED =
-      4;  // The price increase has been declined.
+  // Default value, should not be used.
+  APP_STORE_PRICE_INCREASE_STATUS_PROTO_UNSPECIFIED = 0;
+
+  // The customer hasn’t yet responded to an auto-renewable subscription price
+  // increase that requires customer consent.
+  APP_STORE_PRICE_INCREASE_STATUS_PROTO_PENDING_RESPONSE = 1;
+
+  // The customer consented to an auto-renewable subscription price increase
+  // that requires customer consent, or the App Store has notified the customer
+  // of an auto-renewable subscription price increase that doesn’t require
+  // consent.
+  APP_STORE_PRICE_INCREASE_STATUS_PROTO_CONSENTED = 2;
 }

@@ -452,21 +452,22 @@ export enum AppStoreAutoRenewStatusProto {
      */
     UNSPECIFIED = 0,
     /**
-     * Auto-renew is enabled.
+     * Automatic renewal is off. The customer has turned off automatic renewal for
+     * the subscription, and it won’t renew at the end of the current subscription
+     * period.
      *
-     * @generated from protobuf enum value: APP_STORE_AUTO_RENEW_STATUS_PROTO_ACTIVE = 1;
+     * @generated from protobuf enum value: APP_STORE_AUTO_RENEW_STATUS_PROTO_OFF = 1;
      */
-    ACTIVE = 1,
+    OFF = 1,
     /**
-     * Auto-renew is disabled.
+     * Automatic renewal is on. The subscription renews at the end of the current
+     * subscription period.
      *
-     * @generated from protobuf enum value: APP_STORE_AUTO_RENEW_STATUS_PROTO_OFF = 2;
+     * @generated from protobuf enum value: APP_STORE_AUTO_RENEW_STATUS_PROTO_ACTIVE = 2;
      */
-    OFF = 2
+    ACTIVE = 2
 }
 /**
- * The reason the subscription expired.
- *
  * @generated from protobuf enum AppStoreExpirationIntentProto
  */
 export enum AppStoreExpirationIntentProto {
@@ -477,34 +478,40 @@ export enum AppStoreExpirationIntentProto {
      */
     UNSPECIFIED = 0,
     /**
-     * The reason for expiration is unknown.
+     * The customer canceled their subscription.
      *
-     * @generated from protobuf enum value: APP_STORE_EXPIRATION_INTENT_PROTO_UNKNOWN = 1;
+     * @generated from protobuf enum value: APP_STORE_EXPIRATION_INTENT_PROTO_CUSTOMER_CANCEL = 1;
      */
-    UNKNOWN = 1,
+    CUSTOMER_CANCEL = 1,
     /**
-     * The subscription was revoked by the App Store.
+     * Billing error; for example, the customer’s payment information is no longer
+     * valid.
      *
-     * @generated from protobuf enum value: APP_STORE_EXPIRATION_INTENT_PROTO_REVOKE = 2;
+     * @generated from protobuf enum value: APP_STORE_EXPIRATION_INTENT_PROTO_BILLING_ERROR = 2;
      */
-    REVOKE = 2,
+    BILLING_ERROR = 2,
     /**
-     * The subscription expired due to a price increase.
+     * The customer didn’t consent to an auto-renewable subscription price
+     * increase that requires customer consent, allowing the subscription to
+     * expire.
      *
      * @generated from protobuf enum value: APP_STORE_EXPIRATION_INTENT_PROTO_PRICE_INCREASE = 3;
      */
     PRICE_INCREASE = 3,
     /**
-     * The developer canceled the subscription.
+     * The product wasn’t available for purchase at the time of renewal.
      *
-     * @generated from protobuf enum value: APP_STORE_EXPIRATION_INTENT_PROTO_DEVELOPER_CANCEL = 4;
+     * @generated from protobuf enum value: APP_STORE_EXPIRATION_INTENT_PROTO_PRODUCT_UNAVAILABLE = 4;
      */
-    DEVELOPER_CANCEL = 4
+    PRODUCT_UNAVAILABLE = 4,
+    /**
+     * The subscription expired for some other reason.
+     *
+     * @generated from protobuf enum value: APP_STORE_EXPIRATION_INTENT_PROTO_OTHER = 5;
+     */
+    OTHER = 5
 }
 /**
- * The status that indicates whether the auto-renewable subscription is subject
- * to a price increase.
- *
  * @generated from protobuf enum AppStorePriceIncreaseStatusProto
  */
 export enum AppStorePriceIncreaseStatusProto {
@@ -515,29 +522,21 @@ export enum AppStorePriceIncreaseStatusProto {
      */
     UNSPECIFIED = 0,
     /**
-     * No price increase has been set.
+     * The customer hasn’t yet responded to an auto-renewable subscription price
+     * increase that requires customer consent.
      *
-     * @generated from protobuf enum value: APP_STORE_PRICE_INCREASE_STATUS_PROTO_NO_CHANGE = 1;
+     * @generated from protobuf enum value: APP_STORE_PRICE_INCREASE_STATUS_PROTO_PENDING_RESPONSE = 1;
      */
-    NO_CHANGE = 1,
+    PENDING_RESPONSE = 1,
     /**
-     * A price increase is pending approval.
+     * The customer consented to an auto-renewable subscription price increase
+     * that requires customer consent, or the App Store has notified the customer
+     * of an auto-renewable subscription price increase that doesn’t require
+     * consent.
      *
-     * @generated from protobuf enum value: APP_STORE_PRICE_INCREASE_STATUS_PROTO_PENDING = 2;
+     * @generated from protobuf enum value: APP_STORE_PRICE_INCREASE_STATUS_PROTO_CONSENTED = 2;
      */
-    PENDING = 2,
-    /**
-     * The price increase has been accepted.
-     *
-     * @generated from protobuf enum value: APP_STORE_PRICE_INCREASE_STATUS_PROTO_ACCEPTED = 3;
-     */
-    ACCEPTED = 3,
-    /**
-     * The price increase has been declined.
-     *
-     * @generated from protobuf enum value: APP_STORE_PRICE_INCREASE_STATUS_PROTO_DECLINED = 4;
-     */
-    DECLINED = 4
+    CONSENTED = 2
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class AppStoreTransactionProto$Type extends MessageType<AppStoreTransactionProto> {
