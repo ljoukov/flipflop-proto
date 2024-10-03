@@ -171,6 +171,128 @@ export interface AppStoreTransactionProto {
     offerDiscountType: AppStoreOfferDiscountTypeProto;
 }
 /**
+ * Docs:
+ * https://developer.apple.com/documentation/appstoreserverapi/jwsrenewalinfodecodedpayload
+ *
+ * @generated from protobuf message AppStoreRenewalInfoProto
+ */
+export interface AppStoreRenewalInfoProto {
+    /**
+     * The identifier of the product that renews at the next billing period.
+     *
+     * @generated from protobuf field: string auto_renew_product_id = 1;
+     */
+    autoRenewProductId: string;
+    /**
+     * The renewal status of the auto-renewable subscription.
+     *
+     * @generated from protobuf field: AppStoreAutoRenewStatusProto auto_renew_status = 2;
+     */
+    autoRenewStatus: AppStoreAutoRenewStatusProto;
+    /**
+     * The currency code for the renewalPrice of the subscription.
+     *
+     * @generated from protobuf field: string currency = 3;
+     */
+    currency: string;
+    /**
+     * The list of win-back offer IDs that the customer is eligible for.
+     *
+     * @generated from protobuf field: repeated string eligible_win_back_offer_ids = 4;
+     */
+    eligibleWinBackOfferIds: string[];
+    /**
+     * The server environment, either sandbox or production.
+     *
+     * @generated from protobuf field: AppStoreEnvironmentProto environment = 5;
+     */
+    environment: AppStoreEnvironmentProto;
+    /**
+     * The reason the subscription expired.
+     *
+     * @generated from protobuf field: AppStoreExpirationIntentProto expiration_intent = 6;
+     */
+    expirationIntent: AppStoreExpirationIntentProto;
+    /**
+     * The time when the Billing Grace Period for subscription renewals expires.
+     *
+     * @generated from protobuf field: google.protobuf.Timestamp grace_period_expires_date = 7;
+     */
+    gracePeriodExpiresDate?: Timestamp;
+    /**
+     * A Boolean value that indicates whether the App Store is attempting to
+     * automatically renew the expired subscription.
+     *
+     * @generated from protobuf field: bool is_in_billing_retry_period = 8;
+     */
+    isInBillingRetryPeriod: boolean;
+    /**
+     * The payment mode of the discount offer.
+     *
+     * @generated from protobuf field: AppStoreOfferDiscountTypeProto offer_discount_type = 9;
+     */
+    offerDiscountType: AppStoreOfferDiscountTypeProto;
+    /**
+     * The offer code or the promotional offer identifier.
+     *
+     * @generated from protobuf field: string offer_identifier = 10;
+     */
+    offerIdentifier: string;
+    /**
+     * The type of subscription offer.
+     *
+     * @generated from protobuf field: AppStoreOfferTypeProto offer_type = 11;
+     */
+    offerType: AppStoreOfferTypeProto;
+    /**
+     * The transaction identifier of the original purchase associated with this
+     * transaction.
+     *
+     * @generated from protobuf field: string original_transaction_id = 12;
+     */
+    originalTransactionId: string;
+    /**
+     * The status that indicates whether the auto-renewable subscription is
+     * subject to a price increase.
+     *
+     * @generated from protobuf field: AppStorePriceIncreaseStatusProto price_increase_status = 13;
+     */
+    priceIncreaseStatus: AppStorePriceIncreaseStatusProto;
+    /**
+     * The product identifier of the In-App Purchase.
+     *
+     * @generated from protobuf field: string product_id = 14;
+     */
+    productId: string;
+    /**
+     * The earliest start date of the auto-renewable subscription in a series of
+     * subscription purchases that ignores all lapses of paid service that are 60
+     * days or fewer.
+     *
+     * @generated from protobuf field: google.protobuf.Timestamp recent_subscription_start_date = 15;
+     */
+    recentSubscriptionStartDate?: Timestamp;
+    /**
+     * The time when the most recent auto-renewable subscription purchase expires.
+     *
+     * @generated from protobuf field: google.protobuf.Timestamp renewal_date = 16;
+     */
+    renewalDate?: Timestamp;
+    /**
+     * The renewal price, in milliunits, of the auto-renewable subscription that
+     * renews at the next billing period.
+     *
+     * @generated from protobuf field: int64 renewal_price = 17;
+     */
+    renewalPrice: string;
+    /**
+     * The time when the App Store signed the JSON Web Signature (JWS) data.
+     *
+     * @generated from protobuf field: google.protobuf.Timestamp signed_date = 18;
+     */
+    signedDate?: Timestamp;
+}
+/**
  * @generated from protobuf enum AppStorePurchaseTypeProto
  */
 export enum AppStorePurchaseTypeProto {
@@ -316,6 +438,106 @@ export enum AppStoreOfferDiscountTypeProto {
      * @generated from protobuf enum value: APP_STORE_OFFER_DISCOUNT_TYPE_PROTO_PAY_UP_FRONT = 3;
      */
     PAY_UP_FRONT = 3
+}
+/**
+ * The renewal status of the auto-renewable subscription.
+ *
+ * @generated from protobuf enum AppStoreAutoRenewStatusProto
+ */
+export enum AppStoreAutoRenewStatusProto {
+    /**
+     * Default value, should not be used.
+     *
+     * @generated from protobuf enum value: APP_STORE_AUTO_RENEW_STATUS_PROTO_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
+    /**
+     * Auto-renew is enabled.
+     *
+     * @generated from protobuf enum value: APP_STORE_AUTO_RENEW_STATUS_PROTO_ACTIVE = 1;
+     */
+    ACTIVE = 1,
+    /**
+     * Auto-renew is disabled.
+     *
+     * @generated from protobuf enum value: APP_STORE_AUTO_RENEW_STATUS_PROTO_OFF = 2;
+     */
+    OFF = 2
+}
+/**
+ * The reason the subscription expired.
+ *
+ * @generated from protobuf enum AppStoreExpirationIntentProto
+ */
+export enum AppStoreExpirationIntentProto {
+    /**
+     * Default value, should not be used.
+     *
+     * @generated from protobuf enum value: APP_STORE_EXPIRATION_INTENT_PROTO_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
+    /**
+     * The reason for expiration is unknown.
+     *
+     * @generated from protobuf enum value: APP_STORE_EXPIRATION_INTENT_PROTO_UNKNOWN = 1;
+     */
+    UNKNOWN = 1,
+    /**
+     * The subscription was revoked by the App Store.
+     *
+     * @generated from protobuf enum value: APP_STORE_EXPIRATION_INTENT_PROTO_REVOKE = 2;
+     */
+    REVOKE = 2,
+    /**
+     * The subscription expired due to a price increase.
+     *
+     * @generated from protobuf enum value: APP_STORE_EXPIRATION_INTENT_PROTO_PRICE_INCREASE = 3;
+     */
+    PRICE_INCREASE = 3,
+    /**
+     * The developer canceled the subscription.
+     *
+     * @generated from protobuf enum value: APP_STORE_EXPIRATION_INTENT_PROTO_DEVELOPER_CANCEL = 4;
+     */
+    DEVELOPER_CANCEL = 4
+}
+/**
+ * The status that indicates whether the auto-renewable subscription is subject
+ * to a price increase.
+ *
+ * @generated from protobuf enum AppStorePriceIncreaseStatusProto
+ */
+export enum AppStorePriceIncreaseStatusProto {
+    /**
+     * Default value, should not be used.
+     *
+     * @generated from protobuf enum value: APP_STORE_PRICE_INCREASE_STATUS_PROTO_UNSPECIFIED = 0;
+     */
+    UNSPECIFIED = 0,
+    /**
+     * No price increase has been set.
+     *
+     * @generated from protobuf enum value: APP_STORE_PRICE_INCREASE_STATUS_PROTO_NO_CHANGE = 1;
+     */
+    NO_CHANGE = 1,
+    /**
+     * A price increase is pending approval.
+     *
+     * @generated from protobuf enum value: APP_STORE_PRICE_INCREASE_STATUS_PROTO_PENDING = 2;
+     */
+    PENDING = 2,
+    /**
+     * The price increase has been accepted.
+     *
+     * @generated from protobuf enum value: APP_STORE_PRICE_INCREASE_STATUS_PROTO_ACCEPTED = 3;
+     */
+    ACCEPTED = 3,
+    /**
+     * The price increase has been declined.
+     *
+     * @generated from protobuf enum value: APP_STORE_PRICE_INCREASE_STATUS_PROTO_DECLINED = 4;
+     */
+    DECLINED = 4
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class AppStoreTransactionProto$Type extends MessageType<AppStoreTransactionProto> {
@@ -559,3 +781,182 @@ class AppStoreTransactionProto$Type extends MessageType<AppStoreTransactionProto
  * @generated MessageType for protobuf message AppStoreTransactionProto
  */
 export const AppStoreTransactionProto = new AppStoreTransactionProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class AppStoreRenewalInfoProto$Type extends MessageType<AppStoreRenewalInfoProto> {
+    constructor() {
+        super("AppStoreRenewalInfoProto", [
+            { no: 1, name: "auto_renew_product_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "auto_renew_status", kind: "enum", T: () => ["AppStoreAutoRenewStatusProto", AppStoreAutoRenewStatusProto, "APP_STORE_AUTO_RENEW_STATUS_PROTO_"] },
+            { no: 3, name: "currency", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "eligible_win_back_offer_ids", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "environment", kind: "enum", T: () => ["AppStoreEnvironmentProto", AppStoreEnvironmentProto, "APP_STORE_ENVIRONMENT_PROTO_"] },
+            { no: 6, name: "expiration_intent", kind: "enum", T: () => ["AppStoreExpirationIntentProto", AppStoreExpirationIntentProto, "APP_STORE_EXPIRATION_INTENT_PROTO_"] },
+            { no: 7, name: "grace_period_expires_date", kind: "message", T: () => Timestamp },
+            { no: 8, name: "is_in_billing_retry_period", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 9, name: "offer_discount_type", kind: "enum", T: () => ["AppStoreOfferDiscountTypeProto", AppStoreOfferDiscountTypeProto, "APP_STORE_OFFER_DISCOUNT_TYPE_PROTO_"] },
+            { no: 10, name: "offer_identifier", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 11, name: "offer_type", kind: "enum", T: () => ["AppStoreOfferTypeProto", AppStoreOfferTypeProto, "APP_STORE_OFFER_TYPE_PROTO_"] },
+            { no: 12, name: "original_transaction_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 13, name: "price_increase_status", kind: "enum", T: () => ["AppStorePriceIncreaseStatusProto", AppStorePriceIncreaseStatusProto, "APP_STORE_PRICE_INCREASE_STATUS_PROTO_"] },
+            { no: 14, name: "product_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 15, name: "recent_subscription_start_date", kind: "message", T: () => Timestamp },
+            { no: 16, name: "renewal_date", kind: "message", T: () => Timestamp },
+            { no: 17, name: "renewal_price", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
+            { no: 18, name: "signed_date", kind: "message", T: () => Timestamp }
+        ]);
+    }
+    create(value?: PartialMessage<AppStoreRenewalInfoProto>): AppStoreRenewalInfoProto {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.autoRenewProductId = "";
+        message.autoRenewStatus = 0;
+        message.currency = "";
+        message.eligibleWinBackOfferIds = [];
+        message.environment = 0;
+        message.expirationIntent = 0;
+        message.isInBillingRetryPeriod = false;
+        message.offerDiscountType = 0;
+        message.offerIdentifier = "";
+        message.offerType = 0;
+        message.originalTransactionId = "";
+        message.priceIncreaseStatus = 0;
+        message.productId = "";
+        message.renewalPrice = "0";
+        if (value !== undefined)
+            reflectionMergePartial<AppStoreRenewalInfoProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: AppStoreRenewalInfoProto): AppStoreRenewalInfoProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string auto_renew_product_id */ 1:
+                    message.autoRenewProductId = reader.string();
+                    break;
+                case /* AppStoreAutoRenewStatusProto auto_renew_status */ 2:
+                    message.autoRenewStatus = reader.int32();
+                    break;
+                case /* string currency */ 3:
+                    message.currency = reader.string();
+                    break;
+                case /* repeated string eligible_win_back_offer_ids */ 4:
+                    message.eligibleWinBackOfferIds.push(reader.string());
+                    break;
+                case /* AppStoreEnvironmentProto environment */ 5:
+                    message.environment = reader.int32();
+                    break;
+                case /* AppStoreExpirationIntentProto expiration_intent */ 6:
+                    message.expirationIntent = reader.int32();
+                    break;
+                case /* google.protobuf.Timestamp grace_period_expires_date */ 7:
+                    message.gracePeriodExpiresDate = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.gracePeriodExpiresDate);
+                    break;
+                case /* bool is_in_billing_retry_period */ 8:
+                    message.isInBillingRetryPeriod = reader.bool();
+                    break;
+                case /* AppStoreOfferDiscountTypeProto offer_discount_type */ 9:
+                    message.offerDiscountType = reader.int32();
+                    break;
+                case /* string offer_identifier */ 10:
+                    message.offerIdentifier = reader.string();
+                    break;
+                case /* AppStoreOfferTypeProto offer_type */ 11:
+                    message.offerType = reader.int32();
+                    break;
+                case /* string original_transaction_id */ 12:
+                    message.originalTransactionId = reader.string();
+                    break;
+                case /* AppStorePriceIncreaseStatusProto price_increase_status */ 13:
+                    message.priceIncreaseStatus = reader.int32();
+                    break;
+                case /* string product_id */ 14:
+                    message.productId = reader.string();
+                    break;
+                case /* google.protobuf.Timestamp recent_subscription_start_date */ 15:
+                    message.recentSubscriptionStartDate = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.recentSubscriptionStartDate);
+                    break;
+                case /* google.protobuf.Timestamp renewal_date */ 16:
+                    message.renewalDate = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.renewalDate);
+                    break;
+                case /* int64 renewal_price */ 17:
+                    message.renewalPrice = reader.int64().toString();
+                    break;
+                case /* google.protobuf.Timestamp signed_date */ 18:
+                    message.signedDate = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.signedDate);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: AppStoreRenewalInfoProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string auto_renew_product_id = 1; */
+        if (message.autoRenewProductId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.autoRenewProductId);
+        /* AppStoreAutoRenewStatusProto auto_renew_status = 2; */
+        if (message.autoRenewStatus !== 0)
+            writer.tag(2, WireType.Varint).int32(message.autoRenewStatus);
+        /* string currency = 3; */
+        if (message.currency !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.currency);
+        /* repeated string eligible_win_back_offer_ids = 4; */
+        for (let i = 0; i < message.eligibleWinBackOfferIds.length; i++)
+            writer.tag(4, WireType.LengthDelimited).string(message.eligibleWinBackOfferIds[i]);
+        /* AppStoreEnvironmentProto environment = 5; */
+        if (message.environment !== 0)
+            writer.tag(5, WireType.Varint).int32(message.environment);
+        /* AppStoreExpirationIntentProto expiration_intent = 6; */
+        if (message.expirationIntent !== 0)
+            writer.tag(6, WireType.Varint).int32(message.expirationIntent);
+        /* google.protobuf.Timestamp grace_period_expires_date = 7; */
+        if (message.gracePeriodExpiresDate)
+            Timestamp.internalBinaryWrite(message.gracePeriodExpiresDate, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+        /* bool is_in_billing_retry_period = 8; */
+        if (message.isInBillingRetryPeriod !== false)
+            writer.tag(8, WireType.Varint).bool(message.isInBillingRetryPeriod);
+        /* AppStoreOfferDiscountTypeProto offer_discount_type = 9; */
+        if (message.offerDiscountType !== 0)
+            writer.tag(9, WireType.Varint).int32(message.offerDiscountType);
+        /* string offer_identifier = 10; */
+        if (message.offerIdentifier !== "")
+            writer.tag(10, WireType.LengthDelimited).string(message.offerIdentifier);
+        /* AppStoreOfferTypeProto offer_type = 11; */
+        if (message.offerType !== 0)
+            writer.tag(11, WireType.Varint).int32(message.offerType);
+        /* string original_transaction_id = 12; */
+        if (message.originalTransactionId !== "")
+            writer.tag(12, WireType.LengthDelimited).string(message.originalTransactionId);
+        /* AppStorePriceIncreaseStatusProto price_increase_status = 13; */
+        if (message.priceIncreaseStatus !== 0)
+            writer.tag(13, WireType.Varint).int32(message.priceIncreaseStatus);
+        /* string product_id = 14; */
+        if (message.productId !== "")
+            writer.tag(14, WireType.LengthDelimited).string(message.productId);
+        /* google.protobuf.Timestamp recent_subscription_start_date = 15; */
+        if (message.recentSubscriptionStartDate)
+            Timestamp.internalBinaryWrite(message.recentSubscriptionStartDate, writer.tag(15, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.Timestamp renewal_date = 16; */
+        if (message.renewalDate)
+            Timestamp.internalBinaryWrite(message.renewalDate, writer.tag(16, WireType.LengthDelimited).fork(), options).join();
+        /* int64 renewal_price = 17; */
+        if (message.renewalPrice !== "0")
+            writer.tag(17, WireType.Varint).int64(message.renewalPrice);
+        /* google.protobuf.Timestamp signed_date = 18; */
+        if (message.signedDate)
+            Timestamp.internalBinaryWrite(message.signedDate, writer.tag(18, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message AppStoreRenewalInfoProto
+ */
+export const AppStoreRenewalInfoProto = new AppStoreRenewalInfoProto$Type();

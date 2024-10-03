@@ -78,6 +78,70 @@ message AppStoreTransactionProto {
   AppStoreOfferDiscountTypeProto offer_discount_type = 26;
 }
 
+// Docs:
+// https://developer.apple.com/documentation/appstoreserverapi/jwsrenewalinfodecodedpayload
+message AppStoreRenewalInfoProto {
+  // The identifier of the product that renews at the next billing period.
+  string auto_renew_product_id = 1;
+
+  // The renewal status of the auto-renewable subscription.
+  AppStoreAutoRenewStatusProto auto_renew_status = 2;
+
+  // The currency code for the renewalPrice of the subscription.
+  string currency = 3;
+
+  // The list of win-back offer IDs that the customer is eligible for.
+  repeated string eligible_win_back_offer_ids = 4;
+
+  // The server environment, either sandbox or production.
+  AppStoreEnvironmentProto environment = 5;
+
+  // The reason the subscription expired.
+  AppStoreExpirationIntentProto expiration_intent = 6;
+
+  // The time when the Billing Grace Period for subscription renewals expires.
+  google.protobuf.Timestamp grace_period_expires_date = 7;
+
+  // A Boolean value that indicates whether the App Store is attempting to
+  // automatically renew the expired subscription.
+  bool is_in_billing_retry_period = 8;
+
+  // The payment mode of the discount offer.
+  AppStoreOfferDiscountTypeProto offer_discount_type = 9;
+
+  // The offer code or the promotional offer identifier.
+  string offer_identifier = 10;
+
+  // The type of subscription offer.
+  AppStoreOfferTypeProto offer_type = 11;
+
+  // The transaction identifier of the original purchase associated with this
+  // transaction.
+  string original_transaction_id = 12;
+
+  // The status that indicates whether the auto-renewable subscription is
+  // subject to a price increase.
+  AppStorePriceIncreaseStatusProto price_increase_status = 13;
+
+  // The product identifier of the In-App Purchase.
+  string product_id = 14;
+
+  // The earliest start date of the auto-renewable subscription in a series of
+  // subscription purchases that ignores all lapses of paid service that are 60
+  // days or fewer.
+  google.protobuf.Timestamp recent_subscription_start_date = 15;
+
+  // The time when the most recent auto-renewable subscription purchase expires.
+  google.protobuf.Timestamp renewal_date = 16;
+
+  // The renewal price, in milliunits, of the auto-renewable subscription that
+  // renews at the next billing period.
+  int64 renewal_price = 17;
+
+  // The time when the App Store signed the JSON Web Signature (JWS) data.
+  google.protobuf.Timestamp signed_date = 18;
+}
+
 enum AppStorePurchaseTypeProto {
   APP_STORE_PURCHASE_TYPE_PROTO_UNSPECIFIED = 0;
   APP_STORE_PURCHASE_TYPE_PROTO_AUTO_RENEWABLE_SUBSCRIPTION = 1;
@@ -125,4 +189,41 @@ enum AppStoreOfferDiscountTypeProto {
   APP_STORE_OFFER_DISCOUNT_TYPE_PROTO_FREE_TRIAL = 1;
   APP_STORE_OFFER_DISCOUNT_TYPE_PROTO_PAY_AS_YOU_GO = 2;
   APP_STORE_OFFER_DISCOUNT_TYPE_PROTO_PAY_UP_FRONT = 3;
+}
+
+// The renewal status of the auto-renewable subscription.
+enum AppStoreAutoRenewStatusProto {
+  APP_STORE_AUTO_RENEW_STATUS_PROTO_UNSPECIFIED =
+      0;  // Default value, should not be used.
+  APP_STORE_AUTO_RENEW_STATUS_PROTO_ACTIVE = 1;  // Auto-renew is enabled.
+  APP_STORE_AUTO_RENEW_STATUS_PROTO_OFF = 2;     // Auto-renew is disabled.
+}
+
+// The reason the subscription expired.
+enum AppStoreExpirationIntentProto {
+  APP_STORE_EXPIRATION_INTENT_PROTO_UNSPECIFIED =
+      0;  // Default value, should not be used.
+  APP_STORE_EXPIRATION_INTENT_PROTO_UNKNOWN =
+      1;  // The reason for expiration is unknown.
+  APP_STORE_EXPIRATION_INTENT_PROTO_REVOKE =
+      2;  // The subscription was revoked by the App Store.
+  APP_STORE_EXPIRATION_INTENT_PROTO_PRICE_INCREASE =
+      3;  // The subscription expired due to a price increase.
+  APP_STORE_EXPIRATION_INTENT_PROTO_DEVELOPER_CANCEL =
+      4;  // The developer canceled the subscription.
+}
+
+// The status that indicates whether the auto-renewable subscription is subject
+// to a price increase.
+enum AppStorePriceIncreaseStatusProto {
+  APP_STORE_PRICE_INCREASE_STATUS_PROTO_UNSPECIFIED =
+      0;  // Default value, should not be used.
+  APP_STORE_PRICE_INCREASE_STATUS_PROTO_NO_CHANGE =
+      1;  // No price increase has been set.
+  APP_STORE_PRICE_INCREASE_STATUS_PROTO_PENDING =
+      2;  // A price increase is pending approval.
+  APP_STORE_PRICE_INCREASE_STATUS_PROTO_ACCEPTED =
+      3;  // The price increase has been accepted.
+  APP_STORE_PRICE_INCREASE_STATUS_PROTO_DECLINED =
+      4;  // The price increase has been declined.
 }

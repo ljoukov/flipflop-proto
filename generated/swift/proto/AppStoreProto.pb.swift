@@ -314,6 +314,166 @@ enum AppStoreOfferDiscountTypeProto: SwiftProtobuf.Enum, Swift.CaseIterable {
 
 }
 
+/// The renewal status of the auto-renewable subscription.
+enum AppStoreAutoRenewStatusProto: SwiftProtobuf.Enum, Swift.CaseIterable {
+  typealias RawValue = Int
+
+  /// Default value, should not be used.
+  case unspecified // = 0
+
+  /// Auto-renew is enabled.
+  case active // = 1
+
+  /// Auto-renew is disabled.
+  case off // = 2
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .unspecified
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .unspecified
+    case 1: self = .active
+    case 2: self = .off
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .unspecified: return 0
+    case .active: return 1
+    case .off: return 2
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static let allCases: [AppStoreAutoRenewStatusProto] = [
+    .unspecified,
+    .active,
+    .off,
+  ]
+
+}
+
+/// The reason the subscription expired.
+enum AppStoreExpirationIntentProto: SwiftProtobuf.Enum, Swift.CaseIterable {
+  typealias RawValue = Int
+
+  /// Default value, should not be used.
+  case unspecified // = 0
+
+  /// The reason for expiration is unknown.
+  case unknown // = 1
+
+  /// The subscription was revoked by the App Store.
+  case revoke // = 2
+
+  /// The subscription expired due to a price increase.
+  case priceIncrease // = 3
+
+  /// The developer canceled the subscription.
+  case developerCancel // = 4
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .unspecified
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .unspecified
+    case 1: self = .unknown
+    case 2: self = .revoke
+    case 3: self = .priceIncrease
+    case 4: self = .developerCancel
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .unspecified: return 0
+    case .unknown: return 1
+    case .revoke: return 2
+    case .priceIncrease: return 3
+    case .developerCancel: return 4
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static let allCases: [AppStoreExpirationIntentProto] = [
+    .unspecified,
+    .unknown,
+    .revoke,
+    .priceIncrease,
+    .developerCancel,
+  ]
+
+}
+
+/// The status that indicates whether the auto-renewable subscription is subject
+/// to a price increase.
+enum AppStorePriceIncreaseStatusProto: SwiftProtobuf.Enum, Swift.CaseIterable {
+  typealias RawValue = Int
+
+  /// Default value, should not be used.
+  case unspecified // = 0
+
+  /// No price increase has been set.
+  case noChange // = 1
+
+  /// A price increase is pending approval.
+  case pending // = 2
+
+  /// The price increase has been accepted.
+  case accepted // = 3
+
+  /// The price increase has been declined.
+  case declined // = 4
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .unspecified
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .unspecified
+    case 1: self = .noChange
+    case 2: self = .pending
+    case 3: self = .accepted
+    case 4: self = .declined
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .unspecified: return 0
+    case .noChange: return 1
+    case .pending: return 2
+    case .accepted: return 3
+    case .declined: return 4
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static let allCases: [AppStorePriceIncreaseStatusProto] = [
+    .unspecified,
+    .noChange,
+    .pending,
+    .accepted,
+    .declined,
+  ]
+
+}
+
 /// Docs:
 /// https://developer.apple.com/documentation/appstoreserverapi/jwstransactiondecodedpayload
 struct AppStoreTransactionProto: @unchecked Sendable {
@@ -506,6 +666,150 @@ struct AppStoreTransactionProto: @unchecked Sendable {
   fileprivate var _storage = _StorageClass.defaultInstance
 }
 
+/// Docs:
+/// https://developer.apple.com/documentation/appstoreserverapi/jwsrenewalinfodecodedpayload
+struct AppStoreRenewalInfoProto: @unchecked Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// The identifier of the product that renews at the next billing period.
+  var autoRenewProductID: String {
+    get {return _storage._autoRenewProductID}
+    set {_uniqueStorage()._autoRenewProductID = newValue}
+  }
+
+  /// The renewal status of the auto-renewable subscription.
+  var autoRenewStatus: AppStoreAutoRenewStatusProto {
+    get {return _storage._autoRenewStatus}
+    set {_uniqueStorage()._autoRenewStatus = newValue}
+  }
+
+  /// The currency code for the renewalPrice of the subscription.
+  var currency: String {
+    get {return _storage._currency}
+    set {_uniqueStorage()._currency = newValue}
+  }
+
+  /// The list of win-back offer IDs that the customer is eligible for.
+  var eligibleWinBackOfferIds: [String] {
+    get {return _storage._eligibleWinBackOfferIds}
+    set {_uniqueStorage()._eligibleWinBackOfferIds = newValue}
+  }
+
+  /// The server environment, either sandbox or production.
+  var environment: AppStoreEnvironmentProto {
+    get {return _storage._environment}
+    set {_uniqueStorage()._environment = newValue}
+  }
+
+  /// The reason the subscription expired.
+  var expirationIntent: AppStoreExpirationIntentProto {
+    get {return _storage._expirationIntent}
+    set {_uniqueStorage()._expirationIntent = newValue}
+  }
+
+  /// The time when the Billing Grace Period for subscription renewals expires.
+  var gracePeriodExpiresDate: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _storage._gracePeriodExpiresDate ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_uniqueStorage()._gracePeriodExpiresDate = newValue}
+  }
+  /// Returns true if `gracePeriodExpiresDate` has been explicitly set.
+  var hasGracePeriodExpiresDate: Bool {return _storage._gracePeriodExpiresDate != nil}
+  /// Clears the value of `gracePeriodExpiresDate`. Subsequent reads from it will return its default value.
+  mutating func clearGracePeriodExpiresDate() {_uniqueStorage()._gracePeriodExpiresDate = nil}
+
+  /// A Boolean value that indicates whether the App Store is attempting to
+  /// automatically renew the expired subscription.
+  var isInBillingRetryPeriod: Bool {
+    get {return _storage._isInBillingRetryPeriod}
+    set {_uniqueStorage()._isInBillingRetryPeriod = newValue}
+  }
+
+  /// The payment mode of the discount offer.
+  var offerDiscountType: AppStoreOfferDiscountTypeProto {
+    get {return _storage._offerDiscountType}
+    set {_uniqueStorage()._offerDiscountType = newValue}
+  }
+
+  /// The offer code or the promotional offer identifier.
+  var offerIdentifier: String {
+    get {return _storage._offerIdentifier}
+    set {_uniqueStorage()._offerIdentifier = newValue}
+  }
+
+  /// The type of subscription offer.
+  var offerType: AppStoreOfferTypeProto {
+    get {return _storage._offerType}
+    set {_uniqueStorage()._offerType = newValue}
+  }
+
+  /// The transaction identifier of the original purchase associated with this
+  /// transaction.
+  var originalTransactionID: String {
+    get {return _storage._originalTransactionID}
+    set {_uniqueStorage()._originalTransactionID = newValue}
+  }
+
+  /// The status that indicates whether the auto-renewable subscription is
+  /// subject to a price increase.
+  var priceIncreaseStatus: AppStorePriceIncreaseStatusProto {
+    get {return _storage._priceIncreaseStatus}
+    set {_uniqueStorage()._priceIncreaseStatus = newValue}
+  }
+
+  /// The product identifier of the In-App Purchase.
+  var productID: String {
+    get {return _storage._productID}
+    set {_uniqueStorage()._productID = newValue}
+  }
+
+  /// The earliest start date of the auto-renewable subscription in a series of
+  /// subscription purchases that ignores all lapses of paid service that are 60
+  /// days or fewer.
+  var recentSubscriptionStartDate: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _storage._recentSubscriptionStartDate ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_uniqueStorage()._recentSubscriptionStartDate = newValue}
+  }
+  /// Returns true if `recentSubscriptionStartDate` has been explicitly set.
+  var hasRecentSubscriptionStartDate: Bool {return _storage._recentSubscriptionStartDate != nil}
+  /// Clears the value of `recentSubscriptionStartDate`. Subsequent reads from it will return its default value.
+  mutating func clearRecentSubscriptionStartDate() {_uniqueStorage()._recentSubscriptionStartDate = nil}
+
+  /// The time when the most recent auto-renewable subscription purchase expires.
+  var renewalDate: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _storage._renewalDate ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_uniqueStorage()._renewalDate = newValue}
+  }
+  /// Returns true if `renewalDate` has been explicitly set.
+  var hasRenewalDate: Bool {return _storage._renewalDate != nil}
+  /// Clears the value of `renewalDate`. Subsequent reads from it will return its default value.
+  mutating func clearRenewalDate() {_uniqueStorage()._renewalDate = nil}
+
+  /// The renewal price, in milliunits, of the auto-renewable subscription that
+  /// renews at the next billing period.
+  var renewalPrice: Int64 {
+    get {return _storage._renewalPrice}
+    set {_uniqueStorage()._renewalPrice = newValue}
+  }
+
+  /// The time when the App Store signed the JSON Web Signature (JWS) data.
+  var signedDate: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _storage._signedDate ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_uniqueStorage()._signedDate = newValue}
+  }
+  /// Returns true if `signedDate` has been explicitly set.
+  var hasSignedDate: Bool {return _storage._signedDate != nil}
+  /// Clears the value of `signedDate`. Subsequent reads from it will return its default value.
+  mutating func clearSignedDate() {_uniqueStorage()._signedDate = nil}
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+
+  fileprivate var _storage = _StorageClass.defaultInstance
+}
+
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 extension AppStorePurchaseTypeProto: SwiftProtobuf._ProtoNameProviding {
@@ -568,6 +872,34 @@ extension AppStoreOfferDiscountTypeProto: SwiftProtobuf._ProtoNameProviding {
     1: .same(proto: "APP_STORE_OFFER_DISCOUNT_TYPE_PROTO_FREE_TRIAL"),
     2: .same(proto: "APP_STORE_OFFER_DISCOUNT_TYPE_PROTO_PAY_AS_YOU_GO"),
     3: .same(proto: "APP_STORE_OFFER_DISCOUNT_TYPE_PROTO_PAY_UP_FRONT"),
+  ]
+}
+
+extension AppStoreAutoRenewStatusProto: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "APP_STORE_AUTO_RENEW_STATUS_PROTO_UNSPECIFIED"),
+    1: .same(proto: "APP_STORE_AUTO_RENEW_STATUS_PROTO_ACTIVE"),
+    2: .same(proto: "APP_STORE_AUTO_RENEW_STATUS_PROTO_OFF"),
+  ]
+}
+
+extension AppStoreExpirationIntentProto: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "APP_STORE_EXPIRATION_INTENT_PROTO_UNSPECIFIED"),
+    1: .same(proto: "APP_STORE_EXPIRATION_INTENT_PROTO_UNKNOWN"),
+    2: .same(proto: "APP_STORE_EXPIRATION_INTENT_PROTO_REVOKE"),
+    3: .same(proto: "APP_STORE_EXPIRATION_INTENT_PROTO_PRICE_INCREASE"),
+    4: .same(proto: "APP_STORE_EXPIRATION_INTENT_PROTO_DEVELOPER_CANCEL"),
+  ]
+}
+
+extension AppStorePriceIncreaseStatusProto: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "APP_STORE_PRICE_INCREASE_STATUS_PROTO_UNSPECIFIED"),
+    1: .same(proto: "APP_STORE_PRICE_INCREASE_STATUS_PROTO_NO_CHANGE"),
+    2: .same(proto: "APP_STORE_PRICE_INCREASE_STATUS_PROTO_PENDING"),
+    3: .same(proto: "APP_STORE_PRICE_INCREASE_STATUS_PROTO_ACCEPTED"),
+    4: .same(proto: "APP_STORE_PRICE_INCREASE_STATUS_PROTO_DECLINED"),
   ]
 }
 
@@ -838,6 +1170,218 @@ extension AppStoreTransactionProto: SwiftProtobuf.Message, SwiftProtobuf._Messag
         if _storage._currency != rhs_storage._currency {return false}
         if _storage._price != rhs_storage._price {return false}
         if _storage._offerDiscountType != rhs_storage._offerDiscountType {return false}
+        return true
+      }
+      if !storagesAreEqual {return false}
+    }
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension AppStoreRenewalInfoProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "AppStoreRenewalInfoProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "auto_renew_product_id"),
+    2: .standard(proto: "auto_renew_status"),
+    3: .same(proto: "currency"),
+    4: .standard(proto: "eligible_win_back_offer_ids"),
+    5: .same(proto: "environment"),
+    6: .standard(proto: "expiration_intent"),
+    7: .standard(proto: "grace_period_expires_date"),
+    8: .standard(proto: "is_in_billing_retry_period"),
+    9: .standard(proto: "offer_discount_type"),
+    10: .standard(proto: "offer_identifier"),
+    11: .standard(proto: "offer_type"),
+    12: .standard(proto: "original_transaction_id"),
+    13: .standard(proto: "price_increase_status"),
+    14: .standard(proto: "product_id"),
+    15: .standard(proto: "recent_subscription_start_date"),
+    16: .standard(proto: "renewal_date"),
+    17: .standard(proto: "renewal_price"),
+    18: .standard(proto: "signed_date"),
+  ]
+
+  fileprivate class _StorageClass {
+    var _autoRenewProductID: String = String()
+    var _autoRenewStatus: AppStoreAutoRenewStatusProto = .unspecified
+    var _currency: String = String()
+    var _eligibleWinBackOfferIds: [String] = []
+    var _environment: AppStoreEnvironmentProto = .unspecified
+    var _expirationIntent: AppStoreExpirationIntentProto = .unspecified
+    var _gracePeriodExpiresDate: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+    var _isInBillingRetryPeriod: Bool = false
+    var _offerDiscountType: AppStoreOfferDiscountTypeProto = .unspecified
+    var _offerIdentifier: String = String()
+    var _offerType: AppStoreOfferTypeProto = .unspecified
+    var _originalTransactionID: String = String()
+    var _priceIncreaseStatus: AppStorePriceIncreaseStatusProto = .unspecified
+    var _productID: String = String()
+    var _recentSubscriptionStartDate: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+    var _renewalDate: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+    var _renewalPrice: Int64 = 0
+    var _signedDate: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+
+    #if swift(>=5.10)
+      // This property is used as the initial default value for new instances of the type.
+      // The type itself is protecting the reference to its storage via CoW semantics.
+      // This will force a copy to be made of this reference when the first mutation occurs;
+      // hence, it is safe to mark this as `nonisolated(unsafe)`.
+      static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
+
+    private init() {}
+
+    init(copying source: _StorageClass) {
+      _autoRenewProductID = source._autoRenewProductID
+      _autoRenewStatus = source._autoRenewStatus
+      _currency = source._currency
+      _eligibleWinBackOfferIds = source._eligibleWinBackOfferIds
+      _environment = source._environment
+      _expirationIntent = source._expirationIntent
+      _gracePeriodExpiresDate = source._gracePeriodExpiresDate
+      _isInBillingRetryPeriod = source._isInBillingRetryPeriod
+      _offerDiscountType = source._offerDiscountType
+      _offerIdentifier = source._offerIdentifier
+      _offerType = source._offerType
+      _originalTransactionID = source._originalTransactionID
+      _priceIncreaseStatus = source._priceIncreaseStatus
+      _productID = source._productID
+      _recentSubscriptionStartDate = source._recentSubscriptionStartDate
+      _renewalDate = source._renewalDate
+      _renewalPrice = source._renewalPrice
+      _signedDate = source._signedDate
+    }
+  }
+
+  fileprivate mutating func _uniqueStorage() -> _StorageClass {
+    if !isKnownUniquelyReferenced(&_storage) {
+      _storage = _StorageClass(copying: _storage)
+    }
+    return _storage
+  }
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    _ = _uniqueStorage()
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      while let fieldNumber = try decoder.nextFieldNumber() {
+        // The use of inline closures is to circumvent an issue where the compiler
+        // allocates stack space for every case branch when no optimizations are
+        // enabled. https://github.com/apple/swift-protobuf/issues/1034
+        switch fieldNumber {
+        case 1: try { try decoder.decodeSingularStringField(value: &_storage._autoRenewProductID) }()
+        case 2: try { try decoder.decodeSingularEnumField(value: &_storage._autoRenewStatus) }()
+        case 3: try { try decoder.decodeSingularStringField(value: &_storage._currency) }()
+        case 4: try { try decoder.decodeRepeatedStringField(value: &_storage._eligibleWinBackOfferIds) }()
+        case 5: try { try decoder.decodeSingularEnumField(value: &_storage._environment) }()
+        case 6: try { try decoder.decodeSingularEnumField(value: &_storage._expirationIntent) }()
+        case 7: try { try decoder.decodeSingularMessageField(value: &_storage._gracePeriodExpiresDate) }()
+        case 8: try { try decoder.decodeSingularBoolField(value: &_storage._isInBillingRetryPeriod) }()
+        case 9: try { try decoder.decodeSingularEnumField(value: &_storage._offerDiscountType) }()
+        case 10: try { try decoder.decodeSingularStringField(value: &_storage._offerIdentifier) }()
+        case 11: try { try decoder.decodeSingularEnumField(value: &_storage._offerType) }()
+        case 12: try { try decoder.decodeSingularStringField(value: &_storage._originalTransactionID) }()
+        case 13: try { try decoder.decodeSingularEnumField(value: &_storage._priceIncreaseStatus) }()
+        case 14: try { try decoder.decodeSingularStringField(value: &_storage._productID) }()
+        case 15: try { try decoder.decodeSingularMessageField(value: &_storage._recentSubscriptionStartDate) }()
+        case 16: try { try decoder.decodeSingularMessageField(value: &_storage._renewalDate) }()
+        case 17: try { try decoder.decodeSingularInt64Field(value: &_storage._renewalPrice) }()
+        case 18: try { try decoder.decodeSingularMessageField(value: &_storage._signedDate) }()
+        default: break
+        }
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every if/case branch local when no optimizations
+      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+      // https://github.com/apple/swift-protobuf/issues/1182
+      if !_storage._autoRenewProductID.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._autoRenewProductID, fieldNumber: 1)
+      }
+      if _storage._autoRenewStatus != .unspecified {
+        try visitor.visitSingularEnumField(value: _storage._autoRenewStatus, fieldNumber: 2)
+      }
+      if !_storage._currency.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._currency, fieldNumber: 3)
+      }
+      if !_storage._eligibleWinBackOfferIds.isEmpty {
+        try visitor.visitRepeatedStringField(value: _storage._eligibleWinBackOfferIds, fieldNumber: 4)
+      }
+      if _storage._environment != .unspecified {
+        try visitor.visitSingularEnumField(value: _storage._environment, fieldNumber: 5)
+      }
+      if _storage._expirationIntent != .unspecified {
+        try visitor.visitSingularEnumField(value: _storage._expirationIntent, fieldNumber: 6)
+      }
+      try { if let v = _storage._gracePeriodExpiresDate {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
+      } }()
+      if _storage._isInBillingRetryPeriod != false {
+        try visitor.visitSingularBoolField(value: _storage._isInBillingRetryPeriod, fieldNumber: 8)
+      }
+      if _storage._offerDiscountType != .unspecified {
+        try visitor.visitSingularEnumField(value: _storage._offerDiscountType, fieldNumber: 9)
+      }
+      if !_storage._offerIdentifier.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._offerIdentifier, fieldNumber: 10)
+      }
+      if _storage._offerType != .unspecified {
+        try visitor.visitSingularEnumField(value: _storage._offerType, fieldNumber: 11)
+      }
+      if !_storage._originalTransactionID.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._originalTransactionID, fieldNumber: 12)
+      }
+      if _storage._priceIncreaseStatus != .unspecified {
+        try visitor.visitSingularEnumField(value: _storage._priceIncreaseStatus, fieldNumber: 13)
+      }
+      if !_storage._productID.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._productID, fieldNumber: 14)
+      }
+      try { if let v = _storage._recentSubscriptionStartDate {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
+      } }()
+      try { if let v = _storage._renewalDate {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 16)
+      } }()
+      if _storage._renewalPrice != 0 {
+        try visitor.visitSingularInt64Field(value: _storage._renewalPrice, fieldNumber: 17)
+      }
+      try { if let v = _storage._signedDate {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 18)
+      } }()
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: AppStoreRenewalInfoProto, rhs: AppStoreRenewalInfoProto) -> Bool {
+    if lhs._storage !== rhs._storage {
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+        let _storage = _args.0
+        let rhs_storage = _args.1
+        if _storage._autoRenewProductID != rhs_storage._autoRenewProductID {return false}
+        if _storage._autoRenewStatus != rhs_storage._autoRenewStatus {return false}
+        if _storage._currency != rhs_storage._currency {return false}
+        if _storage._eligibleWinBackOfferIds != rhs_storage._eligibleWinBackOfferIds {return false}
+        if _storage._environment != rhs_storage._environment {return false}
+        if _storage._expirationIntent != rhs_storage._expirationIntent {return false}
+        if _storage._gracePeriodExpiresDate != rhs_storage._gracePeriodExpiresDate {return false}
+        if _storage._isInBillingRetryPeriod != rhs_storage._isInBillingRetryPeriod {return false}
+        if _storage._offerDiscountType != rhs_storage._offerDiscountType {return false}
+        if _storage._offerIdentifier != rhs_storage._offerIdentifier {return false}
+        if _storage._offerType != rhs_storage._offerType {return false}
+        if _storage._originalTransactionID != rhs_storage._originalTransactionID {return false}
+        if _storage._priceIncreaseStatus != rhs_storage._priceIncreaseStatus {return false}
+        if _storage._productID != rhs_storage._productID {return false}
+        if _storage._recentSubscriptionStartDate != rhs_storage._recentSubscriptionStartDate {return false}
+        if _storage._renewalDate != rhs_storage._renewalDate {return false}
+        if _storage._renewalPrice != rhs_storage._renewalPrice {return false}
+        if _storage._signedDate != rhs_storage._signedDate {return false}
         return true
       }
       if !storagesAreEqual {return false}
