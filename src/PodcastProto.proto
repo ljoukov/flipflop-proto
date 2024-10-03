@@ -411,8 +411,15 @@ message PodcastAppStoreTransactionProto {
   string jws = 1;
 }
 
+enum PodcastSubscriptionTypeProto {
+  PODCAST_SUBSCRIPTION_TYPE_PROTO_UNDEFINED = 0;
+  PODCAST_SUBSCRIPTION_TYPE_PROTO_WEEKLY = 1;
+  PODCAST_SUBSCRIPTION_TYPE_PROTO_MONTHLY = 2;
+  PODCAST_SUBSCRIPTION_TYPE_PROTO_ANNUAL = 3;
+}
+
 message PodcastSubscriptionTransactionProto {
-  string product_id = 1;
+  PodcastSubscriptionTypeProto subscription_type = 1;
   string appstore_token = 2;
 }
 

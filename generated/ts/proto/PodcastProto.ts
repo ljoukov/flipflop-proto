@@ -1124,9 +1124,9 @@ export interface PodcastAppStoreTransactionProto {
  */
 export interface PodcastSubscriptionTransactionProto {
     /**
-     * @generated from protobuf field: string product_id = 1;
+     * @generated from protobuf field: PodcastSubscriptionTypeProto subscription_type = 1;
      */
-    productId: string;
+    subscriptionType: PodcastSubscriptionTypeProto;
     /**
      * @generated from protobuf field: string appstore_token = 2;
      */
@@ -1203,6 +1203,27 @@ export enum PodcastHostProto {
      * @generated from protobuf enum value: PODCAST_HOST_PROTO_FEMALE = 2;
      */
     FEMALE = 2
+}
+/**
+ * @generated from protobuf enum PodcastSubscriptionTypeProto
+ */
+export enum PodcastSubscriptionTypeProto {
+    /**
+     * @generated from protobuf enum value: PODCAST_SUBSCRIPTION_TYPE_PROTO_UNDEFINED = 0;
+     */
+    UNDEFINED = 0,
+    /**
+     * @generated from protobuf enum value: PODCAST_SUBSCRIPTION_TYPE_PROTO_WEEKLY = 1;
+     */
+    WEEKLY = 1,
+    /**
+     * @generated from protobuf enum value: PODCAST_SUBSCRIPTION_TYPE_PROTO_MONTHLY = 2;
+     */
+    MONTHLY = 2,
+    /**
+     * @generated from protobuf enum value: PODCAST_SUBSCRIPTION_TYPE_PROTO_ANNUAL = 3;
+     */
+    ANNUAL = 3
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class PodcastRequestAuthProto$Type extends MessageType<PodcastRequestAuthProto> {
@@ -4948,13 +4969,13 @@ export const PodcastAppStoreTransactionProto = new PodcastAppStoreTransactionPro
 class PodcastSubscriptionTransactionProto$Type extends MessageType<PodcastSubscriptionTransactionProto> {
     constructor() {
         super("PodcastSubscriptionTransactionProto", [
-            { no: 1, name: "product_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 1, name: "subscription_type", kind: "enum", T: () => ["PodcastSubscriptionTypeProto", PodcastSubscriptionTypeProto, "PODCAST_SUBSCRIPTION_TYPE_PROTO_"] },
             { no: 2, name: "appstore_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PodcastSubscriptionTransactionProto>): PodcastSubscriptionTransactionProto {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.productId = "";
+        message.subscriptionType = 0;
         message.appstoreToken = "";
         if (value !== undefined)
             reflectionMergePartial<PodcastSubscriptionTransactionProto>(this, message, value);
@@ -4965,8 +4986,8 @@ class PodcastSubscriptionTransactionProto$Type extends MessageType<PodcastSubscr
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string product_id */ 1:
-                    message.productId = reader.string();
+                case /* PodcastSubscriptionTypeProto subscription_type */ 1:
+                    message.subscriptionType = reader.int32();
                     break;
                 case /* string appstore_token */ 2:
                     message.appstoreToken = reader.string();
@@ -4983,9 +5004,9 @@ class PodcastSubscriptionTransactionProto$Type extends MessageType<PodcastSubscr
         return message;
     }
     internalBinaryWrite(message: PodcastSubscriptionTransactionProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string product_id = 1; */
-        if (message.productId !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.productId);
+        /* PodcastSubscriptionTypeProto subscription_type = 1; */
+        if (message.subscriptionType !== 0)
+            writer.tag(1, WireType.Varint).int32(message.subscriptionType);
         /* string appstore_token = 2; */
         if (message.appstoreToken !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.appstoreToken);

@@ -146,6 +146,48 @@ enum PodcastHostProto: SwiftProtobuf.Enum, Swift.CaseIterable {
 
 }
 
+enum PodcastSubscriptionTypeProto: SwiftProtobuf.Enum, Swift.CaseIterable {
+  typealias RawValue = Int
+  case undefined // = 0
+  case weekly // = 1
+  case monthly // = 2
+  case annual // = 3
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .undefined
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .undefined
+    case 1: self = .weekly
+    case 2: self = .monthly
+    case 3: self = .annual
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .undefined: return 0
+    case .weekly: return 1
+    case .monthly: return 2
+    case .annual: return 3
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static let allCases: [PodcastSubscriptionTypeProto] = [
+    .undefined,
+    .weekly,
+    .monthly,
+    .annual,
+  ]
+
+}
+
 struct PodcastRequestAuthProto: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -1656,7 +1698,7 @@ struct PodcastSubscriptionTransactionProto: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var productID: String = String()
+  var subscriptionType: PodcastSubscriptionTypeProto = .undefined
 
   var appstoreToken: String = String()
 
@@ -1712,6 +1754,15 @@ extension PodcastHostProto: SwiftProtobuf._ProtoNameProviding {
     0: .same(proto: "PODCAST_HOST_PROTO_UNKNOWN"),
     1: .same(proto: "PODCAST_HOST_PROTO_MALE"),
     2: .same(proto: "PODCAST_HOST_PROTO_FEMALE"),
+  ]
+}
+
+extension PodcastSubscriptionTypeProto: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "PODCAST_SUBSCRIPTION_TYPE_PROTO_UNDEFINED"),
+    1: .same(proto: "PODCAST_SUBSCRIPTION_TYPE_PROTO_WEEKLY"),
+    2: .same(proto: "PODCAST_SUBSCRIPTION_TYPE_PROTO_MONTHLY"),
+    3: .same(proto: "PODCAST_SUBSCRIPTION_TYPE_PROTO_ANNUAL"),
   ]
 }
 
@@ -4907,7 +4958,7 @@ extension PodcastAppStoreTransactionProto: SwiftProtobuf.Message, SwiftProtobuf.
 extension PodcastSubscriptionTransactionProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "PodcastSubscriptionTransactionProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "product_id"),
+    1: .standard(proto: "subscription_type"),
     2: .standard(proto: "appstore_token"),
   ]
 
@@ -4917,7 +4968,7 @@ extension PodcastSubscriptionTransactionProto: SwiftProtobuf.Message, SwiftProto
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.productID) }()
+      case 1: try { try decoder.decodeSingularEnumField(value: &self.subscriptionType) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.appstoreToken) }()
       default: break
       }
@@ -4925,8 +4976,8 @@ extension PodcastSubscriptionTransactionProto: SwiftProtobuf.Message, SwiftProto
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.productID.isEmpty {
-      try visitor.visitSingularStringField(value: self.productID, fieldNumber: 1)
+    if self.subscriptionType != .undefined {
+      try visitor.visitSingularEnumField(value: self.subscriptionType, fieldNumber: 1)
     }
     if !self.appstoreToken.isEmpty {
       try visitor.visitSingularStringField(value: self.appstoreToken, fieldNumber: 2)
@@ -4935,7 +4986,7 @@ extension PodcastSubscriptionTransactionProto: SwiftProtobuf.Message, SwiftProto
   }
 
   static func ==(lhs: PodcastSubscriptionTransactionProto, rhs: PodcastSubscriptionTransactionProto) -> Bool {
-    if lhs.productID != rhs.productID {return false}
+    if lhs.subscriptionType != rhs.subscriptionType {return false}
     if lhs.appstoreToken != rhs.appstoreToken {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
