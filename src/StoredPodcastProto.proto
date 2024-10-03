@@ -283,18 +283,6 @@ message StoredPodcastStorySlideProto {
   string image_key = 6;
 }
 
-message StoredPodcastQueryCompletionsProto {
-  repeated StoredPodcastQueryCompletionsSectionProto section = 1;
-}
-
-message StoredPodcastQueryCompletionsSectionProto {
-  repeated StoredPodcastQueryCompletionProto query_completions = 1;
-}
-
-message StoredPodcastQueryCompletionProto {
-  string query = 1;
-}
-
 message StoredPodcastRoutineProto {
   string reasoning = 1;
   repeated StoredPodcastRoutineSegmentProto segments = 2;

@@ -845,15 +845,6 @@ struct FirestorePodcastSuggestionsProto: Sendable {
   /// Clears the value of `suggestions`. Subsequent reads from it will return its default value.
   mutating func clearSuggestions() {self._suggestions = nil}
 
-  var queryCompletions: PodcastQueryCompletionsProto {
-    get {return _queryCompletions ?? PodcastQueryCompletionsProto()}
-    set {_queryCompletions = newValue}
-  }
-  /// Returns true if `queryCompletions` has been explicitly set.
-  var hasQueryCompletions: Bool {return self._queryCompletions != nil}
-  /// Clears the value of `queryCompletions`. Subsequent reads from it will return its default value.
-  mutating func clearQueryCompletions() {self._queryCompletions = nil}
-
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -861,7 +852,6 @@ struct FirestorePodcastSuggestionsProto: Sendable {
   fileprivate var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
   fileprivate var _yourPodcastsShelf: YourPodcastsShelfProto? = nil
   fileprivate var _suggestions: PodcastSuggestionsProto? = nil
-  fileprivate var _queryCompletions: PodcastQueryCompletionsProto? = nil
 }
 
 struct YourPodcastsShelfProto: Sendable {
@@ -1434,30 +1424,6 @@ struct PodcastSuggestionsSectionProto: @unchecked Sendable {
   init() {}
 
   fileprivate var _storage = _StorageClass.defaultInstance
-}
-
-struct PodcastQueryCompletionsProto: Sendable {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  var queryCompletions: [PodcastQueryCompletionProto] = []
-
-  var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  init() {}
-}
-
-struct PodcastQueryCompletionProto: Sendable {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  var query: String = String()
-
-  var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  init() {}
 }
 
 struct PodcastStoryThumbnailProto: Sendable {
@@ -2950,7 +2916,6 @@ extension FirestorePodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf
     1: .standard(proto: "updated_at"),
     2: .standard(proto: "your_podcasts_shelf"),
     3: .same(proto: "suggestions"),
-    4: .standard(proto: "query_completions"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2962,7 +2927,6 @@ extension FirestorePodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf
       case 1: try { try decoder.decodeSingularMessageField(value: &self._updatedAt) }()
       case 2: try { try decoder.decodeSingularMessageField(value: &self._yourPodcastsShelf) }()
       case 3: try { try decoder.decodeSingularMessageField(value: &self._suggestions) }()
-      case 4: try { try decoder.decodeSingularMessageField(value: &self._queryCompletions) }()
       default: break
       }
     }
@@ -2982,9 +2946,6 @@ extension FirestorePodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf
     try { if let v = self._suggestions {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
     } }()
-    try { if let v = self._queryCompletions {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
-    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -2992,7 +2953,6 @@ extension FirestorePodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf
     if lhs._updatedAt != rhs._updatedAt {return false}
     if lhs._yourPodcastsShelf != rhs._yourPodcastsShelf {return false}
     if lhs._suggestions != rhs._suggestions {return false}
-    if lhs._queryCompletions != rhs._queryCompletions {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -4275,70 +4235,6 @@ extension PodcastSuggestionsSectionProto: SwiftProtobuf.Message, SwiftProtobuf._
       }
       if !storagesAreEqual {return false}
     }
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension PodcastQueryCompletionsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "PodcastQueryCompletionsProto"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "query_completions"),
-  ]
-
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.queryCompletions) }()
-      default: break
-      }
-    }
-  }
-
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.queryCompletions.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.queryCompletions, fieldNumber: 1)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  static func ==(lhs: PodcastQueryCompletionsProto, rhs: PodcastQueryCompletionsProto) -> Bool {
-    if lhs.queryCompletions != rhs.queryCompletions {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension PodcastQueryCompletionProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "PodcastQueryCompletionProto"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "query"),
-  ]
-
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.query) }()
-      default: break
-      }
-    }
-  }
-
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.query.isEmpty {
-      try visitor.visitSingularStringField(value: self.query, fieldNumber: 1)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  static func ==(lhs: PodcastQueryCompletionProto, rhs: PodcastQueryCompletionProto) -> Bool {
-    if lhs.query != rhs.query {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

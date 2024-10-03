@@ -463,10 +463,6 @@ export interface FirestorePodcastSuggestionsProto {
      * @generated from protobuf field: PodcastSuggestionsProto suggestions = 3;
      */
     suggestions?: PodcastSuggestionsProto;
-    /**
-     * @generated from protobuf field: PodcastQueryCompletionsProto query_completions = 4;
-     */
-    queryCompletions?: PodcastQueryCompletionsProto;
 }
 /**
  * @generated from protobuf message YourPodcastsShelfProto
@@ -941,24 +937,6 @@ export interface PodcastSuggestionsSectionProto {
      * @generated from protobuf field: PodcastStoryThumbnailProto story2 = 6;
      */
     story2?: PodcastStoryThumbnailProto;
-}
-/**
- * @generated from protobuf message PodcastQueryCompletionsProto
- */
-export interface PodcastQueryCompletionsProto {
-    /**
-     * @generated from protobuf field: repeated PodcastQueryCompletionProto query_completions = 1;
-     */
-    queryCompletions: PodcastQueryCompletionProto[];
-}
-/**
- * @generated from protobuf message PodcastQueryCompletionProto
- */
-export interface PodcastQueryCompletionProto {
-    /**
-     * @generated from protobuf field: string query = 1;
-     */
-    query: string;
 }
 /**
  * @generated from protobuf message PodcastStoryThumbnailProto
@@ -2493,8 +2471,7 @@ class FirestorePodcastSuggestionsProto$Type extends MessageType<FirestorePodcast
         super("FirestorePodcastSuggestionsProto", [
             { no: 1, name: "updated_at", kind: "message", T: () => Timestamp },
             { no: 2, name: "your_podcasts_shelf", kind: "message", T: () => YourPodcastsShelfProto },
-            { no: 3, name: "suggestions", kind: "message", T: () => PodcastSuggestionsProto },
-            { no: 4, name: "query_completions", kind: "message", T: () => PodcastQueryCompletionsProto }
+            { no: 3, name: "suggestions", kind: "message", T: () => PodcastSuggestionsProto }
         ]);
     }
     create(value?: PartialMessage<FirestorePodcastSuggestionsProto>): FirestorePodcastSuggestionsProto {
@@ -2517,9 +2494,6 @@ class FirestorePodcastSuggestionsProto$Type extends MessageType<FirestorePodcast
                 case /* PodcastSuggestionsProto suggestions */ 3:
                     message.suggestions = PodcastSuggestionsProto.internalBinaryRead(reader, reader.uint32(), options, message.suggestions);
                     break;
-                case /* PodcastQueryCompletionsProto query_completions */ 4:
-                    message.queryCompletions = PodcastQueryCompletionsProto.internalBinaryRead(reader, reader.uint32(), options, message.queryCompletions);
-                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -2541,9 +2515,6 @@ class FirestorePodcastSuggestionsProto$Type extends MessageType<FirestorePodcast
         /* PodcastSuggestionsProto suggestions = 3; */
         if (message.suggestions)
             PodcastSuggestionsProto.internalBinaryWrite(message.suggestions, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* PodcastQueryCompletionsProto query_completions = 4; */
-        if (message.queryCompletions)
-            PodcastQueryCompletionsProto.internalBinaryWrite(message.queryCompletions, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -4222,100 +4193,6 @@ class PodcastSuggestionsSectionProto$Type extends MessageType<PodcastSuggestions
  * @generated MessageType for protobuf message PodcastSuggestionsSectionProto
  */
 export const PodcastSuggestionsSectionProto = new PodcastSuggestionsSectionProto$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class PodcastQueryCompletionsProto$Type extends MessageType<PodcastQueryCompletionsProto> {
-    constructor() {
-        super("PodcastQueryCompletionsProto", [
-            { no: 1, name: "query_completions", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastQueryCompletionProto }
-        ]);
-    }
-    create(value?: PartialMessage<PodcastQueryCompletionsProto>): PodcastQueryCompletionsProto {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.queryCompletions = [];
-        if (value !== undefined)
-            reflectionMergePartial<PodcastQueryCompletionsProto>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastQueryCompletionsProto): PodcastQueryCompletionsProto {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* repeated PodcastQueryCompletionProto query_completions */ 1:
-                    message.queryCompletions.push(PodcastQueryCompletionProto.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: PodcastQueryCompletionsProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated PodcastQueryCompletionProto query_completions = 1; */
-        for (let i = 0; i < message.queryCompletions.length; i++)
-            PodcastQueryCompletionProto.internalBinaryWrite(message.queryCompletions[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message PodcastQueryCompletionsProto
- */
-export const PodcastQueryCompletionsProto = new PodcastQueryCompletionsProto$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class PodcastQueryCompletionProto$Type extends MessageType<PodcastQueryCompletionProto> {
-    constructor() {
-        super("PodcastQueryCompletionProto", [
-            { no: 1, name: "query", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
-        ]);
-    }
-    create(value?: PartialMessage<PodcastQueryCompletionProto>): PodcastQueryCompletionProto {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.query = "";
-        if (value !== undefined)
-            reflectionMergePartial<PodcastQueryCompletionProto>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastQueryCompletionProto): PodcastQueryCompletionProto {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string query */ 1:
-                    message.query = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: PodcastQueryCompletionProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string query = 1; */
-        if (message.query !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.query);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message PodcastQueryCompletionProto
- */
-export const PodcastQueryCompletionProto = new PodcastQueryCompletionProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class PodcastStoryThumbnailProto$Type extends MessageType<PodcastStoryThumbnailProto> {
     constructor() {

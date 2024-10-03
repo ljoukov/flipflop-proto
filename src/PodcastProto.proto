@@ -148,7 +148,6 @@ message FirestorePodcastSuggestionsProto {
   google.protobuf.Timestamp updated_at = 1;
   YourPodcastsShelfProto your_podcasts_shelf = 2;
   PodcastSuggestionsProto suggestions = 3;
-  PodcastQueryCompletionsProto query_completions = 4;
 }
 
 message YourPodcastsShelfProto {
@@ -347,14 +346,6 @@ message PodcastSuggestionsSectionProto {
 
   PodcastStoryThumbnailProto story1 = 5;
   PodcastStoryThumbnailProto story2 = 6;
-}
-
-message PodcastQueryCompletionsProto {
-  repeated PodcastQueryCompletionProto query_completions = 1;
-}
-
-message PodcastQueryCompletionProto {
-  string query = 1;
 }
 
 message PodcastStoryThumbnailProto {
