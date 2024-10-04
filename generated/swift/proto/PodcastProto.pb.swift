@@ -1547,31 +1547,31 @@ struct PodcastAppStoreTransactionProto: Sendable {
   init() {}
 }
 
-struct PodcastUserProgress: Sendable {
+struct PodcastUserProgressProto: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var routineProgress: Dictionary<String,PodcastRoutineProgress> = [:]
+  var routineProgress: Dictionary<String,PodcastRoutineProgressProto> = [:]
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 }
 
-struct PodcastRoutineProgress: Sendable {
+struct PodcastRoutineProgressProto: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var stepProgress: Dictionary<String,PodcastRoutineStepProgress> = [:]
+  var stepProgress: Dictionary<String,PodcastRoutineStepProgressProto> = [:]
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 }
 
-struct PodcastRoutineStepProgress: Sendable {
+struct PodcastRoutineStepProgressProto: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -4621,8 +4621,8 @@ extension PodcastAppStoreTransactionProto: SwiftProtobuf.Message, SwiftProtobuf.
   }
 }
 
-extension PodcastUserProgress: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "PodcastUserProgress"
+extension PodcastUserProgressProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastUserProgressProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "routine_progress"),
   ]
@@ -4633,7 +4633,7 @@ extension PodcastUserProgress: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,PodcastRoutineProgress>.self, value: &self.routineProgress) }()
+      case 1: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,PodcastRoutineProgressProto>.self, value: &self.routineProgress) }()
       default: break
       }
     }
@@ -4641,20 +4641,20 @@ extension PodcastUserProgress: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     if !self.routineProgress.isEmpty {
-      try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,PodcastRoutineProgress>.self, value: self.routineProgress, fieldNumber: 1)
+      try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,PodcastRoutineProgressProto>.self, value: self.routineProgress, fieldNumber: 1)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: PodcastUserProgress, rhs: PodcastUserProgress) -> Bool {
+  static func ==(lhs: PodcastUserProgressProto, rhs: PodcastUserProgressProto) -> Bool {
     if lhs.routineProgress != rhs.routineProgress {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
-extension PodcastRoutineProgress: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "PodcastRoutineProgress"
+extension PodcastRoutineProgressProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastRoutineProgressProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "step_progress"),
   ]
@@ -4665,7 +4665,7 @@ extension PodcastRoutineProgress: SwiftProtobuf.Message, SwiftProtobuf._MessageI
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,PodcastRoutineStepProgress>.self, value: &self.stepProgress) }()
+      case 1: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,PodcastRoutineStepProgressProto>.self, value: &self.stepProgress) }()
       default: break
       }
     }
@@ -4673,20 +4673,20 @@ extension PodcastRoutineProgress: SwiftProtobuf.Message, SwiftProtobuf._MessageI
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     if !self.stepProgress.isEmpty {
-      try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,PodcastRoutineStepProgress>.self, value: self.stepProgress, fieldNumber: 1)
+      try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,PodcastRoutineStepProgressProto>.self, value: self.stepProgress, fieldNumber: 1)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: PodcastRoutineProgress, rhs: PodcastRoutineProgress) -> Bool {
+  static func ==(lhs: PodcastRoutineProgressProto, rhs: PodcastRoutineProgressProto) -> Bool {
     if lhs.stepProgress != rhs.stepProgress {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
-extension PodcastRoutineStepProgress: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "PodcastRoutineStepProgress"
+extension PodcastRoutineStepProgressProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastRoutineStepProgressProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "completed_at"),
     2: .same(proto: "completed"),
@@ -4719,7 +4719,7 @@ extension PodcastRoutineStepProgress: SwiftProtobuf.Message, SwiftProtobuf._Mess
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: PodcastRoutineStepProgress, rhs: PodcastRoutineStepProgress) -> Bool {
+  static func ==(lhs: PodcastRoutineStepProgressProto, rhs: PodcastRoutineStepProgressProto) -> Bool {
     if lhs._completedAt != rhs._completedAt {return false}
     if lhs.completed != rhs.completed {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}

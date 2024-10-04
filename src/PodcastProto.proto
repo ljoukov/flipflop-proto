@@ -392,15 +392,15 @@ message PodcastAppStoreTransactionProto {
   string renewal_info_jws = 2;
 }
 
-message PodcastUserProgress {
-  map<string, PodcastRoutineProgress> routine_progress = 1;
+message PodcastUserProgressProto {
+  map<string, PodcastRoutineProgressProto> routine_progress = 1;
 }
 
-message PodcastRoutineProgress {
-  map<string, PodcastRoutineStepProgress> step_progress = 1;
+message PodcastRoutineProgressProto {
+  map<string, PodcastRoutineStepProgressProto> step_progress = 1;
 }
 
-message PodcastRoutineStepProgress {
+message PodcastRoutineStepProgressProto {
   google.protobuf.Timestamp completed_at = 1;
   bool completed = 2;
 }

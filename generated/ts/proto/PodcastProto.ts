@@ -1058,31 +1058,31 @@ export interface PodcastAppStoreTransactionProto {
     renewalInfoJws: string;
 }
 /**
- * @generated from protobuf message PodcastUserProgress
+ * @generated from protobuf message PodcastUserProgressProto
  */
-export interface PodcastUserProgress {
+export interface PodcastUserProgressProto {
     /**
-     * @generated from protobuf field: map<string, PodcastRoutineProgress> routine_progress = 1;
+     * @generated from protobuf field: map<string, PodcastRoutineProgressProto> routine_progress = 1;
      */
     routineProgress: {
-        [key: string]: PodcastRoutineProgress;
+        [key: string]: PodcastRoutineProgressProto;
     };
 }
 /**
- * @generated from protobuf message PodcastRoutineProgress
+ * @generated from protobuf message PodcastRoutineProgressProto
  */
-export interface PodcastRoutineProgress {
+export interface PodcastRoutineProgressProto {
     /**
-     * @generated from protobuf field: map<string, PodcastRoutineStepProgress> step_progress = 1;
+     * @generated from protobuf field: map<string, PodcastRoutineStepProgressProto> step_progress = 1;
      */
     stepProgress: {
-        [key: string]: PodcastRoutineStepProgress;
+        [key: string]: PodcastRoutineStepProgressProto;
     };
 }
 /**
- * @generated from protobuf message PodcastRoutineStepProgress
+ * @generated from protobuf message PodcastRoutineStepProgressProto
  */
-export interface PodcastRoutineStepProgress {
+export interface PodcastRoutineStepProgressProto {
     /**
      * @generated from protobuf field: google.protobuf.Timestamp completed_at = 1;
      */
@@ -4695,25 +4695,25 @@ class PodcastAppStoreTransactionProto$Type extends MessageType<PodcastAppStoreTr
  */
 export const PodcastAppStoreTransactionProto = new PodcastAppStoreTransactionProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class PodcastUserProgress$Type extends MessageType<PodcastUserProgress> {
+class PodcastUserProgressProto$Type extends MessageType<PodcastUserProgressProto> {
     constructor() {
-        super("PodcastUserProgress", [
-            { no: 1, name: "routine_progress", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => PodcastRoutineProgress } }
+        super("PodcastUserProgressProto", [
+            { no: 1, name: "routine_progress", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => PodcastRoutineProgressProto } }
         ]);
     }
-    create(value?: PartialMessage<PodcastUserProgress>): PodcastUserProgress {
+    create(value?: PartialMessage<PodcastUserProgressProto>): PodcastUserProgressProto {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.routineProgress = {};
         if (value !== undefined)
-            reflectionMergePartial<PodcastUserProgress>(this, message, value);
+            reflectionMergePartial<PodcastUserProgressProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastUserProgress): PodcastUserProgress {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastUserProgressProto): PodcastUserProgressProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* map<string, PodcastRoutineProgress> routine_progress */ 1:
+                case /* map<string, PodcastRoutineProgressProto> routine_progress */ 1:
                     this.binaryReadMap1(message.routineProgress, reader, options);
                     break;
                 default:
@@ -4727,8 +4727,8 @@ class PodcastUserProgress$Type extends MessageType<PodcastUserProgress> {
         }
         return message;
     }
-    private binaryReadMap1(map: PodcastUserProgress["routineProgress"], reader: IBinaryReader, options: BinaryReadOptions): void {
-        let len = reader.uint32(), end = reader.pos + len, key: keyof PodcastUserProgress["routineProgress"] | undefined, val: PodcastUserProgress["routineProgress"][any] | undefined;
+    private binaryReadMap1(map: PodcastUserProgressProto["routineProgress"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof PodcastUserProgressProto["routineProgress"] | undefined, val: PodcastUserProgressProto["routineProgress"][any] | undefined;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
@@ -4736,19 +4736,19 @@ class PodcastUserProgress$Type extends MessageType<PodcastUserProgress> {
                     key = reader.string();
                     break;
                 case 2:
-                    val = PodcastRoutineProgress.internalBinaryRead(reader, reader.uint32(), options);
+                    val = PodcastRoutineProgressProto.internalBinaryRead(reader, reader.uint32(), options);
                     break;
-                default: throw new globalThis.Error("unknown map entry field for field PodcastUserProgress.routine_progress");
+                default: throw new globalThis.Error("unknown map entry field for field PodcastUserProgressProto.routine_progress");
             }
         }
-        map[key ?? ""] = val ?? PodcastRoutineProgress.create();
+        map[key ?? ""] = val ?? PodcastRoutineProgressProto.create();
     }
-    internalBinaryWrite(message: PodcastUserProgress, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* map<string, PodcastRoutineProgress> routine_progress = 1; */
+    internalBinaryWrite(message: PodcastUserProgressProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* map<string, PodcastRoutineProgressProto> routine_progress = 1; */
         for (let k of globalThis.Object.keys(message.routineProgress)) {
             writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k);
             writer.tag(2, WireType.LengthDelimited).fork();
-            PodcastRoutineProgress.internalBinaryWrite(message.routineProgress[k], writer, options);
+            PodcastRoutineProgressProto.internalBinaryWrite(message.routineProgress[k], writer, options);
             writer.join().join();
         }
         let u = options.writeUnknownFields;
@@ -4758,29 +4758,29 @@ class PodcastUserProgress$Type extends MessageType<PodcastUserProgress> {
     }
 }
 /**
- * @generated MessageType for protobuf message PodcastUserProgress
+ * @generated MessageType for protobuf message PodcastUserProgressProto
  */
-export const PodcastUserProgress = new PodcastUserProgress$Type();
+export const PodcastUserProgressProto = new PodcastUserProgressProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class PodcastRoutineProgress$Type extends MessageType<PodcastRoutineProgress> {
+class PodcastRoutineProgressProto$Type extends MessageType<PodcastRoutineProgressProto> {
     constructor() {
-        super("PodcastRoutineProgress", [
-            { no: 1, name: "step_progress", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => PodcastRoutineStepProgress } }
+        super("PodcastRoutineProgressProto", [
+            { no: 1, name: "step_progress", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => PodcastRoutineStepProgressProto } }
         ]);
     }
-    create(value?: PartialMessage<PodcastRoutineProgress>): PodcastRoutineProgress {
+    create(value?: PartialMessage<PodcastRoutineProgressProto>): PodcastRoutineProgressProto {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.stepProgress = {};
         if (value !== undefined)
-            reflectionMergePartial<PodcastRoutineProgress>(this, message, value);
+            reflectionMergePartial<PodcastRoutineProgressProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastRoutineProgress): PodcastRoutineProgress {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastRoutineProgressProto): PodcastRoutineProgressProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* map<string, PodcastRoutineStepProgress> step_progress */ 1:
+                case /* map<string, PodcastRoutineStepProgressProto> step_progress */ 1:
                     this.binaryReadMap1(message.stepProgress, reader, options);
                     break;
                 default:
@@ -4794,8 +4794,8 @@ class PodcastRoutineProgress$Type extends MessageType<PodcastRoutineProgress> {
         }
         return message;
     }
-    private binaryReadMap1(map: PodcastRoutineProgress["stepProgress"], reader: IBinaryReader, options: BinaryReadOptions): void {
-        let len = reader.uint32(), end = reader.pos + len, key: keyof PodcastRoutineProgress["stepProgress"] | undefined, val: PodcastRoutineProgress["stepProgress"][any] | undefined;
+    private binaryReadMap1(map: PodcastRoutineProgressProto["stepProgress"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof PodcastRoutineProgressProto["stepProgress"] | undefined, val: PodcastRoutineProgressProto["stepProgress"][any] | undefined;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
@@ -4803,19 +4803,19 @@ class PodcastRoutineProgress$Type extends MessageType<PodcastRoutineProgress> {
                     key = reader.string();
                     break;
                 case 2:
-                    val = PodcastRoutineStepProgress.internalBinaryRead(reader, reader.uint32(), options);
+                    val = PodcastRoutineStepProgressProto.internalBinaryRead(reader, reader.uint32(), options);
                     break;
-                default: throw new globalThis.Error("unknown map entry field for field PodcastRoutineProgress.step_progress");
+                default: throw new globalThis.Error("unknown map entry field for field PodcastRoutineProgressProto.step_progress");
             }
         }
-        map[key ?? ""] = val ?? PodcastRoutineStepProgress.create();
+        map[key ?? ""] = val ?? PodcastRoutineStepProgressProto.create();
     }
-    internalBinaryWrite(message: PodcastRoutineProgress, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* map<string, PodcastRoutineStepProgress> step_progress = 1; */
+    internalBinaryWrite(message: PodcastRoutineProgressProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* map<string, PodcastRoutineStepProgressProto> step_progress = 1; */
         for (let k of globalThis.Object.keys(message.stepProgress)) {
             writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k);
             writer.tag(2, WireType.LengthDelimited).fork();
-            PodcastRoutineStepProgress.internalBinaryWrite(message.stepProgress[k], writer, options);
+            PodcastRoutineStepProgressProto.internalBinaryWrite(message.stepProgress[k], writer, options);
             writer.join().join();
         }
         let u = options.writeUnknownFields;
@@ -4825,25 +4825,25 @@ class PodcastRoutineProgress$Type extends MessageType<PodcastRoutineProgress> {
     }
 }
 /**
- * @generated MessageType for protobuf message PodcastRoutineProgress
+ * @generated MessageType for protobuf message PodcastRoutineProgressProto
  */
-export const PodcastRoutineProgress = new PodcastRoutineProgress$Type();
+export const PodcastRoutineProgressProto = new PodcastRoutineProgressProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class PodcastRoutineStepProgress$Type extends MessageType<PodcastRoutineStepProgress> {
+class PodcastRoutineStepProgressProto$Type extends MessageType<PodcastRoutineStepProgressProto> {
     constructor() {
-        super("PodcastRoutineStepProgress", [
+        super("PodcastRoutineStepProgressProto", [
             { no: 1, name: "completed_at", kind: "message", T: () => Timestamp },
             { no: 2, name: "completed", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
-    create(value?: PartialMessage<PodcastRoutineStepProgress>): PodcastRoutineStepProgress {
+    create(value?: PartialMessage<PodcastRoutineStepProgressProto>): PodcastRoutineStepProgressProto {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.completed = false;
         if (value !== undefined)
-            reflectionMergePartial<PodcastRoutineStepProgress>(this, message, value);
+            reflectionMergePartial<PodcastRoutineStepProgressProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastRoutineStepProgress): PodcastRoutineStepProgress {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastRoutineStepProgressProto): PodcastRoutineStepProgressProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -4865,7 +4865,7 @@ class PodcastRoutineStepProgress$Type extends MessageType<PodcastRoutineStepProg
         }
         return message;
     }
-    internalBinaryWrite(message: PodcastRoutineStepProgress, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: PodcastRoutineStepProgressProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* google.protobuf.Timestamp completed_at = 1; */
         if (message.completedAt)
             Timestamp.internalBinaryWrite(message.completedAt, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
@@ -4879,6 +4879,6 @@ class PodcastRoutineStepProgress$Type extends MessageType<PodcastRoutineStepProg
     }
 }
 /**
- * @generated MessageType for protobuf message PodcastRoutineStepProgress
+ * @generated MessageType for protobuf message PodcastRoutineStepProgressProto
  */
-export const PodcastRoutineStepProgress = new PodcastRoutineStepProgress$Type();
+export const PodcastRoutineStepProgressProto = new PodcastRoutineStepProgressProto$Type();
