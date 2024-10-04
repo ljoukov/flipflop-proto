@@ -310,31 +310,3 @@ enum StoredPodcastTypeProto {
   STORED_PODCAST_TYPE_PROTO_EXERCISE = 2;
   STORED_PODCAST_TYPE_PROTO_MEDITATION = 3;
 }
-
-message StoredPodcastUserProto {
-  string user_id = 1;
-  google.protobuf.Timestamp created_at = 2;
-  google.protobuf.Timestamp updated_at = 3;
-  StoredPodcastSubscriptionProto subscription = 4;
-}
-
-message StoredPodcastSubscriptionProto {
-  StoredPodcastSubscriptionTypeProto subscription_type = 1;
-  google.protobuf.Timestamp subscription_purchased_at = 2;
-  google.protobuf.Timestamp subscription_expires_at = 3;
-  StoredPodcastUserAppStoreStateProto appstore_state = 4;
-}
-
-enum StoredPodcastSubscriptionTypeProto {
-  STORED_PODCAST_SUBSCRIPTION_TYPE_PROTO_UNDEFINED = 0;
-  STORED_PODCAST_SUBSCRIPTION_TYPE_PROTO_FREE = 1;
-  STORED_PODCAST_SUBSCRIPTION_TYPE_PROTO_WEEKLY = 2;
-  STORED_PODCAST_SUBSCRIPTION_TYPE_PROTO_MONTHLY = 3;
-  STORED_PODCAST_SUBSCRIPTION_TYPE_PROTO_ANNUAL = 4;
-}
-
-message StoredPodcastUserAppStoreStateProto {
-  string original_transaction_id = 1;
-  string latest_transaction_id = 2;
-  google.protobuf.Timestamp latest_transaction_timestamp = 3;
-}
