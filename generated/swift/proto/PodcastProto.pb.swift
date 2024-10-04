@@ -1490,6 +1490,8 @@ struct PodcastRoutineProto: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  var routineID: String = String()
+
   var segments: [PodcastRoutineSegmentProto] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -1518,6 +1520,8 @@ struct PodcastRoutineStepProto: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  var stepID: String = String()
+
   var title: String = String()
 
   var outline: String = String()
@@ -1541,6 +1545,53 @@ struct PodcastAppStoreTransactionProto: Sendable {
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
+}
+
+struct PodcastUserProgress: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var routineProgress: Dictionary<String,PodcastRoutineProgress> = [:]
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct PodcastRoutineProgress: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var stepProgress: Dictionary<String,PodcastRoutineStepProgress> = [:]
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct PodcastRoutineStepProgress: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var completedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _completedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_completedAt = newValue}
+  }
+  /// Returns true if `completedAt` has been explicitly set.
+  var hasCompletedAt: Bool {return self._completedAt != nil}
+  /// Clears the value of `completedAt`. Subsequent reads from it will return its default value.
+  mutating func clearCompletedAt() {self._completedAt = nil}
+
+  var completed: Bool = false
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+
+  fileprivate var _completedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
@@ -4403,6 +4454,7 @@ extension PodcastStorySlideProto: SwiftProtobuf.Message, SwiftProtobuf._MessageI
 extension PodcastRoutineProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "PodcastRoutineProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    2: .standard(proto: "routine_id"),
     1: .same(proto: "segments"),
   ]
 
@@ -4413,6 +4465,7 @@ extension PodcastRoutineProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeRepeatedMessageField(value: &self.segments) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.routineID) }()
       default: break
       }
     }
@@ -4422,10 +4475,14 @@ extension PodcastRoutineProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     if !self.segments.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.segments, fieldNumber: 1)
     }
+    if !self.routineID.isEmpty {
+      try visitor.visitSingularStringField(value: self.routineID, fieldNumber: 2)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: PodcastRoutineProto, rhs: PodcastRoutineProto) -> Bool {
+    if lhs.routineID != rhs.routineID {return false}
     if lhs.segments != rhs.segments {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
@@ -4479,6 +4536,7 @@ extension PodcastRoutineSegmentProto: SwiftProtobuf.Message, SwiftProtobuf._Mess
 extension PodcastRoutineStepProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "PodcastRoutineStepProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    4: .standard(proto: "step_id"),
     1: .same(proto: "title"),
     2: .same(proto: "outline"),
     3: .standard(proto: "thumbnail_path"),
@@ -4493,6 +4551,7 @@ extension PodcastRoutineStepProto: SwiftProtobuf.Message, SwiftProtobuf._Message
       case 1: try { try decoder.decodeSingularStringField(value: &self.title) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.outline) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.thumbnailPath) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.stepID) }()
       default: break
       }
     }
@@ -4508,10 +4567,14 @@ extension PodcastRoutineStepProto: SwiftProtobuf.Message, SwiftProtobuf._Message
     if !self.thumbnailPath.isEmpty {
       try visitor.visitSingularStringField(value: self.thumbnailPath, fieldNumber: 3)
     }
+    if !self.stepID.isEmpty {
+      try visitor.visitSingularStringField(value: self.stepID, fieldNumber: 4)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: PodcastRoutineStepProto, rhs: PodcastRoutineStepProto) -> Bool {
+    if lhs.stepID != rhs.stepID {return false}
     if lhs.title != rhs.title {return false}
     if lhs.outline != rhs.outline {return false}
     if lhs.thumbnailPath != rhs.thumbnailPath {return false}
@@ -4553,6 +4616,112 @@ extension PodcastAppStoreTransactionProto: SwiftProtobuf.Message, SwiftProtobuf.
   static func ==(lhs: PodcastAppStoreTransactionProto, rhs: PodcastAppStoreTransactionProto) -> Bool {
     if lhs.transactionJws != rhs.transactionJws {return false}
     if lhs.renewalInfoJws != rhs.renewalInfoJws {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension PodcastUserProgress: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastUserProgress"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "routine_progress"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,PodcastRoutineProgress>.self, value: &self.routineProgress) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.routineProgress.isEmpty {
+      try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,PodcastRoutineProgress>.self, value: self.routineProgress, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PodcastUserProgress, rhs: PodcastUserProgress) -> Bool {
+    if lhs.routineProgress != rhs.routineProgress {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension PodcastRoutineProgress: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastRoutineProgress"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "step_progress"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,PodcastRoutineStepProgress>.self, value: &self.stepProgress) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.stepProgress.isEmpty {
+      try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,PodcastRoutineStepProgress>.self, value: self.stepProgress, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PodcastRoutineProgress, rhs: PodcastRoutineProgress) -> Bool {
+    if lhs.stepProgress != rhs.stepProgress {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension PodcastRoutineStepProgress: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastRoutineStepProgress"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "completed_at"),
+    2: .same(proto: "completed"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._completedAt) }()
+      case 2: try { try decoder.decodeSingularBoolField(value: &self.completed) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._completedAt {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    if self.completed != false {
+      try visitor.visitSingularBoolField(value: self.completed, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PodcastRoutineStepProgress, rhs: PodcastRoutineStepProgress) -> Bool {
+    if lhs._completedAt != rhs._completedAt {return false}
+    if lhs.completed != rhs.completed {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

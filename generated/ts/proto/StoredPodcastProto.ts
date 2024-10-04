@@ -641,6 +641,10 @@ export interface StoredPodcastStorySlideProto {
  */
 export interface StoredPodcastRoutineProto {
     /**
+     * @generated from protobuf field: string routine_id = 4;
+     */
+    routineId: string;
+    /**
      * @generated from protobuf field: string reasoning = 1;
      */
     reasoning: string;
@@ -662,6 +666,10 @@ export interface StoredPodcastRoutineSegmentProto {
      */
     segmentId: string;
     /**
+     * @generated from protobuf field: string segment_label = 5;
+     */
+    segmentLabel: string;
+    /**
      * @generated from protobuf field: string reasoning = 2;
      */
     reasoning: string;
@@ -678,6 +686,10 @@ export interface StoredPodcastRoutineSegmentProto {
  * @generated from protobuf message StoredPodcastRoutineStepProto
  */
 export interface StoredPodcastRoutineStepProto {
+    /**
+     * @generated from protobuf field: string step_id = 6;
+     */
+    stepId: string;
     /**
      * @generated from protobuf field: StoredPodcastTypeProto type = 1;
      */
@@ -2825,6 +2837,7 @@ export const StoredPodcastStorySlideProto = new StoredPodcastStorySlideProto$Typ
 class StoredPodcastRoutineProto$Type extends MessageType<StoredPodcastRoutineProto> {
     constructor() {
         super("StoredPodcastRoutineProto", [
+            { no: 4, name: "routine_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 1, name: "reasoning", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "segments", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastRoutineSegmentProto },
             { no: 3, name: "style", kind: "message", T: () => StoredPodcastStyleProto }
@@ -2832,6 +2845,7 @@ class StoredPodcastRoutineProto$Type extends MessageType<StoredPodcastRoutinePro
     }
     create(value?: PartialMessage<StoredPodcastRoutineProto>): StoredPodcastRoutineProto {
         const message = globalThis.Object.create((this.messagePrototype!));
+        message.routineId = "";
         message.reasoning = "";
         message.segments = [];
         if (value !== undefined)
@@ -2843,6 +2857,9 @@ class StoredPodcastRoutineProto$Type extends MessageType<StoredPodcastRoutinePro
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
+                case /* string routine_id */ 4:
+                    message.routineId = reader.string();
+                    break;
                 case /* string reasoning */ 1:
                     message.reasoning = reader.string();
                     break;
@@ -2864,6 +2881,9 @@ class StoredPodcastRoutineProto$Type extends MessageType<StoredPodcastRoutinePro
         return message;
     }
     internalBinaryWrite(message: StoredPodcastRoutineProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string routine_id = 4; */
+        if (message.routineId !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.routineId);
         /* string reasoning = 1; */
         if (message.reasoning !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.reasoning);
@@ -2888,6 +2908,7 @@ class StoredPodcastRoutineSegmentProto$Type extends MessageType<StoredPodcastRou
     constructor() {
         super("StoredPodcastRoutineSegmentProto", [
             { no: 1, name: "segment_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "segment_label", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "reasoning", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "steps", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastRoutineStepProto }
@@ -2896,6 +2917,7 @@ class StoredPodcastRoutineSegmentProto$Type extends MessageType<StoredPodcastRou
     create(value?: PartialMessage<StoredPodcastRoutineSegmentProto>): StoredPodcastRoutineSegmentProto {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.segmentId = "";
+        message.segmentLabel = "";
         message.reasoning = "";
         message.title = "";
         message.steps = [];
@@ -2910,6 +2932,9 @@ class StoredPodcastRoutineSegmentProto$Type extends MessageType<StoredPodcastRou
             switch (fieldNo) {
                 case /* string segment_id */ 1:
                     message.segmentId = reader.string();
+                    break;
+                case /* string segment_label */ 5:
+                    message.segmentLabel = reader.string();
                     break;
                 case /* string reasoning */ 2:
                     message.reasoning = reader.string();
@@ -2935,6 +2960,9 @@ class StoredPodcastRoutineSegmentProto$Type extends MessageType<StoredPodcastRou
         /* string segment_id = 1; */
         if (message.segmentId !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.segmentId);
+        /* string segment_label = 5; */
+        if (message.segmentLabel !== "")
+            writer.tag(5, WireType.LengthDelimited).string(message.segmentLabel);
         /* string reasoning = 2; */
         if (message.reasoning !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.reasoning);
@@ -2958,6 +2986,7 @@ export const StoredPodcastRoutineSegmentProto = new StoredPodcastRoutineSegmentP
 class StoredPodcastRoutineStepProto$Type extends MessageType<StoredPodcastRoutineStepProto> {
     constructor() {
         super("StoredPodcastRoutineStepProto", [
+            { no: 6, name: "step_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 1, name: "type", kind: "enum", T: () => ["StoredPodcastTypeProto", StoredPodcastTypeProto, "STORED_PODCAST_TYPE_PROTO_"] },
             { no: 2, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "outline", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
@@ -2967,6 +2996,7 @@ class StoredPodcastRoutineStepProto$Type extends MessageType<StoredPodcastRoutin
     }
     create(value?: PartialMessage<StoredPodcastRoutineStepProto>): StoredPodcastRoutineStepProto {
         const message = globalThis.Object.create((this.messagePrototype!));
+        message.stepId = "";
         message.type = 0;
         message.title = "";
         message.outline = "";
@@ -2981,6 +3011,9 @@ class StoredPodcastRoutineStepProto$Type extends MessageType<StoredPodcastRoutin
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
+                case /* string step_id */ 6:
+                    message.stepId = reader.string();
+                    break;
                 case /* StoredPodcastTypeProto type */ 1:
                     message.type = reader.int32();
                     break;
@@ -3008,6 +3041,9 @@ class StoredPodcastRoutineStepProto$Type extends MessageType<StoredPodcastRoutin
         return message;
     }
     internalBinaryWrite(message: StoredPodcastRoutineStepProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string step_id = 6; */
+        if (message.stepId !== "")
+            writer.tag(6, WireType.LengthDelimited).string(message.stepId);
         /* StoredPodcastTypeProto type = 1; */
         if (message.type !== 0)
             writer.tag(1, WireType.Varint).int32(message.type);

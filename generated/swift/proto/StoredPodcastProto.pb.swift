@@ -1114,6 +1114,8 @@ struct StoredPodcastRoutineProto: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  var routineID: String = String()
+
   var reasoning: String = String()
 
   var segments: [StoredPodcastRoutineSegmentProto] = []
@@ -1141,6 +1143,8 @@ struct StoredPodcastRoutineSegmentProto: Sendable {
 
   var segmentID: String = String()
 
+  var segmentLabel: String = String()
+
   var reasoning: String = String()
 
   var title: String = String()
@@ -1156,6 +1160,8 @@ struct StoredPodcastRoutineStepProto: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
+
+  var stepID: String = String()
 
   var type: StoredPodcastTypeProto = .undefined
 
@@ -2877,6 +2883,7 @@ extension StoredPodcastStorySlideProto: SwiftProtobuf.Message, SwiftProtobuf._Me
 extension StoredPodcastRoutineProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "StoredPodcastRoutineProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    4: .standard(proto: "routine_id"),
     1: .same(proto: "reasoning"),
     2: .same(proto: "segments"),
     3: .same(proto: "style"),
@@ -2891,6 +2898,7 @@ extension StoredPodcastRoutineProto: SwiftProtobuf.Message, SwiftProtobuf._Messa
       case 1: try { try decoder.decodeSingularStringField(value: &self.reasoning) }()
       case 2: try { try decoder.decodeRepeatedMessageField(value: &self.segments) }()
       case 3: try { try decoder.decodeSingularMessageField(value: &self._style) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.routineID) }()
       default: break
       }
     }
@@ -2910,10 +2918,14 @@ extension StoredPodcastRoutineProto: SwiftProtobuf.Message, SwiftProtobuf._Messa
     try { if let v = self._style {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
     } }()
+    if !self.routineID.isEmpty {
+      try visitor.visitSingularStringField(value: self.routineID, fieldNumber: 4)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: StoredPodcastRoutineProto, rhs: StoredPodcastRoutineProto) -> Bool {
+    if lhs.routineID != rhs.routineID {return false}
     if lhs.reasoning != rhs.reasoning {return false}
     if lhs.segments != rhs.segments {return false}
     if lhs._style != rhs._style {return false}
@@ -2926,6 +2938,7 @@ extension StoredPodcastRoutineSegmentProto: SwiftProtobuf.Message, SwiftProtobuf
   static let protoMessageName: String = "StoredPodcastRoutineSegmentProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "segment_id"),
+    5: .standard(proto: "segment_label"),
     2: .same(proto: "reasoning"),
     3: .same(proto: "title"),
     4: .same(proto: "steps"),
@@ -2941,6 +2954,7 @@ extension StoredPodcastRoutineSegmentProto: SwiftProtobuf.Message, SwiftProtobuf
       case 2: try { try decoder.decodeSingularStringField(value: &self.reasoning) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.title) }()
       case 4: try { try decoder.decodeRepeatedMessageField(value: &self.steps) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.segmentLabel) }()
       default: break
       }
     }
@@ -2959,11 +2973,15 @@ extension StoredPodcastRoutineSegmentProto: SwiftProtobuf.Message, SwiftProtobuf
     if !self.steps.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.steps, fieldNumber: 4)
     }
+    if !self.segmentLabel.isEmpty {
+      try visitor.visitSingularStringField(value: self.segmentLabel, fieldNumber: 5)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: StoredPodcastRoutineSegmentProto, rhs: StoredPodcastRoutineSegmentProto) -> Bool {
     if lhs.segmentID != rhs.segmentID {return false}
+    if lhs.segmentLabel != rhs.segmentLabel {return false}
     if lhs.reasoning != rhs.reasoning {return false}
     if lhs.title != rhs.title {return false}
     if lhs.steps != rhs.steps {return false}
@@ -2975,6 +2993,7 @@ extension StoredPodcastRoutineSegmentProto: SwiftProtobuf.Message, SwiftProtobuf
 extension StoredPodcastRoutineStepProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "StoredPodcastRoutineStepProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    6: .standard(proto: "step_id"),
     1: .same(proto: "type"),
     2: .same(proto: "title"),
     3: .same(proto: "outline"),
@@ -2993,6 +3012,7 @@ extension StoredPodcastRoutineStepProto: SwiftProtobuf.Message, SwiftProtobuf._M
       case 3: try { try decoder.decodeSingularStringField(value: &self.outline) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self.thumbnailPrompt) }()
       case 5: try { try decoder.decodeSingularStringField(value: &self.thumbnailKey) }()
+      case 6: try { try decoder.decodeSingularStringField(value: &self.stepID) }()
       default: break
       }
     }
@@ -3014,10 +3034,14 @@ extension StoredPodcastRoutineStepProto: SwiftProtobuf.Message, SwiftProtobuf._M
     if !self.thumbnailKey.isEmpty {
       try visitor.visitSingularStringField(value: self.thumbnailKey, fieldNumber: 5)
     }
+    if !self.stepID.isEmpty {
+      try visitor.visitSingularStringField(value: self.stepID, fieldNumber: 6)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: StoredPodcastRoutineStepProto, rhs: StoredPodcastRoutineStepProto) -> Bool {
+    if lhs.stepID != rhs.stepID {return false}
     if lhs.type != rhs.type {return false}
     if lhs.title != rhs.title {return false}
     if lhs.outline != rhs.outline {return false}

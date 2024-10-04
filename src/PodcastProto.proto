@@ -370,6 +370,7 @@ message PodcastStorySlideProto {
 }
 
 message PodcastRoutineProto {
+  string routine_id = 2;
   repeated PodcastRoutineSegmentProto segments = 1;
 }
 
@@ -380,6 +381,7 @@ message PodcastRoutineSegmentProto {
 }
 
 message PodcastRoutineStepProto {
+  string step_id = 4;
   string title = 1;
   string outline = 2;
   string thumbnail_path = 3;
@@ -388,4 +390,17 @@ message PodcastRoutineStepProto {
 message PodcastAppStoreTransactionProto {
   string transaction_jws = 1;
   string renewal_info_jws = 2;
+}
+
+message PodcastUserProgress {
+  map<string, PodcastRoutineProgress> routine_progress = 1;
+}
+
+message PodcastRoutineProgress {
+  map<string, PodcastRoutineStepProgress> step_progress = 1;
+}
+
+message PodcastRoutineStepProgress {
+  google.protobuf.Timestamp completed_at = 1;
+  bool completed = 2;
 }

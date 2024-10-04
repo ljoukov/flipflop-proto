@@ -284,6 +284,7 @@ message StoredPodcastStorySlideProto {
 }
 
 message StoredPodcastRoutineProto {
+  string routine_id = 4;
   string reasoning = 1;
   repeated StoredPodcastRoutineSegmentProto segments = 2;
   StoredPodcastStyleProto style = 3;
@@ -291,12 +292,14 @@ message StoredPodcastRoutineProto {
 
 message StoredPodcastRoutineSegmentProto {
   string segment_id = 1;
+  string segment_label = 5;
   string reasoning = 2;
   string title = 3;
   repeated StoredPodcastRoutineStepProto steps = 4;
 }
 
 message StoredPodcastRoutineStepProto {
+  string step_id = 6;
   StoredPodcastTypeProto type = 1;
   string title = 2;
   string outline = 3;
