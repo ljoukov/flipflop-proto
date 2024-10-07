@@ -408,6 +408,10 @@ export interface RefreshPodcastSuggestionsResponseHeaderProto {
      * @generated from protobuf field: PodcastSuggestionsProto suggestions = 1;
      */
     suggestions?: PodcastSuggestionsProto;
+    /**
+     * @generated from protobuf field: bool is_subscriber = 2;
+     */
+    isSubscriber: boolean;
 }
 /**
  * @generated from protobuf message RefreshPodcastSuggestionsResponseDeltaProto
@@ -2371,11 +2375,13 @@ export const RefreshPodcastSuggestionsRequestProto = new RefreshPodcastSuggestio
 class RefreshPodcastSuggestionsResponseHeaderProto$Type extends MessageType<RefreshPodcastSuggestionsResponseHeaderProto> {
     constructor() {
         super("RefreshPodcastSuggestionsResponseHeaderProto", [
-            { no: 1, name: "suggestions", kind: "message", T: () => PodcastSuggestionsProto }
+            { no: 1, name: "suggestions", kind: "message", T: () => PodcastSuggestionsProto },
+            { no: 2, name: "is_subscriber", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
     create(value?: PartialMessage<RefreshPodcastSuggestionsResponseHeaderProto>): RefreshPodcastSuggestionsResponseHeaderProto {
         const message = globalThis.Object.create((this.messagePrototype!));
+        message.isSubscriber = false;
         if (value !== undefined)
             reflectionMergePartial<RefreshPodcastSuggestionsResponseHeaderProto>(this, message, value);
         return message;
@@ -2387,6 +2393,9 @@ class RefreshPodcastSuggestionsResponseHeaderProto$Type extends MessageType<Refr
             switch (fieldNo) {
                 case /* PodcastSuggestionsProto suggestions */ 1:
                     message.suggestions = PodcastSuggestionsProto.internalBinaryRead(reader, reader.uint32(), options, message.suggestions);
+                    break;
+                case /* bool is_subscriber */ 2:
+                    message.isSubscriber = reader.bool();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2403,6 +2412,9 @@ class RefreshPodcastSuggestionsResponseHeaderProto$Type extends MessageType<Refr
         /* PodcastSuggestionsProto suggestions = 1; */
         if (message.suggestions)
             PodcastSuggestionsProto.internalBinaryWrite(message.suggestions, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* bool is_subscriber = 2; */
+        if (message.isSubscriber !== false)
+            writer.tag(2, WireType.Varint).bool(message.isSubscriber);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

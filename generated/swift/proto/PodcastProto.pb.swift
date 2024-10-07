@@ -723,6 +723,8 @@ struct RefreshPodcastSuggestionsResponseHeaderProto: Sendable {
   /// Clears the value of `suggestions`. Subsequent reads from it will return its default value.
   mutating func clearSuggestions() {self._suggestions = nil}
 
+  var isSubscriber: Bool = false
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -2806,6 +2808,7 @@ extension RefreshPodcastSuggestionsResponseHeaderProto: SwiftProtobuf.Message, S
   static let protoMessageName: String = "RefreshPodcastSuggestionsResponseHeaderProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "suggestions"),
+    2: .standard(proto: "is_subscriber"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2815,6 +2818,7 @@ extension RefreshPodcastSuggestionsResponseHeaderProto: SwiftProtobuf.Message, S
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularMessageField(value: &self._suggestions) }()
+      case 2: try { try decoder.decodeSingularBoolField(value: &self.isSubscriber) }()
       default: break
       }
     }
@@ -2828,11 +2832,15 @@ extension RefreshPodcastSuggestionsResponseHeaderProto: SwiftProtobuf.Message, S
     try { if let v = self._suggestions {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
     } }()
+    if self.isSubscriber != false {
+      try visitor.visitSingularBoolField(value: self.isSubscriber, fieldNumber: 2)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: RefreshPodcastSuggestionsResponseHeaderProto, rhs: RefreshPodcastSuggestionsResponseHeaderProto) -> Bool {
     if lhs._suggestions != rhs._suggestions {return false}
+    if lhs.isSubscriber != rhs.isSubscriber {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
