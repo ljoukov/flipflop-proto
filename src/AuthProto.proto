@@ -1,6 +1,5 @@
 syntax = "proto3";
 
-import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
 
 message UserAuthProto {
@@ -9,46 +8,4 @@ message UserAuthProto {
   string access_token = 2;
   google.protobuf.Timestamp expires_at = 3;
   string refresh_token = 4;
-}
-
-message AuthApiRequestProto {
-  oneof request {
-    SignInWithIdpRequestProto sign_in_with_idp = 1;
-    SignInWithPasswordRequestProto sign_in_with_password = 2;
-  }
-}
-
-message AuthApiResponseProto {
-  oneof response {
-    SignInWithIdpResponseProto sign_in_with_idp = 1;
-    SignInWithPasswordResponseProto sign_in_with_password = 2;
-  }
-  map<string, google.protobuf.Duration> latencies = 5;
-}
-
-message SignInWithIdpRequestProto {
-  string id_token = 1;
-  string provider_id = 2;
-  string raw_nonce = 3;
-}
-
-message SignInWithIdpResponseProto {
-  string encoded_user_auth = 1;
-}
-
-message SignInWithPasswordRequestProto {
-  string email = 1;
-  string password = 2;
-}
-
-message SignInWithPasswordResponseProto {
-  string encoded_user_auth = 1;
-
-  enum Error {
-    NO_ERROR = 0;
-    INVALID_PASSWORD = 1;
-    EMAIL_NOT_FOUND = 2;
-  }
-
-  Error error = 2;
 }
