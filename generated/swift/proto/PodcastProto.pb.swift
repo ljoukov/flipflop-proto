@@ -579,11 +579,21 @@ struct GetPodcastResponseHeaderProto: Sendable {
   /// Clears the value of `podcast`. Subsequent reads from it will return its default value.
   mutating func clearPodcast() {self._podcast = nil}
 
+  var cards: PodcastCardsProto {
+    get {return _cards ?? PodcastCardsProto()}
+    set {_cards = newValue}
+  }
+  /// Returns true if `cards` has been explicitly set.
+  var hasCards: Bool {return self._cards != nil}
+  /// Clears the value of `cards`. Subsequent reads from it will return its default value.
+  mutating func clearCards() {self._cards = nil}
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 
   fileprivate var _podcast: PodcastProto? = nil
+  fileprivate var _cards: PodcastCardsProto? = nil
 }
 
 struct GetPodcastResponseDeltaProto: Sendable {
@@ -2514,6 +2524,7 @@ extension GetPodcastResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobuf._M
   static let protoMessageName: String = "GetPodcastResponseHeaderProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "podcast"),
+    2: .same(proto: "cards"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2523,6 +2534,7 @@ extension GetPodcastResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobuf._M
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularMessageField(value: &self._podcast) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._cards) }()
       default: break
       }
     }
@@ -2536,11 +2548,15 @@ extension GetPodcastResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobuf._M
     try { if let v = self._podcast {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
     } }()
+    try { if let v = self._cards {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: GetPodcastResponseHeaderProto, rhs: GetPodcastResponseHeaderProto) -> Bool {
     if lhs._podcast != rhs._podcast {return false}
+    if lhs._cards != rhs._cards {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

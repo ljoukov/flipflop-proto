@@ -94,6 +94,7 @@ message GetPodcastRequestProto {
 
 message GetPodcastResponseHeaderProto {
   PodcastProto podcast = 1;
+  PodcastCardsProto cards = 2;
 }
 
 message GetPodcastResponseDeltaProto {}

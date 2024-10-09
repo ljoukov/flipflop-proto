@@ -321,6 +321,10 @@ export interface GetPodcastResponseHeaderProto {
      * @generated from protobuf field: PodcastProto podcast = 1;
      */
     podcast?: PodcastProto;
+    /**
+     * @generated from protobuf field: PodcastCardsProto cards = 2;
+     */
+    cards?: PodcastCardsProto;
 }
 /**
  * @generated from protobuf message GetPodcastResponseDeltaProto
@@ -2025,7 +2029,8 @@ export const GetPodcastRequestProto = new GetPodcastRequestProto$Type();
 class GetPodcastResponseHeaderProto$Type extends MessageType<GetPodcastResponseHeaderProto> {
     constructor() {
         super("GetPodcastResponseHeaderProto", [
-            { no: 1, name: "podcast", kind: "message", T: () => PodcastProto }
+            { no: 1, name: "podcast", kind: "message", T: () => PodcastProto },
+            { no: 2, name: "cards", kind: "message", T: () => PodcastCardsProto }
         ]);
     }
     create(value?: PartialMessage<GetPodcastResponseHeaderProto>): GetPodcastResponseHeaderProto {
@@ -2042,6 +2047,9 @@ class GetPodcastResponseHeaderProto$Type extends MessageType<GetPodcastResponseH
                 case /* PodcastProto podcast */ 1:
                     message.podcast = PodcastProto.internalBinaryRead(reader, reader.uint32(), options, message.podcast);
                     break;
+                case /* PodcastCardsProto cards */ 2:
+                    message.cards = PodcastCardsProto.internalBinaryRead(reader, reader.uint32(), options, message.cards);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -2057,6 +2065,9 @@ class GetPodcastResponseHeaderProto$Type extends MessageType<GetPodcastResponseH
         /* PodcastProto podcast = 1; */
         if (message.podcast)
             PodcastProto.internalBinaryWrite(message.podcast, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastCardsProto cards = 2; */
+        if (message.cards)
+            PodcastCardsProto.internalBinaryWrite(message.cards, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
