@@ -212,14 +212,6 @@ struct PodcastStreamApiRequestProto: Sendable {
     set {request = .story(newValue)}
   }
 
-  var quiz: GetPodcastQuizRequestProto {
-    get {
-      if case .quiz(let v)? = request {return v}
-      return GetPodcastQuizRequestProto()
-    }
-    set {request = .quiz(newValue)}
-  }
-
   var suggestionPoints: GetPodcastSuggestionPointsProto {
     get {
       if case .suggestionPoints(let v)? = request {return v}
@@ -243,7 +235,6 @@ struct PodcastStreamApiRequestProto: Sendable {
     case generate(GeneratePodcastRequestProto)
     case podcast(GetPodcastRequestProto)
     case story(GetPodcastStoryRequestProto)
-    case quiz(GetPodcastQuizRequestProto)
     case suggestionPoints(GetPodcastSuggestionPointsProto)
     case refreshSuggestions(RefreshPodcastSuggestionsRequestProto)
 
@@ -293,14 +284,6 @@ struct PodcastStreamApiResponseHeaderProto: Sendable {
     set {header = .storyHeader(newValue)}
   }
 
-  var quizHeader: GetPodcastQuizResponseHeaderProto {
-    get {
-      if case .quizHeader(let v)? = header {return v}
-      return GetPodcastQuizResponseHeaderProto()
-    }
-    set {header = .quizHeader(newValue)}
-  }
-
   var suggestionPointsHeader: GetPodcastSuggestionPointsResponseHeaderProto {
     get {
       if case .suggestionPointsHeader(let v)? = header {return v}
@@ -326,7 +309,6 @@ struct PodcastStreamApiResponseHeaderProto: Sendable {
     case generate(GeneratePodcastResponseHeaderProto)
     case podcastHeader(GetPodcastResponseHeaderProto)
     case storyHeader(GetPodcastStoryResponseHeaderProto)
-    case quizHeader(GetPodcastQuizResponseHeaderProto)
     case suggestionPointsHeader(GetPodcastSuggestionPointsResponseHeaderProto)
     case refreshSuggestions(RefreshPodcastSuggestionsResponseHeaderProto)
 
@@ -674,53 +656,6 @@ struct GetPodcastStoryResponseDeltaProto: Sendable {
   enum OneOf_Type: Equatable, Sendable {
     case header(PodcastStoryHeaderProto)
     case slide(PodcastStorySlideProto)
-
-  }
-
-  init() {}
-}
-
-struct GetPodcastQuizRequestProto: Sendable {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  var quizID: String = String()
-
-  var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  init() {}
-}
-
-struct GetPodcastQuizResponseHeaderProto: Sendable {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  init() {}
-}
-
-struct GetPodcastQuizResponseDeltaProto: Sendable {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  var type: GetPodcastQuizResponseDeltaProto.OneOf_Type? = nil
-
-  var card: PodcastCardProto {
-    get {
-      if case .card(let v)? = type {return v}
-      return PodcastCardProto()
-    }
-    set {type = .card(newValue)}
-  }
-
-  var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  enum OneOf_Type: Equatable, Sendable {
-    case card(PodcastCardProto)
 
   }
 
@@ -1758,7 +1693,6 @@ extension PodcastStreamApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Me
     3: .same(proto: "generate"),
     4: .same(proto: "podcast"),
     5: .same(proto: "story"),
-    8: .same(proto: "quiz"),
     6: .standard(proto: "suggestion_points"),
     7: .standard(proto: "refresh_suggestions"),
   ]
@@ -1847,19 +1781,6 @@ extension PodcastStreamApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Me
           self.request = .refreshSuggestions(v)
         }
       }()
-      case 8: try {
-        var v: GetPodcastQuizRequestProto?
-        var hadOneofValue = false
-        if let current = self.request {
-          hadOneofValue = true
-          if case .quiz(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {
-          if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.request = .quiz(v)
-        }
-      }()
       case 100: try { try decoder.decodeSingularMessageField(value: &self._requestAuth) }()
       default: break
       }
@@ -1896,10 +1817,6 @@ extension PodcastStreamApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Me
       guard case .refreshSuggestions(let v)? = self.request else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
     }()
-    case .quiz?: try {
-      guard case .quiz(let v)? = self.request else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
-    }()
     case nil: break
     }
     try { if let v = self._requestAuth {
@@ -1923,7 +1840,6 @@ extension PodcastStreamApiResponseHeaderProto: SwiftProtobuf.Message, SwiftProto
     3: .same(proto: "generate"),
     4: .standard(proto: "podcast_header"),
     5: .standard(proto: "story_header"),
-    8: .standard(proto: "quiz_header"),
     6: .standard(proto: "suggestion_points_header"),
     7: .standard(proto: "refresh_suggestions"),
     100: .same(proto: "latencies"),
@@ -2013,19 +1929,6 @@ extension PodcastStreamApiResponseHeaderProto: SwiftProtobuf.Message, SwiftProto
           self.header = .refreshSuggestions(v)
         }
       }()
-      case 8: try {
-        var v: GetPodcastQuizResponseHeaderProto?
-        var hadOneofValue = false
-        if let current = self.header {
-          hadOneofValue = true
-          if case .quizHeader(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {
-          if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.header = .quizHeader(v)
-        }
-      }()
       case 100: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.Google_Protobuf_Duration>.self, value: &self.latencies) }()
       default: break
       }
@@ -2061,10 +1964,6 @@ extension PodcastStreamApiResponseHeaderProto: SwiftProtobuf.Message, SwiftProto
     case .refreshSuggestions?: try {
       guard case .refreshSuggestions(let v)? = self.header else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
-    }()
-    case .quizHeader?: try {
-      guard case .quizHeader(let v)? = self.header else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
     }()
     case nil: break
     }
@@ -2797,105 +2696,6 @@ extension GetPodcastStoryResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobu
   }
 
   static func ==(lhs: GetPodcastStoryResponseDeltaProto, rhs: GetPodcastStoryResponseDeltaProto) -> Bool {
-    if lhs.type != rhs.type {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension GetPodcastQuizRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "GetPodcastQuizRequestProto"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "quiz_id"),
-  ]
-
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.quizID) }()
-      default: break
-      }
-    }
-  }
-
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.quizID.isEmpty {
-      try visitor.visitSingularStringField(value: self.quizID, fieldNumber: 1)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  static func ==(lhs: GetPodcastQuizRequestProto, rhs: GetPodcastQuizRequestProto) -> Bool {
-    if lhs.quizID != rhs.quizID {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension GetPodcastQuizResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "GetPodcastQuizResponseHeaderProto"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
-
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    // Load everything into unknown fields
-    while try decoder.nextFieldNumber() != nil {}
-  }
-
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  static func ==(lhs: GetPodcastQuizResponseHeaderProto, rhs: GetPodcastQuizResponseHeaderProto) -> Bool {
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension GetPodcastQuizResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "GetPodcastQuizResponseDeltaProto"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "card"),
-  ]
-
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try {
-        var v: PodcastCardProto?
-        var hadOneofValue = false
-        if let current = self.type {
-          hadOneofValue = true
-          if case .card(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {
-          if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.type = .card(v)
-        }
-      }()
-      default: break
-      }
-    }
-  }
-
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every if/case branch local when no optimizations
-    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-    // https://github.com/apple/swift-protobuf/issues/1182
-    try { if case .card(let v)? = self.type {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    } }()
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  static func ==(lhs: GetPodcastQuizResponseDeltaProto, rhs: GetPodcastQuizResponseDeltaProto) -> Bool {
     if lhs.type != rhs.type {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
