@@ -26,13 +26,30 @@ export interface LLMMessageProto {
     content: string;
 }
 /**
- * @generated from protobuf message LLMMessagesProto
+ * @generated from protobuf message LLMRequestProto
  */
-export interface LLMMessagesProto {
+export interface LLMRequestProto {
     /**
      * @generated from protobuf field: repeated LLMMessageProto messages = 1;
      */
     messages: LLMMessageProto[];
+    /**
+     * @generated from protobuf field: int32 max_tokens = 2;
+     */
+    maxTokens: number;
+    /**
+     * @generated from protobuf field: float temperature = 3;
+     */
+    temperature: number;
+}
+/**
+ * @generated from protobuf message LLMResponseProto
+ */
+export interface LLMResponseProto {
+    /**
+     * @generated from protobuf field: LLMMessageProto message = 1;
+     */
+    message?: LLMMessageProto;
 }
 /**
  * @generated from protobuf enum LLMMessageRoleProto
@@ -111,26 +128,36 @@ class LLMMessageProto$Type extends MessageType<LLMMessageProto> {
  */
 export const LLMMessageProto = new LLMMessageProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class LLMMessagesProto$Type extends MessageType<LLMMessagesProto> {
+class LLMRequestProto$Type extends MessageType<LLMRequestProto> {
     constructor() {
-        super("LLMMessagesProto", [
-            { no: 1, name: "messages", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => LLMMessageProto }
+        super("LLMRequestProto", [
+            { no: 1, name: "messages", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => LLMMessageProto },
+            { no: 2, name: "max_tokens", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 3, name: "temperature", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ }
         ]);
     }
-    create(value?: PartialMessage<LLMMessagesProto>): LLMMessagesProto {
+    create(value?: PartialMessage<LLMRequestProto>): LLMRequestProto {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.messages = [];
+        message.maxTokens = 0;
+        message.temperature = 0;
         if (value !== undefined)
-            reflectionMergePartial<LLMMessagesProto>(this, message, value);
+            reflectionMergePartial<LLMRequestProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: LLMMessagesProto): LLMMessagesProto {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: LLMRequestProto): LLMRequestProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
                 case /* repeated LLMMessageProto messages */ 1:
                     message.messages.push(LLMMessageProto.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* int32 max_tokens */ 2:
+                    message.maxTokens = reader.int32();
+                    break;
+                case /* float temperature */ 3:
+                    message.temperature = reader.float();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -143,10 +170,16 @@ class LLMMessagesProto$Type extends MessageType<LLMMessagesProto> {
         }
         return message;
     }
-    internalBinaryWrite(message: LLMMessagesProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: LLMRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* repeated LLMMessageProto messages = 1; */
         for (let i = 0; i < message.messages.length; i++)
             LLMMessageProto.internalBinaryWrite(message.messages[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* int32 max_tokens = 2; */
+        if (message.maxTokens !== 0)
+            writer.tag(2, WireType.Varint).int32(message.maxTokens);
+        /* float temperature = 3; */
+        if (message.temperature !== 0)
+            writer.tag(3, WireType.Bit32).float(message.temperature);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -154,6 +187,52 @@ class LLMMessagesProto$Type extends MessageType<LLMMessagesProto> {
     }
 }
 /**
- * @generated MessageType for protobuf message LLMMessagesProto
+ * @generated MessageType for protobuf message LLMRequestProto
  */
-export const LLMMessagesProto = new LLMMessagesProto$Type();
+export const LLMRequestProto = new LLMRequestProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class LLMResponseProto$Type extends MessageType<LLMResponseProto> {
+    constructor() {
+        super("LLMResponseProto", [
+            { no: 1, name: "message", kind: "message", T: () => LLMMessageProto }
+        ]);
+    }
+    create(value?: PartialMessage<LLMResponseProto>): LLMResponseProto {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        if (value !== undefined)
+            reflectionMergePartial<LLMResponseProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: LLMResponseProto): LLMResponseProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* LLMMessageProto message */ 1:
+                    message.message = LLMMessageProto.internalBinaryRead(reader, reader.uint32(), options, message.message);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: LLMResponseProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* LLMMessageProto message = 1; */
+        if (message.message)
+            LLMMessageProto.internalBinaryWrite(message.message, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message LLMResponseProto
+ */
+export const LLMResponseProto = new LLMResponseProto$Type();
