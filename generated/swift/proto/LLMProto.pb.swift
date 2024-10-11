@@ -20,7 +20,7 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
-enum LLMMessageRole: SwiftProtobuf.Enum, Swift.CaseIterable {
+enum LLMMessageRoleProto: SwiftProtobuf.Enum, Swift.CaseIterable {
   typealias RawValue = Int
   case unknown // = 0
   case system // = 1
@@ -53,7 +53,7 @@ enum LLMMessageRole: SwiftProtobuf.Enum, Swift.CaseIterable {
   }
 
   // The compiler won't synthesize support with the UNRECOGNIZED case.
-  static let allCases: [LLMMessageRole] = [
+  static let allCases: [LLMMessageRoleProto] = [
     .unknown,
     .system,
     .user,
@@ -62,12 +62,12 @@ enum LLMMessageRole: SwiftProtobuf.Enum, Swift.CaseIterable {
 
 }
 
-struct LLMMessage: Sendable {
+struct LLMMessageProto: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var role: LLMMessageRole = .unknown
+  var role: LLMMessageRoleProto = .unknown
 
   var content: String = String()
 
@@ -76,80 +76,31 @@ struct LLMMessage: Sendable {
   init() {}
 }
 
-struct LLMUsage: Sendable {
+struct LLMMessagesProto: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var promptTokes: Int32 = 0
-
-  var completionTokens: Int32 = 0
-
-  var totalTokens: Int32 = 0
+  var messages: [LLMMessageProto] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
-}
-
-struct LLMOutputProto: Sendable {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  var model: String = String()
-
-  var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {return _createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
-    set {_createdAt = newValue}
-  }
-  /// Returns true if `createdAt` has been explicitly set.
-  var hasCreatedAt: Bool {return self._createdAt != nil}
-  /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
-  mutating func clearCreatedAt() {self._createdAt = nil}
-
-  var completedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {return _completedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
-    set {_completedAt = newValue}
-  }
-  /// Returns true if `completedAt` has been explicitly set.
-  var hasCompletedAt: Bool {return self._completedAt != nil}
-  /// Clears the value of `completedAt`. Subsequent reads from it will return its default value.
-  mutating func clearCompletedAt() {self._completedAt = nil}
-
-  var messages: [LLMMessage] = []
-
-  var usage: LLMUsage {
-    get {return _usage ?? LLMUsage()}
-    set {_usage = newValue}
-  }
-  /// Returns true if `usage` has been explicitly set.
-  var hasUsage: Bool {return self._usage != nil}
-  /// Clears the value of `usage`. Subsequent reads from it will return its default value.
-  mutating func clearUsage() {self._usage = nil}
-
-  var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  init() {}
-
-  fileprivate var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
-  fileprivate var _completedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
-  fileprivate var _usage: LLMUsage? = nil
 }
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-extension LLMMessageRole: SwiftProtobuf._ProtoNameProviding {
+extension LLMMessageRoleProto: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    0: .same(proto: "LLM_MESSAGE_ROLE_UNKNOWN"),
-    1: .same(proto: "LLM_MESSAGE_ROLE_SYSTEM"),
-    2: .same(proto: "LLM_MESSAGE_ROLE_USER"),
-    3: .same(proto: "LLM_MESSAGE_ROLE_ASSISTANT"),
+    0: .same(proto: "LLM_MESSAGE_ROLE_PROTO_UNKNOWN"),
+    1: .same(proto: "LLM_MESSAGE_ROLE_PROTO_SYSTEM"),
+    2: .same(proto: "LLM_MESSAGE_ROLE_PROTO_USER"),
+    3: .same(proto: "LLM_MESSAGE_ROLE_PROTO_ASSISTANT"),
   ]
 }
 
-extension LLMMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "LLMMessage"
+extension LLMMessageProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "LLMMessageProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "role"),
     2: .same(proto: "content"),
@@ -178,7 +129,7 @@ extension LLMMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementatio
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: LLMMessage, rhs: LLMMessage) -> Bool {
+  static func ==(lhs: LLMMessageProto, rhs: LLMMessageProto) -> Bool {
     if lhs.role != rhs.role {return false}
     if lhs.content != rhs.content {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
@@ -186,12 +137,10 @@ extension LLMMessage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementatio
   }
 }
 
-extension LLMUsage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "LLMUsage"
+extension LLMMessagesProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "LLMMessagesProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    5: .standard(proto: "prompt_tokes"),
-    6: .standard(proto: "completion_tokens"),
-    7: .standard(proto: "total_tokens"),
+    1: .same(proto: "messages"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -200,91 +149,21 @@ extension LLMUsage: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationB
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 5: try { try decoder.decodeSingularInt32Field(value: &self.promptTokes) }()
-      case 6: try { try decoder.decodeSingularInt32Field(value: &self.completionTokens) }()
-      case 7: try { try decoder.decodeSingularInt32Field(value: &self.totalTokens) }()
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.messages) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if self.promptTokes != 0 {
-      try visitor.visitSingularInt32Field(value: self.promptTokes, fieldNumber: 5)
-    }
-    if self.completionTokens != 0 {
-      try visitor.visitSingularInt32Field(value: self.completionTokens, fieldNumber: 6)
-    }
-    if self.totalTokens != 0 {
-      try visitor.visitSingularInt32Field(value: self.totalTokens, fieldNumber: 7)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  static func ==(lhs: LLMUsage, rhs: LLMUsage) -> Bool {
-    if lhs.promptTokes != rhs.promptTokes {return false}
-    if lhs.completionTokens != rhs.completionTokens {return false}
-    if lhs.totalTokens != rhs.totalTokens {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension LLMOutputProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "LLMOutputProto"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "model"),
-    2: .standard(proto: "created_at"),
-    3: .standard(proto: "completed_at"),
-    4: .same(proto: "messages"),
-    5: .same(proto: "usage"),
-  ]
-
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.model) }()
-      case 2: try { try decoder.decodeSingularMessageField(value: &self._createdAt) }()
-      case 3: try { try decoder.decodeSingularMessageField(value: &self._completedAt) }()
-      case 4: try { try decoder.decodeRepeatedMessageField(value: &self.messages) }()
-      case 5: try { try decoder.decodeSingularMessageField(value: &self._usage) }()
-      default: break
-      }
-    }
-  }
-
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every if/case branch local when no optimizations
-    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-    // https://github.com/apple/swift-protobuf/issues/1182
-    if !self.model.isEmpty {
-      try visitor.visitSingularStringField(value: self.model, fieldNumber: 1)
-    }
-    try { if let v = self._createdAt {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
-    } }()
-    try { if let v = self._completedAt {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
-    } }()
     if !self.messages.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.messages, fieldNumber: 4)
+      try visitor.visitRepeatedMessageField(value: self.messages, fieldNumber: 1)
     }
-    try { if let v = self._usage {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
-    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: LLMOutputProto, rhs: LLMOutputProto) -> Bool {
-    if lhs.model != rhs.model {return false}
-    if lhs._createdAt != rhs._createdAt {return false}
-    if lhs._completedAt != rhs._completedAt {return false}
+  static func ==(lhs: LLMMessagesProto, rhs: LLMMessagesProto) -> Bool {
     if lhs.messages != rhs.messages {return false}
-    if lhs._usage != rhs._usage {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

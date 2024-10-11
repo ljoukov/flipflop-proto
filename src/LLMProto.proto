@@ -1,29 +1,17 @@
 syntax = "proto3";
 
-import "google/protobuf/timestamp.proto";
-
-enum LLMMessageRole {
-  LLM_MESSAGE_ROLE_UNKNOWN = 0;
-  LLM_MESSAGE_ROLE_SYSTEM = 1;
-  LLM_MESSAGE_ROLE_USER = 2;
-  LLM_MESSAGE_ROLE_ASSISTANT = 3;
+enum LLMMessageRoleProto {
+  LLM_MESSAGE_ROLE_PROTO_UNKNOWN = 0;
+  LLM_MESSAGE_ROLE_PROTO_SYSTEM = 1;
+  LLM_MESSAGE_ROLE_PROTO_USER = 2;
+  LLM_MESSAGE_ROLE_PROTO_ASSISTANT = 3;
 }
 
-message LLMMessage {
-  LLMMessageRole role = 1;
+message LLMMessageProto {
+  LLMMessageRoleProto role = 1;
   string content = 2;
 }
 
-message LLMUsage {
-  int32 prompt_tokes = 5;
-  int32 completion_tokens = 6;
-  int32 total_tokens = 7;
-}
-
-message LLMOutputProto {
-  string model = 1;
-  google.protobuf.Timestamp created_at = 2;
-  google.protobuf.Timestamp completed_at = 3;
-  repeated LLMMessage messages = 4;
-  LLMUsage usage = 5;
+message LLMMessagesProto {
+  repeated LLMMessageProto messages = 1;
 }

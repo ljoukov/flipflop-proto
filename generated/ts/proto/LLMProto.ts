@@ -12,105 +12,71 @@ import { UnknownFieldHandler } from "@protobuf-ts/runtime";
 import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
-import { Timestamp } from "./google/protobuf/timestamp";
 /**
- * @generated from protobuf message LLMMessage
+ * @generated from protobuf message LLMMessageProto
  */
-export interface LLMMessage {
+export interface LLMMessageProto {
     /**
-     * @generated from protobuf field: LLMMessageRole role = 1;
+     * @generated from protobuf field: LLMMessageRoleProto role = 1;
      */
-    role: LLMMessageRole;
+    role: LLMMessageRoleProto;
     /**
      * @generated from protobuf field: string content = 2;
      */
     content: string;
 }
 /**
- * @generated from protobuf message LLMUsage
+ * @generated from protobuf message LLMMessagesProto
  */
-export interface LLMUsage {
+export interface LLMMessagesProto {
     /**
-     * @generated from protobuf field: int32 prompt_tokes = 5;
+     * @generated from protobuf field: repeated LLMMessageProto messages = 1;
      */
-    promptTokes: number;
-    /**
-     * @generated from protobuf field: int32 completion_tokens = 6;
-     */
-    completionTokens: number;
-    /**
-     * @generated from protobuf field: int32 total_tokens = 7;
-     */
-    totalTokens: number;
+    messages: LLMMessageProto[];
 }
 /**
- * @generated from protobuf message LLMOutputProto
+ * @generated from protobuf enum LLMMessageRoleProto
  */
-export interface LLMOutputProto {
+export enum LLMMessageRoleProto {
     /**
-     * @generated from protobuf field: string model = 1;
+     * @generated from protobuf enum value: LLM_MESSAGE_ROLE_PROTO_UNKNOWN = 0;
      */
-    model: string;
+    LLM_MESSAGE_ROLE_PROTO_UNKNOWN = 0,
     /**
-     * @generated from protobuf field: google.protobuf.Timestamp created_at = 2;
+     * @generated from protobuf enum value: LLM_MESSAGE_ROLE_PROTO_SYSTEM = 1;
      */
-    createdAt?: Timestamp;
+    LLM_MESSAGE_ROLE_PROTO_SYSTEM = 1,
     /**
-     * @generated from protobuf field: google.protobuf.Timestamp completed_at = 3;
+     * @generated from protobuf enum value: LLM_MESSAGE_ROLE_PROTO_USER = 2;
      */
-    completedAt?: Timestamp;
+    LLM_MESSAGE_ROLE_PROTO_USER = 2,
     /**
-     * @generated from protobuf field: repeated LLMMessage messages = 4;
+     * @generated from protobuf enum value: LLM_MESSAGE_ROLE_PROTO_ASSISTANT = 3;
      */
-    messages: LLMMessage[];
-    /**
-     * @generated from protobuf field: LLMUsage usage = 5;
-     */
-    usage?: LLMUsage;
-}
-/**
- * @generated from protobuf enum LLMMessageRole
- */
-export enum LLMMessageRole {
-    /**
-     * @generated from protobuf enum value: LLM_MESSAGE_ROLE_UNKNOWN = 0;
-     */
-    LLM_MESSAGE_ROLE_UNKNOWN = 0,
-    /**
-     * @generated from protobuf enum value: LLM_MESSAGE_ROLE_SYSTEM = 1;
-     */
-    LLM_MESSAGE_ROLE_SYSTEM = 1,
-    /**
-     * @generated from protobuf enum value: LLM_MESSAGE_ROLE_USER = 2;
-     */
-    LLM_MESSAGE_ROLE_USER = 2,
-    /**
-     * @generated from protobuf enum value: LLM_MESSAGE_ROLE_ASSISTANT = 3;
-     */
-    LLM_MESSAGE_ROLE_ASSISTANT = 3
+    LLM_MESSAGE_ROLE_PROTO_ASSISTANT = 3
 }
 // @generated message type with reflection information, may provide speed optimized methods
-class LLMMessage$Type extends MessageType<LLMMessage> {
+class LLMMessageProto$Type extends MessageType<LLMMessageProto> {
     constructor() {
-        super("LLMMessage", [
-            { no: 1, name: "role", kind: "enum", T: () => ["LLMMessageRole", LLMMessageRole] },
+        super("LLMMessageProto", [
+            { no: 1, name: "role", kind: "enum", T: () => ["LLMMessageRoleProto", LLMMessageRoleProto] },
             { no: 2, name: "content", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<LLMMessage>): LLMMessage {
+    create(value?: PartialMessage<LLMMessageProto>): LLMMessageProto {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.role = 0;
         message.content = "";
         if (value !== undefined)
-            reflectionMergePartial<LLMMessage>(this, message, value);
+            reflectionMergePartial<LLMMessageProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: LLMMessage): LLMMessage {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: LLMMessageProto): LLMMessageProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* LLMMessageRole role */ 1:
+                case /* LLMMessageRoleProto role */ 1:
                     message.role = reader.int32();
                     break;
                 case /* string content */ 2:
@@ -127,8 +93,8 @@ class LLMMessage$Type extends MessageType<LLMMessage> {
         }
         return message;
     }
-    internalBinaryWrite(message: LLMMessage, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* LLMMessageRole role = 1; */
+    internalBinaryWrite(message: LLMMessageProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* LLMMessageRoleProto role = 1; */
         if (message.role !== 0)
             writer.tag(1, WireType.Varint).int32(message.role);
         /* string content = 2; */
@@ -141,110 +107,30 @@ class LLMMessage$Type extends MessageType<LLMMessage> {
     }
 }
 /**
- * @generated MessageType for protobuf message LLMMessage
+ * @generated MessageType for protobuf message LLMMessageProto
  */
-export const LLMMessage = new LLMMessage$Type();
+export const LLMMessageProto = new LLMMessageProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class LLMUsage$Type extends MessageType<LLMUsage> {
+class LLMMessagesProto$Type extends MessageType<LLMMessagesProto> {
     constructor() {
-        super("LLMUsage", [
-            { no: 5, name: "prompt_tokes", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 6, name: "completion_tokens", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 7, name: "total_tokens", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
+        super("LLMMessagesProto", [
+            { no: 1, name: "messages", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => LLMMessageProto }
         ]);
     }
-    create(value?: PartialMessage<LLMUsage>): LLMUsage {
+    create(value?: PartialMessage<LLMMessagesProto>): LLMMessagesProto {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.promptTokes = 0;
-        message.completionTokens = 0;
-        message.totalTokens = 0;
-        if (value !== undefined)
-            reflectionMergePartial<LLMUsage>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: LLMUsage): LLMUsage {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* int32 prompt_tokes */ 5:
-                    message.promptTokes = reader.int32();
-                    break;
-                case /* int32 completion_tokens */ 6:
-                    message.completionTokens = reader.int32();
-                    break;
-                case /* int32 total_tokens */ 7:
-                    message.totalTokens = reader.int32();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: LLMUsage, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* int32 prompt_tokes = 5; */
-        if (message.promptTokes !== 0)
-            writer.tag(5, WireType.Varint).int32(message.promptTokes);
-        /* int32 completion_tokens = 6; */
-        if (message.completionTokens !== 0)
-            writer.tag(6, WireType.Varint).int32(message.completionTokens);
-        /* int32 total_tokens = 7; */
-        if (message.totalTokens !== 0)
-            writer.tag(7, WireType.Varint).int32(message.totalTokens);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message LLMUsage
- */
-export const LLMUsage = new LLMUsage$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class LLMOutputProto$Type extends MessageType<LLMOutputProto> {
-    constructor() {
-        super("LLMOutputProto", [
-            { no: 1, name: "model", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "created_at", kind: "message", T: () => Timestamp },
-            { no: 3, name: "completed_at", kind: "message", T: () => Timestamp },
-            { no: 4, name: "messages", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => LLMMessage },
-            { no: 5, name: "usage", kind: "message", T: () => LLMUsage }
-        ]);
-    }
-    create(value?: PartialMessage<LLMOutputProto>): LLMOutputProto {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.model = "";
         message.messages = [];
         if (value !== undefined)
-            reflectionMergePartial<LLMOutputProto>(this, message, value);
+            reflectionMergePartial<LLMMessagesProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: LLMOutputProto): LLMOutputProto {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: LLMMessagesProto): LLMMessagesProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string model */ 1:
-                    message.model = reader.string();
-                    break;
-                case /* google.protobuf.Timestamp created_at */ 2:
-                    message.createdAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.createdAt);
-                    break;
-                case /* google.protobuf.Timestamp completed_at */ 3:
-                    message.completedAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.completedAt);
-                    break;
-                case /* repeated LLMMessage messages */ 4:
-                    message.messages.push(LLMMessage.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                case /* LLMUsage usage */ 5:
-                    message.usage = LLMUsage.internalBinaryRead(reader, reader.uint32(), options, message.usage);
+                case /* repeated LLMMessageProto messages */ 1:
+                    message.messages.push(LLMMessageProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -257,22 +143,10 @@ class LLMOutputProto$Type extends MessageType<LLMOutputProto> {
         }
         return message;
     }
-    internalBinaryWrite(message: LLMOutputProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string model = 1; */
-        if (message.model !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.model);
-        /* google.protobuf.Timestamp created_at = 2; */
-        if (message.createdAt)
-            Timestamp.internalBinaryWrite(message.createdAt, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* google.protobuf.Timestamp completed_at = 3; */
-        if (message.completedAt)
-            Timestamp.internalBinaryWrite(message.completedAt, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* repeated LLMMessage messages = 4; */
+    internalBinaryWrite(message: LLMMessagesProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated LLMMessageProto messages = 1; */
         for (let i = 0; i < message.messages.length; i++)
-            LLMMessage.internalBinaryWrite(message.messages[i], writer.tag(4, WireType.LengthDelimited).fork(), options).join();
-        /* LLMUsage usage = 5; */
-        if (message.usage)
-            LLMUsage.internalBinaryWrite(message.usage, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+            LLMMessageProto.internalBinaryWrite(message.messages[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -280,6 +154,6 @@ class LLMOutputProto$Type extends MessageType<LLMOutputProto> {
     }
 }
 /**
- * @generated MessageType for protobuf message LLMOutputProto
+ * @generated MessageType for protobuf message LLMMessagesProto
  */
-export const LLMOutputProto = new LLMOutputProto$Type();
+export const LLMMessagesProto = new LLMMessagesProto$Type();

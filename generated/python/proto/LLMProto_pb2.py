@@ -22,22 +22,19 @@ _runtime_version.ValidateProtobufRuntimeVersion(
 _sym_db = _symbol_database.Default()
 
 
-from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0eLLMProto.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"<\n\nLLMMessage\x12\x1d\n\x04role\x18\x01 \x01(\x0e\x32\x0f.LLMMessageRole\x12\x0f\n\x07\x63ontent\x18\x02 \x01(\t\"Q\n\x08LLMUsage\x12\x14\n\x0cprompt_tokes\x18\x05 \x01(\x05\x12\x19\n\x11\x63ompletion_tokens\x18\x06 \x01(\x05\x12\x14\n\x0ctotal_tokens\x18\x07 \x01(\x05\"\xba\x01\n\x0eLLMOutputProto\x12\r\n\x05model\x18\x01 \x01(\t\x12.\n\ncreated_at\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x30\n\x0c\x63ompleted_at\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x1d\n\x08messages\x18\x04 \x03(\x0b\x32\x0b.LLMMessage\x12\x18\n\x05usage\x18\x05 \x01(\x0b\x32\t.LLMUsage*\x86\x01\n\x0eLLMMessageRole\x12\x1c\n\x18LLM_MESSAGE_ROLE_UNKNOWN\x10\x00\x12\x1b\n\x17LLM_MESSAGE_ROLE_SYSTEM\x10\x01\x12\x19\n\x15LLM_MESSAGE_ROLE_USER\x10\x02\x12\x1e\n\x1aLLM_MESSAGE_ROLE_ASSISTANT\x10\x03\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0eLLMProto.proto\"F\n\x0fLLMMessageProto\x12\"\n\x04role\x18\x01 \x01(\x0e\x32\x14.LLMMessageRoleProto\x12\x0f\n\x07\x63ontent\x18\x02 \x01(\t\"6\n\x10LLMMessagesProto\x12\"\n\x08messages\x18\x01 \x03(\x0b\x32\x10.LLMMessageProto*\xa3\x01\n\x13LLMMessageRoleProto\x12\"\n\x1eLLM_MESSAGE_ROLE_PROTO_UNKNOWN\x10\x00\x12!\n\x1dLLM_MESSAGE_ROLE_PROTO_SYSTEM\x10\x01\x12\x1f\n\x1bLLM_MESSAGE_ROLE_PROTO_USER\x10\x02\x12$\n LLM_MESSAGE_ROLE_PROTO_ASSISTANT\x10\x03\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'LLMProto_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
-  _globals['_LLMMESSAGEROLE']._serialized_start=386
-  _globals['_LLMMESSAGEROLE']._serialized_end=520
-  _globals['_LLMMESSAGE']._serialized_start=51
-  _globals['_LLMMESSAGE']._serialized_end=111
-  _globals['_LLMUSAGE']._serialized_start=113
-  _globals['_LLMUSAGE']._serialized_end=194
-  _globals['_LLMOUTPUTPROTO']._serialized_start=197
-  _globals['_LLMOUTPUTPROTO']._serialized_end=383
+  _globals['_LLMMESSAGEROLEPROTO']._serialized_start=147
+  _globals['_LLMMESSAGEROLEPROTO']._serialized_end=310
+  _globals['_LLMMESSAGEPROTO']._serialized_start=18
+  _globals['_LLMMESSAGEPROTO']._serialized_end=88
+  _globals['_LLMMESSAGESPROTO']._serialized_start=90
+  _globals['_LLMMESSAGESPROTO']._serialized_end=144
 # @@protoc_insertion_point(module_scope)
