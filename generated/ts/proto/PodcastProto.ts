@@ -1118,24 +1118,28 @@ export interface PodcastExerciseProto {
  */
 export interface PodcastExerciseSectionProto {
     /**
+     * @generated from protobuf field: string section_id = 1;
+     */
+    sectionId: string;
+    /**
      * @generated from protobuf oneof: type
      */
     type: {
         oneofKind: "setup";
         /**
-         * @generated from protobuf field: PodcastExerciseSetupProto setup = 1;
+         * @generated from protobuf field: PodcastExerciseSetupProto setup = 10;
          */
         setup: PodcastExerciseSetupProto;
     } | {
         oneofKind: "rep";
         /**
-         * @generated from protobuf field: PodcastExerciseRepProto rep = 2;
+         * @generated from protobuf field: PodcastExerciseRepProto rep = 11;
          */
         rep: PodcastExerciseRepProto;
     } | {
         oneofKind: "cooldown";
         /**
-         * @generated from protobuf field: PodcastExerciseCooldownProto cooldown = 3;
+         * @generated from protobuf field: PodcastExerciseCooldownProto cooldown = 12;
          */
         cooldown: PodcastExerciseCooldownProto;
     } | {
@@ -5098,13 +5102,15 @@ export const PodcastExerciseProto = new PodcastExerciseProto$Type();
 class PodcastExerciseSectionProto$Type extends MessageType<PodcastExerciseSectionProto> {
     constructor() {
         super("PodcastExerciseSectionProto", [
-            { no: 1, name: "setup", kind: "message", oneof: "type", T: () => PodcastExerciseSetupProto },
-            { no: 2, name: "rep", kind: "message", oneof: "type", T: () => PodcastExerciseRepProto },
-            { no: 3, name: "cooldown", kind: "message", oneof: "type", T: () => PodcastExerciseCooldownProto }
+            { no: 1, name: "section_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 10, name: "setup", kind: "message", oneof: "type", T: () => PodcastExerciseSetupProto },
+            { no: 11, name: "rep", kind: "message", oneof: "type", T: () => PodcastExerciseRepProto },
+            { no: 12, name: "cooldown", kind: "message", oneof: "type", T: () => PodcastExerciseCooldownProto }
         ]);
     }
     create(value?: PartialMessage<PodcastExerciseSectionProto>): PodcastExerciseSectionProto {
         const message = globalThis.Object.create((this.messagePrototype!));
+        message.sectionId = "";
         message.type = { oneofKind: undefined };
         if (value !== undefined)
             reflectionMergePartial<PodcastExerciseSectionProto>(this, message, value);
@@ -5115,19 +5121,22 @@ class PodcastExerciseSectionProto$Type extends MessageType<PodcastExerciseSectio
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* PodcastExerciseSetupProto setup */ 1:
+                case /* string section_id */ 1:
+                    message.sectionId = reader.string();
+                    break;
+                case /* PodcastExerciseSetupProto setup */ 10:
                     message.type = {
                         oneofKind: "setup",
                         setup: PodcastExerciseSetupProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).setup)
                     };
                     break;
-                case /* PodcastExerciseRepProto rep */ 2:
+                case /* PodcastExerciseRepProto rep */ 11:
                     message.type = {
                         oneofKind: "rep",
                         rep: PodcastExerciseRepProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).rep)
                     };
                     break;
-                case /* PodcastExerciseCooldownProto cooldown */ 3:
+                case /* PodcastExerciseCooldownProto cooldown */ 12:
                     message.type = {
                         oneofKind: "cooldown",
                         cooldown: PodcastExerciseCooldownProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).cooldown)
@@ -5145,15 +5154,18 @@ class PodcastExerciseSectionProto$Type extends MessageType<PodcastExerciseSectio
         return message;
     }
     internalBinaryWrite(message: PodcastExerciseSectionProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* PodcastExerciseSetupProto setup = 1; */
+        /* string section_id = 1; */
+        if (message.sectionId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.sectionId);
+        /* PodcastExerciseSetupProto setup = 10; */
         if (message.type.oneofKind === "setup")
-            PodcastExerciseSetupProto.internalBinaryWrite(message.type.setup, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* PodcastExerciseRepProto rep = 2; */
+            PodcastExerciseSetupProto.internalBinaryWrite(message.type.setup, writer.tag(10, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastExerciseRepProto rep = 11; */
         if (message.type.oneofKind === "rep")
-            PodcastExerciseRepProto.internalBinaryWrite(message.type.rep, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* PodcastExerciseCooldownProto cooldown = 3; */
+            PodcastExerciseRepProto.internalBinaryWrite(message.type.rep, writer.tag(11, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastExerciseCooldownProto cooldown = 12; */
         if (message.type.oneofKind === "cooldown")
-            PodcastExerciseCooldownProto.internalBinaryWrite(message.type.cooldown, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+            PodcastExerciseCooldownProto.internalBinaryWrite(message.type.cooldown, writer.tag(12, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

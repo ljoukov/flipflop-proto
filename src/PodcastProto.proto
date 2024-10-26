@@ -413,10 +413,13 @@ message PodcastExerciseProto {
 }
 
 message PodcastExerciseSectionProto {
+  string section_id = 1;
+
+  // IDs start with 10
   oneof type {
-    PodcastExerciseSetupProto setup = 1;
-    PodcastExerciseRepProto rep = 2;
-    PodcastExerciseCooldownProto cooldown = 3;
+    PodcastExerciseSetupProto setup = 10;
+    PodcastExerciseRepProto rep = 11;
+    PodcastExerciseCooldownProto cooldown = 12;
   }
 }
 

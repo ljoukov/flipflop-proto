@@ -1679,6 +1679,9 @@ struct PodcastExerciseSectionProto: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  var sectionID: String = String()
+
+  /// IDs start with 10
   var type: PodcastExerciseSectionProto.OneOf_Type? = nil
 
   var setup: PodcastExerciseSetupProto {
@@ -1707,6 +1710,7 @@ struct PodcastExerciseSectionProto: Sendable {
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
+  /// IDs start with 10
   enum OneOf_Type: Equatable, Sendable {
     case setup(PodcastExerciseSetupProto)
     case rep(PodcastExerciseRepProto)
@@ -4966,9 +4970,10 @@ extension PodcastExerciseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
 extension PodcastExerciseSectionProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "PodcastExerciseSectionProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "setup"),
-    2: .same(proto: "rep"),
-    3: .same(proto: "cooldown"),
+    1: .standard(proto: "section_id"),
+    10: .same(proto: "setup"),
+    11: .same(proto: "rep"),
+    12: .same(proto: "cooldown"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -4977,7 +4982,8 @@ extension PodcastExerciseSectionProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.sectionID) }()
+      case 10: try {
         var v: PodcastExerciseSetupProto?
         var hadOneofValue = false
         if let current = self.type {
@@ -4990,7 +4996,7 @@ extension PodcastExerciseSectionProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
           self.type = .setup(v)
         }
       }()
-      case 2: try {
+      case 11: try {
         var v: PodcastExerciseRepProto?
         var hadOneofValue = false
         if let current = self.type {
@@ -5003,7 +5009,7 @@ extension PodcastExerciseSectionProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
           self.type = .rep(v)
         }
       }()
-      case 3: try {
+      case 12: try {
         var v: PodcastExerciseCooldownProto?
         var hadOneofValue = false
         if let current = self.type {
@@ -5026,18 +5032,21 @@ extension PodcastExerciseSectionProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.sectionID.isEmpty {
+      try visitor.visitSingularStringField(value: self.sectionID, fieldNumber: 1)
+    }
     switch self.type {
     case .setup?: try {
       guard case .setup(let v)? = self.type else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
     }()
     case .rep?: try {
       guard case .rep(let v)? = self.type else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 11)
     }()
     case .cooldown?: try {
       guard case .cooldown(let v)? = self.type else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 12)
     }()
     case nil: break
     }
@@ -5045,6 +5054,7 @@ extension PodcastExerciseSectionProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
   }
 
   static func ==(lhs: PodcastExerciseSectionProto, rhs: PodcastExerciseSectionProto) -> Bool {
+    if lhs.sectionID != rhs.sectionID {return false}
     if lhs.type != rhs.type {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
