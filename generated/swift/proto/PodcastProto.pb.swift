@@ -1797,12 +1797,32 @@ struct PodcastExerciseCooldownProto: Sendable {
   /// Clears the value of `audio`. Subsequent reads from it will return its default value.
   mutating func clearAudio() {self._audio = nil}
 
+  var farewelAudio: PodcastAudioProto {
+    get {return _farewelAudio ?? PodcastAudioProto()}
+    set {_farewelAudio = newValue}
+  }
+  /// Returns true if `farewelAudio` has been explicitly set.
+  var hasFarewelAudio: Bool {return self._farewelAudio != nil}
+  /// Clears the value of `farewelAudio`. Subsequent reads from it will return its default value.
+  mutating func clearFarewelAudio() {self._farewelAudio = nil}
+
+  var instructionsAudio: PodcastAudioProto {
+    get {return _instructionsAudio ?? PodcastAudioProto()}
+    set {_instructionsAudio = newValue}
+  }
+  /// Returns true if `instructionsAudio` has been explicitly set.
+  var hasInstructionsAudio: Bool {return self._instructionsAudio != nil}
+  /// Clears the value of `instructionsAudio`. Subsequent reads from it will return its default value.
+  mutating func clearInstructionsAudio() {self._instructionsAudio = nil}
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 
   fileprivate var _hero: PodcastCardHeroProto? = nil
   fileprivate var _audio: PodcastAudioProto? = nil
+  fileprivate var _farewelAudio: PodcastAudioProto? = nil
+  fileprivate var _instructionsAudio: PodcastAudioProto? = nil
 }
 
 struct PodcastExerciseRepProto: Sendable {
@@ -5239,6 +5259,8 @@ extension PodcastExerciseCooldownProto: SwiftProtobuf.Message, SwiftProtobuf._Me
     3: .same(proto: "tips"),
     4: .standard(proto: "error_prevention_tips"),
     5: .same(proto: "audio"),
+    6: .standard(proto: "farewel_audio"),
+    7: .standard(proto: "instructions_audio"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -5252,6 +5274,8 @@ extension PodcastExerciseCooldownProto: SwiftProtobuf.Message, SwiftProtobuf._Me
       case 3: try { try decoder.decodeRepeatedStringField(value: &self.tips) }()
       case 4: try { try decoder.decodeRepeatedStringField(value: &self.errorPreventionTips) }()
       case 5: try { try decoder.decodeSingularMessageField(value: &self._audio) }()
+      case 6: try { try decoder.decodeSingularMessageField(value: &self._farewelAudio) }()
+      case 7: try { try decoder.decodeSingularMessageField(value: &self._instructionsAudio) }()
       default: break
       }
     }
@@ -5277,6 +5301,12 @@ extension PodcastExerciseCooldownProto: SwiftProtobuf.Message, SwiftProtobuf._Me
     try { if let v = self._audio {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
     } }()
+    try { if let v = self._farewelAudio {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
+    } }()
+    try { if let v = self._instructionsAudio {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -5286,6 +5316,8 @@ extension PodcastExerciseCooldownProto: SwiftProtobuf.Message, SwiftProtobuf._Me
     if lhs.tips != rhs.tips {return false}
     if lhs.errorPreventionTips != rhs.errorPreventionTips {return false}
     if lhs._audio != rhs._audio {return false}
+    if lhs._farewelAudio != rhs._farewelAudio {return false}
+    if lhs._instructionsAudio != rhs._instructionsAudio {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

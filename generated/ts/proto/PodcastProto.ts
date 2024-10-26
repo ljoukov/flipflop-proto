@@ -1199,6 +1199,14 @@ export interface PodcastExerciseCooldownProto {
      * @generated from protobuf field: PodcastAudioProto audio = 5;
      */
     audio?: PodcastAudioProto;
+    /**
+     * @generated from protobuf field: PodcastAudioProto farewel_audio = 6;
+     */
+    farewelAudio?: PodcastAudioProto;
+    /**
+     * @generated from protobuf field: PodcastAudioProto instructions_audio = 7;
+     */
+    instructionsAudio?: PodcastAudioProto;
 }
 /**
  * @generated from protobuf message PodcastExerciseRepProto
@@ -5325,7 +5333,9 @@ class PodcastExerciseCooldownProto$Type extends MessageType<PodcastExerciseCoold
             { no: 2, name: "hero", kind: "message", T: () => PodcastCardHeroProto },
             { no: 3, name: "tips", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "error_prevention_tips", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "audio", kind: "message", T: () => PodcastAudioProto }
+            { no: 5, name: "audio", kind: "message", T: () => PodcastAudioProto },
+            { no: 6, name: "farewel_audio", kind: "message", T: () => PodcastAudioProto },
+            { no: 7, name: "instructions_audio", kind: "message", T: () => PodcastAudioProto }
         ]);
     }
     create(value?: PartialMessage<PodcastExerciseCooldownProto>): PodcastExerciseCooldownProto {
@@ -5357,6 +5367,12 @@ class PodcastExerciseCooldownProto$Type extends MessageType<PodcastExerciseCoold
                 case /* PodcastAudioProto audio */ 5:
                     message.audio = PodcastAudioProto.internalBinaryRead(reader, reader.uint32(), options, message.audio);
                     break;
+                case /* PodcastAudioProto farewel_audio */ 6:
+                    message.farewelAudio = PodcastAudioProto.internalBinaryRead(reader, reader.uint32(), options, message.farewelAudio);
+                    break;
+                case /* PodcastAudioProto instructions_audio */ 7:
+                    message.instructionsAudio = PodcastAudioProto.internalBinaryRead(reader, reader.uint32(), options, message.instructionsAudio);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -5384,6 +5400,12 @@ class PodcastExerciseCooldownProto$Type extends MessageType<PodcastExerciseCoold
         /* PodcastAudioProto audio = 5; */
         if (message.audio)
             PodcastAudioProto.internalBinaryWrite(message.audio, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastAudioProto farewel_audio = 6; */
+        if (message.farewelAudio)
+            PodcastAudioProto.internalBinaryWrite(message.farewelAudio, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastAudioProto instructions_audio = 7; */
+        if (message.instructionsAudio)
+            PodcastAudioProto.internalBinaryWrite(message.instructionsAudio, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

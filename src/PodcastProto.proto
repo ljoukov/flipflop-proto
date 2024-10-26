@@ -438,6 +438,8 @@ message PodcastExerciseCooldownProto {
   repeated string tips = 3;
   repeated string error_prevention_tips = 4;
   PodcastAudioProto audio = 5;
+  PodcastAudioProto farewel_audio = 6;
+  PodcastAudioProto instructions_audio = 7;
 }
 
 message PodcastExerciseRepProto {
