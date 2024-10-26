@@ -1178,6 +1178,43 @@ struct StoredPodcastRoutineStepProto: Sendable {
   init() {}
 }
 
+struct StoredPodcastExerciseProto: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var exerciseID: String = String()
+
+  var segments: [StoredPodcastExerciseSegmentProto] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct StoredPodcastExerciseSegmentProto: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var spokenText: String = String()
+
+  var visual: PodcastExerciseVisualProto {
+    get {return _visual ?? PodcastExerciseVisualProto()}
+    set {_visual = newValue}
+  }
+  /// Returns true if `visual` has been explicitly set.
+  var hasVisual: Bool {return self._visual != nil}
+  /// Clears the value of `visual`. Subsequent reads from it will return its default value.
+  mutating func clearVisual() {self._visual = nil}
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+
+  fileprivate var _visual: PodcastExerciseVisualProto? = nil
+}
+
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 extension StoredPodcastStateProto: SwiftProtobuf._ProtoNameProviding {
@@ -3047,6 +3084,86 @@ extension StoredPodcastRoutineStepProto: SwiftProtobuf.Message, SwiftProtobuf._M
     if lhs.outline != rhs.outline {return false}
     if lhs.thumbnailPrompt != rhs.thumbnailPrompt {return false}
     if lhs.thumbnailKey != rhs.thumbnailKey {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension StoredPodcastExerciseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredPodcastExerciseProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "exercise_id"),
+    2: .same(proto: "segments"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.exerciseID) }()
+      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.segments) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.exerciseID.isEmpty {
+      try visitor.visitSingularStringField(value: self.exerciseID, fieldNumber: 1)
+    }
+    if !self.segments.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.segments, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: StoredPodcastExerciseProto, rhs: StoredPodcastExerciseProto) -> Bool {
+    if lhs.exerciseID != rhs.exerciseID {return false}
+    if lhs.segments != rhs.segments {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension StoredPodcastExerciseSegmentProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredPodcastExerciseSegmentProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "spoken_text"),
+    2: .same(proto: "visual"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.spokenText) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._visual) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.spokenText.isEmpty {
+      try visitor.visitSingularStringField(value: self.spokenText, fieldNumber: 1)
+    }
+    try { if let v = self._visual {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: StoredPodcastExerciseSegmentProto, rhs: StoredPodcastExerciseSegmentProto) -> Bool {
+    if lhs.spokenText != rhs.spokenText {return false}
+    if lhs._visual != rhs._visual {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

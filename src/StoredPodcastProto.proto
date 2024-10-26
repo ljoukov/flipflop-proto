@@ -313,3 +313,13 @@ enum StoredPodcastTypeProto {
   STORED_PODCAST_TYPE_PROTO_EXERCISE = 2;
   STORED_PODCAST_TYPE_PROTO_MEDITATION = 3;
 }
+
+message StoredPodcastExerciseProto {
+  string exercise_id = 1;
+  repeated StoredPodcastExerciseSegmentProto segments = 2;
+}
+
+message StoredPodcastExerciseSegmentProto {
+  string spoken_text = 1;
+  PodcastExerciseVisualProto visual = 2;
+}

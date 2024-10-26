@@ -12,6 +12,7 @@ import { UnknownFieldHandler } from "@protobuf-ts/runtime";
 import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
+import { PodcastExerciseVisualProto } from "./PodcastProto";
 import { PodcastWordProto } from "./PodcastProto";
 import { Duration } from "./google/protobuf/duration";
 import { PodcastVisualTransitionProto } from "./PodcastProto";
@@ -710,6 +711,32 @@ export interface StoredPodcastRoutineStepProto {
      * @generated from protobuf field: string thumbnail_key = 5;
      */
     thumbnailKey: string;
+}
+/**
+ * @generated from protobuf message StoredPodcastExerciseProto
+ */
+export interface StoredPodcastExerciseProto {
+    /**
+     * @generated from protobuf field: string exercise_id = 1;
+     */
+    exerciseId: string;
+    /**
+     * @generated from protobuf field: repeated StoredPodcastExerciseSegmentProto segments = 2;
+     */
+    segments: StoredPodcastExerciseSegmentProto[];
+}
+/**
+ * @generated from protobuf message StoredPodcastExerciseSegmentProto
+ */
+export interface StoredPodcastExerciseSegmentProto {
+    /**
+     * @generated from protobuf field: string spoken_text = 1;
+     */
+    spokenText: string;
+    /**
+     * @generated from protobuf field: PodcastExerciseVisualProto visual = 2;
+     */
+    visual?: PodcastExerciseVisualProto;
 }
 /**
  * @generated from protobuf enum StoredPodcastStateProto
@@ -3069,3 +3096,112 @@ class StoredPodcastRoutineStepProto$Type extends MessageType<StoredPodcastRoutin
  * @generated MessageType for protobuf message StoredPodcastRoutineStepProto
  */
 export const StoredPodcastRoutineStepProto = new StoredPodcastRoutineStepProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class StoredPodcastExerciseProto$Type extends MessageType<StoredPodcastExerciseProto> {
+    constructor() {
+        super("StoredPodcastExerciseProto", [
+            { no: 1, name: "exercise_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "segments", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastExerciseSegmentProto }
+        ]);
+    }
+    create(value?: PartialMessage<StoredPodcastExerciseProto>): StoredPodcastExerciseProto {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.exerciseId = "";
+        message.segments = [];
+        if (value !== undefined)
+            reflectionMergePartial<StoredPodcastExerciseProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredPodcastExerciseProto): StoredPodcastExerciseProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string exercise_id */ 1:
+                    message.exerciseId = reader.string();
+                    break;
+                case /* repeated StoredPodcastExerciseSegmentProto segments */ 2:
+                    message.segments.push(StoredPodcastExerciseSegmentProto.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: StoredPodcastExerciseProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string exercise_id = 1; */
+        if (message.exerciseId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.exerciseId);
+        /* repeated StoredPodcastExerciseSegmentProto segments = 2; */
+        for (let i = 0; i < message.segments.length; i++)
+            StoredPodcastExerciseSegmentProto.internalBinaryWrite(message.segments[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message StoredPodcastExerciseProto
+ */
+export const StoredPodcastExerciseProto = new StoredPodcastExerciseProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class StoredPodcastExerciseSegmentProto$Type extends MessageType<StoredPodcastExerciseSegmentProto> {
+    constructor() {
+        super("StoredPodcastExerciseSegmentProto", [
+            { no: 1, name: "spoken_text", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "visual", kind: "message", T: () => PodcastExerciseVisualProto }
+        ]);
+    }
+    create(value?: PartialMessage<StoredPodcastExerciseSegmentProto>): StoredPodcastExerciseSegmentProto {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.spokenText = "";
+        if (value !== undefined)
+            reflectionMergePartial<StoredPodcastExerciseSegmentProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredPodcastExerciseSegmentProto): StoredPodcastExerciseSegmentProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string spoken_text */ 1:
+                    message.spokenText = reader.string();
+                    break;
+                case /* PodcastExerciseVisualProto visual */ 2:
+                    message.visual = PodcastExerciseVisualProto.internalBinaryRead(reader, reader.uint32(), options, message.visual);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: StoredPodcastExerciseSegmentProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string spoken_text = 1; */
+        if (message.spokenText !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.spokenText);
+        /* PodcastExerciseVisualProto visual = 2; */
+        if (message.visual)
+            PodcastExerciseVisualProto.internalBinaryWrite(message.visual, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message StoredPodcastExerciseSegmentProto
+ */
+export const StoredPodcastExerciseSegmentProto = new StoredPodcastExerciseSegmentProto$Type();
