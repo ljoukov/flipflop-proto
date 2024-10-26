@@ -406,3 +406,49 @@ message PodcastRoutineStepProgressProto {
   google.protobuf.Timestamp completed_at = 1;
   bool completed = 2;
 }
+
+message PodcastExerciseProto {
+  string exercise_id = 1;
+  PodcastExerciseSectionProto sections = 2;
+}
+
+message PodcastExerciseSectionProto {
+  oneof type {
+    PodcastExerciseSetupProto setup = 1;
+    PodcastExerciseRepProto rep = 2;
+    PodcastExerciseCooldownProto cooldown = 3;
+  }
+}
+
+message PodcastExerciseSetupProto {
+  string instruction = 1;
+  repeated string tips = 2;
+  repeated string error_prevention_tips = 3;
+}
+
+message PodcastExerciseCooldownProto {
+  string instruction = 1;
+  repeated string tips = 2;
+  repeated string error_prevention_tips = 3;
+}
+
+message PodcastExerciseRepProto {
+  int32 num_repetitions = 1;
+  PodcastExerciseMovementProto movement = 2;
+  string instruction = 3;
+  repeated string tips = 4;
+  repeated string error_prevention_tips = 5;
+}
+
+enum PodcastExerciseMovementProto {
+  PODCAST_EXERCISE_MOVEMENT_PROTO_UNDEFINED = 0;
+
+  // Breathing
+  PODCAST_EXERCISE_MOVEMENT_PROTO_INHALE = 1;
+  PODCAST_EXERCISE_MOVEMENT_PROTO_EXHALE = 2;
+  PODCAST_EXERCISE_MOVEMENT_PROTO_HOLD_BREATH = 3;
+
+  // Static
+  PODCAST_EXERCISE_MOVEMENT_PROTO_SQUEEZE = 4;
+  PODCAST_EXERCISE_MOVEMENT_PROTO_RELAX = 5;
+}
