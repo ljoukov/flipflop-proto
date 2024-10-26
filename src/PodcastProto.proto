@@ -446,7 +446,8 @@ message PodcastExerciseRepProto {
   string title = 3;
   repeated string tips = 4;
   repeated string error_prevention_tips = 5;
-  PodcastAudioProto instructions_audio = 6;
+  repeated PodcastAudioProto instructions_audio = 6;
+  repeated PodcastAudioProto rep_instructions_audio = 7;
 }
 
 message PodcastExerciseRepStepProto {
@@ -454,7 +455,8 @@ message PodcastExerciseRepStepProto {
   PodcastExerciseMovementProto movement = 2;
   string label = 3;
   float duration_sec = 4;
-  PodcastAudioProto audio = 5;
+  PodcastAudioProto instructions_audio = 5;
+  PodcastAudioProto counts_audio = 6;
 }
 
 enum PodcastExerciseMovementProto {

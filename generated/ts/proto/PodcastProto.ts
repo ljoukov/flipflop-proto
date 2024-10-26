@@ -1225,9 +1225,13 @@ export interface PodcastExerciseRepProto {
      */
     errorPreventionTips: string[];
     /**
-     * @generated from protobuf field: PodcastAudioProto instructions_audio = 6;
+     * @generated from protobuf field: repeated PodcastAudioProto instructions_audio = 6;
      */
-    instructionsAudio?: PodcastAudioProto;
+    instructionsAudio: PodcastAudioProto[];
+    /**
+     * @generated from protobuf field: repeated PodcastAudioProto rep_instructions_audio = 7;
+     */
+    repInstructionsAudio: PodcastAudioProto[];
 }
 /**
  * @generated from protobuf message PodcastExerciseRepStepProto
@@ -1250,9 +1254,13 @@ export interface PodcastExerciseRepStepProto {
      */
     durationSec: number;
     /**
-     * @generated from protobuf field: PodcastAudioProto audio = 5;
+     * @generated from protobuf field: PodcastAudioProto instructions_audio = 5;
      */
-    audio?: PodcastAudioProto;
+    instructionsAudio?: PodcastAudioProto;
+    /**
+     * @generated from protobuf field: PodcastAudioProto counts_audio = 6;
+     */
+    countsAudio?: PodcastAudioProto;
 }
 /**
  * @generated from protobuf enum PodcastStatusProto
@@ -5395,7 +5403,8 @@ class PodcastExerciseRepProto$Type extends MessageType<PodcastExerciseRepProto> 
             { no: 3, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "tips", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "error_prevention_tips", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
-            { no: 6, name: "instructions_audio", kind: "message", T: () => PodcastAudioProto }
+            { no: 6, name: "instructions_audio", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastAudioProto },
+            { no: 7, name: "rep_instructions_audio", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastAudioProto }
         ]);
     }
     create(value?: PartialMessage<PodcastExerciseRepProto>): PodcastExerciseRepProto {
@@ -5405,6 +5414,8 @@ class PodcastExerciseRepProto$Type extends MessageType<PodcastExerciseRepProto> 
         message.title = "";
         message.tips = [];
         message.errorPreventionTips = [];
+        message.instructionsAudio = [];
+        message.repInstructionsAudio = [];
         if (value !== undefined)
             reflectionMergePartial<PodcastExerciseRepProto>(this, message, value);
         return message;
@@ -5429,8 +5440,11 @@ class PodcastExerciseRepProto$Type extends MessageType<PodcastExerciseRepProto> 
                 case /* repeated string error_prevention_tips */ 5:
                     message.errorPreventionTips.push(reader.string());
                     break;
-                case /* PodcastAudioProto instructions_audio */ 6:
-                    message.instructionsAudio = PodcastAudioProto.internalBinaryRead(reader, reader.uint32(), options, message.instructionsAudio);
+                case /* repeated PodcastAudioProto instructions_audio */ 6:
+                    message.instructionsAudio.push(PodcastAudioProto.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* repeated PodcastAudioProto rep_instructions_audio */ 7:
+                    message.repInstructionsAudio.push(PodcastAudioProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -5459,9 +5473,12 @@ class PodcastExerciseRepProto$Type extends MessageType<PodcastExerciseRepProto> 
         /* repeated string error_prevention_tips = 5; */
         for (let i = 0; i < message.errorPreventionTips.length; i++)
             writer.tag(5, WireType.LengthDelimited).string(message.errorPreventionTips[i]);
-        /* PodcastAudioProto instructions_audio = 6; */
-        if (message.instructionsAudio)
-            PodcastAudioProto.internalBinaryWrite(message.instructionsAudio, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+        /* repeated PodcastAudioProto instructions_audio = 6; */
+        for (let i = 0; i < message.instructionsAudio.length; i++)
+            PodcastAudioProto.internalBinaryWrite(message.instructionsAudio[i], writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+        /* repeated PodcastAudioProto rep_instructions_audio = 7; */
+        for (let i = 0; i < message.repInstructionsAudio.length; i++)
+            PodcastAudioProto.internalBinaryWrite(message.repInstructionsAudio[i], writer.tag(7, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -5480,7 +5497,8 @@ class PodcastExerciseRepStepProto$Type extends MessageType<PodcastExerciseRepSte
             { no: 2, name: "movement", kind: "enum", T: () => ["PodcastExerciseMovementProto", PodcastExerciseMovementProto, "PODCAST_EXERCISE_MOVEMENT_PROTO_"] },
             { no: 3, name: "label", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "duration_sec", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
-            { no: 5, name: "audio", kind: "message", T: () => PodcastAudioProto }
+            { no: 5, name: "instructions_audio", kind: "message", T: () => PodcastAudioProto },
+            { no: 6, name: "counts_audio", kind: "message", T: () => PodcastAudioProto }
         ]);
     }
     create(value?: PartialMessage<PodcastExerciseRepStepProto>): PodcastExerciseRepStepProto {
@@ -5510,8 +5528,11 @@ class PodcastExerciseRepStepProto$Type extends MessageType<PodcastExerciseRepSte
                 case /* float duration_sec */ 4:
                     message.durationSec = reader.float();
                     break;
-                case /* PodcastAudioProto audio */ 5:
-                    message.audio = PodcastAudioProto.internalBinaryRead(reader, reader.uint32(), options, message.audio);
+                case /* PodcastAudioProto instructions_audio */ 5:
+                    message.instructionsAudio = PodcastAudioProto.internalBinaryRead(reader, reader.uint32(), options, message.instructionsAudio);
+                    break;
+                case /* PodcastAudioProto counts_audio */ 6:
+                    message.countsAudio = PodcastAudioProto.internalBinaryRead(reader, reader.uint32(), options, message.countsAudio);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -5537,9 +5558,12 @@ class PodcastExerciseRepStepProto$Type extends MessageType<PodcastExerciseRepSte
         /* float duration_sec = 4; */
         if (message.durationSec !== 0)
             writer.tag(4, WireType.Bit32).float(message.durationSec);
-        /* PodcastAudioProto audio = 5; */
-        if (message.audio)
-            PodcastAudioProto.internalBinaryWrite(message.audio, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastAudioProto instructions_audio = 5; */
+        if (message.instructionsAudio)
+            PodcastAudioProto.internalBinaryWrite(message.instructionsAudio, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastAudioProto counts_audio = 6; */
+        if (message.countsAudio)
+            PodcastAudioProto.internalBinaryWrite(message.countsAudio, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
