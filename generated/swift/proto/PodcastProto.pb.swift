@@ -1667,11 +1667,64 @@ struct PodcastExerciseProto: Sendable {
 
   var exerciseID: String = String()
 
+  var audio: PodcastAudioProto {
+    get {return _audio ?? PodcastAudioProto()}
+    set {_audio = newValue}
+  }
+  /// Returns true if `audio` has been explicitly set.
+  var hasAudio: Bool {return self._audio != nil}
+  /// Clears the value of `audio`. Subsequent reads from it will return its default value.
+  mutating func clearAudio() {self._audio = nil}
+
+  var visuals: [PodcastExerciseVisualProto] = []
+
+  /// remove
   var sections: [PodcastExerciseSectionProto] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
+
+  fileprivate var _audio: PodcastAudioProto? = nil
+}
+
+struct PodcastExerciseVisualProto: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var timestampMillis: Int32 = 0
+
+  var durationMillis: Int32 = 0
+
+  var repNumber: Int32 = 0
+
+  var repTotal: Int32 = 0
+
+  var instruction: String = String()
+
+  var hero: PodcastCardHeroProto {
+    get {return _hero ?? PodcastCardHeroProto()}
+    set {_hero = newValue}
+  }
+  /// Returns true if `hero` has been explicitly set.
+  var hasHero: Bool {return self._hero != nil}
+  /// Clears the value of `hero`. Subsequent reads from it will return its default value.
+  mutating func clearHero() {self._hero = nil}
+
+  var movement: PodcastExerciseMovementProto = .undefined
+
+  var displayTimer: Bool = false
+
+  var tips: [String] = []
+
+  var warningTips: [String] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+
+  fileprivate var _hero: PodcastCardHeroProto? = nil
 }
 
 struct PodcastExerciseSectionProto: Sendable {
@@ -5057,7 +5110,9 @@ extension PodcastExerciseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
   static let protoMessageName: String = "PodcastExerciseProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "exercise_id"),
-    2: .same(proto: "sections"),
+    2: .same(proto: "audio"),
+    3: .same(proto: "visuals"),
+    10: .same(proto: "sections"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -5067,25 +5122,129 @@ extension PodcastExerciseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.exerciseID) }()
-      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.sections) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._audio) }()
+      case 3: try { try decoder.decodeRepeatedMessageField(value: &self.visuals) }()
+      case 10: try { try decoder.decodeRepeatedMessageField(value: &self.sections) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.exerciseID.isEmpty {
       try visitor.visitSingularStringField(value: self.exerciseID, fieldNumber: 1)
     }
+    try { if let v = self._audio {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
+    if !self.visuals.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.visuals, fieldNumber: 3)
+    }
     if !self.sections.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.sections, fieldNumber: 2)
+      try visitor.visitRepeatedMessageField(value: self.sections, fieldNumber: 10)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: PodcastExerciseProto, rhs: PodcastExerciseProto) -> Bool {
     if lhs.exerciseID != rhs.exerciseID {return false}
+    if lhs._audio != rhs._audio {return false}
+    if lhs.visuals != rhs.visuals {return false}
     if lhs.sections != rhs.sections {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension PodcastExerciseVisualProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastExerciseVisualProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "timestamp_millis"),
+    2: .standard(proto: "duration_millis"),
+    3: .standard(proto: "rep_number"),
+    4: .standard(proto: "rep_total"),
+    5: .same(proto: "instruction"),
+    6: .same(proto: "hero"),
+    7: .same(proto: "movement"),
+    8: .standard(proto: "display_timer"),
+    9: .same(proto: "tips"),
+    10: .standard(proto: "warning_tips"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularInt32Field(value: &self.timestampMillis) }()
+      case 2: try { try decoder.decodeSingularInt32Field(value: &self.durationMillis) }()
+      case 3: try { try decoder.decodeSingularInt32Field(value: &self.repNumber) }()
+      case 4: try { try decoder.decodeSingularInt32Field(value: &self.repTotal) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.instruction) }()
+      case 6: try { try decoder.decodeSingularMessageField(value: &self._hero) }()
+      case 7: try { try decoder.decodeSingularEnumField(value: &self.movement) }()
+      case 8: try { try decoder.decodeSingularBoolField(value: &self.displayTimer) }()
+      case 9: try { try decoder.decodeRepeatedStringField(value: &self.tips) }()
+      case 10: try { try decoder.decodeRepeatedStringField(value: &self.warningTips) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if self.timestampMillis != 0 {
+      try visitor.visitSingularInt32Field(value: self.timestampMillis, fieldNumber: 1)
+    }
+    if self.durationMillis != 0 {
+      try visitor.visitSingularInt32Field(value: self.durationMillis, fieldNumber: 2)
+    }
+    if self.repNumber != 0 {
+      try visitor.visitSingularInt32Field(value: self.repNumber, fieldNumber: 3)
+    }
+    if self.repTotal != 0 {
+      try visitor.visitSingularInt32Field(value: self.repTotal, fieldNumber: 4)
+    }
+    if !self.instruction.isEmpty {
+      try visitor.visitSingularStringField(value: self.instruction, fieldNumber: 5)
+    }
+    try { if let v = self._hero {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
+    } }()
+    if self.movement != .undefined {
+      try visitor.visitSingularEnumField(value: self.movement, fieldNumber: 7)
+    }
+    if self.displayTimer != false {
+      try visitor.visitSingularBoolField(value: self.displayTimer, fieldNumber: 8)
+    }
+    if !self.tips.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.tips, fieldNumber: 9)
+    }
+    if !self.warningTips.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.warningTips, fieldNumber: 10)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PodcastExerciseVisualProto, rhs: PodcastExerciseVisualProto) -> Bool {
+    if lhs.timestampMillis != rhs.timestampMillis {return false}
+    if lhs.durationMillis != rhs.durationMillis {return false}
+    if lhs.repNumber != rhs.repNumber {return false}
+    if lhs.repTotal != rhs.repTotal {return false}
+    if lhs.instruction != rhs.instruction {return false}
+    if lhs._hero != rhs._hero {return false}
+    if lhs.movement != rhs.movement {return false}
+    if lhs.displayTimer != rhs.displayTimer {return false}
+    if lhs.tips != rhs.tips {return false}
+    if lhs.warningTips != rhs.warningTips {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

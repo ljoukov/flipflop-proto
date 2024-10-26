@@ -1109,9 +1109,62 @@ export interface PodcastExerciseProto {
      */
     exerciseId: string;
     /**
-     * @generated from protobuf field: repeated PodcastExerciseSectionProto sections = 2;
+     * @generated from protobuf field: PodcastAudioProto audio = 2;
      */
-    sections: PodcastExerciseSectionProto[];
+    audio?: PodcastAudioProto;
+    /**
+     * @generated from protobuf field: repeated PodcastExerciseVisualProto visuals = 3;
+     */
+    visuals: PodcastExerciseVisualProto[];
+    /**
+     * @generated from protobuf field: repeated PodcastExerciseSectionProto sections = 10;
+     */
+    sections: PodcastExerciseSectionProto[]; // remove
+}
+/**
+ * @generated from protobuf message PodcastExerciseVisualProto
+ */
+export interface PodcastExerciseVisualProto {
+    /**
+     * @generated from protobuf field: int32 timestamp_millis = 1;
+     */
+    timestampMillis: number;
+    /**
+     * @generated from protobuf field: int32 duration_millis = 2;
+     */
+    durationMillis: number;
+    /**
+     * @generated from protobuf field: int32 rep_number = 3;
+     */
+    repNumber: number;
+    /**
+     * @generated from protobuf field: int32 rep_total = 4;
+     */
+    repTotal: number;
+    /**
+     * @generated from protobuf field: string instruction = 5;
+     */
+    instruction: string;
+    /**
+     * @generated from protobuf field: PodcastCardHeroProto hero = 6;
+     */
+    hero?: PodcastCardHeroProto;
+    /**
+     * @generated from protobuf field: PodcastExerciseMovementProto movement = 7;
+     */
+    movement: PodcastExerciseMovementProto;
+    /**
+     * @generated from protobuf field: bool display_timer = 8;
+     */
+    displayTimer: boolean;
+    /**
+     * @generated from protobuf field: repeated string tips = 9;
+     */
+    tips: string[];
+    /**
+     * @generated from protobuf field: repeated string warning_tips = 10;
+     */
+    warningTips: string[];
 }
 /**
  * @generated from protobuf message PodcastExerciseSectionProto
@@ -5113,12 +5166,15 @@ class PodcastExerciseProto$Type extends MessageType<PodcastExerciseProto> {
     constructor() {
         super("PodcastExerciseProto", [
             { no: 1, name: "exercise_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "sections", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastExerciseSectionProto }
+            { no: 2, name: "audio", kind: "message", T: () => PodcastAudioProto },
+            { no: 3, name: "visuals", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastExerciseVisualProto },
+            { no: 10, name: "sections", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastExerciseSectionProto }
         ]);
     }
     create(value?: PartialMessage<PodcastExerciseProto>): PodcastExerciseProto {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.exerciseId = "";
+        message.visuals = [];
         message.sections = [];
         if (value !== undefined)
             reflectionMergePartial<PodcastExerciseProto>(this, message, value);
@@ -5132,7 +5188,13 @@ class PodcastExerciseProto$Type extends MessageType<PodcastExerciseProto> {
                 case /* string exercise_id */ 1:
                     message.exerciseId = reader.string();
                     break;
-                case /* repeated PodcastExerciseSectionProto sections */ 2:
+                case /* PodcastAudioProto audio */ 2:
+                    message.audio = PodcastAudioProto.internalBinaryRead(reader, reader.uint32(), options, message.audio);
+                    break;
+                case /* repeated PodcastExerciseVisualProto visuals */ 3:
+                    message.visuals.push(PodcastExerciseVisualProto.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* repeated PodcastExerciseSectionProto sections */ 10:
                     message.sections.push(PodcastExerciseSectionProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
@@ -5150,9 +5212,15 @@ class PodcastExerciseProto$Type extends MessageType<PodcastExerciseProto> {
         /* string exercise_id = 1; */
         if (message.exerciseId !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.exerciseId);
-        /* repeated PodcastExerciseSectionProto sections = 2; */
+        /* PodcastAudioProto audio = 2; */
+        if (message.audio)
+            PodcastAudioProto.internalBinaryWrite(message.audio, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* repeated PodcastExerciseVisualProto visuals = 3; */
+        for (let i = 0; i < message.visuals.length; i++)
+            PodcastExerciseVisualProto.internalBinaryWrite(message.visuals[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* repeated PodcastExerciseSectionProto sections = 10; */
         for (let i = 0; i < message.sections.length; i++)
-            PodcastExerciseSectionProto.internalBinaryWrite(message.sections[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+            PodcastExerciseSectionProto.internalBinaryWrite(message.sections[i], writer.tag(10, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -5163,6 +5231,124 @@ class PodcastExerciseProto$Type extends MessageType<PodcastExerciseProto> {
  * @generated MessageType for protobuf message PodcastExerciseProto
  */
 export const PodcastExerciseProto = new PodcastExerciseProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PodcastExerciseVisualProto$Type extends MessageType<PodcastExerciseVisualProto> {
+    constructor() {
+        super("PodcastExerciseVisualProto", [
+            { no: 1, name: "timestamp_millis", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 2, name: "duration_millis", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 3, name: "rep_number", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 4, name: "rep_total", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 5, name: "instruction", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "hero", kind: "message", T: () => PodcastCardHeroProto },
+            { no: 7, name: "movement", kind: "enum", T: () => ["PodcastExerciseMovementProto", PodcastExerciseMovementProto, "PODCAST_EXERCISE_MOVEMENT_PROTO_"] },
+            { no: 8, name: "display_timer", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 9, name: "tips", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
+            { no: 10, name: "warning_tips", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PodcastExerciseVisualProto>): PodcastExerciseVisualProto {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.timestampMillis = 0;
+        message.durationMillis = 0;
+        message.repNumber = 0;
+        message.repTotal = 0;
+        message.instruction = "";
+        message.movement = 0;
+        message.displayTimer = false;
+        message.tips = [];
+        message.warningTips = [];
+        if (value !== undefined)
+            reflectionMergePartial<PodcastExerciseVisualProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastExerciseVisualProto): PodcastExerciseVisualProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* int32 timestamp_millis */ 1:
+                    message.timestampMillis = reader.int32();
+                    break;
+                case /* int32 duration_millis */ 2:
+                    message.durationMillis = reader.int32();
+                    break;
+                case /* int32 rep_number */ 3:
+                    message.repNumber = reader.int32();
+                    break;
+                case /* int32 rep_total */ 4:
+                    message.repTotal = reader.int32();
+                    break;
+                case /* string instruction */ 5:
+                    message.instruction = reader.string();
+                    break;
+                case /* PodcastCardHeroProto hero */ 6:
+                    message.hero = PodcastCardHeroProto.internalBinaryRead(reader, reader.uint32(), options, message.hero);
+                    break;
+                case /* PodcastExerciseMovementProto movement */ 7:
+                    message.movement = reader.int32();
+                    break;
+                case /* bool display_timer */ 8:
+                    message.displayTimer = reader.bool();
+                    break;
+                case /* repeated string tips */ 9:
+                    message.tips.push(reader.string());
+                    break;
+                case /* repeated string warning_tips */ 10:
+                    message.warningTips.push(reader.string());
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PodcastExerciseVisualProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* int32 timestamp_millis = 1; */
+        if (message.timestampMillis !== 0)
+            writer.tag(1, WireType.Varint).int32(message.timestampMillis);
+        /* int32 duration_millis = 2; */
+        if (message.durationMillis !== 0)
+            writer.tag(2, WireType.Varint).int32(message.durationMillis);
+        /* int32 rep_number = 3; */
+        if (message.repNumber !== 0)
+            writer.tag(3, WireType.Varint).int32(message.repNumber);
+        /* int32 rep_total = 4; */
+        if (message.repTotal !== 0)
+            writer.tag(4, WireType.Varint).int32(message.repTotal);
+        /* string instruction = 5; */
+        if (message.instruction !== "")
+            writer.tag(5, WireType.LengthDelimited).string(message.instruction);
+        /* PodcastCardHeroProto hero = 6; */
+        if (message.hero)
+            PodcastCardHeroProto.internalBinaryWrite(message.hero, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastExerciseMovementProto movement = 7; */
+        if (message.movement !== 0)
+            writer.tag(7, WireType.Varint).int32(message.movement);
+        /* bool display_timer = 8; */
+        if (message.displayTimer !== false)
+            writer.tag(8, WireType.Varint).bool(message.displayTimer);
+        /* repeated string tips = 9; */
+        for (let i = 0; i < message.tips.length; i++)
+            writer.tag(9, WireType.LengthDelimited).string(message.tips[i]);
+        /* repeated string warning_tips = 10; */
+        for (let i = 0; i < message.warningTips.length; i++)
+            writer.tag(10, WireType.LengthDelimited).string(message.warningTips[i]);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message PodcastExerciseVisualProto
+ */
+export const PodcastExerciseVisualProto = new PodcastExerciseVisualProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class PodcastExerciseSectionProto$Type extends MessageType<PodcastExerciseSectionProto> {
     constructor() {

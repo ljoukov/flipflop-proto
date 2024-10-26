@@ -409,7 +409,28 @@ message PodcastRoutineStepProgressProto {
 
 message PodcastExerciseProto {
   string exercise_id = 1;
-  repeated PodcastExerciseSectionProto sections = 2;
+  PodcastAudioProto audio = 2;
+  repeated PodcastExerciseVisualProto visuals = 3;
+
+  repeated PodcastExerciseSectionProto sections = 10;  // remove
+}
+
+message PodcastExerciseVisualProto {
+  int32 timestamp_millis = 1;
+  int32 duration_millis = 2;
+
+  int32 rep_number = 3;
+  int32 rep_total = 4;
+
+  string instruction = 5;
+  PodcastCardHeroProto hero = 6;
+
+  PodcastExerciseMovementProto movement = 7;
+
+  bool display_timer = 8;
+
+  repeated string tips = 9;
+  repeated string warning_tips = 10;
 }
 
 message PodcastExerciseSectionProto {
