@@ -425,14 +425,16 @@ message PodcastExerciseSectionProto {
 
 message PodcastExerciseSetupProto {
   string text = 1;
-  repeated string tips = 2;
-  repeated string error_prevention_tips = 3;
+  PodcastCardHeroProto hero = 2;
+  repeated string tips = 3;
+  repeated string error_prevention_tips = 4;
 }
 
 message PodcastExerciseCooldownProto {
   string text = 1;
-  repeated string tips = 2;
-  repeated string error_prevention_tips = 3;
+  PodcastCardHeroProto hero = 2;
+  repeated string tips = 3;
+  repeated string error_prevention_tips = 4;
 }
 
 message PodcastExerciseRepProto {

@@ -1728,6 +1728,15 @@ struct PodcastExerciseSetupProto: Sendable {
 
   var text: String = String()
 
+  var hero: PodcastCardHeroProto {
+    get {return _hero ?? PodcastCardHeroProto()}
+    set {_hero = newValue}
+  }
+  /// Returns true if `hero` has been explicitly set.
+  var hasHero: Bool {return self._hero != nil}
+  /// Clears the value of `hero`. Subsequent reads from it will return its default value.
+  mutating func clearHero() {self._hero = nil}
+
   var tips: [String] = []
 
   var errorPreventionTips: [String] = []
@@ -1735,6 +1744,8 @@ struct PodcastExerciseSetupProto: Sendable {
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
+
+  fileprivate var _hero: PodcastCardHeroProto? = nil
 }
 
 struct PodcastExerciseCooldownProto: Sendable {
@@ -1744,6 +1755,15 @@ struct PodcastExerciseCooldownProto: Sendable {
 
   var text: String = String()
 
+  var hero: PodcastCardHeroProto {
+    get {return _hero ?? PodcastCardHeroProto()}
+    set {_hero = newValue}
+  }
+  /// Returns true if `hero` has been explicitly set.
+  var hasHero: Bool {return self._hero != nil}
+  /// Clears the value of `hero`. Subsequent reads from it will return its default value.
+  mutating func clearHero() {self._hero = nil}
+
   var tips: [String] = []
 
   var errorPreventionTips: [String] = []
@@ -1751,6 +1771,8 @@ struct PodcastExerciseCooldownProto: Sendable {
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
+
+  fileprivate var _hero: PodcastCardHeroProto? = nil
 }
 
 struct PodcastExerciseRepProto: Sendable {
@@ -5083,8 +5105,9 @@ extension PodcastExerciseSetupProto: SwiftProtobuf.Message, SwiftProtobuf._Messa
   static let protoMessageName: String = "PodcastExerciseSetupProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "text"),
-    2: .same(proto: "tips"),
-    3: .standard(proto: "error_prevention_tips"),
+    2: .same(proto: "hero"),
+    3: .same(proto: "tips"),
+    4: .standard(proto: "error_prevention_tips"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -5094,28 +5117,37 @@ extension PodcastExerciseSetupProto: SwiftProtobuf.Message, SwiftProtobuf._Messa
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.text) }()
-      case 2: try { try decoder.decodeRepeatedStringField(value: &self.tips) }()
-      case 3: try { try decoder.decodeRepeatedStringField(value: &self.errorPreventionTips) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._hero) }()
+      case 3: try { try decoder.decodeRepeatedStringField(value: &self.tips) }()
+      case 4: try { try decoder.decodeRepeatedStringField(value: &self.errorPreventionTips) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.text.isEmpty {
       try visitor.visitSingularStringField(value: self.text, fieldNumber: 1)
     }
+    try { if let v = self._hero {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
     if !self.tips.isEmpty {
-      try visitor.visitRepeatedStringField(value: self.tips, fieldNumber: 2)
+      try visitor.visitRepeatedStringField(value: self.tips, fieldNumber: 3)
     }
     if !self.errorPreventionTips.isEmpty {
-      try visitor.visitRepeatedStringField(value: self.errorPreventionTips, fieldNumber: 3)
+      try visitor.visitRepeatedStringField(value: self.errorPreventionTips, fieldNumber: 4)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: PodcastExerciseSetupProto, rhs: PodcastExerciseSetupProto) -> Bool {
     if lhs.text != rhs.text {return false}
+    if lhs._hero != rhs._hero {return false}
     if lhs.tips != rhs.tips {return false}
     if lhs.errorPreventionTips != rhs.errorPreventionTips {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
@@ -5127,8 +5159,9 @@ extension PodcastExerciseCooldownProto: SwiftProtobuf.Message, SwiftProtobuf._Me
   static let protoMessageName: String = "PodcastExerciseCooldownProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "text"),
-    2: .same(proto: "tips"),
-    3: .standard(proto: "error_prevention_tips"),
+    2: .same(proto: "hero"),
+    3: .same(proto: "tips"),
+    4: .standard(proto: "error_prevention_tips"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -5138,28 +5171,37 @@ extension PodcastExerciseCooldownProto: SwiftProtobuf.Message, SwiftProtobuf._Me
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.text) }()
-      case 2: try { try decoder.decodeRepeatedStringField(value: &self.tips) }()
-      case 3: try { try decoder.decodeRepeatedStringField(value: &self.errorPreventionTips) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._hero) }()
+      case 3: try { try decoder.decodeRepeatedStringField(value: &self.tips) }()
+      case 4: try { try decoder.decodeRepeatedStringField(value: &self.errorPreventionTips) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.text.isEmpty {
       try visitor.visitSingularStringField(value: self.text, fieldNumber: 1)
     }
+    try { if let v = self._hero {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
     if !self.tips.isEmpty {
-      try visitor.visitRepeatedStringField(value: self.tips, fieldNumber: 2)
+      try visitor.visitRepeatedStringField(value: self.tips, fieldNumber: 3)
     }
     if !self.errorPreventionTips.isEmpty {
-      try visitor.visitRepeatedStringField(value: self.errorPreventionTips, fieldNumber: 3)
+      try visitor.visitRepeatedStringField(value: self.errorPreventionTips, fieldNumber: 4)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: PodcastExerciseCooldownProto, rhs: PodcastExerciseCooldownProto) -> Bool {
     if lhs.text != rhs.text {return false}
+    if lhs._hero != rhs._hero {return false}
     if lhs.tips != rhs.tips {return false}
     if lhs.errorPreventionTips != rhs.errorPreventionTips {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}

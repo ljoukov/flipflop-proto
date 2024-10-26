@@ -1155,11 +1155,15 @@ export interface PodcastExerciseSetupProto {
      */
     text: string;
     /**
-     * @generated from protobuf field: repeated string tips = 2;
+     * @generated from protobuf field: PodcastCardHeroProto hero = 2;
+     */
+    hero?: PodcastCardHeroProto;
+    /**
+     * @generated from protobuf field: repeated string tips = 3;
      */
     tips: string[];
     /**
-     * @generated from protobuf field: repeated string error_prevention_tips = 3;
+     * @generated from protobuf field: repeated string error_prevention_tips = 4;
      */
     errorPreventionTips: string[];
 }
@@ -1172,11 +1176,15 @@ export interface PodcastExerciseCooldownProto {
      */
     text: string;
     /**
-     * @generated from protobuf field: repeated string tips = 2;
+     * @generated from protobuf field: PodcastCardHeroProto hero = 2;
+     */
+    hero?: PodcastCardHeroProto;
+    /**
+     * @generated from protobuf field: repeated string tips = 3;
      */
     tips: string[];
     /**
-     * @generated from protobuf field: repeated string error_prevention_tips = 3;
+     * @generated from protobuf field: repeated string error_prevention_tips = 4;
      */
     errorPreventionTips: string[];
 }
@@ -5202,8 +5210,9 @@ class PodcastExerciseSetupProto$Type extends MessageType<PodcastExerciseSetupPro
     constructor() {
         super("PodcastExerciseSetupProto", [
             { no: 1, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "tips", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "error_prevention_tips", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "hero", kind: "message", T: () => PodcastCardHeroProto },
+            { no: 3, name: "tips", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "error_prevention_tips", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PodcastExerciseSetupProto>): PodcastExerciseSetupProto {
@@ -5223,10 +5232,13 @@ class PodcastExerciseSetupProto$Type extends MessageType<PodcastExerciseSetupPro
                 case /* string text */ 1:
                     message.text = reader.string();
                     break;
-                case /* repeated string tips */ 2:
+                case /* PodcastCardHeroProto hero */ 2:
+                    message.hero = PodcastCardHeroProto.internalBinaryRead(reader, reader.uint32(), options, message.hero);
+                    break;
+                case /* repeated string tips */ 3:
                     message.tips.push(reader.string());
                     break;
-                case /* repeated string error_prevention_tips */ 3:
+                case /* repeated string error_prevention_tips */ 4:
                     message.errorPreventionTips.push(reader.string());
                     break;
                 default:
@@ -5244,12 +5256,15 @@ class PodcastExerciseSetupProto$Type extends MessageType<PodcastExerciseSetupPro
         /* string text = 1; */
         if (message.text !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.text);
-        /* repeated string tips = 2; */
+        /* PodcastCardHeroProto hero = 2; */
+        if (message.hero)
+            PodcastCardHeroProto.internalBinaryWrite(message.hero, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* repeated string tips = 3; */
         for (let i = 0; i < message.tips.length; i++)
-            writer.tag(2, WireType.LengthDelimited).string(message.tips[i]);
-        /* repeated string error_prevention_tips = 3; */
+            writer.tag(3, WireType.LengthDelimited).string(message.tips[i]);
+        /* repeated string error_prevention_tips = 4; */
         for (let i = 0; i < message.errorPreventionTips.length; i++)
-            writer.tag(3, WireType.LengthDelimited).string(message.errorPreventionTips[i]);
+            writer.tag(4, WireType.LengthDelimited).string(message.errorPreventionTips[i]);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -5265,8 +5280,9 @@ class PodcastExerciseCooldownProto$Type extends MessageType<PodcastExerciseCoold
     constructor() {
         super("PodcastExerciseCooldownProto", [
             { no: 1, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "tips", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "error_prevention_tips", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "hero", kind: "message", T: () => PodcastCardHeroProto },
+            { no: 3, name: "tips", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "error_prevention_tips", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PodcastExerciseCooldownProto>): PodcastExerciseCooldownProto {
@@ -5286,10 +5302,13 @@ class PodcastExerciseCooldownProto$Type extends MessageType<PodcastExerciseCoold
                 case /* string text */ 1:
                     message.text = reader.string();
                     break;
-                case /* repeated string tips */ 2:
+                case /* PodcastCardHeroProto hero */ 2:
+                    message.hero = PodcastCardHeroProto.internalBinaryRead(reader, reader.uint32(), options, message.hero);
+                    break;
+                case /* repeated string tips */ 3:
                     message.tips.push(reader.string());
                     break;
-                case /* repeated string error_prevention_tips */ 3:
+                case /* repeated string error_prevention_tips */ 4:
                     message.errorPreventionTips.push(reader.string());
                     break;
                 default:
@@ -5307,12 +5326,15 @@ class PodcastExerciseCooldownProto$Type extends MessageType<PodcastExerciseCoold
         /* string text = 1; */
         if (message.text !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.text);
-        /* repeated string tips = 2; */
+        /* PodcastCardHeroProto hero = 2; */
+        if (message.hero)
+            PodcastCardHeroProto.internalBinaryWrite(message.hero, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* repeated string tips = 3; */
         for (let i = 0; i < message.tips.length; i++)
-            writer.tag(2, WireType.LengthDelimited).string(message.tips[i]);
-        /* repeated string error_prevention_tips = 3; */
+            writer.tag(3, WireType.LengthDelimited).string(message.tips[i]);
+        /* repeated string error_prevention_tips = 4; */
         for (let i = 0; i < message.errorPreventionTips.length; i++)
-            writer.tag(3, WireType.LengthDelimited).string(message.errorPreventionTips[i]);
+            writer.tag(4, WireType.LengthDelimited).string(message.errorPreventionTips[i]);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
