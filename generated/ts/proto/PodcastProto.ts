@@ -1225,9 +1225,9 @@ export interface PodcastExerciseRepProto {
      */
     errorPreventionTips: string[];
     /**
-     * @generated from protobuf field: repeated PodcastAudioProto instructions_audio = 6;
+     * @generated from protobuf field: PodcastAudioProto instructions_audio = 6;
      */
-    instructionsAudio: PodcastAudioProto[];
+    instructionsAudio?: PodcastAudioProto;
     /**
      * @generated from protobuf field: repeated PodcastAudioProto rep_instructions_audio = 7;
      */
@@ -5403,7 +5403,7 @@ class PodcastExerciseRepProto$Type extends MessageType<PodcastExerciseRepProto> 
             { no: 3, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "tips", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "error_prevention_tips", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
-            { no: 6, name: "instructions_audio", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastAudioProto },
+            { no: 6, name: "instructions_audio", kind: "message", T: () => PodcastAudioProto },
             { no: 7, name: "rep_instructions_audio", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastAudioProto }
         ]);
     }
@@ -5414,7 +5414,6 @@ class PodcastExerciseRepProto$Type extends MessageType<PodcastExerciseRepProto> 
         message.title = "";
         message.tips = [];
         message.errorPreventionTips = [];
-        message.instructionsAudio = [];
         message.repInstructionsAudio = [];
         if (value !== undefined)
             reflectionMergePartial<PodcastExerciseRepProto>(this, message, value);
@@ -5440,8 +5439,8 @@ class PodcastExerciseRepProto$Type extends MessageType<PodcastExerciseRepProto> 
                 case /* repeated string error_prevention_tips */ 5:
                     message.errorPreventionTips.push(reader.string());
                     break;
-                case /* repeated PodcastAudioProto instructions_audio */ 6:
-                    message.instructionsAudio.push(PodcastAudioProto.internalBinaryRead(reader, reader.uint32(), options));
+                case /* PodcastAudioProto instructions_audio */ 6:
+                    message.instructionsAudio = PodcastAudioProto.internalBinaryRead(reader, reader.uint32(), options, message.instructionsAudio);
                     break;
                 case /* repeated PodcastAudioProto rep_instructions_audio */ 7:
                     message.repInstructionsAudio.push(PodcastAudioProto.internalBinaryRead(reader, reader.uint32(), options));
@@ -5473,9 +5472,9 @@ class PodcastExerciseRepProto$Type extends MessageType<PodcastExerciseRepProto> 
         /* repeated string error_prevention_tips = 5; */
         for (let i = 0; i < message.errorPreventionTips.length; i++)
             writer.tag(5, WireType.LengthDelimited).string(message.errorPreventionTips[i]);
-        /* repeated PodcastAudioProto instructions_audio = 6; */
-        for (let i = 0; i < message.instructionsAudio.length; i++)
-            PodcastAudioProto.internalBinaryWrite(message.instructionsAudio[i], writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastAudioProto instructions_audio = 6; */
+        if (message.instructionsAudio)
+            PodcastAudioProto.internalBinaryWrite(message.instructionsAudio, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
         /* repeated PodcastAudioProto rep_instructions_audio = 7; */
         for (let i = 0; i < message.repInstructionsAudio.length; i++)
             PodcastAudioProto.internalBinaryWrite(message.repInstructionsAudio[i], writer.tag(7, WireType.LengthDelimited).fork(), options).join();

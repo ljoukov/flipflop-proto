@@ -446,7 +446,7 @@ message PodcastExerciseRepProto {
   string title = 3;
   repeated string tips = 4;
   repeated string error_prevention_tips = 5;
-  repeated PodcastAudioProto instructions_audio = 6;
+  PodcastAudioProto instructions_audio = 6;
   repeated PodcastAudioProto rep_instructions_audio = 7;
 }
 
