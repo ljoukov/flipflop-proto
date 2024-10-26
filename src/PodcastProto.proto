@@ -428,6 +428,7 @@ message PodcastExerciseSetupProto {
   PodcastCardHeroProto hero = 2;
   repeated string tips = 3;
   repeated string error_prevention_tips = 4;
+  PodcastAudioProto audio = 5;
 }
 
 message PodcastExerciseCooldownProto {
@@ -435,6 +436,7 @@ message PodcastExerciseCooldownProto {
   PodcastCardHeroProto hero = 2;
   repeated string tips = 3;
   repeated string error_prevention_tips = 4;
+  PodcastAudioProto audio = 5;
 }
 
 message PodcastExerciseRepProto {
@@ -450,6 +452,7 @@ message PodcastExerciseRepStepProto {
   PodcastExerciseMovementProto movement = 2;
   string label = 3;
   float duration_sec = 4;
+  PodcastAudioProto audio = 5;
 }
 
 enum PodcastExerciseMovementProto {

@@ -1741,11 +1741,21 @@ struct PodcastExerciseSetupProto: Sendable {
 
   var errorPreventionTips: [String] = []
 
+  var audio: PodcastAudioProto {
+    get {return _audio ?? PodcastAudioProto()}
+    set {_audio = newValue}
+  }
+  /// Returns true if `audio` has been explicitly set.
+  var hasAudio: Bool {return self._audio != nil}
+  /// Clears the value of `audio`. Subsequent reads from it will return its default value.
+  mutating func clearAudio() {self._audio = nil}
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 
   fileprivate var _hero: PodcastCardHeroProto? = nil
+  fileprivate var _audio: PodcastAudioProto? = nil
 }
 
 struct PodcastExerciseCooldownProto: Sendable {
@@ -1768,11 +1778,21 @@ struct PodcastExerciseCooldownProto: Sendable {
 
   var errorPreventionTips: [String] = []
 
+  var audio: PodcastAudioProto {
+    get {return _audio ?? PodcastAudioProto()}
+    set {_audio = newValue}
+  }
+  /// Returns true if `audio` has been explicitly set.
+  var hasAudio: Bool {return self._audio != nil}
+  /// Clears the value of `audio`. Subsequent reads from it will return its default value.
+  mutating func clearAudio() {self._audio = nil}
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 
   fileprivate var _hero: PodcastCardHeroProto? = nil
+  fileprivate var _audio: PodcastAudioProto? = nil
 }
 
 struct PodcastExerciseRepProto: Sendable {
@@ -1808,9 +1828,20 @@ struct PodcastExerciseRepStepProto: Sendable {
 
   var durationSec: Float = 0
 
+  var audio: PodcastAudioProto {
+    get {return _audio ?? PodcastAudioProto()}
+    set {_audio = newValue}
+  }
+  /// Returns true if `audio` has been explicitly set.
+  var hasAudio: Bool {return self._audio != nil}
+  /// Clears the value of `audio`. Subsequent reads from it will return its default value.
+  mutating func clearAudio() {self._audio = nil}
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
+
+  fileprivate var _audio: PodcastAudioProto? = nil
 }
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
@@ -5108,6 +5139,7 @@ extension PodcastExerciseSetupProto: SwiftProtobuf.Message, SwiftProtobuf._Messa
     2: .same(proto: "hero"),
     3: .same(proto: "tips"),
     4: .standard(proto: "error_prevention_tips"),
+    5: .same(proto: "audio"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -5120,6 +5152,7 @@ extension PodcastExerciseSetupProto: SwiftProtobuf.Message, SwiftProtobuf._Messa
       case 2: try { try decoder.decodeSingularMessageField(value: &self._hero) }()
       case 3: try { try decoder.decodeRepeatedStringField(value: &self.tips) }()
       case 4: try { try decoder.decodeRepeatedStringField(value: &self.errorPreventionTips) }()
+      case 5: try { try decoder.decodeSingularMessageField(value: &self._audio) }()
       default: break
       }
     }
@@ -5142,6 +5175,9 @@ extension PodcastExerciseSetupProto: SwiftProtobuf.Message, SwiftProtobuf._Messa
     if !self.errorPreventionTips.isEmpty {
       try visitor.visitRepeatedStringField(value: self.errorPreventionTips, fieldNumber: 4)
     }
+    try { if let v = self._audio {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -5150,6 +5186,7 @@ extension PodcastExerciseSetupProto: SwiftProtobuf.Message, SwiftProtobuf._Messa
     if lhs._hero != rhs._hero {return false}
     if lhs.tips != rhs.tips {return false}
     if lhs.errorPreventionTips != rhs.errorPreventionTips {return false}
+    if lhs._audio != rhs._audio {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -5162,6 +5199,7 @@ extension PodcastExerciseCooldownProto: SwiftProtobuf.Message, SwiftProtobuf._Me
     2: .same(proto: "hero"),
     3: .same(proto: "tips"),
     4: .standard(proto: "error_prevention_tips"),
+    5: .same(proto: "audio"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -5174,6 +5212,7 @@ extension PodcastExerciseCooldownProto: SwiftProtobuf.Message, SwiftProtobuf._Me
       case 2: try { try decoder.decodeSingularMessageField(value: &self._hero) }()
       case 3: try { try decoder.decodeRepeatedStringField(value: &self.tips) }()
       case 4: try { try decoder.decodeRepeatedStringField(value: &self.errorPreventionTips) }()
+      case 5: try { try decoder.decodeSingularMessageField(value: &self._audio) }()
       default: break
       }
     }
@@ -5196,6 +5235,9 @@ extension PodcastExerciseCooldownProto: SwiftProtobuf.Message, SwiftProtobuf._Me
     if !self.errorPreventionTips.isEmpty {
       try visitor.visitRepeatedStringField(value: self.errorPreventionTips, fieldNumber: 4)
     }
+    try { if let v = self._audio {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -5204,6 +5246,7 @@ extension PodcastExerciseCooldownProto: SwiftProtobuf.Message, SwiftProtobuf._Me
     if lhs._hero != rhs._hero {return false}
     if lhs.tips != rhs.tips {return false}
     if lhs.errorPreventionTips != rhs.errorPreventionTips {return false}
+    if lhs._audio != rhs._audio {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -5272,6 +5315,7 @@ extension PodcastExerciseRepStepProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
     2: .same(proto: "movement"),
     3: .same(proto: "label"),
     4: .standard(proto: "duration_sec"),
+    5: .same(proto: "audio"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -5284,12 +5328,17 @@ extension PodcastExerciseRepStepProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
       case 2: try { try decoder.decodeSingularEnumField(value: &self.movement) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.label) }()
       case 4: try { try decoder.decodeSingularFloatField(value: &self.durationSec) }()
+      case 5: try { try decoder.decodeSingularMessageField(value: &self._audio) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.stepID.isEmpty {
       try visitor.visitSingularStringField(value: self.stepID, fieldNumber: 1)
     }
@@ -5302,6 +5351,9 @@ extension PodcastExerciseRepStepProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
     if self.durationSec.bitPattern != 0 {
       try visitor.visitSingularFloatField(value: self.durationSec, fieldNumber: 4)
     }
+    try { if let v = self._audio {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -5310,6 +5362,7 @@ extension PodcastExerciseRepStepProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
     if lhs.movement != rhs.movement {return false}
     if lhs.label != rhs.label {return false}
     if lhs.durationSec != rhs.durationSec {return false}
+    if lhs._audio != rhs._audio {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

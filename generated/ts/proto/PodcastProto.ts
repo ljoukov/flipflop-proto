@@ -1166,6 +1166,10 @@ export interface PodcastExerciseSetupProto {
      * @generated from protobuf field: repeated string error_prevention_tips = 4;
      */
     errorPreventionTips: string[];
+    /**
+     * @generated from protobuf field: PodcastAudioProto audio = 5;
+     */
+    audio?: PodcastAudioProto;
 }
 /**
  * @generated from protobuf message PodcastExerciseCooldownProto
@@ -1187,6 +1191,10 @@ export interface PodcastExerciseCooldownProto {
      * @generated from protobuf field: repeated string error_prevention_tips = 4;
      */
     errorPreventionTips: string[];
+    /**
+     * @generated from protobuf field: PodcastAudioProto audio = 5;
+     */
+    audio?: PodcastAudioProto;
 }
 /**
  * @generated from protobuf message PodcastExerciseRepProto
@@ -1233,6 +1241,10 @@ export interface PodcastExerciseRepStepProto {
      * @generated from protobuf field: float duration_sec = 4;
      */
     durationSec: number;
+    /**
+     * @generated from protobuf field: PodcastAudioProto audio = 5;
+     */
+    audio?: PodcastAudioProto;
 }
 /**
  * @generated from protobuf enum PodcastStatusProto
@@ -5212,7 +5224,8 @@ class PodcastExerciseSetupProto$Type extends MessageType<PodcastExerciseSetupPro
             { no: 1, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "hero", kind: "message", T: () => PodcastCardHeroProto },
             { no: 3, name: "tips", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "error_prevention_tips", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+            { no: 4, name: "error_prevention_tips", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "audio", kind: "message", T: () => PodcastAudioProto }
         ]);
     }
     create(value?: PartialMessage<PodcastExerciseSetupProto>): PodcastExerciseSetupProto {
@@ -5241,6 +5254,9 @@ class PodcastExerciseSetupProto$Type extends MessageType<PodcastExerciseSetupPro
                 case /* repeated string error_prevention_tips */ 4:
                     message.errorPreventionTips.push(reader.string());
                     break;
+                case /* PodcastAudioProto audio */ 5:
+                    message.audio = PodcastAudioProto.internalBinaryRead(reader, reader.uint32(), options, message.audio);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -5265,6 +5281,9 @@ class PodcastExerciseSetupProto$Type extends MessageType<PodcastExerciseSetupPro
         /* repeated string error_prevention_tips = 4; */
         for (let i = 0; i < message.errorPreventionTips.length; i++)
             writer.tag(4, WireType.LengthDelimited).string(message.errorPreventionTips[i]);
+        /* PodcastAudioProto audio = 5; */
+        if (message.audio)
+            PodcastAudioProto.internalBinaryWrite(message.audio, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -5282,7 +5301,8 @@ class PodcastExerciseCooldownProto$Type extends MessageType<PodcastExerciseCoold
             { no: 1, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "hero", kind: "message", T: () => PodcastCardHeroProto },
             { no: 3, name: "tips", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "error_prevention_tips", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+            { no: 4, name: "error_prevention_tips", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "audio", kind: "message", T: () => PodcastAudioProto }
         ]);
     }
     create(value?: PartialMessage<PodcastExerciseCooldownProto>): PodcastExerciseCooldownProto {
@@ -5311,6 +5331,9 @@ class PodcastExerciseCooldownProto$Type extends MessageType<PodcastExerciseCoold
                 case /* repeated string error_prevention_tips */ 4:
                     message.errorPreventionTips.push(reader.string());
                     break;
+                case /* PodcastAudioProto audio */ 5:
+                    message.audio = PodcastAudioProto.internalBinaryRead(reader, reader.uint32(), options, message.audio);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -5335,6 +5358,9 @@ class PodcastExerciseCooldownProto$Type extends MessageType<PodcastExerciseCoold
         /* repeated string error_prevention_tips = 4; */
         for (let i = 0; i < message.errorPreventionTips.length; i++)
             writer.tag(4, WireType.LengthDelimited).string(message.errorPreventionTips[i]);
+        /* PodcastAudioProto audio = 5; */
+        if (message.audio)
+            PodcastAudioProto.internalBinaryWrite(message.audio, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -5431,7 +5457,8 @@ class PodcastExerciseRepStepProto$Type extends MessageType<PodcastExerciseRepSte
             { no: 1, name: "step_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "movement", kind: "enum", T: () => ["PodcastExerciseMovementProto", PodcastExerciseMovementProto, "PODCAST_EXERCISE_MOVEMENT_PROTO_"] },
             { no: 3, name: "label", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "duration_sec", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ }
+            { no: 4, name: "duration_sec", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
+            { no: 5, name: "audio", kind: "message", T: () => PodcastAudioProto }
         ]);
     }
     create(value?: PartialMessage<PodcastExerciseRepStepProto>): PodcastExerciseRepStepProto {
@@ -5461,6 +5488,9 @@ class PodcastExerciseRepStepProto$Type extends MessageType<PodcastExerciseRepSte
                 case /* float duration_sec */ 4:
                     message.durationSec = reader.float();
                     break;
+                case /* PodcastAudioProto audio */ 5:
+                    message.audio = PodcastAudioProto.internalBinaryRead(reader, reader.uint32(), options, message.audio);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -5485,6 +5515,9 @@ class PodcastExerciseRepStepProto$Type extends MessageType<PodcastExerciseRepSte
         /* float duration_sec = 4; */
         if (message.durationSec !== 0)
             writer.tag(4, WireType.Bit32).float(message.durationSec);
+        /* PodcastAudioProto audio = 5; */
+        if (message.audio)
+            PodcastAudioProto.internalBinaryWrite(message.audio, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
