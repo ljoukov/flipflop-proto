@@ -419,10 +419,9 @@ message PodcastExerciseVisualProto {
   int32 timestamp_millis = 1;
   int32 duration_millis = 2;
 
-  int32 rep_number = 3;
-  int32 rep_total = 4;
+  PodcastExerciseRepCounterProto rep_counter = 3;
 
-  string instruction = 5;
+  string label = 5;
   PodcastCardHeroProto hero = 6;
 
   PodcastExerciseMovementProto movement = 7;
@@ -431,6 +430,11 @@ message PodcastExerciseVisualProto {
 
   repeated string tips = 9;
   repeated string warning_tips = 10;
+}
+
+message PodcastExerciseRepCounterProto {
+  int32 rep_number = 1;
+  int32 rep_total = 2;
 }
 
 message PodcastExerciseSectionProto {

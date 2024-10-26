@@ -1697,11 +1697,16 @@ struct PodcastExerciseVisualProto: Sendable {
 
   var durationMillis: Int32 = 0
 
-  var repNumber: Int32 = 0
+  var repCounter: PodcastExerciseRepCounterProto {
+    get {return _repCounter ?? PodcastExerciseRepCounterProto()}
+    set {_repCounter = newValue}
+  }
+  /// Returns true if `repCounter` has been explicitly set.
+  var hasRepCounter: Bool {return self._repCounter != nil}
+  /// Clears the value of `repCounter`. Subsequent reads from it will return its default value.
+  mutating func clearRepCounter() {self._repCounter = nil}
 
-  var repTotal: Int32 = 0
-
-  var instruction: String = String()
+  var label: String = String()
 
   var hero: PodcastCardHeroProto {
     get {return _hero ?? PodcastCardHeroProto()}
@@ -1724,7 +1729,22 @@ struct PodcastExerciseVisualProto: Sendable {
 
   init() {}
 
+  fileprivate var _repCounter: PodcastExerciseRepCounterProto? = nil
   fileprivate var _hero: PodcastCardHeroProto? = nil
+}
+
+struct PodcastExerciseRepCounterProto: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var repNumber: Int32 = 0
+
+  var repTotal: Int32 = 0
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
 }
 
 struct PodcastExerciseSectionProto: Sendable {
@@ -5165,9 +5185,8 @@ extension PodcastExerciseVisualProto: SwiftProtobuf.Message, SwiftProtobuf._Mess
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "timestamp_millis"),
     2: .standard(proto: "duration_millis"),
-    3: .standard(proto: "rep_number"),
-    4: .standard(proto: "rep_total"),
-    5: .same(proto: "instruction"),
+    3: .standard(proto: "rep_counter"),
+    5: .same(proto: "label"),
     6: .same(proto: "hero"),
     7: .same(proto: "movement"),
     8: .standard(proto: "display_timer"),
@@ -5183,9 +5202,8 @@ extension PodcastExerciseVisualProto: SwiftProtobuf.Message, SwiftProtobuf._Mess
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularInt32Field(value: &self.timestampMillis) }()
       case 2: try { try decoder.decodeSingularInt32Field(value: &self.durationMillis) }()
-      case 3: try { try decoder.decodeSingularInt32Field(value: &self.repNumber) }()
-      case 4: try { try decoder.decodeSingularInt32Field(value: &self.repTotal) }()
-      case 5: try { try decoder.decodeSingularStringField(value: &self.instruction) }()
+      case 3: try { try decoder.decodeSingularMessageField(value: &self._repCounter) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.label) }()
       case 6: try { try decoder.decodeSingularMessageField(value: &self._hero) }()
       case 7: try { try decoder.decodeSingularEnumField(value: &self.movement) }()
       case 8: try { try decoder.decodeSingularBoolField(value: &self.displayTimer) }()
@@ -5207,14 +5225,11 @@ extension PodcastExerciseVisualProto: SwiftProtobuf.Message, SwiftProtobuf._Mess
     if self.durationMillis != 0 {
       try visitor.visitSingularInt32Field(value: self.durationMillis, fieldNumber: 2)
     }
-    if self.repNumber != 0 {
-      try visitor.visitSingularInt32Field(value: self.repNumber, fieldNumber: 3)
-    }
-    if self.repTotal != 0 {
-      try visitor.visitSingularInt32Field(value: self.repTotal, fieldNumber: 4)
-    }
-    if !self.instruction.isEmpty {
-      try visitor.visitSingularStringField(value: self.instruction, fieldNumber: 5)
+    try { if let v = self._repCounter {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+    } }()
+    if !self.label.isEmpty {
+      try visitor.visitSingularStringField(value: self.label, fieldNumber: 5)
     }
     try { if let v = self._hero {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
@@ -5237,14 +5252,51 @@ extension PodcastExerciseVisualProto: SwiftProtobuf.Message, SwiftProtobuf._Mess
   static func ==(lhs: PodcastExerciseVisualProto, rhs: PodcastExerciseVisualProto) -> Bool {
     if lhs.timestampMillis != rhs.timestampMillis {return false}
     if lhs.durationMillis != rhs.durationMillis {return false}
-    if lhs.repNumber != rhs.repNumber {return false}
-    if lhs.repTotal != rhs.repTotal {return false}
-    if lhs.instruction != rhs.instruction {return false}
+    if lhs._repCounter != rhs._repCounter {return false}
+    if lhs.label != rhs.label {return false}
     if lhs._hero != rhs._hero {return false}
     if lhs.movement != rhs.movement {return false}
     if lhs.displayTimer != rhs.displayTimer {return false}
     if lhs.tips != rhs.tips {return false}
     if lhs.warningTips != rhs.warningTips {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension PodcastExerciseRepCounterProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastExerciseRepCounterProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "rep_number"),
+    2: .standard(proto: "rep_total"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularInt32Field(value: &self.repNumber) }()
+      case 2: try { try decoder.decodeSingularInt32Field(value: &self.repTotal) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.repNumber != 0 {
+      try visitor.visitSingularInt32Field(value: self.repNumber, fieldNumber: 1)
+    }
+    if self.repTotal != 0 {
+      try visitor.visitSingularInt32Field(value: self.repTotal, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PodcastExerciseRepCounterProto, rhs: PodcastExerciseRepCounterProto) -> Bool {
+    if lhs.repNumber != rhs.repNumber {return false}
+    if lhs.repTotal != rhs.repTotal {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
