@@ -1667,20 +1667,11 @@ struct PodcastExerciseProto: Sendable {
 
   var exerciseID: String = String()
 
-  var sections: PodcastExerciseSectionProto {
-    get {return _sections ?? PodcastExerciseSectionProto()}
-    set {_sections = newValue}
-  }
-  /// Returns true if `sections` has been explicitly set.
-  var hasSections: Bool {return self._sections != nil}
-  /// Clears the value of `sections`. Subsequent reads from it will return its default value.
-  mutating func clearSections() {self._sections = nil}
+  var sections: [PodcastExerciseSectionProto] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
-
-  fileprivate var _sections: PodcastExerciseSectionProto? = nil
 }
 
 struct PodcastExerciseSectionProto: Sendable {
@@ -4948,29 +4939,25 @@ extension PodcastExerciseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.exerciseID) }()
-      case 2: try { try decoder.decodeSingularMessageField(value: &self._sections) }()
+      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.sections) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every if/case branch local when no optimizations
-    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.exerciseID.isEmpty {
       try visitor.visitSingularStringField(value: self.exerciseID, fieldNumber: 1)
     }
-    try { if let v = self._sections {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
-    } }()
+    if !self.sections.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.sections, fieldNumber: 2)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: PodcastExerciseProto, rhs: PodcastExerciseProto) -> Bool {
     if lhs.exerciseID != rhs.exerciseID {return false}
-    if lhs._sections != rhs._sections {return false}
+    if lhs.sections != rhs.sections {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

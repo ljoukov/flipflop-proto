@@ -409,7 +409,7 @@ message PodcastRoutineStepProgressProto {
 
 message PodcastExerciseProto {
   string exercise_id = 1;
-  PodcastExerciseSectionProto sections = 2;
+  repeated PodcastExerciseSectionProto sections = 2;
 }
 
 message PodcastExerciseSectionProto {

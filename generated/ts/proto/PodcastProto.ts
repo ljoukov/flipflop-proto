@@ -1109,9 +1109,9 @@ export interface PodcastExerciseProto {
      */
     exerciseId: string;
     /**
-     * @generated from protobuf field: PodcastExerciseSectionProto sections = 2;
+     * @generated from protobuf field: repeated PodcastExerciseSectionProto sections = 2;
      */
-    sections?: PodcastExerciseSectionProto;
+    sections: PodcastExerciseSectionProto[];
 }
 /**
  * @generated from protobuf message PodcastExerciseSectionProto
@@ -5044,12 +5044,13 @@ class PodcastExerciseProto$Type extends MessageType<PodcastExerciseProto> {
     constructor() {
         super("PodcastExerciseProto", [
             { no: 1, name: "exercise_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "sections", kind: "message", T: () => PodcastExerciseSectionProto }
+            { no: 2, name: "sections", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastExerciseSectionProto }
         ]);
     }
     create(value?: PartialMessage<PodcastExerciseProto>): PodcastExerciseProto {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.exerciseId = "";
+        message.sections = [];
         if (value !== undefined)
             reflectionMergePartial<PodcastExerciseProto>(this, message, value);
         return message;
@@ -5062,8 +5063,8 @@ class PodcastExerciseProto$Type extends MessageType<PodcastExerciseProto> {
                 case /* string exercise_id */ 1:
                     message.exerciseId = reader.string();
                     break;
-                case /* PodcastExerciseSectionProto sections */ 2:
-                    message.sections = PodcastExerciseSectionProto.internalBinaryRead(reader, reader.uint32(), options, message.sections);
+                case /* repeated PodcastExerciseSectionProto sections */ 2:
+                    message.sections.push(PodcastExerciseSectionProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -5080,9 +5081,9 @@ class PodcastExerciseProto$Type extends MessageType<PodcastExerciseProto> {
         /* string exercise_id = 1; */
         if (message.exerciseId !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.exerciseId);
-        /* PodcastExerciseSectionProto sections = 2; */
-        if (message.sections)
-            PodcastExerciseSectionProto.internalBinaryWrite(message.sections, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* repeated PodcastExerciseSectionProto sections = 2; */
+        for (let i = 0; i < message.sections.length; i++)
+            PodcastExerciseSectionProto.internalBinaryWrite(message.sections[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
