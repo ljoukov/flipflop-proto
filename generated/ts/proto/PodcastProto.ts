@@ -1151,9 +1151,9 @@ export interface PodcastExerciseSectionProto {
  */
 export interface PodcastExerciseSetupProto {
     /**
-     * @generated from protobuf field: string instruction = 1;
+     * @generated from protobuf field: string text = 1;
      */
-    instruction: string;
+    text: string;
     /**
      * @generated from protobuf field: repeated string tips = 2;
      */
@@ -1168,9 +1168,9 @@ export interface PodcastExerciseSetupProto {
  */
 export interface PodcastExerciseCooldownProto {
     /**
-     * @generated from protobuf field: string instruction = 1;
+     * @generated from protobuf field: string text = 1;
      */
-    instruction: string;
+    text: string;
     /**
      * @generated from protobuf field: repeated string tips = 2;
      */
@@ -1189,13 +1189,13 @@ export interface PodcastExerciseRepProto {
      */
     numRepetitions: number;
     /**
-     * @generated from protobuf field: PodcastExerciseMovementProto movement = 2;
+     * @generated from protobuf field: repeated PodcastExerciseRepStepProto steps = 2;
      */
-    movement: PodcastExerciseMovementProto;
+    steps: PodcastExerciseRepStepProto[];
     /**
-     * @generated from protobuf field: string instruction = 3;
+     * @generated from protobuf field: string title = 3;
      */
-    instruction: string;
+    title: string;
     /**
      * @generated from protobuf field: repeated string tips = 4;
      */
@@ -1204,6 +1204,27 @@ export interface PodcastExerciseRepProto {
      * @generated from protobuf field: repeated string error_prevention_tips = 5;
      */
     errorPreventionTips: string[];
+}
+/**
+ * @generated from protobuf message PodcastExerciseRepStepProto
+ */
+export interface PodcastExerciseRepStepProto {
+    /**
+     * @generated from protobuf field: string step_id = 1;
+     */
+    stepId: string;
+    /**
+     * @generated from protobuf field: PodcastExerciseMovementProto movement = 2;
+     */
+    movement: PodcastExerciseMovementProto;
+    /**
+     * @generated from protobuf field: string label = 3;
+     */
+    label: string;
+    /**
+     * @generated from protobuf field: float duration_sec = 4;
+     */
+    durationSec: number;
 }
 /**
  * @generated from protobuf enum PodcastStatusProto
@@ -5180,14 +5201,14 @@ export const PodcastExerciseSectionProto = new PodcastExerciseSectionProto$Type(
 class PodcastExerciseSetupProto$Type extends MessageType<PodcastExerciseSetupProto> {
     constructor() {
         super("PodcastExerciseSetupProto", [
-            { no: 1, name: "instruction", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 1, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "tips", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "error_prevention_tips", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PodcastExerciseSetupProto>): PodcastExerciseSetupProto {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.instruction = "";
+        message.text = "";
         message.tips = [];
         message.errorPreventionTips = [];
         if (value !== undefined)
@@ -5199,8 +5220,8 @@ class PodcastExerciseSetupProto$Type extends MessageType<PodcastExerciseSetupPro
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string instruction */ 1:
-                    message.instruction = reader.string();
+                case /* string text */ 1:
+                    message.text = reader.string();
                     break;
                 case /* repeated string tips */ 2:
                     message.tips.push(reader.string());
@@ -5220,9 +5241,9 @@ class PodcastExerciseSetupProto$Type extends MessageType<PodcastExerciseSetupPro
         return message;
     }
     internalBinaryWrite(message: PodcastExerciseSetupProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string instruction = 1; */
-        if (message.instruction !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.instruction);
+        /* string text = 1; */
+        if (message.text !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.text);
         /* repeated string tips = 2; */
         for (let i = 0; i < message.tips.length; i++)
             writer.tag(2, WireType.LengthDelimited).string(message.tips[i]);
@@ -5243,14 +5264,14 @@ export const PodcastExerciseSetupProto = new PodcastExerciseSetupProto$Type();
 class PodcastExerciseCooldownProto$Type extends MessageType<PodcastExerciseCooldownProto> {
     constructor() {
         super("PodcastExerciseCooldownProto", [
-            { no: 1, name: "instruction", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 1, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "tips", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "error_prevention_tips", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PodcastExerciseCooldownProto>): PodcastExerciseCooldownProto {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.instruction = "";
+        message.text = "";
         message.tips = [];
         message.errorPreventionTips = [];
         if (value !== undefined)
@@ -5262,8 +5283,8 @@ class PodcastExerciseCooldownProto$Type extends MessageType<PodcastExerciseCoold
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string instruction */ 1:
-                    message.instruction = reader.string();
+                case /* string text */ 1:
+                    message.text = reader.string();
                     break;
                 case /* repeated string tips */ 2:
                     message.tips.push(reader.string());
@@ -5283,9 +5304,9 @@ class PodcastExerciseCooldownProto$Type extends MessageType<PodcastExerciseCoold
         return message;
     }
     internalBinaryWrite(message: PodcastExerciseCooldownProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string instruction = 1; */
-        if (message.instruction !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.instruction);
+        /* string text = 1; */
+        if (message.text !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.text);
         /* repeated string tips = 2; */
         for (let i = 0; i < message.tips.length; i++)
             writer.tag(2, WireType.LengthDelimited).string(message.tips[i]);
@@ -5307,8 +5328,8 @@ class PodcastExerciseRepProto$Type extends MessageType<PodcastExerciseRepProto> 
     constructor() {
         super("PodcastExerciseRepProto", [
             { no: 1, name: "num_repetitions", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 2, name: "movement", kind: "enum", T: () => ["PodcastExerciseMovementProto", PodcastExerciseMovementProto, "PODCAST_EXERCISE_MOVEMENT_PROTO_"] },
-            { no: 3, name: "instruction", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "steps", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastExerciseRepStepProto },
+            { no: 3, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "tips", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "error_prevention_tips", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
         ]);
@@ -5316,8 +5337,8 @@ class PodcastExerciseRepProto$Type extends MessageType<PodcastExerciseRepProto> 
     create(value?: PartialMessage<PodcastExerciseRepProto>): PodcastExerciseRepProto {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.numRepetitions = 0;
-        message.movement = 0;
-        message.instruction = "";
+        message.steps = [];
+        message.title = "";
         message.tips = [];
         message.errorPreventionTips = [];
         if (value !== undefined)
@@ -5332,11 +5353,11 @@ class PodcastExerciseRepProto$Type extends MessageType<PodcastExerciseRepProto> 
                 case /* int32 num_repetitions */ 1:
                     message.numRepetitions = reader.int32();
                     break;
-                case /* PodcastExerciseMovementProto movement */ 2:
-                    message.movement = reader.int32();
+                case /* repeated PodcastExerciseRepStepProto steps */ 2:
+                    message.steps.push(PodcastExerciseRepStepProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
-                case /* string instruction */ 3:
-                    message.instruction = reader.string();
+                case /* string title */ 3:
+                    message.title = reader.string();
                     break;
                 case /* repeated string tips */ 4:
                     message.tips.push(reader.string());
@@ -5359,12 +5380,12 @@ class PodcastExerciseRepProto$Type extends MessageType<PodcastExerciseRepProto> 
         /* int32 num_repetitions = 1; */
         if (message.numRepetitions !== 0)
             writer.tag(1, WireType.Varint).int32(message.numRepetitions);
-        /* PodcastExerciseMovementProto movement = 2; */
-        if (message.movement !== 0)
-            writer.tag(2, WireType.Varint).int32(message.movement);
-        /* string instruction = 3; */
-        if (message.instruction !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.instruction);
+        /* repeated PodcastExerciseRepStepProto steps = 2; */
+        for (let i = 0; i < message.steps.length; i++)
+            PodcastExerciseRepStepProto.internalBinaryWrite(message.steps[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* string title = 3; */
+        if (message.title !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.title);
         /* repeated string tips = 4; */
         for (let i = 0; i < message.tips.length; i++)
             writer.tag(4, WireType.LengthDelimited).string(message.tips[i]);
@@ -5381,3 +5402,74 @@ class PodcastExerciseRepProto$Type extends MessageType<PodcastExerciseRepProto> 
  * @generated MessageType for protobuf message PodcastExerciseRepProto
  */
 export const PodcastExerciseRepProto = new PodcastExerciseRepProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PodcastExerciseRepStepProto$Type extends MessageType<PodcastExerciseRepStepProto> {
+    constructor() {
+        super("PodcastExerciseRepStepProto", [
+            { no: 1, name: "step_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "movement", kind: "enum", T: () => ["PodcastExerciseMovementProto", PodcastExerciseMovementProto, "PODCAST_EXERCISE_MOVEMENT_PROTO_"] },
+            { no: 3, name: "label", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "duration_sec", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PodcastExerciseRepStepProto>): PodcastExerciseRepStepProto {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.stepId = "";
+        message.movement = 0;
+        message.label = "";
+        message.durationSec = 0;
+        if (value !== undefined)
+            reflectionMergePartial<PodcastExerciseRepStepProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastExerciseRepStepProto): PodcastExerciseRepStepProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string step_id */ 1:
+                    message.stepId = reader.string();
+                    break;
+                case /* PodcastExerciseMovementProto movement */ 2:
+                    message.movement = reader.int32();
+                    break;
+                case /* string label */ 3:
+                    message.label = reader.string();
+                    break;
+                case /* float duration_sec */ 4:
+                    message.durationSec = reader.float();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PodcastExerciseRepStepProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string step_id = 1; */
+        if (message.stepId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.stepId);
+        /* PodcastExerciseMovementProto movement = 2; */
+        if (message.movement !== 0)
+            writer.tag(2, WireType.Varint).int32(message.movement);
+        /* string label = 3; */
+        if (message.label !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.label);
+        /* float duration_sec = 4; */
+        if (message.durationSec !== 0)
+            writer.tag(4, WireType.Bit32).float(message.durationSec);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message PodcastExerciseRepStepProto
+ */
+export const PodcastExerciseRepStepProto = new PodcastExerciseRepStepProto$Type();

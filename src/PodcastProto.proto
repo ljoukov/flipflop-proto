@@ -424,23 +424,30 @@ message PodcastExerciseSectionProto {
 }
 
 message PodcastExerciseSetupProto {
-  string instruction = 1;
+  string text = 1;
   repeated string tips = 2;
   repeated string error_prevention_tips = 3;
 }
 
 message PodcastExerciseCooldownProto {
-  string instruction = 1;
+  string text = 1;
   repeated string tips = 2;
   repeated string error_prevention_tips = 3;
 }
 
 message PodcastExerciseRepProto {
   int32 num_repetitions = 1;
-  PodcastExerciseMovementProto movement = 2;
-  string instruction = 3;
+  repeated PodcastExerciseRepStepProto steps = 2;
+  string title = 3;
   repeated string tips = 4;
   repeated string error_prevention_tips = 5;
+}
+
+message PodcastExerciseRepStepProto {
+  string step_id = 1;
+  PodcastExerciseMovementProto movement = 2;
+  string label = 3;
+  float duration_sec = 4;
 }
 
 enum PodcastExerciseMovementProto {

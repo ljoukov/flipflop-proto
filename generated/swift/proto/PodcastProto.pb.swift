@@ -1726,7 +1726,7 @@ struct PodcastExerciseSetupProto: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var instruction: String = String()
+  var text: String = String()
 
   var tips: [String] = []
 
@@ -1742,7 +1742,7 @@ struct PodcastExerciseCooldownProto: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var instruction: String = String()
+  var text: String = String()
 
   var tips: [String] = []
 
@@ -1760,13 +1760,31 @@ struct PodcastExerciseRepProto: Sendable {
 
   var numRepetitions: Int32 = 0
 
-  var movement: PodcastExerciseMovementProto = .undefined
+  var steps: [PodcastExerciseRepStepProto] = []
 
-  var instruction: String = String()
+  var title: String = String()
 
   var tips: [String] = []
 
   var errorPreventionTips: [String] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct PodcastExerciseRepStepProto: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var stepID: String = String()
+
+  var movement: PodcastExerciseMovementProto = .undefined
+
+  var label: String = String()
+
+  var durationSec: Float = 0
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -5064,7 +5082,7 @@ extension PodcastExerciseSectionProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
 extension PodcastExerciseSetupProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "PodcastExerciseSetupProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "instruction"),
+    1: .same(proto: "text"),
     2: .same(proto: "tips"),
     3: .standard(proto: "error_prevention_tips"),
   ]
@@ -5075,7 +5093,7 @@ extension PodcastExerciseSetupProto: SwiftProtobuf.Message, SwiftProtobuf._Messa
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.instruction) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self.text) }()
       case 2: try { try decoder.decodeRepeatedStringField(value: &self.tips) }()
       case 3: try { try decoder.decodeRepeatedStringField(value: &self.errorPreventionTips) }()
       default: break
@@ -5084,8 +5102,8 @@ extension PodcastExerciseSetupProto: SwiftProtobuf.Message, SwiftProtobuf._Messa
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.instruction.isEmpty {
-      try visitor.visitSingularStringField(value: self.instruction, fieldNumber: 1)
+    if !self.text.isEmpty {
+      try visitor.visitSingularStringField(value: self.text, fieldNumber: 1)
     }
     if !self.tips.isEmpty {
       try visitor.visitRepeatedStringField(value: self.tips, fieldNumber: 2)
@@ -5097,7 +5115,7 @@ extension PodcastExerciseSetupProto: SwiftProtobuf.Message, SwiftProtobuf._Messa
   }
 
   static func ==(lhs: PodcastExerciseSetupProto, rhs: PodcastExerciseSetupProto) -> Bool {
-    if lhs.instruction != rhs.instruction {return false}
+    if lhs.text != rhs.text {return false}
     if lhs.tips != rhs.tips {return false}
     if lhs.errorPreventionTips != rhs.errorPreventionTips {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
@@ -5108,7 +5126,7 @@ extension PodcastExerciseSetupProto: SwiftProtobuf.Message, SwiftProtobuf._Messa
 extension PodcastExerciseCooldownProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "PodcastExerciseCooldownProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "instruction"),
+    1: .same(proto: "text"),
     2: .same(proto: "tips"),
     3: .standard(proto: "error_prevention_tips"),
   ]
@@ -5119,7 +5137,7 @@ extension PodcastExerciseCooldownProto: SwiftProtobuf.Message, SwiftProtobuf._Me
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.instruction) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self.text) }()
       case 2: try { try decoder.decodeRepeatedStringField(value: &self.tips) }()
       case 3: try { try decoder.decodeRepeatedStringField(value: &self.errorPreventionTips) }()
       default: break
@@ -5128,8 +5146,8 @@ extension PodcastExerciseCooldownProto: SwiftProtobuf.Message, SwiftProtobuf._Me
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.instruction.isEmpty {
-      try visitor.visitSingularStringField(value: self.instruction, fieldNumber: 1)
+    if !self.text.isEmpty {
+      try visitor.visitSingularStringField(value: self.text, fieldNumber: 1)
     }
     if !self.tips.isEmpty {
       try visitor.visitRepeatedStringField(value: self.tips, fieldNumber: 2)
@@ -5141,7 +5159,7 @@ extension PodcastExerciseCooldownProto: SwiftProtobuf.Message, SwiftProtobuf._Me
   }
 
   static func ==(lhs: PodcastExerciseCooldownProto, rhs: PodcastExerciseCooldownProto) -> Bool {
-    if lhs.instruction != rhs.instruction {return false}
+    if lhs.text != rhs.text {return false}
     if lhs.tips != rhs.tips {return false}
     if lhs.errorPreventionTips != rhs.errorPreventionTips {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
@@ -5153,8 +5171,8 @@ extension PodcastExerciseRepProto: SwiftProtobuf.Message, SwiftProtobuf._Message
   static let protoMessageName: String = "PodcastExerciseRepProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "num_repetitions"),
-    2: .same(proto: "movement"),
-    3: .same(proto: "instruction"),
+    2: .same(proto: "steps"),
+    3: .same(proto: "title"),
     4: .same(proto: "tips"),
     5: .standard(proto: "error_prevention_tips"),
   ]
@@ -5166,8 +5184,8 @@ extension PodcastExerciseRepProto: SwiftProtobuf.Message, SwiftProtobuf._Message
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularInt32Field(value: &self.numRepetitions) }()
-      case 2: try { try decoder.decodeSingularEnumField(value: &self.movement) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.instruction) }()
+      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.steps) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.title) }()
       case 4: try { try decoder.decodeRepeatedStringField(value: &self.tips) }()
       case 5: try { try decoder.decodeRepeatedStringField(value: &self.errorPreventionTips) }()
       default: break
@@ -5179,11 +5197,11 @@ extension PodcastExerciseRepProto: SwiftProtobuf.Message, SwiftProtobuf._Message
     if self.numRepetitions != 0 {
       try visitor.visitSingularInt32Field(value: self.numRepetitions, fieldNumber: 1)
     }
-    if self.movement != .undefined {
-      try visitor.visitSingularEnumField(value: self.movement, fieldNumber: 2)
+    if !self.steps.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.steps, fieldNumber: 2)
     }
-    if !self.instruction.isEmpty {
-      try visitor.visitSingularStringField(value: self.instruction, fieldNumber: 3)
+    if !self.title.isEmpty {
+      try visitor.visitSingularStringField(value: self.title, fieldNumber: 3)
     }
     if !self.tips.isEmpty {
       try visitor.visitRepeatedStringField(value: self.tips, fieldNumber: 4)
@@ -5196,10 +5214,60 @@ extension PodcastExerciseRepProto: SwiftProtobuf.Message, SwiftProtobuf._Message
 
   static func ==(lhs: PodcastExerciseRepProto, rhs: PodcastExerciseRepProto) -> Bool {
     if lhs.numRepetitions != rhs.numRepetitions {return false}
-    if lhs.movement != rhs.movement {return false}
-    if lhs.instruction != rhs.instruction {return false}
+    if lhs.steps != rhs.steps {return false}
+    if lhs.title != rhs.title {return false}
     if lhs.tips != rhs.tips {return false}
     if lhs.errorPreventionTips != rhs.errorPreventionTips {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension PodcastExerciseRepStepProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastExerciseRepStepProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "step_id"),
+    2: .same(proto: "movement"),
+    3: .same(proto: "label"),
+    4: .standard(proto: "duration_sec"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.stepID) }()
+      case 2: try { try decoder.decodeSingularEnumField(value: &self.movement) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.label) }()
+      case 4: try { try decoder.decodeSingularFloatField(value: &self.durationSec) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.stepID.isEmpty {
+      try visitor.visitSingularStringField(value: self.stepID, fieldNumber: 1)
+    }
+    if self.movement != .undefined {
+      try visitor.visitSingularEnumField(value: self.movement, fieldNumber: 2)
+    }
+    if !self.label.isEmpty {
+      try visitor.visitSingularStringField(value: self.label, fieldNumber: 3)
+    }
+    if self.durationSec.bitPattern != 0 {
+      try visitor.visitSingularFloatField(value: self.durationSec, fieldNumber: 4)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PodcastExerciseRepStepProto, rhs: PodcastExerciseRepStepProto) -> Bool {
+    if lhs.stepID != rhs.stepID {return false}
+    if lhs.movement != rhs.movement {return false}
+    if lhs.label != rhs.label {return false}
+    if lhs.durationSec != rhs.durationSec {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
