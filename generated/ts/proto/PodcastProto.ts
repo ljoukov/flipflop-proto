@@ -1167,9 +1167,13 @@ export interface PodcastExerciseSetupProto {
      */
     errorPreventionTips: string[];
     /**
-     * @generated from protobuf field: PodcastAudioProto audio = 5;
+     * @generated from protobuf field: PodcastAudioProto welcome_audio = 5;
      */
-    audio?: PodcastAudioProto;
+    welcomeAudio?: PodcastAudioProto;
+    /**
+     * @generated from protobuf field: PodcastAudioProto instructions_audio = 6;
+     */
+    instructionsAudio?: PodcastAudioProto;
 }
 /**
  * @generated from protobuf message PodcastExerciseCooldownProto
@@ -1220,6 +1224,10 @@ export interface PodcastExerciseRepProto {
      * @generated from protobuf field: repeated string error_prevention_tips = 5;
      */
     errorPreventionTips: string[];
+    /**
+     * @generated from protobuf field: PodcastAudioProto instructions_audio = 6;
+     */
+    instructionsAudio?: PodcastAudioProto;
 }
 /**
  * @generated from protobuf message PodcastExerciseRepStepProto
@@ -5225,7 +5233,8 @@ class PodcastExerciseSetupProto$Type extends MessageType<PodcastExerciseSetupPro
             { no: 2, name: "hero", kind: "message", T: () => PodcastCardHeroProto },
             { no: 3, name: "tips", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "error_prevention_tips", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "audio", kind: "message", T: () => PodcastAudioProto }
+            { no: 5, name: "welcome_audio", kind: "message", T: () => PodcastAudioProto },
+            { no: 6, name: "instructions_audio", kind: "message", T: () => PodcastAudioProto }
         ]);
     }
     create(value?: PartialMessage<PodcastExerciseSetupProto>): PodcastExerciseSetupProto {
@@ -5254,8 +5263,11 @@ class PodcastExerciseSetupProto$Type extends MessageType<PodcastExerciseSetupPro
                 case /* repeated string error_prevention_tips */ 4:
                     message.errorPreventionTips.push(reader.string());
                     break;
-                case /* PodcastAudioProto audio */ 5:
-                    message.audio = PodcastAudioProto.internalBinaryRead(reader, reader.uint32(), options, message.audio);
+                case /* PodcastAudioProto welcome_audio */ 5:
+                    message.welcomeAudio = PodcastAudioProto.internalBinaryRead(reader, reader.uint32(), options, message.welcomeAudio);
+                    break;
+                case /* PodcastAudioProto instructions_audio */ 6:
+                    message.instructionsAudio = PodcastAudioProto.internalBinaryRead(reader, reader.uint32(), options, message.instructionsAudio);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -5281,9 +5293,12 @@ class PodcastExerciseSetupProto$Type extends MessageType<PodcastExerciseSetupPro
         /* repeated string error_prevention_tips = 4; */
         for (let i = 0; i < message.errorPreventionTips.length; i++)
             writer.tag(4, WireType.LengthDelimited).string(message.errorPreventionTips[i]);
-        /* PodcastAudioProto audio = 5; */
-        if (message.audio)
-            PodcastAudioProto.internalBinaryWrite(message.audio, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastAudioProto welcome_audio = 5; */
+        if (message.welcomeAudio)
+            PodcastAudioProto.internalBinaryWrite(message.welcomeAudio, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastAudioProto instructions_audio = 6; */
+        if (message.instructionsAudio)
+            PodcastAudioProto.internalBinaryWrite(message.instructionsAudio, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -5379,7 +5394,8 @@ class PodcastExerciseRepProto$Type extends MessageType<PodcastExerciseRepProto> 
             { no: 2, name: "steps", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastExerciseRepStepProto },
             { no: 3, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "tips", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "error_prevention_tips", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+            { no: 5, name: "error_prevention_tips", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "instructions_audio", kind: "message", T: () => PodcastAudioProto }
         ]);
     }
     create(value?: PartialMessage<PodcastExerciseRepProto>): PodcastExerciseRepProto {
@@ -5413,6 +5429,9 @@ class PodcastExerciseRepProto$Type extends MessageType<PodcastExerciseRepProto> 
                 case /* repeated string error_prevention_tips */ 5:
                     message.errorPreventionTips.push(reader.string());
                     break;
+                case /* PodcastAudioProto instructions_audio */ 6:
+                    message.instructionsAudio = PodcastAudioProto.internalBinaryRead(reader, reader.uint32(), options, message.instructionsAudio);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -5440,6 +5459,9 @@ class PodcastExerciseRepProto$Type extends MessageType<PodcastExerciseRepProto> 
         /* repeated string error_prevention_tips = 5; */
         for (let i = 0; i < message.errorPreventionTips.length; i++)
             writer.tag(5, WireType.LengthDelimited).string(message.errorPreventionTips[i]);
+        /* PodcastAudioProto instructions_audio = 6; */
+        if (message.instructionsAudio)
+            PodcastAudioProto.internalBinaryWrite(message.instructionsAudio, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
