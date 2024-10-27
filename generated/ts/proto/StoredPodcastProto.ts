@@ -90,6 +90,14 @@ export interface StoredPodcastProto {
      */
     followups?: StoredPodcastFollowupsProto;
     /**
+     * @generated from protobuf field: StoredPodcastTypeProto podcast_type = 17;
+     */
+    podcastType: StoredPodcastTypeProto;
+    /**
+     * @generated from protobuf field: StoredPodcastExerciseSegmentsProto exercise_segments = 18;
+     */
+    exerciseSegments?: StoredPodcastExerciseSegmentsProto;
+    /**
      * @generated from protobuf field: LogProto log = 101;
      */
     log?: LogProto;
@@ -714,15 +722,11 @@ export interface StoredPodcastRoutineStepProto {
     thumbnailKey: string;
 }
 /**
- * @generated from protobuf message StoredPodcastExerciseProto
+ * @generated from protobuf message StoredPodcastExerciseSegmentsProto
  */
-export interface StoredPodcastExerciseProto {
+export interface StoredPodcastExerciseSegmentsProto {
     /**
-     * @generated from protobuf field: string exercise_id = 1;
-     */
-    exerciseId: string;
-    /**
-     * @generated from protobuf field: repeated StoredPodcastExerciseSegmentProto segments = 2;
+     * @generated from protobuf field: repeated StoredPodcastExerciseSegmentProto segments = 1;
      */
     segments: StoredPodcastExerciseSegmentProto[];
 }
@@ -1010,6 +1014,8 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
             { no: 12, name: "visuals", kind: "message", T: () => StoredPodcastVisualsProto },
             { no: 13, name: "key_points", kind: "message", T: () => StoredPodcastKeyPointsProto },
             { no: 14, name: "followups", kind: "message", T: () => StoredPodcastFollowupsProto },
+            { no: 17, name: "podcast_type", kind: "enum", T: () => ["StoredPodcastTypeProto", StoredPodcastTypeProto, "STORED_PODCAST_TYPE_PROTO_"] },
+            { no: 18, name: "exercise_segments", kind: "message", T: () => StoredPodcastExerciseSegmentsProto },
             { no: 101, name: "log", kind: "message", T: () => LogProto }
         ]);
     }
@@ -1018,6 +1024,7 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
         message.podcastId = "";
         message.createdBy = "";
         message.state = 0;
+        message.podcastType = 0;
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastProto>(this, message, value);
         return message;
@@ -1074,6 +1081,12 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
                     break;
                 case /* StoredPodcastFollowupsProto followups */ 14:
                     message.followups = StoredPodcastFollowupsProto.internalBinaryRead(reader, reader.uint32(), options, message.followups);
+                    break;
+                case /* StoredPodcastTypeProto podcast_type */ 17:
+                    message.podcastType = reader.int32();
+                    break;
+                case /* StoredPodcastExerciseSegmentsProto exercise_segments */ 18:
+                    message.exerciseSegments = StoredPodcastExerciseSegmentsProto.internalBinaryRead(reader, reader.uint32(), options, message.exerciseSegments);
                     break;
                 case /* LogProto log */ 101:
                     message.log = LogProto.internalBinaryRead(reader, reader.uint32(), options, message.log);
@@ -1138,6 +1151,12 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
         /* StoredPodcastFollowupsProto followups = 14; */
         if (message.followups)
             StoredPodcastFollowupsProto.internalBinaryWrite(message.followups, writer.tag(14, WireType.LengthDelimited).fork(), options).join();
+        /* StoredPodcastTypeProto podcast_type = 17; */
+        if (message.podcastType !== 0)
+            writer.tag(17, WireType.Varint).int32(message.podcastType);
+        /* StoredPodcastExerciseSegmentsProto exercise_segments = 18; */
+        if (message.exerciseSegments)
+            StoredPodcastExerciseSegmentsProto.internalBinaryWrite(message.exerciseSegments, writer.tag(18, WireType.LengthDelimited).fork(), options).join();
         /* LogProto log = 101; */
         if (message.log)
             LogProto.internalBinaryWrite(message.log, writer.tag(101, WireType.LengthDelimited).fork(), options).join();
@@ -3193,30 +3212,25 @@ class StoredPodcastRoutineStepProto$Type extends MessageType<StoredPodcastRoutin
  */
 export const StoredPodcastRoutineStepProto = new StoredPodcastRoutineStepProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class StoredPodcastExerciseProto$Type extends MessageType<StoredPodcastExerciseProto> {
+class StoredPodcastExerciseSegmentsProto$Type extends MessageType<StoredPodcastExerciseSegmentsProto> {
     constructor() {
-        super("StoredPodcastExerciseProto", [
-            { no: 1, name: "exercise_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "segments", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastExerciseSegmentProto }
+        super("StoredPodcastExerciseSegmentsProto", [
+            { no: 1, name: "segments", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastExerciseSegmentProto }
         ]);
     }
-    create(value?: PartialMessage<StoredPodcastExerciseProto>): StoredPodcastExerciseProto {
+    create(value?: PartialMessage<StoredPodcastExerciseSegmentsProto>): StoredPodcastExerciseSegmentsProto {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.exerciseId = "";
         message.segments = [];
         if (value !== undefined)
-            reflectionMergePartial<StoredPodcastExerciseProto>(this, message, value);
+            reflectionMergePartial<StoredPodcastExerciseSegmentsProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredPodcastExerciseProto): StoredPodcastExerciseProto {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredPodcastExerciseSegmentsProto): StoredPodcastExerciseSegmentsProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string exercise_id */ 1:
-                    message.exerciseId = reader.string();
-                    break;
-                case /* repeated StoredPodcastExerciseSegmentProto segments */ 2:
+                case /* repeated StoredPodcastExerciseSegmentProto segments */ 1:
                     message.segments.push(StoredPodcastExerciseSegmentProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
@@ -3230,13 +3244,10 @@ class StoredPodcastExerciseProto$Type extends MessageType<StoredPodcastExerciseP
         }
         return message;
     }
-    internalBinaryWrite(message: StoredPodcastExerciseProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string exercise_id = 1; */
-        if (message.exerciseId !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.exerciseId);
-        /* repeated StoredPodcastExerciseSegmentProto segments = 2; */
+    internalBinaryWrite(message: StoredPodcastExerciseSegmentsProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated StoredPodcastExerciseSegmentProto segments = 1; */
         for (let i = 0; i < message.segments.length; i++)
-            StoredPodcastExerciseSegmentProto.internalBinaryWrite(message.segments[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+            StoredPodcastExerciseSegmentProto.internalBinaryWrite(message.segments[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -3244,9 +3255,9 @@ class StoredPodcastExerciseProto$Type extends MessageType<StoredPodcastExerciseP
     }
 }
 /**
- * @generated MessageType for protobuf message StoredPodcastExerciseProto
+ * @generated MessageType for protobuf message StoredPodcastExerciseSegmentsProto
  */
-export const StoredPodcastExerciseProto = new StoredPodcastExerciseProto$Type();
+export const StoredPodcastExerciseSegmentsProto = new StoredPodcastExerciseSegmentsProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class StoredPodcastExerciseSegmentProto$Type extends MessageType<StoredPodcastExerciseSegmentProto> {
     constructor() {

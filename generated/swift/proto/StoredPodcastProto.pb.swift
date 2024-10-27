@@ -439,6 +439,20 @@ struct StoredPodcastProto: @unchecked Sendable {
   /// Clears the value of `followups`. Subsequent reads from it will return its default value.
   mutating func clearFollowups() {_uniqueStorage()._followups = nil}
 
+  var podcastType: StoredPodcastTypeProto {
+    get {return _storage._podcastType}
+    set {_uniqueStorage()._podcastType = newValue}
+  }
+
+  var exerciseSegments: StoredPodcastExerciseSegmentsProto {
+    get {return _storage._exerciseSegments ?? StoredPodcastExerciseSegmentsProto()}
+    set {_uniqueStorage()._exerciseSegments = newValue}
+  }
+  /// Returns true if `exerciseSegments` has been explicitly set.
+  var hasExerciseSegments: Bool {return _storage._exerciseSegments != nil}
+  /// Clears the value of `exerciseSegments`. Subsequent reads from it will return its default value.
+  mutating func clearExerciseSegments() {_uniqueStorage()._exerciseSegments = nil}
+
   var log: LogProto {
     get {return _storage._log ?? LogProto()}
     set {_uniqueStorage()._log = newValue}
@@ -1178,12 +1192,10 @@ struct StoredPodcastRoutineStepProto: Sendable {
   init() {}
 }
 
-struct StoredPodcastExerciseProto: Sendable {
+struct StoredPodcastExerciseSegmentsProto: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
-
-  var exerciseID: String = String()
 
   var segments: [StoredPodcastExerciseSegmentProto] = []
 
@@ -1446,6 +1458,8 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     12: .same(proto: "visuals"),
     13: .standard(proto: "key_points"),
     14: .same(proto: "followups"),
+    17: .standard(proto: "podcast_type"),
+    18: .standard(proto: "exercise_segments"),
     101: .same(proto: "log"),
   ]
 
@@ -1466,6 +1480,8 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     var _visuals: StoredPodcastVisualsProto? = nil
     var _keyPoints: StoredPodcastKeyPointsProto? = nil
     var _followups: StoredPodcastFollowupsProto? = nil
+    var _podcastType: StoredPodcastTypeProto = .undefined
+    var _exerciseSegments: StoredPodcastExerciseSegmentsProto? = nil
     var _log: LogProto? = nil
 
     #if swift(>=5.10)
@@ -1497,6 +1513,8 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       _visuals = source._visuals
       _keyPoints = source._keyPoints
       _followups = source._followups
+      _podcastType = source._podcastType
+      _exerciseSegments = source._exerciseSegments
       _log = source._log
     }
   }
@@ -1532,6 +1550,8 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         case 14: try { try decoder.decodeSingularMessageField(value: &_storage._followups) }()
         case 15: try { try decoder.decodeSingularMessageField(value: &_storage._suggestionInput) }()
         case 16: try { try decoder.decodeSingularMessageField(value: &_storage._deletedAt) }()
+        case 17: try { try decoder.decodeSingularEnumField(value: &_storage._podcastType) }()
+        case 18: try { try decoder.decodeSingularMessageField(value: &_storage._exerciseSegments) }()
         case 101: try { try decoder.decodeSingularMessageField(value: &_storage._log) }()
         default: break
         }
@@ -1593,6 +1613,12 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       try { if let v = _storage._deletedAt {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 16)
       } }()
+      if _storage._podcastType != .undefined {
+        try visitor.visitSingularEnumField(value: _storage._podcastType, fieldNumber: 17)
+      }
+      try { if let v = _storage._exerciseSegments {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 18)
+      } }()
       try { if let v = _storage._log {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 101)
       } }()
@@ -1621,6 +1647,8 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         if _storage._visuals != rhs_storage._visuals {return false}
         if _storage._keyPoints != rhs_storage._keyPoints {return false}
         if _storage._followups != rhs_storage._followups {return false}
+        if _storage._podcastType != rhs_storage._podcastType {return false}
+        if _storage._exerciseSegments != rhs_storage._exerciseSegments {return false}
         if _storage._log != rhs_storage._log {return false}
         return true
       }
@@ -3239,11 +3267,10 @@ extension StoredPodcastRoutineStepProto: SwiftProtobuf.Message, SwiftProtobuf._M
   }
 }
 
-extension StoredPodcastExerciseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "StoredPodcastExerciseProto"
+extension StoredPodcastExerciseSegmentsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredPodcastExerciseSegmentsProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "exercise_id"),
-    2: .same(proto: "segments"),
+    1: .same(proto: "segments"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3252,25 +3279,20 @@ extension StoredPodcastExerciseProto: SwiftProtobuf.Message, SwiftProtobuf._Mess
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.exerciseID) }()
-      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.segments) }()
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.segments) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.exerciseID.isEmpty {
-      try visitor.visitSingularStringField(value: self.exerciseID, fieldNumber: 1)
-    }
     if !self.segments.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.segments, fieldNumber: 2)
+      try visitor.visitRepeatedMessageField(value: self.segments, fieldNumber: 1)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: StoredPodcastExerciseProto, rhs: StoredPodcastExerciseProto) -> Bool {
-    if lhs.exerciseID != rhs.exerciseID {return false}
+  static func ==(lhs: StoredPodcastExerciseSegmentsProto, rhs: StoredPodcastExerciseSegmentsProto) -> Bool {
     if lhs.segments != rhs.segments {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

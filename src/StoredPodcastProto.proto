@@ -31,6 +31,9 @@ message StoredPodcastProto {
   StoredPodcastKeyPointsProto key_points = 13;
   StoredPodcastFollowupsProto followups = 14;
 
+  StoredPodcastTypeProto podcast_type = 17;
+  StoredPodcastExerciseSegmentsProto exercise_segments = 18;
+
   // Debug metadata
   reserved 100;
   LogProto log = 101;
@@ -314,9 +317,8 @@ enum StoredPodcastTypeProto {
   STORED_PODCAST_TYPE_PROTO_MEDITATION = 3;
 }
 
-message StoredPodcastExerciseProto {
-  string exercise_id = 1;
-  repeated StoredPodcastExerciseSegmentProto segments = 2;
+message StoredPodcastExerciseSegmentsProto {
+  repeated StoredPodcastExerciseSegmentProto segments = 1;
 }
 
 message StoredPodcastExerciseSegmentProto {

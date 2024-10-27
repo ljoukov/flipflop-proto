@@ -324,14 +324,6 @@ struct PodcastStreamApiRequestProto: Sendable {
     set {request = .refreshSuggestions(newValue)}
   }
 
-  var exercise: GetPodcastExerciseRequestProto {
-    get {
-      if case .exercise(let v)? = request {return v}
-      return GetPodcastExerciseRequestProto()
-    }
-    set {request = .exercise(newValue)}
-  }
-
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_Request: Equatable, Sendable {
@@ -341,7 +333,6 @@ struct PodcastStreamApiRequestProto: Sendable {
     case story(GetPodcastStoryRequestProto)
     case suggestionPoints(GetPodcastSuggestionPointsProto)
     case refreshSuggestions(RefreshPodcastSuggestionsRequestProto)
-    case exercise(GetPodcastExerciseRequestProto)
 
   }
 
@@ -405,14 +396,6 @@ struct PodcastStreamApiResponseHeaderProto: Sendable {
     set {header = .refreshSuggestions(newValue)}
   }
 
-  var exercise: GetPodcastExerciseResponseHeaderProto {
-    get {
-      if case .exercise(let v)? = header {return v}
-      return GetPodcastExerciseResponseHeaderProto()
-    }
-    set {header = .exercise(newValue)}
-  }
-
   var latencies: Dictionary<String,SwiftProtobuf.Google_Protobuf_Duration> = [:]
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -424,7 +407,6 @@ struct PodcastStreamApiResponseHeaderProto: Sendable {
     case storyHeader(GetPodcastStoryResponseHeaderProto)
     case suggestionPointsHeader(GetPodcastSuggestionPointsResponseHeaderProto)
     case refreshSuggestions(RefreshPodcastSuggestionsResponseHeaderProto)
-    case exercise(GetPodcastExerciseResponseHeaderProto)
 
   }
 
@@ -486,14 +468,6 @@ struct PodcastStreamApiResponseDeltaProto: Sendable {
     set {responseDelta = .refreshSuggestions(newValue)}
   }
 
-  var exercise: GetPodcastExerciseResponseDeltaProto {
-    get {
-      if case .exercise(let v)? = responseDelta {return v}
-      return GetPodcastExerciseResponseDeltaProto()
-    }
-    set {responseDelta = .exercise(newValue)}
-  }
-
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_ResponseDelta: Equatable, Sendable {
@@ -503,7 +477,6 @@ struct PodcastStreamApiResponseDeltaProto: Sendable {
     case storyDelta(GetPodcastStoryResponseDeltaProto)
     case suggestionPointsDelta(GetPodcastSuggestionPointsResponseDeltaProto)
     case refreshSuggestions(RefreshPodcastSuggestionsResponseDeltaProto)
-    case exercise(GetPodcastExerciseResponseDeltaProto)
 
   }
 
@@ -785,49 +758,6 @@ struct GetPodcastStoryResponseDeltaProto: Sendable {
   init() {}
 }
 
-struct GetPodcastExerciseRequestProto: Sendable {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  var exerciseID: String = String()
-
-  var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  init() {}
-}
-
-struct GetPodcastExerciseResponseHeaderProto: Sendable {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  var exercise: PodcastExerciseProto {
-    get {return _exercise ?? PodcastExerciseProto()}
-    set {_exercise = newValue}
-  }
-  /// Returns true if `exercise` has been explicitly set.
-  var hasExercise: Bool {return self._exercise != nil}
-  /// Clears the value of `exercise`. Subsequent reads from it will return its default value.
-  mutating func clearExercise() {self._exercise = nil}
-
-  var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  init() {}
-
-  fileprivate var _exercise: PodcastExerciseProto? = nil
-}
-
-struct GetPodcastExerciseResponseDeltaProto: Sendable {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  init() {}
-}
-
 struct GetPodcastSuggestionPointsProto: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -958,6 +888,15 @@ struct PodcastProto: @unchecked Sendable {
   var hasVisuals: Bool {return _storage._visuals != nil}
   /// Clears the value of `visuals`. Subsequent reads from it will return its default value.
   mutating func clearVisuals() {_uniqueStorage()._visuals = nil}
+
+  var exerciseVisuals: PodcastExerciseVisualsProto {
+    get {return _storage._exerciseVisuals ?? PodcastExerciseVisualsProto()}
+    set {_uniqueStorage()._exerciseVisuals = newValue}
+  }
+  /// Returns true if `exerciseVisuals` has been explicitly set.
+  var hasExerciseVisuals: Bool {return _storage._exerciseVisuals != nil}
+  /// Clears the value of `exerciseVisuals`. Subsequent reads from it will return its default value.
+  mutating func clearExerciseVisuals() {_uniqueStorage()._exerciseVisuals = nil}
 
   var transcript: PodcastTranscriptProto {
     get {return _storage._transcript ?? PodcastTranscriptProto()}
@@ -1772,42 +1711,6 @@ struct PodcastRoutineStepProgressProto: Sendable {
   fileprivate var _completedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
-struct PodcastExerciseProto: Sendable {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  var exerciseID: String = String()
-
-  var audio: PodcastAudioProto {
-    get {return _audio ?? PodcastAudioProto()}
-    set {_audio = newValue}
-  }
-  /// Returns true if `audio` has been explicitly set.
-  var hasAudio: Bool {return self._audio != nil}
-  /// Clears the value of `audio`. Subsequent reads from it will return its default value.
-  mutating func clearAudio() {self._audio = nil}
-
-  var visuals: PodcastExerciseVisualsProto {
-    get {return _visuals ?? PodcastExerciseVisualsProto()}
-    set {_visuals = newValue}
-  }
-  /// Returns true if `visuals` has been explicitly set.
-  var hasVisuals: Bool {return self._visuals != nil}
-  /// Clears the value of `visuals`. Subsequent reads from it will return its default value.
-  mutating func clearVisuals() {self._visuals = nil}
-
-  /// remove
-  var sections: [PodcastExerciseSectionProto] = []
-
-  var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  init() {}
-
-  fileprivate var _audio: PodcastAudioProto? = nil
-  fileprivate var _visuals: PodcastExerciseVisualsProto? = nil
-}
-
 struct PodcastExerciseVisualsProto: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -1963,6 +1866,20 @@ struct PodcastExerciseRepCounterProto: Sendable {
 }
 
 /// DELETE
+struct PodcastExerciseProto: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var exerciseID: String = String()
+
+  var sections: [PodcastExerciseSectionProto] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 struct PodcastExerciseTipProto: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -2309,7 +2226,6 @@ extension PodcastStreamApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Me
     5: .same(proto: "story"),
     6: .standard(proto: "suggestion_points"),
     7: .standard(proto: "refresh_suggestions"),
-    8: .same(proto: "exercise"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2396,19 +2312,6 @@ extension PodcastStreamApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Me
           self.request = .refreshSuggestions(v)
         }
       }()
-      case 8: try {
-        var v: GetPodcastExerciseRequestProto?
-        var hadOneofValue = false
-        if let current = self.request {
-          hadOneofValue = true
-          if case .exercise(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {
-          if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.request = .exercise(v)
-        }
-      }()
       case 100: try { try decoder.decodeSingularMessageField(value: &self._requestAuth) }()
       default: break
       }
@@ -2445,10 +2348,6 @@ extension PodcastStreamApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Me
       guard case .refreshSuggestions(let v)? = self.request else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
     }()
-    case .exercise?: try {
-      guard case .exercise(let v)? = self.request else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
-    }()
     case nil: break
     }
     try { if let v = self._requestAuth {
@@ -2474,7 +2373,6 @@ extension PodcastStreamApiResponseHeaderProto: SwiftProtobuf.Message, SwiftProto
     5: .standard(proto: "story_header"),
     6: .standard(proto: "suggestion_points_header"),
     7: .standard(proto: "refresh_suggestions"),
-    8: .same(proto: "exercise"),
     100: .same(proto: "latencies"),
   ]
 
@@ -2562,19 +2460,6 @@ extension PodcastStreamApiResponseHeaderProto: SwiftProtobuf.Message, SwiftProto
           self.header = .refreshSuggestions(v)
         }
       }()
-      case 8: try {
-        var v: GetPodcastExerciseResponseHeaderProto?
-        var hadOneofValue = false
-        if let current = self.header {
-          hadOneofValue = true
-          if case .exercise(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {
-          if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.header = .exercise(v)
-        }
-      }()
       case 100: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.Google_Protobuf_Duration>.self, value: &self.latencies) }()
       default: break
       }
@@ -2611,10 +2496,6 @@ extension PodcastStreamApiResponseHeaderProto: SwiftProtobuf.Message, SwiftProto
       guard case .refreshSuggestions(let v)? = self.header else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
     }()
-    case .exercise?: try {
-      guard case .exercise(let v)? = self.header else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
-    }()
     case nil: break
     }
     if !self.latencies.isEmpty {
@@ -2640,7 +2521,6 @@ extension PodcastStreamApiResponseDeltaProto: SwiftProtobuf.Message, SwiftProtob
     4: .standard(proto: "story_delta"),
     6: .standard(proto: "suggestion_points_delta"),
     7: .standard(proto: "refresh_suggestions"),
-    8: .same(proto: "exercise"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2727,19 +2607,6 @@ extension PodcastStreamApiResponseDeltaProto: SwiftProtobuf.Message, SwiftProtob
           self.responseDelta = .refreshSuggestions(v)
         }
       }()
-      case 8: try {
-        var v: GetPodcastExerciseResponseDeltaProto?
-        var hadOneofValue = false
-        if let current = self.responseDelta {
-          hadOneofValue = true
-          if case .exercise(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {
-          if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.responseDelta = .exercise(v)
-        }
-      }()
       default: break
       }
     }
@@ -2774,10 +2641,6 @@ extension PodcastStreamApiResponseDeltaProto: SwiftProtobuf.Message, SwiftProtob
     case .refreshSuggestions?: try {
       guard case .refreshSuggestions(let v)? = self.responseDelta else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
-    }()
-    case .exercise?: try {
-      guard case .exercise(let v)? = self.responseDelta else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
     }()
     case nil: break
     }
@@ -3370,93 +3233,6 @@ extension GetPodcastStoryResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobu
   }
 }
 
-extension GetPodcastExerciseRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "GetPodcastExerciseRequestProto"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "exercise_id"),
-  ]
-
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.exerciseID) }()
-      default: break
-      }
-    }
-  }
-
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.exerciseID.isEmpty {
-      try visitor.visitSingularStringField(value: self.exerciseID, fieldNumber: 1)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  static func ==(lhs: GetPodcastExerciseRequestProto, rhs: GetPodcastExerciseRequestProto) -> Bool {
-    if lhs.exerciseID != rhs.exerciseID {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension GetPodcastExerciseResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "GetPodcastExerciseResponseHeaderProto"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "exercise"),
-  ]
-
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularMessageField(value: &self._exercise) }()
-      default: break
-      }
-    }
-  }
-
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every if/case branch local when no optimizations
-    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-    // https://github.com/apple/swift-protobuf/issues/1182
-    try { if let v = self._exercise {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    } }()
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  static func ==(lhs: GetPodcastExerciseResponseHeaderProto, rhs: GetPodcastExerciseResponseHeaderProto) -> Bool {
-    if lhs._exercise != rhs._exercise {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension GetPodcastExerciseResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "GetPodcastExerciseResponseDeltaProto"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
-
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    // Load everything into unknown fields
-    while try decoder.nextFieldNumber() != nil {}
-  }
-
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  static func ==(lhs: GetPodcastExerciseResponseDeltaProto, rhs: GetPodcastExerciseResponseDeltaProto) -> Bool {
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
 extension GetPodcastSuggestionPointsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "GetPodcastSuggestionPointsProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -3643,6 +3419,7 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     2: .same(proto: "thumbnail"),
     3: .same(proto: "audio"),
     4: .same(proto: "visuals"),
+    9: .standard(proto: "exercise_visuals"),
     5: .same(proto: "transcript"),
     6: .same(proto: "cards"),
     7: .standard(proto: "key_points"),
@@ -3654,6 +3431,7 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
     var _thumbnail: PodcastThumbnailProto? = nil
     var _audio: PodcastAudioProto? = nil
     var _visuals: PodcastVisualsProto? = nil
+    var _exerciseVisuals: PodcastExerciseVisualsProto? = nil
     var _transcript: PodcastTranscriptProto? = nil
     var _cards: PodcastCardsProto? = nil
     var _keyPoints: PodcastKeyPointsProto? = nil
@@ -3676,6 +3454,7 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
       _thumbnail = source._thumbnail
       _audio = source._audio
       _visuals = source._visuals
+      _exerciseVisuals = source._exerciseVisuals
       _transcript = source._transcript
       _cards = source._cards
       _keyPoints = source._keyPoints
@@ -3706,6 +3485,7 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
         case 6: try { try decoder.decodeSingularMessageField(value: &_storage._cards) }()
         case 7: try { try decoder.decodeSingularMessageField(value: &_storage._keyPoints) }()
         case 8: try { try decoder.decodeSingularMessageField(value: &_storage._followups) }()
+        case 9: try { try decoder.decodeSingularMessageField(value: &_storage._exerciseVisuals) }()
         default: break
         }
       }
@@ -3742,6 +3522,9 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
       try { if let v = _storage._followups {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
       } }()
+      try { if let v = _storage._exerciseVisuals {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 9)
+      } }()
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -3755,6 +3538,7 @@ extension PodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementat
         if _storage._thumbnail != rhs_storage._thumbnail {return false}
         if _storage._audio != rhs_storage._audio {return false}
         if _storage._visuals != rhs_storage._visuals {return false}
+        if _storage._exerciseVisuals != rhs_storage._exerciseVisuals {return false}
         if _storage._transcript != rhs_storage._transcript {return false}
         if _storage._cards != rhs_storage._cards {return false}
         if _storage._keyPoints != rhs_storage._keyPoints {return false}
@@ -5506,60 +5290,6 @@ extension PodcastRoutineStepProgressProto: SwiftProtobuf.Message, SwiftProtobuf.
   }
 }
 
-extension PodcastExerciseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "PodcastExerciseProto"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "exercise_id"),
-    2: .same(proto: "audio"),
-    3: .same(proto: "visuals"),
-    10: .same(proto: "sections"),
-  ]
-
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.exerciseID) }()
-      case 2: try { try decoder.decodeSingularMessageField(value: &self._audio) }()
-      case 3: try { try decoder.decodeSingularMessageField(value: &self._visuals) }()
-      case 10: try { try decoder.decodeRepeatedMessageField(value: &self.sections) }()
-      default: break
-      }
-    }
-  }
-
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every if/case branch local when no optimizations
-    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-    // https://github.com/apple/swift-protobuf/issues/1182
-    if !self.exerciseID.isEmpty {
-      try visitor.visitSingularStringField(value: self.exerciseID, fieldNumber: 1)
-    }
-    try { if let v = self._audio {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
-    } }()
-    try { if let v = self._visuals {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
-    } }()
-    if !self.sections.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.sections, fieldNumber: 10)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  static func ==(lhs: PodcastExerciseProto, rhs: PodcastExerciseProto) -> Bool {
-    if lhs.exerciseID != rhs.exerciseID {return false}
-    if lhs._audio != rhs._audio {return false}
-    if lhs._visuals != rhs._visuals {return false}
-    if lhs.sections != rhs.sections {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
 extension PodcastExerciseVisualsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "PodcastExerciseVisualsProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -5867,6 +5597,44 @@ extension PodcastExerciseRepCounterProto: SwiftProtobuf.Message, SwiftProtobuf._
   static func ==(lhs: PodcastExerciseRepCounterProto, rhs: PodcastExerciseRepCounterProto) -> Bool {
     if lhs.repNumber != rhs.repNumber {return false}
     if lhs.repTotal != rhs.repTotal {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension PodcastExerciseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastExerciseProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "exercise_id"),
+    2: .same(proto: "sections"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.exerciseID) }()
+      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.sections) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.exerciseID.isEmpty {
+      try visitor.visitSingularStringField(value: self.exerciseID, fieldNumber: 1)
+    }
+    if !self.sections.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.sections, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PodcastExerciseProto, rhs: PodcastExerciseProto) -> Bool {
+    if lhs.exerciseID != rhs.exerciseID {return false}
+    if lhs.sections != rhs.sections {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

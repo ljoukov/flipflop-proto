@@ -20,7 +20,6 @@ message PodcastStreamApiRequestProto {
     GetPodcastStoryRequestProto story = 5;
     GetPodcastSuggestionPointsProto suggestion_points = 6;
     RefreshPodcastSuggestionsRequestProto refresh_suggestions = 7;
-    GetPodcastExerciseRequestProto exercise = 8;
   }
 }
 
@@ -33,7 +32,6 @@ message PodcastStreamApiResponseHeaderProto {
     GetPodcastStoryResponseHeaderProto story_header = 5;
     GetPodcastSuggestionPointsResponseHeaderProto suggestion_points_header = 6;
     RefreshPodcastSuggestionsResponseHeaderProto refresh_suggestions = 7;
-    GetPodcastExerciseResponseHeaderProto exercise = 8;
   }
   map<string, google.protobuf.Duration> latencies = 100;
 }
@@ -46,7 +44,6 @@ message PodcastStreamApiResponseDeltaProto {
     GetPodcastStoryResponseDeltaProto story_delta = 4;
     GetPodcastSuggestionPointsResponseDeltaProto suggestion_points_delta = 6;
     RefreshPodcastSuggestionsResponseDeltaProto refresh_suggestions = 7;
-    GetPodcastExerciseResponseDeltaProto exercise = 8;
   }
 }
 
@@ -115,16 +112,6 @@ message GetPodcastStoryResponseDeltaProto {
   }
 }
 
-message GetPodcastExerciseRequestProto {
-  string exercise_id = 1;
-}
-
-message GetPodcastExerciseResponseHeaderProto {
-  PodcastExerciseProto exercise = 1;
-}
-
-message GetPodcastExerciseResponseDeltaProto {}
-
 message GetPodcastSuggestionPointsProto {
   string podcast_id = 1;
 }
@@ -152,7 +139,10 @@ message PodcastProto {
   PodcastThumbnailProto thumbnail = 2;
 
   PodcastAudioProto audio = 3;
+
   PodcastVisualsProto visuals = 4;
+  PodcastExerciseVisualsProto exercise_visuals = 9;
+
   PodcastTranscriptProto transcript = 5;
 
   PodcastCardsProto cards = 6;
@@ -420,15 +410,6 @@ message PodcastRoutineStepProgressProto {
   bool completed = 2;
 }
 
-message PodcastExerciseProto {
-  string exercise_id = 1;
-
-  PodcastAudioProto audio = 2;
-  PodcastExerciseVisualsProto visuals = 3;
-
-  repeated PodcastExerciseSectionProto sections = 10;  // remove
-}
-
 message PodcastExerciseVisualsProto {
   repeated PodcastExerciseVisualProto visuals = 1;
 }
@@ -491,6 +472,11 @@ enum PodcastExerciseTipTypeProto {
 }
 
 // DELETE
+message PodcastExerciseProto {
+  string exercise_id = 1;
+  repeated PodcastExerciseSectionProto sections = 2;
+}
+
 message PodcastExerciseTipProto {
   PodcastExerciseTipTypeProto type = 1;
   string label = 2;
