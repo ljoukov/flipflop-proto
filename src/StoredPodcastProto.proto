@@ -329,3 +329,21 @@ message StoredPodcastSpokenSegmentProto {
   int32 leading_pause_millis = 2;
   int32 min_duration_millis = 3;
 }
+
+message StoredPodcastExerciseVisualProto {
+  StoredPodcastExerciseRepCounterProto rep_counter = 3;
+  string title = 5;
+  string title_emoji = 6;
+  PodcastExerciseMovementProto movement = 7;
+  repeated StoredPodcastExerciseTipProto tips = 8;
+}
+
+message StoredPodcastExerciseTipProto {
+  PodcastExerciseTipTypeProto type = 1;
+  string label = 2;
+}
+
+message StoredPodcastExerciseRepCounterProto {
+  int32 rep_number = 1;
+  int32 rep_total = 2;
+}

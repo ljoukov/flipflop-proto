@@ -1138,9 +1138,9 @@ export interface PodcastExerciseVisualProto {
      */
     repCounter?: PodcastExerciseRepCounterProto;
     /**
-     * @generated from protobuf field: string label = 5;
+     * @generated from protobuf field: string title = 5;
      */
-    label: string;
+    title: string;
     /**
      * @generated from protobuf field: PodcastCardHeroProto hero = 6;
      */
@@ -1150,17 +1150,9 @@ export interface PodcastExerciseVisualProto {
      */
     movement: PodcastExerciseMovementProto;
     /**
-     * @generated from protobuf field: bool display_timer = 8;
+     * @generated from protobuf field: repeated PodcastExerciseTipProto tips = 8;
      */
-    displayTimer: boolean;
-    /**
-     * @generated from protobuf field: repeated string tips = 9;
-     */
-    tips: string[];
-    /**
-     * @generated from protobuf field: repeated string warning_tips = 10;
-     */
-    warningTips: string[];
+    tips: PodcastExerciseTipProto[];
 }
 /**
  * @generated from protobuf message PodcastExerciseRepCounterProto
@@ -1174,6 +1166,19 @@ export interface PodcastExerciseRepCounterProto {
      * @generated from protobuf field: int32 rep_total = 2;
      */
     repTotal: number;
+}
+/**
+ * @generated from protobuf message PodcastExerciseTipProto
+ */
+export interface PodcastExerciseTipProto {
+    /**
+     * @generated from protobuf field: PodcastExerciseTipTypeProto type = 1;
+     */
+    type: PodcastExerciseTipTypeProto;
+    /**
+     * @generated from protobuf field: string label = 2;
+     */
+    label: string;
 }
 /**
  * @generated from protobuf message PodcastExerciseSectionProto
@@ -1394,6 +1399,23 @@ export enum PodcastHostProto {
      * @generated from protobuf enum value: PODCAST_HOST_PROTO_FEMALE = 2;
      */
     FEMALE = 2
+}
+/**
+ * @generated from protobuf enum PodcastExerciseTipTypeProto
+ */
+export enum PodcastExerciseTipTypeProto {
+    /**
+     * @generated from protobuf enum value: PODCAST_EXERCISE_TIP_TYPE_PROTO_UNDEFINED = 0;
+     */
+    UNDEFINED = 0,
+    /**
+     * @generated from protobuf enum value: PODCAST_EXERCISE_TIP_TYPE_PROTO_CHECK = 1;
+     */
+    CHECK = 1,
+    /**
+     * @generated from protobuf enum value: PODCAST_EXERCISE_TIP_TYPE_PROTO_WARNING = 2;
+     */
+    WARNING = 2
 }
 /**
  * @generated from protobuf enum PodcastExerciseMovementProto
@@ -5247,23 +5269,19 @@ class PodcastExerciseVisualProto$Type extends MessageType<PodcastExerciseVisualP
             { no: 1, name: "timestamp_millis", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 2, name: "duration_millis", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 3, name: "rep_counter", kind: "message", T: () => PodcastExerciseRepCounterProto },
-            { no: 5, name: "label", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 6, name: "hero", kind: "message", T: () => PodcastCardHeroProto },
             { no: 7, name: "movement", kind: "enum", T: () => ["PodcastExerciseMovementProto", PodcastExerciseMovementProto, "PODCAST_EXERCISE_MOVEMENT_PROTO_"] },
-            { no: 8, name: "display_timer", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 9, name: "tips", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
-            { no: 10, name: "warning_tips", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+            { no: 8, name: "tips", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastExerciseTipProto }
         ]);
     }
     create(value?: PartialMessage<PodcastExerciseVisualProto>): PodcastExerciseVisualProto {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.timestampMillis = 0;
         message.durationMillis = 0;
-        message.label = "";
+        message.title = "";
         message.movement = 0;
-        message.displayTimer = false;
         message.tips = [];
-        message.warningTips = [];
         if (value !== undefined)
             reflectionMergePartial<PodcastExerciseVisualProto>(this, message, value);
         return message;
@@ -5282,8 +5300,8 @@ class PodcastExerciseVisualProto$Type extends MessageType<PodcastExerciseVisualP
                 case /* PodcastExerciseRepCounterProto rep_counter */ 3:
                     message.repCounter = PodcastExerciseRepCounterProto.internalBinaryRead(reader, reader.uint32(), options, message.repCounter);
                     break;
-                case /* string label */ 5:
-                    message.label = reader.string();
+                case /* string title */ 5:
+                    message.title = reader.string();
                     break;
                 case /* PodcastCardHeroProto hero */ 6:
                     message.hero = PodcastCardHeroProto.internalBinaryRead(reader, reader.uint32(), options, message.hero);
@@ -5291,14 +5309,8 @@ class PodcastExerciseVisualProto$Type extends MessageType<PodcastExerciseVisualP
                 case /* PodcastExerciseMovementProto movement */ 7:
                     message.movement = reader.int32();
                     break;
-                case /* bool display_timer */ 8:
-                    message.displayTimer = reader.bool();
-                    break;
-                case /* repeated string tips */ 9:
-                    message.tips.push(reader.string());
-                    break;
-                case /* repeated string warning_tips */ 10:
-                    message.warningTips.push(reader.string());
+                case /* repeated PodcastExerciseTipProto tips */ 8:
+                    message.tips.push(PodcastExerciseTipProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -5321,24 +5333,18 @@ class PodcastExerciseVisualProto$Type extends MessageType<PodcastExerciseVisualP
         /* PodcastExerciseRepCounterProto rep_counter = 3; */
         if (message.repCounter)
             PodcastExerciseRepCounterProto.internalBinaryWrite(message.repCounter, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* string label = 5; */
-        if (message.label !== "")
-            writer.tag(5, WireType.LengthDelimited).string(message.label);
+        /* string title = 5; */
+        if (message.title !== "")
+            writer.tag(5, WireType.LengthDelimited).string(message.title);
         /* PodcastCardHeroProto hero = 6; */
         if (message.hero)
             PodcastCardHeroProto.internalBinaryWrite(message.hero, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
         /* PodcastExerciseMovementProto movement = 7; */
         if (message.movement !== 0)
             writer.tag(7, WireType.Varint).int32(message.movement);
-        /* bool display_timer = 8; */
-        if (message.displayTimer !== false)
-            writer.tag(8, WireType.Varint).bool(message.displayTimer);
-        /* repeated string tips = 9; */
+        /* repeated PodcastExerciseTipProto tips = 8; */
         for (let i = 0; i < message.tips.length; i++)
-            writer.tag(9, WireType.LengthDelimited).string(message.tips[i]);
-        /* repeated string warning_tips = 10; */
-        for (let i = 0; i < message.warningTips.length; i++)
-            writer.tag(10, WireType.LengthDelimited).string(message.warningTips[i]);
+            PodcastExerciseTipProto.internalBinaryWrite(message.tips[i], writer.tag(8, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -5404,6 +5410,61 @@ class PodcastExerciseRepCounterProto$Type extends MessageType<PodcastExerciseRep
  * @generated MessageType for protobuf message PodcastExerciseRepCounterProto
  */
 export const PodcastExerciseRepCounterProto = new PodcastExerciseRepCounterProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PodcastExerciseTipProto$Type extends MessageType<PodcastExerciseTipProto> {
+    constructor() {
+        super("PodcastExerciseTipProto", [
+            { no: 1, name: "type", kind: "enum", T: () => ["PodcastExerciseTipTypeProto", PodcastExerciseTipTypeProto, "PODCAST_EXERCISE_TIP_TYPE_PROTO_"] },
+            { no: 2, name: "label", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PodcastExerciseTipProto>): PodcastExerciseTipProto {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.type = 0;
+        message.label = "";
+        if (value !== undefined)
+            reflectionMergePartial<PodcastExerciseTipProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastExerciseTipProto): PodcastExerciseTipProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* PodcastExerciseTipTypeProto type */ 1:
+                    message.type = reader.int32();
+                    break;
+                case /* string label */ 2:
+                    message.label = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PodcastExerciseTipProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* PodcastExerciseTipTypeProto type = 1; */
+        if (message.type !== 0)
+            writer.tag(1, WireType.Varint).int32(message.type);
+        /* string label = 2; */
+        if (message.label !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.label);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message PodcastExerciseTipProto
+ */
+export const PodcastExerciseTipProto = new PodcastExerciseTipProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class PodcastExerciseSectionProto$Type extends MessageType<PodcastExerciseSectionProto> {
     constructor() {

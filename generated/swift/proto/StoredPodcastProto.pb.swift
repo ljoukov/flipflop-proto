@@ -1231,6 +1231,63 @@ struct StoredPodcastSpokenSegmentProto: Sendable {
   init() {}
 }
 
+struct StoredPodcastExerciseVisualProto: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var repCounter: StoredPodcastExerciseRepCounterProto {
+    get {return _repCounter ?? StoredPodcastExerciseRepCounterProto()}
+    set {_repCounter = newValue}
+  }
+  /// Returns true if `repCounter` has been explicitly set.
+  var hasRepCounter: Bool {return self._repCounter != nil}
+  /// Clears the value of `repCounter`. Subsequent reads from it will return its default value.
+  mutating func clearRepCounter() {self._repCounter = nil}
+
+  var title: String = String()
+
+  var titleEmoji: String = String()
+
+  var movement: PodcastExerciseMovementProto = .undefined
+
+  var tips: [StoredPodcastExerciseTipProto] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+
+  fileprivate var _repCounter: StoredPodcastExerciseRepCounterProto? = nil
+}
+
+struct StoredPodcastExerciseTipProto: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var type: PodcastExerciseTipTypeProto = .undefined
+
+  var label: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct StoredPodcastExerciseRepCounterProto: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var repNumber: Int32 = 0
+
+  var repTotal: Int32 = 0
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 extension StoredPodcastStateProto: SwiftProtobuf._ProtoNameProviding {
@@ -3224,6 +3281,142 @@ extension StoredPodcastSpokenSegmentProto: SwiftProtobuf.Message, SwiftProtobuf.
     if lhs.text != rhs.text {return false}
     if lhs.leadingPauseMillis != rhs.leadingPauseMillis {return false}
     if lhs.minDurationMillis != rhs.minDurationMillis {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension StoredPodcastExerciseVisualProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredPodcastExerciseVisualProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    3: .standard(proto: "rep_counter"),
+    5: .same(proto: "title"),
+    6: .standard(proto: "title_emoji"),
+    7: .same(proto: "movement"),
+    8: .same(proto: "tips"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 3: try { try decoder.decodeSingularMessageField(value: &self._repCounter) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.title) }()
+      case 6: try { try decoder.decodeSingularStringField(value: &self.titleEmoji) }()
+      case 7: try { try decoder.decodeSingularEnumField(value: &self.movement) }()
+      case 8: try { try decoder.decodeRepeatedMessageField(value: &self.tips) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._repCounter {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+    } }()
+    if !self.title.isEmpty {
+      try visitor.visitSingularStringField(value: self.title, fieldNumber: 5)
+    }
+    if !self.titleEmoji.isEmpty {
+      try visitor.visitSingularStringField(value: self.titleEmoji, fieldNumber: 6)
+    }
+    if self.movement != .undefined {
+      try visitor.visitSingularEnumField(value: self.movement, fieldNumber: 7)
+    }
+    if !self.tips.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.tips, fieldNumber: 8)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: StoredPodcastExerciseVisualProto, rhs: StoredPodcastExerciseVisualProto) -> Bool {
+    if lhs._repCounter != rhs._repCounter {return false}
+    if lhs.title != rhs.title {return false}
+    if lhs.titleEmoji != rhs.titleEmoji {return false}
+    if lhs.movement != rhs.movement {return false}
+    if lhs.tips != rhs.tips {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension StoredPodcastExerciseTipProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredPodcastExerciseTipProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "type"),
+    2: .same(proto: "label"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularEnumField(value: &self.type) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.label) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.type != .undefined {
+      try visitor.visitSingularEnumField(value: self.type, fieldNumber: 1)
+    }
+    if !self.label.isEmpty {
+      try visitor.visitSingularStringField(value: self.label, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: StoredPodcastExerciseTipProto, rhs: StoredPodcastExerciseTipProto) -> Bool {
+    if lhs.type != rhs.type {return false}
+    if lhs.label != rhs.label {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension StoredPodcastExerciseRepCounterProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredPodcastExerciseRepCounterProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "rep_number"),
+    2: .standard(proto: "rep_total"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularInt32Field(value: &self.repNumber) }()
+      case 2: try { try decoder.decodeSingularInt32Field(value: &self.repTotal) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.repNumber != 0 {
+      try visitor.visitSingularInt32Field(value: self.repNumber, fieldNumber: 1)
+    }
+    if self.repTotal != 0 {
+      try visitor.visitSingularInt32Field(value: self.repTotal, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: StoredPodcastExerciseRepCounterProto, rhs: StoredPodcastExerciseRepCounterProto) -> Bool {
+    if lhs.repNumber != rhs.repNumber {return false}
+    if lhs.repTotal != rhs.repTotal {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

@@ -420,21 +420,26 @@ message PodcastExerciseVisualProto {
   int32 duration_millis = 2;
 
   PodcastExerciseRepCounterProto rep_counter = 3;
-
-  string label = 5;
+  string title = 5;
   PodcastCardHeroProto hero = 6;
-
   PodcastExerciseMovementProto movement = 7;
-
-  bool display_timer = 8;
-
-  repeated string tips = 9;
-  repeated string warning_tips = 10;
+  repeated PodcastExerciseTipProto tips = 8;
 }
 
 message PodcastExerciseRepCounterProto {
   int32 rep_number = 1;
   int32 rep_total = 2;
+}
+
+message PodcastExerciseTipProto {
+  PodcastExerciseTipTypeProto type = 1;
+  string label = 2;
+}
+
+enum PodcastExerciseTipTypeProto {
+  PODCAST_EXERCISE_TIP_TYPE_PROTO_UNDEFINED = 0;
+  PODCAST_EXERCISE_TIP_TYPE_PROTO_CHECK = 1;
+  PODCAST_EXERCISE_TIP_TYPE_PROTO_WARNING = 2;
 }
 
 message PodcastExerciseSectionProto {

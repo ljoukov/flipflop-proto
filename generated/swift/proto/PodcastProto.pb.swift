@@ -146,6 +146,44 @@ enum PodcastHostProto: SwiftProtobuf.Enum, Swift.CaseIterable {
 
 }
 
+enum PodcastExerciseTipTypeProto: SwiftProtobuf.Enum, Swift.CaseIterable {
+  typealias RawValue = Int
+  case undefined // = 0
+  case check // = 1
+  case warning // = 2
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .undefined
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .undefined
+    case 1: self = .check
+    case 2: self = .warning
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .undefined: return 0
+    case .check: return 1
+    case .warning: return 2
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static let allCases: [PodcastExerciseTipTypeProto] = [
+    .undefined,
+    .check,
+    .warning,
+  ]
+
+}
+
 enum PodcastExerciseMovementProto: SwiftProtobuf.Enum, Swift.CaseIterable {
   typealias RawValue = Int
   case undefined // = 0
@@ -1706,7 +1744,7 @@ struct PodcastExerciseVisualProto: Sendable {
   /// Clears the value of `repCounter`. Subsequent reads from it will return its default value.
   mutating func clearRepCounter() {self._repCounter = nil}
 
-  var label: String = String()
+  var title: String = String()
 
   var hero: PodcastCardHeroProto {
     get {return _hero ?? PodcastCardHeroProto()}
@@ -1719,11 +1757,7 @@ struct PodcastExerciseVisualProto: Sendable {
 
   var movement: PodcastExerciseMovementProto = .undefined
 
-  var displayTimer: Bool = false
-
-  var tips: [String] = []
-
-  var warningTips: [String] = []
+  var tips: [PodcastExerciseTipProto] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -1741,6 +1775,20 @@ struct PodcastExerciseRepCounterProto: Sendable {
   var repNumber: Int32 = 0
 
   var repTotal: Int32 = 0
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct PodcastExerciseTipProto: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var type: PodcastExerciseTipTypeProto = .undefined
+
+  var label: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -1996,6 +2044,14 @@ extension PodcastHostProto: SwiftProtobuf._ProtoNameProviding {
     0: .same(proto: "PODCAST_HOST_PROTO_UNKNOWN"),
     1: .same(proto: "PODCAST_HOST_PROTO_MALE"),
     2: .same(proto: "PODCAST_HOST_PROTO_FEMALE"),
+  ]
+}
+
+extension PodcastExerciseTipTypeProto: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "PODCAST_EXERCISE_TIP_TYPE_PROTO_UNDEFINED"),
+    1: .same(proto: "PODCAST_EXERCISE_TIP_TYPE_PROTO_CHECK"),
+    2: .same(proto: "PODCAST_EXERCISE_TIP_TYPE_PROTO_WARNING"),
   ]
 }
 
@@ -5186,12 +5242,10 @@ extension PodcastExerciseVisualProto: SwiftProtobuf.Message, SwiftProtobuf._Mess
     1: .standard(proto: "timestamp_millis"),
     2: .standard(proto: "duration_millis"),
     3: .standard(proto: "rep_counter"),
-    5: .same(proto: "label"),
+    5: .same(proto: "title"),
     6: .same(proto: "hero"),
     7: .same(proto: "movement"),
-    8: .standard(proto: "display_timer"),
-    9: .same(proto: "tips"),
-    10: .standard(proto: "warning_tips"),
+    8: .same(proto: "tips"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -5203,12 +5257,10 @@ extension PodcastExerciseVisualProto: SwiftProtobuf.Message, SwiftProtobuf._Mess
       case 1: try { try decoder.decodeSingularInt32Field(value: &self.timestampMillis) }()
       case 2: try { try decoder.decodeSingularInt32Field(value: &self.durationMillis) }()
       case 3: try { try decoder.decodeSingularMessageField(value: &self._repCounter) }()
-      case 5: try { try decoder.decodeSingularStringField(value: &self.label) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.title) }()
       case 6: try { try decoder.decodeSingularMessageField(value: &self._hero) }()
       case 7: try { try decoder.decodeSingularEnumField(value: &self.movement) }()
-      case 8: try { try decoder.decodeSingularBoolField(value: &self.displayTimer) }()
-      case 9: try { try decoder.decodeRepeatedStringField(value: &self.tips) }()
-      case 10: try { try decoder.decodeRepeatedStringField(value: &self.warningTips) }()
+      case 8: try { try decoder.decodeRepeatedMessageField(value: &self.tips) }()
       default: break
       }
     }
@@ -5228,8 +5280,8 @@ extension PodcastExerciseVisualProto: SwiftProtobuf.Message, SwiftProtobuf._Mess
     try { if let v = self._repCounter {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
     } }()
-    if !self.label.isEmpty {
-      try visitor.visitSingularStringField(value: self.label, fieldNumber: 5)
+    if !self.title.isEmpty {
+      try visitor.visitSingularStringField(value: self.title, fieldNumber: 5)
     }
     try { if let v = self._hero {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
@@ -5237,14 +5289,8 @@ extension PodcastExerciseVisualProto: SwiftProtobuf.Message, SwiftProtobuf._Mess
     if self.movement != .undefined {
       try visitor.visitSingularEnumField(value: self.movement, fieldNumber: 7)
     }
-    if self.displayTimer != false {
-      try visitor.visitSingularBoolField(value: self.displayTimer, fieldNumber: 8)
-    }
     if !self.tips.isEmpty {
-      try visitor.visitRepeatedStringField(value: self.tips, fieldNumber: 9)
-    }
-    if !self.warningTips.isEmpty {
-      try visitor.visitRepeatedStringField(value: self.warningTips, fieldNumber: 10)
+      try visitor.visitRepeatedMessageField(value: self.tips, fieldNumber: 8)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -5253,12 +5299,10 @@ extension PodcastExerciseVisualProto: SwiftProtobuf.Message, SwiftProtobuf._Mess
     if lhs.timestampMillis != rhs.timestampMillis {return false}
     if lhs.durationMillis != rhs.durationMillis {return false}
     if lhs._repCounter != rhs._repCounter {return false}
-    if lhs.label != rhs.label {return false}
+    if lhs.title != rhs.title {return false}
     if lhs._hero != rhs._hero {return false}
     if lhs.movement != rhs.movement {return false}
-    if lhs.displayTimer != rhs.displayTimer {return false}
     if lhs.tips != rhs.tips {return false}
-    if lhs.warningTips != rhs.warningTips {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -5297,6 +5341,44 @@ extension PodcastExerciseRepCounterProto: SwiftProtobuf.Message, SwiftProtobuf._
   static func ==(lhs: PodcastExerciseRepCounterProto, rhs: PodcastExerciseRepCounterProto) -> Bool {
     if lhs.repNumber != rhs.repNumber {return false}
     if lhs.repTotal != rhs.repTotal {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension PodcastExerciseTipProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastExerciseTipProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "type"),
+    2: .same(proto: "label"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularEnumField(value: &self.type) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.label) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.type != .undefined {
+      try visitor.visitSingularEnumField(value: self.type, fieldNumber: 1)
+    }
+    if !self.label.isEmpty {
+      try visitor.visitSingularStringField(value: self.label, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PodcastExerciseTipProto, rhs: PodcastExerciseTipProto) -> Bool {
+    if lhs.type != rhs.type {return false}
+    if lhs.label != rhs.label {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
