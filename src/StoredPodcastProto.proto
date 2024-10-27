@@ -331,14 +331,26 @@ message StoredPodcastSpokenSegmentProto {
 }
 
 message StoredPodcastExerciseVisualProto {
-  StoredPodcastExerciseRepCounterProto rep_counter = 3;
-  string title = 5;
-  string title_emoji = 6;
-  PodcastExerciseMovementProto movement = 7;
-  repeated StoredPodcastExerciseTipProto tips = 8;
+  StoredPodcastExerciseRepCounterProto rep_counter = 1;
+  StoredPodcastExerciseVisualTextProto text = 2;
+  StoredPodcastExerciseVisualMovementProto movement = 3;
+  StoredPodcastExerciseVisualTipsProto tips = 4;
 }
 
-message StoredPodcastExerciseTipProto {
+message StoredPodcastExerciseVisualTextProto {
+  string title = 1;
+  string title_emoji = 2;
+}
+
+message StoredPodcastExerciseVisualMovementProto {
+  PodcastExerciseMovementProto movement = 1;
+}
+
+message StoredPodcastExerciseVisualTipsProto {
+  repeated StoredPodcastExerciseVisualTipProto tips = 1;
+}
+
+message StoredPodcastExerciseVisualTipProto {
   PodcastExerciseTipTypeProto type = 1;
   string label = 2;
 }
