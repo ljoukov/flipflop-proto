@@ -786,13 +786,13 @@ export interface StoredPodcastExerciseVisualProto {
  */
 export interface StoredPodcastExerciseVisualTextProto {
     /**
-     * @generated from protobuf field: string title = 1;
+     * @generated from protobuf field: string text = 1;
      */
-    title: string;
+    text: string;
     /**
-     * @generated from protobuf field: string title_emoji = 2;
+     * @generated from protobuf field: string emoji = 2;
      */
-    titleEmoji: string;
+    emoji: string;
 }
 /**
  * @generated from protobuf message StoredPodcastExerciseVisualMovementProto
@@ -3444,14 +3444,14 @@ export const StoredPodcastExerciseVisualProto = new StoredPodcastExerciseVisualP
 class StoredPodcastExerciseVisualTextProto$Type extends MessageType<StoredPodcastExerciseVisualTextProto> {
     constructor() {
         super("StoredPodcastExerciseVisualTextProto", [
-            { no: 1, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "title_emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastExerciseVisualTextProto>): StoredPodcastExerciseVisualTextProto {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.title = "";
-        message.titleEmoji = "";
+        message.text = "";
+        message.emoji = "";
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastExerciseVisualTextProto>(this, message, value);
         return message;
@@ -3461,11 +3461,11 @@ class StoredPodcastExerciseVisualTextProto$Type extends MessageType<StoredPodcas
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string title */ 1:
-                    message.title = reader.string();
+                case /* string text */ 1:
+                    message.text = reader.string();
                     break;
-                case /* string title_emoji */ 2:
-                    message.titleEmoji = reader.string();
+                case /* string emoji */ 2:
+                    message.emoji = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -3479,12 +3479,12 @@ class StoredPodcastExerciseVisualTextProto$Type extends MessageType<StoredPodcas
         return message;
     }
     internalBinaryWrite(message: StoredPodcastExerciseVisualTextProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string title = 1; */
-        if (message.title !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.title);
-        /* string title_emoji = 2; */
-        if (message.titleEmoji !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.titleEmoji);
+        /* string text = 1; */
+        if (message.text !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.text);
+        /* string emoji = 2; */
+        if (message.emoji !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.emoji);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
