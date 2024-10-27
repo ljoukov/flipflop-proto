@@ -343,7 +343,7 @@ message StoredPodcastExerciseVisualTextProto {
 }
 
 message StoredPodcastExerciseVisualMovementProto {
-  PodcastExerciseMovementProto movement = 1;
+  PodcastExerciseMovementTypeProto movement_type = 1;
 }
 
 message StoredPodcastExerciseVisualTipsProto {

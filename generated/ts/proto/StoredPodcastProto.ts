@@ -13,7 +13,7 @@ import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
 import { PodcastExerciseTipTypeProto } from "./PodcastProto";
-import { PodcastExerciseMovementProto } from "./PodcastProto";
+import { PodcastExerciseMovementTypeProto } from "./PodcastProto";
 import { PodcastWordProto } from "./PodcastProto";
 import { Duration } from "./google/protobuf/duration";
 import { PodcastVisualTransitionProto } from "./PodcastProto";
@@ -795,9 +795,9 @@ export interface StoredPodcastExerciseVisualTextProto {
  */
 export interface StoredPodcastExerciseVisualMovementProto {
     /**
-     * @generated from protobuf field: PodcastExerciseMovementProto movement = 1;
+     * @generated from protobuf field: PodcastExerciseMovementTypeProto movement_type = 1;
      */
-    movement: PodcastExerciseMovementProto;
+    movementType: PodcastExerciseMovementTypeProto;
 }
 /**
  * @generated from protobuf message StoredPodcastExerciseVisualTipsProto
@@ -3488,12 +3488,12 @@ export const StoredPodcastExerciseVisualTextProto = new StoredPodcastExerciseVis
 class StoredPodcastExerciseVisualMovementProto$Type extends MessageType<StoredPodcastExerciseVisualMovementProto> {
     constructor() {
         super("StoredPodcastExerciseVisualMovementProto", [
-            { no: 1, name: "movement", kind: "enum", T: () => ["PodcastExerciseMovementProto", PodcastExerciseMovementProto, "PODCAST_EXERCISE_MOVEMENT_PROTO_"] }
+            { no: 1, name: "movement_type", kind: "enum", T: () => ["PodcastExerciseMovementTypeProto", PodcastExerciseMovementTypeProto, "PODCAST_EXERCISE_MOVEMENT_TYPE_PROTO_"] }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastExerciseVisualMovementProto>): StoredPodcastExerciseVisualMovementProto {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.movement = 0;
+        message.movementType = 0;
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastExerciseVisualMovementProto>(this, message, value);
         return message;
@@ -3503,8 +3503,8 @@ class StoredPodcastExerciseVisualMovementProto$Type extends MessageType<StoredPo
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* PodcastExerciseMovementProto movement */ 1:
-                    message.movement = reader.int32();
+                case /* PodcastExerciseMovementTypeProto movement_type */ 1:
+                    message.movementType = reader.int32();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -3518,9 +3518,9 @@ class StoredPodcastExerciseVisualMovementProto$Type extends MessageType<StoredPo
         return message;
     }
     internalBinaryWrite(message: StoredPodcastExerciseVisualMovementProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* PodcastExerciseMovementProto movement = 1; */
-        if (message.movement !== 0)
-            writer.tag(1, WireType.Varint).int32(message.movement);
+        /* PodcastExerciseMovementTypeProto movement_type = 1; */
+        if (message.movementType !== 0)
+            writer.tag(1, WireType.Varint).int32(message.movementType);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
