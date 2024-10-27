@@ -748,13 +748,13 @@ export interface StoredPodcastSpokenSegmentProto {
      */
     text: string;
     /**
-     * @generated from protobuf field: int32 leading_pause_millis = 2;
+     * @generated from protobuf field: google.protobuf.Duration leading_pause = 2;
      */
-    leadingPauseMillis: number;
+    leadingPause?: Duration;
     /**
-     * @generated from protobuf field: int32 min_duration_millis = 3;
+     * @generated from protobuf field: google.protobuf.Duration min_duration = 3;
      */
-    minDurationMillis: number;
+    minDuration?: Duration;
 }
 /**
  * @generated from protobuf message StoredPodcastExerciseVisualProto
@@ -3279,15 +3279,13 @@ class StoredPodcastSpokenSegmentProto$Type extends MessageType<StoredPodcastSpok
     constructor() {
         super("StoredPodcastSpokenSegmentProto", [
             { no: 1, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "leading_pause_millis", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 3, name: "min_duration_millis", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
+            { no: 2, name: "leading_pause", kind: "message", T: () => Duration },
+            { no: 3, name: "min_duration", kind: "message", T: () => Duration }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastSpokenSegmentProto>): StoredPodcastSpokenSegmentProto {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.text = "";
-        message.leadingPauseMillis = 0;
-        message.minDurationMillis = 0;
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastSpokenSegmentProto>(this, message, value);
         return message;
@@ -3300,11 +3298,11 @@ class StoredPodcastSpokenSegmentProto$Type extends MessageType<StoredPodcastSpok
                 case /* string text */ 1:
                     message.text = reader.string();
                     break;
-                case /* int32 leading_pause_millis */ 2:
-                    message.leadingPauseMillis = reader.int32();
+                case /* google.protobuf.Duration leading_pause */ 2:
+                    message.leadingPause = Duration.internalBinaryRead(reader, reader.uint32(), options, message.leadingPause);
                     break;
-                case /* int32 min_duration_millis */ 3:
-                    message.minDurationMillis = reader.int32();
+                case /* google.protobuf.Duration min_duration */ 3:
+                    message.minDuration = Duration.internalBinaryRead(reader, reader.uint32(), options, message.minDuration);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -3321,12 +3319,12 @@ class StoredPodcastSpokenSegmentProto$Type extends MessageType<StoredPodcastSpok
         /* string text = 1; */
         if (message.text !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.text);
-        /* int32 leading_pause_millis = 2; */
-        if (message.leadingPauseMillis !== 0)
-            writer.tag(2, WireType.Varint).int32(message.leadingPauseMillis);
-        /* int32 min_duration_millis = 3; */
-        if (message.minDurationMillis !== 0)
-            writer.tag(3, WireType.Varint).int32(message.minDurationMillis);
+        /* google.protobuf.Duration leading_pause = 2; */
+        if (message.leadingPause)
+            Duration.internalBinaryWrite(message.leadingPause, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* google.protobuf.Duration min_duration = 3; */
+        if (message.minDuration)
+            Duration.internalBinaryWrite(message.minDuration, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

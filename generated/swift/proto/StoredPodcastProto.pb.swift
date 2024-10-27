@@ -1222,13 +1222,30 @@ struct StoredPodcastSpokenSegmentProto: Sendable {
 
   var text: String = String()
 
-  var leadingPauseMillis: Int32 = 0
+  var leadingPause: SwiftProtobuf.Google_Protobuf_Duration {
+    get {return _leadingPause ?? SwiftProtobuf.Google_Protobuf_Duration()}
+    set {_leadingPause = newValue}
+  }
+  /// Returns true if `leadingPause` has been explicitly set.
+  var hasLeadingPause: Bool {return self._leadingPause != nil}
+  /// Clears the value of `leadingPause`. Subsequent reads from it will return its default value.
+  mutating func clearLeadingPause() {self._leadingPause = nil}
 
-  var minDurationMillis: Int32 = 0
+  var minDuration: SwiftProtobuf.Google_Protobuf_Duration {
+    get {return _minDuration ?? SwiftProtobuf.Google_Protobuf_Duration()}
+    set {_minDuration = newValue}
+  }
+  /// Returns true if `minDuration` has been explicitly set.
+  var hasMinDuration: Bool {return self._minDuration != nil}
+  /// Clears the value of `minDuration`. Subsequent reads from it will return its default value.
+  mutating func clearMinDuration() {self._minDuration = nil}
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
+
+  fileprivate var _leadingPause: SwiftProtobuf.Google_Protobuf_Duration? = nil
+  fileprivate var _minDuration: SwiftProtobuf.Google_Protobuf_Duration? = nil
 }
 
 struct StoredPodcastExerciseVisualProto: Sendable {
@@ -3246,8 +3263,8 @@ extension StoredPodcastSpokenSegmentProto: SwiftProtobuf.Message, SwiftProtobuf.
   static let protoMessageName: String = "StoredPodcastSpokenSegmentProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "text"),
-    2: .standard(proto: "leading_pause_millis"),
-    3: .standard(proto: "min_duration_millis"),
+    2: .standard(proto: "leading_pause"),
+    3: .standard(proto: "min_duration"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3257,30 +3274,34 @@ extension StoredPodcastSpokenSegmentProto: SwiftProtobuf.Message, SwiftProtobuf.
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.text) }()
-      case 2: try { try decoder.decodeSingularInt32Field(value: &self.leadingPauseMillis) }()
-      case 3: try { try decoder.decodeSingularInt32Field(value: &self.minDurationMillis) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._leadingPause) }()
+      case 3: try { try decoder.decodeSingularMessageField(value: &self._minDuration) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.text.isEmpty {
       try visitor.visitSingularStringField(value: self.text, fieldNumber: 1)
     }
-    if self.leadingPauseMillis != 0 {
-      try visitor.visitSingularInt32Field(value: self.leadingPauseMillis, fieldNumber: 2)
-    }
-    if self.minDurationMillis != 0 {
-      try visitor.visitSingularInt32Field(value: self.minDurationMillis, fieldNumber: 3)
-    }
+    try { if let v = self._leadingPause {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
+    try { if let v = self._minDuration {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: StoredPodcastSpokenSegmentProto, rhs: StoredPodcastSpokenSegmentProto) -> Bool {
     if lhs.text != rhs.text {return false}
-    if lhs.leadingPauseMillis != rhs.leadingPauseMillis {return false}
-    if lhs.minDurationMillis != rhs.minDurationMillis {return false}
+    if lhs._leadingPause != rhs._leadingPause {return false}
+    if lhs._minDuration != rhs._minDuration {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
