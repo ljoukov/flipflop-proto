@@ -761,9 +761,9 @@ export interface StoredPodcastSpokenSegmentProto {
  */
 export interface StoredPodcastExerciseVisualProto {
     /**
-     * @generated from protobuf field: StoredPodcastExerciseRepCounterProto rep_counter = 1;
+     * @generated from protobuf field: StoredPodcastExerciseVisualRepCounterProto rep_counter = 1;
      */
-    repCounter?: StoredPodcastExerciseRepCounterProto;
+    repCounter?: StoredPodcastExerciseVisualRepCounterProto;
     /**
      * @generated from protobuf field: StoredPodcastExerciseVisualTextProto text = 2;
      */
@@ -822,9 +822,9 @@ export interface StoredPodcastExerciseVisualTipProto {
     label: string;
 }
 /**
- * @generated from protobuf message StoredPodcastExerciseRepCounterProto
+ * @generated from protobuf message StoredPodcastExerciseVisualRepCounterProto
  */
-export interface StoredPodcastExerciseRepCounterProto {
+export interface StoredPodcastExerciseVisualRepCounterProto {
     /**
      * @generated from protobuf field: int32 rep_number = 1;
      */
@@ -3366,7 +3366,7 @@ export const StoredPodcastSpokenSegmentProto = new StoredPodcastSpokenSegmentPro
 class StoredPodcastExerciseVisualProto$Type extends MessageType<StoredPodcastExerciseVisualProto> {
     constructor() {
         super("StoredPodcastExerciseVisualProto", [
-            { no: 1, name: "rep_counter", kind: "message", T: () => StoredPodcastExerciseRepCounterProto },
+            { no: 1, name: "rep_counter", kind: "message", T: () => StoredPodcastExerciseVisualRepCounterProto },
             { no: 2, name: "text", kind: "message", T: () => StoredPodcastExerciseVisualTextProto },
             { no: 3, name: "movement", kind: "message", T: () => StoredPodcastExerciseVisualMovementProto },
             { no: 4, name: "tips", kind: "message", T: () => StoredPodcastExerciseVisualTipsProto }
@@ -3383,8 +3383,8 @@ class StoredPodcastExerciseVisualProto$Type extends MessageType<StoredPodcastExe
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* StoredPodcastExerciseRepCounterProto rep_counter */ 1:
-                    message.repCounter = StoredPodcastExerciseRepCounterProto.internalBinaryRead(reader, reader.uint32(), options, message.repCounter);
+                case /* StoredPodcastExerciseVisualRepCounterProto rep_counter */ 1:
+                    message.repCounter = StoredPodcastExerciseVisualRepCounterProto.internalBinaryRead(reader, reader.uint32(), options, message.repCounter);
                     break;
                 case /* StoredPodcastExerciseVisualTextProto text */ 2:
                     message.text = StoredPodcastExerciseVisualTextProto.internalBinaryRead(reader, reader.uint32(), options, message.text);
@@ -3407,9 +3407,9 @@ class StoredPodcastExerciseVisualProto$Type extends MessageType<StoredPodcastExe
         return message;
     }
     internalBinaryWrite(message: StoredPodcastExerciseVisualProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* StoredPodcastExerciseRepCounterProto rep_counter = 1; */
+        /* StoredPodcastExerciseVisualRepCounterProto rep_counter = 1; */
         if (message.repCounter)
-            StoredPodcastExerciseRepCounterProto.internalBinaryWrite(message.repCounter, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+            StoredPodcastExerciseVisualRepCounterProto.internalBinaryWrite(message.repCounter, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         /* StoredPodcastExerciseVisualTextProto text = 2; */
         if (message.text)
             StoredPodcastExerciseVisualTextProto.internalBinaryWrite(message.text, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
@@ -3634,22 +3634,22 @@ class StoredPodcastExerciseVisualTipProto$Type extends MessageType<StoredPodcast
  */
 export const StoredPodcastExerciseVisualTipProto = new StoredPodcastExerciseVisualTipProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class StoredPodcastExerciseRepCounterProto$Type extends MessageType<StoredPodcastExerciseRepCounterProto> {
+class StoredPodcastExerciseVisualRepCounterProto$Type extends MessageType<StoredPodcastExerciseVisualRepCounterProto> {
     constructor() {
-        super("StoredPodcastExerciseRepCounterProto", [
+        super("StoredPodcastExerciseVisualRepCounterProto", [
             { no: 1, name: "rep_number", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 2, name: "rep_total", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
         ]);
     }
-    create(value?: PartialMessage<StoredPodcastExerciseRepCounterProto>): StoredPodcastExerciseRepCounterProto {
+    create(value?: PartialMessage<StoredPodcastExerciseVisualRepCounterProto>): StoredPodcastExerciseVisualRepCounterProto {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.repNumber = 0;
         message.repTotal = 0;
         if (value !== undefined)
-            reflectionMergePartial<StoredPodcastExerciseRepCounterProto>(this, message, value);
+            reflectionMergePartial<StoredPodcastExerciseVisualRepCounterProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredPodcastExerciseRepCounterProto): StoredPodcastExerciseRepCounterProto {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredPodcastExerciseVisualRepCounterProto): StoredPodcastExerciseVisualRepCounterProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -3671,7 +3671,7 @@ class StoredPodcastExerciseRepCounterProto$Type extends MessageType<StoredPodcas
         }
         return message;
     }
-    internalBinaryWrite(message: StoredPodcastExerciseRepCounterProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: StoredPodcastExerciseVisualRepCounterProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* int32 rep_number = 1; */
         if (message.repNumber !== 0)
             writer.tag(1, WireType.Varint).int32(message.repNumber);
@@ -3685,6 +3685,6 @@ class StoredPodcastExerciseRepCounterProto$Type extends MessageType<StoredPodcas
     }
 }
 /**
- * @generated MessageType for protobuf message StoredPodcastExerciseRepCounterProto
+ * @generated MessageType for protobuf message StoredPodcastExerciseVisualRepCounterProto
  */
-export const StoredPodcastExerciseRepCounterProto = new StoredPodcastExerciseRepCounterProto$Type();
+export const StoredPodcastExerciseVisualRepCounterProto = new StoredPodcastExerciseVisualRepCounterProto$Type();

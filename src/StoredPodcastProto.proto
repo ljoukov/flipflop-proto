@@ -331,7 +331,7 @@ message StoredPodcastSpokenSegmentProto {
 }
 
 message StoredPodcastExerciseVisualProto {
-  StoredPodcastExerciseRepCounterProto rep_counter = 1;
+  StoredPodcastExerciseVisualRepCounterProto rep_counter = 1;
   StoredPodcastExerciseVisualTextProto text = 2;
   StoredPodcastExerciseVisualMovementProto movement = 3;
   StoredPodcastExerciseVisualTipsProto tips = 4;
@@ -355,7 +355,7 @@ message StoredPodcastExerciseVisualTipProto {
   string label = 2;
 }
 
-message StoredPodcastExerciseRepCounterProto {
+message StoredPodcastExerciseVisualRepCounterProto {
   int32 rep_number = 1;
   int32 rep_total = 2;
 }

@@ -1253,8 +1253,8 @@ struct StoredPodcastExerciseVisualProto: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var repCounter: StoredPodcastExerciseRepCounterProto {
-    get {return _repCounter ?? StoredPodcastExerciseRepCounterProto()}
+  var repCounter: StoredPodcastExerciseVisualRepCounterProto {
+    get {return _repCounter ?? StoredPodcastExerciseVisualRepCounterProto()}
     set {_repCounter = newValue}
   }
   /// Returns true if `repCounter` has been explicitly set.
@@ -1293,7 +1293,7 @@ struct StoredPodcastExerciseVisualProto: Sendable {
 
   init() {}
 
-  fileprivate var _repCounter: StoredPodcastExerciseRepCounterProto? = nil
+  fileprivate var _repCounter: StoredPodcastExerciseVisualRepCounterProto? = nil
   fileprivate var _text: StoredPodcastExerciseVisualTextProto? = nil
   fileprivate var _movement: StoredPodcastExerciseVisualMovementProto? = nil
   fileprivate var _tips: StoredPodcastExerciseVisualTipsProto? = nil
@@ -1351,7 +1351,7 @@ struct StoredPodcastExerciseVisualTipProto: Sendable {
   init() {}
 }
 
-struct StoredPodcastExerciseRepCounterProto: Sendable {
+struct StoredPodcastExerciseVisualRepCounterProto: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -3561,8 +3561,8 @@ extension StoredPodcastExerciseVisualTipProto: SwiftProtobuf.Message, SwiftProto
   }
 }
 
-extension StoredPodcastExerciseRepCounterProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "StoredPodcastExerciseRepCounterProto"
+extension StoredPodcastExerciseVisualRepCounterProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredPodcastExerciseVisualRepCounterProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "rep_number"),
     2: .standard(proto: "rep_total"),
@@ -3591,7 +3591,7 @@ extension StoredPodcastExerciseRepCounterProto: SwiftProtobuf.Message, SwiftProt
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: StoredPodcastExerciseRepCounterProto, rhs: StoredPodcastExerciseRepCounterProto) -> Bool {
+  static func ==(lhs: StoredPodcastExerciseVisualRepCounterProto, rhs: StoredPodcastExerciseVisualRepCounterProto) -> Bool {
     if lhs.repNumber != rhs.repNumber {return false}
     if lhs.repTotal != rhs.repTotal {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
