@@ -320,6 +320,12 @@ message StoredPodcastExerciseProto {
 }
 
 message StoredPodcastExerciseSegmentProto {
-  string spoken_text = 1;
+  repeated StoredPodcastSpokenSegmentProto spoken_segments = 1;
   PodcastExerciseVisualProto visual = 2;
+}
+
+message StoredPodcastSpokenSegmentProto {
+  string text = 1;
+  int32 leading_pause_millis = 2;
+  int32 min_duration_millis = 3;
 }
