@@ -340,8 +340,8 @@ message StoredPodcastExerciseVisualProto {
 }
 
 message StoredPodcastExerciseVisualTextProto {
-  string text = 1;
-  string emoji = 2;
+  string title = 1;
+  string title_emoji = 2;
 }
 
 message StoredPodcastExerciseVisualMovementProto {

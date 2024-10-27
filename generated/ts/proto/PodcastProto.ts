@@ -1156,17 +1156,13 @@ export interface PodcastExerciseVisualRepCounterProto {
  */
 export interface PodcastExerciseVisualTextProto {
     /**
-     * @generated from protobuf field: string text = 1;
+     * @generated from protobuf field: string title = 1;
      */
-    text: string;
+    title: string;
     /**
-     * @generated from protobuf field: string emoji = 2;
+     * @generated from protobuf field: PodcastCardHeroProto hero = 2;
      */
-    emoji: string;
-    /**
-     * @generated from protobuf field: string lottie_url = 3;
-     */
-    lottieUrl: string;
+    hero?: PodcastCardHeroProto;
 }
 /**
  * @generated from protobuf message PodcastExerciseVisualMovementProto
@@ -5444,16 +5440,13 @@ export const PodcastExerciseVisualRepCounterProto = new PodcastExerciseVisualRep
 class PodcastExerciseVisualTextProto$Type extends MessageType<PodcastExerciseVisualTextProto> {
     constructor() {
         super("PodcastExerciseVisualTextProto", [
-            { no: 1, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "lottie_url", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "hero", kind: "message", T: () => PodcastCardHeroProto }
         ]);
     }
     create(value?: PartialMessage<PodcastExerciseVisualTextProto>): PodcastExerciseVisualTextProto {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.text = "";
-        message.emoji = "";
-        message.lottieUrl = "";
+        message.title = "";
         if (value !== undefined)
             reflectionMergePartial<PodcastExerciseVisualTextProto>(this, message, value);
         return message;
@@ -5463,14 +5456,11 @@ class PodcastExerciseVisualTextProto$Type extends MessageType<PodcastExerciseVis
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string text */ 1:
-                    message.text = reader.string();
+                case /* string title */ 1:
+                    message.title = reader.string();
                     break;
-                case /* string emoji */ 2:
-                    message.emoji = reader.string();
-                    break;
-                case /* string lottie_url */ 3:
-                    message.lottieUrl = reader.string();
+                case /* PodcastCardHeroProto hero */ 2:
+                    message.hero = PodcastCardHeroProto.internalBinaryRead(reader, reader.uint32(), options, message.hero);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -5484,15 +5474,12 @@ class PodcastExerciseVisualTextProto$Type extends MessageType<PodcastExerciseVis
         return message;
     }
     internalBinaryWrite(message: PodcastExerciseVisualTextProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string text = 1; */
-        if (message.text !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.text);
-        /* string emoji = 2; */
-        if (message.emoji !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.emoji);
-        /* string lottie_url = 3; */
-        if (message.lottieUrl !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.lottieUrl);
+        /* string title = 1; */
+        if (message.title !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.title);
+        /* PodcastCardHeroProto hero = 2; */
+        if (message.hero)
+            PodcastCardHeroProto.internalBinaryWrite(message.hero, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

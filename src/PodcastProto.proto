@@ -428,9 +428,8 @@ message PodcastExerciseVisualRepCounterProto {
 }
 
 message PodcastExerciseVisualTextProto {
-  string text = 1;
-  string emoji = 2;
-  string lottie_url = 3;
+  string title = 1;
+  PodcastCardHeroProto hero = 2;
 }
 
 message PodcastExerciseVisualMovementProto {
