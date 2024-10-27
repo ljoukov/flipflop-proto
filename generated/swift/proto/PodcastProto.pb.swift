@@ -196,6 +196,7 @@ enum PodcastExerciseMovementProto: SwiftProtobuf.Enum, Swift.CaseIterable {
   /// Static
   case squeeze // = 4
   case relax // = 5
+  case roll // = 6
   case UNRECOGNIZED(Int)
 
   init() {
@@ -210,6 +211,7 @@ enum PodcastExerciseMovementProto: SwiftProtobuf.Enum, Swift.CaseIterable {
     case 3: self = .holdBreath
     case 4: self = .squeeze
     case 5: self = .relax
+    case 6: self = .roll
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -222,6 +224,7 @@ enum PodcastExerciseMovementProto: SwiftProtobuf.Enum, Swift.CaseIterable {
     case .holdBreath: return 3
     case .squeeze: return 4
     case .relax: return 5
+    case .roll: return 6
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -234,6 +237,7 @@ enum PodcastExerciseMovementProto: SwiftProtobuf.Enum, Swift.CaseIterable {
     .holdBreath,
     .squeeze,
     .relax,
+    .roll,
   ]
 
 }
@@ -2063,6 +2067,7 @@ extension PodcastExerciseMovementProto: SwiftProtobuf._ProtoNameProviding {
     3: .same(proto: "PODCAST_EXERCISE_MOVEMENT_PROTO_HOLD_BREATH"),
     4: .same(proto: "PODCAST_EXERCISE_MOVEMENT_PROTO_SQUEEZE"),
     5: .same(proto: "PODCAST_EXERCISE_MOVEMENT_PROTO_RELAX"),
+    6: .same(proto: "PODCAST_EXERCISE_MOVEMENT_PROTO_ROLL"),
   ]
 }
 

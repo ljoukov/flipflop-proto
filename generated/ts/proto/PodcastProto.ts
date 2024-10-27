@@ -1448,7 +1448,11 @@ export enum PodcastExerciseMovementProto {
     /**
      * @generated from protobuf enum value: PODCAST_EXERCISE_MOVEMENT_PROTO_RELAX = 5;
      */
-    RELAX = 5
+    RELAX = 5,
+    /**
+     * @generated from protobuf enum value: PODCAST_EXERCISE_MOVEMENT_PROTO_ROLL = 6;
+     */
+    ROLL = 6
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class PodcastRequestAuthProto$Type extends MessageType<PodcastRequestAuthProto> {
