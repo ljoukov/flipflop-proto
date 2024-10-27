@@ -1199,8 +1199,8 @@ struct StoredPodcastExerciseSegmentProto: Sendable {
 
   var spokenSegments: [StoredPodcastSpokenSegmentProto] = []
 
-  var visual: PodcastExerciseVisualProto {
-    get {return _visual ?? PodcastExerciseVisualProto()}
+  var visual: StoredPodcastExerciseVisualProto {
+    get {return _visual ?? StoredPodcastExerciseVisualProto()}
     set {_visual = newValue}
   }
   /// Returns true if `visual` has been explicitly set.
@@ -1212,7 +1212,7 @@ struct StoredPodcastExerciseSegmentProto: Sendable {
 
   init() {}
 
-  fileprivate var _visual: PodcastExerciseVisualProto? = nil
+  fileprivate var _visual: StoredPodcastExerciseVisualProto? = nil
 }
 
 struct StoredPodcastSpokenSegmentProto: Sendable {

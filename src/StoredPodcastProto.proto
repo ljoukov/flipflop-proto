@@ -321,7 +321,7 @@ message StoredPodcastExerciseProto {
 
 message StoredPodcastExerciseSegmentProto {
   repeated StoredPodcastSpokenSegmentProto spoken_segments = 1;
-  PodcastExerciseVisualProto visual = 2;
+  StoredPodcastExerciseVisualProto visual = 2;
 }
 
 message StoredPodcastSpokenSegmentProto {

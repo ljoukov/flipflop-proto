@@ -14,7 +14,6 @@ import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
 import { PodcastExerciseTipTypeProto } from "./PodcastProto";
 import { PodcastExerciseMovementProto } from "./PodcastProto";
-import { PodcastExerciseVisualProto } from "./PodcastProto";
 import { PodcastWordProto } from "./PodcastProto";
 import { Duration } from "./google/protobuf/duration";
 import { PodcastVisualTransitionProto } from "./PodcastProto";
@@ -736,9 +735,9 @@ export interface StoredPodcastExerciseSegmentProto {
      */
     spokenSegments: StoredPodcastSpokenSegmentProto[];
     /**
-     * @generated from protobuf field: PodcastExerciseVisualProto visual = 2;
+     * @generated from protobuf field: StoredPodcastExerciseVisualProto visual = 2;
      */
-    visual?: PodcastExerciseVisualProto;
+    visual?: StoredPodcastExerciseVisualProto;
 }
 /**
  * @generated from protobuf message StoredPodcastSpokenSegmentProto
@@ -3226,7 +3225,7 @@ class StoredPodcastExerciseSegmentProto$Type extends MessageType<StoredPodcastEx
     constructor() {
         super("StoredPodcastExerciseSegmentProto", [
             { no: 1, name: "spoken_segments", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastSpokenSegmentProto },
-            { no: 2, name: "visual", kind: "message", T: () => PodcastExerciseVisualProto }
+            { no: 2, name: "visual", kind: "message", T: () => StoredPodcastExerciseVisualProto }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastExerciseSegmentProto>): StoredPodcastExerciseSegmentProto {
@@ -3244,8 +3243,8 @@ class StoredPodcastExerciseSegmentProto$Type extends MessageType<StoredPodcastEx
                 case /* repeated StoredPodcastSpokenSegmentProto spoken_segments */ 1:
                     message.spokenSegments.push(StoredPodcastSpokenSegmentProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
-                case /* PodcastExerciseVisualProto visual */ 2:
-                    message.visual = PodcastExerciseVisualProto.internalBinaryRead(reader, reader.uint32(), options, message.visual);
+                case /* StoredPodcastExerciseVisualProto visual */ 2:
+                    message.visual = StoredPodcastExerciseVisualProto.internalBinaryRead(reader, reader.uint32(), options, message.visual);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -3262,9 +3261,9 @@ class StoredPodcastExerciseSegmentProto$Type extends MessageType<StoredPodcastEx
         /* repeated StoredPodcastSpokenSegmentProto spoken_segments = 1; */
         for (let i = 0; i < message.spokenSegments.length; i++)
             StoredPodcastSpokenSegmentProto.internalBinaryWrite(message.spokenSegments[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* PodcastExerciseVisualProto visual = 2; */
+        /* StoredPodcastExerciseVisualProto visual = 2; */
         if (message.visual)
-            PodcastExerciseVisualProto.internalBinaryWrite(message.visual, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+            StoredPodcastExerciseVisualProto.internalBinaryWrite(message.visual, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
