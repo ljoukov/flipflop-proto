@@ -18,7 +18,7 @@ message PodcastStreamApiRequestProto {
     GetPodcastRequestProto podcast = 12;
     GetPodcastStoryRequestProto story = 13;
     GetPodcastSuggestionPointsProto suggestion_points = 14;
-    RefreshPodcastSuggestionsRequestProto refresh_suggestions = 15;
+    GetPodcastHomeRequestProto home = 15;
     DeleteAccountRequestProto delete_account = 16;
   }
 }
@@ -30,8 +30,7 @@ message PodcastStreamApiResponseHeaderProto {
     GetPodcastResponseHeaderProto podcast_header = 12;
     GetPodcastStoryResponseHeaderProto story_header = 13;
     GetPodcastSuggestionPointsResponseHeaderProto suggestion_points_header = 14;
-    RefreshPodcastSuggestionsResponseHeaderProto refresh_suggestions_header =
-        15;
+    GetPodcastHomeResponseHeaderProto home_header = 15;
     DeleteAccountResponseHeaderProto delete_account_header = 16;
   }
   map<string, google.protobuf.Duration> latencies = 100;
@@ -44,7 +43,7 @@ message PodcastStreamApiResponseDeltaProto {
     GetPodcastResponseDeltaProto podcast_delta = 12;
     GetPodcastStoryResponseDeltaProto story_delta = 13;
     GetPodcastSuggestionPointsResponseDeltaProto suggestion_points_delta = 14;
-    RefreshPodcastSuggestionsResponseDeltaProto refresh_suggestions = 15;
+    GetPodcastHomeResponseDeltaProto home_delta = 15;
     DeleteAccountResponseDeltaProto delete_account_delta = 16;
   }
 }
@@ -126,20 +125,20 @@ message GetPodcastSuggestionPointsResponseDeltaProto {
   }
 }
 
-message RefreshPodcastSuggestionsRequestProto {}
+message GetPodcastHomeRequestProto {}
 
-message RefreshPodcastSuggestionsResponseHeaderProto {
+message GetPodcastHomeResponseHeaderProto {
   PodcastSuggestionsProto suggestions = 1;
   bool is_subscriber = 2;
 }
+
+message GetPodcastHomeResponseDeltaProto {}
 
 message DeleteAccountRequestProto {}
 
 message DeleteAccountResponseHeaderProto {}
 
 message DeleteAccountResponseDeltaProto {}
-
-message RefreshPodcastSuggestionsResponseDeltaProto {}
 
 message PodcastProto {
   google.protobuf.Timestamp updated_at = 1;

@@ -316,12 +316,12 @@ struct PodcastStreamApiRequestProto: Sendable {
     set {request = .suggestionPoints(newValue)}
   }
 
-  var refreshSuggestions: RefreshPodcastSuggestionsRequestProto {
+  var home: GetPodcastHomeRequestProto {
     get {
-      if case .refreshSuggestions(let v)? = request {return v}
-      return RefreshPodcastSuggestionsRequestProto()
+      if case .home(let v)? = request {return v}
+      return GetPodcastHomeRequestProto()
     }
-    set {request = .refreshSuggestions(newValue)}
+    set {request = .home(newValue)}
   }
 
   var deleteAccount: DeleteAccountRequestProto {
@@ -340,7 +340,7 @@ struct PodcastStreamApiRequestProto: Sendable {
     case podcast(GetPodcastRequestProto)
     case story(GetPodcastStoryRequestProto)
     case suggestionPoints(GetPodcastSuggestionPointsProto)
-    case refreshSuggestions(RefreshPodcastSuggestionsRequestProto)
+    case home(GetPodcastHomeRequestProto)
     case deleteAccount(DeleteAccountRequestProto)
 
   }
@@ -397,12 +397,12 @@ struct PodcastStreamApiResponseHeaderProto: Sendable {
     set {header = .suggestionPointsHeader(newValue)}
   }
 
-  var refreshSuggestionsHeader: RefreshPodcastSuggestionsResponseHeaderProto {
+  var homeHeader: GetPodcastHomeResponseHeaderProto {
     get {
-      if case .refreshSuggestionsHeader(let v)? = header {return v}
-      return RefreshPodcastSuggestionsResponseHeaderProto()
+      if case .homeHeader(let v)? = header {return v}
+      return GetPodcastHomeResponseHeaderProto()
     }
-    set {header = .refreshSuggestionsHeader(newValue)}
+    set {header = .homeHeader(newValue)}
   }
 
   var deleteAccountHeader: DeleteAccountResponseHeaderProto {
@@ -423,7 +423,7 @@ struct PodcastStreamApiResponseHeaderProto: Sendable {
     case podcastHeader(GetPodcastResponseHeaderProto)
     case storyHeader(GetPodcastStoryResponseHeaderProto)
     case suggestionPointsHeader(GetPodcastSuggestionPointsResponseHeaderProto)
-    case refreshSuggestionsHeader(RefreshPodcastSuggestionsResponseHeaderProto)
+    case homeHeader(GetPodcastHomeResponseHeaderProto)
     case deleteAccountHeader(DeleteAccountResponseHeaderProto)
 
   }
@@ -478,12 +478,12 @@ struct PodcastStreamApiResponseDeltaProto: Sendable {
     set {responseDelta = .suggestionPointsDelta(newValue)}
   }
 
-  var refreshSuggestions: RefreshPodcastSuggestionsResponseDeltaProto {
+  var homeDelta: GetPodcastHomeResponseDeltaProto {
     get {
-      if case .refreshSuggestions(let v)? = responseDelta {return v}
-      return RefreshPodcastSuggestionsResponseDeltaProto()
+      if case .homeDelta(let v)? = responseDelta {return v}
+      return GetPodcastHomeResponseDeltaProto()
     }
-    set {responseDelta = .refreshSuggestions(newValue)}
+    set {responseDelta = .homeDelta(newValue)}
   }
 
   var deleteAccountDelta: DeleteAccountResponseDeltaProto {
@@ -502,7 +502,7 @@ struct PodcastStreamApiResponseDeltaProto: Sendable {
     case podcastDelta(GetPodcastResponseDeltaProto)
     case storyDelta(GetPodcastStoryResponseDeltaProto)
     case suggestionPointsDelta(GetPodcastSuggestionPointsResponseDeltaProto)
-    case refreshSuggestions(RefreshPodcastSuggestionsResponseDeltaProto)
+    case homeDelta(GetPodcastHomeResponseDeltaProto)
     case deleteAccountDelta(DeleteAccountResponseDeltaProto)
 
   }
@@ -832,7 +832,7 @@ struct GetPodcastSuggestionPointsResponseDeltaProto: Sendable {
   init() {}
 }
 
-struct RefreshPodcastSuggestionsRequestProto: Sendable {
+struct GetPodcastHomeRequestProto: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -842,7 +842,7 @@ struct RefreshPodcastSuggestionsRequestProto: Sendable {
   init() {}
 }
 
-struct RefreshPodcastSuggestionsResponseHeaderProto: Sendable {
+struct GetPodcastHomeResponseHeaderProto: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -863,6 +863,16 @@ struct RefreshPodcastSuggestionsResponseHeaderProto: Sendable {
   init() {}
 
   fileprivate var _suggestions: PodcastSuggestionsProto? = nil
+}
+
+struct GetPodcastHomeResponseDeltaProto: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
 }
 
 struct DeleteAccountRequestProto: Sendable {
@@ -886,16 +896,6 @@ struct DeleteAccountResponseHeaderProto: Sendable {
 }
 
 struct DeleteAccountResponseDeltaProto: Sendable {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  init() {}
-}
-
-struct RefreshPodcastSuggestionsResponseDeltaProto: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -2282,7 +2282,7 @@ extension PodcastStreamApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Me
     12: .same(proto: "podcast"),
     13: .same(proto: "story"),
     14: .standard(proto: "suggestion_points"),
-    15: .standard(proto: "refresh_suggestions"),
+    15: .same(proto: "home"),
     16: .standard(proto: "delete_account"),
   ]
 
@@ -2359,16 +2359,16 @@ extension PodcastStreamApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Me
         }
       }()
       case 15: try {
-        var v: RefreshPodcastSuggestionsRequestProto?
+        var v: GetPodcastHomeRequestProto?
         var hadOneofValue = false
         if let current = self.request {
           hadOneofValue = true
-          if case .refreshSuggestions(let m) = current {v = m}
+          if case .home(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.request = .refreshSuggestions(v)
+          self.request = .home(v)
         }
       }()
       case 16: try {
@@ -2418,8 +2418,8 @@ extension PodcastStreamApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Me
       guard case .suggestionPoints(let v)? = self.request else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 14)
     }()
-    case .refreshSuggestions?: try {
-      guard case .refreshSuggestions(let v)? = self.request else { preconditionFailure() }
+    case .home?: try {
+      guard case .home(let v)? = self.request else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
     }()
     case .deleteAccount?: try {
@@ -2447,7 +2447,7 @@ extension PodcastStreamApiResponseHeaderProto: SwiftProtobuf.Message, SwiftProto
     12: .standard(proto: "podcast_header"),
     13: .standard(proto: "story_header"),
     14: .standard(proto: "suggestion_points_header"),
-    15: .standard(proto: "refresh_suggestions_header"),
+    15: .standard(proto: "home_header"),
     16: .standard(proto: "delete_account_header"),
     100: .same(proto: "latencies"),
   ]
@@ -2524,16 +2524,16 @@ extension PodcastStreamApiResponseHeaderProto: SwiftProtobuf.Message, SwiftProto
         }
       }()
       case 15: try {
-        var v: RefreshPodcastSuggestionsResponseHeaderProto?
+        var v: GetPodcastHomeResponseHeaderProto?
         var hadOneofValue = false
         if let current = self.header {
           hadOneofValue = true
-          if case .refreshSuggestionsHeader(let m) = current {v = m}
+          if case .homeHeader(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.header = .refreshSuggestionsHeader(v)
+          self.header = .homeHeader(v)
         }
       }()
       case 16: try {
@@ -2581,8 +2581,8 @@ extension PodcastStreamApiResponseHeaderProto: SwiftProtobuf.Message, SwiftProto
       guard case .suggestionPointsHeader(let v)? = self.header else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 14)
     }()
-    case .refreshSuggestionsHeader?: try {
-      guard case .refreshSuggestionsHeader(let v)? = self.header else { preconditionFailure() }
+    case .homeHeader?: try {
+      guard case .homeHeader(let v)? = self.header else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
     }()
     case .deleteAccountHeader?: try {
@@ -2613,7 +2613,7 @@ extension PodcastStreamApiResponseDeltaProto: SwiftProtobuf.Message, SwiftProtob
     12: .standard(proto: "podcast_delta"),
     13: .standard(proto: "story_delta"),
     14: .standard(proto: "suggestion_points_delta"),
-    15: .standard(proto: "refresh_suggestions"),
+    15: .standard(proto: "home_delta"),
     16: .standard(proto: "delete_account_delta"),
   ]
 
@@ -2689,16 +2689,16 @@ extension PodcastStreamApiResponseDeltaProto: SwiftProtobuf.Message, SwiftProtob
         }
       }()
       case 15: try {
-        var v: RefreshPodcastSuggestionsResponseDeltaProto?
+        var v: GetPodcastHomeResponseDeltaProto?
         var hadOneofValue = false
         if let current = self.responseDelta {
           hadOneofValue = true
-          if case .refreshSuggestions(let m) = current {v = m}
+          if case .homeDelta(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.responseDelta = .refreshSuggestions(v)
+          self.responseDelta = .homeDelta(v)
         }
       }()
       case 16: try {
@@ -2745,8 +2745,8 @@ extension PodcastStreamApiResponseDeltaProto: SwiftProtobuf.Message, SwiftProtob
       guard case .suggestionPointsDelta(let v)? = self.responseDelta else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 14)
     }()
-    case .refreshSuggestions?: try {
-      guard case .refreshSuggestions(let v)? = self.responseDelta else { preconditionFailure() }
+    case .homeDelta?: try {
+      guard case .homeDelta(let v)? = self.responseDelta else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
     }()
     case .deleteAccountDelta?: try {
@@ -3443,8 +3443,8 @@ extension GetPodcastSuggestionPointsResponseDeltaProto: SwiftProtobuf.Message, S
   }
 }
 
-extension RefreshPodcastSuggestionsRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "RefreshPodcastSuggestionsRequestProto"
+extension GetPodcastHomeRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "GetPodcastHomeRequestProto"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3456,14 +3456,14 @@ extension RefreshPodcastSuggestionsRequestProto: SwiftProtobuf.Message, SwiftPro
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: RefreshPodcastSuggestionsRequestProto, rhs: RefreshPodcastSuggestionsRequestProto) -> Bool {
+  static func ==(lhs: GetPodcastHomeRequestProto, rhs: GetPodcastHomeRequestProto) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
-extension RefreshPodcastSuggestionsResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "RefreshPodcastSuggestionsResponseHeaderProto"
+extension GetPodcastHomeResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "GetPodcastHomeResponseHeaderProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "suggestions"),
     2: .standard(proto: "is_subscriber"),
@@ -3496,9 +3496,28 @@ extension RefreshPodcastSuggestionsResponseHeaderProto: SwiftProtobuf.Message, S
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: RefreshPodcastSuggestionsResponseHeaderProto, rhs: RefreshPodcastSuggestionsResponseHeaderProto) -> Bool {
+  static func ==(lhs: GetPodcastHomeResponseHeaderProto, rhs: GetPodcastHomeResponseHeaderProto) -> Bool {
     if lhs._suggestions != rhs._suggestions {return false}
     if lhs.isSubscriber != rhs.isSubscriber {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension GetPodcastHomeResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "GetPodcastHomeResponseDeltaProto"
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    // Load everything into unknown fields
+    while try decoder.nextFieldNumber() != nil {}
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: GetPodcastHomeResponseDeltaProto, rhs: GetPodcastHomeResponseDeltaProto) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -3556,25 +3575,6 @@ extension DeleteAccountResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf.
   }
 
   static func ==(lhs: DeleteAccountResponseDeltaProto, rhs: DeleteAccountResponseDeltaProto) -> Bool {
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension RefreshPodcastSuggestionsResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "RefreshPodcastSuggestionsResponseDeltaProto"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
-
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    // Load everything into unknown fields
-    while try decoder.nextFieldNumber() != nil {}
-  }
-
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  static func ==(lhs: RefreshPodcastSuggestionsResponseDeltaProto, rhs: RefreshPodcastSuggestionsResponseDeltaProto) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
