@@ -11,39 +11,41 @@ message PodcastRequestAuthProto {
 }
 
 message PodcastStreamApiRequestProto {
-  reserved 1;
-  PodcastRequestAuthProto request_auth = 100;
+  PodcastRequestAuthProto request_auth = 1;
   oneof request {
-    CreatePodcastRequestProto create = 2;
-    GeneratePodcastRequestProto generate = 3;
-    GetPodcastRequestProto podcast = 4;
-    GetPodcastStoryRequestProto story = 5;
-    GetPodcastSuggestionPointsProto suggestion_points = 6;
-    RefreshPodcastSuggestionsRequestProto refresh_suggestions = 7;
+    CreatePodcastRequestProto create = 10;
+    GeneratePodcastRequestProto generate = 11;
+    GetPodcastRequestProto podcast = 12;
+    GetPodcastStoryRequestProto story = 13;
+    GetPodcastSuggestionPointsProto suggestion_points = 14;
+    RefreshPodcastSuggestionsRequestProto refresh_suggestions = 15;
+    DeleteAccountRequestProto delete_account = 16;
   }
 }
 
 message PodcastStreamApiResponseHeaderProto {
-  reserved 1;
   oneof header {
-    CreatePodcastResponseHeaderProto create_header = 2;
-    GeneratePodcastResponseHeaderProto generate = 3;
-    GetPodcastResponseHeaderProto podcast_header = 4;
-    GetPodcastStoryResponseHeaderProto story_header = 5;
-    GetPodcastSuggestionPointsResponseHeaderProto suggestion_points_header = 6;
-    RefreshPodcastSuggestionsResponseHeaderProto refresh_suggestions = 7;
+    CreatePodcastResponseHeaderProto create_header = 10;
+    GeneratePodcastResponseHeaderProto generate_header = 11;
+    GetPodcastResponseHeaderProto podcast_header = 12;
+    GetPodcastStoryResponseHeaderProto story_header = 13;
+    GetPodcastSuggestionPointsResponseHeaderProto suggestion_points_header = 14;
+    RefreshPodcastSuggestionsResponseHeaderProto refresh_suggestions_header =
+        15;
+    DeleteAccountResponseHeaderProto delete_account_header = 16;
   }
   map<string, google.protobuf.Duration> latencies = 100;
 }
 
 message PodcastStreamApiResponseDeltaProto {
   oneof response_delta {
-    CreatePodcastResponseDeltaProto create_delta = 1;
-    GeneratePodcastResponseDeltaProto generate_delta = 2;
-    GetPodcastResponseDeltaProto podcast_delta = 3;
-    GetPodcastStoryResponseDeltaProto story_delta = 4;
-    GetPodcastSuggestionPointsResponseDeltaProto suggestion_points_delta = 6;
-    RefreshPodcastSuggestionsResponseDeltaProto refresh_suggestions = 7;
+    CreatePodcastResponseDeltaProto create_delta = 10;
+    GeneratePodcastResponseDeltaProto generate_delta = 11;
+    GetPodcastResponseDeltaProto podcast_delta = 12;
+    GetPodcastStoryResponseDeltaProto story_delta = 13;
+    GetPodcastSuggestionPointsResponseDeltaProto suggestion_points_delta = 14;
+    RefreshPodcastSuggestionsResponseDeltaProto refresh_suggestions = 15;
+    DeleteAccountResponseDeltaProto delete_account_delta = 16;
   }
 }
 
@@ -130,6 +132,12 @@ message RefreshPodcastSuggestionsResponseHeaderProto {
   PodcastSuggestionsProto suggestions = 1;
   bool is_subscriber = 2;
 }
+
+message DeleteAccountRequestProto {}
+
+message DeleteAccountResponseHeaderProto {}
+
+message DeleteAccountResponseDeltaProto {}
 
 message RefreshPodcastSuggestionsResponseDeltaProto {}
 
