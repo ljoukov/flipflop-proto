@@ -338,6 +338,7 @@ message StoredPodcastExercisePlanProto {
 
 message StoredPodcastExerciseSectionProto {
   repeated StoredPodcastSpokenSegmentProto spoken_segments = 2;
+  string llm_request_id = 100;
 }
 
 message StoredPodcastExerciseSegmentsProto {

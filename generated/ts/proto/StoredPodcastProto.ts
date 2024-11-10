@@ -787,6 +787,10 @@ export interface StoredPodcastExerciseSectionProto {
      * @generated from protobuf field: repeated StoredPodcastSpokenSegmentProto spoken_segments = 2;
      */
     spokenSegments: StoredPodcastSpokenSegmentProto[];
+    /**
+     * @generated from protobuf field: string llm_request_id = 100;
+     */
+    llmRequestId: string;
 }
 /**
  * @generated from protobuf message StoredPodcastExerciseSegmentsProto
@@ -3453,12 +3457,14 @@ export const StoredPodcastExercisePlanProto = new StoredPodcastExercisePlanProto
 class StoredPodcastExerciseSectionProto$Type extends MessageType<StoredPodcastExerciseSectionProto> {
     constructor() {
         super("StoredPodcastExerciseSectionProto", [
-            { no: 2, name: "spoken_segments", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastSpokenSegmentProto }
+            { no: 2, name: "spoken_segments", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastSpokenSegmentProto },
+            { no: 100, name: "llm_request_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastExerciseSectionProto>): StoredPodcastExerciseSectionProto {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.spokenSegments = [];
+        message.llmRequestId = "";
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastExerciseSectionProto>(this, message, value);
         return message;
@@ -3470,6 +3476,9 @@ class StoredPodcastExerciseSectionProto$Type extends MessageType<StoredPodcastEx
             switch (fieldNo) {
                 case /* repeated StoredPodcastSpokenSegmentProto spoken_segments */ 2:
                     message.spokenSegments.push(StoredPodcastSpokenSegmentProto.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* string llm_request_id */ 100:
+                    message.llmRequestId = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -3486,6 +3495,9 @@ class StoredPodcastExerciseSectionProto$Type extends MessageType<StoredPodcastEx
         /* repeated StoredPodcastSpokenSegmentProto spoken_segments = 2; */
         for (let i = 0; i < message.spokenSegments.length; i++)
             StoredPodcastSpokenSegmentProto.internalBinaryWrite(message.spokenSegments[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* string llm_request_id = 100; */
+        if (message.llmRequestId !== "")
+            writer.tag(100, WireType.LengthDelimited).string(message.llmRequestId);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

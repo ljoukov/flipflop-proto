@@ -1268,6 +1268,8 @@ struct StoredPodcastExerciseSectionProto: Sendable {
 
   var spokenSegments: [StoredPodcastSpokenSegmentProto] = []
 
+  var llmRequestID: String = String()
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -3480,6 +3482,7 @@ extension StoredPodcastExerciseSectionProto: SwiftProtobuf.Message, SwiftProtobu
   static let protoMessageName: String = "StoredPodcastExerciseSectionProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     2: .standard(proto: "spoken_segments"),
+    100: .standard(proto: "llm_request_id"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3489,6 +3492,7 @@ extension StoredPodcastExerciseSectionProto: SwiftProtobuf.Message, SwiftProtobu
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 2: try { try decoder.decodeRepeatedMessageField(value: &self.spokenSegments) }()
+      case 100: try { try decoder.decodeSingularStringField(value: &self.llmRequestID) }()
       default: break
       }
     }
@@ -3498,11 +3502,15 @@ extension StoredPodcastExerciseSectionProto: SwiftProtobuf.Message, SwiftProtobu
     if !self.spokenSegments.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.spokenSegments, fieldNumber: 2)
     }
+    if !self.llmRequestID.isEmpty {
+      try visitor.visitSingularStringField(value: self.llmRequestID, fieldNumber: 100)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: StoredPodcastExerciseSectionProto, rhs: StoredPodcastExerciseSectionProto) -> Bool {
     if lhs.spokenSegments != rhs.spokenSegments {return false}
+    if lhs.llmRequestID != rhs.llmRequestID {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
