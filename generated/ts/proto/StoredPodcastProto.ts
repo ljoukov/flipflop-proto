@@ -755,9 +755,9 @@ export interface StoredPodcastExercisePlanProto {
      */
     warmup?: StoredPodcastExercisePlanProto_Exercise;
     /**
-     * @generated from protobuf field: repeated StoredPodcastExercisePlanProto.Exercise main_exercises = 6;
+     * @generated from protobuf field: repeated StoredPodcastExercisePlanProto.Exercise exercises = 6;
      */
-    mainExercises: StoredPodcastExercisePlanProto_Exercise[];
+    exercises: StoredPodcastExercisePlanProto_Exercise[];
     /**
      * @generated from protobuf field: StoredPodcastExercisePlanProto.Exercise cooldown = 7;
      */
@@ -3321,7 +3321,7 @@ class StoredPodcastExercisePlanProto$Type extends MessageType<StoredPodcastExerc
             { no: 3, name: "reasoning", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "selected_category", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "warmup", kind: "message", T: () => StoredPodcastExercisePlanProto_Exercise },
-            { no: 6, name: "main_exercises", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastExercisePlanProto_Exercise },
+            { no: 6, name: "exercises", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastExercisePlanProto_Exercise },
             { no: 7, name: "cooldown", kind: "message", T: () => StoredPodcastExercisePlanProto_Exercise }
         ]);
     }
@@ -3331,7 +3331,7 @@ class StoredPodcastExercisePlanProto$Type extends MessageType<StoredPodcastExerc
         message.ideas = "";
         message.reasoning = "";
         message.selectedCategory = "";
-        message.mainExercises = [];
+        message.exercises = [];
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastExercisePlanProto>(this, message, value);
         return message;
@@ -3356,8 +3356,8 @@ class StoredPodcastExercisePlanProto$Type extends MessageType<StoredPodcastExerc
                 case /* StoredPodcastExercisePlanProto.Exercise warmup */ 5:
                     message.warmup = StoredPodcastExercisePlanProto_Exercise.internalBinaryRead(reader, reader.uint32(), options, message.warmup);
                     break;
-                case /* repeated StoredPodcastExercisePlanProto.Exercise main_exercises */ 6:
-                    message.mainExercises.push(StoredPodcastExercisePlanProto_Exercise.internalBinaryRead(reader, reader.uint32(), options));
+                case /* repeated StoredPodcastExercisePlanProto.Exercise exercises */ 6:
+                    message.exercises.push(StoredPodcastExercisePlanProto_Exercise.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 case /* StoredPodcastExercisePlanProto.Exercise cooldown */ 7:
                     message.cooldown = StoredPodcastExercisePlanProto_Exercise.internalBinaryRead(reader, reader.uint32(), options, message.cooldown);
@@ -3389,9 +3389,9 @@ class StoredPodcastExercisePlanProto$Type extends MessageType<StoredPodcastExerc
         /* StoredPodcastExercisePlanProto.Exercise warmup = 5; */
         if (message.warmup)
             StoredPodcastExercisePlanProto_Exercise.internalBinaryWrite(message.warmup, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
-        /* repeated StoredPodcastExercisePlanProto.Exercise main_exercises = 6; */
-        for (let i = 0; i < message.mainExercises.length; i++)
-            StoredPodcastExercisePlanProto_Exercise.internalBinaryWrite(message.mainExercises[i], writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+        /* repeated StoredPodcastExercisePlanProto.Exercise exercises = 6; */
+        for (let i = 0; i < message.exercises.length; i++)
+            StoredPodcastExercisePlanProto_Exercise.internalBinaryWrite(message.exercises[i], writer.tag(6, WireType.LengthDelimited).fork(), options).join();
         /* StoredPodcastExercisePlanProto.Exercise cooldown = 7; */
         if (message.cooldown)
             StoredPodcastExercisePlanProto_Exercise.internalBinaryWrite(message.cooldown, writer.tag(7, WireType.LengthDelimited).fork(), options).join();

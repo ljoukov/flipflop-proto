@@ -1235,7 +1235,7 @@ struct StoredPodcastExercisePlanProto: Sendable {
   /// Clears the value of `warmup`. Subsequent reads from it will return its default value.
   mutating func clearWarmup() {self._warmup = nil}
 
-  var mainExercises: [StoredPodcastExercisePlanProto.Exercise] = []
+  var exercises: [StoredPodcastExercisePlanProto.Exercise] = []
 
   var cooldown: StoredPodcastExercisePlanProto.Exercise {
     get {return _cooldown ?? StoredPodcastExercisePlanProto.Exercise()}
@@ -3387,7 +3387,7 @@ extension StoredPodcastExercisePlanProto: SwiftProtobuf.Message, SwiftProtobuf._
     3: .same(proto: "reasoning"),
     4: .standard(proto: "selected_category"),
     5: .same(proto: "warmup"),
-    6: .standard(proto: "main_exercises"),
+    6: .same(proto: "exercises"),
     7: .same(proto: "cooldown"),
   ]
 
@@ -3402,7 +3402,7 @@ extension StoredPodcastExercisePlanProto: SwiftProtobuf.Message, SwiftProtobuf._
       case 3: try { try decoder.decodeSingularStringField(value: &self.reasoning) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self.selectedCategory) }()
       case 5: try { try decoder.decodeSingularMessageField(value: &self._warmup) }()
-      case 6: try { try decoder.decodeRepeatedMessageField(value: &self.mainExercises) }()
+      case 6: try { try decoder.decodeRepeatedMessageField(value: &self.exercises) }()
       case 7: try { try decoder.decodeSingularMessageField(value: &self._cooldown) }()
       default: break
       }
@@ -3429,8 +3429,8 @@ extension StoredPodcastExercisePlanProto: SwiftProtobuf.Message, SwiftProtobuf._
     try { if let v = self._warmup {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
     } }()
-    if !self.mainExercises.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.mainExercises, fieldNumber: 6)
+    if !self.exercises.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.exercises, fieldNumber: 6)
     }
     try { if let v = self._cooldown {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
@@ -3444,7 +3444,7 @@ extension StoredPodcastExercisePlanProto: SwiftProtobuf.Message, SwiftProtobuf._
     if lhs.reasoning != rhs.reasoning {return false}
     if lhs.selectedCategory != rhs.selectedCategory {return false}
     if lhs._warmup != rhs._warmup {return false}
-    if lhs.mainExercises != rhs.mainExercises {return false}
+    if lhs.exercises != rhs.exercises {return false}
     if lhs._cooldown != rhs._cooldown {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

@@ -332,7 +332,7 @@ message StoredPodcastExercisePlanProto {
   string reasoning = 3;
   string selected_category = 4;
   Exercise warmup = 5;
-  repeated Exercise main_exercises = 6;
+  repeated Exercise exercises = 6;
   Exercise cooldown = 7;
 }
 
