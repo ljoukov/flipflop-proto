@@ -317,6 +317,25 @@ enum StoredPodcastTypeProto {
   STORED_PODCAST_TYPE_PROTO_MEDITATION = 3;
 }
 
+message StoredPodcastExerciseProto {
+  StoredPodcastExercisePlanProto plan = 1;
+}
+
+message StoredPodcastExercisePlanProto {
+  message Exercise {
+    string title = 1;
+    string plan = 2;
+  }
+
+  string title = 1;
+  string ideas = 2;
+  string reasoning = 3;
+  string selected_category = 4;
+  Exercise warmup = 5;
+  repeated Exercise main_exercises = 6;
+  Exercise cooldown = 7;
+}
+
 message StoredPodcastExerciseSegmentsProto {
   repeated StoredPodcastExerciseSegmentProto segments = 1;
 }
