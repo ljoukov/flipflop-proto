@@ -322,18 +322,13 @@ message StoredPodcastExerciseProto {
 }
 
 message StoredPodcastExercisePlanProto {
-  message Exercise {
-    string title = 1;
-    string plan = 2;
-  }
-
   string title = 1;
   string ideas = 2;
   string reasoning = 3;
   string selected_category = 4;
-  Exercise warmup = 5;
-  repeated Exercise exercises = 6;
-  Exercise cooldown = 7;
+  string warmup = 5;
+  repeated string exercises = 6;
+  string cooldown = 7;
 }
 
 message StoredPodcastExerciseSegmentsProto {

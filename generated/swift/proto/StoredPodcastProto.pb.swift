@@ -1226,46 +1226,15 @@ struct StoredPodcastExercisePlanProto: Sendable {
 
   var selectedCategory: String = String()
 
-  var warmup: StoredPodcastExercisePlanProto.Exercise {
-    get {return _warmup ?? StoredPodcastExercisePlanProto.Exercise()}
-    set {_warmup = newValue}
-  }
-  /// Returns true if `warmup` has been explicitly set.
-  var hasWarmup: Bool {return self._warmup != nil}
-  /// Clears the value of `warmup`. Subsequent reads from it will return its default value.
-  mutating func clearWarmup() {self._warmup = nil}
+  var warmup: String = String()
 
-  var exercises: [StoredPodcastExercisePlanProto.Exercise] = []
+  var exercises: [String] = []
 
-  var cooldown: StoredPodcastExercisePlanProto.Exercise {
-    get {return _cooldown ?? StoredPodcastExercisePlanProto.Exercise()}
-    set {_cooldown = newValue}
-  }
-  /// Returns true if `cooldown` has been explicitly set.
-  var hasCooldown: Bool {return self._cooldown != nil}
-  /// Clears the value of `cooldown`. Subsequent reads from it will return its default value.
-  mutating func clearCooldown() {self._cooldown = nil}
+  var cooldown: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  struct Exercise: Sendable {
-    // SwiftProtobuf.Message conformance is added in an extension below. See the
-    // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-    // methods supported on all messages.
-
-    var title: String = String()
-
-    var plan: String = String()
-
-    var unknownFields = SwiftProtobuf.UnknownStorage()
-
-    init() {}
-  }
-
   init() {}
-
-  fileprivate var _warmup: StoredPodcastExercisePlanProto.Exercise? = nil
-  fileprivate var _cooldown: StoredPodcastExercisePlanProto.Exercise? = nil
 }
 
 struct StoredPodcastExerciseSegmentsProto: Sendable {
@@ -3401,19 +3370,15 @@ extension StoredPodcastExercisePlanProto: SwiftProtobuf.Message, SwiftProtobuf._
       case 2: try { try decoder.decodeSingularStringField(value: &self.ideas) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.reasoning) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self.selectedCategory) }()
-      case 5: try { try decoder.decodeSingularMessageField(value: &self._warmup) }()
-      case 6: try { try decoder.decodeRepeatedMessageField(value: &self.exercises) }()
-      case 7: try { try decoder.decodeSingularMessageField(value: &self._cooldown) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.warmup) }()
+      case 6: try { try decoder.decodeRepeatedStringField(value: &self.exercises) }()
+      case 7: try { try decoder.decodeSingularStringField(value: &self.cooldown) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every if/case branch local when no optimizations
-    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.title.isEmpty {
       try visitor.visitSingularStringField(value: self.title, fieldNumber: 1)
     }
@@ -3426,15 +3391,15 @@ extension StoredPodcastExercisePlanProto: SwiftProtobuf.Message, SwiftProtobuf._
     if !self.selectedCategory.isEmpty {
       try visitor.visitSingularStringField(value: self.selectedCategory, fieldNumber: 4)
     }
-    try { if let v = self._warmup {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
-    } }()
-    if !self.exercises.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.exercises, fieldNumber: 6)
+    if !self.warmup.isEmpty {
+      try visitor.visitSingularStringField(value: self.warmup, fieldNumber: 5)
     }
-    try { if let v = self._cooldown {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
-    } }()
+    if !self.exercises.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.exercises, fieldNumber: 6)
+    }
+    if !self.cooldown.isEmpty {
+      try visitor.visitSingularStringField(value: self.cooldown, fieldNumber: 7)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -3443,47 +3408,9 @@ extension StoredPodcastExercisePlanProto: SwiftProtobuf.Message, SwiftProtobuf._
     if lhs.ideas != rhs.ideas {return false}
     if lhs.reasoning != rhs.reasoning {return false}
     if lhs.selectedCategory != rhs.selectedCategory {return false}
-    if lhs._warmup != rhs._warmup {return false}
+    if lhs.warmup != rhs.warmup {return false}
     if lhs.exercises != rhs.exercises {return false}
-    if lhs._cooldown != rhs._cooldown {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension StoredPodcastExercisePlanProto.Exercise: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = StoredPodcastExercisePlanProto.protoMessageName + ".Exercise"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "title"),
-    2: .same(proto: "plan"),
-  ]
-
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.title) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.plan) }()
-      default: break
-      }
-    }
-  }
-
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.title.isEmpty {
-      try visitor.visitSingularStringField(value: self.title, fieldNumber: 1)
-    }
-    if !self.plan.isEmpty {
-      try visitor.visitSingularStringField(value: self.plan, fieldNumber: 2)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  static func ==(lhs: StoredPodcastExercisePlanProto.Exercise, rhs: StoredPodcastExercisePlanProto.Exercise) -> Bool {
-    if lhs.title != rhs.title {return false}
-    if lhs.plan != rhs.plan {return false}
+    if lhs.cooldown != rhs.cooldown {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

@@ -751,30 +751,17 @@ export interface StoredPodcastExercisePlanProto {
      */
     selectedCategory: string;
     /**
-     * @generated from protobuf field: StoredPodcastExercisePlanProto.Exercise warmup = 5;
+     * @generated from protobuf field: string warmup = 5;
      */
-    warmup?: StoredPodcastExercisePlanProto_Exercise;
+    warmup: string;
     /**
-     * @generated from protobuf field: repeated StoredPodcastExercisePlanProto.Exercise exercises = 6;
+     * @generated from protobuf field: repeated string exercises = 6;
      */
-    exercises: StoredPodcastExercisePlanProto_Exercise[];
+    exercises: string[];
     /**
-     * @generated from protobuf field: StoredPodcastExercisePlanProto.Exercise cooldown = 7;
+     * @generated from protobuf field: string cooldown = 7;
      */
-    cooldown?: StoredPodcastExercisePlanProto_Exercise;
-}
-/**
- * @generated from protobuf message StoredPodcastExercisePlanProto.Exercise
- */
-export interface StoredPodcastExercisePlanProto_Exercise {
-    /**
-     * @generated from protobuf field: string title = 1;
-     */
-    title: string;
-    /**
-     * @generated from protobuf field: string plan = 2;
-     */
-    plan: string;
+    cooldown: string;
 }
 /**
  * @generated from protobuf message StoredPodcastExerciseSegmentsProto
@@ -3320,9 +3307,9 @@ class StoredPodcastExercisePlanProto$Type extends MessageType<StoredPodcastExerc
             { no: 2, name: "ideas", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "reasoning", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "selected_category", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "warmup", kind: "message", T: () => StoredPodcastExercisePlanProto_Exercise },
-            { no: 6, name: "exercises", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastExercisePlanProto_Exercise },
-            { no: 7, name: "cooldown", kind: "message", T: () => StoredPodcastExercisePlanProto_Exercise }
+            { no: 5, name: "warmup", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "exercises", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
+            { no: 7, name: "cooldown", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastExercisePlanProto>): StoredPodcastExercisePlanProto {
@@ -3331,7 +3318,9 @@ class StoredPodcastExercisePlanProto$Type extends MessageType<StoredPodcastExerc
         message.ideas = "";
         message.reasoning = "";
         message.selectedCategory = "";
+        message.warmup = "";
         message.exercises = [];
+        message.cooldown = "";
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastExercisePlanProto>(this, message, value);
         return message;
@@ -3353,14 +3342,14 @@ class StoredPodcastExercisePlanProto$Type extends MessageType<StoredPodcastExerc
                 case /* string selected_category */ 4:
                     message.selectedCategory = reader.string();
                     break;
-                case /* StoredPodcastExercisePlanProto.Exercise warmup */ 5:
-                    message.warmup = StoredPodcastExercisePlanProto_Exercise.internalBinaryRead(reader, reader.uint32(), options, message.warmup);
+                case /* string warmup */ 5:
+                    message.warmup = reader.string();
                     break;
-                case /* repeated StoredPodcastExercisePlanProto.Exercise exercises */ 6:
-                    message.exercises.push(StoredPodcastExercisePlanProto_Exercise.internalBinaryRead(reader, reader.uint32(), options));
+                case /* repeated string exercises */ 6:
+                    message.exercises.push(reader.string());
                     break;
-                case /* StoredPodcastExercisePlanProto.Exercise cooldown */ 7:
-                    message.cooldown = StoredPodcastExercisePlanProto_Exercise.internalBinaryRead(reader, reader.uint32(), options, message.cooldown);
+                case /* string cooldown */ 7:
+                    message.cooldown = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -3386,15 +3375,15 @@ class StoredPodcastExercisePlanProto$Type extends MessageType<StoredPodcastExerc
         /* string selected_category = 4; */
         if (message.selectedCategory !== "")
             writer.tag(4, WireType.LengthDelimited).string(message.selectedCategory);
-        /* StoredPodcastExercisePlanProto.Exercise warmup = 5; */
-        if (message.warmup)
-            StoredPodcastExercisePlanProto_Exercise.internalBinaryWrite(message.warmup, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
-        /* repeated StoredPodcastExercisePlanProto.Exercise exercises = 6; */
+        /* string warmup = 5; */
+        if (message.warmup !== "")
+            writer.tag(5, WireType.LengthDelimited).string(message.warmup);
+        /* repeated string exercises = 6; */
         for (let i = 0; i < message.exercises.length; i++)
-            StoredPodcastExercisePlanProto_Exercise.internalBinaryWrite(message.exercises[i], writer.tag(6, WireType.LengthDelimited).fork(), options).join();
-        /* StoredPodcastExercisePlanProto.Exercise cooldown = 7; */
-        if (message.cooldown)
-            StoredPodcastExercisePlanProto_Exercise.internalBinaryWrite(message.cooldown, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+            writer.tag(6, WireType.LengthDelimited).string(message.exercises[i]);
+        /* string cooldown = 7; */
+        if (message.cooldown !== "")
+            writer.tag(7, WireType.LengthDelimited).string(message.cooldown);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -3405,61 +3394,6 @@ class StoredPodcastExercisePlanProto$Type extends MessageType<StoredPodcastExerc
  * @generated MessageType for protobuf message StoredPodcastExercisePlanProto
  */
 export const StoredPodcastExercisePlanProto = new StoredPodcastExercisePlanProto$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class StoredPodcastExercisePlanProto_Exercise$Type extends MessageType<StoredPodcastExercisePlanProto_Exercise> {
-    constructor() {
-        super("StoredPodcastExercisePlanProto.Exercise", [
-            { no: 1, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "plan", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
-        ]);
-    }
-    create(value?: PartialMessage<StoredPodcastExercisePlanProto_Exercise>): StoredPodcastExercisePlanProto_Exercise {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.title = "";
-        message.plan = "";
-        if (value !== undefined)
-            reflectionMergePartial<StoredPodcastExercisePlanProto_Exercise>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredPodcastExercisePlanProto_Exercise): StoredPodcastExercisePlanProto_Exercise {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string title */ 1:
-                    message.title = reader.string();
-                    break;
-                case /* string plan */ 2:
-                    message.plan = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: StoredPodcastExercisePlanProto_Exercise, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string title = 1; */
-        if (message.title !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.title);
-        /* string plan = 2; */
-        if (message.plan !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.plan);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message StoredPodcastExercisePlanProto.Exercise
- */
-export const StoredPodcastExercisePlanProto_Exercise = new StoredPodcastExercisePlanProto_Exercise$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class StoredPodcastExerciseSegmentsProto$Type extends MessageType<StoredPodcastExerciseSegmentsProto> {
     constructor() {
