@@ -762,6 +762,10 @@ export interface StoredPodcastExercisePlanProto {
      * @generated from protobuf field: string cooldown = 7;
      */
     cooldown: string;
+    /**
+     * @generated from protobuf field: string llm_request_id = 100;
+     */
+    llmRequestId: string;
 }
 /**
  * @generated from protobuf message StoredPodcastExerciseSegmentsProto
@@ -3309,7 +3313,8 @@ class StoredPodcastExercisePlanProto$Type extends MessageType<StoredPodcastExerc
             { no: 4, name: "selected_category", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "warmup", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 6, name: "exercises", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
-            { no: 7, name: "cooldown", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 7, name: "cooldown", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 100, name: "llm_request_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastExercisePlanProto>): StoredPodcastExercisePlanProto {
@@ -3321,6 +3326,7 @@ class StoredPodcastExercisePlanProto$Type extends MessageType<StoredPodcastExerc
         message.warmup = "";
         message.exercises = [];
         message.cooldown = "";
+        message.llmRequestId = "";
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastExercisePlanProto>(this, message, value);
         return message;
@@ -3350,6 +3356,9 @@ class StoredPodcastExercisePlanProto$Type extends MessageType<StoredPodcastExerc
                     break;
                 case /* string cooldown */ 7:
                     message.cooldown = reader.string();
+                    break;
+                case /* string llm_request_id */ 100:
+                    message.llmRequestId = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -3384,6 +3393,9 @@ class StoredPodcastExercisePlanProto$Type extends MessageType<StoredPodcastExerc
         /* string cooldown = 7; */
         if (message.cooldown !== "")
             writer.tag(7, WireType.LengthDelimited).string(message.cooldown);
+        /* string llm_request_id = 100; */
+        if (message.llmRequestId !== "")
+            writer.tag(100, WireType.LengthDelimited).string(message.llmRequestId);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

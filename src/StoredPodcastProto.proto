@@ -329,6 +329,8 @@ message StoredPodcastExercisePlanProto {
   string warmup = 5;
   repeated string exercises = 6;
   string cooldown = 7;
+
+  string llm_request_id = 100;
 }
 
 message StoredPodcastExerciseSegmentsProto {

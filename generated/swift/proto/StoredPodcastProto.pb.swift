@@ -1232,6 +1232,8 @@ struct StoredPodcastExercisePlanProto: Sendable {
 
   var cooldown: String = String()
 
+  var llmRequestID: String = String()
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -3358,6 +3360,7 @@ extension StoredPodcastExercisePlanProto: SwiftProtobuf.Message, SwiftProtobuf._
     5: .same(proto: "warmup"),
     6: .same(proto: "exercises"),
     7: .same(proto: "cooldown"),
+    100: .standard(proto: "llm_request_id"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3373,6 +3376,7 @@ extension StoredPodcastExercisePlanProto: SwiftProtobuf.Message, SwiftProtobuf._
       case 5: try { try decoder.decodeSingularStringField(value: &self.warmup) }()
       case 6: try { try decoder.decodeRepeatedStringField(value: &self.exercises) }()
       case 7: try { try decoder.decodeSingularStringField(value: &self.cooldown) }()
+      case 100: try { try decoder.decodeSingularStringField(value: &self.llmRequestID) }()
       default: break
       }
     }
@@ -3400,6 +3404,9 @@ extension StoredPodcastExercisePlanProto: SwiftProtobuf.Message, SwiftProtobuf._
     if !self.cooldown.isEmpty {
       try visitor.visitSingularStringField(value: self.cooldown, fieldNumber: 7)
     }
+    if !self.llmRequestID.isEmpty {
+      try visitor.visitSingularStringField(value: self.llmRequestID, fieldNumber: 100)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -3411,6 +3418,7 @@ extension StoredPodcastExercisePlanProto: SwiftProtobuf.Message, SwiftProtobuf._
     if lhs.warmup != rhs.warmup {return false}
     if lhs.exercises != rhs.exercises {return false}
     if lhs.cooldown != rhs.cooldown {return false}
+    if lhs.llmRequestID != rhs.llmRequestID {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
