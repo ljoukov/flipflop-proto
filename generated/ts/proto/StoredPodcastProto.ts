@@ -729,6 +729,18 @@ export interface StoredPodcastExerciseProto {
      * @generated from protobuf field: StoredPodcastExercisePlanProto plan = 1;
      */
     plan?: StoredPodcastExercisePlanProto;
+    /**
+     * @generated from protobuf field: StoredPodcastExerciseSectionProto warmup = 2;
+     */
+    warmup?: StoredPodcastExerciseSectionProto;
+    /**
+     * @generated from protobuf field: repeated StoredPodcastExerciseSectionProto exercises = 3;
+     */
+    exercises: StoredPodcastExerciseSectionProto[];
+    /**
+     * @generated from protobuf field: StoredPodcastExerciseSectionProto cooldown = 4;
+     */
+    cooldown?: StoredPodcastExerciseSectionProto;
 }
 /**
  * @generated from protobuf message StoredPodcastExercisePlanProto
@@ -766,6 +778,15 @@ export interface StoredPodcastExercisePlanProto {
      * @generated from protobuf field: string llm_request_id = 100;
      */
     llmRequestId: string;
+}
+/**
+ * @generated from protobuf message StoredPodcastExerciseSectionProto
+ */
+export interface StoredPodcastExerciseSectionProto {
+    /**
+     * @generated from protobuf field: repeated StoredPodcastSpokenSegmentProto spoken_segments = 2;
+     */
+    spokenSegments: StoredPodcastSpokenSegmentProto[];
 }
 /**
  * @generated from protobuf message StoredPodcastExerciseSegmentsProto
@@ -3261,11 +3282,15 @@ export const StoredPodcastRoutineStepProto = new StoredPodcastRoutineStepProto$T
 class StoredPodcastExerciseProto$Type extends MessageType<StoredPodcastExerciseProto> {
     constructor() {
         super("StoredPodcastExerciseProto", [
-            { no: 1, name: "plan", kind: "message", T: () => StoredPodcastExercisePlanProto }
+            { no: 1, name: "plan", kind: "message", T: () => StoredPodcastExercisePlanProto },
+            { no: 2, name: "warmup", kind: "message", T: () => StoredPodcastExerciseSectionProto },
+            { no: 3, name: "exercises", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastExerciseSectionProto },
+            { no: 4, name: "cooldown", kind: "message", T: () => StoredPodcastExerciseSectionProto }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastExerciseProto>): StoredPodcastExerciseProto {
         const message = globalThis.Object.create((this.messagePrototype!));
+        message.exercises = [];
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastExerciseProto>(this, message, value);
         return message;
@@ -3277,6 +3302,15 @@ class StoredPodcastExerciseProto$Type extends MessageType<StoredPodcastExerciseP
             switch (fieldNo) {
                 case /* StoredPodcastExercisePlanProto plan */ 1:
                     message.plan = StoredPodcastExercisePlanProto.internalBinaryRead(reader, reader.uint32(), options, message.plan);
+                    break;
+                case /* StoredPodcastExerciseSectionProto warmup */ 2:
+                    message.warmup = StoredPodcastExerciseSectionProto.internalBinaryRead(reader, reader.uint32(), options, message.warmup);
+                    break;
+                case /* repeated StoredPodcastExerciseSectionProto exercises */ 3:
+                    message.exercises.push(StoredPodcastExerciseSectionProto.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* StoredPodcastExerciseSectionProto cooldown */ 4:
+                    message.cooldown = StoredPodcastExerciseSectionProto.internalBinaryRead(reader, reader.uint32(), options, message.cooldown);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -3293,6 +3327,15 @@ class StoredPodcastExerciseProto$Type extends MessageType<StoredPodcastExerciseP
         /* StoredPodcastExercisePlanProto plan = 1; */
         if (message.plan)
             StoredPodcastExercisePlanProto.internalBinaryWrite(message.plan, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* StoredPodcastExerciseSectionProto warmup = 2; */
+        if (message.warmup)
+            StoredPodcastExerciseSectionProto.internalBinaryWrite(message.warmup, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* repeated StoredPodcastExerciseSectionProto exercises = 3; */
+        for (let i = 0; i < message.exercises.length; i++)
+            StoredPodcastExerciseSectionProto.internalBinaryWrite(message.exercises[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* StoredPodcastExerciseSectionProto cooldown = 4; */
+        if (message.cooldown)
+            StoredPodcastExerciseSectionProto.internalBinaryWrite(message.cooldown, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -3406,6 +3449,53 @@ class StoredPodcastExercisePlanProto$Type extends MessageType<StoredPodcastExerc
  * @generated MessageType for protobuf message StoredPodcastExercisePlanProto
  */
 export const StoredPodcastExercisePlanProto = new StoredPodcastExercisePlanProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class StoredPodcastExerciseSectionProto$Type extends MessageType<StoredPodcastExerciseSectionProto> {
+    constructor() {
+        super("StoredPodcastExerciseSectionProto", [
+            { no: 2, name: "spoken_segments", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastSpokenSegmentProto }
+        ]);
+    }
+    create(value?: PartialMessage<StoredPodcastExerciseSectionProto>): StoredPodcastExerciseSectionProto {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.spokenSegments = [];
+        if (value !== undefined)
+            reflectionMergePartial<StoredPodcastExerciseSectionProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredPodcastExerciseSectionProto): StoredPodcastExerciseSectionProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated StoredPodcastSpokenSegmentProto spoken_segments */ 2:
+                    message.spokenSegments.push(StoredPodcastSpokenSegmentProto.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: StoredPodcastExerciseSectionProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated StoredPodcastSpokenSegmentProto spoken_segments = 2; */
+        for (let i = 0; i < message.spokenSegments.length; i++)
+            StoredPodcastSpokenSegmentProto.internalBinaryWrite(message.spokenSegments[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message StoredPodcastExerciseSectionProto
+ */
+export const StoredPodcastExerciseSectionProto = new StoredPodcastExerciseSectionProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class StoredPodcastExerciseSegmentsProto$Type extends MessageType<StoredPodcastExerciseSegmentsProto> {
     constructor() {

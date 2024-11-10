@@ -319,6 +319,9 @@ enum StoredPodcastTypeProto {
 
 message StoredPodcastExerciseProto {
   StoredPodcastExercisePlanProto plan = 1;
+  StoredPodcastExerciseSectionProto warmup = 2;
+  repeated StoredPodcastExerciseSectionProto exercises = 3;
+  StoredPodcastExerciseSectionProto cooldown = 4;
 }
 
 message StoredPodcastExercisePlanProto {
@@ -331,6 +334,10 @@ message StoredPodcastExercisePlanProto {
   string cooldown = 7;
 
   string llm_request_id = 100;
+}
+
+message StoredPodcastExerciseSectionProto {
+  repeated StoredPodcastSpokenSegmentProto spoken_segments = 2;
 }
 
 message StoredPodcastExerciseSegmentsProto {
