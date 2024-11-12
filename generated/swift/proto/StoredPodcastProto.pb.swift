@@ -1238,6 +1238,11 @@ struct StoredPodcastExerciseProto: @unchecked Sendable {
   /// Clears the value of `style`. Subsequent reads from it will return its default value.
   mutating func clearStyle() {_uniqueStorage()._style = nil}
 
+  var backgroundsLlmRequestID: String {
+    get {return _storage._backgroundsLlmRequestID}
+    set {_uniqueStorage()._backgroundsLlmRequestID = newValue}
+  }
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -1347,8 +1352,6 @@ struct StoredPodcastExerciseSectionBackgroundProto: Sendable {
   var imagePrompt: String = String()
 
   var imageKey: String = String()
-
-  var imageLlmRequestID: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -3402,6 +3405,7 @@ extension StoredPodcastExerciseProto: SwiftProtobuf.Message, SwiftProtobuf._Mess
     3: .same(proto: "exercises"),
     4: .same(proto: "cooldown"),
     5: .same(proto: "style"),
+    100: .standard(proto: "backgrounds_llm_request_id"),
   ]
 
   fileprivate class _StorageClass {
@@ -3410,6 +3414,7 @@ extension StoredPodcastExerciseProto: SwiftProtobuf.Message, SwiftProtobuf._Mess
     var _exercises: [StoredPodcastExerciseSectionProto] = []
     var _cooldown: StoredPodcastExerciseSectionProto? = nil
     var _style: StoredPodcastStyleProto? = nil
+    var _backgroundsLlmRequestID: String = String()
 
     #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
@@ -3429,6 +3434,7 @@ extension StoredPodcastExerciseProto: SwiftProtobuf.Message, SwiftProtobuf._Mess
       _exercises = source._exercises
       _cooldown = source._cooldown
       _style = source._style
+      _backgroundsLlmRequestID = source._backgroundsLlmRequestID
     }
   }
 
@@ -3452,6 +3458,7 @@ extension StoredPodcastExerciseProto: SwiftProtobuf.Message, SwiftProtobuf._Mess
         case 3: try { try decoder.decodeRepeatedMessageField(value: &_storage._exercises) }()
         case 4: try { try decoder.decodeSingularMessageField(value: &_storage._cooldown) }()
         case 5: try { try decoder.decodeSingularMessageField(value: &_storage._style) }()
+        case 100: try { try decoder.decodeSingularStringField(value: &_storage._backgroundsLlmRequestID) }()
         default: break
         }
       }
@@ -3479,6 +3486,9 @@ extension StoredPodcastExerciseProto: SwiftProtobuf.Message, SwiftProtobuf._Mess
       try { if let v = _storage._style {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
       } }()
+      if !_storage._backgroundsLlmRequestID.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._backgroundsLlmRequestID, fieldNumber: 100)
+      }
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -3493,6 +3503,7 @@ extension StoredPodcastExerciseProto: SwiftProtobuf.Message, SwiftProtobuf._Mess
         if _storage._exercises != rhs_storage._exercises {return false}
         if _storage._cooldown != rhs_storage._cooldown {return false}
         if _storage._style != rhs_storage._style {return false}
+        if _storage._backgroundsLlmRequestID != rhs_storage._backgroundsLlmRequestID {return false}
         return true
       }
       if !storagesAreEqual {return false}
@@ -3717,7 +3728,6 @@ extension StoredPodcastExerciseSectionBackgroundProto: SwiftProtobuf.Message, Sw
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "image_prompt"),
     2: .standard(proto: "image_key"),
-    100: .standard(proto: "image_llm_request_id"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3728,7 +3738,6 @@ extension StoredPodcastExerciseSectionBackgroundProto: SwiftProtobuf.Message, Sw
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.imagePrompt) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.imageKey) }()
-      case 100: try { try decoder.decodeSingularStringField(value: &self.imageLlmRequestID) }()
       default: break
       }
     }
@@ -3741,16 +3750,12 @@ extension StoredPodcastExerciseSectionBackgroundProto: SwiftProtobuf.Message, Sw
     if !self.imageKey.isEmpty {
       try visitor.visitSingularStringField(value: self.imageKey, fieldNumber: 2)
     }
-    if !self.imageLlmRequestID.isEmpty {
-      try visitor.visitSingularStringField(value: self.imageLlmRequestID, fieldNumber: 100)
-    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: StoredPodcastExerciseSectionBackgroundProto, rhs: StoredPodcastExerciseSectionBackgroundProto) -> Bool {
     if lhs.imagePrompt != rhs.imagePrompt {return false}
     if lhs.imageKey != rhs.imageKey {return false}
-    if lhs.imageLlmRequestID != rhs.imageLlmRequestID {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

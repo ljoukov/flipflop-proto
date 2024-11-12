@@ -323,6 +323,8 @@ message StoredPodcastExerciseProto {
   repeated StoredPodcastExerciseSectionProto exercises = 3;
   StoredPodcastExerciseSectionProto cooldown = 4;
   StoredPodcastStyleProto style = 5;
+
+  string backgrounds_llm_request_id = 100;
 }
 
 message StoredPodcastExercisePlanProto {
@@ -354,7 +356,6 @@ message StoredPodcastExerciseSegmentProto {
 message StoredPodcastExerciseSectionBackgroundProto {
   string image_prompt = 1;
   string image_key = 2;
-  string image_llm_request_id = 100;
 }
 
 message StoredPodcastSpokenSegmentProto {

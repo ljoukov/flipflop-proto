@@ -743,6 +743,10 @@ export interface StoredPodcastExerciseProto {
      * @generated from protobuf field: StoredPodcastStyleProto style = 5;
      */
     style?: StoredPodcastStyleProto;
+    /**
+     * @generated from protobuf field: string backgrounds_llm_request_id = 100;
+     */
+    backgroundsLlmRequestId: string;
 }
 /**
  * @generated from protobuf message StoredPodcastExercisePlanProto
@@ -839,10 +843,6 @@ export interface StoredPodcastExerciseSectionBackgroundProto {
      * @generated from protobuf field: string image_key = 2;
      */
     imageKey: string;
-    /**
-     * @generated from protobuf field: string image_llm_request_id = 100;
-     */
-    imageLlmRequestId: string;
 }
 /**
  * @generated from protobuf message StoredPodcastSpokenSegmentProto
@@ -3321,12 +3321,14 @@ class StoredPodcastExerciseProto$Type extends MessageType<StoredPodcastExerciseP
             { no: 2, name: "warmup", kind: "message", T: () => StoredPodcastExerciseSectionProto },
             { no: 3, name: "exercises", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastExerciseSectionProto },
             { no: 4, name: "cooldown", kind: "message", T: () => StoredPodcastExerciseSectionProto },
-            { no: 5, name: "style", kind: "message", T: () => StoredPodcastStyleProto }
+            { no: 5, name: "style", kind: "message", T: () => StoredPodcastStyleProto },
+            { no: 100, name: "backgrounds_llm_request_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastExerciseProto>): StoredPodcastExerciseProto {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.exercises = [];
+        message.backgroundsLlmRequestId = "";
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastExerciseProto>(this, message, value);
         return message;
@@ -3350,6 +3352,9 @@ class StoredPodcastExerciseProto$Type extends MessageType<StoredPodcastExerciseP
                     break;
                 case /* StoredPodcastStyleProto style */ 5:
                     message.style = StoredPodcastStyleProto.internalBinaryRead(reader, reader.uint32(), options, message.style);
+                    break;
+                case /* string backgrounds_llm_request_id */ 100:
+                    message.backgroundsLlmRequestId = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -3378,6 +3383,9 @@ class StoredPodcastExerciseProto$Type extends MessageType<StoredPodcastExerciseP
         /* StoredPodcastStyleProto style = 5; */
         if (message.style)
             StoredPodcastStyleProto.internalBinaryWrite(message.style, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        /* string backgrounds_llm_request_id = 100; */
+        if (message.backgroundsLlmRequestId !== "")
+            writer.tag(100, WireType.LengthDelimited).string(message.backgroundsLlmRequestId);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -3628,15 +3636,13 @@ class StoredPodcastExerciseSectionBackgroundProto$Type extends MessageType<Store
     constructor() {
         super("StoredPodcastExerciseSectionBackgroundProto", [
             { no: 1, name: "image_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "image_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 100, name: "image_llm_request_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "image_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastExerciseSectionBackgroundProto>): StoredPodcastExerciseSectionBackgroundProto {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.imagePrompt = "";
         message.imageKey = "";
-        message.imageLlmRequestId = "";
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastExerciseSectionBackgroundProto>(this, message, value);
         return message;
@@ -3651,9 +3657,6 @@ class StoredPodcastExerciseSectionBackgroundProto$Type extends MessageType<Store
                     break;
                 case /* string image_key */ 2:
                     message.imageKey = reader.string();
-                    break;
-                case /* string image_llm_request_id */ 100:
-                    message.imageLlmRequestId = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -3673,9 +3676,6 @@ class StoredPodcastExerciseSectionBackgroundProto$Type extends MessageType<Store
         /* string image_key = 2; */
         if (message.imageKey !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.imageKey);
-        /* string image_llm_request_id = 100; */
-        if (message.imageLlmRequestId !== "")
-            writer.tag(100, WireType.LengthDelimited).string(message.imageLlmRequestId);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
