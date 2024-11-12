@@ -850,11 +850,15 @@ export interface StoredPodcastExerciseVisualTextProto {
  */
 export interface StoredPodcastExerciseVisualRepsProto {
     /**
-     * @generated from protobuf field: int32 rep_number = 1;
+     * @generated from protobuf field: StoredPodcastExerciseVisualRepsProto.Type type = 1;
+     */
+    type: StoredPodcastExerciseVisualRepsProto_Type;
+    /**
+     * @generated from protobuf field: int32 rep_number = 2;
      */
     repNumber: number;
     /**
-     * @generated from protobuf field: int32 rep_total = 2;
+     * @generated from protobuf field: int32 rep_total = 3;
      */
     repTotal: number;
 }
@@ -3660,12 +3664,14 @@ export const StoredPodcastExerciseVisualTextProto = new StoredPodcastExerciseVis
 class StoredPodcastExerciseVisualRepsProto$Type extends MessageType<StoredPodcastExerciseVisualRepsProto> {
     constructor() {
         super("StoredPodcastExerciseVisualRepsProto", [
-            { no: 1, name: "rep_number", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 2, name: "rep_total", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
+            { no: 1, name: "type", kind: "enum", T: () => ["StoredPodcastExerciseVisualRepsProto.Type", StoredPodcastExerciseVisualRepsProto_Type] },
+            { no: 2, name: "rep_number", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 3, name: "rep_total", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastExerciseVisualRepsProto>): StoredPodcastExerciseVisualRepsProto {
         const message = globalThis.Object.create((this.messagePrototype!));
+        message.type = 0;
         message.repNumber = 0;
         message.repTotal = 0;
         if (value !== undefined)
@@ -3677,10 +3683,13 @@ class StoredPodcastExerciseVisualRepsProto$Type extends MessageType<StoredPodcas
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* int32 rep_number */ 1:
+                case /* StoredPodcastExerciseVisualRepsProto.Type type */ 1:
+                    message.type = reader.int32();
+                    break;
+                case /* int32 rep_number */ 2:
                     message.repNumber = reader.int32();
                     break;
-                case /* int32 rep_total */ 2:
+                case /* int32 rep_total */ 3:
                     message.repTotal = reader.int32();
                     break;
                 default:
@@ -3695,12 +3704,15 @@ class StoredPodcastExerciseVisualRepsProto$Type extends MessageType<StoredPodcas
         return message;
     }
     internalBinaryWrite(message: StoredPodcastExerciseVisualRepsProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* int32 rep_number = 1; */
+        /* StoredPodcastExerciseVisualRepsProto.Type type = 1; */
+        if (message.type !== 0)
+            writer.tag(1, WireType.Varint).int32(message.type);
+        /* int32 rep_number = 2; */
         if (message.repNumber !== 0)
-            writer.tag(1, WireType.Varint).int32(message.repNumber);
-        /* int32 rep_total = 2; */
+            writer.tag(2, WireType.Varint).int32(message.repNumber);
+        /* int32 rep_total = 3; */
         if (message.repTotal !== 0)
-            writer.tag(2, WireType.Varint).int32(message.repTotal);
+            writer.tag(3, WireType.Varint).int32(message.repTotal);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

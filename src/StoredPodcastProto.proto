@@ -366,6 +366,7 @@ message StoredPodcastExerciseVisualRepsProto {
     END = 2;
     COUNTER = 3;
   }
-  int32 rep_number = 1;
-  int32 rep_total = 2;
+  Type type = 1;
+  int32 rep_number = 2;
+  int32 rep_total = 3;
 }

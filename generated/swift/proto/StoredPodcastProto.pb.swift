@@ -1368,6 +1368,8 @@ struct StoredPodcastExerciseVisualRepsProto: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  var type: StoredPodcastExerciseVisualRepsProto.TypeEnum = .undefined
+
   var repNumber: Int32 = 0
 
   var repTotal: Int32 = 0
@@ -3646,8 +3648,9 @@ extension StoredPodcastExerciseVisualTextProto: SwiftProtobuf.Message, SwiftProt
 extension StoredPodcastExerciseVisualRepsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "StoredPodcastExerciseVisualRepsProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "rep_number"),
-    2: .standard(proto: "rep_total"),
+    1: .same(proto: "type"),
+    2: .standard(proto: "rep_number"),
+    3: .standard(proto: "rep_total"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3656,24 +3659,29 @@ extension StoredPodcastExerciseVisualRepsProto: SwiftProtobuf.Message, SwiftProt
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularInt32Field(value: &self.repNumber) }()
-      case 2: try { try decoder.decodeSingularInt32Field(value: &self.repTotal) }()
+      case 1: try { try decoder.decodeSingularEnumField(value: &self.type) }()
+      case 2: try { try decoder.decodeSingularInt32Field(value: &self.repNumber) }()
+      case 3: try { try decoder.decodeSingularInt32Field(value: &self.repTotal) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.type != .undefined {
+      try visitor.visitSingularEnumField(value: self.type, fieldNumber: 1)
+    }
     if self.repNumber != 0 {
-      try visitor.visitSingularInt32Field(value: self.repNumber, fieldNumber: 1)
+      try visitor.visitSingularInt32Field(value: self.repNumber, fieldNumber: 2)
     }
     if self.repTotal != 0 {
-      try visitor.visitSingularInt32Field(value: self.repTotal, fieldNumber: 2)
+      try visitor.visitSingularInt32Field(value: self.repTotal, fieldNumber: 3)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: StoredPodcastExerciseVisualRepsProto, rhs: StoredPodcastExerciseVisualRepsProto) -> Bool {
+    if lhs.type != rhs.type {return false}
     if lhs.repNumber != rhs.repNumber {return false}
     if lhs.repTotal != rhs.repTotal {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
