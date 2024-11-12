@@ -1379,7 +1379,7 @@ struct StoredPodcastExerciseVisualRepsProto: Sendable {
   enum TypeEnum: SwiftProtobuf.Enum, Swift.CaseIterable {
     typealias RawValue = Int
     case undefined // = 0
-    case begin // = 1
+    case start // = 1
     case end // = 2
     case counter // = 3
     case UNRECOGNIZED(Int)
@@ -1391,7 +1391,7 @@ struct StoredPodcastExerciseVisualRepsProto: Sendable {
     init?(rawValue: Int) {
       switch rawValue {
       case 0: self = .undefined
-      case 1: self = .begin
+      case 1: self = .start
       case 2: self = .end
       case 3: self = .counter
       default: self = .UNRECOGNIZED(rawValue)
@@ -1401,7 +1401,7 @@ struct StoredPodcastExerciseVisualRepsProto: Sendable {
     var rawValue: Int {
       switch self {
       case .undefined: return 0
-      case .begin: return 1
+      case .start: return 1
       case .end: return 2
       case .counter: return 3
       case .UNRECOGNIZED(let i): return i
@@ -1411,7 +1411,7 @@ struct StoredPodcastExerciseVisualRepsProto: Sendable {
     // The compiler won't synthesize support with the UNRECOGNIZED case.
     static let allCases: [StoredPodcastExerciseVisualRepsProto.TypeEnum] = [
       .undefined,
-      .begin,
+      .start,
       .end,
       .counter,
     ]
@@ -3692,7 +3692,7 @@ extension StoredPodcastExerciseVisualRepsProto: SwiftProtobuf.Message, SwiftProt
 extension StoredPodcastExerciseVisualRepsProto.TypeEnum: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     0: .same(proto: "UNDEFINED"),
-    1: .same(proto: "BEGIN"),
+    1: .same(proto: "START"),
     2: .same(proto: "END"),
     3: .same(proto: "COUNTER"),
   ]

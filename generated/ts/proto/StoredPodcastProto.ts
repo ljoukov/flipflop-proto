@@ -871,9 +871,9 @@ export enum StoredPodcastExerciseVisualRepsProto_Type {
      */
     UNDEFINED = 0,
     /**
-     * @generated from protobuf enum value: BEGIN = 1;
+     * @generated from protobuf enum value: START = 1;
      */
-    BEGIN = 1,
+    START = 1,
     /**
      * @generated from protobuf enum value: END = 2;
      */

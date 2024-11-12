@@ -362,7 +362,7 @@ message StoredPodcastExerciseVisualTextProto {
 message StoredPodcastExerciseVisualRepsProto {
   enum Type {
     UNDEFINED = 0;
-    BEGIN = 1;
+    START = 1;
     END = 2;
     COUNTER = 3;
   }
