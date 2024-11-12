@@ -32,7 +32,7 @@ message StoredPodcastProto {
   StoredPodcastFollowupsProto followups = 14;
 
   StoredPodcastTypeProto podcast_type = 17;
-  StoredPodcastExerciseSegmentsProto exercise_segments = 18;
+  StoredPodcastExerciseProto exercise = 18;
 
   // Debug metadata
   reserved 100;
@@ -337,17 +337,16 @@ message StoredPodcastExercisePlanProto {
 }
 
 message StoredPodcastExerciseSectionProto {
-  repeated StoredPodcastSpokenSegmentProto spoken_segments = 2;
+  repeated StoredPodcastExerciseSegmentProto segments = 1;
   string llm_request_id = 100;
 }
 
-message StoredPodcastExerciseSegmentsProto {
-  repeated StoredPodcastExerciseSegmentProto segments = 1;
-}
-
 message StoredPodcastExerciseSegmentProto {
-  repeated StoredPodcastSpokenSegmentProto spoken_segments = 1;
-  StoredPodcastExerciseVisualProto visual = 2;
+  oneof type {
+    StoredPodcastSpokenSegmentProto spoken_segments = 1;
+    StoredPodcastExerciseVisualRepsProto reps = 2;
+    StoredPodcastExerciseVisualTextProto text = 3;
+  }
 }
 
 message StoredPodcastSpokenSegmentProto {
@@ -356,32 +355,17 @@ message StoredPodcastSpokenSegmentProto {
   google.protobuf.Duration min_duration = 3;
 }
 
-message StoredPodcastExerciseVisualProto {
-  StoredPodcastExerciseVisualRepCounterProto rep_counter = 1;
-  StoredPodcastExerciseVisualTextProto text = 2;
-  StoredPodcastExerciseVisualMovementProto movement = 3;
-  StoredPodcastExerciseVisualTipsProto tips = 4;
-}
-
 message StoredPodcastExerciseVisualTextProto {
   string title = 1;
-  string title_emoji = 2;
 }
 
-message StoredPodcastExerciseVisualMovementProto {
-  PodcastExerciseMovementTypeProto movement_type = 1;
-}
-
-message StoredPodcastExerciseVisualTipsProto {
-  repeated StoredPodcastExerciseVisualTipProto tips = 1;
-}
-
-message StoredPodcastExerciseVisualTipProto {
-  PodcastExerciseTipTypeProto type = 1;
-  string label = 2;
-}
-
-message StoredPodcastExerciseVisualRepCounterProto {
+message StoredPodcastExerciseVisualRepsProto {
+  enum Type {
+    UNDEFINED = 0;
+    BEGIN = 1;
+    END = 2;
+    COUNTER = 3;
+  }
   int32 rep_number = 1;
   int32 rep_total = 2;
 }
