@@ -1278,17 +1278,22 @@ struct StoredPodcastExerciseSectionProto: Sendable {
 
   var segments: [StoredPodcastExerciseSegmentProto] = []
 
-  var imagePrompt: String = String()
-
-  var imageKey: String = String()
+  var background: StoredPodcastExerciseSectionBackgroundProto {
+    get {return _background ?? StoredPodcastExerciseSectionBackgroundProto()}
+    set {_background = newValue}
+  }
+  /// Returns true if `background` has been explicitly set.
+  var hasBackground: Bool {return self._background != nil}
+  /// Clears the value of `background`. Subsequent reads from it will return its default value.
+  mutating func clearBackground() {self._background = nil}
 
   var llmRequestID: String = String()
-
-  var imageLlmRequestID: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
+
+  fileprivate var _background: StoredPodcastExerciseSectionBackgroundProto? = nil
 }
 
 struct StoredPodcastExerciseSegmentProto: Sendable {
@@ -1330,6 +1335,22 @@ struct StoredPodcastExerciseSegmentProto: Sendable {
     case text(StoredPodcastExerciseVisualTextProto)
 
   }
+
+  init() {}
+}
+
+struct StoredPodcastExerciseSectionBackgroundProto: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var imagePrompt: String = String()
+
+  var imageKey: String = String()
+
+  var imageLlmRequestID: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 }
@@ -3559,10 +3580,8 @@ extension StoredPodcastExerciseSectionProto: SwiftProtobuf.Message, SwiftProtobu
   static let protoMessageName: String = "StoredPodcastExerciseSectionProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "segments"),
-    2: .standard(proto: "image_prompt"),
-    3: .standard(proto: "image_key"),
+    2: .same(proto: "background"),
     100: .standard(proto: "llm_request_id"),
-    101: .standard(proto: "image_llm_request_id"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3572,40 +3591,34 @@ extension StoredPodcastExerciseSectionProto: SwiftProtobuf.Message, SwiftProtobu
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeRepeatedMessageField(value: &self.segments) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.imagePrompt) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.imageKey) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._background) }()
       case 100: try { try decoder.decodeSingularStringField(value: &self.llmRequestID) }()
-      case 101: try { try decoder.decodeSingularStringField(value: &self.imageLlmRequestID) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.segments.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.segments, fieldNumber: 1)
     }
-    if !self.imagePrompt.isEmpty {
-      try visitor.visitSingularStringField(value: self.imagePrompt, fieldNumber: 2)
-    }
-    if !self.imageKey.isEmpty {
-      try visitor.visitSingularStringField(value: self.imageKey, fieldNumber: 3)
-    }
+    try { if let v = self._background {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
     if !self.llmRequestID.isEmpty {
       try visitor.visitSingularStringField(value: self.llmRequestID, fieldNumber: 100)
-    }
-    if !self.imageLlmRequestID.isEmpty {
-      try visitor.visitSingularStringField(value: self.imageLlmRequestID, fieldNumber: 101)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: StoredPodcastExerciseSectionProto, rhs: StoredPodcastExerciseSectionProto) -> Bool {
     if lhs.segments != rhs.segments {return false}
-    if lhs.imagePrompt != rhs.imagePrompt {return false}
-    if lhs.imageKey != rhs.imageKey {return false}
+    if lhs._background != rhs._background {return false}
     if lhs.llmRequestID != rhs.llmRequestID {return false}
-    if lhs.imageLlmRequestID != rhs.imageLlmRequestID {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -3694,6 +3707,50 @@ extension StoredPodcastExerciseSegmentProto: SwiftProtobuf.Message, SwiftProtobu
 
   static func ==(lhs: StoredPodcastExerciseSegmentProto, rhs: StoredPodcastExerciseSegmentProto) -> Bool {
     if lhs.type != rhs.type {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension StoredPodcastExerciseSectionBackgroundProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredPodcastExerciseSectionBackgroundProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "image_prompt"),
+    2: .standard(proto: "image_key"),
+    100: .standard(proto: "image_llm_request_id"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.imagePrompt) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.imageKey) }()
+      case 100: try { try decoder.decodeSingularStringField(value: &self.imageLlmRequestID) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.imagePrompt.isEmpty {
+      try visitor.visitSingularStringField(value: self.imagePrompt, fieldNumber: 1)
+    }
+    if !self.imageKey.isEmpty {
+      try visitor.visitSingularStringField(value: self.imageKey, fieldNumber: 2)
+    }
+    if !self.imageLlmRequestID.isEmpty {
+      try visitor.visitSingularStringField(value: self.imageLlmRequestID, fieldNumber: 100)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: StoredPodcastExerciseSectionBackgroundProto, rhs: StoredPodcastExerciseSectionBackgroundProto) -> Bool {
+    if lhs.imagePrompt != rhs.imagePrompt {return false}
+    if lhs.imageKey != rhs.imageKey {return false}
+    if lhs.imageLlmRequestID != rhs.imageLlmRequestID {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

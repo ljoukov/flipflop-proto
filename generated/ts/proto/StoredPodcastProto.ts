@@ -790,21 +790,13 @@ export interface StoredPodcastExerciseSectionProto {
      */
     segments: StoredPodcastExerciseSegmentProto[];
     /**
-     * @generated from protobuf field: string image_prompt = 2;
+     * @generated from protobuf field: StoredPodcastExerciseSectionBackgroundProto background = 2;
      */
-    imagePrompt: string;
-    /**
-     * @generated from protobuf field: string image_key = 3;
-     */
-    imageKey: string;
+    background?: StoredPodcastExerciseSectionBackgroundProto;
     /**
      * @generated from protobuf field: string llm_request_id = 100;
      */
     llmRequestId: string;
-    /**
-     * @generated from protobuf field: string image_llm_request_id = 101;
-     */
-    imageLlmRequestId: string;
 }
 /**
  * @generated from protobuf message StoredPodcastExerciseSegmentProto
@@ -834,6 +826,23 @@ export interface StoredPodcastExerciseSegmentProto {
     } | {
         oneofKind: undefined;
     };
+}
+/**
+ * @generated from protobuf message StoredPodcastExerciseSectionBackgroundProto
+ */
+export interface StoredPodcastExerciseSectionBackgroundProto {
+    /**
+     * @generated from protobuf field: string image_prompt = 1;
+     */
+    imagePrompt: string;
+    /**
+     * @generated from protobuf field: string image_key = 2;
+     */
+    imageKey: string;
+    /**
+     * @generated from protobuf field: string image_llm_request_id = 100;
+     */
+    imageLlmRequestId: string;
 }
 /**
  * @generated from protobuf message StoredPodcastSpokenSegmentProto
@@ -3487,19 +3496,14 @@ class StoredPodcastExerciseSectionProto$Type extends MessageType<StoredPodcastEx
     constructor() {
         super("StoredPodcastExerciseSectionProto", [
             { no: 1, name: "segments", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastExerciseSegmentProto },
-            { no: 2, name: "image_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "image_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 100, name: "llm_request_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 101, name: "image_llm_request_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "background", kind: "message", T: () => StoredPodcastExerciseSectionBackgroundProto },
+            { no: 100, name: "llm_request_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastExerciseSectionProto>): StoredPodcastExerciseSectionProto {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.segments = [];
-        message.imagePrompt = "";
-        message.imageKey = "";
         message.llmRequestId = "";
-        message.imageLlmRequestId = "";
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastExerciseSectionProto>(this, message, value);
         return message;
@@ -3512,17 +3516,11 @@ class StoredPodcastExerciseSectionProto$Type extends MessageType<StoredPodcastEx
                 case /* repeated StoredPodcastExerciseSegmentProto segments */ 1:
                     message.segments.push(StoredPodcastExerciseSegmentProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
-                case /* string image_prompt */ 2:
-                    message.imagePrompt = reader.string();
-                    break;
-                case /* string image_key */ 3:
-                    message.imageKey = reader.string();
+                case /* StoredPodcastExerciseSectionBackgroundProto background */ 2:
+                    message.background = StoredPodcastExerciseSectionBackgroundProto.internalBinaryRead(reader, reader.uint32(), options, message.background);
                     break;
                 case /* string llm_request_id */ 100:
                     message.llmRequestId = reader.string();
-                    break;
-                case /* string image_llm_request_id */ 101:
-                    message.imageLlmRequestId = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -3539,18 +3537,12 @@ class StoredPodcastExerciseSectionProto$Type extends MessageType<StoredPodcastEx
         /* repeated StoredPodcastExerciseSegmentProto segments = 1; */
         for (let i = 0; i < message.segments.length; i++)
             StoredPodcastExerciseSegmentProto.internalBinaryWrite(message.segments[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* string image_prompt = 2; */
-        if (message.imagePrompt !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.imagePrompt);
-        /* string image_key = 3; */
-        if (message.imageKey !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.imageKey);
+        /* StoredPodcastExerciseSectionBackgroundProto background = 2; */
+        if (message.background)
+            StoredPodcastExerciseSectionBackgroundProto.internalBinaryWrite(message.background, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         /* string llm_request_id = 100; */
         if (message.llmRequestId !== "")
             writer.tag(100, WireType.LengthDelimited).string(message.llmRequestId);
-        /* string image_llm_request_id = 101; */
-        if (message.imageLlmRequestId !== "")
-            writer.tag(101, WireType.LengthDelimited).string(message.imageLlmRequestId);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -3631,6 +3623,69 @@ class StoredPodcastExerciseSegmentProto$Type extends MessageType<StoredPodcastEx
  * @generated MessageType for protobuf message StoredPodcastExerciseSegmentProto
  */
 export const StoredPodcastExerciseSegmentProto = new StoredPodcastExerciseSegmentProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class StoredPodcastExerciseSectionBackgroundProto$Type extends MessageType<StoredPodcastExerciseSectionBackgroundProto> {
+    constructor() {
+        super("StoredPodcastExerciseSectionBackgroundProto", [
+            { no: 1, name: "image_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "image_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 100, name: "image_llm_request_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<StoredPodcastExerciseSectionBackgroundProto>): StoredPodcastExerciseSectionBackgroundProto {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.imagePrompt = "";
+        message.imageKey = "";
+        message.imageLlmRequestId = "";
+        if (value !== undefined)
+            reflectionMergePartial<StoredPodcastExerciseSectionBackgroundProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredPodcastExerciseSectionBackgroundProto): StoredPodcastExerciseSectionBackgroundProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string image_prompt */ 1:
+                    message.imagePrompt = reader.string();
+                    break;
+                case /* string image_key */ 2:
+                    message.imageKey = reader.string();
+                    break;
+                case /* string image_llm_request_id */ 100:
+                    message.imageLlmRequestId = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: StoredPodcastExerciseSectionBackgroundProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string image_prompt = 1; */
+        if (message.imagePrompt !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.imagePrompt);
+        /* string image_key = 2; */
+        if (message.imageKey !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.imageKey);
+        /* string image_llm_request_id = 100; */
+        if (message.imageLlmRequestId !== "")
+            writer.tag(100, WireType.LengthDelimited).string(message.imageLlmRequestId);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message StoredPodcastExerciseSectionBackgroundProto
+ */
+export const StoredPodcastExerciseSectionBackgroundProto = new StoredPodcastExerciseSectionBackgroundProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class StoredPodcastSpokenSegmentProto$Type extends MessageType<StoredPodcastSpokenSegmentProto> {
     constructor() {

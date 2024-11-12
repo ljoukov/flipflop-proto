@@ -339,12 +339,8 @@ message StoredPodcastExercisePlanProto {
 
 message StoredPodcastExerciseSectionProto {
   repeated StoredPodcastExerciseSegmentProto segments = 1;
-
-  string image_prompt = 2;
-  string image_key = 3;
-
+  StoredPodcastExerciseSectionBackgroundProto background = 2;
   string llm_request_id = 100;
-  string image_llm_request_id = 101;
 }
 
 message StoredPodcastExerciseSegmentProto {
@@ -353,6 +349,12 @@ message StoredPodcastExerciseSegmentProto {
     StoredPodcastExerciseVisualRepsProto reps = 2;
     StoredPodcastExerciseVisualTextProto text = 3;
   }
+}
+
+message StoredPodcastExerciseSectionBackgroundProto {
+  string image_prompt = 1;
+  string image_key = 2;
+  string image_llm_request_id = 100;
 }
 
 message StoredPodcastSpokenSegmentProto {
