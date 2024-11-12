@@ -360,6 +360,13 @@ message StoredPodcastExerciseVisualTextProto {
 }
 
 message StoredPodcastExerciseVisualRepsProto {
+  oneof type {
+    StoredPodcastExerciseVisualRepsMarkerProto marker = 1;
+    StoredPodcastExerciseVisualRepsCounterProto counter = 2;
+  }
+}
+
+message StoredPodcastExerciseVisualRepsMarkerProto {
   enum Type {
     UNDEFINED = 0;
     START = 1;
@@ -367,6 +374,10 @@ message StoredPodcastExerciseVisualRepsProto {
     COUNTER = 3;
   }
   Type type = 1;
+  int32 rep_total = 2;
+}
+
+message StoredPodcastExerciseVisualRepsCounterProto {
   int32 rep_number = 2;
   int32 rep_total = 3;
 }
