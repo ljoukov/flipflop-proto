@@ -1206,9 +1206,19 @@ struct StoredPodcastLLMRequestsProtos: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  var pointsLlmRequestID: String = String()
+
   var planLlmRequestID: String = String()
 
+  var transcriptLlmRequestID: String = String()
+
   var visualsLlmRequestID: String = String()
+
+  var keyPointsLlmRequestID: String = String()
+
+  var cardsLlmRequestID: String = String()
+
+  var thumbnailLlmRequestID: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -3424,8 +3434,13 @@ extension StoredPodcastRoutineStepProto: SwiftProtobuf.Message, SwiftProtobuf._M
 extension StoredPodcastLLMRequestsProtos: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "StoredPodcastLLMRequestsProtos"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "plan_llm_request_id"),
-    12: .standard(proto: "visuals_llm_request_id"),
+    1: .standard(proto: "points_llm_request_id"),
+    2: .standard(proto: "plan_llm_request_id"),
+    3: .standard(proto: "transcript_llm_request_id"),
+    4: .standard(proto: "visuals_llm_request_id"),
+    5: .standard(proto: "key_points_llm_request_id"),
+    6: .standard(proto: "cards_llm_request_id"),
+    7: .standard(proto: "thumbnail_llm_request_id"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3434,26 +3449,51 @@ extension StoredPodcastLLMRequestsProtos: SwiftProtobuf.Message, SwiftProtobuf._
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.planLlmRequestID) }()
-      case 12: try { try decoder.decodeSingularStringField(value: &self.visualsLlmRequestID) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self.pointsLlmRequestID) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.planLlmRequestID) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.transcriptLlmRequestID) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.visualsLlmRequestID) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.keyPointsLlmRequestID) }()
+      case 6: try { try decoder.decodeSingularStringField(value: &self.cardsLlmRequestID) }()
+      case 7: try { try decoder.decodeSingularStringField(value: &self.thumbnailLlmRequestID) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.pointsLlmRequestID.isEmpty {
+      try visitor.visitSingularStringField(value: self.pointsLlmRequestID, fieldNumber: 1)
+    }
     if !self.planLlmRequestID.isEmpty {
-      try visitor.visitSingularStringField(value: self.planLlmRequestID, fieldNumber: 1)
+      try visitor.visitSingularStringField(value: self.planLlmRequestID, fieldNumber: 2)
+    }
+    if !self.transcriptLlmRequestID.isEmpty {
+      try visitor.visitSingularStringField(value: self.transcriptLlmRequestID, fieldNumber: 3)
     }
     if !self.visualsLlmRequestID.isEmpty {
-      try visitor.visitSingularStringField(value: self.visualsLlmRequestID, fieldNumber: 12)
+      try visitor.visitSingularStringField(value: self.visualsLlmRequestID, fieldNumber: 4)
+    }
+    if !self.keyPointsLlmRequestID.isEmpty {
+      try visitor.visitSingularStringField(value: self.keyPointsLlmRequestID, fieldNumber: 5)
+    }
+    if !self.cardsLlmRequestID.isEmpty {
+      try visitor.visitSingularStringField(value: self.cardsLlmRequestID, fieldNumber: 6)
+    }
+    if !self.thumbnailLlmRequestID.isEmpty {
+      try visitor.visitSingularStringField(value: self.thumbnailLlmRequestID, fieldNumber: 7)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: StoredPodcastLLMRequestsProtos, rhs: StoredPodcastLLMRequestsProtos) -> Bool {
+    if lhs.pointsLlmRequestID != rhs.pointsLlmRequestID {return false}
     if lhs.planLlmRequestID != rhs.planLlmRequestID {return false}
+    if lhs.transcriptLlmRequestID != rhs.transcriptLlmRequestID {return false}
     if lhs.visualsLlmRequestID != rhs.visualsLlmRequestID {return false}
+    if lhs.keyPointsLlmRequestID != rhs.keyPointsLlmRequestID {return false}
+    if lhs.cardsLlmRequestID != rhs.cardsLlmRequestID {return false}
+    if lhs.thumbnailLlmRequestID != rhs.thumbnailLlmRequestID {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

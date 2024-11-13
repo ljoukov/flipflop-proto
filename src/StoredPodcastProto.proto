@@ -319,8 +319,13 @@ enum StoredPodcastTypeProto {
 }
 
 message StoredPodcastLLMRequestsProtos {
-  string plan_llm_request_id = 1;
-  string visuals_llm_request_id = 12;
+  string points_llm_request_id = 1;
+  string plan_llm_request_id = 2;
+  string transcript_llm_request_id = 3;
+  string visuals_llm_request_id = 4;
+  string key_points_llm_request_id = 5;
+  string cards_llm_request_id = 6;
+  string thumbnail_llm_request_id = 7;
 }
 
 message StoredPodcastExerciseProto {
