@@ -1694,7 +1694,7 @@ struct PodcastRoutineStepProto: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var stepID: String = String()
+  var podcastID: String = String()
 
   var title: String = String()
 
@@ -5015,7 +5015,7 @@ extension PodcastRoutineSegmentProto: SwiftProtobuf.Message, SwiftProtobuf._Mess
 extension PodcastRoutineStepProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "PodcastRoutineStepProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    4: .standard(proto: "step_id"),
+    4: .standard(proto: "podcast_id"),
     1: .same(proto: "title"),
     2: .same(proto: "outline"),
     3: .standard(proto: "thumbnail_path"),
@@ -5030,7 +5030,7 @@ extension PodcastRoutineStepProto: SwiftProtobuf.Message, SwiftProtobuf._Message
       case 1: try { try decoder.decodeSingularStringField(value: &self.title) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.outline) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.thumbnailPath) }()
-      case 4: try { try decoder.decodeSingularStringField(value: &self.stepID) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.podcastID) }()
       default: break
       }
     }
@@ -5046,14 +5046,14 @@ extension PodcastRoutineStepProto: SwiftProtobuf.Message, SwiftProtobuf._Message
     if !self.thumbnailPath.isEmpty {
       try visitor.visitSingularStringField(value: self.thumbnailPath, fieldNumber: 3)
     }
-    if !self.stepID.isEmpty {
-      try visitor.visitSingularStringField(value: self.stepID, fieldNumber: 4)
+    if !self.podcastID.isEmpty {
+      try visitor.visitSingularStringField(value: self.podcastID, fieldNumber: 4)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: PodcastRoutineStepProto, rhs: PodcastRoutineStepProto) -> Bool {
-    if lhs.stepID != rhs.stepID {return false}
+    if lhs.podcastID != rhs.podcastID {return false}
     if lhs.title != rhs.title {return false}
     if lhs.outline != rhs.outline {return false}
     if lhs.thumbnailPath != rhs.thumbnailPath {return false}

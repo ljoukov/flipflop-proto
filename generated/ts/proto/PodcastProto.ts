@@ -1073,9 +1073,9 @@ export interface PodcastRoutineSegmentProto {
  */
 export interface PodcastRoutineStepProto {
     /**
-     * @generated from protobuf field: string step_id = 4;
+     * @generated from protobuf field: string podcast_id = 4;
      */
-    stepId: string;
+    podcastId: string;
     /**
      * @generated from protobuf field: string title = 1;
      */
@@ -4902,7 +4902,7 @@ export const PodcastRoutineSegmentProto = new PodcastRoutineSegmentProto$Type();
 class PodcastRoutineStepProto$Type extends MessageType<PodcastRoutineStepProto> {
     constructor() {
         super("PodcastRoutineStepProto", [
-            { no: 4, name: "step_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "podcast_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 1, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "outline", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "thumbnail_path", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
@@ -4910,7 +4910,7 @@ class PodcastRoutineStepProto$Type extends MessageType<PodcastRoutineStepProto> 
     }
     create(value?: PartialMessage<PodcastRoutineStepProto>): PodcastRoutineStepProto {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.stepId = "";
+        message.podcastId = "";
         message.title = "";
         message.outline = "";
         message.thumbnailPath = "";
@@ -4923,8 +4923,8 @@ class PodcastRoutineStepProto$Type extends MessageType<PodcastRoutineStepProto> 
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string step_id */ 4:
-                    message.stepId = reader.string();
+                case /* string podcast_id */ 4:
+                    message.podcastId = reader.string();
                     break;
                 case /* string title */ 1:
                     message.title = reader.string();
@@ -4947,9 +4947,9 @@ class PodcastRoutineStepProto$Type extends MessageType<PodcastRoutineStepProto> 
         return message;
     }
     internalBinaryWrite(message: PodcastRoutineStepProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string step_id = 4; */
-        if (message.stepId !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.stepId);
+        /* string podcast_id = 4; */
+        if (message.podcastId !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.podcastId);
         /* string title = 1; */
         if (message.title !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.title);

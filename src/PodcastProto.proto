@@ -393,7 +393,7 @@ message PodcastRoutineSegmentProto {
 }
 
 message PodcastRoutineStepProto {
-  string step_id = 4;
+  string podcast_id = 4;
   string title = 1;
   string outline = 2;
   string thumbnail_path = 3;
