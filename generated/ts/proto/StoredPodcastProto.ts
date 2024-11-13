@@ -728,33 +728,11 @@ export interface StoredPodcastRoutineStepProto {
  */
 export interface StoredPodcastLLMRequestsProtos {
     /**
-     * @generated from protobuf field: string points_llm_request_id = 1;
+     * @generated from protobuf field: map<string, string> llm_request_id = 1;
      */
-    pointsLlmRequestId: string;
-    /**
-     * @generated from protobuf field: string plan_llm_request_id = 2;
-     */
-    planLlmRequestId: string;
-    /**
-     * @generated from protobuf field: string transcript_llm_request_id = 3;
-     */
-    transcriptLlmRequestId: string;
-    /**
-     * @generated from protobuf field: string visuals_llm_request_id = 4;
-     */
-    visualsLlmRequestId: string;
-    /**
-     * @generated from protobuf field: string key_points_llm_request_id = 5;
-     */
-    keyPointsLlmRequestId: string;
-    /**
-     * @generated from protobuf field: string cards_llm_request_id = 6;
-     */
-    cardsLlmRequestId: string;
-    /**
-     * @generated from protobuf field: string thumbnail_llm_request_id = 7;
-     */
-    thumbnailLlmRequestId: string;
+    llmRequestId: {
+        [key: string]: string;
+    };
 }
 /**
  * @generated from protobuf message StoredPodcastExerciseProto
@@ -3353,24 +3331,12 @@ export const StoredPodcastRoutineStepProto = new StoredPodcastRoutineStepProto$T
 class StoredPodcastLLMRequestsProtos$Type extends MessageType<StoredPodcastLLMRequestsProtos> {
     constructor() {
         super("StoredPodcastLLMRequestsProtos", [
-            { no: 1, name: "points_llm_request_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "plan_llm_request_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "transcript_llm_request_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "visuals_llm_request_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "key_points_llm_request_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 6, name: "cards_llm_request_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 7, name: "thumbnail_llm_request_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "llm_request_id", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastLLMRequestsProtos>): StoredPodcastLLMRequestsProtos {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.pointsLlmRequestId = "";
-        message.planLlmRequestId = "";
-        message.transcriptLlmRequestId = "";
-        message.visualsLlmRequestId = "";
-        message.keyPointsLlmRequestId = "";
-        message.cardsLlmRequestId = "";
-        message.thumbnailLlmRequestId = "";
+        message.llmRequestId = {};
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastLLMRequestsProtos>(this, message, value);
         return message;
@@ -3380,26 +3346,8 @@ class StoredPodcastLLMRequestsProtos$Type extends MessageType<StoredPodcastLLMRe
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string points_llm_request_id */ 1:
-                    message.pointsLlmRequestId = reader.string();
-                    break;
-                case /* string plan_llm_request_id */ 2:
-                    message.planLlmRequestId = reader.string();
-                    break;
-                case /* string transcript_llm_request_id */ 3:
-                    message.transcriptLlmRequestId = reader.string();
-                    break;
-                case /* string visuals_llm_request_id */ 4:
-                    message.visualsLlmRequestId = reader.string();
-                    break;
-                case /* string key_points_llm_request_id */ 5:
-                    message.keyPointsLlmRequestId = reader.string();
-                    break;
-                case /* string cards_llm_request_id */ 6:
-                    message.cardsLlmRequestId = reader.string();
-                    break;
-                case /* string thumbnail_llm_request_id */ 7:
-                    message.thumbnailLlmRequestId = reader.string();
+                case /* map<string, string> llm_request_id */ 1:
+                    this.binaryReadMap1(message.llmRequestId, reader, options);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -3412,28 +3360,26 @@ class StoredPodcastLLMRequestsProtos$Type extends MessageType<StoredPodcastLLMRe
         }
         return message;
     }
+    private binaryReadMap1(map: StoredPodcastLLMRequestsProtos["llmRequestId"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof StoredPodcastLLMRequestsProtos["llmRequestId"] | undefined, val: StoredPodcastLLMRequestsProtos["llmRequestId"][any] | undefined;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case 1:
+                    key = reader.string();
+                    break;
+                case 2:
+                    val = reader.string();
+                    break;
+                default: throw new globalThis.Error("unknown map entry field for field StoredPodcastLLMRequestsProtos.llm_request_id");
+            }
+        }
+        map[key ?? ""] = val ?? "";
+    }
     internalBinaryWrite(message: StoredPodcastLLMRequestsProtos, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string points_llm_request_id = 1; */
-        if (message.pointsLlmRequestId !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.pointsLlmRequestId);
-        /* string plan_llm_request_id = 2; */
-        if (message.planLlmRequestId !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.planLlmRequestId);
-        /* string transcript_llm_request_id = 3; */
-        if (message.transcriptLlmRequestId !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.transcriptLlmRequestId);
-        /* string visuals_llm_request_id = 4; */
-        if (message.visualsLlmRequestId !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.visualsLlmRequestId);
-        /* string key_points_llm_request_id = 5; */
-        if (message.keyPointsLlmRequestId !== "")
-            writer.tag(5, WireType.LengthDelimited).string(message.keyPointsLlmRequestId);
-        /* string cards_llm_request_id = 6; */
-        if (message.cardsLlmRequestId !== "")
-            writer.tag(6, WireType.LengthDelimited).string(message.cardsLlmRequestId);
-        /* string thumbnail_llm_request_id = 7; */
-        if (message.thumbnailLlmRequestId !== "")
-            writer.tag(7, WireType.LengthDelimited).string(message.thumbnailLlmRequestId);
+        /* map<string, string> llm_request_id = 1; */
+        for (let k of globalThis.Object.keys(message.llmRequestId))
+            writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.llmRequestId[k]).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
