@@ -1180,7 +1180,7 @@ struct StoredPodcastRoutineStepProto: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var stepID: String = String()
+  var podcastID: String = String()
 
   var type: StoredPodcastTypeProto = .undefined
 
@@ -3344,7 +3344,7 @@ extension StoredPodcastRoutineSegmentProto: SwiftProtobuf.Message, SwiftProtobuf
 extension StoredPodcastRoutineStepProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "StoredPodcastRoutineStepProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    6: .standard(proto: "step_id"),
+    6: .standard(proto: "podcast_id"),
     1: .same(proto: "type"),
     2: .same(proto: "title"),
     3: .same(proto: "outline"),
@@ -3363,7 +3363,7 @@ extension StoredPodcastRoutineStepProto: SwiftProtobuf.Message, SwiftProtobuf._M
       case 3: try { try decoder.decodeSingularStringField(value: &self.outline) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self.thumbnailPrompt) }()
       case 5: try { try decoder.decodeSingularStringField(value: &self.thumbnailKey) }()
-      case 6: try { try decoder.decodeSingularStringField(value: &self.stepID) }()
+      case 6: try { try decoder.decodeSingularStringField(value: &self.podcastID) }()
       default: break
       }
     }
@@ -3385,14 +3385,14 @@ extension StoredPodcastRoutineStepProto: SwiftProtobuf.Message, SwiftProtobuf._M
     if !self.thumbnailKey.isEmpty {
       try visitor.visitSingularStringField(value: self.thumbnailKey, fieldNumber: 5)
     }
-    if !self.stepID.isEmpty {
-      try visitor.visitSingularStringField(value: self.stepID, fieldNumber: 6)
+    if !self.podcastID.isEmpty {
+      try visitor.visitSingularStringField(value: self.podcastID, fieldNumber: 6)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: StoredPodcastRoutineStepProto, rhs: StoredPodcastRoutineStepProto) -> Bool {
-    if lhs.stepID != rhs.stepID {return false}
+    if lhs.podcastID != rhs.podcastID {return false}
     if lhs.type != rhs.type {return false}
     if lhs.title != rhs.title {return false}
     if lhs.outline != rhs.outline {return false}

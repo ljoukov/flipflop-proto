@@ -303,7 +303,7 @@ message StoredPodcastRoutineSegmentProto {
 }
 
 message StoredPodcastRoutineStepProto {
-  string step_id = 6;
+  string podcast_id = 6;
   StoredPodcastTypeProto type = 1;
   string title = 2;
   string outline = 3;

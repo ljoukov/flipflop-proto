@@ -701,9 +701,9 @@ export interface StoredPodcastRoutineSegmentProto {
  */
 export interface StoredPodcastRoutineStepProto {
     /**
-     * @generated from protobuf field: string step_id = 6;
+     * @generated from protobuf field: string podcast_id = 6;
      */
-    stepId: string;
+    podcastId: string;
     /**
      * @generated from protobuf field: StoredPodcastTypeProto type = 1;
      */
@@ -3252,7 +3252,7 @@ export const StoredPodcastRoutineSegmentProto = new StoredPodcastRoutineSegmentP
 class StoredPodcastRoutineStepProto$Type extends MessageType<StoredPodcastRoutineStepProto> {
     constructor() {
         super("StoredPodcastRoutineStepProto", [
-            { no: 6, name: "step_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "podcast_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 1, name: "type", kind: "enum", T: () => ["StoredPodcastTypeProto", StoredPodcastTypeProto, "STORED_PODCAST_TYPE_PROTO_"] },
             { no: 2, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "outline", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
@@ -3262,7 +3262,7 @@ class StoredPodcastRoutineStepProto$Type extends MessageType<StoredPodcastRoutin
     }
     create(value?: PartialMessage<StoredPodcastRoutineStepProto>): StoredPodcastRoutineStepProto {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.stepId = "";
+        message.podcastId = "";
         message.type = 0;
         message.title = "";
         message.outline = "";
@@ -3277,8 +3277,8 @@ class StoredPodcastRoutineStepProto$Type extends MessageType<StoredPodcastRoutin
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string step_id */ 6:
-                    message.stepId = reader.string();
+                case /* string podcast_id */ 6:
+                    message.podcastId = reader.string();
                     break;
                 case /* StoredPodcastTypeProto type */ 1:
                     message.type = reader.int32();
@@ -3307,9 +3307,9 @@ class StoredPodcastRoutineStepProto$Type extends MessageType<StoredPodcastRoutin
         return message;
     }
     internalBinaryWrite(message: StoredPodcastRoutineStepProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string step_id = 6; */
-        if (message.stepId !== "")
-            writer.tag(6, WireType.LengthDelimited).string(message.stepId);
+        /* string podcast_id = 6; */
+        if (message.podcastId !== "")
+            writer.tag(6, WireType.LengthDelimited).string(message.podcastId);
         /* StoredPodcastTypeProto type = 1; */
         if (message.type !== 0)
             writer.tag(1, WireType.Varint).int32(message.type);
