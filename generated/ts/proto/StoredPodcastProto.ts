@@ -100,9 +100,9 @@ export interface StoredPodcastProto {
      */
     log?: LogProto;
     /**
-     * @generated from protobuf field: map<string, string> llm_request_id = 102;
+     * @generated from protobuf field: map<string, string> llm_request_ids = 102;
      */
-    llmRequestId: {
+    llmRequestIds: {
         [key: string]: string;
     };
 }
@@ -1117,7 +1117,7 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
             { no: 17, name: "podcast_type", kind: "enum", T: () => ["StoredPodcastTypeProto", StoredPodcastTypeProto, "STORED_PODCAST_TYPE_PROTO_"] },
             { no: 18, name: "exercise", kind: "message", T: () => StoredPodcastExerciseProto },
             { no: 101, name: "log", kind: "message", T: () => LogProto },
-            { no: 102, name: "llm_request_id", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } }
+            { no: 102, name: "llm_request_ids", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastProto>): StoredPodcastProto {
@@ -1126,7 +1126,7 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
         message.createdBy = "";
         message.state = 0;
         message.podcastType = 0;
-        message.llmRequestId = {};
+        message.llmRequestIds = {};
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastProto>(this, message, value);
         return message;
@@ -1193,8 +1193,8 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
                 case /* LogProto log */ 101:
                     message.log = LogProto.internalBinaryRead(reader, reader.uint32(), options, message.log);
                     break;
-                case /* map<string, string> llm_request_id */ 102:
-                    this.binaryReadMap102(message.llmRequestId, reader, options);
+                case /* map<string, string> llm_request_ids */ 102:
+                    this.binaryReadMap102(message.llmRequestIds, reader, options);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1207,8 +1207,8 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
         }
         return message;
     }
-    private binaryReadMap102(map: StoredPodcastProto["llmRequestId"], reader: IBinaryReader, options: BinaryReadOptions): void {
-        let len = reader.uint32(), end = reader.pos + len, key: keyof StoredPodcastProto["llmRequestId"] | undefined, val: StoredPodcastProto["llmRequestId"][any] | undefined;
+    private binaryReadMap102(map: StoredPodcastProto["llmRequestIds"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof StoredPodcastProto["llmRequestIds"] | undefined, val: StoredPodcastProto["llmRequestIds"][any] | undefined;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
@@ -1218,7 +1218,7 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
                 case 2:
                     val = reader.string();
                     break;
-                default: throw new globalThis.Error("unknown map entry field for field StoredPodcastProto.llm_request_id");
+                default: throw new globalThis.Error("unknown map entry field for field StoredPodcastProto.llm_request_ids");
             }
         }
         map[key ?? ""] = val ?? "";
@@ -1281,9 +1281,9 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
         /* LogProto log = 101; */
         if (message.log)
             LogProto.internalBinaryWrite(message.log, writer.tag(101, WireType.LengthDelimited).fork(), options).join();
-        /* map<string, string> llm_request_id = 102; */
-        for (let k of globalThis.Object.keys(message.llmRequestId))
-            writer.tag(102, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.llmRequestId[k]).join();
+        /* map<string, string> llm_request_ids = 102; */
+        for (let k of globalThis.Object.keys(message.llmRequestIds))
+            writer.tag(102, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.llmRequestIds[k]).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
