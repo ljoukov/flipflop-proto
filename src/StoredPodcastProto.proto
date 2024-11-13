@@ -37,7 +37,7 @@ message StoredPodcastProto {
   // Debug metadata
   reserved 100;
   LogProto log = 101;
-  StoredPodcastLLMRequestsProtos llm_requests = 102;
+  map<string, string> llm_request_id = 102;
 }
 
 enum StoredPodcastStateProto {
@@ -316,10 +316,6 @@ enum StoredPodcastTypeProto {
   STORED_PODCAST_TYPE_PROTO_EXPLAINER = 1;
   STORED_PODCAST_TYPE_PROTO_EXERCISE = 2;
   STORED_PODCAST_TYPE_PROTO_MEDITATION = 3;
-}
-
-message StoredPodcastLLMRequestsProtos {
-  map<string, string> llm_request_id = 1;
 }
 
 message StoredPodcastExerciseProto {

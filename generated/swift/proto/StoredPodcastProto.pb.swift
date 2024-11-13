@@ -462,14 +462,10 @@ struct StoredPodcastProto: @unchecked Sendable {
   /// Clears the value of `log`. Subsequent reads from it will return its default value.
   mutating func clearLog() {_uniqueStorage()._log = nil}
 
-  var llmRequests: StoredPodcastLLMRequestsProtos {
-    get {return _storage._llmRequests ?? StoredPodcastLLMRequestsProtos()}
-    set {_uniqueStorage()._llmRequests = newValue}
+  var llmRequestID: Dictionary<String,String> {
+    get {return _storage._llmRequestID}
+    set {_uniqueStorage()._llmRequestID = newValue}
   }
-  /// Returns true if `llmRequests` has been explicitly set.
-  var hasLlmRequests: Bool {return _storage._llmRequests != nil}
-  /// Clears the value of `llmRequests`. Subsequent reads from it will return its default value.
-  mutating func clearLlmRequests() {_uniqueStorage()._llmRequests = nil}
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -1201,18 +1197,6 @@ struct StoredPodcastRoutineStepProto: Sendable {
   init() {}
 }
 
-struct StoredPodcastLLMRequestsProtos: Sendable {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  var llmRequestID: Dictionary<String,String> = [:]
-
-  var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  init() {}
-}
-
 struct StoredPodcastExerciseProto: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -1605,7 +1589,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     17: .standard(proto: "podcast_type"),
     18: .same(proto: "exercise"),
     101: .same(proto: "log"),
-    102: .standard(proto: "llm_requests"),
+    102: .standard(proto: "llm_request_id"),
   ]
 
   fileprivate class _StorageClass {
@@ -1628,7 +1612,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     var _podcastType: StoredPodcastTypeProto = .undefined
     var _exercise: StoredPodcastExerciseProto? = nil
     var _log: LogProto? = nil
-    var _llmRequests: StoredPodcastLLMRequestsProtos? = nil
+    var _llmRequestID: Dictionary<String,String> = [:]
 
     #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
@@ -1662,7 +1646,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       _podcastType = source._podcastType
       _exercise = source._exercise
       _log = source._log
-      _llmRequests = source._llmRequests
+      _llmRequestID = source._llmRequestID
     }
   }
 
@@ -1700,7 +1684,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         case 17: try { try decoder.decodeSingularEnumField(value: &_storage._podcastType) }()
         case 18: try { try decoder.decodeSingularMessageField(value: &_storage._exercise) }()
         case 101: try { try decoder.decodeSingularMessageField(value: &_storage._log) }()
-        case 102: try { try decoder.decodeSingularMessageField(value: &_storage._llmRequests) }()
+        case 102: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: &_storage._llmRequestID) }()
         default: break
         }
       }
@@ -1770,9 +1754,9 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       try { if let v = _storage._log {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 101)
       } }()
-      try { if let v = _storage._llmRequests {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 102)
-      } }()
+      if !_storage._llmRequestID.isEmpty {
+        try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: _storage._llmRequestID, fieldNumber: 102)
+      }
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -1801,7 +1785,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         if _storage._podcastType != rhs_storage._podcastType {return false}
         if _storage._exercise != rhs_storage._exercise {return false}
         if _storage._log != rhs_storage._log {return false}
-        if _storage._llmRequests != rhs_storage._llmRequests {return false}
+        if _storage._llmRequestID != rhs_storage._llmRequestID {return false}
         return true
       }
       if !storagesAreEqual {return false}
@@ -3414,38 +3398,6 @@ extension StoredPodcastRoutineStepProto: SwiftProtobuf.Message, SwiftProtobuf._M
     if lhs.outline != rhs.outline {return false}
     if lhs.thumbnailPrompt != rhs.thumbnailPrompt {return false}
     if lhs.thumbnailKey != rhs.thumbnailKey {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension StoredPodcastLLMRequestsProtos: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "StoredPodcastLLMRequestsProtos"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "llm_request_id"),
-  ]
-
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: &self.llmRequestID) }()
-      default: break
-      }
-    }
-  }
-
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.llmRequestID.isEmpty {
-      try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: self.llmRequestID, fieldNumber: 1)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  static func ==(lhs: StoredPodcastLLMRequestsProtos, rhs: StoredPodcastLLMRequestsProtos) -> Bool {
-    if lhs.llmRequestID != rhs.llmRequestID {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
