@@ -37,6 +37,7 @@ message StoredPodcastProto {
   // Debug metadata
   reserved 100;
   LogProto log = 101;
+  StoredPodcastLLMRequestsProtos llm_requests = 102;
 }
 
 enum StoredPodcastStateProto {
@@ -317,14 +318,17 @@ enum StoredPodcastTypeProto {
   STORED_PODCAST_TYPE_PROTO_MEDITATION = 3;
 }
 
+message StoredPodcastLLMRequestsProtos {
+  string plan_llm_request_id = 1;
+  string visuals_llm_request_id = 12;
+}
+
 message StoredPodcastExerciseProto {
   StoredPodcastExercisePlanProto plan = 1;
   StoredPodcastExerciseSectionProto warmup = 2;
   repeated StoredPodcastExerciseSectionProto exercises = 3;
   StoredPodcastExerciseSectionProto cooldown = 4;
   StoredPodcastStyleProto style = 5;
-
-  string backgrounds_llm_request_id = 100;
 }
 
 message StoredPodcastExercisePlanProto {
@@ -335,8 +339,6 @@ message StoredPodcastExercisePlanProto {
   string warmup = 5;
   repeated string exercises = 6;
   string cooldown = 7;
-
-  string llm_request_id = 100;
 }
 
 message StoredPodcastExerciseSectionProto {
