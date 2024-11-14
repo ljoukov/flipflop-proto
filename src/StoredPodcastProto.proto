@@ -293,6 +293,9 @@ message StoredPodcastRoutineProto {
   string reasoning = 1;
   repeated StoredPodcastRoutineSegmentProto segments = 2;
   StoredPodcastStyleProto style = 3;
+  string thumbnail_prompt = 5;
+  string thumbnail_key = 6;
+  string title = 7;
 }
 
 message StoredPodcastRoutineSegmentProto {

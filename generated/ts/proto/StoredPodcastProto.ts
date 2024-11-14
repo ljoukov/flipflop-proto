@@ -674,6 +674,18 @@ export interface StoredPodcastRoutineProto {
      * @generated from protobuf field: StoredPodcastStyleProto style = 3;
      */
     style?: StoredPodcastStyleProto;
+    /**
+     * @generated from protobuf field: string thumbnail_prompt = 5;
+     */
+    thumbnailPrompt: string;
+    /**
+     * @generated from protobuf field: string thumbnail_key = 6;
+     */
+    thumbnailKey: string;
+    /**
+     * @generated from protobuf field: string title = 7;
+     */
+    title: string;
 }
 /**
  * @generated from protobuf message StoredPodcastRoutineSegmentProto
@@ -3118,7 +3130,10 @@ class StoredPodcastRoutineProto$Type extends MessageType<StoredPodcastRoutinePro
             { no: 4, name: "routine_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 1, name: "reasoning", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "segments", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastRoutineSegmentProto },
-            { no: 3, name: "style", kind: "message", T: () => StoredPodcastStyleProto }
+            { no: 3, name: "style", kind: "message", T: () => StoredPodcastStyleProto },
+            { no: 5, name: "thumbnail_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "thumbnail_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 7, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastRoutineProto>): StoredPodcastRoutineProto {
@@ -3126,6 +3141,9 @@ class StoredPodcastRoutineProto$Type extends MessageType<StoredPodcastRoutinePro
         message.routineId = "";
         message.reasoning = "";
         message.segments = [];
+        message.thumbnailPrompt = "";
+        message.thumbnailKey = "";
+        message.title = "";
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastRoutineProto>(this, message, value);
         return message;
@@ -3146,6 +3164,15 @@ class StoredPodcastRoutineProto$Type extends MessageType<StoredPodcastRoutinePro
                     break;
                 case /* StoredPodcastStyleProto style */ 3:
                     message.style = StoredPodcastStyleProto.internalBinaryRead(reader, reader.uint32(), options, message.style);
+                    break;
+                case /* string thumbnail_prompt */ 5:
+                    message.thumbnailPrompt = reader.string();
+                    break;
+                case /* string thumbnail_key */ 6:
+                    message.thumbnailKey = reader.string();
+                    break;
+                case /* string title */ 7:
+                    message.title = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -3171,6 +3198,15 @@ class StoredPodcastRoutineProto$Type extends MessageType<StoredPodcastRoutinePro
         /* StoredPodcastStyleProto style = 3; */
         if (message.style)
             StoredPodcastStyleProto.internalBinaryWrite(message.style, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* string thumbnail_prompt = 5; */
+        if (message.thumbnailPrompt !== "")
+            writer.tag(5, WireType.LengthDelimited).string(message.thumbnailPrompt);
+        /* string thumbnail_key = 6; */
+        if (message.thumbnailKey !== "")
+            writer.tag(6, WireType.LengthDelimited).string(message.thumbnailKey);
+        /* string title = 7; */
+        if (message.title !== "")
+            writer.tag(7, WireType.LengthDelimited).string(message.title);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
