@@ -918,6 +918,8 @@ struct StoredPodcastSuggestionProto: Sendable {
 
   var suggestedPodcastID: String = String()
 
+  var userID: String = String()
+
   var title: String = String()
 
   /// Q&A, Explainer, ...
@@ -2763,6 +2765,7 @@ extension StoredPodcastSuggestionProto: SwiftProtobuf.Message, SwiftProtobuf._Me
   static let protoMessageName: String = "StoredPodcastSuggestionProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "suggested_podcast_id"),
+    6: .standard(proto: "user_id"),
     2: .same(proto: "title"),
     3: .same(proto: "badge"),
     4: .standard(proto: "thumbnail_prompt"),
@@ -2780,6 +2783,7 @@ extension StoredPodcastSuggestionProto: SwiftProtobuf.Message, SwiftProtobuf._Me
       case 3: try { try decoder.decodeSingularStringField(value: &self.badge) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self.thumbnailPrompt) }()
       case 5: try { try decoder.decodeSingularStringField(value: &self.thumbnailKey) }()
+      case 6: try { try decoder.decodeSingularStringField(value: &self.userID) }()
       default: break
       }
     }
@@ -2801,11 +2805,15 @@ extension StoredPodcastSuggestionProto: SwiftProtobuf.Message, SwiftProtobuf._Me
     if !self.thumbnailKey.isEmpty {
       try visitor.visitSingularStringField(value: self.thumbnailKey, fieldNumber: 5)
     }
+    if !self.userID.isEmpty {
+      try visitor.visitSingularStringField(value: self.userID, fieldNumber: 6)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: StoredPodcastSuggestionProto, rhs: StoredPodcastSuggestionProto) -> Bool {
     if lhs.suggestedPodcastID != rhs.suggestedPodcastID {return false}
+    if lhs.userID != rhs.userID {return false}
     if lhs.title != rhs.title {return false}
     if lhs.badge != rhs.badge {return false}
     if lhs.thumbnailPrompt != rhs.thumbnailPrompt {return false}

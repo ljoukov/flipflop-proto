@@ -474,6 +474,10 @@ export interface StoredPodcastSuggestionProto {
      */
     suggestedPodcastId: string;
     /**
+     * @generated from protobuf field: string user_id = 6;
+     */
+    userId: string;
+    /**
      * @generated from protobuf field: string title = 2;
      */
     title: string;
@@ -2555,6 +2559,7 @@ class StoredPodcastSuggestionProto$Type extends MessageType<StoredPodcastSuggest
     constructor() {
         super("StoredPodcastSuggestionProto", [
             { no: 1, name: "suggested_podcast_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "user_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "badge", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "thumbnail_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
@@ -2564,6 +2569,7 @@ class StoredPodcastSuggestionProto$Type extends MessageType<StoredPodcastSuggest
     create(value?: PartialMessage<StoredPodcastSuggestionProto>): StoredPodcastSuggestionProto {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.suggestedPodcastId = "";
+        message.userId = "";
         message.title = "";
         message.badge = "";
         message.thumbnailPrompt = "";
@@ -2579,6 +2585,9 @@ class StoredPodcastSuggestionProto$Type extends MessageType<StoredPodcastSuggest
             switch (fieldNo) {
                 case /* string suggested_podcast_id */ 1:
                     message.suggestedPodcastId = reader.string();
+                    break;
+                case /* string user_id */ 6:
+                    message.userId = reader.string();
                     break;
                 case /* string title */ 2:
                     message.title = reader.string();
@@ -2607,6 +2616,9 @@ class StoredPodcastSuggestionProto$Type extends MessageType<StoredPodcastSuggest
         /* string suggested_podcast_id = 1; */
         if (message.suggestedPodcastId !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.suggestedPodcastId);
+        /* string user_id = 6; */
+        if (message.userId !== "")
+            writer.tag(6, WireType.LengthDelimited).string(message.userId);
         /* string title = 2; */
         if (message.title !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.title);
