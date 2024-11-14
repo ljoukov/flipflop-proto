@@ -52,6 +52,10 @@ export interface StoredPodcastProto {
      */
     suggestionInput?: StoredPodcastSuggestionInputProto;
     /**
+     * @generated from protobuf field: StoredPodcastRoutineInputProto routine_input = 19;
+     */
+    routineInput?: StoredPodcastRoutineInputProto;
+    /**
      * @generated from protobuf field: StoredPodcastStateProto state = 6;
      */
     state: StoredPodcastStateProto;
@@ -151,6 +155,19 @@ export interface StoredPodcastSuggestionInputProto {
      * @generated from protobuf field: StoredPodcastSuggestionUserInputProto user_input = 7;
      */
     userInput?: StoredPodcastSuggestionUserInputProto;
+}
+/**
+ * @generated from protobuf message StoredPodcastRoutineInputProto
+ */
+export interface StoredPodcastRoutineInputProto {
+    /**
+     * @generated from protobuf field: string routine_id = 1;
+     */
+    routineId: string;
+    /**
+     * @generated from protobuf field: string title = 2;
+     */
+    title: string;
 }
 /**
  * @generated from protobuf message StoredPodcastSuggestionUserInputProto
@@ -1121,6 +1138,7 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
             { no: 16, name: "deleted_at", kind: "message", T: () => Timestamp },
             { no: 5, name: "user_input", kind: "message", T: () => StoredPodcastUserInputProto },
             { no: 15, name: "suggestion_input", kind: "message", T: () => StoredPodcastSuggestionInputProto },
+            { no: 19, name: "routine_input", kind: "message", T: () => StoredPodcastRoutineInputProto },
             { no: 6, name: "state", kind: "enum", T: () => ["StoredPodcastStateProto", StoredPodcastStateProto, "STORED_PODCAST_STATE_PROTO_"] },
             { no: 7, name: "answer", kind: "message", T: () => PodcastPromptAnswerProto },
             { no: 8, name: "points", kind: "message", T: () => StoredPodcastPointsProto },
@@ -1172,6 +1190,9 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
                     break;
                 case /* StoredPodcastSuggestionInputProto suggestion_input */ 15:
                     message.suggestionInput = StoredPodcastSuggestionInputProto.internalBinaryRead(reader, reader.uint32(), options, message.suggestionInput);
+                    break;
+                case /* StoredPodcastRoutineInputProto routine_input */ 19:
+                    message.routineInput = StoredPodcastRoutineInputProto.internalBinaryRead(reader, reader.uint32(), options, message.routineInput);
                     break;
                 case /* StoredPodcastStateProto state */ 6:
                     message.state = reader.int32();
@@ -1261,6 +1282,9 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
         /* StoredPodcastSuggestionInputProto suggestion_input = 15; */
         if (message.suggestionInput)
             StoredPodcastSuggestionInputProto.internalBinaryWrite(message.suggestionInput, writer.tag(15, WireType.LengthDelimited).fork(), options).join();
+        /* StoredPodcastRoutineInputProto routine_input = 19; */
+        if (message.routineInput)
+            StoredPodcastRoutineInputProto.internalBinaryWrite(message.routineInput, writer.tag(19, WireType.LengthDelimited).fork(), options).join();
         /* StoredPodcastStateProto state = 6; */
         if (message.state !== 0)
             writer.tag(6, WireType.Varint).int32(message.state);
@@ -1458,6 +1482,61 @@ class StoredPodcastSuggestionInputProto$Type extends MessageType<StoredPodcastSu
  * @generated MessageType for protobuf message StoredPodcastSuggestionInputProto
  */
 export const StoredPodcastSuggestionInputProto = new StoredPodcastSuggestionInputProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class StoredPodcastRoutineInputProto$Type extends MessageType<StoredPodcastRoutineInputProto> {
+    constructor() {
+        super("StoredPodcastRoutineInputProto", [
+            { no: 1, name: "routine_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<StoredPodcastRoutineInputProto>): StoredPodcastRoutineInputProto {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.routineId = "";
+        message.title = "";
+        if (value !== undefined)
+            reflectionMergePartial<StoredPodcastRoutineInputProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredPodcastRoutineInputProto): StoredPodcastRoutineInputProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string routine_id */ 1:
+                    message.routineId = reader.string();
+                    break;
+                case /* string title */ 2:
+                    message.title = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: StoredPodcastRoutineInputProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string routine_id = 1; */
+        if (message.routineId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.routineId);
+        /* string title = 2; */
+        if (message.title !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.title);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message StoredPodcastRoutineInputProto
+ */
+export const StoredPodcastRoutineInputProto = new StoredPodcastRoutineInputProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class StoredPodcastSuggestionUserInputProto$Type extends MessageType<StoredPodcastSuggestionUserInputProto> {
     constructor() {

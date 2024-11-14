@@ -362,6 +362,15 @@ struct StoredPodcastProto: @unchecked Sendable {
   /// Clears the value of `suggestionInput`. Subsequent reads from it will return its default value.
   mutating func clearSuggestionInput() {_uniqueStorage()._suggestionInput = nil}
 
+  var routineInput: StoredPodcastRoutineInputProto {
+    get {return _storage._routineInput ?? StoredPodcastRoutineInputProto()}
+    set {_uniqueStorage()._routineInput = newValue}
+  }
+  /// Returns true if `routineInput` has been explicitly set.
+  var hasRoutineInput: Bool {return _storage._routineInput != nil}
+  /// Clears the value of `routineInput`. Subsequent reads from it will return its default value.
+  mutating func clearRoutineInput() {_uniqueStorage()._routineInput = nil}
+
   var state: StoredPodcastStateProto {
     get {return _storage._state}
     set {_uniqueStorage()._state = newValue}
@@ -527,6 +536,20 @@ struct StoredPodcastSuggestionInputProto: Sendable {
 
   fileprivate var _suggestionPoints: StoredPodcastPointsProto? = nil
   fileprivate var _userInput: StoredPodcastSuggestionUserInputProto? = nil
+}
+
+struct StoredPodcastRoutineInputProto: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var routineID: String = String()
+
+  var title: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
 }
 
 struct StoredPodcastSuggestionUserInputProto: Sendable {
@@ -1600,6 +1623,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     16: .standard(proto: "deleted_at"),
     5: .standard(proto: "user_input"),
     15: .standard(proto: "suggestion_input"),
+    19: .standard(proto: "routine_input"),
     6: .same(proto: "state"),
     7: .same(proto: "answer"),
     8: .same(proto: "points"),
@@ -1623,6 +1647,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     var _deletedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
     var _userInput: StoredPodcastUserInputProto? = nil
     var _suggestionInput: StoredPodcastSuggestionInputProto? = nil
+    var _routineInput: StoredPodcastRoutineInputProto? = nil
     var _state: StoredPodcastStateProto = .unknown
     var _answer: PodcastPromptAnswerProto? = nil
     var _points: StoredPodcastPointsProto? = nil
@@ -1657,6 +1682,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       _deletedAt = source._deletedAt
       _userInput = source._userInput
       _suggestionInput = source._suggestionInput
+      _routineInput = source._routineInput
       _state = source._state
       _answer = source._answer
       _points = source._points
@@ -1706,6 +1732,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         case 16: try { try decoder.decodeSingularMessageField(value: &_storage._deletedAt) }()
         case 17: try { try decoder.decodeSingularEnumField(value: &_storage._podcastType) }()
         case 18: try { try decoder.decodeSingularMessageField(value: &_storage._exercise) }()
+        case 19: try { try decoder.decodeSingularMessageField(value: &_storage._routineInput) }()
         case 101: try { try decoder.decodeSingularMessageField(value: &_storage._log) }()
         case 102: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: &_storage._llmRequestIds) }()
         default: break
@@ -1774,6 +1801,9 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       try { if let v = _storage._exercise {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 18)
       } }()
+      try { if let v = _storage._routineInput {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 19)
+      } }()
       try { if let v = _storage._log {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 101)
       } }()
@@ -1796,6 +1826,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         if _storage._deletedAt != rhs_storage._deletedAt {return false}
         if _storage._userInput != rhs_storage._userInput {return false}
         if _storage._suggestionInput != rhs_storage._suggestionInput {return false}
+        if _storage._routineInput != rhs_storage._routineInput {return false}
         if _storage._state != rhs_storage._state {return false}
         if _storage._answer != rhs_storage._answer {return false}
         if _storage._points != rhs_storage._points {return false}
@@ -1923,6 +1954,44 @@ extension StoredPodcastSuggestionInputProto: SwiftProtobuf.Message, SwiftProtobu
     if lhs.suggestionBadge != rhs.suggestionBadge {return false}
     if lhs._suggestionPoints != rhs._suggestionPoints {return false}
     if lhs._userInput != rhs._userInput {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension StoredPodcastRoutineInputProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredPodcastRoutineInputProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "routine_id"),
+    2: .same(proto: "title"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.routineID) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.title) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.routineID.isEmpty {
+      try visitor.visitSingularStringField(value: self.routineID, fieldNumber: 1)
+    }
+    if !self.title.isEmpty {
+      try visitor.visitSingularStringField(value: self.title, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: StoredPodcastRoutineInputProto, rhs: StoredPodcastRoutineInputProto) -> Bool {
+    if lhs.routineID != rhs.routineID {return false}
+    if lhs.title != rhs.title {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
