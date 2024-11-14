@@ -396,6 +396,10 @@ export interface StoredPodcastSuggestionsProto {
      */
     suggestionsId: string;
     /**
+     * @generated from protobuf field: string user_id = 9;
+     */
+    userId: string;
+    /**
      * @generated from protobuf field: StoredPodcastSuggestionsStateProto state = 2;
      */
     state: StoredPodcastSuggestionsStateProto;
@@ -473,10 +477,6 @@ export interface StoredPodcastSuggestionProto {
      * @generated from protobuf field: string suggested_podcast_id = 1;
      */
     suggestedPodcastId: string;
-    /**
-     * @generated from protobuf field: string user_id = 6;
-     */
-    userId: string;
     /**
      * @generated from protobuf field: string title = 2;
      */
@@ -2354,6 +2354,7 @@ class StoredPodcastSuggestionsProto$Type extends MessageType<StoredPodcastSugges
     constructor() {
         super("StoredPodcastSuggestionsProto", [
             { no: 1, name: "suggestions_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 9, name: "user_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "state", kind: "enum", T: () => ["StoredPodcastSuggestionsStateProto", StoredPodcastSuggestionsStateProto, "STORED_PODCAST_SUGGESTIONS_STATE_PROTO_"] },
             { no: 3, name: "created_at", kind: "message", T: () => Timestamp },
             { no: 4, name: "updated_at", kind: "message", T: () => Timestamp },
@@ -2367,6 +2368,7 @@ class StoredPodcastSuggestionsProto$Type extends MessageType<StoredPodcastSugges
     create(value?: PartialMessage<StoredPodcastSuggestionsProto>): StoredPodcastSuggestionsProto {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.suggestionsId = "";
+        message.userId = "";
         message.state = 0;
         message.reasoning = "";
         message.ranking = "";
@@ -2382,6 +2384,9 @@ class StoredPodcastSuggestionsProto$Type extends MessageType<StoredPodcastSugges
             switch (fieldNo) {
                 case /* string suggestions_id */ 1:
                     message.suggestionsId = reader.string();
+                    break;
+                case /* string user_id */ 9:
+                    message.userId = reader.string();
                     break;
                 case /* StoredPodcastSuggestionsStateProto state */ 2:
                     message.state = reader.int32();
@@ -2422,6 +2427,9 @@ class StoredPodcastSuggestionsProto$Type extends MessageType<StoredPodcastSugges
         /* string suggestions_id = 1; */
         if (message.suggestionsId !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.suggestionsId);
+        /* string user_id = 9; */
+        if (message.userId !== "")
+            writer.tag(9, WireType.LengthDelimited).string(message.userId);
         /* StoredPodcastSuggestionsStateProto state = 2; */
         if (message.state !== 0)
             writer.tag(2, WireType.Varint).int32(message.state);
@@ -2559,7 +2567,6 @@ class StoredPodcastSuggestionProto$Type extends MessageType<StoredPodcastSuggest
     constructor() {
         super("StoredPodcastSuggestionProto", [
             { no: 1, name: "suggested_podcast_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 6, name: "user_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "badge", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "thumbnail_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
@@ -2569,7 +2576,6 @@ class StoredPodcastSuggestionProto$Type extends MessageType<StoredPodcastSuggest
     create(value?: PartialMessage<StoredPodcastSuggestionProto>): StoredPodcastSuggestionProto {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.suggestedPodcastId = "";
-        message.userId = "";
         message.title = "";
         message.badge = "";
         message.thumbnailPrompt = "";
@@ -2585,9 +2591,6 @@ class StoredPodcastSuggestionProto$Type extends MessageType<StoredPodcastSuggest
             switch (fieldNo) {
                 case /* string suggested_podcast_id */ 1:
                     message.suggestedPodcastId = reader.string();
-                    break;
-                case /* string user_id */ 6:
-                    message.userId = reader.string();
                     break;
                 case /* string title */ 2:
                     message.title = reader.string();
@@ -2616,9 +2619,6 @@ class StoredPodcastSuggestionProto$Type extends MessageType<StoredPodcastSuggest
         /* string suggested_podcast_id = 1; */
         if (message.suggestedPodcastId !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.suggestedPodcastId);
-        /* string user_id = 6; */
-        if (message.userId !== "")
-            writer.tag(6, WireType.LengthDelimited).string(message.userId);
         /* string title = 2; */
         if (message.title !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.title);

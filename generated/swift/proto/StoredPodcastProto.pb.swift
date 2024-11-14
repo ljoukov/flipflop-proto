@@ -784,6 +784,8 @@ struct StoredPodcastSuggestionsProto: Sendable {
 
   var suggestionsID: String = String()
 
+  var userID: String = String()
+
   var state: StoredPodcastSuggestionsStateProto = .undefined
 
   var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
@@ -917,8 +919,6 @@ struct StoredPodcastSuggestionProto: Sendable {
   // methods supported on all messages.
 
   var suggestedPodcastID: String = String()
-
-  var userID: String = String()
 
   var title: String = String()
 
@@ -2549,6 +2549,7 @@ extension StoredPodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf._M
   static let protoMessageName: String = "StoredPodcastSuggestionsProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "suggestions_id"),
+    9: .standard(proto: "user_id"),
     2: .same(proto: "state"),
     3: .standard(proto: "created_at"),
     4: .standard(proto: "updated_at"),
@@ -2573,6 +2574,7 @@ extension StoredPodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf._M
       case 6: try { try decoder.decodeSingularStringField(value: &self.ranking) }()
       case 7: try { try decoder.decodeRepeatedMessageField(value: &self.sections) }()
       case 8: try { try decoder.decodeSingularMessageField(value: &self._routine) }()
+      case 9: try { try decoder.decodeSingularStringField(value: &self.userID) }()
       case 101: try { try decoder.decodeSingularMessageField(value: &self._log) }()
       default: break
       }
@@ -2608,6 +2610,9 @@ extension StoredPodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf._M
     try { if let v = self._routine {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
     } }()
+    if !self.userID.isEmpty {
+      try visitor.visitSingularStringField(value: self.userID, fieldNumber: 9)
+    }
     try { if let v = self._log {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 101)
     } }()
@@ -2616,6 +2621,7 @@ extension StoredPodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf._M
 
   static func ==(lhs: StoredPodcastSuggestionsProto, rhs: StoredPodcastSuggestionsProto) -> Bool {
     if lhs.suggestionsID != rhs.suggestionsID {return false}
+    if lhs.userID != rhs.userID {return false}
     if lhs.state != rhs.state {return false}
     if lhs._createdAt != rhs._createdAt {return false}
     if lhs._updatedAt != rhs._updatedAt {return false}
@@ -2765,7 +2771,6 @@ extension StoredPodcastSuggestionProto: SwiftProtobuf.Message, SwiftProtobuf._Me
   static let protoMessageName: String = "StoredPodcastSuggestionProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "suggested_podcast_id"),
-    6: .standard(proto: "user_id"),
     2: .same(proto: "title"),
     3: .same(proto: "badge"),
     4: .standard(proto: "thumbnail_prompt"),
@@ -2783,7 +2788,6 @@ extension StoredPodcastSuggestionProto: SwiftProtobuf.Message, SwiftProtobuf._Me
       case 3: try { try decoder.decodeSingularStringField(value: &self.badge) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self.thumbnailPrompt) }()
       case 5: try { try decoder.decodeSingularStringField(value: &self.thumbnailKey) }()
-      case 6: try { try decoder.decodeSingularStringField(value: &self.userID) }()
       default: break
       }
     }
@@ -2805,15 +2809,11 @@ extension StoredPodcastSuggestionProto: SwiftProtobuf.Message, SwiftProtobuf._Me
     if !self.thumbnailKey.isEmpty {
       try visitor.visitSingularStringField(value: self.thumbnailKey, fieldNumber: 5)
     }
-    if !self.userID.isEmpty {
-      try visitor.visitSingularStringField(value: self.userID, fieldNumber: 6)
-    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: StoredPodcastSuggestionProto, rhs: StoredPodcastSuggestionProto) -> Bool {
     if lhs.suggestedPodcastID != rhs.suggestedPodcastID {return false}
-    if lhs.userID != rhs.userID {return false}
     if lhs.title != rhs.title {return false}
     if lhs.badge != rhs.badge {return false}
     if lhs.thumbnailPrompt != rhs.thumbnailPrompt {return false}

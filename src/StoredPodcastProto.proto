@@ -178,6 +178,7 @@ message StoredPodcastKeyPointProto {
 
 message StoredPodcastSuggestionsProto {
   string suggestions_id = 1;
+  string user_id = 9;
   StoredPodcastSuggestionsStateProto state = 2;
   google.protobuf.Timestamp created_at = 3;
   google.protobuf.Timestamp updated_at = 4;
@@ -214,7 +215,6 @@ message StoredPodcastSuggestionsSectionProto {
 
 message StoredPodcastSuggestionProto {
   string suggested_podcast_id = 1;
-  string user_id = 6;
   string title = 2;
   string badge = 3;  // Q&A, Explainer, ...
   string thumbnail_prompt = 4;
