@@ -148,7 +148,6 @@ message PodcastProto {
   PodcastAudioProto audio = 3;
 
   PodcastVisualsProto visuals = 4;
-  PodcastExerciseVisualsProto exercise_visuals = 9;
 
   PodcastTranscriptProto transcript = 5;
 
@@ -415,65 +414,4 @@ message PodcastRoutineProgressProto {
 message PodcastRoutineStepProgressProto {
   google.protobuf.Timestamp completed_at = 1;
   bool completed = 2;
-}
-
-message PodcastExerciseVisualsProto {
-  repeated PodcastExerciseVisualProto visuals = 1;
-}
-
-message PodcastExerciseVisualProto {
-  int32 timestamp_millis = 1;
-  PodcastExerciseVisualRepCounterProto rep_counter = 2;
-  PodcastExerciseVisualTextProto text = 3;
-  PodcastExerciseVisualMovementProto movement = 4;
-  PodcastExerciseVisualTipsProto tips = 5;
-}
-
-message PodcastExerciseVisualRepCounterProto {
-  int32 rep_number = 1;
-  int32 rep_total = 2;
-}
-
-message PodcastExerciseVisualTextProto {
-  string title = 1;
-  PodcastCardHeroProto hero = 2;
-}
-
-message PodcastExerciseVisualMovementProto {
-  PodcastExerciseMovementTypeProto movement_type = 1;
-}
-
-message PodcastExerciseVisualTipsProto {
-  repeated PodcastExerciseVisualTipProto tips = 1;
-}
-
-message PodcastExerciseVisualTipProto {
-  PodcastExerciseTipTypeProto type = 1;
-  string label = 2;
-}
-
-message PodcastExerciseRepCounterProto {
-  int32 rep_number = 1;
-  int32 rep_total = 2;
-}
-
-enum PodcastExerciseMovementTypeProto {
-  PODCAST_EXERCISE_MOVEMENT_TYPE_PROTO_UNDEFINED = 0;
-
-  // Breathing
-  PODCAST_EXERCISE_MOVEMENT_TYPE_PROTO_INHALE = 1;
-  PODCAST_EXERCISE_MOVEMENT_TYPE_PROTO_EXHALE = 2;
-  PODCAST_EXERCISE_MOVEMENT_TYPE_PROTO_HOLD_BREATH = 3;
-
-  // Static
-  PODCAST_EXERCISE_MOVEMENT_TYPE_PROTO_SQUEEZE = 4;
-  PODCAST_EXERCISE_MOVEMENT_TYPE_PROTO_RELAX = 5;
-
-  PODCAST_EXERCISE_MOVEMENT_TYPE_PROTO_ROLL = 6;
-}
-
-enum PodcastExerciseTipTypeProto {
-  PODCAST_EXERCISE_TIP_TYPE_PROTO_UNDEFINED = 0;
-  PODCAST_EXERCISE_TIP_TYPE_PROTO_CHECK = 1;
-  PODCAST_EXERCISE_TIP_TYPE_PROTO_WARNING = 2;
 }
