@@ -1069,21 +1069,9 @@ export interface PodcastRoutineSegmentProto {
  */
 export interface PodcastRoutineStepProto {
     /**
-     * @generated from protobuf field: string podcast_id = 4;
+     * @generated from protobuf field: PodcastThumbnailProto thumbnail = 5;
      */
-    podcastId: string;
-    /**
-     * @generated from protobuf field: string title = 1;
-     */
-    title: string;
-    /**
-     * @generated from protobuf field: string outline = 2;
-     */
-    outline: string;
-    /**
-     * @generated from protobuf field: string thumbnail_path = 3;
-     */
-    thumbnailPath: string;
+    thumbnail?: PodcastThumbnailProto;
 }
 /**
  * @generated from protobuf message PodcastAppStoreTransactionProto
@@ -4733,18 +4721,11 @@ export const PodcastRoutineSegmentProto = new PodcastRoutineSegmentProto$Type();
 class PodcastRoutineStepProto$Type extends MessageType<PodcastRoutineStepProto> {
     constructor() {
         super("PodcastRoutineStepProto", [
-            { no: 4, name: "podcast_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 1, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "outline", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "thumbnail_path", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 5, name: "thumbnail", kind: "message", T: () => PodcastThumbnailProto }
         ]);
     }
     create(value?: PartialMessage<PodcastRoutineStepProto>): PodcastRoutineStepProto {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.podcastId = "";
-        message.title = "";
-        message.outline = "";
-        message.thumbnailPath = "";
         if (value !== undefined)
             reflectionMergePartial<PodcastRoutineStepProto>(this, message, value);
         return message;
@@ -4754,17 +4735,8 @@ class PodcastRoutineStepProto$Type extends MessageType<PodcastRoutineStepProto> 
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string podcast_id */ 4:
-                    message.podcastId = reader.string();
-                    break;
-                case /* string title */ 1:
-                    message.title = reader.string();
-                    break;
-                case /* string outline */ 2:
-                    message.outline = reader.string();
-                    break;
-                case /* string thumbnail_path */ 3:
-                    message.thumbnailPath = reader.string();
+                case /* PodcastThumbnailProto thumbnail */ 5:
+                    message.thumbnail = PodcastThumbnailProto.internalBinaryRead(reader, reader.uint32(), options, message.thumbnail);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -4778,18 +4750,9 @@ class PodcastRoutineStepProto$Type extends MessageType<PodcastRoutineStepProto> 
         return message;
     }
     internalBinaryWrite(message: PodcastRoutineStepProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string podcast_id = 4; */
-        if (message.podcastId !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.podcastId);
-        /* string title = 1; */
-        if (message.title !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.title);
-        /* string outline = 2; */
-        if (message.outline !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.outline);
-        /* string thumbnail_path = 3; */
-        if (message.thumbnailPath !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.thumbnailPath);
+        /* PodcastThumbnailProto thumbnail = 5; */
+        if (message.thumbnail)
+            PodcastThumbnailProto.internalBinaryWrite(message.thumbnail, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

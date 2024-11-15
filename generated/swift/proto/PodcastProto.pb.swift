@@ -1589,17 +1589,20 @@ struct PodcastRoutineStepProto: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var podcastID: String = String()
-
-  var title: String = String()
-
-  var outline: String = String()
-
-  var thumbnailPath: String = String()
+  var thumbnail: PodcastThumbnailProto {
+    get {return _thumbnail ?? PodcastThumbnailProto()}
+    set {_thumbnail = newValue}
+  }
+  /// Returns true if `thumbnail` has been explicitly set.
+  var hasThumbnail: Bool {return self._thumbnail != nil}
+  /// Clears the value of `thumbnail`. Subsequent reads from it will return its default value.
+  mutating func clearThumbnail() {self._thumbnail = nil}
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
+
+  fileprivate var _thumbnail: PodcastThumbnailProto? = nil
 }
 
 struct PodcastAppStoreTransactionProto: Sendable {
@@ -4728,10 +4731,7 @@ extension PodcastRoutineSegmentProto: SwiftProtobuf.Message, SwiftProtobuf._Mess
 extension PodcastRoutineStepProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "PodcastRoutineStepProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    4: .standard(proto: "podcast_id"),
-    1: .same(proto: "title"),
-    2: .same(proto: "outline"),
-    3: .standard(proto: "thumbnail_path"),
+    5: .same(proto: "thumbnail"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -4740,36 +4740,25 @@ extension PodcastRoutineStepProto: SwiftProtobuf.Message, SwiftProtobuf._Message
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.title) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.outline) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.thumbnailPath) }()
-      case 4: try { try decoder.decodeSingularStringField(value: &self.podcastID) }()
+      case 5: try { try decoder.decodeSingularMessageField(value: &self._thumbnail) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.title.isEmpty {
-      try visitor.visitSingularStringField(value: self.title, fieldNumber: 1)
-    }
-    if !self.outline.isEmpty {
-      try visitor.visitSingularStringField(value: self.outline, fieldNumber: 2)
-    }
-    if !self.thumbnailPath.isEmpty {
-      try visitor.visitSingularStringField(value: self.thumbnailPath, fieldNumber: 3)
-    }
-    if !self.podcastID.isEmpty {
-      try visitor.visitSingularStringField(value: self.podcastID, fieldNumber: 4)
-    }
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._thumbnail {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: PodcastRoutineStepProto, rhs: PodcastRoutineStepProto) -> Bool {
-    if lhs.podcastID != rhs.podcastID {return false}
-    if lhs.title != rhs.title {return false}
-    if lhs.outline != rhs.outline {return false}
-    if lhs.thumbnailPath != rhs.thumbnailPath {return false}
+    if lhs._thumbnail != rhs._thumbnail {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

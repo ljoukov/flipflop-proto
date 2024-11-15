@@ -392,10 +392,8 @@ message PodcastRoutineSegmentProto {
 }
 
 message PodcastRoutineStepProto {
-  string podcast_id = 4;
-  string title = 1;
-  string outline = 2;
-  string thumbnail_path = 3;
+  reserved 1, 2, 3, 4;
+  PodcastThumbnailProto thumbnail = 5;
 }
 
 message PodcastAppStoreTransactionProto {
