@@ -354,7 +354,7 @@ message StoredPodcastExerciseSectionProto {
 
 message StoredPodcastExerciseSegmentProto {
   oneof type {
-    StoredPodcastSpokenSegmentProto spoken_segments = 1;
+    StoredPodcastSpokenSegmentProto spoken_segment = 1;
     StoredPodcastExerciseVisualRepsProto reps = 2;
     StoredPodcastExerciseVisualTextProto text = 3;
   }

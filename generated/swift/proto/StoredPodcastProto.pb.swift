@@ -1352,12 +1352,12 @@ struct StoredPodcastExerciseSegmentProto: Sendable {
 
   var type: StoredPodcastExerciseSegmentProto.OneOf_Type? = nil
 
-  var spokenSegments: StoredPodcastSpokenSegmentProto {
+  var spokenSegment: StoredPodcastSpokenSegmentProto {
     get {
-      if case .spokenSegments(let v)? = type {return v}
+      if case .spokenSegment(let v)? = type {return v}
       return StoredPodcastSpokenSegmentProto()
     }
-    set {type = .spokenSegments(newValue)}
+    set {type = .spokenSegment(newValue)}
   }
 
   var reps: StoredPodcastExerciseVisualRepsProto {
@@ -1379,7 +1379,7 @@ struct StoredPodcastExerciseSegmentProto: Sendable {
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_Type: Equatable, Sendable {
-    case spokenSegments(StoredPodcastSpokenSegmentProto)
+    case spokenSegment(StoredPodcastSpokenSegmentProto)
     case reps(StoredPodcastExerciseVisualRepsProto)
     case text(StoredPodcastExerciseVisualTextProto)
 
@@ -3828,7 +3828,7 @@ extension StoredPodcastExerciseSectionProto: SwiftProtobuf.Message, SwiftProtobu
 extension StoredPodcastExerciseSegmentProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "StoredPodcastExerciseSegmentProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "spoken_segments"),
+    1: .standard(proto: "spoken_segment"),
     2: .same(proto: "reps"),
     3: .same(proto: "text"),
   ]
@@ -3844,12 +3844,12 @@ extension StoredPodcastExerciseSegmentProto: SwiftProtobuf.Message, SwiftProtobu
         var hadOneofValue = false
         if let current = self.type {
           hadOneofValue = true
-          if case .spokenSegments(let m) = current {v = m}
+          if case .spokenSegment(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.type = .spokenSegments(v)
+          self.type = .spokenSegment(v)
         }
       }()
       case 2: try {
@@ -3889,8 +3889,8 @@ extension StoredPodcastExerciseSegmentProto: SwiftProtobuf.Message, SwiftProtobu
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
     switch self.type {
-    case .spokenSegments?: try {
-      guard case .spokenSegments(let v)? = self.type else { preconditionFailure() }
+    case .spokenSegment?: try {
+      guard case .spokenSegment(let v)? = self.type else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
     }()
     case .reps?: try {

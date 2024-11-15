@@ -841,11 +841,11 @@ export interface StoredPodcastExerciseSegmentProto {
      * @generated from protobuf oneof: type
      */
     type: {
-        oneofKind: "spokenSegments";
+        oneofKind: "spokenSegment";
         /**
-         * @generated from protobuf field: StoredPodcastSpokenSegmentProto spoken_segments = 1;
+         * @generated from protobuf field: StoredPodcastSpokenSegmentProto spoken_segment = 1;
          */
-        spokenSegments: StoredPodcastSpokenSegmentProto;
+        spokenSegment: StoredPodcastSpokenSegmentProto;
     } | {
         oneofKind: "reps";
         /**
@@ -3715,7 +3715,7 @@ export const StoredPodcastExerciseSectionProto = new StoredPodcastExerciseSectio
 class StoredPodcastExerciseSegmentProto$Type extends MessageType<StoredPodcastExerciseSegmentProto> {
     constructor() {
         super("StoredPodcastExerciseSegmentProto", [
-            { no: 1, name: "spoken_segments", kind: "message", oneof: "type", T: () => StoredPodcastSpokenSegmentProto },
+            { no: 1, name: "spoken_segment", kind: "message", oneof: "type", T: () => StoredPodcastSpokenSegmentProto },
             { no: 2, name: "reps", kind: "message", oneof: "type", T: () => StoredPodcastExerciseVisualRepsProto },
             { no: 3, name: "text", kind: "message", oneof: "type", T: () => StoredPodcastExerciseVisualTextProto }
         ]);
@@ -3732,10 +3732,10 @@ class StoredPodcastExerciseSegmentProto$Type extends MessageType<StoredPodcastEx
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* StoredPodcastSpokenSegmentProto spoken_segments */ 1:
+                case /* StoredPodcastSpokenSegmentProto spoken_segment */ 1:
                     message.type = {
-                        oneofKind: "spokenSegments",
-                        spokenSegments: StoredPodcastSpokenSegmentProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).spokenSegments)
+                        oneofKind: "spokenSegment",
+                        spokenSegment: StoredPodcastSpokenSegmentProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).spokenSegment)
                     };
                     break;
                 case /* StoredPodcastExerciseVisualRepsProto reps */ 2:
@@ -3762,9 +3762,9 @@ class StoredPodcastExerciseSegmentProto$Type extends MessageType<StoredPodcastEx
         return message;
     }
     internalBinaryWrite(message: StoredPodcastExerciseSegmentProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* StoredPodcastSpokenSegmentProto spoken_segments = 1; */
-        if (message.type.oneofKind === "spokenSegments")
-            StoredPodcastSpokenSegmentProto.internalBinaryWrite(message.type.spokenSegments, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* StoredPodcastSpokenSegmentProto spoken_segment = 1; */
+        if (message.type.oneofKind === "spokenSegment")
+            StoredPodcastSpokenSegmentProto.internalBinaryWrite(message.type.spokenSegment, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         /* StoredPodcastExerciseVisualRepsProto reps = 2; */
         if (message.type.oneofKind === "reps")
             StoredPodcastExerciseVisualRepsProto.internalBinaryWrite(message.type.reps, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
