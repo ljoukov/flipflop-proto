@@ -1427,12 +1427,36 @@ struct StoredPodcastSpokenSegmentProto: Sendable {
   /// Clears the value of `minDuration`. Subsequent reads from it will return its default value.
   mutating func clearMinDuration() {self._minDuration = nil}
 
+  var timing: StoredPodcastSpokenSegmentTimingProto {
+    get {return _timing ?? StoredPodcastSpokenSegmentTimingProto()}
+    set {_timing = newValue}
+  }
+  /// Returns true if `timing` has been explicitly set.
+  var hasTiming: Bool {return self._timing != nil}
+  /// Clears the value of `timing`. Subsequent reads from it will return its default value.
+  mutating func clearTiming() {self._timing = nil}
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 
   fileprivate var _leadingPause: SwiftProtobuf.Google_Protobuf_Duration? = nil
   fileprivate var _minDuration: SwiftProtobuf.Google_Protobuf_Duration? = nil
+  fileprivate var _timing: StoredPodcastSpokenSegmentTimingProto? = nil
+}
+
+struct StoredPodcastSpokenSegmentTimingProto: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var startMillis: Int32 = 0
+
+  var endMillis: Int32 = 0
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
 }
 
 struct StoredPodcastExerciseVisualTextProto: Sendable {
@@ -3933,6 +3957,7 @@ extension StoredPodcastSpokenSegmentProto: SwiftProtobuf.Message, SwiftProtobuf.
     1: .same(proto: "text"),
     2: .standard(proto: "leading_pause"),
     3: .standard(proto: "min_duration"),
+    4: .same(proto: "timing"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3944,6 +3969,7 @@ extension StoredPodcastSpokenSegmentProto: SwiftProtobuf.Message, SwiftProtobuf.
       case 1: try { try decoder.decodeSingularStringField(value: &self.text) }()
       case 2: try { try decoder.decodeSingularMessageField(value: &self._leadingPause) }()
       case 3: try { try decoder.decodeSingularMessageField(value: &self._minDuration) }()
+      case 4: try { try decoder.decodeSingularMessageField(value: &self._timing) }()
       default: break
       }
     }
@@ -3963,6 +3989,9 @@ extension StoredPodcastSpokenSegmentProto: SwiftProtobuf.Message, SwiftProtobuf.
     try { if let v = self._minDuration {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
     } }()
+    try { if let v = self._timing {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -3970,6 +3999,45 @@ extension StoredPodcastSpokenSegmentProto: SwiftProtobuf.Message, SwiftProtobuf.
     if lhs.text != rhs.text {return false}
     if lhs._leadingPause != rhs._leadingPause {return false}
     if lhs._minDuration != rhs._minDuration {return false}
+    if lhs._timing != rhs._timing {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension StoredPodcastSpokenSegmentTimingProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredPodcastSpokenSegmentTimingProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "start_millis"),
+    2: .standard(proto: "end_millis"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularInt32Field(value: &self.startMillis) }()
+      case 2: try { try decoder.decodeSingularInt32Field(value: &self.endMillis) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.startMillis != 0 {
+      try visitor.visitSingularInt32Field(value: self.startMillis, fieldNumber: 1)
+    }
+    if self.endMillis != 0 {
+      try visitor.visitSingularInt32Field(value: self.endMillis, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: StoredPodcastSpokenSegmentTimingProto, rhs: StoredPodcastSpokenSegmentTimingProto) -> Bool {
+    if lhs.startMillis != rhs.startMillis {return false}
+    if lhs.endMillis != rhs.endMillis {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

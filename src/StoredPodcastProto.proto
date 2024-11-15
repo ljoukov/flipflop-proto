@@ -369,6 +369,12 @@ message StoredPodcastSpokenSegmentProto {
   string text = 1;
   google.protobuf.Duration leading_pause = 2;
   google.protobuf.Duration min_duration = 3;
+  StoredPodcastSpokenSegmentTimingProto timing = 4;
+}
+
+message StoredPodcastSpokenSegmentTimingProto {
+  int32 start_millis = 1;
+  int32 end_millis = 2;
 }
 
 message StoredPodcastExerciseVisualTextProto {
