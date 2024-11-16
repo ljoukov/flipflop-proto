@@ -1247,57 +1247,37 @@ struct StoredPodcastRoutineStepProto: Sendable {
   init() {}
 }
 
-struct StoredPodcastExerciseProto: @unchecked Sendable {
+struct StoredPodcastExerciseProto: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   var plan: StoredPodcastExercisePlanProto {
-    get {return _storage._plan ?? StoredPodcastExercisePlanProto()}
-    set {_uniqueStorage()._plan = newValue}
+    get {return _plan ?? StoredPodcastExercisePlanProto()}
+    set {_plan = newValue}
   }
   /// Returns true if `plan` has been explicitly set.
-  var hasPlan: Bool {return _storage._plan != nil}
+  var hasPlan: Bool {return self._plan != nil}
   /// Clears the value of `plan`. Subsequent reads from it will return its default value.
-  mutating func clearPlan() {_uniqueStorage()._plan = nil}
+  mutating func clearPlan() {self._plan = nil}
 
-  var warmup: StoredPodcastExerciseSectionProto {
-    get {return _storage._warmup ?? StoredPodcastExerciseSectionProto()}
-    set {_uniqueStorage()._warmup = newValue}
-  }
-  /// Returns true if `warmup` has been explicitly set.
-  var hasWarmup: Bool {return _storage._warmup != nil}
-  /// Clears the value of `warmup`. Subsequent reads from it will return its default value.
-  mutating func clearWarmup() {_uniqueStorage()._warmup = nil}
-
-  var exercises: [StoredPodcastExerciseSectionProto] {
-    get {return _storage._exercises}
-    set {_uniqueStorage()._exercises = newValue}
-  }
-
-  var cooldown: StoredPodcastExerciseSectionProto {
-    get {return _storage._cooldown ?? StoredPodcastExerciseSectionProto()}
-    set {_uniqueStorage()._cooldown = newValue}
-  }
-  /// Returns true if `cooldown` has been explicitly set.
-  var hasCooldown: Bool {return _storage._cooldown != nil}
-  /// Clears the value of `cooldown`. Subsequent reads from it will return its default value.
-  mutating func clearCooldown() {_uniqueStorage()._cooldown = nil}
+  var sections: [StoredPodcastExerciseSectionProto] = []
 
   var style: StoredPodcastStyleProto {
-    get {return _storage._style ?? StoredPodcastStyleProto()}
-    set {_uniqueStorage()._style = newValue}
+    get {return _style ?? StoredPodcastStyleProto()}
+    set {_style = newValue}
   }
   /// Returns true if `style` has been explicitly set.
-  var hasStyle: Bool {return _storage._style != nil}
+  var hasStyle: Bool {return self._style != nil}
   /// Clears the value of `style`. Subsequent reads from it will return its default value.
-  mutating func clearStyle() {_uniqueStorage()._style = nil}
+  mutating func clearStyle() {self._style = nil}
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 
-  fileprivate var _storage = _StorageClass.defaultInstance
+  fileprivate var _plan: StoredPodcastExercisePlanProto? = nil
+  fileprivate var _style: StoredPodcastStyleProto? = nil
 }
 
 struct StoredPodcastExercisePlanProto: Sendable {
@@ -1313,11 +1293,21 @@ struct StoredPodcastExercisePlanProto: Sendable {
 
   var selectedCategory: String = String()
 
-  var warmup: String = String()
+  var sections: [StoredPodcastExerciseSectionPlanProto] = []
 
-  var exercises: [String] = []
+  var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  var cooldown: String = String()
+  init() {}
+}
+
+struct StoredPodcastExerciseSectionPlanProto: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var label: String = String()
+
+  var plan: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -1329,6 +1319,8 @@ struct StoredPodcastExerciseSectionProto: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  var label: String = String()
+
   var segments: [StoredPodcastExerciseSegmentProto] = []
 
   var background: StoredPodcastExerciseSectionBackgroundProto {
@@ -1339,8 +1331,6 @@ struct StoredPodcastExerciseSectionProto: Sendable {
   var hasBackground: Bool {return self._background != nil}
   /// Clears the value of `background`. Subsequent reads from it will return its default value.
   mutating func clearBackground() {self._background = nil}
-
-  var llmRequestID: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -3621,105 +3611,45 @@ extension StoredPodcastExerciseProto: SwiftProtobuf.Message, SwiftProtobuf._Mess
   static let protoMessageName: String = "StoredPodcastExerciseProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "plan"),
-    2: .same(proto: "warmup"),
-    3: .same(proto: "exercises"),
-    4: .same(proto: "cooldown"),
+    6: .same(proto: "sections"),
     5: .same(proto: "style"),
   ]
 
-  fileprivate class _StorageClass {
-    var _plan: StoredPodcastExercisePlanProto? = nil
-    var _warmup: StoredPodcastExerciseSectionProto? = nil
-    var _exercises: [StoredPodcastExerciseSectionProto] = []
-    var _cooldown: StoredPodcastExerciseSectionProto? = nil
-    var _style: StoredPodcastStyleProto? = nil
-
-    #if swift(>=5.10)
-      // This property is used as the initial default value for new instances of the type.
-      // The type itself is protecting the reference to its storage via CoW semantics.
-      // This will force a copy to be made of this reference when the first mutation occurs;
-      // hence, it is safe to mark this as `nonisolated(unsafe)`.
-      static nonisolated(unsafe) let defaultInstance = _StorageClass()
-    #else
-      static let defaultInstance = _StorageClass()
-    #endif
-
-    private init() {}
-
-    init(copying source: _StorageClass) {
-      _plan = source._plan
-      _warmup = source._warmup
-      _exercises = source._exercises
-      _cooldown = source._cooldown
-      _style = source._style
-    }
-  }
-
-  fileprivate mutating func _uniqueStorage() -> _StorageClass {
-    if !isKnownUniquelyReferenced(&_storage) {
-      _storage = _StorageClass(copying: _storage)
-    }
-    return _storage
-  }
-
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    _ = _uniqueStorage()
-    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
-      while let fieldNumber = try decoder.nextFieldNumber() {
-        // The use of inline closures is to circumvent an issue where the compiler
-        // allocates stack space for every case branch when no optimizations are
-        // enabled. https://github.com/apple/swift-protobuf/issues/1034
-        switch fieldNumber {
-        case 1: try { try decoder.decodeSingularMessageField(value: &_storage._plan) }()
-        case 2: try { try decoder.decodeSingularMessageField(value: &_storage._warmup) }()
-        case 3: try { try decoder.decodeRepeatedMessageField(value: &_storage._exercises) }()
-        case 4: try { try decoder.decodeSingularMessageField(value: &_storage._cooldown) }()
-        case 5: try { try decoder.decodeSingularMessageField(value: &_storage._style) }()
-        default: break
-        }
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._plan) }()
+      case 5: try { try decoder.decodeSingularMessageField(value: &self._style) }()
+      case 6: try { try decoder.decodeRepeatedMessageField(value: &self.sections) }()
+      default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every if/case branch local when no optimizations
-      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-      // https://github.com/apple/swift-protobuf/issues/1182
-      try { if let v = _storage._plan {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-      } }()
-      try { if let v = _storage._warmup {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
-      } }()
-      if !_storage._exercises.isEmpty {
-        try visitor.visitRepeatedMessageField(value: _storage._exercises, fieldNumber: 3)
-      }
-      try { if let v = _storage._cooldown {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
-      } }()
-      try { if let v = _storage._style {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
-      } }()
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._plan {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    try { if let v = self._style {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
+    } }()
+    if !self.sections.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.sections, fieldNumber: 6)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: StoredPodcastExerciseProto, rhs: StoredPodcastExerciseProto) -> Bool {
-    if lhs._storage !== rhs._storage {
-      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
-        let _storage = _args.0
-        let rhs_storage = _args.1
-        if _storage._plan != rhs_storage._plan {return false}
-        if _storage._warmup != rhs_storage._warmup {return false}
-        if _storage._exercises != rhs_storage._exercises {return false}
-        if _storage._cooldown != rhs_storage._cooldown {return false}
-        if _storage._style != rhs_storage._style {return false}
-        return true
-      }
-      if !storagesAreEqual {return false}
-    }
+    if lhs._plan != rhs._plan {return false}
+    if lhs.sections != rhs.sections {return false}
+    if lhs._style != rhs._style {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -3732,9 +3662,7 @@ extension StoredPodcastExercisePlanProto: SwiftProtobuf.Message, SwiftProtobuf._
     2: .same(proto: "ideas"),
     3: .same(proto: "reasoning"),
     4: .standard(proto: "selected_category"),
-    5: .same(proto: "warmup"),
-    6: .same(proto: "exercises"),
-    7: .same(proto: "cooldown"),
+    8: .same(proto: "sections"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3747,9 +3675,7 @@ extension StoredPodcastExercisePlanProto: SwiftProtobuf.Message, SwiftProtobuf._
       case 2: try { try decoder.decodeSingularStringField(value: &self.ideas) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.reasoning) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self.selectedCategory) }()
-      case 5: try { try decoder.decodeSingularStringField(value: &self.warmup) }()
-      case 6: try { try decoder.decodeRepeatedStringField(value: &self.exercises) }()
-      case 7: try { try decoder.decodeSingularStringField(value: &self.cooldown) }()
+      case 8: try { try decoder.decodeRepeatedMessageField(value: &self.sections) }()
       default: break
       }
     }
@@ -3768,14 +3694,8 @@ extension StoredPodcastExercisePlanProto: SwiftProtobuf.Message, SwiftProtobuf._
     if !self.selectedCategory.isEmpty {
       try visitor.visitSingularStringField(value: self.selectedCategory, fieldNumber: 4)
     }
-    if !self.warmup.isEmpty {
-      try visitor.visitSingularStringField(value: self.warmup, fieldNumber: 5)
-    }
-    if !self.exercises.isEmpty {
-      try visitor.visitRepeatedStringField(value: self.exercises, fieldNumber: 6)
-    }
-    if !self.cooldown.isEmpty {
-      try visitor.visitSingularStringField(value: self.cooldown, fieldNumber: 7)
+    if !self.sections.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.sections, fieldNumber: 8)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -3785,9 +3705,45 @@ extension StoredPodcastExercisePlanProto: SwiftProtobuf.Message, SwiftProtobuf._
     if lhs.ideas != rhs.ideas {return false}
     if lhs.reasoning != rhs.reasoning {return false}
     if lhs.selectedCategory != rhs.selectedCategory {return false}
-    if lhs.warmup != rhs.warmup {return false}
-    if lhs.exercises != rhs.exercises {return false}
-    if lhs.cooldown != rhs.cooldown {return false}
+    if lhs.sections != rhs.sections {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension StoredPodcastExerciseSectionPlanProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredPodcastExerciseSectionPlanProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "label"),
+    2: .same(proto: "plan"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.label) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.plan) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.label.isEmpty {
+      try visitor.visitSingularStringField(value: self.label, fieldNumber: 1)
+    }
+    if !self.plan.isEmpty {
+      try visitor.visitSingularStringField(value: self.plan, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: StoredPodcastExerciseSectionPlanProto, rhs: StoredPodcastExerciseSectionPlanProto) -> Bool {
+    if lhs.label != rhs.label {return false}
+    if lhs.plan != rhs.plan {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -3796,9 +3752,9 @@ extension StoredPodcastExercisePlanProto: SwiftProtobuf.Message, SwiftProtobuf._
 extension StoredPodcastExerciseSectionProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "StoredPodcastExerciseSectionProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    3: .same(proto: "label"),
     1: .same(proto: "segments"),
     2: .same(proto: "background"),
-    100: .standard(proto: "llm_request_id"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3809,7 +3765,7 @@ extension StoredPodcastExerciseSectionProto: SwiftProtobuf.Message, SwiftProtobu
       switch fieldNumber {
       case 1: try { try decoder.decodeRepeatedMessageField(value: &self.segments) }()
       case 2: try { try decoder.decodeSingularMessageField(value: &self._background) }()
-      case 100: try { try decoder.decodeSingularStringField(value: &self.llmRequestID) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.label) }()
       default: break
       }
     }
@@ -3826,16 +3782,16 @@ extension StoredPodcastExerciseSectionProto: SwiftProtobuf.Message, SwiftProtobu
     try { if let v = self._background {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     } }()
-    if !self.llmRequestID.isEmpty {
-      try visitor.visitSingularStringField(value: self.llmRequestID, fieldNumber: 100)
+    if !self.label.isEmpty {
+      try visitor.visitSingularStringField(value: self.label, fieldNumber: 3)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: StoredPodcastExerciseSectionProto, rhs: StoredPodcastExerciseSectionProto) -> Bool {
+    if lhs.label != rhs.label {return false}
     if lhs.segments != rhs.segments {return false}
     if lhs._background != rhs._background {return false}
-    if lhs.llmRequestID != rhs.llmRequestID {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
