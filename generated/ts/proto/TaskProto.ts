@@ -55,13 +55,13 @@ export interface TaskProto {
  */
 export interface GeneratePodcastTaskProto {
     /**
-     * @generated from protobuf field: string user_id = 1;
-     */
-    userId: string;
-    /**
-     * @generated from protobuf field: string podcast_id = 2;
+     * @generated from protobuf field: string podcast_id = 1;
      */
     podcastId: string;
+    /**
+     * @generated from protobuf field: bool ignore_generated = 2;
+     */
+    ignoreGenerated: boolean;
 }
 /**
  * @generated from protobuf message GeneratePodcastSuggestionsTaskProto
@@ -174,14 +174,14 @@ export const TaskProto = new TaskProto$Type();
 class GeneratePodcastTaskProto$Type extends MessageType<GeneratePodcastTaskProto> {
     constructor() {
         super("GeneratePodcastTaskProto", [
-            { no: 1, name: "user_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "podcast_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "podcast_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "ignore_generated", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
     create(value?: PartialMessage<GeneratePodcastTaskProto>): GeneratePodcastTaskProto {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.userId = "";
         message.podcastId = "";
+        message.ignoreGenerated = false;
         if (value !== undefined)
             reflectionMergePartial<GeneratePodcastTaskProto>(this, message, value);
         return message;
@@ -191,11 +191,11 @@ class GeneratePodcastTaskProto$Type extends MessageType<GeneratePodcastTaskProto
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string user_id */ 1:
-                    message.userId = reader.string();
-                    break;
-                case /* string podcast_id */ 2:
+                case /* string podcast_id */ 1:
                     message.podcastId = reader.string();
+                    break;
+                case /* bool ignore_generated */ 2:
+                    message.ignoreGenerated = reader.bool();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -209,12 +209,12 @@ class GeneratePodcastTaskProto$Type extends MessageType<GeneratePodcastTaskProto
         return message;
     }
     internalBinaryWrite(message: GeneratePodcastTaskProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string user_id = 1; */
-        if (message.userId !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.userId);
-        /* string podcast_id = 2; */
+        /* string podcast_id = 1; */
         if (message.podcastId !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.podcastId);
+            writer.tag(1, WireType.LengthDelimited).string(message.podcastId);
+        /* bool ignore_generated = 2; */
+        if (message.ignoreGenerated !== false)
+            writer.tag(2, WireType.Varint).bool(message.ignoreGenerated);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

@@ -15,8 +15,8 @@ message TaskProto {
 }
 
 message GeneratePodcastTaskProto {
-  string user_id = 1;
-  string podcast_id = 2;
+  string podcast_id = 1;
+  bool ignore_generated = 2;
 }
 
 message GeneratePodcastSuggestionsTaskProto {

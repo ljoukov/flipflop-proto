@@ -83,9 +83,9 @@ struct GeneratePodcastTaskProto: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var userID: String = String()
-
   var podcastID: String = String()
+
+  var ignoreGenerated: Bool = false
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -223,8 +223,8 @@ extension TaskProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementation
 extension GeneratePodcastTaskProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "GeneratePodcastTaskProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "user_id"),
-    2: .standard(proto: "podcast_id"),
+    1: .standard(proto: "podcast_id"),
+    2: .standard(proto: "ignore_generated"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -233,26 +233,26 @@ extension GeneratePodcastTaskProto: SwiftProtobuf.Message, SwiftProtobuf._Messag
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.userID) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.podcastID) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self.podcastID) }()
+      case 2: try { try decoder.decodeSingularBoolField(value: &self.ignoreGenerated) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.userID.isEmpty {
-      try visitor.visitSingularStringField(value: self.userID, fieldNumber: 1)
-    }
     if !self.podcastID.isEmpty {
-      try visitor.visitSingularStringField(value: self.podcastID, fieldNumber: 2)
+      try visitor.visitSingularStringField(value: self.podcastID, fieldNumber: 1)
+    }
+    if self.ignoreGenerated != false {
+      try visitor.visitSingularBoolField(value: self.ignoreGenerated, fieldNumber: 2)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: GeneratePodcastTaskProto, rhs: GeneratePodcastTaskProto) -> Bool {
-    if lhs.userID != rhs.userID {return false}
     if lhs.podcastID != rhs.podcastID {return false}
+    if lhs.ignoreGenerated != rhs.ignoreGenerated {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

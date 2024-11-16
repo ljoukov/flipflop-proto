@@ -25,7 +25,7 @@ _sym_db = _symbol_database.Default()
 from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0fTaskProto.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xa4\x02\n\tTaskProto\x12\x0f\n\x07task_id\x18\x01 \x01(\t\x12.\n\ncreated_at\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x35\n\x10generate_podcast\x18\n \x01(\x0b\x32\x19.GeneratePodcastTaskProtoH\x00\x12\x44\n\x14generate_suggestions\x18\x0b \x01(\x0b\x32$.GeneratePodcastSuggestionsTaskProtoH\x00\x12Q\n\x1bgenerate_global_suggestions\x18\x0c \x01(\x0b\x32*.GeneratePodcastGlobalSuggestionsTaskProtoH\x00\x42\x06\n\x04type\"?\n\x18GeneratePodcastTaskProto\x12\x0f\n\x07user_id\x18\x01 \x01(\t\x12\x12\n\npodcast_id\x18\x02 \x01(\t\"6\n#GeneratePodcastSuggestionsTaskProto\x12\x0f\n\x07user_id\x18\x01 \x01(\t\"r\n)GeneratePodcastGlobalSuggestionsTaskProto\x12!\n\x19ignore_recently_generated\x18\x01 \x01(\x08\x12\"\n\x1aignore_partially_generated\x18\x02 \x01(\x08\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0fTaskProto.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xa4\x02\n\tTaskProto\x12\x0f\n\x07task_id\x18\x01 \x01(\t\x12.\n\ncreated_at\x18\x02 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x35\n\x10generate_podcast\x18\n \x01(\x0b\x32\x19.GeneratePodcastTaskProtoH\x00\x12\x44\n\x14generate_suggestions\x18\x0b \x01(\x0b\x32$.GeneratePodcastSuggestionsTaskProtoH\x00\x12Q\n\x1bgenerate_global_suggestions\x18\x0c \x01(\x0b\x32*.GeneratePodcastGlobalSuggestionsTaskProtoH\x00\x42\x06\n\x04type\"H\n\x18GeneratePodcastTaskProto\x12\x12\n\npodcast_id\x18\x01 \x01(\t\x12\x18\n\x10ignore_generated\x18\x02 \x01(\x08\"6\n#GeneratePodcastSuggestionsTaskProto\x12\x0f\n\x07user_id\x18\x01 \x01(\t\"r\n)GeneratePodcastGlobalSuggestionsTaskProto\x12!\n\x19ignore_recently_generated\x18\x01 \x01(\x08\x12\"\n\x1aignore_partially_generated\x18\x02 \x01(\x08\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -35,9 +35,9 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['_TASKPROTO']._serialized_start=53
   _globals['_TASKPROTO']._serialized_end=345
   _globals['_GENERATEPODCASTTASKPROTO']._serialized_start=347
-  _globals['_GENERATEPODCASTTASKPROTO']._serialized_end=410
-  _globals['_GENERATEPODCASTSUGGESTIONSTASKPROTO']._serialized_start=412
-  _globals['_GENERATEPODCASTSUGGESTIONSTASKPROTO']._serialized_end=466
-  _globals['_GENERATEPODCASTGLOBALSUGGESTIONSTASKPROTO']._serialized_start=468
-  _globals['_GENERATEPODCASTGLOBALSUGGESTIONSTASKPROTO']._serialized_end=582
+  _globals['_GENERATEPODCASTTASKPROTO']._serialized_end=419
+  _globals['_GENERATEPODCASTSUGGESTIONSTASKPROTO']._serialized_start=421
+  _globals['_GENERATEPODCASTSUGGESTIONSTASKPROTO']._serialized_end=475
+  _globals['_GENERATEPODCASTGLOBALSUGGESTIONSTASKPROTO']._serialized_start=477
+  _globals['_GENERATEPODCASTGLOBALSUGGESTIONSTASKPROTO']._serialized_end=591
 # @@protoc_insertion_point(module_scope)
