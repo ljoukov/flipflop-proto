@@ -362,8 +362,8 @@ struct StoredPodcastProto: @unchecked Sendable {
   /// Clears the value of `suggestionInput`. Subsequent reads from it will return its default value.
   mutating func clearSuggestionInput() {_uniqueStorage()._suggestionInput = nil}
 
-  var routineInput: StoredPodcastRoutineInputProto {
-    get {return _storage._routineInput ?? StoredPodcastRoutineInputProto()}
+  var routineInput: StoredPodcastRoutineStepInputProto {
+    get {return _storage._routineInput ?? StoredPodcastRoutineStepInputProto()}
     set {_uniqueStorage()._routineInput = newValue}
   }
   /// Returns true if `routineInput` has been explicitly set.
@@ -538,7 +538,7 @@ struct StoredPodcastSuggestionInputProto: Sendable {
   fileprivate var _userInput: StoredPodcastSuggestionUserInputProto? = nil
 }
 
-struct StoredPodcastRoutineInputProto: Sendable {
+struct StoredPodcastRoutineStepInputProto: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -546,6 +546,10 @@ struct StoredPodcastRoutineInputProto: Sendable {
   var routineID: String = String()
 
   var title: String = String()
+
+  var routineReasoning: String = String()
+
+  var stepOutline: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -1671,7 +1675,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     var _deletedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
     var _userInput: StoredPodcastUserInputProto? = nil
     var _suggestionInput: StoredPodcastSuggestionInputProto? = nil
-    var _routineInput: StoredPodcastRoutineInputProto? = nil
+    var _routineInput: StoredPodcastRoutineStepInputProto? = nil
     var _state: StoredPodcastStateProto = .unknown
     var _answer: PodcastPromptAnswerProto? = nil
     var _points: StoredPodcastPointsProto? = nil
@@ -1983,11 +1987,13 @@ extension StoredPodcastSuggestionInputProto: SwiftProtobuf.Message, SwiftProtobu
   }
 }
 
-extension StoredPodcastRoutineInputProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "StoredPodcastRoutineInputProto"
+extension StoredPodcastRoutineStepInputProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredPodcastRoutineStepInputProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "routine_id"),
     2: .same(proto: "title"),
+    3: .standard(proto: "routine_reasoning"),
+    4: .standard(proto: "step_outline"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1998,6 +2004,8 @@ extension StoredPodcastRoutineInputProto: SwiftProtobuf.Message, SwiftProtobuf._
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.routineID) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.title) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.routineReasoning) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.stepOutline) }()
       default: break
       }
     }
@@ -2010,12 +2018,20 @@ extension StoredPodcastRoutineInputProto: SwiftProtobuf.Message, SwiftProtobuf._
     if !self.title.isEmpty {
       try visitor.visitSingularStringField(value: self.title, fieldNumber: 2)
     }
+    if !self.routineReasoning.isEmpty {
+      try visitor.visitSingularStringField(value: self.routineReasoning, fieldNumber: 3)
+    }
+    if !self.stepOutline.isEmpty {
+      try visitor.visitSingularStringField(value: self.stepOutline, fieldNumber: 4)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: StoredPodcastRoutineInputProto, rhs: StoredPodcastRoutineInputProto) -> Bool {
+  static func ==(lhs: StoredPodcastRoutineStepInputProto, rhs: StoredPodcastRoutineStepInputProto) -> Bool {
     if lhs.routineID != rhs.routineID {return false}
     if lhs.title != rhs.title {return false}
+    if lhs.routineReasoning != rhs.routineReasoning {return false}
+    if lhs.stepOutline != rhs.stepOutline {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

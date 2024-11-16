@@ -16,7 +16,7 @@ message StoredPodcastProto {
 
   StoredPodcastUserInputProto user_input = 5;
   StoredPodcastSuggestionInputProto suggestion_input = 15;
-  StoredPodcastRoutineInputProto routine_input = 19;
+  StoredPodcastRoutineStepInputProto routine_input = 19;
 
   StoredPodcastStateProto state = 6;
 
@@ -76,9 +76,11 @@ message StoredPodcastSuggestionInputProto {
   StoredPodcastSuggestionUserInputProto user_input = 7;
 }
 
-message StoredPodcastRoutineInputProto {
+message StoredPodcastRoutineStepInputProto {
   string routine_id = 1;
   string title = 2;
+  string routine_reasoning = 3;
+  string step_outline = 4;
 }
 
 message StoredPodcastSuggestionUserInputProto {

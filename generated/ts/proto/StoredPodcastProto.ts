@@ -52,9 +52,9 @@ export interface StoredPodcastProto {
      */
     suggestionInput?: StoredPodcastSuggestionInputProto;
     /**
-     * @generated from protobuf field: StoredPodcastRoutineInputProto routine_input = 19;
+     * @generated from protobuf field: StoredPodcastRoutineStepInputProto routine_input = 19;
      */
-    routineInput?: StoredPodcastRoutineInputProto;
+    routineInput?: StoredPodcastRoutineStepInputProto;
     /**
      * @generated from protobuf field: StoredPodcastStateProto state = 6;
      */
@@ -157,9 +157,9 @@ export interface StoredPodcastSuggestionInputProto {
     userInput?: StoredPodcastSuggestionUserInputProto;
 }
 /**
- * @generated from protobuf message StoredPodcastRoutineInputProto
+ * @generated from protobuf message StoredPodcastRoutineStepInputProto
  */
-export interface StoredPodcastRoutineInputProto {
+export interface StoredPodcastRoutineStepInputProto {
     /**
      * @generated from protobuf field: string routine_id = 1;
      */
@@ -168,6 +168,14 @@ export interface StoredPodcastRoutineInputProto {
      * @generated from protobuf field: string title = 2;
      */
     title: string;
+    /**
+     * @generated from protobuf field: string routine_reasoning = 3;
+     */
+    routineReasoning: string;
+    /**
+     * @generated from protobuf field: string step_outline = 4;
+     */
+    stepOutline: string;
 }
 /**
  * @generated from protobuf message StoredPodcastSuggestionUserInputProto
@@ -1155,7 +1163,7 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
             { no: 16, name: "deleted_at", kind: "message", T: () => Timestamp },
             { no: 5, name: "user_input", kind: "message", T: () => StoredPodcastUserInputProto },
             { no: 15, name: "suggestion_input", kind: "message", T: () => StoredPodcastSuggestionInputProto },
-            { no: 19, name: "routine_input", kind: "message", T: () => StoredPodcastRoutineInputProto },
+            { no: 19, name: "routine_input", kind: "message", T: () => StoredPodcastRoutineStepInputProto },
             { no: 6, name: "state", kind: "enum", T: () => ["StoredPodcastStateProto", StoredPodcastStateProto, "STORED_PODCAST_STATE_PROTO_"] },
             { no: 7, name: "answer", kind: "message", T: () => PodcastPromptAnswerProto },
             { no: 8, name: "points", kind: "message", T: () => StoredPodcastPointsProto },
@@ -1208,8 +1216,8 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
                 case /* StoredPodcastSuggestionInputProto suggestion_input */ 15:
                     message.suggestionInput = StoredPodcastSuggestionInputProto.internalBinaryRead(reader, reader.uint32(), options, message.suggestionInput);
                     break;
-                case /* StoredPodcastRoutineInputProto routine_input */ 19:
-                    message.routineInput = StoredPodcastRoutineInputProto.internalBinaryRead(reader, reader.uint32(), options, message.routineInput);
+                case /* StoredPodcastRoutineStepInputProto routine_input */ 19:
+                    message.routineInput = StoredPodcastRoutineStepInputProto.internalBinaryRead(reader, reader.uint32(), options, message.routineInput);
                     break;
                 case /* StoredPodcastStateProto state */ 6:
                     message.state = reader.int32();
@@ -1299,9 +1307,9 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
         /* StoredPodcastSuggestionInputProto suggestion_input = 15; */
         if (message.suggestionInput)
             StoredPodcastSuggestionInputProto.internalBinaryWrite(message.suggestionInput, writer.tag(15, WireType.LengthDelimited).fork(), options).join();
-        /* StoredPodcastRoutineInputProto routine_input = 19; */
+        /* StoredPodcastRoutineStepInputProto routine_input = 19; */
         if (message.routineInput)
-            StoredPodcastRoutineInputProto.internalBinaryWrite(message.routineInput, writer.tag(19, WireType.LengthDelimited).fork(), options).join();
+            StoredPodcastRoutineStepInputProto.internalBinaryWrite(message.routineInput, writer.tag(19, WireType.LengthDelimited).fork(), options).join();
         /* StoredPodcastStateProto state = 6; */
         if (message.state !== 0)
             writer.tag(6, WireType.Varint).int32(message.state);
@@ -1500,22 +1508,26 @@ class StoredPodcastSuggestionInputProto$Type extends MessageType<StoredPodcastSu
  */
 export const StoredPodcastSuggestionInputProto = new StoredPodcastSuggestionInputProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class StoredPodcastRoutineInputProto$Type extends MessageType<StoredPodcastRoutineInputProto> {
+class StoredPodcastRoutineStepInputProto$Type extends MessageType<StoredPodcastRoutineStepInputProto> {
     constructor() {
-        super("StoredPodcastRoutineInputProto", [
+        super("StoredPodcastRoutineStepInputProto", [
             { no: 1, name: "routine_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "routine_reasoning", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "step_outline", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<StoredPodcastRoutineInputProto>): StoredPodcastRoutineInputProto {
+    create(value?: PartialMessage<StoredPodcastRoutineStepInputProto>): StoredPodcastRoutineStepInputProto {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.routineId = "";
         message.title = "";
+        message.routineReasoning = "";
+        message.stepOutline = "";
         if (value !== undefined)
-            reflectionMergePartial<StoredPodcastRoutineInputProto>(this, message, value);
+            reflectionMergePartial<StoredPodcastRoutineStepInputProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredPodcastRoutineInputProto): StoredPodcastRoutineInputProto {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredPodcastRoutineStepInputProto): StoredPodcastRoutineStepInputProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -1525,6 +1537,12 @@ class StoredPodcastRoutineInputProto$Type extends MessageType<StoredPodcastRouti
                     break;
                 case /* string title */ 2:
                     message.title = reader.string();
+                    break;
+                case /* string routine_reasoning */ 3:
+                    message.routineReasoning = reader.string();
+                    break;
+                case /* string step_outline */ 4:
+                    message.stepOutline = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1537,13 +1555,19 @@ class StoredPodcastRoutineInputProto$Type extends MessageType<StoredPodcastRouti
         }
         return message;
     }
-    internalBinaryWrite(message: StoredPodcastRoutineInputProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: StoredPodcastRoutineStepInputProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string routine_id = 1; */
         if (message.routineId !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.routineId);
         /* string title = 2; */
         if (message.title !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.title);
+        /* string routine_reasoning = 3; */
+        if (message.routineReasoning !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.routineReasoning);
+        /* string step_outline = 4; */
+        if (message.stepOutline !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.stepOutline);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1551,9 +1575,9 @@ class StoredPodcastRoutineInputProto$Type extends MessageType<StoredPodcastRouti
     }
 }
 /**
- * @generated MessageType for protobuf message StoredPodcastRoutineInputProto
+ * @generated MessageType for protobuf message StoredPodcastRoutineStepInputProto
  */
-export const StoredPodcastRoutineInputProto = new StoredPodcastRoutineInputProto$Type();
+export const StoredPodcastRoutineStepInputProto = new StoredPodcastRoutineStepInputProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class StoredPodcastSuggestionUserInputProto$Type extends MessageType<StoredPodcastSuggestionUserInputProto> {
     constructor() {
