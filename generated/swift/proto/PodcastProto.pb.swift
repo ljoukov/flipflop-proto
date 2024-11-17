@@ -1561,6 +1561,8 @@ struct PodcastRoutineProto: Sendable {
 
   var routineID: String = String()
 
+  var title: String = String()
+
   var segments: [PodcastRoutineSegmentProto] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -4650,6 +4652,7 @@ extension PodcastRoutineProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
   static let protoMessageName: String = "PodcastRoutineProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     2: .standard(proto: "routine_id"),
+    3: .same(proto: "title"),
     1: .same(proto: "segments"),
   ]
 
@@ -4661,6 +4664,7 @@ extension PodcastRoutineProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
       switch fieldNumber {
       case 1: try { try decoder.decodeRepeatedMessageField(value: &self.segments) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.routineID) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.title) }()
       default: break
       }
     }
@@ -4673,11 +4677,15 @@ extension PodcastRoutineProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     if !self.routineID.isEmpty {
       try visitor.visitSingularStringField(value: self.routineID, fieldNumber: 2)
     }
+    if !self.title.isEmpty {
+      try visitor.visitSingularStringField(value: self.title, fieldNumber: 3)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: PodcastRoutineProto, rhs: PodcastRoutineProto) -> Bool {
     if lhs.routineID != rhs.routineID {return false}
+    if lhs.title != rhs.title {return false}
     if lhs.segments != rhs.segments {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

@@ -1043,6 +1043,10 @@ export interface PodcastRoutineProto {
      */
     routineId: string;
     /**
+     * @generated from protobuf field: string title = 3;
+     */
+    title: string;
+    /**
      * @generated from protobuf field: repeated PodcastRoutineSegmentProto segments = 1;
      */
     segments: PodcastRoutineSegmentProto[];
@@ -4604,12 +4608,14 @@ class PodcastRoutineProto$Type extends MessageType<PodcastRoutineProto> {
     constructor() {
         super("PodcastRoutineProto", [
             { no: 2, name: "routine_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 1, name: "segments", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastRoutineSegmentProto }
         ]);
     }
     create(value?: PartialMessage<PodcastRoutineProto>): PodcastRoutineProto {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.routineId = "";
+        message.title = "";
         message.segments = [];
         if (value !== undefined)
             reflectionMergePartial<PodcastRoutineProto>(this, message, value);
@@ -4622,6 +4628,9 @@ class PodcastRoutineProto$Type extends MessageType<PodcastRoutineProto> {
             switch (fieldNo) {
                 case /* string routine_id */ 2:
                     message.routineId = reader.string();
+                    break;
+                case /* string title */ 3:
+                    message.title = reader.string();
                     break;
                 case /* repeated PodcastRoutineSegmentProto segments */ 1:
                     message.segments.push(PodcastRoutineSegmentProto.internalBinaryRead(reader, reader.uint32(), options));
@@ -4641,6 +4650,9 @@ class PodcastRoutineProto$Type extends MessageType<PodcastRoutineProto> {
         /* string routine_id = 2; */
         if (message.routineId !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.routineId);
+        /* string title = 3; */
+        if (message.title !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.title);
         /* repeated PodcastRoutineSegmentProto segments = 1; */
         for (let i = 0; i < message.segments.length; i++)
             PodcastRoutineSegmentProto.internalBinaryWrite(message.segments[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();

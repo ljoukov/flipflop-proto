@@ -382,6 +382,7 @@ message PodcastStorySlideProto {
 
 message PodcastRoutineProto {
   string routine_id = 2;
+  string title = 3;
   repeated PodcastRoutineSegmentProto segments = 1;
 }
 
