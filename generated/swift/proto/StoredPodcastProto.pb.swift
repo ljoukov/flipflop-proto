@@ -175,6 +175,7 @@ enum StoredPodcastImageStyleProto: SwiftProtobuf.Enum, Swift.CaseIterable {
 enum StoredPodcastSuggestionsStateProto: SwiftProtobuf.Enum, Swift.CaseIterable {
   typealias RawValue = Int
   case undefined // = 0
+  case created // = 4
   case generating // = 1
   case ready // = 2
   case failed // = 3
@@ -190,6 +191,7 @@ enum StoredPodcastSuggestionsStateProto: SwiftProtobuf.Enum, Swift.CaseIterable 
     case 1: self = .generating
     case 2: self = .ready
     case 3: self = .failed
+    case 4: self = .created
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -200,6 +202,7 @@ enum StoredPodcastSuggestionsStateProto: SwiftProtobuf.Enum, Swift.CaseIterable 
     case .generating: return 1
     case .ready: return 2
     case .failed: return 3
+    case .created: return 4
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -207,6 +210,7 @@ enum StoredPodcastSuggestionsStateProto: SwiftProtobuf.Enum, Swift.CaseIterable 
   // The compiler won't synthesize support with the UNRECOGNIZED case.
   static let allCases: [StoredPodcastSuggestionsStateProto] = [
     .undefined,
+    .created,
     .generating,
     .ready,
     .failed,
@@ -1601,6 +1605,7 @@ extension StoredPodcastSuggestionsStateProto: SwiftProtobuf._ProtoNameProviding 
     1: .same(proto: "STORED_PODCAST_SUGGESTIONS_STATE_PROTO_GENERATING"),
     2: .same(proto: "STORED_PODCAST_SUGGESTIONS_STATE_PROTO_READY"),
     3: .same(proto: "STORED_PODCAST_SUGGESTIONS_STATE_PROTO_FAILED"),
+    4: .same(proto: "STORED_PODCAST_SUGGESTIONS_STATE_PROTO_CREATED"),
   ]
 }
 

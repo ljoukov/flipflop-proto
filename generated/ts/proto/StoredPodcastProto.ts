@@ -1100,6 +1100,10 @@ export enum StoredPodcastSuggestionsStateProto {
      */
     UNDEFINED = 0,
     /**
+     * @generated from protobuf enum value: STORED_PODCAST_SUGGESTIONS_STATE_PROTO_CREATED = 4;
+     */
+    CREATED = 4,
+    /**
      * @generated from protobuf enum value: STORED_PODCAST_SUGGESTIONS_STATE_PROTO_GENERATING = 1;
      */
     GENERATING = 1,
