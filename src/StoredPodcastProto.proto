@@ -250,6 +250,7 @@ message StoredPodcastStoryProto {
 
   // Debug metadata
   LogProto log = 100;
+  map<string, string> llm_request_ids = 101;
 }
 
 enum StoredPodcastStoryStateProto {
