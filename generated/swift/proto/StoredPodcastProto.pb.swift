@@ -502,6 +502,8 @@ struct StoredPodcastSuggestionInputProto: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  var suggestionsID: String = String()
+
   var suggestionSectionID: String = String()
 
   var suggestionSectionReasoning: String = String()
@@ -965,6 +967,8 @@ struct StoredPodcastStorySuggestionProto: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
+
+  var suggestionsID: String = String()
 
   var suggestedStoryID: String = String()
 
@@ -1896,6 +1900,7 @@ extension StoredPodcastUserInputProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
 extension StoredPodcastSuggestionInputProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "StoredPodcastSuggestionInputProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    8: .standard(proto: "suggestions_id"),
     1: .standard(proto: "suggestion_section_id"),
     2: .standard(proto: "suggestion_section_reasoning"),
     3: .standard(proto: "suggestion_title"),
@@ -1918,6 +1923,7 @@ extension StoredPodcastSuggestionInputProto: SwiftProtobuf.Message, SwiftProtobu
       case 5: try { try decoder.decodeSingularStringField(value: &self.suggestionBadge) }()
       case 6: try { try decoder.decodeSingularMessageField(value: &self._suggestionPoints) }()
       case 7: try { try decoder.decodeSingularMessageField(value: &self._userInput) }()
+      case 8: try { try decoder.decodeSingularStringField(value: &self.suggestionsID) }()
       default: break
       }
     }
@@ -1949,10 +1955,14 @@ extension StoredPodcastSuggestionInputProto: SwiftProtobuf.Message, SwiftProtobu
     try { if let v = self._userInput {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
     } }()
+    if !self.suggestionsID.isEmpty {
+      try visitor.visitSingularStringField(value: self.suggestionsID, fieldNumber: 8)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: StoredPodcastSuggestionInputProto, rhs: StoredPodcastSuggestionInputProto) -> Bool {
+    if lhs.suggestionsID != rhs.suggestionsID {return false}
     if lhs.suggestionSectionID != rhs.suggestionSectionID {return false}
     if lhs.suggestionSectionReasoning != rhs.suggestionSectionReasoning {return false}
     if lhs.suggestionTitle != rhs.suggestionTitle {return false}
@@ -2934,6 +2944,7 @@ extension StoredPodcastSuggestionProto: SwiftProtobuf.Message, SwiftProtobuf._Me
 extension StoredPodcastStorySuggestionProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "StoredPodcastStorySuggestionProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    5: .standard(proto: "suggestions_id"),
     1: .standard(proto: "suggested_story_id"),
     2: .same(proto: "title"),
     3: .standard(proto: "thumbnail_prompt"),
@@ -2950,6 +2961,7 @@ extension StoredPodcastStorySuggestionProto: SwiftProtobuf.Message, SwiftProtobu
       case 2: try { try decoder.decodeSingularStringField(value: &self.title) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.thumbnailPrompt) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self.thumbnailKey) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.suggestionsID) }()
       default: break
       }
     }
@@ -2968,10 +2980,14 @@ extension StoredPodcastStorySuggestionProto: SwiftProtobuf.Message, SwiftProtobu
     if !self.thumbnailKey.isEmpty {
       try visitor.visitSingularStringField(value: self.thumbnailKey, fieldNumber: 4)
     }
+    if !self.suggestionsID.isEmpty {
+      try visitor.visitSingularStringField(value: self.suggestionsID, fieldNumber: 5)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: StoredPodcastStorySuggestionProto, rhs: StoredPodcastStorySuggestionProto) -> Bool {
+    if lhs.suggestionsID != rhs.suggestionsID {return false}
     if lhs.suggestedStoryID != rhs.suggestedStoryID {return false}
     if lhs.title != rhs.title {return false}
     if lhs.thumbnailPrompt != rhs.thumbnailPrompt {return false}

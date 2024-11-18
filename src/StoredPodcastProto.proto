@@ -67,6 +67,7 @@ message StoredPodcastUserInputProto {
 }
 
 message StoredPodcastSuggestionInputProto {
+  string suggestions_id = 8;
   string suggestion_section_id = 1;
   string suggestion_section_reasoning = 2;
   string suggestion_title = 3;
@@ -230,6 +231,7 @@ message StoredPodcastSuggestionProto {
 }
 
 message StoredPodcastStorySuggestionProto {
+  string suggestions_id = 5;
   string suggested_story_id = 1;
   string title = 2;
   string thumbnail_prompt = 3;

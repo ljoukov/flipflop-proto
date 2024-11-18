@@ -41,17 +41,17 @@ export interface TaskProto {
          */
         generateSuggestions: GeneratePodcastSuggestionsTaskProto;
     } | {
-        oneofKind: "generateGlobalSuggestions";
-        /**
-         * @generated from protobuf field: GeneratePodcastGlobalSuggestionsTaskProto generate_global_suggestions = 12;
-         */
-        generateGlobalSuggestions: GeneratePodcastGlobalSuggestionsTaskProto;
-    } | {
         oneofKind: "generateStory";
         /**
-         * @generated from protobuf field: GeneratePodcastStoryTaskProto generate_story = 13;
+         * @generated from protobuf field: GeneratePodcastStoryTaskProto generate_story = 12;
          */
         generateStory: GeneratePodcastStoryTaskProto;
+    } | {
+        oneofKind: "finalizeSuggestions";
+        /**
+         * @generated from protobuf field: FinalizeSuggestionsTaskProto finalize_suggestions = 13;
+         */
+        finalizeSuggestions: FinalizeSuggestionsTaskProto;
     } | {
         oneofKind: undefined;
     };
@@ -75,19 +75,6 @@ export interface GeneratePodcastSuggestionsTaskProto {
     userId: string;
 }
 /**
- * @generated from protobuf message GeneratePodcastGlobalSuggestionsTaskProto
- */
-export interface GeneratePodcastGlobalSuggestionsTaskProto {
-    /**
-     * @generated from protobuf field: bool ignore_recently_generated = 1;
-     */
-    ignoreRecentlyGenerated: boolean;
-    /**
-     * @generated from protobuf field: bool ignore_partially_generated = 2;
-     */
-    ignorePartiallyGenerated: boolean;
-}
-/**
  * @generated from protobuf message GeneratePodcastStoryTaskProto
  */
 export interface GeneratePodcastStoryTaskProto {
@@ -95,6 +82,15 @@ export interface GeneratePodcastStoryTaskProto {
      * @generated from protobuf field: string story_id = 1;
      */
     storyId: string;
+}
+/**
+ * @generated from protobuf message FinalizeSuggestionsTaskProto
+ */
+export interface FinalizeSuggestionsTaskProto {
+    /**
+     * @generated from protobuf field: string suggestions_id = 1;
+     */
+    suggestionsId: string;
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class TaskProto$Type extends MessageType<TaskProto> {
@@ -104,8 +100,8 @@ class TaskProto$Type extends MessageType<TaskProto> {
             { no: 2, name: "created_at", kind: "message", T: () => Timestamp },
             { no: 10, name: "generate_podcast", kind: "message", oneof: "type", T: () => GeneratePodcastTaskProto },
             { no: 11, name: "generate_suggestions", kind: "message", oneof: "type", T: () => GeneratePodcastSuggestionsTaskProto },
-            { no: 12, name: "generate_global_suggestions", kind: "message", oneof: "type", T: () => GeneratePodcastGlobalSuggestionsTaskProto },
-            { no: 13, name: "generate_story", kind: "message", oneof: "type", T: () => GeneratePodcastStoryTaskProto }
+            { no: 12, name: "generate_story", kind: "message", oneof: "type", T: () => GeneratePodcastStoryTaskProto },
+            { no: 13, name: "finalize_suggestions", kind: "message", oneof: "type", T: () => FinalizeSuggestionsTaskProto }
         ]);
     }
     create(value?: PartialMessage<TaskProto>): TaskProto {
@@ -139,16 +135,16 @@ class TaskProto$Type extends MessageType<TaskProto> {
                         generateSuggestions: GeneratePodcastSuggestionsTaskProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).generateSuggestions)
                     };
                     break;
-                case /* GeneratePodcastGlobalSuggestionsTaskProto generate_global_suggestions */ 12:
-                    message.type = {
-                        oneofKind: "generateGlobalSuggestions",
-                        generateGlobalSuggestions: GeneratePodcastGlobalSuggestionsTaskProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).generateGlobalSuggestions)
-                    };
-                    break;
-                case /* GeneratePodcastStoryTaskProto generate_story */ 13:
+                case /* GeneratePodcastStoryTaskProto generate_story */ 12:
                     message.type = {
                         oneofKind: "generateStory",
                         generateStory: GeneratePodcastStoryTaskProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).generateStory)
+                    };
+                    break;
+                case /* FinalizeSuggestionsTaskProto finalize_suggestions */ 13:
+                    message.type = {
+                        oneofKind: "finalizeSuggestions",
+                        finalizeSuggestions: FinalizeSuggestionsTaskProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).finalizeSuggestions)
                     };
                     break;
                 default:
@@ -175,12 +171,12 @@ class TaskProto$Type extends MessageType<TaskProto> {
         /* GeneratePodcastSuggestionsTaskProto generate_suggestions = 11; */
         if (message.type.oneofKind === "generateSuggestions")
             GeneratePodcastSuggestionsTaskProto.internalBinaryWrite(message.type.generateSuggestions, writer.tag(11, WireType.LengthDelimited).fork(), options).join();
-        /* GeneratePodcastGlobalSuggestionsTaskProto generate_global_suggestions = 12; */
-        if (message.type.oneofKind === "generateGlobalSuggestions")
-            GeneratePodcastGlobalSuggestionsTaskProto.internalBinaryWrite(message.type.generateGlobalSuggestions, writer.tag(12, WireType.LengthDelimited).fork(), options).join();
-        /* GeneratePodcastStoryTaskProto generate_story = 13; */
+        /* GeneratePodcastStoryTaskProto generate_story = 12; */
         if (message.type.oneofKind === "generateStory")
-            GeneratePodcastStoryTaskProto.internalBinaryWrite(message.type.generateStory, writer.tag(13, WireType.LengthDelimited).fork(), options).join();
+            GeneratePodcastStoryTaskProto.internalBinaryWrite(message.type.generateStory, writer.tag(12, WireType.LengthDelimited).fork(), options).join();
+        /* FinalizeSuggestionsTaskProto finalize_suggestions = 13; */
+        if (message.type.oneofKind === "finalizeSuggestions")
+            FinalizeSuggestionsTaskProto.internalBinaryWrite(message.type.finalizeSuggestions, writer.tag(13, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -286,61 +282,6 @@ class GeneratePodcastSuggestionsTaskProto$Type extends MessageType<GeneratePodca
  */
 export const GeneratePodcastSuggestionsTaskProto = new GeneratePodcastSuggestionsTaskProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class GeneratePodcastGlobalSuggestionsTaskProto$Type extends MessageType<GeneratePodcastGlobalSuggestionsTaskProto> {
-    constructor() {
-        super("GeneratePodcastGlobalSuggestionsTaskProto", [
-            { no: 1, name: "ignore_recently_generated", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 2, name: "ignore_partially_generated", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
-        ]);
-    }
-    create(value?: PartialMessage<GeneratePodcastGlobalSuggestionsTaskProto>): GeneratePodcastGlobalSuggestionsTaskProto {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.ignoreRecentlyGenerated = false;
-        message.ignorePartiallyGenerated = false;
-        if (value !== undefined)
-            reflectionMergePartial<GeneratePodcastGlobalSuggestionsTaskProto>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GeneratePodcastGlobalSuggestionsTaskProto): GeneratePodcastGlobalSuggestionsTaskProto {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* bool ignore_recently_generated */ 1:
-                    message.ignoreRecentlyGenerated = reader.bool();
-                    break;
-                case /* bool ignore_partially_generated */ 2:
-                    message.ignorePartiallyGenerated = reader.bool();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: GeneratePodcastGlobalSuggestionsTaskProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* bool ignore_recently_generated = 1; */
-        if (message.ignoreRecentlyGenerated !== false)
-            writer.tag(1, WireType.Varint).bool(message.ignoreRecentlyGenerated);
-        /* bool ignore_partially_generated = 2; */
-        if (message.ignorePartiallyGenerated !== false)
-            writer.tag(2, WireType.Varint).bool(message.ignorePartiallyGenerated);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message GeneratePodcastGlobalSuggestionsTaskProto
- */
-export const GeneratePodcastGlobalSuggestionsTaskProto = new GeneratePodcastGlobalSuggestionsTaskProto$Type();
-// @generated message type with reflection information, may provide speed optimized methods
 class GeneratePodcastStoryTaskProto$Type extends MessageType<GeneratePodcastStoryTaskProto> {
     constructor() {
         super("GeneratePodcastStoryTaskProto", [
@@ -387,3 +328,50 @@ class GeneratePodcastStoryTaskProto$Type extends MessageType<GeneratePodcastStor
  * @generated MessageType for protobuf message GeneratePodcastStoryTaskProto
  */
 export const GeneratePodcastStoryTaskProto = new GeneratePodcastStoryTaskProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class FinalizeSuggestionsTaskProto$Type extends MessageType<FinalizeSuggestionsTaskProto> {
+    constructor() {
+        super("FinalizeSuggestionsTaskProto", [
+            { no: 1, name: "suggestions_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<FinalizeSuggestionsTaskProto>): FinalizeSuggestionsTaskProto {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.suggestionsId = "";
+        if (value !== undefined)
+            reflectionMergePartial<FinalizeSuggestionsTaskProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: FinalizeSuggestionsTaskProto): FinalizeSuggestionsTaskProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string suggestions_id */ 1:
+                    message.suggestionsId = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: FinalizeSuggestionsTaskProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string suggestions_id = 1; */
+        if (message.suggestionsId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.suggestionsId);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message FinalizeSuggestionsTaskProto
+ */
+export const FinalizeSuggestionsTaskProto = new FinalizeSuggestionsTaskProto$Type();
