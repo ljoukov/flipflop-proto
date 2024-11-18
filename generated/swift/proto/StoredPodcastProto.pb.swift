@@ -810,67 +810,87 @@ struct StoredPodcastKeyPointProto: Sendable {
   init() {}
 }
 
-struct StoredPodcastSuggestionsProto: Sendable {
+struct StoredPodcastSuggestionsProto: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var suggestionsID: String = String()
+  var suggestionsID: String {
+    get {return _storage._suggestionsID}
+    set {_uniqueStorage()._suggestionsID = newValue}
+  }
 
-  var userID: String = String()
+  var userID: String {
+    get {return _storage._userID}
+    set {_uniqueStorage()._userID = newValue}
+  }
 
-  var state: StoredPodcastSuggestionsStateProto = .undefined
+  var state: StoredPodcastSuggestionsStateProto {
+    get {return _storage._state}
+    set {_uniqueStorage()._state = newValue}
+  }
 
   var createdAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {return _createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
-    set {_createdAt = newValue}
+    get {return _storage._createdAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_uniqueStorage()._createdAt = newValue}
   }
   /// Returns true if `createdAt` has been explicitly set.
-  var hasCreatedAt: Bool {return self._createdAt != nil}
+  var hasCreatedAt: Bool {return _storage._createdAt != nil}
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
-  mutating func clearCreatedAt() {self._createdAt = nil}
+  mutating func clearCreatedAt() {_uniqueStorage()._createdAt = nil}
 
   var updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
-    get {return _updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
-    set {_updatedAt = newValue}
+    get {return _storage._updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_uniqueStorage()._updatedAt = newValue}
   }
   /// Returns true if `updatedAt` has been explicitly set.
-  var hasUpdatedAt: Bool {return self._updatedAt != nil}
+  var hasUpdatedAt: Bool {return _storage._updatedAt != nil}
   /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
-  mutating func clearUpdatedAt() {self._updatedAt = nil}
+  mutating func clearUpdatedAt() {_uniqueStorage()._updatedAt = nil}
 
-  var reasoning: String = String()
+  var reasoning: String {
+    get {return _storage._reasoning}
+    set {_uniqueStorage()._reasoning = newValue}
+  }
 
-  var ranking: String = String()
+  var ranking: String {
+    get {return _storage._ranking}
+    set {_uniqueStorage()._ranking = newValue}
+  }
 
-  var sections: [StoredPodcastSuggestionsSectionProto] = []
+  var sections: [StoredPodcastSuggestionsSectionProto] {
+    get {return _storage._sections}
+    set {_uniqueStorage()._sections = newValue}
+  }
 
   var routine: StoredPodcastRoutineProto {
-    get {return _routine ?? StoredPodcastRoutineProto()}
-    set {_routine = newValue}
+    get {return _storage._routine ?? StoredPodcastRoutineProto()}
+    set {_uniqueStorage()._routine = newValue}
   }
   /// Returns true if `routine` has been explicitly set.
-  var hasRoutine: Bool {return self._routine != nil}
+  var hasRoutine: Bool {return _storage._routine != nil}
   /// Clears the value of `routine`. Subsequent reads from it will return its default value.
-  mutating func clearRoutine() {self._routine = nil}
+  mutating func clearRoutine() {_uniqueStorage()._routine = nil}
 
   var log: LogProto {
-    get {return _log ?? LogProto()}
-    set {_log = newValue}
+    get {return _storage._log ?? LogProto()}
+    set {_uniqueStorage()._log = newValue}
   }
   /// Returns true if `log` has been explicitly set.
-  var hasLog: Bool {return self._log != nil}
+  var hasLog: Bool {return _storage._log != nil}
   /// Clears the value of `log`. Subsequent reads from it will return its default value.
-  mutating func clearLog() {self._log = nil}
+  mutating func clearLog() {_uniqueStorage()._log = nil}
+
+  var llmRequestIds: Dictionary<String,String> {
+    get {return _storage._llmRequestIds}
+    set {_uniqueStorage()._llmRequestIds = newValue}
+  }
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 
-  fileprivate var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
-  fileprivate var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
-  fileprivate var _routine: StoredPodcastRoutineProto? = nil
-  fileprivate var _log: LogProto? = nil
+  fileprivate var _storage = _StorageClass.defaultInstance
 }
 
 struct StoredPodcastSuggestionsSectionProto: @unchecked Sendable {
@@ -2681,78 +2701,144 @@ extension StoredPodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf._M
     7: .same(proto: "sections"),
     8: .same(proto: "routine"),
     101: .same(proto: "log"),
+    102: .standard(proto: "llm_request_ids"),
   ]
 
+  fileprivate class _StorageClass {
+    var _suggestionsID: String = String()
+    var _userID: String = String()
+    var _state: StoredPodcastSuggestionsStateProto = .undefined
+    var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+    var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+    var _reasoning: String = String()
+    var _ranking: String = String()
+    var _sections: [StoredPodcastSuggestionsSectionProto] = []
+    var _routine: StoredPodcastRoutineProto? = nil
+    var _log: LogProto? = nil
+    var _llmRequestIds: Dictionary<String,String> = [:]
+
+    #if swift(>=5.10)
+      // This property is used as the initial default value for new instances of the type.
+      // The type itself is protecting the reference to its storage via CoW semantics.
+      // This will force a copy to be made of this reference when the first mutation occurs;
+      // hence, it is safe to mark this as `nonisolated(unsafe)`.
+      static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
+
+    private init() {}
+
+    init(copying source: _StorageClass) {
+      _suggestionsID = source._suggestionsID
+      _userID = source._userID
+      _state = source._state
+      _createdAt = source._createdAt
+      _updatedAt = source._updatedAt
+      _reasoning = source._reasoning
+      _ranking = source._ranking
+      _sections = source._sections
+      _routine = source._routine
+      _log = source._log
+      _llmRequestIds = source._llmRequestIds
+    }
+  }
+
+  fileprivate mutating func _uniqueStorage() -> _StorageClass {
+    if !isKnownUniquelyReferenced(&_storage) {
+      _storage = _StorageClass(copying: _storage)
+    }
+    return _storage
+  }
+
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.suggestionsID) }()
-      case 2: try { try decoder.decodeSingularEnumField(value: &self.state) }()
-      case 3: try { try decoder.decodeSingularMessageField(value: &self._createdAt) }()
-      case 4: try { try decoder.decodeSingularMessageField(value: &self._updatedAt) }()
-      case 5: try { try decoder.decodeSingularStringField(value: &self.reasoning) }()
-      case 6: try { try decoder.decodeSingularStringField(value: &self.ranking) }()
-      case 7: try { try decoder.decodeRepeatedMessageField(value: &self.sections) }()
-      case 8: try { try decoder.decodeSingularMessageField(value: &self._routine) }()
-      case 9: try { try decoder.decodeSingularStringField(value: &self.userID) }()
-      case 101: try { try decoder.decodeSingularMessageField(value: &self._log) }()
-      default: break
+    _ = _uniqueStorage()
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      while let fieldNumber = try decoder.nextFieldNumber() {
+        // The use of inline closures is to circumvent an issue where the compiler
+        // allocates stack space for every case branch when no optimizations are
+        // enabled. https://github.com/apple/swift-protobuf/issues/1034
+        switch fieldNumber {
+        case 1: try { try decoder.decodeSingularStringField(value: &_storage._suggestionsID) }()
+        case 2: try { try decoder.decodeSingularEnumField(value: &_storage._state) }()
+        case 3: try { try decoder.decodeSingularMessageField(value: &_storage._createdAt) }()
+        case 4: try { try decoder.decodeSingularMessageField(value: &_storage._updatedAt) }()
+        case 5: try { try decoder.decodeSingularStringField(value: &_storage._reasoning) }()
+        case 6: try { try decoder.decodeSingularStringField(value: &_storage._ranking) }()
+        case 7: try { try decoder.decodeRepeatedMessageField(value: &_storage._sections) }()
+        case 8: try { try decoder.decodeSingularMessageField(value: &_storage._routine) }()
+        case 9: try { try decoder.decodeSingularStringField(value: &_storage._userID) }()
+        case 101: try { try decoder.decodeSingularMessageField(value: &_storage._log) }()
+        case 102: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: &_storage._llmRequestIds) }()
+        default: break
+        }
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every if/case branch local when no optimizations
-    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-    // https://github.com/apple/swift-protobuf/issues/1182
-    if !self.suggestionsID.isEmpty {
-      try visitor.visitSingularStringField(value: self.suggestionsID, fieldNumber: 1)
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every if/case branch local when no optimizations
+      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+      // https://github.com/apple/swift-protobuf/issues/1182
+      if !_storage._suggestionsID.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._suggestionsID, fieldNumber: 1)
+      }
+      if _storage._state != .undefined {
+        try visitor.visitSingularEnumField(value: _storage._state, fieldNumber: 2)
+      }
+      try { if let v = _storage._createdAt {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+      } }()
+      try { if let v = _storage._updatedAt {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+      } }()
+      if !_storage._reasoning.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._reasoning, fieldNumber: 5)
+      }
+      if !_storage._ranking.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._ranking, fieldNumber: 6)
+      }
+      if !_storage._sections.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._sections, fieldNumber: 7)
+      }
+      try { if let v = _storage._routine {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
+      } }()
+      if !_storage._userID.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._userID, fieldNumber: 9)
+      }
+      try { if let v = _storage._log {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 101)
+      } }()
+      if !_storage._llmRequestIds.isEmpty {
+        try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: _storage._llmRequestIds, fieldNumber: 102)
+      }
     }
-    if self.state != .undefined {
-      try visitor.visitSingularEnumField(value: self.state, fieldNumber: 2)
-    }
-    try { if let v = self._createdAt {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
-    } }()
-    try { if let v = self._updatedAt {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
-    } }()
-    if !self.reasoning.isEmpty {
-      try visitor.visitSingularStringField(value: self.reasoning, fieldNumber: 5)
-    }
-    if !self.ranking.isEmpty {
-      try visitor.visitSingularStringField(value: self.ranking, fieldNumber: 6)
-    }
-    if !self.sections.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.sections, fieldNumber: 7)
-    }
-    try { if let v = self._routine {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
-    } }()
-    if !self.userID.isEmpty {
-      try visitor.visitSingularStringField(value: self.userID, fieldNumber: 9)
-    }
-    try { if let v = self._log {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 101)
-    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: StoredPodcastSuggestionsProto, rhs: StoredPodcastSuggestionsProto) -> Bool {
-    if lhs.suggestionsID != rhs.suggestionsID {return false}
-    if lhs.userID != rhs.userID {return false}
-    if lhs.state != rhs.state {return false}
-    if lhs._createdAt != rhs._createdAt {return false}
-    if lhs._updatedAt != rhs._updatedAt {return false}
-    if lhs.reasoning != rhs.reasoning {return false}
-    if lhs.ranking != rhs.ranking {return false}
-    if lhs.sections != rhs.sections {return false}
-    if lhs._routine != rhs._routine {return false}
-    if lhs._log != rhs._log {return false}
+    if lhs._storage !== rhs._storage {
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+        let _storage = _args.0
+        let rhs_storage = _args.1
+        if _storage._suggestionsID != rhs_storage._suggestionsID {return false}
+        if _storage._userID != rhs_storage._userID {return false}
+        if _storage._state != rhs_storage._state {return false}
+        if _storage._createdAt != rhs_storage._createdAt {return false}
+        if _storage._updatedAt != rhs_storage._updatedAt {return false}
+        if _storage._reasoning != rhs_storage._reasoning {return false}
+        if _storage._ranking != rhs_storage._ranking {return false}
+        if _storage._sections != rhs_storage._sections {return false}
+        if _storage._routine != rhs_storage._routine {return false}
+        if _storage._log != rhs_storage._log {return false}
+        if _storage._llmRequestIds != rhs_storage._llmRequestIds {return false}
+        return true
+      }
+      if !storagesAreEqual {return false}
+    }
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

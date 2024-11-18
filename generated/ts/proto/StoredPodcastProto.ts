@@ -460,6 +460,12 @@ export interface StoredPodcastSuggestionsProto {
      * @generated from protobuf field: LogProto log = 101;
      */
     log?: LogProto;
+    /**
+     * @generated from protobuf field: map<string, string> llm_request_ids = 102;
+     */
+    llmRequestIds: {
+        [key: string]: string;
+    };
 }
 /**
  * @generated from protobuf message StoredPodcastSuggestionsSectionProto
@@ -2512,7 +2518,8 @@ class StoredPodcastSuggestionsProto$Type extends MessageType<StoredPodcastSugges
             { no: 6, name: "ranking", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 7, name: "sections", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastSuggestionsSectionProto },
             { no: 8, name: "routine", kind: "message", T: () => StoredPodcastRoutineProto },
-            { no: 101, name: "log", kind: "message", T: () => LogProto }
+            { no: 101, name: "log", kind: "message", T: () => LogProto },
+            { no: 102, name: "llm_request_ids", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastSuggestionsProto>): StoredPodcastSuggestionsProto {
@@ -2523,6 +2530,7 @@ class StoredPodcastSuggestionsProto$Type extends MessageType<StoredPodcastSugges
         message.reasoning = "";
         message.ranking = "";
         message.sections = [];
+        message.llmRequestIds = {};
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastSuggestionsProto>(this, message, value);
         return message;
@@ -2562,6 +2570,9 @@ class StoredPodcastSuggestionsProto$Type extends MessageType<StoredPodcastSugges
                 case /* LogProto log */ 101:
                     message.log = LogProto.internalBinaryRead(reader, reader.uint32(), options, message.log);
                     break;
+                case /* map<string, string> llm_request_ids */ 102:
+                    this.binaryReadMap102(message.llmRequestIds, reader, options);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -2572,6 +2583,22 @@ class StoredPodcastSuggestionsProto$Type extends MessageType<StoredPodcastSugges
             }
         }
         return message;
+    }
+    private binaryReadMap102(map: StoredPodcastSuggestionsProto["llmRequestIds"], reader: IBinaryReader, options: BinaryReadOptions): void {
+        let len = reader.uint32(), end = reader.pos + len, key: keyof StoredPodcastSuggestionsProto["llmRequestIds"] | undefined, val: StoredPodcastSuggestionsProto["llmRequestIds"][any] | undefined;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case 1:
+                    key = reader.string();
+                    break;
+                case 2:
+                    val = reader.string();
+                    break;
+                default: throw new globalThis.Error("unknown map entry field for field StoredPodcastSuggestionsProto.llm_request_ids");
+            }
+        }
+        map[key ?? ""] = val ?? "";
     }
     internalBinaryWrite(message: StoredPodcastSuggestionsProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string suggestions_id = 1; */
@@ -2604,6 +2631,9 @@ class StoredPodcastSuggestionsProto$Type extends MessageType<StoredPodcastSugges
         /* LogProto log = 101; */
         if (message.log)
             LogProto.internalBinaryWrite(message.log, writer.tag(101, WireType.LengthDelimited).fork(), options).join();
+        /* map<string, string> llm_request_ids = 102; */
+        for (let k of globalThis.Object.keys(message.llmRequestIds))
+            writer.tag(102, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.llmRequestIds[k]).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
