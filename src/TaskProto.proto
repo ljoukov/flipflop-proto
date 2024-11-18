@@ -11,12 +11,12 @@ message TaskProto {
     GeneratePodcastTaskProto generate_podcast = 10;
     GeneratePodcastSuggestionsTaskProto generate_suggestions = 11;
     GeneratePodcastGlobalSuggestionsTaskProto generate_global_suggestions = 12;
+    GeneratePodcastStoryTaskProto generate_story = 13;
   }
 }
 
 message GeneratePodcastTaskProto {
   string podcast_id = 1;
-  bool ignore_generated = 2;
 }
 
 message GeneratePodcastSuggestionsTaskProto {
@@ -26,4 +26,8 @@ message GeneratePodcastSuggestionsTaskProto {
 message GeneratePodcastGlobalSuggestionsTaskProto {
   bool ignore_recently_generated = 1;
   bool ignore_partially_generated = 2;
+}
+
+message GeneratePodcastStoryTaskProto {
+  string story_id = 1;
 }
