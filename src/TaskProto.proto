@@ -9,9 +9,10 @@ message TaskProto {
   // IDs start at 10
   oneof type {
     GeneratePodcastTaskProto generate_podcast = 10;
-    GeneratePodcastSuggestionsTaskProto generate_suggestions = 11;
-    GeneratePodcastStoryTaskProto generate_story = 12;
-    FinalizeSuggestionsTaskProto finalize_suggestions = 13;
+    GeneratePodcastStoryTaskProto generate_story = 11;
+    CreatePodcastSuggestionsTaskProto create_suggestions = 12;
+    GeneratePodcastSuggestionsTaskProto generate_suggestions = 13;
+    PublishPodcastSuggestionsTaskProto publish_suggestions = 14;
   }
 }
 
@@ -19,14 +20,20 @@ message GeneratePodcastTaskProto {
   string podcast_id = 1;
 }
 
-message GeneratePodcastSuggestionsTaskProto {
-  string user_id = 1;
-}
-
 message GeneratePodcastStoryTaskProto {
   string story_id = 1;
 }
 
-message FinalizeSuggestionsTaskProto {
+message CreatePodcastSuggestionsTaskProto {
+  string user_id = 1;
+  bool ignore_partially_generated = 2;
+  bool ignore_recently_generated = 3;
+}
+
+message GeneratePodcastSuggestionsTaskProto {
+  string suggestions_id = 1;
+}
+
+message PublishPodcastSuggestionsTaskProto {
   string suggestions_id = 1;
 }

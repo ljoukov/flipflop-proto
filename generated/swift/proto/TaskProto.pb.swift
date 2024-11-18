@@ -47,14 +47,6 @@ struct TaskProto: Sendable {
     set {type = .generatePodcast(newValue)}
   }
 
-  var generateSuggestions: GeneratePodcastSuggestionsTaskProto {
-    get {
-      if case .generateSuggestions(let v)? = type {return v}
-      return GeneratePodcastSuggestionsTaskProto()
-    }
-    set {type = .generateSuggestions(newValue)}
-  }
-
   var generateStory: GeneratePodcastStoryTaskProto {
     get {
       if case .generateStory(let v)? = type {return v}
@@ -63,12 +55,28 @@ struct TaskProto: Sendable {
     set {type = .generateStory(newValue)}
   }
 
-  var finalizeSuggestions: FinalizeSuggestionsTaskProto {
+  var createSuggestions: CreatePodcastSuggestionsTaskProto {
     get {
-      if case .finalizeSuggestions(let v)? = type {return v}
-      return FinalizeSuggestionsTaskProto()
+      if case .createSuggestions(let v)? = type {return v}
+      return CreatePodcastSuggestionsTaskProto()
     }
-    set {type = .finalizeSuggestions(newValue)}
+    set {type = .createSuggestions(newValue)}
+  }
+
+  var generateSuggestions: GeneratePodcastSuggestionsTaskProto {
+    get {
+      if case .generateSuggestions(let v)? = type {return v}
+      return GeneratePodcastSuggestionsTaskProto()
+    }
+    set {type = .generateSuggestions(newValue)}
+  }
+
+  var publishSuggestions: PublishPodcastSuggestionsTaskProto {
+    get {
+      if case .publishSuggestions(let v)? = type {return v}
+      return PublishPodcastSuggestionsTaskProto()
+    }
+    set {type = .publishSuggestions(newValue)}
   }
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -76,9 +84,10 @@ struct TaskProto: Sendable {
   /// IDs start at 10
   enum OneOf_Type: Equatable, Sendable {
     case generatePodcast(GeneratePodcastTaskProto)
-    case generateSuggestions(GeneratePodcastSuggestionsTaskProto)
     case generateStory(GeneratePodcastStoryTaskProto)
-    case finalizeSuggestions(FinalizeSuggestionsTaskProto)
+    case createSuggestions(CreatePodcastSuggestionsTaskProto)
+    case generateSuggestions(GeneratePodcastSuggestionsTaskProto)
+    case publishSuggestions(PublishPodcastSuggestionsTaskProto)
 
   }
 
@@ -99,18 +108,6 @@ struct GeneratePodcastTaskProto: Sendable {
   init() {}
 }
 
-struct GeneratePodcastSuggestionsTaskProto: Sendable {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  var userID: String = String()
-
-  var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  init() {}
-}
-
 struct GeneratePodcastStoryTaskProto: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -123,7 +120,35 @@ struct GeneratePodcastStoryTaskProto: Sendable {
   init() {}
 }
 
-struct FinalizeSuggestionsTaskProto: Sendable {
+struct CreatePodcastSuggestionsTaskProto: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var userID: String = String()
+
+  var ignorePartiallyGenerated: Bool = false
+
+  var ignoreRecentlyGenerated: Bool = false
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct GeneratePodcastSuggestionsTaskProto: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var suggestionsID: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct PublishPodcastSuggestionsTaskProto: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -143,9 +168,10 @@ extension TaskProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementation
     1: .standard(proto: "task_id"),
     2: .standard(proto: "created_at"),
     10: .standard(proto: "generate_podcast"),
-    11: .standard(proto: "generate_suggestions"),
-    12: .standard(proto: "generate_story"),
-    13: .standard(proto: "finalize_suggestions"),
+    11: .standard(proto: "generate_story"),
+    12: .standard(proto: "create_suggestions"),
+    13: .standard(proto: "generate_suggestions"),
+    14: .standard(proto: "publish_suggestions"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -170,19 +196,6 @@ extension TaskProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementation
         }
       }()
       case 11: try {
-        var v: GeneratePodcastSuggestionsTaskProto?
-        var hadOneofValue = false
-        if let current = self.type {
-          hadOneofValue = true
-          if case .generateSuggestions(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {
-          if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.type = .generateSuggestions(v)
-        }
-      }()
-      case 12: try {
         var v: GeneratePodcastStoryTaskProto?
         var hadOneofValue = false
         if let current = self.type {
@@ -195,17 +208,43 @@ extension TaskProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementation
           self.type = .generateStory(v)
         }
       }()
-      case 13: try {
-        var v: FinalizeSuggestionsTaskProto?
+      case 12: try {
+        var v: CreatePodcastSuggestionsTaskProto?
         var hadOneofValue = false
         if let current = self.type {
           hadOneofValue = true
-          if case .finalizeSuggestions(let m) = current {v = m}
+          if case .createSuggestions(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.type = .finalizeSuggestions(v)
+          self.type = .createSuggestions(v)
+        }
+      }()
+      case 13: try {
+        var v: GeneratePodcastSuggestionsTaskProto?
+        var hadOneofValue = false
+        if let current = self.type {
+          hadOneofValue = true
+          if case .generateSuggestions(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.type = .generateSuggestions(v)
+        }
+      }()
+      case 14: try {
+        var v: PublishPodcastSuggestionsTaskProto?
+        var hadOneofValue = false
+        if let current = self.type {
+          hadOneofValue = true
+          if case .publishSuggestions(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.type = .publishSuggestions(v)
         }
       }()
       default: break
@@ -229,17 +268,21 @@ extension TaskProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementation
       guard case .generatePodcast(let v)? = self.type else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
     }()
-    case .generateSuggestions?: try {
-      guard case .generateSuggestions(let v)? = self.type else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 11)
-    }()
     case .generateStory?: try {
       guard case .generateStory(let v)? = self.type else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 11)
+    }()
+    case .createSuggestions?: try {
+      guard case .createSuggestions(let v)? = self.type else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 12)
     }()
-    case .finalizeSuggestions?: try {
-      guard case .finalizeSuggestions(let v)? = self.type else { preconditionFailure() }
+    case .generateSuggestions?: try {
+      guard case .generateSuggestions(let v)? = self.type else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 13)
+    }()
+    case .publishSuggestions?: try {
+      guard case .publishSuggestions(let v)? = self.type else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 14)
     }()
     case nil: break
     }
@@ -287,38 +330,6 @@ extension GeneratePodcastTaskProto: SwiftProtobuf.Message, SwiftProtobuf._Messag
   }
 }
 
-extension GeneratePodcastSuggestionsTaskProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "GeneratePodcastSuggestionsTaskProto"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "user_id"),
-  ]
-
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.userID) }()
-      default: break
-      }
-    }
-  }
-
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.userID.isEmpty {
-      try visitor.visitSingularStringField(value: self.userID, fieldNumber: 1)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  static func ==(lhs: GeneratePodcastSuggestionsTaskProto, rhs: GeneratePodcastSuggestionsTaskProto) -> Bool {
-    if lhs.userID != rhs.userID {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
 extension GeneratePodcastStoryTaskProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "GeneratePodcastStoryTaskProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -351,8 +362,52 @@ extension GeneratePodcastStoryTaskProto: SwiftProtobuf.Message, SwiftProtobuf._M
   }
 }
 
-extension FinalizeSuggestionsTaskProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "FinalizeSuggestionsTaskProto"
+extension CreatePodcastSuggestionsTaskProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "CreatePodcastSuggestionsTaskProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_id"),
+    2: .standard(proto: "ignore_partially_generated"),
+    3: .standard(proto: "ignore_recently_generated"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.userID) }()
+      case 2: try { try decoder.decodeSingularBoolField(value: &self.ignorePartiallyGenerated) }()
+      case 3: try { try decoder.decodeSingularBoolField(value: &self.ignoreRecentlyGenerated) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.userID.isEmpty {
+      try visitor.visitSingularStringField(value: self.userID, fieldNumber: 1)
+    }
+    if self.ignorePartiallyGenerated != false {
+      try visitor.visitSingularBoolField(value: self.ignorePartiallyGenerated, fieldNumber: 2)
+    }
+    if self.ignoreRecentlyGenerated != false {
+      try visitor.visitSingularBoolField(value: self.ignoreRecentlyGenerated, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: CreatePodcastSuggestionsTaskProto, rhs: CreatePodcastSuggestionsTaskProto) -> Bool {
+    if lhs.userID != rhs.userID {return false}
+    if lhs.ignorePartiallyGenerated != rhs.ignorePartiallyGenerated {return false}
+    if lhs.ignoreRecentlyGenerated != rhs.ignoreRecentlyGenerated {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension GeneratePodcastSuggestionsTaskProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "GeneratePodcastSuggestionsTaskProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "suggestions_id"),
   ]
@@ -376,7 +431,39 @@ extension FinalizeSuggestionsTaskProto: SwiftProtobuf.Message, SwiftProtobuf._Me
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: FinalizeSuggestionsTaskProto, rhs: FinalizeSuggestionsTaskProto) -> Bool {
+  static func ==(lhs: GeneratePodcastSuggestionsTaskProto, rhs: GeneratePodcastSuggestionsTaskProto) -> Bool {
+    if lhs.suggestionsID != rhs.suggestionsID {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension PublishPodcastSuggestionsTaskProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PublishPodcastSuggestionsTaskProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "suggestions_id"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.suggestionsID) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.suggestionsID.isEmpty {
+      try visitor.visitSingularStringField(value: self.suggestionsID, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PublishPodcastSuggestionsTaskProto, rhs: PublishPodcastSuggestionsTaskProto) -> Bool {
     if lhs.suggestionsID != rhs.suggestionsID {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
