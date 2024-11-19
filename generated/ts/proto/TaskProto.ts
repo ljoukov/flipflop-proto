@@ -70,6 +70,10 @@ export interface GeneratePodcastTaskProto {
      * @generated from protobuf field: string podcast_id = 1;
      */
     podcastId: string;
+    /**
+     * @generated from protobuf field: bool generate_cards = 2;
+     */
+    generateCards: boolean;
 }
 /**
  * @generated from protobuf message GeneratePodcastStoryTaskProto
@@ -114,6 +118,24 @@ export interface PublishPodcastSuggestionsTaskProto {
      * @generated from protobuf field: string suggestions_id = 1;
      */
     suggestionsId: string;
+    /**
+     * @generated from protobuf oneof: trigger
+     */
+    trigger: {
+        oneofKind: "readySuggestedPodcastId";
+        /**
+         * @generated from protobuf field: string ready_suggested_podcast_id = 2;
+         */
+        readySuggestedPodcastId: string;
+    } | {
+        oneofKind: "readySuggestedStoryId";
+        /**
+         * @generated from protobuf field: string ready_suggested_story_id = 3;
+         */
+        readySuggestedStoryId: string;
+    } | {
+        oneofKind: undefined;
+    };
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class TaskProto$Type extends MessageType<TaskProto> {
@@ -224,12 +246,14 @@ export const TaskProto = new TaskProto$Type();
 class GeneratePodcastTaskProto$Type extends MessageType<GeneratePodcastTaskProto> {
     constructor() {
         super("GeneratePodcastTaskProto", [
-            { no: 1, name: "podcast_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "podcast_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "generate_cards", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
     create(value?: PartialMessage<GeneratePodcastTaskProto>): GeneratePodcastTaskProto {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.podcastId = "";
+        message.generateCards = false;
         if (value !== undefined)
             reflectionMergePartial<GeneratePodcastTaskProto>(this, message, value);
         return message;
@@ -241,6 +265,9 @@ class GeneratePodcastTaskProto$Type extends MessageType<GeneratePodcastTaskProto
             switch (fieldNo) {
                 case /* string podcast_id */ 1:
                     message.podcastId = reader.string();
+                    break;
+                case /* bool generate_cards */ 2:
+                    message.generateCards = reader.bool();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -257,6 +284,9 @@ class GeneratePodcastTaskProto$Type extends MessageType<GeneratePodcastTaskProto
         /* string podcast_id = 1; */
         if (message.podcastId !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.podcastId);
+        /* bool generate_cards = 2; */
+        if (message.generateCards !== false)
+            writer.tag(2, WireType.Varint).bool(message.generateCards);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -428,12 +458,15 @@ export const GeneratePodcastSuggestionsTaskProto = new GeneratePodcastSuggestion
 class PublishPodcastSuggestionsTaskProto$Type extends MessageType<PublishPodcastSuggestionsTaskProto> {
     constructor() {
         super("PublishPodcastSuggestionsTaskProto", [
-            { no: 1, name: "suggestions_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "suggestions_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "ready_suggested_podcast_id", kind: "scalar", oneof: "trigger", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "ready_suggested_story_id", kind: "scalar", oneof: "trigger", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PublishPodcastSuggestionsTaskProto>): PublishPodcastSuggestionsTaskProto {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.suggestionsId = "";
+        message.trigger = { oneofKind: undefined };
         if (value !== undefined)
             reflectionMergePartial<PublishPodcastSuggestionsTaskProto>(this, message, value);
         return message;
@@ -445,6 +478,18 @@ class PublishPodcastSuggestionsTaskProto$Type extends MessageType<PublishPodcast
             switch (fieldNo) {
                 case /* string suggestions_id */ 1:
                     message.suggestionsId = reader.string();
+                    break;
+                case /* string ready_suggested_podcast_id */ 2:
+                    message.trigger = {
+                        oneofKind: "readySuggestedPodcastId",
+                        readySuggestedPodcastId: reader.string()
+                    };
+                    break;
+                case /* string ready_suggested_story_id */ 3:
+                    message.trigger = {
+                        oneofKind: "readySuggestedStoryId",
+                        readySuggestedStoryId: reader.string()
+                    };
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -461,6 +506,12 @@ class PublishPodcastSuggestionsTaskProto$Type extends MessageType<PublishPodcast
         /* string suggestions_id = 1; */
         if (message.suggestionsId !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.suggestionsId);
+        /* string ready_suggested_podcast_id = 2; */
+        if (message.trigger.oneofKind === "readySuggestedPodcastId")
+            writer.tag(2, WireType.LengthDelimited).string(message.trigger.readySuggestedPodcastId);
+        /* string ready_suggested_story_id = 3; */
+        if (message.trigger.oneofKind === "readySuggestedStoryId")
+            writer.tag(3, WireType.LengthDelimited).string(message.trigger.readySuggestedStoryId);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

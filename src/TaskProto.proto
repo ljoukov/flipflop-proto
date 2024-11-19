@@ -18,6 +18,7 @@ message TaskProto {
 
 message GeneratePodcastTaskProto {
   string podcast_id = 1;
+  bool generate_cards = 2;
 }
 
 message GeneratePodcastStoryTaskProto {
@@ -36,4 +37,8 @@ message GeneratePodcastSuggestionsTaskProto {
 
 message PublishPodcastSuggestionsTaskProto {
   string suggestions_id = 1;
+  oneof trigger {
+    string ready_suggested_podcast_id = 2;
+    string ready_suggested_story_id = 3;
+  }
 }

@@ -103,6 +103,8 @@ struct GeneratePodcastTaskProto: Sendable {
 
   var podcastID: String = String()
 
+  var generateCards: Bool = false
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -155,7 +157,31 @@ struct PublishPodcastSuggestionsTaskProto: Sendable {
 
   var suggestionsID: String = String()
 
+  var trigger: PublishPodcastSuggestionsTaskProto.OneOf_Trigger? = nil
+
+  var readySuggestedPodcastID: String {
+    get {
+      if case .readySuggestedPodcastID(let v)? = trigger {return v}
+      return String()
+    }
+    set {trigger = .readySuggestedPodcastID(newValue)}
+  }
+
+  var readySuggestedStoryID: String {
+    get {
+      if case .readySuggestedStoryID(let v)? = trigger {return v}
+      return String()
+    }
+    set {trigger = .readySuggestedStoryID(newValue)}
+  }
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  enum OneOf_Trigger: Equatable, Sendable {
+    case readySuggestedPodcastID(String)
+    case readySuggestedStoryID(String)
+
+  }
 
   init() {}
 }
@@ -302,6 +328,7 @@ extension GeneratePodcastTaskProto: SwiftProtobuf.Message, SwiftProtobuf._Messag
   static let protoMessageName: String = "GeneratePodcastTaskProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "podcast_id"),
+    2: .standard(proto: "generate_cards"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -311,6 +338,7 @@ extension GeneratePodcastTaskProto: SwiftProtobuf.Message, SwiftProtobuf._Messag
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.podcastID) }()
+      case 2: try { try decoder.decodeSingularBoolField(value: &self.generateCards) }()
       default: break
       }
     }
@@ -320,11 +348,15 @@ extension GeneratePodcastTaskProto: SwiftProtobuf.Message, SwiftProtobuf._Messag
     if !self.podcastID.isEmpty {
       try visitor.visitSingularStringField(value: self.podcastID, fieldNumber: 1)
     }
+    if self.generateCards != false {
+      try visitor.visitSingularBoolField(value: self.generateCards, fieldNumber: 2)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: GeneratePodcastTaskProto, rhs: GeneratePodcastTaskProto) -> Bool {
     if lhs.podcastID != rhs.podcastID {return false}
+    if lhs.generateCards != rhs.generateCards {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -442,6 +474,8 @@ extension PublishPodcastSuggestionsTaskProto: SwiftProtobuf.Message, SwiftProtob
   static let protoMessageName: String = "PublishPodcastSuggestionsTaskProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "suggestions_id"),
+    2: .standard(proto: "ready_suggested_podcast_id"),
+    3: .standard(proto: "ready_suggested_story_id"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -451,20 +485,52 @@ extension PublishPodcastSuggestionsTaskProto: SwiftProtobuf.Message, SwiftProtob
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.suggestionsID) }()
+      case 2: try {
+        var v: String?
+        try decoder.decodeSingularStringField(value: &v)
+        if let v = v {
+          if self.trigger != nil {try decoder.handleConflictingOneOf()}
+          self.trigger = .readySuggestedPodcastID(v)
+        }
+      }()
+      case 3: try {
+        var v: String?
+        try decoder.decodeSingularStringField(value: &v)
+        if let v = v {
+          if self.trigger != nil {try decoder.handleConflictingOneOf()}
+          self.trigger = .readySuggestedStoryID(v)
+        }
+      }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.suggestionsID.isEmpty {
       try visitor.visitSingularStringField(value: self.suggestionsID, fieldNumber: 1)
+    }
+    switch self.trigger {
+    case .readySuggestedPodcastID?: try {
+      guard case .readySuggestedPodcastID(let v)? = self.trigger else { preconditionFailure() }
+      try visitor.visitSingularStringField(value: v, fieldNumber: 2)
+    }()
+    case .readySuggestedStoryID?: try {
+      guard case .readySuggestedStoryID(let v)? = self.trigger else { preconditionFailure() }
+      try visitor.visitSingularStringField(value: v, fieldNumber: 3)
+    }()
+    case nil: break
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: PublishPodcastSuggestionsTaskProto, rhs: PublishPodcastSuggestionsTaskProto) -> Bool {
     if lhs.suggestionsID != rhs.suggestionsID {return false}
+    if lhs.trigger != rhs.trigger {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
