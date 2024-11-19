@@ -466,6 +466,23 @@ export interface StoredPodcastSuggestionsProto {
     llmRequestIds: {
         [key: string]: string;
     };
+    /**
+     * @generated from protobuf field: StoredPodcastSuggestionsGenerationTasksProto generation_tasks = 103;
+     */
+    generationTasks?: StoredPodcastSuggestionsGenerationTasksProto;
+}
+/**
+ * @generated from protobuf message StoredPodcastSuggestionsGenerationTasksProto
+ */
+export interface StoredPodcastSuggestionsGenerationTasksProto {
+    /**
+     * @generated from protobuf field: repeated string generating_podcast_ids = 1;
+     */
+    generatingPodcastIds: string[];
+    /**
+     * @generated from protobuf field: repeated string generating_story_ids = 2;
+     */
+    generatingStoryIds: string[];
 }
 /**
  * @generated from protobuf message StoredPodcastSuggestionsSectionProto
@@ -2519,7 +2536,8 @@ class StoredPodcastSuggestionsProto$Type extends MessageType<StoredPodcastSugges
             { no: 7, name: "sections", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastSuggestionsSectionProto },
             { no: 8, name: "routine", kind: "message", T: () => StoredPodcastRoutineProto },
             { no: 101, name: "log", kind: "message", T: () => LogProto },
-            { no: 102, name: "llm_request_ids", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } }
+            { no: 102, name: "llm_request_ids", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
+            { no: 103, name: "generation_tasks", kind: "message", T: () => StoredPodcastSuggestionsGenerationTasksProto }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastSuggestionsProto>): StoredPodcastSuggestionsProto {
@@ -2572,6 +2590,9 @@ class StoredPodcastSuggestionsProto$Type extends MessageType<StoredPodcastSugges
                     break;
                 case /* map<string, string> llm_request_ids */ 102:
                     this.binaryReadMap102(message.llmRequestIds, reader, options);
+                    break;
+                case /* StoredPodcastSuggestionsGenerationTasksProto generation_tasks */ 103:
+                    message.generationTasks = StoredPodcastSuggestionsGenerationTasksProto.internalBinaryRead(reader, reader.uint32(), options, message.generationTasks);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2634,6 +2655,9 @@ class StoredPodcastSuggestionsProto$Type extends MessageType<StoredPodcastSugges
         /* map<string, string> llm_request_ids = 102; */
         for (let k of globalThis.Object.keys(message.llmRequestIds))
             writer.tag(102, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.llmRequestIds[k]).join();
+        /* StoredPodcastSuggestionsGenerationTasksProto generation_tasks = 103; */
+        if (message.generationTasks)
+            StoredPodcastSuggestionsGenerationTasksProto.internalBinaryWrite(message.generationTasks, writer.tag(103, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2644,6 +2668,61 @@ class StoredPodcastSuggestionsProto$Type extends MessageType<StoredPodcastSugges
  * @generated MessageType for protobuf message StoredPodcastSuggestionsProto
  */
 export const StoredPodcastSuggestionsProto = new StoredPodcastSuggestionsProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class StoredPodcastSuggestionsGenerationTasksProto$Type extends MessageType<StoredPodcastSuggestionsGenerationTasksProto> {
+    constructor() {
+        super("StoredPodcastSuggestionsGenerationTasksProto", [
+            { no: 1, name: "generating_podcast_ids", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "generating_story_ids", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<StoredPodcastSuggestionsGenerationTasksProto>): StoredPodcastSuggestionsGenerationTasksProto {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.generatingPodcastIds = [];
+        message.generatingStoryIds = [];
+        if (value !== undefined)
+            reflectionMergePartial<StoredPodcastSuggestionsGenerationTasksProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredPodcastSuggestionsGenerationTasksProto): StoredPodcastSuggestionsGenerationTasksProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated string generating_podcast_ids */ 1:
+                    message.generatingPodcastIds.push(reader.string());
+                    break;
+                case /* repeated string generating_story_ids */ 2:
+                    message.generatingStoryIds.push(reader.string());
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: StoredPodcastSuggestionsGenerationTasksProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated string generating_podcast_ids = 1; */
+        for (let i = 0; i < message.generatingPodcastIds.length; i++)
+            writer.tag(1, WireType.LengthDelimited).string(message.generatingPodcastIds[i]);
+        /* repeated string generating_story_ids = 2; */
+        for (let i = 0; i < message.generatingStoryIds.length; i++)
+            writer.tag(2, WireType.LengthDelimited).string(message.generatingStoryIds[i]);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message StoredPodcastSuggestionsGenerationTasksProto
+ */
+export const StoredPodcastSuggestionsGenerationTasksProto = new StoredPodcastSuggestionsGenerationTasksProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class StoredPodcastSuggestionsSectionProto$Type extends MessageType<StoredPodcastSuggestionsSectionProto> {
     constructor() {

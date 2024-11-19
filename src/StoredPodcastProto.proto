@@ -200,6 +200,12 @@ message StoredPodcastSuggestionsProto {
   reserved 100;
   LogProto log = 101;
   map<string, string> llm_request_ids = 102;
+  StoredPodcastSuggestionsGenerationTasksProto generation_tasks = 103;
+}
+
+message StoredPodcastSuggestionsGenerationTasksProto {
+  repeated string generating_podcast_ids = 1;
+  repeated string generating_story_ids = 2;
 }
 
 enum StoredPodcastSuggestionsStateProto {
