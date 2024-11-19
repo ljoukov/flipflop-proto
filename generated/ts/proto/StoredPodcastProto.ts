@@ -1137,7 +1137,11 @@ export enum StoredPodcastSuggestionsStateProto {
     /**
      * @generated from protobuf enum value: STORED_PODCAST_SUGGESTIONS_STATE_PROTO_FAILED = 3;
      */
-    FAILED = 3
+    FAILED = 3,
+    /**
+     * @generated from protobuf enum value: STORED_PODCAST_SUGGESTIONS_STATE_PROTO_GENERATING_CONTENT = 5;
+     */
+    GENERATING_CONTENT = 5
 }
 /**
  * @generated from protobuf enum StoredPodcastStoryStateProto

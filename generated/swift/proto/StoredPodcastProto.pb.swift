@@ -179,6 +179,7 @@ enum StoredPodcastSuggestionsStateProto: SwiftProtobuf.Enum, Swift.CaseIterable 
   case generating // = 1
   case ready // = 2
   case failed // = 3
+  case generatingContent // = 5
   case UNRECOGNIZED(Int)
 
   init() {
@@ -192,6 +193,7 @@ enum StoredPodcastSuggestionsStateProto: SwiftProtobuf.Enum, Swift.CaseIterable 
     case 2: self = .ready
     case 3: self = .failed
     case 4: self = .created
+    case 5: self = .generatingContent
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -203,6 +205,7 @@ enum StoredPodcastSuggestionsStateProto: SwiftProtobuf.Enum, Swift.CaseIterable 
     case .ready: return 2
     case .failed: return 3
     case .created: return 4
+    case .generatingContent: return 5
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -214,6 +217,7 @@ enum StoredPodcastSuggestionsStateProto: SwiftProtobuf.Enum, Swift.CaseIterable 
     .generating,
     .ready,
     .failed,
+    .generatingContent,
   ]
 
 }
@@ -1649,6 +1653,7 @@ extension StoredPodcastSuggestionsStateProto: SwiftProtobuf._ProtoNameProviding 
     2: .same(proto: "STORED_PODCAST_SUGGESTIONS_STATE_PROTO_READY"),
     3: .same(proto: "STORED_PODCAST_SUGGESTIONS_STATE_PROTO_FAILED"),
     4: .same(proto: "STORED_PODCAST_SUGGESTIONS_STATE_PROTO_CREATED"),
+    5: .same(proto: "STORED_PODCAST_SUGGESTIONS_STATE_PROTO_GENERATING_CONTENT"),
   ]
 }
 
