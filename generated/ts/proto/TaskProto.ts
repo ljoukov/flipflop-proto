@@ -134,6 +134,12 @@ export interface PublishPodcastSuggestionsTaskProto {
          */
         readySuggestedStoryId: string;
     } | {
+        oneofKind: "cleanup";
+        /**
+         * @generated from protobuf field: bool cleanup = 4;
+         */
+        cleanup: boolean;
+    } | {
         oneofKind: undefined;
     };
 }
@@ -460,7 +466,8 @@ class PublishPodcastSuggestionsTaskProto$Type extends MessageType<PublishPodcast
         super("PublishPodcastSuggestionsTaskProto", [
             { no: 1, name: "suggestions_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "ready_suggested_podcast_id", kind: "scalar", oneof: "trigger", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "ready_suggested_story_id", kind: "scalar", oneof: "trigger", T: 9 /*ScalarType.STRING*/ }
+            { no: 3, name: "ready_suggested_story_id", kind: "scalar", oneof: "trigger", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "cleanup", kind: "scalar", oneof: "trigger", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
     create(value?: PartialMessage<PublishPodcastSuggestionsTaskProto>): PublishPodcastSuggestionsTaskProto {
@@ -491,6 +498,12 @@ class PublishPodcastSuggestionsTaskProto$Type extends MessageType<PublishPodcast
                         readySuggestedStoryId: reader.string()
                     };
                     break;
+                case /* bool cleanup */ 4:
+                    message.trigger = {
+                        oneofKind: "cleanup",
+                        cleanup: reader.bool()
+                    };
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -512,6 +525,9 @@ class PublishPodcastSuggestionsTaskProto$Type extends MessageType<PublishPodcast
         /* string ready_suggested_story_id = 3; */
         if (message.trigger.oneofKind === "readySuggestedStoryId")
             writer.tag(3, WireType.LengthDelimited).string(message.trigger.readySuggestedStoryId);
+        /* bool cleanup = 4; */
+        if (message.trigger.oneofKind === "cleanup")
+            writer.tag(4, WireType.Varint).bool(message.trigger.cleanup);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

@@ -40,5 +40,6 @@ message PublishPodcastSuggestionsTaskProto {
   oneof trigger {
     string ready_suggested_podcast_id = 2;
     string ready_suggested_story_id = 3;
+    bool cleanup = 4;
   }
 }

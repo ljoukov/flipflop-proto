@@ -175,11 +175,20 @@ struct PublishPodcastSuggestionsTaskProto: Sendable {
     set {trigger = .readySuggestedStoryID(newValue)}
   }
 
+  var cleanup: Bool {
+    get {
+      if case .cleanup(let v)? = trigger {return v}
+      return false
+    }
+    set {trigger = .cleanup(newValue)}
+  }
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_Trigger: Equatable, Sendable {
     case readySuggestedPodcastID(String)
     case readySuggestedStoryID(String)
+    case cleanup(Bool)
 
   }
 
@@ -476,6 +485,7 @@ extension PublishPodcastSuggestionsTaskProto: SwiftProtobuf.Message, SwiftProtob
     1: .standard(proto: "suggestions_id"),
     2: .standard(proto: "ready_suggested_podcast_id"),
     3: .standard(proto: "ready_suggested_story_id"),
+    4: .same(proto: "cleanup"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -501,6 +511,14 @@ extension PublishPodcastSuggestionsTaskProto: SwiftProtobuf.Message, SwiftProtob
           self.trigger = .readySuggestedStoryID(v)
         }
       }()
+      case 4: try {
+        var v: Bool?
+        try decoder.decodeSingularBoolField(value: &v)
+        if let v = v {
+          if self.trigger != nil {try decoder.handleConflictingOneOf()}
+          self.trigger = .cleanup(v)
+        }
+      }()
       default: break
       }
     }
@@ -522,6 +540,10 @@ extension PublishPodcastSuggestionsTaskProto: SwiftProtobuf.Message, SwiftProtob
     case .readySuggestedStoryID?: try {
       guard case .readySuggestedStoryID(let v)? = self.trigger else { preconditionFailure() }
       try visitor.visitSingularStringField(value: v, fieldNumber: 3)
+    }()
+    case .cleanup?: try {
+      guard case .cleanup(let v)? = self.trigger else { preconditionFailure() }
+      try visitor.visitSingularBoolField(value: v, fieldNumber: 4)
     }()
     case nil: break
     }
