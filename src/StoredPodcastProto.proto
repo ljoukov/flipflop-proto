@@ -39,6 +39,11 @@ message StoredPodcastProto {
   reserved 100;
   LogProto log = 101;
   map<string, string> llm_request_ids = 102;
+  StoredPodcastGenerationJobProto generation_job = 103;
+}
+
+message StoredPodcastGenerationJobProto {
+  string job_id = 1;
 }
 
 enum StoredPodcastStateProto {
@@ -200,6 +205,7 @@ message StoredPodcastSuggestionsProto {
   reserved 100;
   LogProto log = 101;
   map<string, string> llm_request_ids = 102;
+  StoredPodcastGenerationJobProto generation_job = 103;
 }
 
 enum StoredPodcastSuggestionsStateProto {
@@ -211,12 +217,12 @@ enum StoredPodcastSuggestionsStateProto {
   STORED_PODCAST_SUGGESTIONS_STATE_PROTO_GENERATING_CONTENT = 5;
 }
 
-enum StoredPodcastContentGenerationStateProto {
-  STORED_PODCAST_CONTENT_GENERATION_STATE_PROTO_UNDEFINED = 0;
-  STORED_PODCAST_CONTENT_GENERATION_STATE_PROTO_CREATED = 1;
-  STORED_PODCAST_CONTENT_GENERATION_STATE_PROTO_GENERATING = 2;
-  STORED_PODCAST_CONTENT_GENERATION_STATE_PROTO_READY = 3;
-  STORED_PODCAST_CONTENT_GENERATION_STATE_PROTO_FAILED = 4;
+enum StoredPodcastGenerationStateProto {
+  STORED_PODCAST_GENERATION_STATE_PROTO_UNDEFINED = 0;
+  STORED_PODCAST_GENERATION_STATE_PROTO_CREATED = 1;
+  STORED_PODCAST_GENERATION_STATE_PROTO_GENERATING = 2;
+  STORED_PODCAST_GENERATION_STATE_PROTO_READY = 3;
+  STORED_PODCAST_GENERATION_STATE_PROTO_FAILED = 4;
 }
 
 message StoredPodcastSuggestionsSectionProto {
@@ -239,7 +245,7 @@ message StoredPodcastSuggestionProto {
   string badge = 3;  // Q&A, Explainer, ...
   string thumbnail_prompt = 4;
   string thumbnail_key = 5;
-  StoredPodcastContentGenerationStateProto generation_state = 6;
+  StoredPodcastGenerationStateProto generation_state = 6;
 }
 
 message StoredPodcastStorySuggestionProto {
@@ -248,7 +254,7 @@ message StoredPodcastStorySuggestionProto {
   string title = 2;
   string thumbnail_prompt = 3;
   string thumbnail_key = 4;
-  StoredPodcastContentGenerationStateProto generation_state = 6;
+  StoredPodcastGenerationStateProto generation_state = 6;
 }
 
 message StoredPodcastStoryProto {
@@ -266,6 +272,7 @@ message StoredPodcastStoryProto {
   // Debug metadata
   LogProto log = 100;
   map<string, string> llm_request_ids = 101;
+  StoredPodcastGenerationJobProto generation_job = 103;
 }
 
 enum StoredPodcastStoryStateProto {
@@ -337,7 +344,7 @@ message StoredPodcastRoutineStepProto {
   string outline = 3;
   string thumbnail_prompt = 4;
   string thumbnail_key = 5;
-  StoredPodcastContentGenerationStateProto generation_state = 7;
+  StoredPodcastGenerationStateProto generation_state = 7;
 }
 
 enum StoredPodcastTypeProto {

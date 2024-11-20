@@ -222,7 +222,7 @@ enum StoredPodcastSuggestionsStateProto: SwiftProtobuf.Enum, Swift.CaseIterable 
 
 }
 
-enum StoredPodcastContentGenerationStateProto: SwiftProtobuf.Enum, Swift.CaseIterable {
+enum StoredPodcastGenerationStateProto: SwiftProtobuf.Enum, Swift.CaseIterable {
   typealias RawValue = Int
   case undefined // = 0
   case created // = 1
@@ -258,7 +258,7 @@ enum StoredPodcastContentGenerationStateProto: SwiftProtobuf.Enum, Swift.CaseIte
   }
 
   // The compiler won't synthesize support with the UNRECOGNIZED case.
-  static let allCases: [StoredPodcastContentGenerationStateProto] = [
+  static let allCases: [StoredPodcastGenerationStateProto] = [
     .undefined,
     .created,
     .generating,
@@ -530,11 +530,32 @@ struct StoredPodcastProto: @unchecked Sendable {
     set {_uniqueStorage()._llmRequestIds = newValue}
   }
 
+  var generationJob: StoredPodcastGenerationJobProto {
+    get {return _storage._generationJob ?? StoredPodcastGenerationJobProto()}
+    set {_uniqueStorage()._generationJob = newValue}
+  }
+  /// Returns true if `generationJob` has been explicitly set.
+  var hasGenerationJob: Bool {return _storage._generationJob != nil}
+  /// Clears the value of `generationJob`. Subsequent reads from it will return its default value.
+  mutating func clearGenerationJob() {_uniqueStorage()._generationJob = nil}
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 
   fileprivate var _storage = _StorageClass.defaultInstance
+}
+
+struct StoredPodcastGenerationJobProto: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var jobID: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
 }
 
 struct StoredPodcastUserInputProto: Sendable {
@@ -936,6 +957,15 @@ struct StoredPodcastSuggestionsProto: @unchecked Sendable {
     set {_uniqueStorage()._llmRequestIds = newValue}
   }
 
+  var generationJob: StoredPodcastGenerationJobProto {
+    get {return _storage._generationJob ?? StoredPodcastGenerationJobProto()}
+    set {_uniqueStorage()._generationJob = newValue}
+  }
+  /// Returns true if `generationJob` has been explicitly set.
+  var hasGenerationJob: Bool {return _storage._generationJob != nil}
+  /// Clears the value of `generationJob`. Subsequent reads from it will return its default value.
+  mutating func clearGenerationJob() {_uniqueStorage()._generationJob = nil}
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -1032,7 +1062,7 @@ struct StoredPodcastSuggestionProto: Sendable {
 
   var thumbnailKey: String = String()
 
-  var generationState: StoredPodcastContentGenerationStateProto = .undefined
+  var generationState: StoredPodcastGenerationStateProto = .undefined
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -1054,7 +1084,7 @@ struct StoredPodcastStorySuggestionProto: Sendable {
 
   var thumbnailKey: String = String()
 
-  var generationState: StoredPodcastContentGenerationStateProto = .undefined
+  var generationState: StoredPodcastGenerationStateProto = .undefined
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -1140,6 +1170,15 @@ struct StoredPodcastStoryProto: @unchecked Sendable {
     get {return _storage._llmRequestIds}
     set {_uniqueStorage()._llmRequestIds = newValue}
   }
+
+  var generationJob: StoredPodcastGenerationJobProto {
+    get {return _storage._generationJob ?? StoredPodcastGenerationJobProto()}
+    set {_uniqueStorage()._generationJob = newValue}
+  }
+  /// Returns true if `generationJob` has been explicitly set.
+  var hasGenerationJob: Bool {return _storage._generationJob != nil}
+  /// Clears the value of `generationJob`. Subsequent reads from it will return its default value.
+  mutating func clearGenerationJob() {_uniqueStorage()._generationJob = nil}
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -1312,7 +1351,7 @@ struct StoredPodcastRoutineStepProto: Sendable {
 
   var thumbnailKey: String = String()
 
-  var generationState: StoredPodcastContentGenerationStateProto = .undefined
+  var generationState: StoredPodcastGenerationStateProto = .undefined
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -1686,13 +1725,13 @@ extension StoredPodcastSuggestionsStateProto: SwiftProtobuf._ProtoNameProviding 
   ]
 }
 
-extension StoredPodcastContentGenerationStateProto: SwiftProtobuf._ProtoNameProviding {
+extension StoredPodcastGenerationStateProto: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    0: .same(proto: "STORED_PODCAST_CONTENT_GENERATION_STATE_PROTO_UNDEFINED"),
-    1: .same(proto: "STORED_PODCAST_CONTENT_GENERATION_STATE_PROTO_CREATED"),
-    2: .same(proto: "STORED_PODCAST_CONTENT_GENERATION_STATE_PROTO_GENERATING"),
-    3: .same(proto: "STORED_PODCAST_CONTENT_GENERATION_STATE_PROTO_READY"),
-    4: .same(proto: "STORED_PODCAST_CONTENT_GENERATION_STATE_PROTO_FAILED"),
+    0: .same(proto: "STORED_PODCAST_GENERATION_STATE_PROTO_UNDEFINED"),
+    1: .same(proto: "STORED_PODCAST_GENERATION_STATE_PROTO_CREATED"),
+    2: .same(proto: "STORED_PODCAST_GENERATION_STATE_PROTO_GENERATING"),
+    3: .same(proto: "STORED_PODCAST_GENERATION_STATE_PROTO_READY"),
+    4: .same(proto: "STORED_PODCAST_GENERATION_STATE_PROTO_FAILED"),
   ]
 }
 
@@ -1739,6 +1778,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     18: .same(proto: "exercise"),
     101: .same(proto: "log"),
     102: .standard(proto: "llm_request_ids"),
+    103: .standard(proto: "generation_job"),
   ]
 
   fileprivate class _StorageClass {
@@ -1763,6 +1803,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     var _exercise: StoredPodcastExerciseProto? = nil
     var _log: LogProto? = nil
     var _llmRequestIds: Dictionary<String,String> = [:]
+    var _generationJob: StoredPodcastGenerationJobProto? = nil
 
     #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
@@ -1798,6 +1839,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       _exercise = source._exercise
       _log = source._log
       _llmRequestIds = source._llmRequestIds
+      _generationJob = source._generationJob
     }
   }
 
@@ -1837,6 +1879,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         case 19: try { try decoder.decodeSingularMessageField(value: &_storage._routineInput) }()
         case 101: try { try decoder.decodeSingularMessageField(value: &_storage._log) }()
         case 102: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: &_storage._llmRequestIds) }()
+        case 103: try { try decoder.decodeSingularMessageField(value: &_storage._generationJob) }()
         default: break
         }
       }
@@ -1912,6 +1955,9 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       if !_storage._llmRequestIds.isEmpty {
         try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: _storage._llmRequestIds, fieldNumber: 102)
       }
+      try { if let v = _storage._generationJob {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 103)
+      } }()
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -1942,10 +1988,43 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         if _storage._exercise != rhs_storage._exercise {return false}
         if _storage._log != rhs_storage._log {return false}
         if _storage._llmRequestIds != rhs_storage._llmRequestIds {return false}
+        if _storage._generationJob != rhs_storage._generationJob {return false}
         return true
       }
       if !storagesAreEqual {return false}
     }
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension StoredPodcastGenerationJobProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredPodcastGenerationJobProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "job_id"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.jobID) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.jobID.isEmpty {
+      try visitor.visitSingularStringField(value: self.jobID, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: StoredPodcastGenerationJobProto, rhs: StoredPodcastGenerationJobProto) -> Bool {
+    if lhs.jobID != rhs.jobID {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -2769,6 +2848,7 @@ extension StoredPodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf._M
     8: .same(proto: "routine"),
     101: .same(proto: "log"),
     102: .standard(proto: "llm_request_ids"),
+    103: .standard(proto: "generation_job"),
   ]
 
   fileprivate class _StorageClass {
@@ -2783,6 +2863,7 @@ extension StoredPodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf._M
     var _routine: StoredPodcastRoutineProto? = nil
     var _log: LogProto? = nil
     var _llmRequestIds: Dictionary<String,String> = [:]
+    var _generationJob: StoredPodcastGenerationJobProto? = nil
 
     #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
@@ -2808,6 +2889,7 @@ extension StoredPodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf._M
       _routine = source._routine
       _log = source._log
       _llmRequestIds = source._llmRequestIds
+      _generationJob = source._generationJob
     }
   }
 
@@ -2837,6 +2919,7 @@ extension StoredPodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf._M
         case 9: try { try decoder.decodeSingularStringField(value: &_storage._userID) }()
         case 101: try { try decoder.decodeSingularMessageField(value: &_storage._log) }()
         case 102: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: &_storage._llmRequestIds) }()
+        case 103: try { try decoder.decodeSingularMessageField(value: &_storage._generationJob) }()
         default: break
         }
       }
@@ -2882,6 +2965,9 @@ extension StoredPodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf._M
       if !_storage._llmRequestIds.isEmpty {
         try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: _storage._llmRequestIds, fieldNumber: 102)
       }
+      try { if let v = _storage._generationJob {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 103)
+      } }()
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -2902,6 +2988,7 @@ extension StoredPodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf._M
         if _storage._routine != rhs_storage._routine {return false}
         if _storage._log != rhs_storage._log {return false}
         if _storage._llmRequestIds != rhs_storage._llmRequestIds {return false}
+        if _storage._generationJob != rhs_storage._generationJob {return false}
         return true
       }
       if !storagesAreEqual {return false}
@@ -3180,6 +3267,7 @@ extension StoredPodcastStoryProto: SwiftProtobuf.Message, SwiftProtobuf._Message
     8: .same(proto: "slides"),
     100: .same(proto: "log"),
     101: .standard(proto: "llm_request_ids"),
+    103: .standard(proto: "generation_job"),
   ]
 
   fileprivate class _StorageClass {
@@ -3193,6 +3281,7 @@ extension StoredPodcastStoryProto: SwiftProtobuf.Message, SwiftProtobuf._Message
     var _slides: StoredPodcastStorySlidesProto? = nil
     var _log: LogProto? = nil
     var _llmRequestIds: Dictionary<String,String> = [:]
+    var _generationJob: StoredPodcastGenerationJobProto? = nil
 
     #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
@@ -3217,6 +3306,7 @@ extension StoredPodcastStoryProto: SwiftProtobuf.Message, SwiftProtobuf._Message
       _slides = source._slides
       _log = source._log
       _llmRequestIds = source._llmRequestIds
+      _generationJob = source._generationJob
     }
   }
 
@@ -3245,6 +3335,7 @@ extension StoredPodcastStoryProto: SwiftProtobuf.Message, SwiftProtobuf._Message
         case 8: try { try decoder.decodeSingularMessageField(value: &_storage._slides) }()
         case 100: try { try decoder.decodeSingularMessageField(value: &_storage._log) }()
         case 101: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: &_storage._llmRequestIds) }()
+        case 103: try { try decoder.decodeSingularMessageField(value: &_storage._generationJob) }()
         default: break
         }
       }
@@ -3287,6 +3378,9 @@ extension StoredPodcastStoryProto: SwiftProtobuf.Message, SwiftProtobuf._Message
       if !_storage._llmRequestIds.isEmpty {
         try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: _storage._llmRequestIds, fieldNumber: 101)
       }
+      try { if let v = _storage._generationJob {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 103)
+      } }()
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -3306,6 +3400,7 @@ extension StoredPodcastStoryProto: SwiftProtobuf.Message, SwiftProtobuf._Message
         if _storage._slides != rhs_storage._slides {return false}
         if _storage._log != rhs_storage._log {return false}
         if _storage._llmRequestIds != rhs_storage._llmRequestIds {return false}
+        if _storage._generationJob != rhs_storage._generationJob {return false}
         return true
       }
       if !storagesAreEqual {return false}

@@ -109,6 +109,19 @@ export interface StoredPodcastProto {
     llmRequestIds: {
         [key: string]: string;
     };
+    /**
+     * @generated from protobuf field: StoredPodcastGenerationJobProto generation_job = 103;
+     */
+    generationJob?: StoredPodcastGenerationJobProto;
+}
+/**
+ * @generated from protobuf message StoredPodcastGenerationJobProto
+ */
+export interface StoredPodcastGenerationJobProto {
+    /**
+     * @generated from protobuf field: string job_id = 1;
+     */
+    jobId: string;
 }
 /**
  * @generated from protobuf message StoredPodcastUserInputProto
@@ -466,6 +479,10 @@ export interface StoredPodcastSuggestionsProto {
     llmRequestIds: {
         [key: string]: string;
     };
+    /**
+     * @generated from protobuf field: StoredPodcastGenerationJobProto generation_job = 103;
+     */
+    generationJob?: StoredPodcastGenerationJobProto;
 }
 /**
  * @generated from protobuf message StoredPodcastSuggestionsSectionProto
@@ -529,9 +546,9 @@ export interface StoredPodcastSuggestionProto {
      */
     thumbnailKey: string;
     /**
-     * @generated from protobuf field: StoredPodcastContentGenerationStateProto generation_state = 6;
+     * @generated from protobuf field: StoredPodcastGenerationStateProto generation_state = 6;
      */
-    generationState: StoredPodcastContentGenerationStateProto;
+    generationState: StoredPodcastGenerationStateProto;
 }
 /**
  * @generated from protobuf message StoredPodcastStorySuggestionProto
@@ -558,9 +575,9 @@ export interface StoredPodcastStorySuggestionProto {
      */
     thumbnailKey: string;
     /**
-     * @generated from protobuf field: StoredPodcastContentGenerationStateProto generation_state = 6;
+     * @generated from protobuf field: StoredPodcastGenerationStateProto generation_state = 6;
      */
-    generationState: StoredPodcastContentGenerationStateProto;
+    generationState: StoredPodcastGenerationStateProto;
 }
 /**
  * @generated from protobuf message StoredPodcastStoryProto
@@ -610,6 +627,10 @@ export interface StoredPodcastStoryProto {
     llmRequestIds: {
         [key: string]: string;
     };
+    /**
+     * @generated from protobuf field: StoredPodcastGenerationJobProto generation_job = 103;
+     */
+    generationJob?: StoredPodcastGenerationJobProto;
 }
 /**
  * @generated from protobuf message StoredPodcastStoryInputProto
@@ -789,9 +810,9 @@ export interface StoredPodcastRoutineStepProto {
      */
     thumbnailKey: string;
     /**
-     * @generated from protobuf field: StoredPodcastContentGenerationStateProto generation_state = 7;
+     * @generated from protobuf field: StoredPodcastGenerationStateProto generation_state = 7;
      */
-    generationState: StoredPodcastContentGenerationStateProto;
+    generationState: StoredPodcastGenerationStateProto;
 }
 /**
  * @generated from protobuf message StoredPodcastExerciseProto
@@ -1139,27 +1160,27 @@ export enum StoredPodcastSuggestionsStateProto {
     GENERATING_CONTENT = 5
 }
 /**
- * @generated from protobuf enum StoredPodcastContentGenerationStateProto
+ * @generated from protobuf enum StoredPodcastGenerationStateProto
  */
-export enum StoredPodcastContentGenerationStateProto {
+export enum StoredPodcastGenerationStateProto {
     /**
-     * @generated from protobuf enum value: STORED_PODCAST_CONTENT_GENERATION_STATE_PROTO_UNDEFINED = 0;
+     * @generated from protobuf enum value: STORED_PODCAST_GENERATION_STATE_PROTO_UNDEFINED = 0;
      */
     UNDEFINED = 0,
     /**
-     * @generated from protobuf enum value: STORED_PODCAST_CONTENT_GENERATION_STATE_PROTO_CREATED = 1;
+     * @generated from protobuf enum value: STORED_PODCAST_GENERATION_STATE_PROTO_CREATED = 1;
      */
     CREATED = 1,
     /**
-     * @generated from protobuf enum value: STORED_PODCAST_CONTENT_GENERATION_STATE_PROTO_GENERATING = 2;
+     * @generated from protobuf enum value: STORED_PODCAST_GENERATION_STATE_PROTO_GENERATING = 2;
      */
     GENERATING = 2,
     /**
-     * @generated from protobuf enum value: STORED_PODCAST_CONTENT_GENERATION_STATE_PROTO_READY = 3;
+     * @generated from protobuf enum value: STORED_PODCAST_GENERATION_STATE_PROTO_READY = 3;
      */
     READY = 3,
     /**
-     * @generated from protobuf enum value: STORED_PODCAST_CONTENT_GENERATION_STATE_PROTO_FAILED = 4;
+     * @generated from protobuf enum value: STORED_PODCAST_GENERATION_STATE_PROTO_FAILED = 4;
      */
     FAILED = 4
 }
@@ -1233,7 +1254,8 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
             { no: 17, name: "podcast_type", kind: "enum", T: () => ["StoredPodcastTypeProto", StoredPodcastTypeProto, "STORED_PODCAST_TYPE_PROTO_"] },
             { no: 18, name: "exercise", kind: "message", T: () => StoredPodcastExerciseProto },
             { no: 101, name: "log", kind: "message", T: () => LogProto },
-            { no: 102, name: "llm_request_ids", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } }
+            { no: 102, name: "llm_request_ids", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
+            { no: 103, name: "generation_job", kind: "message", T: () => StoredPodcastGenerationJobProto }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastProto>): StoredPodcastProto {
@@ -1314,6 +1336,9 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
                     break;
                 case /* map<string, string> llm_request_ids */ 102:
                     this.binaryReadMap102(message.llmRequestIds, reader, options);
+                    break;
+                case /* StoredPodcastGenerationJobProto generation_job */ 103:
+                    message.generationJob = StoredPodcastGenerationJobProto.internalBinaryRead(reader, reader.uint32(), options, message.generationJob);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1406,6 +1431,9 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
         /* map<string, string> llm_request_ids = 102; */
         for (let k of globalThis.Object.keys(message.llmRequestIds))
             writer.tag(102, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.llmRequestIds[k]).join();
+        /* StoredPodcastGenerationJobProto generation_job = 103; */
+        if (message.generationJob)
+            StoredPodcastGenerationJobProto.internalBinaryWrite(message.generationJob, writer.tag(103, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1416,6 +1444,53 @@ class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
  * @generated MessageType for protobuf message StoredPodcastProto
  */
 export const StoredPodcastProto = new StoredPodcastProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class StoredPodcastGenerationJobProto$Type extends MessageType<StoredPodcastGenerationJobProto> {
+    constructor() {
+        super("StoredPodcastGenerationJobProto", [
+            { no: 1, name: "job_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<StoredPodcastGenerationJobProto>): StoredPodcastGenerationJobProto {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.jobId = "";
+        if (value !== undefined)
+            reflectionMergePartial<StoredPodcastGenerationJobProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredPodcastGenerationJobProto): StoredPodcastGenerationJobProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string job_id */ 1:
+                    message.jobId = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: StoredPodcastGenerationJobProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string job_id = 1; */
+        if (message.jobId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.jobId);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message StoredPodcastGenerationJobProto
+ */
+export const StoredPodcastGenerationJobProto = new StoredPodcastGenerationJobProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class StoredPodcastUserInputProto$Type extends MessageType<StoredPodcastUserInputProto> {
     constructor() {
@@ -2560,7 +2635,8 @@ class StoredPodcastSuggestionsProto$Type extends MessageType<StoredPodcastSugges
             { no: 7, name: "sections", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastSuggestionsSectionProto },
             { no: 8, name: "routine", kind: "message", T: () => StoredPodcastRoutineProto },
             { no: 101, name: "log", kind: "message", T: () => LogProto },
-            { no: 102, name: "llm_request_ids", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } }
+            { no: 102, name: "llm_request_ids", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
+            { no: 103, name: "generation_job", kind: "message", T: () => StoredPodcastGenerationJobProto }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastSuggestionsProto>): StoredPodcastSuggestionsProto {
@@ -2613,6 +2689,9 @@ class StoredPodcastSuggestionsProto$Type extends MessageType<StoredPodcastSugges
                     break;
                 case /* map<string, string> llm_request_ids */ 102:
                     this.binaryReadMap102(message.llmRequestIds, reader, options);
+                    break;
+                case /* StoredPodcastGenerationJobProto generation_job */ 103:
+                    message.generationJob = StoredPodcastGenerationJobProto.internalBinaryRead(reader, reader.uint32(), options, message.generationJob);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2675,6 +2754,9 @@ class StoredPodcastSuggestionsProto$Type extends MessageType<StoredPodcastSugges
         /* map<string, string> llm_request_ids = 102; */
         for (let k of globalThis.Object.keys(message.llmRequestIds))
             writer.tag(102, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.llmRequestIds[k]).join();
+        /* StoredPodcastGenerationJobProto generation_job = 103; */
+        if (message.generationJob)
+            StoredPodcastGenerationJobProto.internalBinaryWrite(message.generationJob, writer.tag(103, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -2792,7 +2874,7 @@ class StoredPodcastSuggestionProto$Type extends MessageType<StoredPodcastSuggest
             { no: 3, name: "badge", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "thumbnail_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "thumbnail_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 6, name: "generation_state", kind: "enum", T: () => ["StoredPodcastContentGenerationStateProto", StoredPodcastContentGenerationStateProto, "STORED_PODCAST_CONTENT_GENERATION_STATE_PROTO_"] }
+            { no: 6, name: "generation_state", kind: "enum", T: () => ["StoredPodcastGenerationStateProto", StoredPodcastGenerationStateProto, "STORED_PODCAST_GENERATION_STATE_PROTO_"] }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastSuggestionProto>): StoredPodcastSuggestionProto {
@@ -2827,7 +2909,7 @@ class StoredPodcastSuggestionProto$Type extends MessageType<StoredPodcastSuggest
                 case /* string thumbnail_key */ 5:
                     message.thumbnailKey = reader.string();
                     break;
-                case /* StoredPodcastContentGenerationStateProto generation_state */ 6:
+                case /* StoredPodcastGenerationStateProto generation_state */ 6:
                     message.generationState = reader.int32();
                     break;
                 default:
@@ -2857,7 +2939,7 @@ class StoredPodcastSuggestionProto$Type extends MessageType<StoredPodcastSuggest
         /* string thumbnail_key = 5; */
         if (message.thumbnailKey !== "")
             writer.tag(5, WireType.LengthDelimited).string(message.thumbnailKey);
-        /* StoredPodcastContentGenerationStateProto generation_state = 6; */
+        /* StoredPodcastGenerationStateProto generation_state = 6; */
         if (message.generationState !== 0)
             writer.tag(6, WireType.Varint).int32(message.generationState);
         let u = options.writeUnknownFields;
@@ -2879,7 +2961,7 @@ class StoredPodcastStorySuggestionProto$Type extends MessageType<StoredPodcastSt
             { no: 2, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "thumbnail_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "thumbnail_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 6, name: "generation_state", kind: "enum", T: () => ["StoredPodcastContentGenerationStateProto", StoredPodcastContentGenerationStateProto, "STORED_PODCAST_CONTENT_GENERATION_STATE_PROTO_"] }
+            { no: 6, name: "generation_state", kind: "enum", T: () => ["StoredPodcastGenerationStateProto", StoredPodcastGenerationStateProto, "STORED_PODCAST_GENERATION_STATE_PROTO_"] }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastStorySuggestionProto>): StoredPodcastStorySuggestionProto {
@@ -2914,7 +2996,7 @@ class StoredPodcastStorySuggestionProto$Type extends MessageType<StoredPodcastSt
                 case /* string thumbnail_key */ 4:
                     message.thumbnailKey = reader.string();
                     break;
-                case /* StoredPodcastContentGenerationStateProto generation_state */ 6:
+                case /* StoredPodcastGenerationStateProto generation_state */ 6:
                     message.generationState = reader.int32();
                     break;
                 default:
@@ -2944,7 +3026,7 @@ class StoredPodcastStorySuggestionProto$Type extends MessageType<StoredPodcastSt
         /* string thumbnail_key = 4; */
         if (message.thumbnailKey !== "")
             writer.tag(4, WireType.LengthDelimited).string(message.thumbnailKey);
-        /* StoredPodcastContentGenerationStateProto generation_state = 6; */
+        /* StoredPodcastGenerationStateProto generation_state = 6; */
         if (message.generationState !== 0)
             writer.tag(6, WireType.Varint).int32(message.generationState);
         let u = options.writeUnknownFields;
@@ -2970,7 +3052,8 @@ class StoredPodcastStoryProto$Type extends MessageType<StoredPodcastStoryProto> 
             { no: 7, name: "input", kind: "message", T: () => StoredPodcastStoryInputProto },
             { no: 8, name: "slides", kind: "message", T: () => StoredPodcastStorySlidesProto },
             { no: 100, name: "log", kind: "message", T: () => LogProto },
-            { no: 101, name: "llm_request_ids", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } }
+            { no: 101, name: "llm_request_ids", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
+            { no: 103, name: "generation_job", kind: "message", T: () => StoredPodcastGenerationJobProto }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastStoryProto>): StoredPodcastStoryProto {
@@ -3017,6 +3100,9 @@ class StoredPodcastStoryProto$Type extends MessageType<StoredPodcastStoryProto> 
                     break;
                 case /* map<string, string> llm_request_ids */ 101:
                     this.binaryReadMap101(message.llmRequestIds, reader, options);
+                    break;
+                case /* StoredPodcastGenerationJobProto generation_job */ 103:
+                    message.generationJob = StoredPodcastGenerationJobProto.internalBinaryRead(reader, reader.uint32(), options, message.generationJob);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -3076,6 +3162,9 @@ class StoredPodcastStoryProto$Type extends MessageType<StoredPodcastStoryProto> 
         /* map<string, string> llm_request_ids = 101; */
         for (let k of globalThis.Object.keys(message.llmRequestIds))
             writer.tag(101, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k).tag(2, WireType.LengthDelimited).string(message.llmRequestIds[k]).join();
+        /* StoredPodcastGenerationJobProto generation_job = 103; */
+        if (message.generationJob)
+            StoredPodcastGenerationJobProto.internalBinaryWrite(message.generationJob, writer.tag(103, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -3547,7 +3636,7 @@ class StoredPodcastRoutineStepProto$Type extends MessageType<StoredPodcastRoutin
             { no: 3, name: "outline", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "thumbnail_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "thumbnail_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 7, name: "generation_state", kind: "enum", T: () => ["StoredPodcastContentGenerationStateProto", StoredPodcastContentGenerationStateProto, "STORED_PODCAST_CONTENT_GENERATION_STATE_PROTO_"] }
+            { no: 7, name: "generation_state", kind: "enum", T: () => ["StoredPodcastGenerationStateProto", StoredPodcastGenerationStateProto, "STORED_PODCAST_GENERATION_STATE_PROTO_"] }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastRoutineStepProto>): StoredPodcastRoutineStepProto {
@@ -3586,7 +3675,7 @@ class StoredPodcastRoutineStepProto$Type extends MessageType<StoredPodcastRoutin
                 case /* string thumbnail_key */ 5:
                     message.thumbnailKey = reader.string();
                     break;
-                case /* StoredPodcastContentGenerationStateProto generation_state */ 7:
+                case /* StoredPodcastGenerationStateProto generation_state */ 7:
                     message.generationState = reader.int32();
                     break;
                 default:
@@ -3619,7 +3708,7 @@ class StoredPodcastRoutineStepProto$Type extends MessageType<StoredPodcastRoutin
         /* string thumbnail_key = 5; */
         if (message.thumbnailKey !== "")
             writer.tag(5, WireType.LengthDelimited).string(message.thumbnailKey);
-        /* StoredPodcastContentGenerationStateProto generation_state = 7; */
+        /* StoredPodcastGenerationStateProto generation_state = 7; */
         if (message.generationState !== 0)
             writer.tag(7, WireType.Varint).int32(message.generationState);
         let u = options.writeUnknownFields;
