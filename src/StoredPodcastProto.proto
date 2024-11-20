@@ -200,12 +200,6 @@ message StoredPodcastSuggestionsProto {
   reserved 100;
   LogProto log = 101;
   map<string, string> llm_request_ids = 102;
-  StoredPodcastSuggestionsGenerationTasksProto generation_tasks = 103;
-}
-
-message StoredPodcastSuggestionsGenerationTasksProto {
-  repeated string generating_podcast_ids = 1;
-  repeated string generating_story_ids = 2;
 }
 
 enum StoredPodcastSuggestionsStateProto {
@@ -215,6 +209,14 @@ enum StoredPodcastSuggestionsStateProto {
   STORED_PODCAST_SUGGESTIONS_STATE_PROTO_READY = 2;
   STORED_PODCAST_SUGGESTIONS_STATE_PROTO_FAILED = 3;
   STORED_PODCAST_SUGGESTIONS_STATE_PROTO_GENERATING_CONTENT = 5;
+}
+
+enum StoredPodcastContentGenerationStateProto {
+  STORED_PODCAST_CONTENT_GENERATION_STATE_PROTO_UNDEFINED = 0;
+  STORED_PODCAST_CONTENT_GENERATION_STATE_PROTO_CREATED = 1;
+  STORED_PODCAST_CONTENT_GENERATION_STATE_PROTO_GENERATING = 2;
+  STORED_PODCAST_CONTENT_GENERATION_STATE_PROTO_READY = 3;
+  STORED_PODCAST_CONTENT_GENERATION_STATE_PROTO_FAILED = 4;
 }
 
 message StoredPodcastSuggestionsSectionProto {
@@ -237,6 +239,7 @@ message StoredPodcastSuggestionProto {
   string badge = 3;  // Q&A, Explainer, ...
   string thumbnail_prompt = 4;
   string thumbnail_key = 5;
+  StoredPodcastContentGenerationStateProto generation_state = 6;
 }
 
 message StoredPodcastStorySuggestionProto {
@@ -245,6 +248,7 @@ message StoredPodcastStorySuggestionProto {
   string title = 2;
   string thumbnail_prompt = 3;
   string thumbnail_key = 4;
+  StoredPodcastContentGenerationStateProto generation_state = 6;
 }
 
 message StoredPodcastStoryProto {
@@ -333,6 +337,7 @@ message StoredPodcastRoutineStepProto {
   string outline = 3;
   string thumbnail_prompt = 4;
   string thumbnail_key = 5;
+  StoredPodcastContentGenerationStateProto generation_state = 7;
 }
 
 enum StoredPodcastTypeProto {
