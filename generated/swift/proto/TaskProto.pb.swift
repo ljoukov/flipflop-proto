@@ -133,6 +133,8 @@ struct CreatePodcastSuggestionsTaskProto: Sendable {
 
   var ignoreRecentlyGenerated: Bool = false
 
+  var forceGenerationTask: Bool = false
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -409,6 +411,7 @@ extension CreatePodcastSuggestionsTaskProto: SwiftProtobuf.Message, SwiftProtobu
     1: .standard(proto: "user_id"),
     2: .standard(proto: "ignore_partially_generated"),
     3: .standard(proto: "ignore_recently_generated"),
+    4: .standard(proto: "force_generation_task"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -420,6 +423,7 @@ extension CreatePodcastSuggestionsTaskProto: SwiftProtobuf.Message, SwiftProtobu
       case 1: try { try decoder.decodeSingularStringField(value: &self.userID) }()
       case 2: try { try decoder.decodeSingularBoolField(value: &self.ignorePartiallyGenerated) }()
       case 3: try { try decoder.decodeSingularBoolField(value: &self.ignoreRecentlyGenerated) }()
+      case 4: try { try decoder.decodeSingularBoolField(value: &self.forceGenerationTask) }()
       default: break
       }
     }
@@ -435,6 +439,9 @@ extension CreatePodcastSuggestionsTaskProto: SwiftProtobuf.Message, SwiftProtobu
     if self.ignoreRecentlyGenerated != false {
       try visitor.visitSingularBoolField(value: self.ignoreRecentlyGenerated, fieldNumber: 3)
     }
+    if self.forceGenerationTask != false {
+      try visitor.visitSingularBoolField(value: self.forceGenerationTask, fieldNumber: 4)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -442,6 +449,7 @@ extension CreatePodcastSuggestionsTaskProto: SwiftProtobuf.Message, SwiftProtobu
     if lhs.userID != rhs.userID {return false}
     if lhs.ignorePartiallyGenerated != rhs.ignorePartiallyGenerated {return false}
     if lhs.ignoreRecentlyGenerated != rhs.ignoreRecentlyGenerated {return false}
+    if lhs.forceGenerationTask != rhs.forceGenerationTask {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

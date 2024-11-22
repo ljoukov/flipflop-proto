@@ -100,6 +100,10 @@ export interface CreatePodcastSuggestionsTaskProto {
      * @generated from protobuf field: bool ignore_recently_generated = 3;
      */
     ignoreRecentlyGenerated: boolean;
+    /**
+     * @generated from protobuf field: bool force_generation_task = 4;
+     */
+    forceGenerationTask: boolean;
 }
 /**
  * @generated from protobuf message GeneratePodcastSuggestionsTaskProto
@@ -356,7 +360,8 @@ class CreatePodcastSuggestionsTaskProto$Type extends MessageType<CreatePodcastSu
         super("CreatePodcastSuggestionsTaskProto", [
             { no: 1, name: "user_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "ignore_partially_generated", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 3, name: "ignore_recently_generated", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+            { no: 3, name: "ignore_recently_generated", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 4, name: "force_generation_task", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
     create(value?: PartialMessage<CreatePodcastSuggestionsTaskProto>): CreatePodcastSuggestionsTaskProto {
@@ -364,6 +369,7 @@ class CreatePodcastSuggestionsTaskProto$Type extends MessageType<CreatePodcastSu
         message.userId = "";
         message.ignorePartiallyGenerated = false;
         message.ignoreRecentlyGenerated = false;
+        message.forceGenerationTask = false;
         if (value !== undefined)
             reflectionMergePartial<CreatePodcastSuggestionsTaskProto>(this, message, value);
         return message;
@@ -381,6 +387,9 @@ class CreatePodcastSuggestionsTaskProto$Type extends MessageType<CreatePodcastSu
                     break;
                 case /* bool ignore_recently_generated */ 3:
                     message.ignoreRecentlyGenerated = reader.bool();
+                    break;
+                case /* bool force_generation_task */ 4:
+                    message.forceGenerationTask = reader.bool();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -403,6 +412,9 @@ class CreatePodcastSuggestionsTaskProto$Type extends MessageType<CreatePodcastSu
         /* bool ignore_recently_generated = 3; */
         if (message.ignoreRecentlyGenerated !== false)
             writer.tag(3, WireType.Varint).bool(message.ignoreRecentlyGenerated);
+        /* bool force_generation_task = 4; */
+        if (message.forceGenerationTask !== false)
+            writer.tag(4, WireType.Varint).bool(message.forceGenerationTask);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

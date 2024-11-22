@@ -29,6 +29,7 @@ message CreatePodcastSuggestionsTaskProto {
   string user_id = 1;
   bool ignore_partially_generated = 2;
   bool ignore_recently_generated = 3;
+  bool force_generation_task = 4;
 }
 
 message GeneratePodcastSuggestionsTaskProto {
