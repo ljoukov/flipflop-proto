@@ -16,7 +16,6 @@ message StoredPodcastProto {
 
   StoredPodcastUserInputProto user_input = 5;
   StoredPodcastSuggestionInputProto suggestion_input = 15;
-  StoredPodcastRoutineStepInputProto routine_input = 19;
 
   StoredPodcastStateProto state = 6;
 
@@ -72,23 +71,30 @@ message StoredPodcastUserInputProto {
 }
 
 message StoredPodcastSuggestionInputProto {
-  string suggestions_id = 8;
-  string suggestion_section_id = 1;
-  string suggestion_section_reasoning = 2;
-  string suggestion_title = 3;
-  string suggestion_thumbnail_prompt = 4;
-  string suggestion_badge = 5;
-  StoredPodcastPointsProto suggestion_points = 6;
-  StoredPodcastSuggestionUserInputProto user_input = 7;
+  string suggestions_id = 1;
+
+  oneof type {
+    StoredPodcastSuggestionFromSectionInputProto suggestion_section = 2;
+    StoredPodcastSuggestionFromRoutineStepInputProto routine_step = 3;
+  }
+
+  StoredPodcastPointsProto suggestion_points = 10;
+  StoredPodcastSuggestionUserInputProto user_input = 11;
 }
 
-message StoredPodcastRoutineStepInputProto {
+message StoredPodcastSuggestionFromSectionInputProto {
+  string suggestion_section_id = 1;
+  string suggestion_section_reasoning = 2;
+  string title = 3;
+  string thumbnail_prompt = 4;
+  string badge = 5;
+}
+
+message StoredPodcastSuggestionFromRoutineStepInputProto {
   string routine_id = 1;
   string title = 2;
   string routine_reasoning = 3;
   string step_outline = 4;
-  StoredPodcastPointsProto suggestion_points = 5;
-  StoredPodcastSuggestionUserInputProto user_input = 6;
 }
 
 message StoredPodcastSuggestionUserInputProto {
