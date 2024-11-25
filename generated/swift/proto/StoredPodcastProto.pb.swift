@@ -572,8 +572,6 @@ struct StoredPodcastSuggestionInputProto: Sendable {
 
   var title: String = String()
 
-  var thumbnailPrompt: String = String()
-
   var type: StoredPodcastSuggestionInputProto.OneOf_Type? = nil
 
   var suggestionSection: StoredPodcastSuggestionFromSectionInputProto {
@@ -2088,7 +2086,6 @@ extension StoredPodcastSuggestionInputProto: SwiftProtobuf.Message, SwiftProtobu
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "suggestions_id"),
     2: .same(proto: "title"),
-    3: .standard(proto: "thumbnail_prompt"),
     10: .standard(proto: "suggestion_section"),
     11: .standard(proto: "routine_step"),
     20: .standard(proto: "suggestion_points"),
@@ -2103,7 +2100,6 @@ extension StoredPodcastSuggestionInputProto: SwiftProtobuf.Message, SwiftProtobu
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.suggestionsID) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.title) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.thumbnailPrompt) }()
       case 10: try {
         var v: StoredPodcastSuggestionFromSectionInputProto?
         var hadOneofValue = false
@@ -2148,9 +2144,6 @@ extension StoredPodcastSuggestionInputProto: SwiftProtobuf.Message, SwiftProtobu
     if !self.title.isEmpty {
       try visitor.visitSingularStringField(value: self.title, fieldNumber: 2)
     }
-    if !self.thumbnailPrompt.isEmpty {
-      try visitor.visitSingularStringField(value: self.thumbnailPrompt, fieldNumber: 3)
-    }
     switch self.type {
     case .suggestionSection?: try {
       guard case .suggestionSection(let v)? = self.type else { preconditionFailure() }
@@ -2174,7 +2167,6 @@ extension StoredPodcastSuggestionInputProto: SwiftProtobuf.Message, SwiftProtobu
   static func ==(lhs: StoredPodcastSuggestionInputProto, rhs: StoredPodcastSuggestionInputProto) -> Bool {
     if lhs.suggestionsID != rhs.suggestionsID {return false}
     if lhs.title != rhs.title {return false}
-    if lhs.thumbnailPrompt != rhs.thumbnailPrompt {return false}
     if lhs.type != rhs.type {return false}
     if lhs._suggestionPoints != rhs._suggestionPoints {return false}
     if lhs._userInput != rhs._userInput {return false}
