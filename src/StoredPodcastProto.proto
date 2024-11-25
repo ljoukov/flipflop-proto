@@ -87,6 +87,8 @@ message StoredPodcastRoutineStepInputProto {
   string title = 2;
   string routine_reasoning = 3;
   string step_outline = 4;
+  StoredPodcastPointsProto suggestion_points = 5;
+  StoredPodcastSuggestionUserInputProto user_input = 6;
 }
 
 message StoredPodcastSuggestionUserInputProto {

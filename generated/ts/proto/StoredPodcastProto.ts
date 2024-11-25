@@ -193,6 +193,14 @@ export interface StoredPodcastRoutineStepInputProto {
      * @generated from protobuf field: string step_outline = 4;
      */
     stepOutline: string;
+    /**
+     * @generated from protobuf field: StoredPodcastPointsProto suggestion_points = 5;
+     */
+    suggestionPoints?: StoredPodcastPointsProto;
+    /**
+     * @generated from protobuf field: StoredPodcastSuggestionUserInputProto user_input = 6;
+     */
+    userInput?: StoredPodcastSuggestionUserInputProto;
 }
 /**
  * @generated from protobuf message StoredPodcastSuggestionUserInputProto
@@ -1654,7 +1662,9 @@ class StoredPodcastRoutineStepInputProto$Type extends MessageType<StoredPodcastR
             { no: 1, name: "routine_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "routine_reasoning", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "step_outline", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 4, name: "step_outline", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "suggestion_points", kind: "message", T: () => StoredPodcastPointsProto },
+            { no: 6, name: "user_input", kind: "message", T: () => StoredPodcastSuggestionUserInputProto }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastRoutineStepInputProto>): StoredPodcastRoutineStepInputProto {
@@ -1684,6 +1694,12 @@ class StoredPodcastRoutineStepInputProto$Type extends MessageType<StoredPodcastR
                 case /* string step_outline */ 4:
                     message.stepOutline = reader.string();
                     break;
+                case /* StoredPodcastPointsProto suggestion_points */ 5:
+                    message.suggestionPoints = StoredPodcastPointsProto.internalBinaryRead(reader, reader.uint32(), options, message.suggestionPoints);
+                    break;
+                case /* StoredPodcastSuggestionUserInputProto user_input */ 6:
+                    message.userInput = StoredPodcastSuggestionUserInputProto.internalBinaryRead(reader, reader.uint32(), options, message.userInput);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -1708,6 +1724,12 @@ class StoredPodcastRoutineStepInputProto$Type extends MessageType<StoredPodcastR
         /* string step_outline = 4; */
         if (message.stepOutline !== "")
             writer.tag(4, WireType.LengthDelimited).string(message.stepOutline);
+        /* StoredPodcastPointsProto suggestion_points = 5; */
+        if (message.suggestionPoints)
+            StoredPodcastPointsProto.internalBinaryWrite(message.suggestionPoints, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        /* StoredPodcastSuggestionUserInputProto user_input = 6; */
+        if (message.userInput)
+            StoredPodcastSuggestionUserInputProto.internalBinaryWrite(message.userInput, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
