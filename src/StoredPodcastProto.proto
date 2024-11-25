@@ -73,6 +73,7 @@ message StoredPodcastUserInputProto {
 message StoredPodcastSuggestionInputProto {
   string suggestions_id = 1;
   string title = 2;
+  string thumbnail_prompt = 3;  // passed further into generation prompts
 
   oneof type {
     StoredPodcastSuggestionFromSectionInputProto suggestion_section = 10;

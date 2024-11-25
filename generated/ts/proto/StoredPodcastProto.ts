@@ -145,6 +145,10 @@ export interface StoredPodcastSuggestionInputProto {
      */
     title: string;
     /**
+     * @generated from protobuf field: string thumbnail_prompt = 3;
+     */
+    thumbnailPrompt: string; // passed further into generation prompts
+    /**
      * @generated from protobuf oneof: type
      */
     type: {
@@ -1556,6 +1560,7 @@ class StoredPodcastSuggestionInputProto$Type extends MessageType<StoredPodcastSu
         super("StoredPodcastSuggestionInputProto", [
             { no: 1, name: "suggestions_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "thumbnail_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 10, name: "suggestion_section", kind: "message", oneof: "type", T: () => StoredPodcastSuggestionFromSectionInputProto },
             { no: 11, name: "routine_step", kind: "message", oneof: "type", T: () => StoredPodcastSuggestionFromRoutineStepInputProto },
             { no: 20, name: "suggestion_points", kind: "message", T: () => StoredPodcastPointsProto },
@@ -1566,6 +1571,7 @@ class StoredPodcastSuggestionInputProto$Type extends MessageType<StoredPodcastSu
         const message = globalThis.Object.create((this.messagePrototype!));
         message.suggestionsId = "";
         message.title = "";
+        message.thumbnailPrompt = "";
         message.type = { oneofKind: undefined };
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastSuggestionInputProto>(this, message, value);
@@ -1581,6 +1587,9 @@ class StoredPodcastSuggestionInputProto$Type extends MessageType<StoredPodcastSu
                     break;
                 case /* string title */ 2:
                     message.title = reader.string();
+                    break;
+                case /* string thumbnail_prompt */ 3:
+                    message.thumbnailPrompt = reader.string();
                     break;
                 case /* StoredPodcastSuggestionFromSectionInputProto suggestion_section */ 10:
                     message.type = {
@@ -1618,6 +1627,9 @@ class StoredPodcastSuggestionInputProto$Type extends MessageType<StoredPodcastSu
         /* string title = 2; */
         if (message.title !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.title);
+        /* string thumbnail_prompt = 3; */
+        if (message.thumbnailPrompt !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.thumbnailPrompt);
         /* StoredPodcastSuggestionFromSectionInputProto suggestion_section = 10; */
         if (message.type.oneofKind === "suggestionSection")
             StoredPodcastSuggestionFromSectionInputProto.internalBinaryWrite(message.type.suggestionSection, writer.tag(10, WireType.LengthDelimited).fork(), options).join();
