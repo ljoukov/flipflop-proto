@@ -141,29 +141,37 @@ export interface StoredPodcastSuggestionInputProto {
      */
     suggestionsId: string;
     /**
+     * @generated from protobuf field: string title = 2;
+     */
+    title: string;
+    /**
+     * @generated from protobuf field: string thumbnail_prompt = 3;
+     */
+    thumbnailPrompt: string;
+    /**
      * @generated from protobuf oneof: type
      */
     type: {
         oneofKind: "suggestionSection";
         /**
-         * @generated from protobuf field: StoredPodcastSuggestionFromSectionInputProto suggestion_section = 2;
+         * @generated from protobuf field: StoredPodcastSuggestionFromSectionInputProto suggestion_section = 10;
          */
         suggestionSection: StoredPodcastSuggestionFromSectionInputProto;
     } | {
         oneofKind: "routineStep";
         /**
-         * @generated from protobuf field: StoredPodcastSuggestionFromRoutineStepInputProto routine_step = 3;
+         * @generated from protobuf field: StoredPodcastSuggestionFromRoutineStepInputProto routine_step = 11;
          */
         routineStep: StoredPodcastSuggestionFromRoutineStepInputProto;
     } | {
         oneofKind: undefined;
     };
     /**
-     * @generated from protobuf field: StoredPodcastPointsProto suggestion_points = 10;
+     * @generated from protobuf field: StoredPodcastPointsProto suggestion_points = 20;
      */
     suggestionPoints?: StoredPodcastPointsProto;
     /**
-     * @generated from protobuf field: StoredPodcastSuggestionUserInputProto user_input = 11;
+     * @generated from protobuf field: StoredPodcastSuggestionUserInputProto user_input = 21;
      */
     userInput?: StoredPodcastSuggestionUserInputProto;
 }
@@ -180,15 +188,7 @@ export interface StoredPodcastSuggestionFromSectionInputProto {
      */
     suggestionSectionReasoning: string;
     /**
-     * @generated from protobuf field: string title = 3;
-     */
-    title: string;
-    /**
-     * @generated from protobuf field: string thumbnail_prompt = 4;
-     */
-    thumbnailPrompt: string;
-    /**
-     * @generated from protobuf field: string badge = 5;
+     * @generated from protobuf field: string badge = 3;
      */
     badge: string;
 }
@@ -201,15 +201,11 @@ export interface StoredPodcastSuggestionFromRoutineStepInputProto {
      */
     routineId: string;
     /**
-     * @generated from protobuf field: string title = 2;
-     */
-    title: string;
-    /**
-     * @generated from protobuf field: string routine_reasoning = 3;
+     * @generated from protobuf field: string routine_reasoning = 2;
      */
     routineReasoning: string;
     /**
-     * @generated from protobuf field: string step_outline = 4;
+     * @generated from protobuf field: string step_outline = 3;
      */
     stepOutline: string;
 }
@@ -1563,15 +1559,19 @@ class StoredPodcastSuggestionInputProto$Type extends MessageType<StoredPodcastSu
     constructor() {
         super("StoredPodcastSuggestionInputProto", [
             { no: 1, name: "suggestions_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "suggestion_section", kind: "message", oneof: "type", T: () => StoredPodcastSuggestionFromSectionInputProto },
-            { no: 3, name: "routine_step", kind: "message", oneof: "type", T: () => StoredPodcastSuggestionFromRoutineStepInputProto },
-            { no: 10, name: "suggestion_points", kind: "message", T: () => StoredPodcastPointsProto },
-            { no: 11, name: "user_input", kind: "message", T: () => StoredPodcastSuggestionUserInputProto }
+            { no: 2, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "thumbnail_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 10, name: "suggestion_section", kind: "message", oneof: "type", T: () => StoredPodcastSuggestionFromSectionInputProto },
+            { no: 11, name: "routine_step", kind: "message", oneof: "type", T: () => StoredPodcastSuggestionFromRoutineStepInputProto },
+            { no: 20, name: "suggestion_points", kind: "message", T: () => StoredPodcastPointsProto },
+            { no: 21, name: "user_input", kind: "message", T: () => StoredPodcastSuggestionUserInputProto }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastSuggestionInputProto>): StoredPodcastSuggestionInputProto {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.suggestionsId = "";
+        message.title = "";
+        message.thumbnailPrompt = "";
         message.type = { oneofKind: undefined };
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastSuggestionInputProto>(this, message, value);
@@ -1585,22 +1585,28 @@ class StoredPodcastSuggestionInputProto$Type extends MessageType<StoredPodcastSu
                 case /* string suggestions_id */ 1:
                     message.suggestionsId = reader.string();
                     break;
-                case /* StoredPodcastSuggestionFromSectionInputProto suggestion_section */ 2:
+                case /* string title */ 2:
+                    message.title = reader.string();
+                    break;
+                case /* string thumbnail_prompt */ 3:
+                    message.thumbnailPrompt = reader.string();
+                    break;
+                case /* StoredPodcastSuggestionFromSectionInputProto suggestion_section */ 10:
                     message.type = {
                         oneofKind: "suggestionSection",
                         suggestionSection: StoredPodcastSuggestionFromSectionInputProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).suggestionSection)
                     };
                     break;
-                case /* StoredPodcastSuggestionFromRoutineStepInputProto routine_step */ 3:
+                case /* StoredPodcastSuggestionFromRoutineStepInputProto routine_step */ 11:
                     message.type = {
                         oneofKind: "routineStep",
                         routineStep: StoredPodcastSuggestionFromRoutineStepInputProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).routineStep)
                     };
                     break;
-                case /* StoredPodcastPointsProto suggestion_points */ 10:
+                case /* StoredPodcastPointsProto suggestion_points */ 20:
                     message.suggestionPoints = StoredPodcastPointsProto.internalBinaryRead(reader, reader.uint32(), options, message.suggestionPoints);
                     break;
-                case /* StoredPodcastSuggestionUserInputProto user_input */ 11:
+                case /* StoredPodcastSuggestionUserInputProto user_input */ 21:
                     message.userInput = StoredPodcastSuggestionUserInputProto.internalBinaryRead(reader, reader.uint32(), options, message.userInput);
                     break;
                 default:
@@ -1618,18 +1624,24 @@ class StoredPodcastSuggestionInputProto$Type extends MessageType<StoredPodcastSu
         /* string suggestions_id = 1; */
         if (message.suggestionsId !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.suggestionsId);
-        /* StoredPodcastSuggestionFromSectionInputProto suggestion_section = 2; */
+        /* string title = 2; */
+        if (message.title !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.title);
+        /* string thumbnail_prompt = 3; */
+        if (message.thumbnailPrompt !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.thumbnailPrompt);
+        /* StoredPodcastSuggestionFromSectionInputProto suggestion_section = 10; */
         if (message.type.oneofKind === "suggestionSection")
-            StoredPodcastSuggestionFromSectionInputProto.internalBinaryWrite(message.type.suggestionSection, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* StoredPodcastSuggestionFromRoutineStepInputProto routine_step = 3; */
+            StoredPodcastSuggestionFromSectionInputProto.internalBinaryWrite(message.type.suggestionSection, writer.tag(10, WireType.LengthDelimited).fork(), options).join();
+        /* StoredPodcastSuggestionFromRoutineStepInputProto routine_step = 11; */
         if (message.type.oneofKind === "routineStep")
-            StoredPodcastSuggestionFromRoutineStepInputProto.internalBinaryWrite(message.type.routineStep, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* StoredPodcastPointsProto suggestion_points = 10; */
+            StoredPodcastSuggestionFromRoutineStepInputProto.internalBinaryWrite(message.type.routineStep, writer.tag(11, WireType.LengthDelimited).fork(), options).join();
+        /* StoredPodcastPointsProto suggestion_points = 20; */
         if (message.suggestionPoints)
-            StoredPodcastPointsProto.internalBinaryWrite(message.suggestionPoints, writer.tag(10, WireType.LengthDelimited).fork(), options).join();
-        /* StoredPodcastSuggestionUserInputProto user_input = 11; */
+            StoredPodcastPointsProto.internalBinaryWrite(message.suggestionPoints, writer.tag(20, WireType.LengthDelimited).fork(), options).join();
+        /* StoredPodcastSuggestionUserInputProto user_input = 21; */
         if (message.userInput)
-            StoredPodcastSuggestionUserInputProto.internalBinaryWrite(message.userInput, writer.tag(11, WireType.LengthDelimited).fork(), options).join();
+            StoredPodcastSuggestionUserInputProto.internalBinaryWrite(message.userInput, writer.tag(21, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1646,17 +1658,13 @@ class StoredPodcastSuggestionFromSectionInputProto$Type extends MessageType<Stor
         super("StoredPodcastSuggestionFromSectionInputProto", [
             { no: 1, name: "suggestion_section_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "suggestion_section_reasoning", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "thumbnail_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "badge", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 3, name: "badge", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastSuggestionFromSectionInputProto>): StoredPodcastSuggestionFromSectionInputProto {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.suggestionSectionId = "";
         message.suggestionSectionReasoning = "";
-        message.title = "";
-        message.thumbnailPrompt = "";
         message.badge = "";
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastSuggestionFromSectionInputProto>(this, message, value);
@@ -1673,13 +1681,7 @@ class StoredPodcastSuggestionFromSectionInputProto$Type extends MessageType<Stor
                 case /* string suggestion_section_reasoning */ 2:
                     message.suggestionSectionReasoning = reader.string();
                     break;
-                case /* string title */ 3:
-                    message.title = reader.string();
-                    break;
-                case /* string thumbnail_prompt */ 4:
-                    message.thumbnailPrompt = reader.string();
-                    break;
-                case /* string badge */ 5:
+                case /* string badge */ 3:
                     message.badge = reader.string();
                     break;
                 default:
@@ -1700,15 +1702,9 @@ class StoredPodcastSuggestionFromSectionInputProto$Type extends MessageType<Stor
         /* string suggestion_section_reasoning = 2; */
         if (message.suggestionSectionReasoning !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.suggestionSectionReasoning);
-        /* string title = 3; */
-        if (message.title !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.title);
-        /* string thumbnail_prompt = 4; */
-        if (message.thumbnailPrompt !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.thumbnailPrompt);
-        /* string badge = 5; */
+        /* string badge = 3; */
         if (message.badge !== "")
-            writer.tag(5, WireType.LengthDelimited).string(message.badge);
+            writer.tag(3, WireType.LengthDelimited).string(message.badge);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1724,15 +1720,13 @@ class StoredPodcastSuggestionFromRoutineStepInputProto$Type extends MessageType<
     constructor() {
         super("StoredPodcastSuggestionFromRoutineStepInputProto", [
             { no: 1, name: "routine_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "routine_reasoning", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "step_outline", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "routine_reasoning", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "step_outline", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastSuggestionFromRoutineStepInputProto>): StoredPodcastSuggestionFromRoutineStepInputProto {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.routineId = "";
-        message.title = "";
         message.routineReasoning = "";
         message.stepOutline = "";
         if (value !== undefined)
@@ -1747,13 +1741,10 @@ class StoredPodcastSuggestionFromRoutineStepInputProto$Type extends MessageType<
                 case /* string routine_id */ 1:
                     message.routineId = reader.string();
                     break;
-                case /* string title */ 2:
-                    message.title = reader.string();
-                    break;
-                case /* string routine_reasoning */ 3:
+                case /* string routine_reasoning */ 2:
                     message.routineReasoning = reader.string();
                     break;
-                case /* string step_outline */ 4:
+                case /* string step_outline */ 3:
                     message.stepOutline = reader.string();
                     break;
                 default:
@@ -1771,15 +1762,12 @@ class StoredPodcastSuggestionFromRoutineStepInputProto$Type extends MessageType<
         /* string routine_id = 1; */
         if (message.routineId !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.routineId);
-        /* string title = 2; */
-        if (message.title !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.title);
-        /* string routine_reasoning = 3; */
+        /* string routine_reasoning = 2; */
         if (message.routineReasoning !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.routineReasoning);
-        /* string step_outline = 4; */
+            writer.tag(2, WireType.LengthDelimited).string(message.routineReasoning);
+        /* string step_outline = 3; */
         if (message.stepOutline !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.stepOutline);
+            writer.tag(3, WireType.LengthDelimited).string(message.stepOutline);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

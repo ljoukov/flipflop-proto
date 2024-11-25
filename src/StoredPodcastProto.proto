@@ -72,29 +72,28 @@ message StoredPodcastUserInputProto {
 
 message StoredPodcastSuggestionInputProto {
   string suggestions_id = 1;
+  string title = 2;
+  string thumbnail_prompt = 3;
 
   oneof type {
-    StoredPodcastSuggestionFromSectionInputProto suggestion_section = 2;
-    StoredPodcastSuggestionFromRoutineStepInputProto routine_step = 3;
+    StoredPodcastSuggestionFromSectionInputProto suggestion_section = 10;
+    StoredPodcastSuggestionFromRoutineStepInputProto routine_step = 11;
   }
 
-  StoredPodcastPointsProto suggestion_points = 10;
-  StoredPodcastSuggestionUserInputProto user_input = 11;
+  StoredPodcastPointsProto suggestion_points = 20;
+  StoredPodcastSuggestionUserInputProto user_input = 21;
 }
 
 message StoredPodcastSuggestionFromSectionInputProto {
   string suggestion_section_id = 1;
   string suggestion_section_reasoning = 2;
-  string title = 3;
-  string thumbnail_prompt = 4;
-  string badge = 5;
+  string badge = 3;
 }
 
 message StoredPodcastSuggestionFromRoutineStepInputProto {
   string routine_id = 1;
-  string title = 2;
-  string routine_reasoning = 3;
-  string step_outline = 4;
+  string routine_reasoning = 2;
+  string step_outline = 3;
 }
 
 message StoredPodcastSuggestionUserInputProto {

@@ -570,6 +570,10 @@ struct StoredPodcastSuggestionInputProto: Sendable {
 
   var suggestionsID: String = String()
 
+  var title: String = String()
+
+  var thumbnailPrompt: String = String()
+
   var type: StoredPodcastSuggestionInputProto.OneOf_Type? = nil
 
   var suggestionSection: StoredPodcastSuggestionFromSectionInputProto {
@@ -629,10 +633,6 @@ struct StoredPodcastSuggestionFromSectionInputProto: Sendable {
 
   var suggestionSectionReasoning: String = String()
 
-  var title: String = String()
-
-  var thumbnailPrompt: String = String()
-
   var badge: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -646,8 +646,6 @@ struct StoredPodcastSuggestionFromRoutineStepInputProto: Sendable {
   // methods supported on all messages.
 
   var routineID: String = String()
-
-  var title: String = String()
 
   var routineReasoning: String = String()
 
@@ -2089,10 +2087,12 @@ extension StoredPodcastSuggestionInputProto: SwiftProtobuf.Message, SwiftProtobu
   static let protoMessageName: String = "StoredPodcastSuggestionInputProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "suggestions_id"),
-    2: .standard(proto: "suggestion_section"),
-    3: .standard(proto: "routine_step"),
-    10: .standard(proto: "suggestion_points"),
-    11: .standard(proto: "user_input"),
+    2: .same(proto: "title"),
+    3: .standard(proto: "thumbnail_prompt"),
+    10: .standard(proto: "suggestion_section"),
+    11: .standard(proto: "routine_step"),
+    20: .standard(proto: "suggestion_points"),
+    21: .standard(proto: "user_input"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2102,7 +2102,9 @@ extension StoredPodcastSuggestionInputProto: SwiftProtobuf.Message, SwiftProtobu
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.suggestionsID) }()
-      case 2: try {
+      case 2: try { try decoder.decodeSingularStringField(value: &self.title) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.thumbnailPrompt) }()
+      case 10: try {
         var v: StoredPodcastSuggestionFromSectionInputProto?
         var hadOneofValue = false
         if let current = self.type {
@@ -2115,7 +2117,7 @@ extension StoredPodcastSuggestionInputProto: SwiftProtobuf.Message, SwiftProtobu
           self.type = .suggestionSection(v)
         }
       }()
-      case 3: try {
+      case 11: try {
         var v: StoredPodcastSuggestionFromRoutineStepInputProto?
         var hadOneofValue = false
         if let current = self.type {
@@ -2128,8 +2130,8 @@ extension StoredPodcastSuggestionInputProto: SwiftProtobuf.Message, SwiftProtobu
           self.type = .routineStep(v)
         }
       }()
-      case 10: try { try decoder.decodeSingularMessageField(value: &self._suggestionPoints) }()
-      case 11: try { try decoder.decodeSingularMessageField(value: &self._userInput) }()
+      case 20: try { try decoder.decodeSingularMessageField(value: &self._suggestionPoints) }()
+      case 21: try { try decoder.decodeSingularMessageField(value: &self._userInput) }()
       default: break
       }
     }
@@ -2143,28 +2145,36 @@ extension StoredPodcastSuggestionInputProto: SwiftProtobuf.Message, SwiftProtobu
     if !self.suggestionsID.isEmpty {
       try visitor.visitSingularStringField(value: self.suggestionsID, fieldNumber: 1)
     }
+    if !self.title.isEmpty {
+      try visitor.visitSingularStringField(value: self.title, fieldNumber: 2)
+    }
+    if !self.thumbnailPrompt.isEmpty {
+      try visitor.visitSingularStringField(value: self.thumbnailPrompt, fieldNumber: 3)
+    }
     switch self.type {
     case .suggestionSection?: try {
       guard case .suggestionSection(let v)? = self.type else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
     }()
     case .routineStep?: try {
       guard case .routineStep(let v)? = self.type else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 11)
     }()
     case nil: break
     }
     try { if let v = self._suggestionPoints {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 20)
     } }()
     try { if let v = self._userInput {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 11)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 21)
     } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: StoredPodcastSuggestionInputProto, rhs: StoredPodcastSuggestionInputProto) -> Bool {
     if lhs.suggestionsID != rhs.suggestionsID {return false}
+    if lhs.title != rhs.title {return false}
+    if lhs.thumbnailPrompt != rhs.thumbnailPrompt {return false}
     if lhs.type != rhs.type {return false}
     if lhs._suggestionPoints != rhs._suggestionPoints {return false}
     if lhs._userInput != rhs._userInput {return false}
@@ -2178,9 +2188,7 @@ extension StoredPodcastSuggestionFromSectionInputProto: SwiftProtobuf.Message, S
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "suggestion_section_id"),
     2: .standard(proto: "suggestion_section_reasoning"),
-    3: .same(proto: "title"),
-    4: .standard(proto: "thumbnail_prompt"),
-    5: .same(proto: "badge"),
+    3: .same(proto: "badge"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2191,9 +2199,7 @@ extension StoredPodcastSuggestionFromSectionInputProto: SwiftProtobuf.Message, S
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.suggestionSectionID) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.suggestionSectionReasoning) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.title) }()
-      case 4: try { try decoder.decodeSingularStringField(value: &self.thumbnailPrompt) }()
-      case 5: try { try decoder.decodeSingularStringField(value: &self.badge) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.badge) }()
       default: break
       }
     }
@@ -2206,14 +2212,8 @@ extension StoredPodcastSuggestionFromSectionInputProto: SwiftProtobuf.Message, S
     if !self.suggestionSectionReasoning.isEmpty {
       try visitor.visitSingularStringField(value: self.suggestionSectionReasoning, fieldNumber: 2)
     }
-    if !self.title.isEmpty {
-      try visitor.visitSingularStringField(value: self.title, fieldNumber: 3)
-    }
-    if !self.thumbnailPrompt.isEmpty {
-      try visitor.visitSingularStringField(value: self.thumbnailPrompt, fieldNumber: 4)
-    }
     if !self.badge.isEmpty {
-      try visitor.visitSingularStringField(value: self.badge, fieldNumber: 5)
+      try visitor.visitSingularStringField(value: self.badge, fieldNumber: 3)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -2221,8 +2221,6 @@ extension StoredPodcastSuggestionFromSectionInputProto: SwiftProtobuf.Message, S
   static func ==(lhs: StoredPodcastSuggestionFromSectionInputProto, rhs: StoredPodcastSuggestionFromSectionInputProto) -> Bool {
     if lhs.suggestionSectionID != rhs.suggestionSectionID {return false}
     if lhs.suggestionSectionReasoning != rhs.suggestionSectionReasoning {return false}
-    if lhs.title != rhs.title {return false}
-    if lhs.thumbnailPrompt != rhs.thumbnailPrompt {return false}
     if lhs.badge != rhs.badge {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
@@ -2233,9 +2231,8 @@ extension StoredPodcastSuggestionFromRoutineStepInputProto: SwiftProtobuf.Messag
   static let protoMessageName: String = "StoredPodcastSuggestionFromRoutineStepInputProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "routine_id"),
-    2: .same(proto: "title"),
-    3: .standard(proto: "routine_reasoning"),
-    4: .standard(proto: "step_outline"),
+    2: .standard(proto: "routine_reasoning"),
+    3: .standard(proto: "step_outline"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2245,9 +2242,8 @@ extension StoredPodcastSuggestionFromRoutineStepInputProto: SwiftProtobuf.Messag
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.routineID) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.title) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.routineReasoning) }()
-      case 4: try { try decoder.decodeSingularStringField(value: &self.stepOutline) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.routineReasoning) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.stepOutline) }()
       default: break
       }
     }
@@ -2257,21 +2253,17 @@ extension StoredPodcastSuggestionFromRoutineStepInputProto: SwiftProtobuf.Messag
     if !self.routineID.isEmpty {
       try visitor.visitSingularStringField(value: self.routineID, fieldNumber: 1)
     }
-    if !self.title.isEmpty {
-      try visitor.visitSingularStringField(value: self.title, fieldNumber: 2)
-    }
     if !self.routineReasoning.isEmpty {
-      try visitor.visitSingularStringField(value: self.routineReasoning, fieldNumber: 3)
+      try visitor.visitSingularStringField(value: self.routineReasoning, fieldNumber: 2)
     }
     if !self.stepOutline.isEmpty {
-      try visitor.visitSingularStringField(value: self.stepOutline, fieldNumber: 4)
+      try visitor.visitSingularStringField(value: self.stepOutline, fieldNumber: 3)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: StoredPodcastSuggestionFromRoutineStepInputProto, rhs: StoredPodcastSuggestionFromRoutineStepInputProto) -> Bool {
     if lhs.routineID != rhs.routineID {return false}
-    if lhs.title != rhs.title {return false}
     if lhs.routineReasoning != rhs.routineReasoning {return false}
     if lhs.stepOutline != rhs.stepOutline {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
