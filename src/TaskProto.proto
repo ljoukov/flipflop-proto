@@ -19,10 +19,18 @@ message TaskProto {
 message GeneratePodcastTaskProto {
   string podcast_id = 1;
   bool generate_cards = 2;
+  oneof trigger {
+    bool user = 10;
+    string suggestions_id = 11;
+  }
 }
 
 message GeneratePodcastStoryTaskProto {
   string story_id = 1;
+  oneof trigger {
+    bool user = 10;
+    string suggestions_id = 11;
+  }
 }
 
 message CreatePodcastSuggestionsTaskProto {

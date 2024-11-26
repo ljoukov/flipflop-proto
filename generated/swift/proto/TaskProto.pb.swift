@@ -105,7 +105,31 @@ struct GeneratePodcastTaskProto: Sendable {
 
   var generateCards: Bool = false
 
+  var trigger: GeneratePodcastTaskProto.OneOf_Trigger? = nil
+
+  var user: Bool {
+    get {
+      if case .user(let v)? = trigger {return v}
+      return false
+    }
+    set {trigger = .user(newValue)}
+  }
+
+  var suggestionsID: String {
+    get {
+      if case .suggestionsID(let v)? = trigger {return v}
+      return String()
+    }
+    set {trigger = .suggestionsID(newValue)}
+  }
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  enum OneOf_Trigger: Equatable, Sendable {
+    case user(Bool)
+    case suggestionsID(String)
+
+  }
 
   init() {}
 }
@@ -117,7 +141,31 @@ struct GeneratePodcastStoryTaskProto: Sendable {
 
   var storyID: String = String()
 
+  var trigger: GeneratePodcastStoryTaskProto.OneOf_Trigger? = nil
+
+  var user: Bool {
+    get {
+      if case .user(let v)? = trigger {return v}
+      return false
+    }
+    set {trigger = .user(newValue)}
+  }
+
+  var suggestionsID: String {
+    get {
+      if case .suggestionsID(let v)? = trigger {return v}
+      return String()
+    }
+    set {trigger = .suggestionsID(newValue)}
+  }
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  enum OneOf_Trigger: Equatable, Sendable {
+    case user(Bool)
+    case suggestionsID(String)
+
+  }
 
   init() {}
 }
@@ -340,6 +388,8 @@ extension GeneratePodcastTaskProto: SwiftProtobuf.Message, SwiftProtobuf._Messag
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "podcast_id"),
     2: .standard(proto: "generate_cards"),
+    10: .same(proto: "user"),
+    11: .standard(proto: "suggestions_id"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -350,17 +400,48 @@ extension GeneratePodcastTaskProto: SwiftProtobuf.Message, SwiftProtobuf._Messag
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.podcastID) }()
       case 2: try { try decoder.decodeSingularBoolField(value: &self.generateCards) }()
+      case 10: try {
+        var v: Bool?
+        try decoder.decodeSingularBoolField(value: &v)
+        if let v = v {
+          if self.trigger != nil {try decoder.handleConflictingOneOf()}
+          self.trigger = .user(v)
+        }
+      }()
+      case 11: try {
+        var v: String?
+        try decoder.decodeSingularStringField(value: &v)
+        if let v = v {
+          if self.trigger != nil {try decoder.handleConflictingOneOf()}
+          self.trigger = .suggestionsID(v)
+        }
+      }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.podcastID.isEmpty {
       try visitor.visitSingularStringField(value: self.podcastID, fieldNumber: 1)
     }
     if self.generateCards != false {
       try visitor.visitSingularBoolField(value: self.generateCards, fieldNumber: 2)
+    }
+    switch self.trigger {
+    case .user?: try {
+      guard case .user(let v)? = self.trigger else { preconditionFailure() }
+      try visitor.visitSingularBoolField(value: v, fieldNumber: 10)
+    }()
+    case .suggestionsID?: try {
+      guard case .suggestionsID(let v)? = self.trigger else { preconditionFailure() }
+      try visitor.visitSingularStringField(value: v, fieldNumber: 11)
+    }()
+    case nil: break
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -368,6 +449,7 @@ extension GeneratePodcastTaskProto: SwiftProtobuf.Message, SwiftProtobuf._Messag
   static func ==(lhs: GeneratePodcastTaskProto, rhs: GeneratePodcastTaskProto) -> Bool {
     if lhs.podcastID != rhs.podcastID {return false}
     if lhs.generateCards != rhs.generateCards {return false}
+    if lhs.trigger != rhs.trigger {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -377,6 +459,8 @@ extension GeneratePodcastStoryTaskProto: SwiftProtobuf.Message, SwiftProtobuf._M
   static let protoMessageName: String = "GeneratePodcastStoryTaskProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "story_id"),
+    10: .same(proto: "user"),
+    11: .standard(proto: "suggestions_id"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -386,20 +470,52 @@ extension GeneratePodcastStoryTaskProto: SwiftProtobuf.Message, SwiftProtobuf._M
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.storyID) }()
+      case 10: try {
+        var v: Bool?
+        try decoder.decodeSingularBoolField(value: &v)
+        if let v = v {
+          if self.trigger != nil {try decoder.handleConflictingOneOf()}
+          self.trigger = .user(v)
+        }
+      }()
+      case 11: try {
+        var v: String?
+        try decoder.decodeSingularStringField(value: &v)
+        if let v = v {
+          if self.trigger != nil {try decoder.handleConflictingOneOf()}
+          self.trigger = .suggestionsID(v)
+        }
+      }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.storyID.isEmpty {
       try visitor.visitSingularStringField(value: self.storyID, fieldNumber: 1)
+    }
+    switch self.trigger {
+    case .user?: try {
+      guard case .user(let v)? = self.trigger else { preconditionFailure() }
+      try visitor.visitSingularBoolField(value: v, fieldNumber: 10)
+    }()
+    case .suggestionsID?: try {
+      guard case .suggestionsID(let v)? = self.trigger else { preconditionFailure() }
+      try visitor.visitSingularStringField(value: v, fieldNumber: 11)
+    }()
+    case nil: break
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: GeneratePodcastStoryTaskProto, rhs: GeneratePodcastStoryTaskProto) -> Bool {
     if lhs.storyID != rhs.storyID {return false}
+    if lhs.trigger != rhs.trigger {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

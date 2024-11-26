@@ -74,6 +74,24 @@ export interface GeneratePodcastTaskProto {
      * @generated from protobuf field: bool generate_cards = 2;
      */
     generateCards: boolean;
+    /**
+     * @generated from protobuf oneof: trigger
+     */
+    trigger: {
+        oneofKind: "user";
+        /**
+         * @generated from protobuf field: bool user = 10;
+         */
+        user: boolean;
+    } | {
+        oneofKind: "suggestionsId";
+        /**
+         * @generated from protobuf field: string suggestions_id = 11;
+         */
+        suggestionsId: string;
+    } | {
+        oneofKind: undefined;
+    };
 }
 /**
  * @generated from protobuf message GeneratePodcastStoryTaskProto
@@ -83,6 +101,24 @@ export interface GeneratePodcastStoryTaskProto {
      * @generated from protobuf field: string story_id = 1;
      */
     storyId: string;
+    /**
+     * @generated from protobuf oneof: trigger
+     */
+    trigger: {
+        oneofKind: "user";
+        /**
+         * @generated from protobuf field: bool user = 10;
+         */
+        user: boolean;
+    } | {
+        oneofKind: "suggestionsId";
+        /**
+         * @generated from protobuf field: string suggestions_id = 11;
+         */
+        suggestionsId: string;
+    } | {
+        oneofKind: undefined;
+    };
 }
 /**
  * @generated from protobuf message CreatePodcastSuggestionsTaskProto
@@ -257,13 +293,16 @@ class GeneratePodcastTaskProto$Type extends MessageType<GeneratePodcastTaskProto
     constructor() {
         super("GeneratePodcastTaskProto", [
             { no: 1, name: "podcast_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "generate_cards", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+            { no: 2, name: "generate_cards", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 10, name: "user", kind: "scalar", oneof: "trigger", T: 8 /*ScalarType.BOOL*/ },
+            { no: 11, name: "suggestions_id", kind: "scalar", oneof: "trigger", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<GeneratePodcastTaskProto>): GeneratePodcastTaskProto {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.podcastId = "";
         message.generateCards = false;
+        message.trigger = { oneofKind: undefined };
         if (value !== undefined)
             reflectionMergePartial<GeneratePodcastTaskProto>(this, message, value);
         return message;
@@ -278,6 +317,18 @@ class GeneratePodcastTaskProto$Type extends MessageType<GeneratePodcastTaskProto
                     break;
                 case /* bool generate_cards */ 2:
                     message.generateCards = reader.bool();
+                    break;
+                case /* bool user */ 10:
+                    message.trigger = {
+                        oneofKind: "user",
+                        user: reader.bool()
+                    };
+                    break;
+                case /* string suggestions_id */ 11:
+                    message.trigger = {
+                        oneofKind: "suggestionsId",
+                        suggestionsId: reader.string()
+                    };
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -297,6 +348,12 @@ class GeneratePodcastTaskProto$Type extends MessageType<GeneratePodcastTaskProto
         /* bool generate_cards = 2; */
         if (message.generateCards !== false)
             writer.tag(2, WireType.Varint).bool(message.generateCards);
+        /* bool user = 10; */
+        if (message.trigger.oneofKind === "user")
+            writer.tag(10, WireType.Varint).bool(message.trigger.user);
+        /* string suggestions_id = 11; */
+        if (message.trigger.oneofKind === "suggestionsId")
+            writer.tag(11, WireType.LengthDelimited).string(message.trigger.suggestionsId);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -311,12 +368,15 @@ export const GeneratePodcastTaskProto = new GeneratePodcastTaskProto$Type();
 class GeneratePodcastStoryTaskProto$Type extends MessageType<GeneratePodcastStoryTaskProto> {
     constructor() {
         super("GeneratePodcastStoryTaskProto", [
-            { no: 1, name: "story_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "story_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 10, name: "user", kind: "scalar", oneof: "trigger", T: 8 /*ScalarType.BOOL*/ },
+            { no: 11, name: "suggestions_id", kind: "scalar", oneof: "trigger", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<GeneratePodcastStoryTaskProto>): GeneratePodcastStoryTaskProto {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.storyId = "";
+        message.trigger = { oneofKind: undefined };
         if (value !== undefined)
             reflectionMergePartial<GeneratePodcastStoryTaskProto>(this, message, value);
         return message;
@@ -328,6 +388,18 @@ class GeneratePodcastStoryTaskProto$Type extends MessageType<GeneratePodcastStor
             switch (fieldNo) {
                 case /* string story_id */ 1:
                     message.storyId = reader.string();
+                    break;
+                case /* bool user */ 10:
+                    message.trigger = {
+                        oneofKind: "user",
+                        user: reader.bool()
+                    };
+                    break;
+                case /* string suggestions_id */ 11:
+                    message.trigger = {
+                        oneofKind: "suggestionsId",
+                        suggestionsId: reader.string()
+                    };
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -344,6 +416,12 @@ class GeneratePodcastStoryTaskProto$Type extends MessageType<GeneratePodcastStor
         /* string story_id = 1; */
         if (message.storyId !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.storyId);
+        /* bool user = 10; */
+        if (message.trigger.oneofKind === "user")
+            writer.tag(10, WireType.Varint).bool(message.trigger.user);
+        /* string suggestions_id = 11; */
+        if (message.trigger.oneofKind === "suggestionsId")
+            writer.tag(11, WireType.LengthDelimited).string(message.trigger.suggestionsId);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
