@@ -23,8 +23,8 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
 enum PodcastSubscriptionSourceProto: SwiftProtobuf.Enum, Swift.CaseIterable {
   typealias RawValue = Int
   case undefined // = 0
-  case platform // = 1
-  case external // = 2
+  case platformSubscription // = 1
+  case externalSubscription // = 2
   case UNRECOGNIZED(Int)
 
   init() {
@@ -34,8 +34,8 @@ enum PodcastSubscriptionSourceProto: SwiftProtobuf.Enum, Swift.CaseIterable {
   init?(rawValue: Int) {
     switch rawValue {
     case 0: self = .undefined
-    case 1: self = .platform
-    case 2: self = .external
+    case 1: self = .platformSubscription
+    case 2: self = .externalSubscription
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -43,8 +43,8 @@ enum PodcastSubscriptionSourceProto: SwiftProtobuf.Enum, Swift.CaseIterable {
   var rawValue: Int {
     switch self {
     case .undefined: return 0
-    case .platform: return 1
-    case .external: return 2
+    case .platformSubscription: return 1
+    case .externalSubscription: return 2
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -52,8 +52,8 @@ enum PodcastSubscriptionSourceProto: SwiftProtobuf.Enum, Swift.CaseIterable {
   // The compiler won't synthesize support with the UNRECOGNIZED case.
   static let allCases: [PodcastSubscriptionSourceProto] = [
     .undefined,
-    .platform,
-    .external,
+    .platformSubscription,
+    .externalSubscription,
   ]
 
 }
@@ -1733,8 +1733,8 @@ struct PodcastRoutineStepProgressProto: Sendable {
 extension PodcastSubscriptionSourceProto: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     0: .same(proto: "PODCAST_SUBSCRIPTION_SOURCE_PROTO_UNDEFINED"),
-    1: .same(proto: "PODCAST_SUBSCRIPTION_SOURCE_PROTO_PLATFORM"),
-    2: .same(proto: "PODCAST_SUBSCRIPTION_SOURCE_PROTO_EXTERNAL"),
+    1: .same(proto: "PODCAST_SUBSCRIPTION_SOURCE_PROTO_PLATFORM_SUBSCRIPTION"),
+    2: .same(proto: "PODCAST_SUBSCRIPTION_SOURCE_PROTO_EXTERNAL_SUBSCRIPTION"),
   ]
 }
 

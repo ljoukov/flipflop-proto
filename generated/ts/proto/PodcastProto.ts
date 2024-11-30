@@ -1147,13 +1147,13 @@ export enum PodcastSubscriptionSourceProto {
      */
     UNDEFINED = 0,
     /**
-     * @generated from protobuf enum value: PODCAST_SUBSCRIPTION_SOURCE_PROTO_PLATFORM = 1;
+     * @generated from protobuf enum value: PODCAST_SUBSCRIPTION_SOURCE_PROTO_PLATFORM_SUBSCRIPTION = 1;
      */
-    PLATFORM = 1,
+    PLATFORM_SUBSCRIPTION = 1,
     /**
-     * @generated from protobuf enum value: PODCAST_SUBSCRIPTION_SOURCE_PROTO_EXTERNAL = 2;
+     * @generated from protobuf enum value: PODCAST_SUBSCRIPTION_SOURCE_PROTO_EXTERNAL_SUBSCRIPTION = 2;
      */
-    EXTERNAL = 2
+    EXTERNAL_SUBSCRIPTION = 2
 }
 /**
  * @generated from protobuf enum PodcastStatusProto

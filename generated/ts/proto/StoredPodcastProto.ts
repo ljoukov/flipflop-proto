@@ -1254,9 +1254,9 @@ export enum StoredPodcastSubscriptionSourceProto {
      */
     UNDEFINED = 0,
     /**
-     * @generated from protobuf enum value: STORED_PODCAST_SUBSCRIPTION_SOURCE_PROTO_INTERNAL = 1;
+     * @generated from protobuf enum value: STORED_PODCAST_SUBSCRIPTION_SOURCE_PROTO_INTERNAL_USER = 1;
      */
-    INTERNAL = 1,
+    INTERNAL_USER = 1,
     /**
      * @generated from protobuf enum value: STORED_PODCAST_SUBSCRIPTION_SOURCE_PROTO_APPSTORE = 2;
      */
