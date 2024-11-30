@@ -356,6 +356,52 @@ enum StoredPodcastTypeProto: SwiftProtobuf.Enum, Swift.CaseIterable {
 
 }
 
+enum StoredPodcastSubscriptionSourceProto: SwiftProtobuf.Enum, Swift.CaseIterable {
+  typealias RawValue = Int
+  case undefined // = 0
+  case `internal` // = 1
+  case appstore // = 2
+  case playstore // = 3
+  case web // = 4
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .undefined
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .undefined
+    case 1: self = .internal
+    case 2: self = .appstore
+    case 3: self = .playstore
+    case 4: self = .web
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .undefined: return 0
+    case .internal: return 1
+    case .appstore: return 2
+    case .playstore: return 3
+    case .web: return 4
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static let allCases: [StoredPodcastSubscriptionSourceProto] = [
+    .undefined,
+    .internal,
+    .appstore,
+    .playstore,
+    .web,
+  ]
+
+}
+
 struct StoredPodcastProto: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -1775,6 +1821,16 @@ extension StoredPodcastTypeProto: SwiftProtobuf._ProtoNameProviding {
     1: .same(proto: "STORED_PODCAST_TYPE_PROTO_EXPLAINER"),
     2: .same(proto: "STORED_PODCAST_TYPE_PROTO_EXERCISE"),
     3: .same(proto: "STORED_PODCAST_TYPE_PROTO_MEDITATION"),
+  ]
+}
+
+extension StoredPodcastSubscriptionSourceProto: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "STORED_PODCAST_SUBSCRIPTION_SOURCE_PROTO_UNDEFINED"),
+    1: .same(proto: "STORED_PODCAST_SUBSCRIPTION_SOURCE_PROTO_INTERNAL"),
+    2: .same(proto: "STORED_PODCAST_SUBSCRIPTION_SOURCE_PROTO_APPSTORE"),
+    3: .same(proto: "STORED_PODCAST_SUBSCRIPTION_SOURCE_PROTO_PLAYSTORE"),
+    4: .same(proto: "STORED_PODCAST_SUBSCRIPTION_SOURCE_PROTO_WEB"),
   ]
 }
 

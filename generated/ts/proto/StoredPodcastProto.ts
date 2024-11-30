@@ -1245,6 +1245,31 @@ export enum StoredPodcastTypeProto {
      */
     MEDITATION = 3
 }
+/**
+ * @generated from protobuf enum StoredPodcastSubscriptionSourceProto
+ */
+export enum StoredPodcastSubscriptionSourceProto {
+    /**
+     * @generated from protobuf enum value: STORED_PODCAST_SUBSCRIPTION_SOURCE_PROTO_UNDEFINED = 0;
+     */
+    UNDEFINED = 0,
+    /**
+     * @generated from protobuf enum value: STORED_PODCAST_SUBSCRIPTION_SOURCE_PROTO_INTERNAL = 1;
+     */
+    INTERNAL = 1,
+    /**
+     * @generated from protobuf enum value: STORED_PODCAST_SUBSCRIPTION_SOURCE_PROTO_APPSTORE = 2;
+     */
+    APPSTORE = 2,
+    /**
+     * @generated from protobuf enum value: STORED_PODCAST_SUBSCRIPTION_SOURCE_PROTO_PLAYSTORE = 3;
+     */
+    PLAYSTORE = 3,
+    /**
+     * @generated from protobuf enum value: STORED_PODCAST_SUBSCRIPTION_SOURCE_PROTO_WEB = 4;
+     */
+    WEB = 4
+}
 // @generated message type with reflection information, may provide speed optimized methods
 class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
     constructor() {
