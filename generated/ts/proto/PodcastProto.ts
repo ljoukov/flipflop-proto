@@ -36,6 +36,19 @@ export interface PodcastRequestAuthProto {
     appstoreCurrentEntitlements: PodcastAppStoreTransactionProto[];
 }
 /**
+ * @generated from protobuf message PodcastSubscriptionStatusProto
+ */
+export interface PodcastSubscriptionStatusProto {
+    /**
+     * @generated from protobuf field: bool is_subscriber = 1;
+     */
+    isSubscriber: boolean;
+    /**
+     * @generated from protobuf field: PodcastSubscriptionSourceProto source = 2;
+     */
+    source: PodcastSubscriptionSourceProto;
+}
+/**
  * @generated from protobuf message PodcastStreamApiRequestProto
  */
 export interface PodcastStreamApiRequestProto {
@@ -431,9 +444,9 @@ export interface GetPodcastHomeResponseHeaderProto {
      */
     suggestions?: PodcastSuggestionsProto;
     /**
-     * @generated from protobuf field: bool is_subscriber = 2;
+     * @generated from protobuf field: PodcastSubscriptionStatusProto subscription_status = 2;
      */
-    isSubscriber: boolean;
+    subscriptionStatus?: PodcastSubscriptionStatusProto;
 }
 /**
  * @generated from protobuf message GetPodcastHomeResponseDeltaProto
@@ -1126,6 +1139,23 @@ export interface PodcastRoutineStepProgressProto {
     completed: boolean;
 }
 /**
+ * @generated from protobuf enum PodcastSubscriptionSourceProto
+ */
+export enum PodcastSubscriptionSourceProto {
+    /**
+     * @generated from protobuf enum value: PODCAST_SUBSCRIPTION_SOURCE_PROTO_UNDEFINED = 0;
+     */
+    UNDEFINED = 0,
+    /**
+     * @generated from protobuf enum value: PODCAST_SUBSCRIPTION_SOURCE_PROTO_PLATFORM = 1;
+     */
+    PLATFORM = 1,
+    /**
+     * @generated from protobuf enum value: PODCAST_SUBSCRIPTION_SOURCE_PROTO_EXTERNAL = 2;
+     */
+    EXTERNAL = 2
+}
+/**
  * @generated from protobuf enum PodcastStatusProto
  */
 export enum PodcastStatusProto {
@@ -1259,6 +1289,61 @@ class PodcastRequestAuthProto$Type extends MessageType<PodcastRequestAuthProto> 
  * @generated MessageType for protobuf message PodcastRequestAuthProto
  */
 export const PodcastRequestAuthProto = new PodcastRequestAuthProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PodcastSubscriptionStatusProto$Type extends MessageType<PodcastSubscriptionStatusProto> {
+    constructor() {
+        super("PodcastSubscriptionStatusProto", [
+            { no: 1, name: "is_subscriber", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 2, name: "source", kind: "enum", T: () => ["PodcastSubscriptionSourceProto", PodcastSubscriptionSourceProto, "PODCAST_SUBSCRIPTION_SOURCE_PROTO_"] }
+        ]);
+    }
+    create(value?: PartialMessage<PodcastSubscriptionStatusProto>): PodcastSubscriptionStatusProto {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.isSubscriber = false;
+        message.source = 0;
+        if (value !== undefined)
+            reflectionMergePartial<PodcastSubscriptionStatusProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastSubscriptionStatusProto): PodcastSubscriptionStatusProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* bool is_subscriber */ 1:
+                    message.isSubscriber = reader.bool();
+                    break;
+                case /* PodcastSubscriptionSourceProto source */ 2:
+                    message.source = reader.int32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PodcastSubscriptionStatusProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* bool is_subscriber = 1; */
+        if (message.isSubscriber !== false)
+            writer.tag(1, WireType.Varint).bool(message.isSubscriber);
+        /* PodcastSubscriptionSourceProto source = 2; */
+        if (message.source !== 0)
+            writer.tag(2, WireType.Varint).int32(message.source);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message PodcastSubscriptionStatusProto
+ */
+export const PodcastSubscriptionStatusProto = new PodcastSubscriptionStatusProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class PodcastStreamApiRequestProto$Type extends MessageType<PodcastStreamApiRequestProto> {
     constructor() {
@@ -2442,12 +2527,11 @@ class GetPodcastHomeResponseHeaderProto$Type extends MessageType<GetPodcastHomeR
     constructor() {
         super("GetPodcastHomeResponseHeaderProto", [
             { no: 1, name: "suggestions", kind: "message", T: () => PodcastSuggestionsProto },
-            { no: 2, name: "is_subscriber", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+            { no: 2, name: "subscription_status", kind: "message", T: () => PodcastSubscriptionStatusProto }
         ]);
     }
     create(value?: PartialMessage<GetPodcastHomeResponseHeaderProto>): GetPodcastHomeResponseHeaderProto {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.isSubscriber = false;
         if (value !== undefined)
             reflectionMergePartial<GetPodcastHomeResponseHeaderProto>(this, message, value);
         return message;
@@ -2460,8 +2544,8 @@ class GetPodcastHomeResponseHeaderProto$Type extends MessageType<GetPodcastHomeR
                 case /* PodcastSuggestionsProto suggestions */ 1:
                     message.suggestions = PodcastSuggestionsProto.internalBinaryRead(reader, reader.uint32(), options, message.suggestions);
                     break;
-                case /* bool is_subscriber */ 2:
-                    message.isSubscriber = reader.bool();
+                case /* PodcastSubscriptionStatusProto subscription_status */ 2:
+                    message.subscriptionStatus = PodcastSubscriptionStatusProto.internalBinaryRead(reader, reader.uint32(), options, message.subscriptionStatus);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2478,9 +2562,9 @@ class GetPodcastHomeResponseHeaderProto$Type extends MessageType<GetPodcastHomeR
         /* PodcastSuggestionsProto suggestions = 1; */
         if (message.suggestions)
             PodcastSuggestionsProto.internalBinaryWrite(message.suggestions, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* bool is_subscriber = 2; */
-        if (message.isSubscriber !== false)
-            writer.tag(2, WireType.Varint).bool(message.isSubscriber);
+        /* PodcastSubscriptionStatusProto subscription_status = 2; */
+        if (message.subscriptionStatus)
+            PodcastSubscriptionStatusProto.internalBinaryWrite(message.subscriptionStatus, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

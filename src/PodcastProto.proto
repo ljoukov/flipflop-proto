@@ -10,6 +10,17 @@ message PodcastRequestAuthProto {
   repeated PodcastAppStoreTransactionProto appstore_current_entitlements = 4;
 }
 
+enum PodcastSubscriptionSourceProto {
+  PODCAST_SUBSCRIPTION_SOURCE_PROTO_UNDEFINED = 0;
+  PODCAST_SUBSCRIPTION_SOURCE_PROTO_PLATFORM = 1;
+  PODCAST_SUBSCRIPTION_SOURCE_PROTO_EXTERNAL = 2;
+}
+
+message PodcastSubscriptionStatusProto {
+  bool is_subscriber = 1;
+  PodcastSubscriptionSourceProto source = 2;
+}
+
 message PodcastStreamApiRequestProto {
   PodcastRequestAuthProto request_auth = 1;
   oneof request {
@@ -129,7 +140,7 @@ message GetPodcastHomeRequestProto {}
 
 message GetPodcastHomeResponseHeaderProto {
   PodcastSuggestionsProto suggestions = 1;
-  bool is_subscriber = 2;
+  PodcastSubscriptionStatusProto subscription_status = 2;
 }
 
 message GetPodcastHomeResponseDeltaProto {}

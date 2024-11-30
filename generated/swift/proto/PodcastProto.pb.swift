@@ -20,6 +20,44 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
+enum PodcastSubscriptionSourceProto: SwiftProtobuf.Enum, Swift.CaseIterable {
+  typealias RawValue = Int
+  case undefined // = 0
+  case platform // = 1
+  case external // = 2
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .undefined
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .undefined
+    case 1: self = .platform
+    case 2: self = .external
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .undefined: return 0
+    case .platform: return 1
+    case .external: return 2
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static let allCases: [PodcastSubscriptionSourceProto] = [
+    .undefined,
+    .platform,
+    .external,
+  ]
+
+}
+
 enum PodcastStatusProto: SwiftProtobuf.Enum, Swift.CaseIterable {
   typealias RawValue = Int
   case undefined // = 0
@@ -158,6 +196,20 @@ struct PodcastRequestAuthProto: Sendable {
   var isAnonomous: Bool = false
 
   var appstoreCurrentEntitlements: [PodcastAppStoreTransactionProto] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct PodcastSubscriptionStatusProto: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var isSubscriber: Bool = false
+
+  var source: PodcastSubscriptionSourceProto = .undefined
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -760,13 +812,21 @@ struct GetPodcastHomeResponseHeaderProto: Sendable {
   /// Clears the value of `suggestions`. Subsequent reads from it will return its default value.
   mutating func clearSuggestions() {self._suggestions = nil}
 
-  var isSubscriber: Bool = false
+  var subscriptionStatus: PodcastSubscriptionStatusProto {
+    get {return _subscriptionStatus ?? PodcastSubscriptionStatusProto()}
+    set {_subscriptionStatus = newValue}
+  }
+  /// Returns true if `subscriptionStatus` has been explicitly set.
+  var hasSubscriptionStatus: Bool {return self._subscriptionStatus != nil}
+  /// Clears the value of `subscriptionStatus`. Subsequent reads from it will return its default value.
+  mutating func clearSubscriptionStatus() {self._subscriptionStatus = nil}
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 
   fileprivate var _suggestions: PodcastSuggestionsProto? = nil
+  fileprivate var _subscriptionStatus: PodcastSubscriptionStatusProto? = nil
 }
 
 struct GetPodcastHomeResponseDeltaProto: Sendable {
@@ -1670,6 +1730,14 @@ struct PodcastRoutineStepProgressProto: Sendable {
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
+extension PodcastSubscriptionSourceProto: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "PODCAST_SUBSCRIPTION_SOURCE_PROTO_UNDEFINED"),
+    1: .same(proto: "PODCAST_SUBSCRIPTION_SOURCE_PROTO_PLATFORM"),
+    2: .same(proto: "PODCAST_SUBSCRIPTION_SOURCE_PROTO_EXTERNAL"),
+  ]
+}
+
 extension PodcastStatusProto: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     0: .same(proto: "PODCAST_STATUS_PROTO_UNDEFINED"),
@@ -1742,6 +1810,44 @@ extension PodcastRequestAuthProto: SwiftProtobuf.Message, SwiftProtobuf._Message
     if lhs.appcheckToken != rhs.appcheckToken {return false}
     if lhs.isAnonomous != rhs.isAnonomous {return false}
     if lhs.appstoreCurrentEntitlements != rhs.appstoreCurrentEntitlements {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension PodcastSubscriptionStatusProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastSubscriptionStatusProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "is_subscriber"),
+    2: .same(proto: "source"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularBoolField(value: &self.isSubscriber) }()
+      case 2: try { try decoder.decodeSingularEnumField(value: &self.source) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.isSubscriber != false {
+      try visitor.visitSingularBoolField(value: self.isSubscriber, fieldNumber: 1)
+    }
+    if self.source != .undefined {
+      try visitor.visitSingularEnumField(value: self.source, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PodcastSubscriptionStatusProto, rhs: PodcastSubscriptionStatusProto) -> Bool {
+    if lhs.isSubscriber != rhs.isSubscriber {return false}
+    if lhs.source != rhs.source {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -2940,7 +3046,7 @@ extension GetPodcastHomeResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobu
   static let protoMessageName: String = "GetPodcastHomeResponseHeaderProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "suggestions"),
-    2: .standard(proto: "is_subscriber"),
+    2: .standard(proto: "subscription_status"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2950,7 +3056,7 @@ extension GetPodcastHomeResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobu
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularMessageField(value: &self._suggestions) }()
-      case 2: try { try decoder.decodeSingularBoolField(value: &self.isSubscriber) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._subscriptionStatus) }()
       default: break
       }
     }
@@ -2964,15 +3070,15 @@ extension GetPodcastHomeResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobu
     try { if let v = self._suggestions {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
     } }()
-    if self.isSubscriber != false {
-      try visitor.visitSingularBoolField(value: self.isSubscriber, fieldNumber: 2)
-    }
+    try { if let v = self._subscriptionStatus {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: GetPodcastHomeResponseHeaderProto, rhs: GetPodcastHomeResponseHeaderProto) -> Bool {
     if lhs._suggestions != rhs._suggestions {return false}
-    if lhs.isSubscriber != rhs.isSubscriber {return false}
+    if lhs._subscriptionStatus != rhs._subscriptionStatus {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
