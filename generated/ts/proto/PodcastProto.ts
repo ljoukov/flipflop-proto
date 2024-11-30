@@ -522,9 +522,9 @@ export interface FirestorePodcastSuggestionsProto {
      */
     suggestions?: PodcastSuggestionsProto;
     /**
-     * @generated from protobuf field: PodcastSuggestionsGenerationStateProto generation_state = 4;
+     * @generated from protobuf field: PodcastSuggestionsGenerationStateProto new_suggestions_generation_state = 4;
      */
-    generationState?: PodcastSuggestionsGenerationStateProto;
+    newSuggestionsGenerationState?: PodcastSuggestionsGenerationStateProto;
 }
 /**
  * @generated from protobuf message YourPodcastsShelfProto
@@ -2824,7 +2824,7 @@ class FirestorePodcastSuggestionsProto$Type extends MessageType<FirestorePodcast
             { no: 1, name: "updated_at", kind: "message", T: () => Timestamp },
             { no: 2, name: "your_podcasts_shelf", kind: "message", T: () => YourPodcastsShelfProto },
             { no: 3, name: "suggestions", kind: "message", T: () => PodcastSuggestionsProto },
-            { no: 4, name: "generation_state", kind: "message", T: () => PodcastSuggestionsGenerationStateProto }
+            { no: 4, name: "new_suggestions_generation_state", kind: "message", T: () => PodcastSuggestionsGenerationStateProto }
         ]);
     }
     create(value?: PartialMessage<FirestorePodcastSuggestionsProto>): FirestorePodcastSuggestionsProto {
@@ -2847,8 +2847,8 @@ class FirestorePodcastSuggestionsProto$Type extends MessageType<FirestorePodcast
                 case /* PodcastSuggestionsProto suggestions */ 3:
                     message.suggestions = PodcastSuggestionsProto.internalBinaryRead(reader, reader.uint32(), options, message.suggestions);
                     break;
-                case /* PodcastSuggestionsGenerationStateProto generation_state */ 4:
-                    message.generationState = PodcastSuggestionsGenerationStateProto.internalBinaryRead(reader, reader.uint32(), options, message.generationState);
+                case /* PodcastSuggestionsGenerationStateProto new_suggestions_generation_state */ 4:
+                    message.newSuggestionsGenerationState = PodcastSuggestionsGenerationStateProto.internalBinaryRead(reader, reader.uint32(), options, message.newSuggestionsGenerationState);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2871,9 +2871,9 @@ class FirestorePodcastSuggestionsProto$Type extends MessageType<FirestorePodcast
         /* PodcastSuggestionsProto suggestions = 3; */
         if (message.suggestions)
             PodcastSuggestionsProto.internalBinaryWrite(message.suggestions, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* PodcastSuggestionsGenerationStateProto generation_state = 4; */
-        if (message.generationState)
-            PodcastSuggestionsGenerationStateProto.internalBinaryWrite(message.generationState, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastSuggestionsGenerationStateProto new_suggestions_generation_state = 4; */
+        if (message.newSuggestionsGenerationState)
+            PodcastSuggestionsGenerationStateProto.internalBinaryWrite(message.newSuggestionsGenerationState, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

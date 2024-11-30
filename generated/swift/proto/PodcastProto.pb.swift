@@ -1019,14 +1019,14 @@ struct FirestorePodcastSuggestionsProto: Sendable {
   /// Clears the value of `suggestions`. Subsequent reads from it will return its default value.
   mutating func clearSuggestions() {self._suggestions = nil}
 
-  var generationState: PodcastSuggestionsGenerationStateProto {
-    get {return _generationState ?? PodcastSuggestionsGenerationStateProto()}
-    set {_generationState = newValue}
+  var newSuggestionsGenerationState: PodcastSuggestionsGenerationStateProto {
+    get {return _newSuggestionsGenerationState ?? PodcastSuggestionsGenerationStateProto()}
+    set {_newSuggestionsGenerationState = newValue}
   }
-  /// Returns true if `generationState` has been explicitly set.
-  var hasGenerationState: Bool {return self._generationState != nil}
-  /// Clears the value of `generationState`. Subsequent reads from it will return its default value.
-  mutating func clearGenerationState() {self._generationState = nil}
+  /// Returns true if `newSuggestionsGenerationState` has been explicitly set.
+  var hasNewSuggestionsGenerationState: Bool {return self._newSuggestionsGenerationState != nil}
+  /// Clears the value of `newSuggestionsGenerationState`. Subsequent reads from it will return its default value.
+  mutating func clearNewSuggestionsGenerationState() {self._newSuggestionsGenerationState = nil}
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -1035,7 +1035,7 @@ struct FirestorePodcastSuggestionsProto: Sendable {
   fileprivate var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
   fileprivate var _yourPodcastsShelf: YourPodcastsShelfProto? = nil
   fileprivate var _suggestions: PodcastSuggestionsProto? = nil
-  fileprivate var _generationState: PodcastSuggestionsGenerationStateProto? = nil
+  fileprivate var _newSuggestionsGenerationState: PodcastSuggestionsGenerationStateProto? = nil
 }
 
 struct YourPodcastsShelfProto: Sendable {
@@ -3378,7 +3378,7 @@ extension FirestorePodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf
     1: .standard(proto: "updated_at"),
     2: .standard(proto: "your_podcasts_shelf"),
     3: .same(proto: "suggestions"),
-    4: .standard(proto: "generation_state"),
+    4: .standard(proto: "new_suggestions_generation_state"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3390,7 +3390,7 @@ extension FirestorePodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf
       case 1: try { try decoder.decodeSingularMessageField(value: &self._updatedAt) }()
       case 2: try { try decoder.decodeSingularMessageField(value: &self._yourPodcastsShelf) }()
       case 3: try { try decoder.decodeSingularMessageField(value: &self._suggestions) }()
-      case 4: try { try decoder.decodeSingularMessageField(value: &self._generationState) }()
+      case 4: try { try decoder.decodeSingularMessageField(value: &self._newSuggestionsGenerationState) }()
       default: break
       }
     }
@@ -3410,7 +3410,7 @@ extension FirestorePodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf
     try { if let v = self._suggestions {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
     } }()
-    try { if let v = self._generationState {
+    try { if let v = self._newSuggestionsGenerationState {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
     } }()
     try unknownFields.traverse(visitor: &visitor)
@@ -3420,7 +3420,7 @@ extension FirestorePodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf
     if lhs._updatedAt != rhs._updatedAt {return false}
     if lhs._yourPodcastsShelf != rhs._yourPodcastsShelf {return false}
     if lhs._suggestions != rhs._suggestions {return false}
-    if lhs._generationState != rhs._generationState {return false}
+    if lhs._newSuggestionsGenerationState != rhs._newSuggestionsGenerationState {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

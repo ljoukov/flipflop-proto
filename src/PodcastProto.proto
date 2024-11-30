@@ -172,7 +172,7 @@ message FirestorePodcastSuggestionsProto {
   google.protobuf.Timestamp updated_at = 1;
   YourPodcastsShelfProto your_podcasts_shelf = 2;
   PodcastSuggestionsProto suggestions = 3;
-  PodcastSuggestionsGenerationStateProto generation_state = 4;
+  PodcastSuggestionsGenerationStateProto new_suggestions_generation_state = 4;
 }
 
 message YourPodcastsShelfProto {
