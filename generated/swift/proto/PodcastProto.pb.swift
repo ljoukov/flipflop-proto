@@ -184,6 +184,48 @@ enum PodcastHostProto: SwiftProtobuf.Enum, Swift.CaseIterable {
 
 }
 
+enum PodcastSuggestionsStatusProto: SwiftProtobuf.Enum, Swift.CaseIterable {
+  typealias RawValue = Int
+  case undefined // = 0
+  case generating // = 1
+  case ready // = 2
+  case failed // = 3
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .undefined
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .undefined
+    case 1: self = .generating
+    case 2: self = .ready
+    case 3: self = .failed
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .undefined: return 0
+    case .generating: return 1
+    case .ready: return 2
+    case .failed: return 3
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static let allCases: [PodcastSuggestionsStatusProto] = [
+    .undefined,
+    .generating,
+    .ready,
+    .failed,
+  ]
+
+}
+
 struct PodcastRequestAuthProto: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -1481,6 +1523,8 @@ struct PodcastSuggestionsProto: Sendable {
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
   mutating func clearCreatedAt() {self._createdAt = nil}
 
+  var status: PodcastSuggestionsStatusProto = .undefined
+
   var sections: [PodcastSuggestionsSectionProto] = []
 
   var routine: PodcastRoutineProto {
@@ -1754,6 +1798,15 @@ extension PodcastHostProto: SwiftProtobuf._ProtoNameProviding {
     0: .same(proto: "PODCAST_HOST_PROTO_UNKNOWN"),
     1: .same(proto: "PODCAST_HOST_PROTO_MALE"),
     2: .same(proto: "PODCAST_HOST_PROTO_FEMALE"),
+  ]
+}
+
+extension PodcastSuggestionsStatusProto: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "PODCAST_SUGGESTIONS_STATUS_PROTO_UNDEFINED"),
+    1: .same(proto: "PODCAST_SUGGESTIONS_STATUS_PROTO_GENERATING"),
+    2: .same(proto: "PODCAST_SUGGESTIONS_STATUS_PROTO_READY"),
+    3: .same(proto: "PODCAST_SUGGESTIONS_STATUS_PROTO_FAILED"),
   ]
 }
 
@@ -4449,8 +4502,9 @@ extension PodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf._Message
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "suggestions_id"),
     2: .standard(proto: "created_at"),
-    3: .same(proto: "sections"),
-    4: .same(proto: "routine"),
+    3: .same(proto: "status"),
+    4: .same(proto: "sections"),
+    5: .same(proto: "routine"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -4461,8 +4515,9 @@ extension PodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf._Message
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.suggestionsID) }()
       case 2: try { try decoder.decodeSingularMessageField(value: &self._createdAt) }()
-      case 3: try { try decoder.decodeRepeatedMessageField(value: &self.sections) }()
-      case 4: try { try decoder.decodeSingularMessageField(value: &self._routine) }()
+      case 3: try { try decoder.decodeSingularEnumField(value: &self.status) }()
+      case 4: try { try decoder.decodeRepeatedMessageField(value: &self.sections) }()
+      case 5: try { try decoder.decodeSingularMessageField(value: &self._routine) }()
       default: break
       }
     }
@@ -4479,11 +4534,14 @@ extension PodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf._Message
     try { if let v = self._createdAt {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     } }()
+    if self.status != .undefined {
+      try visitor.visitSingularEnumField(value: self.status, fieldNumber: 3)
+    }
     if !self.sections.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.sections, fieldNumber: 3)
+      try visitor.visitRepeatedMessageField(value: self.sections, fieldNumber: 4)
     }
     try { if let v = self._routine {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
     } }()
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -4491,6 +4549,7 @@ extension PodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf._Message
   static func ==(lhs: PodcastSuggestionsProto, rhs: PodcastSuggestionsProto) -> Bool {
     if lhs.suggestionsID != rhs.suggestionsID {return false}
     if lhs._createdAt != rhs._createdAt {return false}
+    if lhs.status != rhs.status {return false}
     if lhs.sections != rhs.sections {return false}
     if lhs._routine != rhs._routine {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}

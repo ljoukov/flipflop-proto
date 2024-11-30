@@ -959,11 +959,15 @@ export interface PodcastSuggestionsProto {
      */
     createdAt?: Timestamp;
     /**
-     * @generated from protobuf field: repeated PodcastSuggestionsSectionProto sections = 3;
+     * @generated from protobuf field: PodcastSuggestionsStatusProto status = 3;
+     */
+    status: PodcastSuggestionsStatusProto;
+    /**
+     * @generated from protobuf field: repeated PodcastSuggestionsSectionProto sections = 4;
      */
     sections: PodcastSuggestionsSectionProto[];
     /**
-     * @generated from protobuf field: PodcastRoutineProto routine = 4;
+     * @generated from protobuf field: PodcastRoutineProto routine = 5;
      */
     routine?: PodcastRoutineProto;
 }
@@ -1217,6 +1221,27 @@ export enum PodcastHostProto {
      * @generated from protobuf enum value: PODCAST_HOST_PROTO_FEMALE = 2;
      */
     FEMALE = 2
+}
+/**
+ * @generated from protobuf enum PodcastSuggestionsStatusProto
+ */
+export enum PodcastSuggestionsStatusProto {
+    /**
+     * @generated from protobuf enum value: PODCAST_SUGGESTIONS_STATUS_PROTO_UNDEFINED = 0;
+     */
+    UNDEFINED = 0,
+    /**
+     * @generated from protobuf enum value: PODCAST_SUGGESTIONS_STATUS_PROTO_GENERATING = 1;
+     */
+    GENERATING = 1,
+    /**
+     * @generated from protobuf enum value: PODCAST_SUGGESTIONS_STATUS_PROTO_READY = 2;
+     */
+    READY = 2,
+    /**
+     * @generated from protobuf enum value: PODCAST_SUGGESTIONS_STATUS_PROTO_FAILED = 3;
+     */
+    FAILED = 3
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class PodcastRequestAuthProto$Type extends MessageType<PodcastRequestAuthProto> {
@@ -4353,13 +4378,15 @@ class PodcastSuggestionsProto$Type extends MessageType<PodcastSuggestionsProto> 
         super("PodcastSuggestionsProto", [
             { no: 1, name: "suggestions_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "created_at", kind: "message", T: () => Timestamp },
-            { no: 3, name: "sections", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastSuggestionsSectionProto },
-            { no: 4, name: "routine", kind: "message", T: () => PodcastRoutineProto }
+            { no: 3, name: "status", kind: "enum", T: () => ["PodcastSuggestionsStatusProto", PodcastSuggestionsStatusProto, "PODCAST_SUGGESTIONS_STATUS_PROTO_"] },
+            { no: 4, name: "sections", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastSuggestionsSectionProto },
+            { no: 5, name: "routine", kind: "message", T: () => PodcastRoutineProto }
         ]);
     }
     create(value?: PartialMessage<PodcastSuggestionsProto>): PodcastSuggestionsProto {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.suggestionsId = "";
+        message.status = 0;
         message.sections = [];
         if (value !== undefined)
             reflectionMergePartial<PodcastSuggestionsProto>(this, message, value);
@@ -4376,10 +4403,13 @@ class PodcastSuggestionsProto$Type extends MessageType<PodcastSuggestionsProto> 
                 case /* google.protobuf.Timestamp created_at */ 2:
                     message.createdAt = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.createdAt);
                     break;
-                case /* repeated PodcastSuggestionsSectionProto sections */ 3:
+                case /* PodcastSuggestionsStatusProto status */ 3:
+                    message.status = reader.int32();
+                    break;
+                case /* repeated PodcastSuggestionsSectionProto sections */ 4:
                     message.sections.push(PodcastSuggestionsSectionProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
-                case /* PodcastRoutineProto routine */ 4:
+                case /* PodcastRoutineProto routine */ 5:
                     message.routine = PodcastRoutineProto.internalBinaryRead(reader, reader.uint32(), options, message.routine);
                     break;
                 default:
@@ -4400,12 +4430,15 @@ class PodcastSuggestionsProto$Type extends MessageType<PodcastSuggestionsProto> 
         /* google.protobuf.Timestamp created_at = 2; */
         if (message.createdAt)
             Timestamp.internalBinaryWrite(message.createdAt, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* repeated PodcastSuggestionsSectionProto sections = 3; */
+        /* PodcastSuggestionsStatusProto status = 3; */
+        if (message.status !== 0)
+            writer.tag(3, WireType.Varint).int32(message.status);
+        /* repeated PodcastSuggestionsSectionProto sections = 4; */
         for (let i = 0; i < message.sections.length; i++)
-            PodcastSuggestionsSectionProto.internalBinaryWrite(message.sections[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* PodcastRoutineProto routine = 4; */
+            PodcastSuggestionsSectionProto.internalBinaryWrite(message.sections[i], writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastRoutineProto routine = 5; */
         if (message.routine)
-            PodcastRoutineProto.internalBinaryWrite(message.routine, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+            PodcastRoutineProto.internalBinaryWrite(message.routine, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
