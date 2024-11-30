@@ -184,7 +184,7 @@ enum PodcastHostProto: SwiftProtobuf.Enum, Swift.CaseIterable {
 
 }
 
-enum PodcastSuggestionsStatusProto: SwiftProtobuf.Enum, Swift.CaseIterable {
+enum PodcastSuggestionsStateProto: SwiftProtobuf.Enum, Swift.CaseIterable {
   typealias RawValue = Int
   case undefined // = 0
   case generating // = 1
@@ -217,7 +217,7 @@ enum PodcastSuggestionsStatusProto: SwiftProtobuf.Enum, Swift.CaseIterable {
   }
 
   // The compiler won't synthesize support with the UNRECOGNIZED case.
-  static let allCases: [PodcastSuggestionsStatusProto] = [
+  static let allCases: [PodcastSuggestionsStateProto] = [
     .undefined,
     .generating,
     .ready,
@@ -1019,6 +1019,15 @@ struct FirestorePodcastSuggestionsProto: Sendable {
   /// Clears the value of `suggestions`. Subsequent reads from it will return its default value.
   mutating func clearSuggestions() {self._suggestions = nil}
 
+  var generationState: PodcastSuggestionsGenerationStateProto {
+    get {return _generationState ?? PodcastSuggestionsGenerationStateProto()}
+    set {_generationState = newValue}
+  }
+  /// Returns true if `generationState` has been explicitly set.
+  var hasGenerationState: Bool {return self._generationState != nil}
+  /// Clears the value of `generationState`. Subsequent reads from it will return its default value.
+  mutating func clearGenerationState() {self._generationState = nil}
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -1026,6 +1035,7 @@ struct FirestorePodcastSuggestionsProto: Sendable {
   fileprivate var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
   fileprivate var _yourPodcastsShelf: YourPodcastsShelfProto? = nil
   fileprivate var _suggestions: PodcastSuggestionsProto? = nil
+  fileprivate var _generationState: PodcastSuggestionsGenerationStateProto? = nil
 }
 
 struct YourPodcastsShelfProto: Sendable {
@@ -1523,8 +1533,6 @@ struct PodcastSuggestionsProto: Sendable {
   /// Clears the value of `createdAt`. Subsequent reads from it will return its default value.
   mutating func clearCreatedAt() {self._createdAt = nil}
 
-  var status: PodcastSuggestionsStatusProto = .undefined
-
   var sections: [PodcastSuggestionsSectionProto] = []
 
   var routine: PodcastRoutineProto {
@@ -1542,6 +1550,33 @@ struct PodcastSuggestionsProto: Sendable {
 
   fileprivate var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
   fileprivate var _routine: PodcastRoutineProto? = nil
+}
+
+struct PodcastSuggestionsGenerationStateProto: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var suggestionsID: String = String()
+
+  var updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _updatedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_updatedAt = newValue}
+  }
+  /// Returns true if `updatedAt` has been explicitly set.
+  var hasUpdatedAt: Bool {return self._updatedAt != nil}
+  /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
+  mutating func clearUpdatedAt() {self._updatedAt = nil}
+
+  var state: PodcastSuggestionsStateProto = .undefined
+
+  var displayState: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+
+  fileprivate var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
 }
 
 struct PodcastSuggestionsSectionProto: @unchecked Sendable {
@@ -1801,12 +1836,12 @@ extension PodcastHostProto: SwiftProtobuf._ProtoNameProviding {
   ]
 }
 
-extension PodcastSuggestionsStatusProto: SwiftProtobuf._ProtoNameProviding {
+extension PodcastSuggestionsStateProto: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    0: .same(proto: "PODCAST_SUGGESTIONS_STATUS_PROTO_UNDEFINED"),
-    1: .same(proto: "PODCAST_SUGGESTIONS_STATUS_PROTO_GENERATING"),
-    2: .same(proto: "PODCAST_SUGGESTIONS_STATUS_PROTO_READY"),
-    3: .same(proto: "PODCAST_SUGGESTIONS_STATUS_PROTO_FAILED"),
+    0: .same(proto: "PODCAST_SUGGESTIONS_STATE_PROTO_UNDEFINED"),
+    1: .same(proto: "PODCAST_SUGGESTIONS_STATE_PROTO_GENERATING"),
+    2: .same(proto: "PODCAST_SUGGESTIONS_STATE_PROTO_READY"),
+    3: .same(proto: "PODCAST_SUGGESTIONS_STATE_PROTO_FAILED"),
   ]
 }
 
@@ -3343,6 +3378,7 @@ extension FirestorePodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf
     1: .standard(proto: "updated_at"),
     2: .standard(proto: "your_podcasts_shelf"),
     3: .same(proto: "suggestions"),
+    4: .standard(proto: "generation_state"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3354,6 +3390,7 @@ extension FirestorePodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf
       case 1: try { try decoder.decodeSingularMessageField(value: &self._updatedAt) }()
       case 2: try { try decoder.decodeSingularMessageField(value: &self._yourPodcastsShelf) }()
       case 3: try { try decoder.decodeSingularMessageField(value: &self._suggestions) }()
+      case 4: try { try decoder.decodeSingularMessageField(value: &self._generationState) }()
       default: break
       }
     }
@@ -3373,6 +3410,9 @@ extension FirestorePodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf
     try { if let v = self._suggestions {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
     } }()
+    try { if let v = self._generationState {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -3380,6 +3420,7 @@ extension FirestorePodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf
     if lhs._updatedAt != rhs._updatedAt {return false}
     if lhs._yourPodcastsShelf != rhs._yourPodcastsShelf {return false}
     if lhs._suggestions != rhs._suggestions {return false}
+    if lhs._generationState != rhs._generationState {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -4502,9 +4543,8 @@ extension PodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf._Message
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "suggestions_id"),
     2: .standard(proto: "created_at"),
-    3: .same(proto: "status"),
-    4: .same(proto: "sections"),
-    5: .same(proto: "routine"),
+    3: .same(proto: "sections"),
+    4: .same(proto: "routine"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -4515,9 +4555,8 @@ extension PodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf._Message
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.suggestionsID) }()
       case 2: try { try decoder.decodeSingularMessageField(value: &self._createdAt) }()
-      case 3: try { try decoder.decodeSingularEnumField(value: &self.status) }()
-      case 4: try { try decoder.decodeRepeatedMessageField(value: &self.sections) }()
-      case 5: try { try decoder.decodeSingularMessageField(value: &self._routine) }()
+      case 3: try { try decoder.decodeRepeatedMessageField(value: &self.sections) }()
+      case 4: try { try decoder.decodeSingularMessageField(value: &self._routine) }()
       default: break
       }
     }
@@ -4534,14 +4573,11 @@ extension PodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf._Message
     try { if let v = self._createdAt {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     } }()
-    if self.status != .undefined {
-      try visitor.visitSingularEnumField(value: self.status, fieldNumber: 3)
-    }
     if !self.sections.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.sections, fieldNumber: 4)
+      try visitor.visitRepeatedMessageField(value: self.sections, fieldNumber: 3)
     }
     try { if let v = self._routine {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
     } }()
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -4549,9 +4585,62 @@ extension PodcastSuggestionsProto: SwiftProtobuf.Message, SwiftProtobuf._Message
   static func ==(lhs: PodcastSuggestionsProto, rhs: PodcastSuggestionsProto) -> Bool {
     if lhs.suggestionsID != rhs.suggestionsID {return false}
     if lhs._createdAt != rhs._createdAt {return false}
-    if lhs.status != rhs.status {return false}
     if lhs.sections != rhs.sections {return false}
     if lhs._routine != rhs._routine {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension PodcastSuggestionsGenerationStateProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastSuggestionsGenerationStateProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "suggestions_id"),
+    2: .standard(proto: "updated_at"),
+    3: .same(proto: "state"),
+    4: .standard(proto: "display_state"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.suggestionsID) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._updatedAt) }()
+      case 3: try { try decoder.decodeSingularEnumField(value: &self.state) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.displayState) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.suggestionsID.isEmpty {
+      try visitor.visitSingularStringField(value: self.suggestionsID, fieldNumber: 1)
+    }
+    try { if let v = self._updatedAt {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
+    if self.state != .undefined {
+      try visitor.visitSingularEnumField(value: self.state, fieldNumber: 3)
+    }
+    if !self.displayState.isEmpty {
+      try visitor.visitSingularStringField(value: self.displayState, fieldNumber: 4)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PodcastSuggestionsGenerationStateProto, rhs: PodcastSuggestionsGenerationStateProto) -> Bool {
+    if lhs.suggestionsID != rhs.suggestionsID {return false}
+    if lhs._updatedAt != rhs._updatedAt {return false}
+    if lhs.state != rhs.state {return false}
+    if lhs.displayState != rhs.displayState {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

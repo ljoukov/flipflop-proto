@@ -172,6 +172,7 @@ message FirestorePodcastSuggestionsProto {
   google.protobuf.Timestamp updated_at = 1;
   YourPodcastsShelfProto your_podcasts_shelf = 2;
   PodcastSuggestionsProto suggestions = 3;
+  PodcastSuggestionsGenerationStateProto generation_state = 4;
 }
 
 message YourPodcastsShelfProto {
@@ -357,16 +358,22 @@ message PodcastKeyPointProto {
 message PodcastSuggestionsProto {
   string suggestions_id = 1;
   google.protobuf.Timestamp created_at = 2;
-  PodcastSuggestionsStatusProto status = 3;
-  repeated PodcastSuggestionsSectionProto sections = 4;
-  PodcastRoutineProto routine = 5;
+  repeated PodcastSuggestionsSectionProto sections = 3;
+  PodcastRoutineProto routine = 4;
 }
 
-enum PodcastSuggestionsStatusProto {
-  PODCAST_SUGGESTIONS_STATUS_PROTO_UNDEFINED = 0;
-  PODCAST_SUGGESTIONS_STATUS_PROTO_GENERATING = 1;
-  PODCAST_SUGGESTIONS_STATUS_PROTO_READY = 2;
-  PODCAST_SUGGESTIONS_STATUS_PROTO_FAILED = 3;
+message PodcastSuggestionsGenerationStateProto {
+  string suggestions_id = 1;
+  google.protobuf.Timestamp updated_at = 2;
+  PodcastSuggestionsStateProto state = 3;
+  string display_state = 4;
+}
+
+enum PodcastSuggestionsStateProto {
+  PODCAST_SUGGESTIONS_STATE_PROTO_UNDEFINED = 0;
+  PODCAST_SUGGESTIONS_STATE_PROTO_GENERATING = 1;
+  PODCAST_SUGGESTIONS_STATE_PROTO_READY = 2;
+  PODCAST_SUGGESTIONS_STATE_PROTO_FAILED = 3;
 }
 
 message PodcastSuggestionsSectionProto {
