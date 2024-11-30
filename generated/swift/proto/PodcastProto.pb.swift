@@ -803,15 +803,6 @@ struct GetPodcastHomeResponseHeaderProto: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var suggestions: PodcastSuggestionsProto {
-    get {return _suggestions ?? PodcastSuggestionsProto()}
-    set {_suggestions = newValue}
-  }
-  /// Returns true if `suggestions` has been explicitly set.
-  var hasSuggestions: Bool {return self._suggestions != nil}
-  /// Clears the value of `suggestions`. Subsequent reads from it will return its default value.
-  mutating func clearSuggestions() {self._suggestions = nil}
-
   var subscriptionStatus: PodcastSubscriptionStatusProto {
     get {return _subscriptionStatus ?? PodcastSubscriptionStatusProto()}
     set {_subscriptionStatus = newValue}
@@ -821,11 +812,12 @@ struct GetPodcastHomeResponseHeaderProto: Sendable {
   /// Clears the value of `subscriptionStatus`. Subsequent reads from it will return its default value.
   mutating func clearSubscriptionStatus() {self._subscriptionStatus = nil}
 
+  var firestoreSuggestionsPath: String = String()
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 
-  fileprivate var _suggestions: PodcastSuggestionsProto? = nil
   fileprivate var _subscriptionStatus: PodcastSubscriptionStatusProto? = nil
 }
 
@@ -3045,8 +3037,8 @@ extension GetPodcastHomeRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Mess
 extension GetPodcastHomeResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "GetPodcastHomeResponseHeaderProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "suggestions"),
-    2: .standard(proto: "subscription_status"),
+    1: .standard(proto: "subscription_status"),
+    2: .standard(proto: "firestore_suggestions_path"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3055,8 +3047,8 @@ extension GetPodcastHomeResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobu
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularMessageField(value: &self._suggestions) }()
-      case 2: try { try decoder.decodeSingularMessageField(value: &self._subscriptionStatus) }()
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._subscriptionStatus) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.firestoreSuggestionsPath) }()
       default: break
       }
     }
@@ -3067,18 +3059,18 @@ extension GetPodcastHomeResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobu
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    try { if let v = self._suggestions {
+    try { if let v = self._subscriptionStatus {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
     } }()
-    try { if let v = self._subscriptionStatus {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
-    } }()
+    if !self.firestoreSuggestionsPath.isEmpty {
+      try visitor.visitSingularStringField(value: self.firestoreSuggestionsPath, fieldNumber: 2)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: GetPodcastHomeResponseHeaderProto, rhs: GetPodcastHomeResponseHeaderProto) -> Bool {
-    if lhs._suggestions != rhs._suggestions {return false}
     if lhs._subscriptionStatus != rhs._subscriptionStatus {return false}
+    if lhs.firestoreSuggestionsPath != rhs.firestoreSuggestionsPath {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

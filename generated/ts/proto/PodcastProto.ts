@@ -440,13 +440,13 @@ export interface GetPodcastHomeRequestProto {
  */
 export interface GetPodcastHomeResponseHeaderProto {
     /**
-     * @generated from protobuf field: PodcastSuggestionsProto suggestions = 1;
-     */
-    suggestions?: PodcastSuggestionsProto;
-    /**
-     * @generated from protobuf field: PodcastSubscriptionStatusProto subscription_status = 2;
+     * @generated from protobuf field: PodcastSubscriptionStatusProto subscription_status = 1;
      */
     subscriptionStatus?: PodcastSubscriptionStatusProto;
+    /**
+     * @generated from protobuf field: string firestore_suggestions_path = 2;
+     */
+    firestoreSuggestionsPath: string;
 }
 /**
  * @generated from protobuf message GetPodcastHomeResponseDeltaProto
@@ -2526,12 +2526,13 @@ export const GetPodcastHomeRequestProto = new GetPodcastHomeRequestProto$Type();
 class GetPodcastHomeResponseHeaderProto$Type extends MessageType<GetPodcastHomeResponseHeaderProto> {
     constructor() {
         super("GetPodcastHomeResponseHeaderProto", [
-            { no: 1, name: "suggestions", kind: "message", T: () => PodcastSuggestionsProto },
-            { no: 2, name: "subscription_status", kind: "message", T: () => PodcastSubscriptionStatusProto }
+            { no: 1, name: "subscription_status", kind: "message", T: () => PodcastSubscriptionStatusProto },
+            { no: 2, name: "firestore_suggestions_path", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<GetPodcastHomeResponseHeaderProto>): GetPodcastHomeResponseHeaderProto {
         const message = globalThis.Object.create((this.messagePrototype!));
+        message.firestoreSuggestionsPath = "";
         if (value !== undefined)
             reflectionMergePartial<GetPodcastHomeResponseHeaderProto>(this, message, value);
         return message;
@@ -2541,11 +2542,11 @@ class GetPodcastHomeResponseHeaderProto$Type extends MessageType<GetPodcastHomeR
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* PodcastSuggestionsProto suggestions */ 1:
-                    message.suggestions = PodcastSuggestionsProto.internalBinaryRead(reader, reader.uint32(), options, message.suggestions);
-                    break;
-                case /* PodcastSubscriptionStatusProto subscription_status */ 2:
+                case /* PodcastSubscriptionStatusProto subscription_status */ 1:
                     message.subscriptionStatus = PodcastSubscriptionStatusProto.internalBinaryRead(reader, reader.uint32(), options, message.subscriptionStatus);
+                    break;
+                case /* string firestore_suggestions_path */ 2:
+                    message.firestoreSuggestionsPath = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2559,12 +2560,12 @@ class GetPodcastHomeResponseHeaderProto$Type extends MessageType<GetPodcastHomeR
         return message;
     }
     internalBinaryWrite(message: GetPodcastHomeResponseHeaderProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* PodcastSuggestionsProto suggestions = 1; */
-        if (message.suggestions)
-            PodcastSuggestionsProto.internalBinaryWrite(message.suggestions, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* PodcastSubscriptionStatusProto subscription_status = 2; */
+        /* PodcastSubscriptionStatusProto subscription_status = 1; */
         if (message.subscriptionStatus)
-            PodcastSubscriptionStatusProto.internalBinaryWrite(message.subscriptionStatus, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+            PodcastSubscriptionStatusProto.internalBinaryWrite(message.subscriptionStatus, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* string firestore_suggestions_path = 2; */
+        if (message.firestoreSuggestionsPath !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.firestoreSuggestionsPath);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
