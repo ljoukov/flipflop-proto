@@ -40,9 +40,8 @@ enum ServerTTSVoiceProto {
 
 message ServerTTSResponseProto {
   bytes audio = 1;
-  string hash_key = 2;
-  ServerAudioMetadataProto audio_metadata = 3;
-  repeated ServerTTSSegmentTranscriptProto segment_transcripts = 4;
+  ServerAudioMetadataProto audio_metadata = 2;
+  repeated ServerTTSSegmentTranscriptProto segment_transcripts = 3;
 }
 
 message ServerAudioMetadataProto {

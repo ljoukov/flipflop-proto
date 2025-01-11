@@ -170,8 +170,6 @@ struct ServerTTSResponseProto: @unchecked Sendable {
 
   var audio: Data = Data()
 
-  var hashKey: String = String()
-
   var audioMetadata: ServerAudioMetadataProto {
     get {return _audioMetadata ?? ServerAudioMetadataProto()}
     set {_audioMetadata = newValue}
@@ -470,9 +468,8 @@ extension ServerTTSResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageI
   static let protoMessageName: String = "ServerTTSResponseProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "audio"),
-    2: .standard(proto: "hash_key"),
-    3: .standard(proto: "audio_metadata"),
-    4: .standard(proto: "segment_transcripts"),
+    2: .standard(proto: "audio_metadata"),
+    3: .standard(proto: "segment_transcripts"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -482,9 +479,8 @@ extension ServerTTSResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageI
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularBytesField(value: &self.audio) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.hashKey) }()
-      case 3: try { try decoder.decodeSingularMessageField(value: &self._audioMetadata) }()
-      case 4: try { try decoder.decodeRepeatedMessageField(value: &self.segmentTranscripts) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._audioMetadata) }()
+      case 3: try { try decoder.decodeRepeatedMessageField(value: &self.segmentTranscripts) }()
       default: break
       }
     }
@@ -498,21 +494,17 @@ extension ServerTTSResponseProto: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     if !self.audio.isEmpty {
       try visitor.visitSingularBytesField(value: self.audio, fieldNumber: 1)
     }
-    if !self.hashKey.isEmpty {
-      try visitor.visitSingularStringField(value: self.hashKey, fieldNumber: 2)
-    }
     try { if let v = self._audioMetadata {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     } }()
     if !self.segmentTranscripts.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.segmentTranscripts, fieldNumber: 4)
+      try visitor.visitRepeatedMessageField(value: self.segmentTranscripts, fieldNumber: 3)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: ServerTTSResponseProto, rhs: ServerTTSResponseProto) -> Bool {
     if lhs.audio != rhs.audio {return false}
-    if lhs.hashKey != rhs.hashKey {return false}
     if lhs._audioMetadata != rhs._audioMetadata {return false}
     if lhs.segmentTranscripts != rhs.segmentTranscripts {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}

@@ -96,15 +96,11 @@ export interface ServerTTSResponseProto {
      */
     audio: Uint8Array;
     /**
-     * @generated from protobuf field: string hash_key = 2;
-     */
-    hashKey: string;
-    /**
-     * @generated from protobuf field: ServerAudioMetadataProto audio_metadata = 3;
+     * @generated from protobuf field: ServerAudioMetadataProto audio_metadata = 2;
      */
     audioMetadata?: ServerAudioMetadataProto;
     /**
-     * @generated from protobuf field: repeated ServerTTSSegmentTranscriptProto segment_transcripts = 4;
+     * @generated from protobuf field: repeated ServerTTSSegmentTranscriptProto segment_transcripts = 3;
      */
     segmentTranscripts: ServerTTSSegmentTranscriptProto[];
 }
@@ -468,15 +464,13 @@ class ServerTTSResponseProto$Type extends MessageType<ServerTTSResponseProto> {
     constructor() {
         super("ServerTTSResponseProto", [
             { no: 1, name: "audio", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
-            { no: 2, name: "hash_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "audio_metadata", kind: "message", T: () => ServerAudioMetadataProto },
-            { no: 4, name: "segment_transcripts", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ServerTTSSegmentTranscriptProto }
+            { no: 2, name: "audio_metadata", kind: "message", T: () => ServerAudioMetadataProto },
+            { no: 3, name: "segment_transcripts", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ServerTTSSegmentTranscriptProto }
         ]);
     }
     create(value?: PartialMessage<ServerTTSResponseProto>): ServerTTSResponseProto {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.audio = new Uint8Array(0);
-        message.hashKey = "";
         message.segmentTranscripts = [];
         if (value !== undefined)
             reflectionMergePartial<ServerTTSResponseProto>(this, message, value);
@@ -490,13 +484,10 @@ class ServerTTSResponseProto$Type extends MessageType<ServerTTSResponseProto> {
                 case /* bytes audio */ 1:
                     message.audio = reader.bytes();
                     break;
-                case /* string hash_key */ 2:
-                    message.hashKey = reader.string();
-                    break;
-                case /* ServerAudioMetadataProto audio_metadata */ 3:
+                case /* ServerAudioMetadataProto audio_metadata */ 2:
                     message.audioMetadata = ServerAudioMetadataProto.internalBinaryRead(reader, reader.uint32(), options, message.audioMetadata);
                     break;
-                case /* repeated ServerTTSSegmentTranscriptProto segment_transcripts */ 4:
+                case /* repeated ServerTTSSegmentTranscriptProto segment_transcripts */ 3:
                     message.segmentTranscripts.push(ServerTTSSegmentTranscriptProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
@@ -514,15 +505,12 @@ class ServerTTSResponseProto$Type extends MessageType<ServerTTSResponseProto> {
         /* bytes audio = 1; */
         if (message.audio.length)
             writer.tag(1, WireType.LengthDelimited).bytes(message.audio);
-        /* string hash_key = 2; */
-        if (message.hashKey !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.hashKey);
-        /* ServerAudioMetadataProto audio_metadata = 3; */
+        /* ServerAudioMetadataProto audio_metadata = 2; */
         if (message.audioMetadata)
-            ServerAudioMetadataProto.internalBinaryWrite(message.audioMetadata, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* repeated ServerTTSSegmentTranscriptProto segment_transcripts = 4; */
+            ServerAudioMetadataProto.internalBinaryWrite(message.audioMetadata, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* repeated ServerTTSSegmentTranscriptProto segment_transcripts = 3; */
         for (let i = 0; i < message.segmentTranscripts.length; i++)
-            ServerTTSSegmentTranscriptProto.internalBinaryWrite(message.segmentTranscripts[i], writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+            ServerTTSSegmentTranscriptProto.internalBinaryWrite(message.segmentTranscripts[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
