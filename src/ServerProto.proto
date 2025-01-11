@@ -1,0 +1,69 @@
+syntax = "proto3";
+
+import "google/protobuf/duration.proto";
+
+message ServerApiRequestProto {
+  oneof request {
+    ServerTTSRequestProto tts = 10;
+  }
+}
+
+message ServerApiResponseProto {
+  oneof response {
+    ServerTTSResponseProto tts = 10;
+  }
+  map<string, google.protobuf.Duration> latencies = 100;
+}
+
+message ServerTTSRequestProto {
+  repeated ServerTTSSegmentProto segments = 1;
+  float silence_sec = 2;
+};
+
+message ServerTTSSegmentProto {
+  float leading_silence_sec = 1;
+  float min_duration_sec = 2;
+  string text = 3;
+  ServerTTSVoiceProto voice = 4;
+};
+
+enum ServerTTSVoiceProto {
+  SERVER_TTS_VOICE_PROTO_UNDEFINED = 0;
+  SERVER_TTS_VOICE_PROTO_ALLOY = 1;
+  SERVER_TTS_VOICE_PROTO_ECHO = 2;
+  SERVER_TTS_VOICE_PROTO_FABLE = 3;
+  SERVER_TTS_VOICE_PROTO_ONYX = 4;
+  SERVER_TTS_VOICE_PROTO_NOVA = 5;
+  SERVER_TTS_VOICE_PROTO_SHIMMER = 6;
+  SERVER_TTS_VOICE_PROTO_MEDITATION = 7;
+}
+
+message ServerTTSResponseProto {
+  bytes audio = 1;
+  string hash_key = 2;
+  ServerAudioMetadataProto audio_metadata = 3;
+  repeated ServerTTSSegmentTranscriptProto segment_transcripts = 4;
+}
+
+message ServerAudioMetadataProto {
+  float duration_sec = 1;
+  int32 sample_rate = 2;
+  int32 num_channels = 3;
+}
+
+message ServerTTSSegmentTranscriptProto {
+  float offset_sec = 1;
+  float duration_sec = 2;
+  ServerTranscriptProto transcript = 3;
+}
+
+message ServerTranscriptProto {
+  string text = 1;
+  repeated ServerTranscriptWordProto words = 2;
+}
+
+message ServerTranscriptWordProto {
+  string word = 1;
+  float start_sec = 2;
+  float end_sec = 3;
+}
