@@ -707,7 +707,7 @@ struct StoredPodcastSuggestionFromRoutineStepInputProto: Sendable {
 
   var stepOutline: String = String()
 
-  var stepTags: String = String()
+  var stepTags: [String] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -2342,7 +2342,7 @@ extension StoredPodcastSuggestionFromRoutineStepInputProto: SwiftProtobuf.Messag
       case 1: try { try decoder.decodeSingularStringField(value: &self.routineID) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.routineReasoning) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.stepOutline) }()
-      case 4: try { try decoder.decodeSingularStringField(value: &self.stepTags) }()
+      case 4: try { try decoder.decodeRepeatedStringField(value: &self.stepTags) }()
       default: break
       }
     }
@@ -2359,7 +2359,7 @@ extension StoredPodcastSuggestionFromRoutineStepInputProto: SwiftProtobuf.Messag
       try visitor.visitSingularStringField(value: self.stepOutline, fieldNumber: 3)
     }
     if !self.stepTags.isEmpty {
-      try visitor.visitSingularStringField(value: self.stepTags, fieldNumber: 4)
+      try visitor.visitRepeatedStringField(value: self.stepTags, fieldNumber: 4)
     }
     try unknownFields.traverse(visitor: &visitor)
   }

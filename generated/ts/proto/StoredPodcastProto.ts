@@ -213,9 +213,9 @@ export interface StoredPodcastSuggestionFromRoutineStepInputProto {
      */
     stepOutline: string;
     /**
-     * @generated from protobuf field: string step_tags = 4;
+     * @generated from protobuf field: repeated string step_tags = 4;
      */
-    stepTags: string;
+    stepTags: string[];
 }
 /**
  * @generated from protobuf message StoredPodcastSuggestionUserInputProto
@@ -1783,7 +1783,7 @@ class StoredPodcastSuggestionFromRoutineStepInputProto$Type extends MessageType<
             { no: 1, name: "routine_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "routine_reasoning", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "step_outline", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "step_tags", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 4, name: "step_tags", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastSuggestionFromRoutineStepInputProto>): StoredPodcastSuggestionFromRoutineStepInputProto {
@@ -1791,7 +1791,7 @@ class StoredPodcastSuggestionFromRoutineStepInputProto$Type extends MessageType<
         message.routineId = "";
         message.routineReasoning = "";
         message.stepOutline = "";
-        message.stepTags = "";
+        message.stepTags = [];
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastSuggestionFromRoutineStepInputProto>(this, message, value);
         return message;
@@ -1810,8 +1810,8 @@ class StoredPodcastSuggestionFromRoutineStepInputProto$Type extends MessageType<
                 case /* string step_outline */ 3:
                     message.stepOutline = reader.string();
                     break;
-                case /* string step_tags */ 4:
-                    message.stepTags = reader.string();
+                case /* repeated string step_tags */ 4:
+                    message.stepTags.push(reader.string());
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -1834,9 +1834,9 @@ class StoredPodcastSuggestionFromRoutineStepInputProto$Type extends MessageType<
         /* string step_outline = 3; */
         if (message.stepOutline !== "")
             writer.tag(3, WireType.LengthDelimited).string(message.stepOutline);
-        /* string step_tags = 4; */
-        if (message.stepTags !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.stepTags);
+        /* repeated string step_tags = 4; */
+        for (let i = 0; i < message.stepTags.length; i++)
+            writer.tag(4, WireType.LengthDelimited).string(message.stepTags[i]);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
