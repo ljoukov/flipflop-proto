@@ -591,6 +591,10 @@ export interface PodcastThumbnailProto {
      */
     badge: string; // May be empty or Q&A, Debate, ...
     /**
+     * @generated from protobuf field: repeated string tags = 10;
+     */
+    tags: string[]; // "breath", "stretch", "focus", ...
+    /**
      * @generated from protobuf field: string path = 6;
      */
     path: string;
@@ -3064,6 +3068,7 @@ class PodcastThumbnailProto$Type extends MessageType<PodcastThumbnailProto> {
             { no: 4, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 9, name: "long_title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "badge", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 10, name: "tags", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
             { no: 6, name: "path", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 7, name: "duration", kind: "message", T: () => Duration },
             { no: 8, name: "updated_at", kind: "message", T: () => Timestamp }
@@ -3077,6 +3082,7 @@ class PodcastThumbnailProto$Type extends MessageType<PodcastThumbnailProto> {
         message.title = "";
         message.longTitle = "";
         message.badge = "";
+        message.tags = [];
         message.path = "";
         if (value !== undefined)
             reflectionMergePartial<PodcastThumbnailProto>(this, message, value);
@@ -3104,6 +3110,9 @@ class PodcastThumbnailProto$Type extends MessageType<PodcastThumbnailProto> {
                     break;
                 case /* string badge */ 5:
                     message.badge = reader.string();
+                    break;
+                case /* repeated string tags */ 10:
+                    message.tags.push(reader.string());
                     break;
                 case /* string path */ 6:
                     message.path = reader.string();
@@ -3144,6 +3153,9 @@ class PodcastThumbnailProto$Type extends MessageType<PodcastThumbnailProto> {
         /* string badge = 5; */
         if (message.badge !== "")
             writer.tag(5, WireType.LengthDelimited).string(message.badge);
+        /* repeated string tags = 10; */
+        for (let i = 0; i < message.tags.length; i++)
+            writer.tag(10, WireType.LengthDelimited).string(message.tags[i]);
         /* string path = 6; */
         if (message.path !== "")
             writer.tag(6, WireType.LengthDelimited).string(message.path);

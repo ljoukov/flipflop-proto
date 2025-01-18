@@ -1096,6 +1096,9 @@ struct PodcastThumbnailProto: Sendable {
   /// May be empty or Q&A, Debate, ...
   var badge: String = String()
 
+  /// "breath", "stretch", "focus", ...
+  var tags: [String] = []
+
   var path: String = String()
 
   var duration: SwiftProtobuf.Google_Protobuf_Duration {
@@ -3555,6 +3558,7 @@ extension PodcastThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     4: .same(proto: "title"),
     9: .standard(proto: "long_title"),
     5: .same(proto: "badge"),
+    10: .same(proto: "tags"),
     6: .same(proto: "path"),
     7: .same(proto: "duration"),
     8: .standard(proto: "updated_at"),
@@ -3575,6 +3579,7 @@ extension PodcastThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
       case 7: try { try decoder.decodeSingularMessageField(value: &self._duration) }()
       case 8: try { try decoder.decodeSingularMessageField(value: &self._updatedAt) }()
       case 9: try { try decoder.decodeSingularStringField(value: &self.longTitle) }()
+      case 10: try { try decoder.decodeRepeatedStringField(value: &self.tags) }()
       default: break
       }
     }
@@ -3612,6 +3617,9 @@ extension PodcastThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     if !self.longTitle.isEmpty {
       try visitor.visitSingularStringField(value: self.longTitle, fieldNumber: 9)
     }
+    if !self.tags.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.tags, fieldNumber: 10)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -3622,6 +3630,7 @@ extension PodcastThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     if lhs.title != rhs.title {return false}
     if lhs.longTitle != rhs.longTitle {return false}
     if lhs.badge != rhs.badge {return false}
+    if lhs.tags != rhs.tags {return false}
     if lhs.path != rhs.path {return false}
     if lhs._duration != rhs._duration {return false}
     if lhs._updatedAt != rhs._updatedAt {return false}

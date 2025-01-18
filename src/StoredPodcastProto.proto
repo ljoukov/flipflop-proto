@@ -356,7 +356,8 @@ message StoredPodcastRoutineStepProto {
   string podcast_id = 6;
   StoredPodcastTypeProto type = 1;
   string title = 2;
-  string outline = 3;
+  reserved 3;
+  repeated string tags = 8;
   string thumbnail_prompt = 4;
   string thumbnail_key = 5;
   StoredPodcastGenerationStateProto generation_state = 7;
