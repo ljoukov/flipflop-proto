@@ -1443,6 +1443,8 @@ struct StoredPodcastRoutineStepProto: Sendable {
 
   var title: String = String()
 
+  var outline: String = String()
+
   var tags: [String] = []
 
   var thumbnailPrompt: String = String()
@@ -3970,6 +3972,7 @@ extension StoredPodcastRoutineStepProto: SwiftProtobuf.Message, SwiftProtobuf._M
     6: .standard(proto: "podcast_id"),
     1: .same(proto: "type"),
     2: .same(proto: "title"),
+    3: .same(proto: "outline"),
     8: .same(proto: "tags"),
     4: .standard(proto: "thumbnail_prompt"),
     5: .standard(proto: "thumbnail_key"),
@@ -3984,6 +3987,7 @@ extension StoredPodcastRoutineStepProto: SwiftProtobuf.Message, SwiftProtobuf._M
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularEnumField(value: &self.type) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.title) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.outline) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self.thumbnailPrompt) }()
       case 5: try { try decoder.decodeSingularStringField(value: &self.thumbnailKey) }()
       case 6: try { try decoder.decodeSingularStringField(value: &self.podcastID) }()
@@ -4000,6 +4004,9 @@ extension StoredPodcastRoutineStepProto: SwiftProtobuf.Message, SwiftProtobuf._M
     }
     if !self.title.isEmpty {
       try visitor.visitSingularStringField(value: self.title, fieldNumber: 2)
+    }
+    if !self.outline.isEmpty {
+      try visitor.visitSingularStringField(value: self.outline, fieldNumber: 3)
     }
     if !self.thumbnailPrompt.isEmpty {
       try visitor.visitSingularStringField(value: self.thumbnailPrompt, fieldNumber: 4)
@@ -4023,6 +4030,7 @@ extension StoredPodcastRoutineStepProto: SwiftProtobuf.Message, SwiftProtobuf._M
     if lhs.podcastID != rhs.podcastID {return false}
     if lhs.type != rhs.type {return false}
     if lhs.title != rhs.title {return false}
+    if lhs.outline != rhs.outline {return false}
     if lhs.tags != rhs.tags {return false}
     if lhs.thumbnailPrompt != rhs.thumbnailPrompt {return false}
     if lhs.thumbnailKey != rhs.thumbnailKey {return false}

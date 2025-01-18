@@ -834,6 +834,10 @@ export interface StoredPodcastRoutineStepProto {
      */
     title: string;
     /**
+     * @generated from protobuf field: string outline = 3;
+     */
+    outline: string;
+    /**
      * @generated from protobuf field: repeated string tags = 8;
      */
     tags: string[];
@@ -3809,6 +3813,7 @@ class StoredPodcastRoutineStepProto$Type extends MessageType<StoredPodcastRoutin
             { no: 6, name: "podcast_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 1, name: "type", kind: "enum", T: () => ["StoredPodcastTypeProto", StoredPodcastTypeProto, "STORED_PODCAST_TYPE_PROTO_"] },
             { no: 2, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "outline", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 8, name: "tags", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "thumbnail_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "thumbnail_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
@@ -3820,6 +3825,7 @@ class StoredPodcastRoutineStepProto$Type extends MessageType<StoredPodcastRoutin
         message.podcastId = "";
         message.type = 0;
         message.title = "";
+        message.outline = "";
         message.tags = [];
         message.thumbnailPrompt = "";
         message.thumbnailKey = "";
@@ -3841,6 +3847,9 @@ class StoredPodcastRoutineStepProto$Type extends MessageType<StoredPodcastRoutin
                     break;
                 case /* string title */ 2:
                     message.title = reader.string();
+                    break;
+                case /* string outline */ 3:
+                    message.outline = reader.string();
                     break;
                 case /* repeated string tags */ 8:
                     message.tags.push(reader.string());
@@ -3875,6 +3884,9 @@ class StoredPodcastRoutineStepProto$Type extends MessageType<StoredPodcastRoutin
         /* string title = 2; */
         if (message.title !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.title);
+        /* string outline = 3; */
+        if (message.outline !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.outline);
         /* repeated string tags = 8; */
         for (let i = 0; i < message.tags.length; i++)
             writer.tag(8, WireType.LengthDelimited).string(message.tags[i]);
