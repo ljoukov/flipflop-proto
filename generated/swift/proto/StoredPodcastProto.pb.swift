@@ -707,6 +707,8 @@ struct StoredPodcastSuggestionFromRoutineStepInputProto: Sendable {
 
   var stepOutline: String = String()
 
+  var stepTags: String = String()
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -2328,6 +2330,7 @@ extension StoredPodcastSuggestionFromRoutineStepInputProto: SwiftProtobuf.Messag
     1: .standard(proto: "routine_id"),
     2: .standard(proto: "routine_reasoning"),
     3: .standard(proto: "step_outline"),
+    4: .standard(proto: "step_tags"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2339,6 +2342,7 @@ extension StoredPodcastSuggestionFromRoutineStepInputProto: SwiftProtobuf.Messag
       case 1: try { try decoder.decodeSingularStringField(value: &self.routineID) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.routineReasoning) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.stepOutline) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.stepTags) }()
       default: break
       }
     }
@@ -2354,6 +2358,9 @@ extension StoredPodcastSuggestionFromRoutineStepInputProto: SwiftProtobuf.Messag
     if !self.stepOutline.isEmpty {
       try visitor.visitSingularStringField(value: self.stepOutline, fieldNumber: 3)
     }
+    if !self.stepTags.isEmpty {
+      try visitor.visitSingularStringField(value: self.stepTags, fieldNumber: 4)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -2361,6 +2368,7 @@ extension StoredPodcastSuggestionFromRoutineStepInputProto: SwiftProtobuf.Messag
     if lhs.routineID != rhs.routineID {return false}
     if lhs.routineReasoning != rhs.routineReasoning {return false}
     if lhs.stepOutline != rhs.stepOutline {return false}
+    if lhs.stepTags != rhs.stepTags {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

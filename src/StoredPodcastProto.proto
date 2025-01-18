@@ -96,6 +96,7 @@ message StoredPodcastSuggestionFromRoutineStepInputProto {
   string routine_id = 1;
   string routine_reasoning = 2;
   string step_outline = 3;
+  string step_tags = 4;
 }
 
 message StoredPodcastSuggestionUserInputProto {
