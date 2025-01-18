@@ -504,6 +504,10 @@ export interface PodcastProto {
      * @generated from protobuf field: PodcastFollowupsProto followups = 8;
      */
     followups?: PodcastFollowupsProto;
+    /**
+     * @generated from protobuf field: PodcastCompletionProto completion = 9;
+     */
+    completion?: PodcastCompletionProto;
 }
 /**
  * @generated from protobuf message FirestorePodcastSuggestionsProto
@@ -949,6 +953,27 @@ export interface PodcastKeyPointProto {
      * @generated from protobuf field: string outline = 4;
      */
     outline: string;
+}
+/**
+ * @generated from protobuf message PodcastCompletionProto
+ */
+export interface PodcastCompletionProto {
+    /**
+     * @generated from protobuf field: string action = 1;
+     */
+    action: string; // "Mark Complete"
+    /**
+     * @generated from protobuf field: string encouragement = 2;
+     */
+    encouragement: string; // "Excellent!"
+    /**
+     * @generated from protobuf field: string emoji = 3;
+     */
+    emoji: string; // "⚡", "💎"
+    /**
+     * @generated from protobuf field: string lottie_url = 4;
+     */
+    lottieUrl: string;
 }
 /**
  * @generated from protobuf message PodcastSuggestionsProto
@@ -2733,7 +2758,8 @@ class PodcastProto$Type extends MessageType<PodcastProto> {
             { no: 5, name: "transcript", kind: "message", T: () => PodcastTranscriptProto },
             { no: 6, name: "cards", kind: "message", T: () => PodcastCardsProto },
             { no: 7, name: "key_points", kind: "message", T: () => PodcastKeyPointsProto },
-            { no: 8, name: "followups", kind: "message", T: () => PodcastFollowupsProto }
+            { no: 8, name: "followups", kind: "message", T: () => PodcastFollowupsProto },
+            { no: 9, name: "completion", kind: "message", T: () => PodcastCompletionProto }
         ]);
     }
     create(value?: PartialMessage<PodcastProto>): PodcastProto {
@@ -2771,6 +2797,9 @@ class PodcastProto$Type extends MessageType<PodcastProto> {
                 case /* PodcastFollowupsProto followups */ 8:
                     message.followups = PodcastFollowupsProto.internalBinaryRead(reader, reader.uint32(), options, message.followups);
                     break;
+                case /* PodcastCompletionProto completion */ 9:
+                    message.completion = PodcastCompletionProto.internalBinaryRead(reader, reader.uint32(), options, message.completion);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -2807,6 +2836,9 @@ class PodcastProto$Type extends MessageType<PodcastProto> {
         /* PodcastFollowupsProto followups = 8; */
         if (message.followups)
             PodcastFollowupsProto.internalBinaryWrite(message.followups, writer.tag(8, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastCompletionProto completion = 9; */
+        if (message.completion)
+            PodcastCompletionProto.internalBinaryWrite(message.completion, writer.tag(9, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -4400,6 +4432,77 @@ class PodcastKeyPointProto$Type extends MessageType<PodcastKeyPointProto> {
  * @generated MessageType for protobuf message PodcastKeyPointProto
  */
 export const PodcastKeyPointProto = new PodcastKeyPointProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PodcastCompletionProto$Type extends MessageType<PodcastCompletionProto> {
+    constructor() {
+        super("PodcastCompletionProto", [
+            { no: 1, name: "action", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "encouragement", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "lottie_url", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PodcastCompletionProto>): PodcastCompletionProto {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.action = "";
+        message.encouragement = "";
+        message.emoji = "";
+        message.lottieUrl = "";
+        if (value !== undefined)
+            reflectionMergePartial<PodcastCompletionProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastCompletionProto): PodcastCompletionProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string action */ 1:
+                    message.action = reader.string();
+                    break;
+                case /* string encouragement */ 2:
+                    message.encouragement = reader.string();
+                    break;
+                case /* string emoji */ 3:
+                    message.emoji = reader.string();
+                    break;
+                case /* string lottie_url */ 4:
+                    message.lottieUrl = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PodcastCompletionProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string action = 1; */
+        if (message.action !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.action);
+        /* string encouragement = 2; */
+        if (message.encouragement !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.encouragement);
+        /* string emoji = 3; */
+        if (message.emoji !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.emoji);
+        /* string lottie_url = 4; */
+        if (message.lottieUrl !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.lottieUrl);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message PodcastCompletionProto
+ */
+export const PodcastCompletionProto = new PodcastCompletionProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class PodcastSuggestionsProto$Type extends MessageType<PodcastSuggestionsProto> {
     constructor() {

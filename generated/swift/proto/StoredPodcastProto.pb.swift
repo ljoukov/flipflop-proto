@@ -553,6 +553,15 @@ struct StoredPodcastProto: @unchecked Sendable {
   /// Clears the value of `exercise`. Subsequent reads from it will return its default value.
   mutating func clearExercise() {_uniqueStorage()._exercise = nil}
 
+  var completion: StoredPodcastCompletionProto {
+    get {return _storage._completion ?? StoredPodcastCompletionProto()}
+    set {_uniqueStorage()._completion = newValue}
+  }
+  /// Returns true if `completion` has been explicitly set.
+  var hasCompletion: Bool {return _storage._completion != nil}
+  /// Clears the value of `completion`. Subsequent reads from it will return its default value.
+  mutating func clearCompletion() {_uniqueStorage()._completion = nil}
+
   var log: LogProto {
     get {return _storage._log ?? LogProto()}
     set {_uniqueStorage()._log = newValue}
@@ -945,6 +954,25 @@ struct StoredPodcastKeyPointProto: Sendable {
   var titleEmoji: String = String()
 
   var outline: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct StoredPodcastCompletionProto: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// "Mark Complete"
+  var action: String = String()
+
+  /// "Excellent!"
+  var encouragement: String = String()
+
+  /// "⚡", "💎"
+  var emoji: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -1855,6 +1883,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     14: .same(proto: "followups"),
     17: .standard(proto: "podcast_type"),
     18: .same(proto: "exercise"),
+    19: .same(proto: "completion"),
     101: .same(proto: "log"),
     102: .standard(proto: "llm_request_ids"),
     103: .standard(proto: "generation_job"),
@@ -1879,6 +1908,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     var _followups: StoredPodcastFollowupsProto? = nil
     var _podcastType: StoredPodcastTypeProto = .undefined
     var _exercise: StoredPodcastExerciseProto? = nil
+    var _completion: StoredPodcastCompletionProto? = nil
     var _log: LogProto? = nil
     var _llmRequestIds: Dictionary<String,String> = [:]
     var _generationJob: StoredPodcastGenerationJobProto? = nil
@@ -1914,6 +1944,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       _followups = source._followups
       _podcastType = source._podcastType
       _exercise = source._exercise
+      _completion = source._completion
       _log = source._log
       _llmRequestIds = source._llmRequestIds
       _generationJob = source._generationJob
@@ -1953,6 +1984,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         case 16: try { try decoder.decodeSingularMessageField(value: &_storage._deletedAt) }()
         case 17: try { try decoder.decodeSingularEnumField(value: &_storage._podcastType) }()
         case 18: try { try decoder.decodeSingularMessageField(value: &_storage._exercise) }()
+        case 19: try { try decoder.decodeSingularMessageField(value: &_storage._completion) }()
         case 101: try { try decoder.decodeSingularMessageField(value: &_storage._log) }()
         case 102: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: &_storage._llmRequestIds) }()
         case 103: try { try decoder.decodeSingularMessageField(value: &_storage._generationJob) }()
@@ -2022,6 +2054,9 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       try { if let v = _storage._exercise {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 18)
       } }()
+      try { if let v = _storage._completion {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 19)
+      } }()
       try { if let v = _storage._log {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 101)
       } }()
@@ -2058,6 +2093,7 @@ extension StoredPodcastProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
         if _storage._followups != rhs_storage._followups {return false}
         if _storage._podcastType != rhs_storage._podcastType {return false}
         if _storage._exercise != rhs_storage._exercise {return false}
+        if _storage._completion != rhs_storage._completion {return false}
         if _storage._log != rhs_storage._log {return false}
         if _storage._llmRequestIds != rhs_storage._llmRequestIds {return false}
         if _storage._generationJob != rhs_storage._generationJob {return false}
@@ -2961,6 +2997,50 @@ extension StoredPodcastKeyPointProto: SwiftProtobuf.Message, SwiftProtobuf._Mess
     if lhs.title != rhs.title {return false}
     if lhs.titleEmoji != rhs.titleEmoji {return false}
     if lhs.outline != rhs.outline {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension StoredPodcastCompletionProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredPodcastCompletionProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "action"),
+    2: .same(proto: "encouragement"),
+    3: .same(proto: "emoji"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.action) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.encouragement) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.emoji) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.action.isEmpty {
+      try visitor.visitSingularStringField(value: self.action, fieldNumber: 1)
+    }
+    if !self.encouragement.isEmpty {
+      try visitor.visitSingularStringField(value: self.encouragement, fieldNumber: 2)
+    }
+    if !self.emoji.isEmpty {
+      try visitor.visitSingularStringField(value: self.emoji, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: StoredPodcastCompletionProto, rhs: StoredPodcastCompletionProto) -> Bool {
+    if lhs.action != rhs.action {return false}
+    if lhs.encouragement != rhs.encouragement {return false}
+    if lhs.emoji != rhs.emoji {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

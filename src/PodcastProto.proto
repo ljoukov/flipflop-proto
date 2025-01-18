@@ -166,6 +166,8 @@ message PodcastProto {
 
   PodcastKeyPointsProto key_points = 7;
   PodcastFollowupsProto followups = 8;
+
+  PodcastCompletionProto completion = 9;
 }
 
 message FirestorePodcastSuggestionsProto {
@@ -353,6 +355,13 @@ message PodcastKeyPointProto {
   string title = 2;
   string title_emoji = 3;
   string outline = 4;
+}
+
+message PodcastCompletionProto {
+  string action = 1;         // "Mark Complete"
+  string encouragement = 2;  // "Excellent!"
+  string emoji = 3;          // "⚡", "💎"
+  string lottie_url = 4;
 }
 
 message PodcastSuggestionsProto {

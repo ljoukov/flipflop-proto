@@ -34,6 +34,8 @@ message StoredPodcastProto {
   StoredPodcastTypeProto podcast_type = 17;
   StoredPodcastExerciseProto exercise = 18;
 
+  StoredPodcastCompletionProto completion = 19;
+
   // Debug metadata
   reserved 100;
   LogProto log = 101;
@@ -195,6 +197,12 @@ message StoredPodcastKeyPointProto {
   string title = 2;
   string title_emoji = 3;
   string outline = 4;
+}
+
+message StoredPodcastCompletionProto {
+  string action = 1;         // "Mark Complete"
+  string encouragement = 2;  // "Excellent!"
+  string emoji = 3;          // "⚡", "💎"
 }
 
 message StoredPodcastSuggestionsProto {
