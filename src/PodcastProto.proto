@@ -196,6 +196,7 @@ message PodcastThumbnailProto {
   string long_title = 9;      // used for large suggested thumbnails
   string badge = 5;           // May be empty or Q&A, Debate, ...
   repeated string tags = 10;  // "breath", "stretch", "focus", ...
+  PodcastTypeProto type = 11;
   string path = 6;
   google.protobuf.Duration duration = 7;
   google.protobuf.Timestamp updated_at = 8;
@@ -206,6 +207,13 @@ enum PodcastStatusProto {
   PODCAST_STATUS_PROTO_GENERATING = 1;
   PODCAST_STATUS_PROTO_READY = 2;
   PODCAST_STATUS_PROTO_FAILED = 3;
+}
+
+enum PodcastTypeProto {
+  PODCAST_TYPE_PROTO_UNDEFINED = 0;
+  PODCAST_TYPE_PROTO_EXPLAINER = 1;
+  PODCAST_TYPE_PROTO_EXERCISE = 2;
+  PODCAST_TYPE_PROTO_MEDITATION = 3;
 }
 
 message PodcastAudioProto {

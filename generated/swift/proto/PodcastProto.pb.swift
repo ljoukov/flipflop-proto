@@ -100,6 +100,48 @@ enum PodcastStatusProto: SwiftProtobuf.Enum, Swift.CaseIterable {
 
 }
 
+enum PodcastTypeProto: SwiftProtobuf.Enum, Swift.CaseIterable {
+  typealias RawValue = Int
+  case undefined // = 0
+  case explainer // = 1
+  case exercise // = 2
+  case meditation // = 3
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .undefined
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .undefined
+    case 1: self = .explainer
+    case 2: self = .exercise
+    case 3: self = .meditation
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .undefined: return 0
+    case .explainer: return 1
+    case .exercise: return 2
+    case .meditation: return 3
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static let allCases: [PodcastTypeProto] = [
+    .undefined,
+    .explainer,
+    .exercise,
+    .meditation,
+  ]
+
+}
+
 enum PodcastVisualTransitionProto: SwiftProtobuf.Enum, Swift.CaseIterable {
   typealias RawValue = Int
   case undefined // = 0
@@ -1099,6 +1141,8 @@ struct PodcastThumbnailProto: Sendable {
   /// "breath", "stretch", "focus", ...
   var tags: [String] = []
 
+  var type: PodcastTypeProto = .undefined
+
   var path: String = String()
 
   var duration: SwiftProtobuf.Google_Protobuf_Duration {
@@ -1848,6 +1892,15 @@ extension PodcastStatusProto: SwiftProtobuf._ProtoNameProviding {
     1: .same(proto: "PODCAST_STATUS_PROTO_GENERATING"),
     2: .same(proto: "PODCAST_STATUS_PROTO_READY"),
     3: .same(proto: "PODCAST_STATUS_PROTO_FAILED"),
+  ]
+}
+
+extension PodcastTypeProto: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "PODCAST_TYPE_PROTO_UNDEFINED"),
+    1: .same(proto: "PODCAST_TYPE_PROTO_EXPLAINER"),
+    2: .same(proto: "PODCAST_TYPE_PROTO_EXERCISE"),
+    3: .same(proto: "PODCAST_TYPE_PROTO_MEDITATION"),
   ]
 }
 
@@ -3559,6 +3612,7 @@ extension PodcastThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     9: .standard(proto: "long_title"),
     5: .same(proto: "badge"),
     10: .same(proto: "tags"),
+    11: .same(proto: "type"),
     6: .same(proto: "path"),
     7: .same(proto: "duration"),
     8: .standard(proto: "updated_at"),
@@ -3580,6 +3634,7 @@ extension PodcastThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
       case 8: try { try decoder.decodeSingularMessageField(value: &self._updatedAt) }()
       case 9: try { try decoder.decodeSingularStringField(value: &self.longTitle) }()
       case 10: try { try decoder.decodeRepeatedStringField(value: &self.tags) }()
+      case 11: try { try decoder.decodeSingularEnumField(value: &self.type) }()
       default: break
       }
     }
@@ -3620,6 +3675,9 @@ extension PodcastThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     if !self.tags.isEmpty {
       try visitor.visitRepeatedStringField(value: self.tags, fieldNumber: 10)
     }
+    if self.type != .undefined {
+      try visitor.visitSingularEnumField(value: self.type, fieldNumber: 11)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -3631,6 +3689,7 @@ extension PodcastThumbnailProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     if lhs.longTitle != rhs.longTitle {return false}
     if lhs.badge != rhs.badge {return false}
     if lhs.tags != rhs.tags {return false}
+    if lhs.type != rhs.type {return false}
     if lhs.path != rhs.path {return false}
     if lhs._duration != rhs._duration {return false}
     if lhs._updatedAt != rhs._updatedAt {return false}

@@ -595,6 +595,10 @@ export interface PodcastThumbnailProto {
      */
     tags: string[]; // "breath", "stretch", "focus", ...
     /**
+     * @generated from protobuf field: PodcastTypeProto type = 11;
+     */
+    type: PodcastTypeProto;
+    /**
      * @generated from protobuf field: string path = 6;
      */
     path: string;
@@ -1229,6 +1233,27 @@ export enum PodcastStatusProto {
      * @generated from protobuf enum value: PODCAST_STATUS_PROTO_FAILED = 3;
      */
     FAILED = 3
+}
+/**
+ * @generated from protobuf enum PodcastTypeProto
+ */
+export enum PodcastTypeProto {
+    /**
+     * @generated from protobuf enum value: PODCAST_TYPE_PROTO_UNDEFINED = 0;
+     */
+    UNDEFINED = 0,
+    /**
+     * @generated from protobuf enum value: PODCAST_TYPE_PROTO_EXPLAINER = 1;
+     */
+    EXPLAINER = 1,
+    /**
+     * @generated from protobuf enum value: PODCAST_TYPE_PROTO_EXERCISE = 2;
+     */
+    EXERCISE = 2,
+    /**
+     * @generated from protobuf enum value: PODCAST_TYPE_PROTO_MEDITATION = 3;
+     */
+    MEDITATION = 3
 }
 /**
  * @generated from protobuf enum PodcastVisualTransitionProto
@@ -3069,6 +3094,7 @@ class PodcastThumbnailProto$Type extends MessageType<PodcastThumbnailProto> {
             { no: 9, name: "long_title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "badge", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 10, name: "tags", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
+            { no: 11, name: "type", kind: "enum", T: () => ["PodcastTypeProto", PodcastTypeProto, "PODCAST_TYPE_PROTO_"] },
             { no: 6, name: "path", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 7, name: "duration", kind: "message", T: () => Duration },
             { no: 8, name: "updated_at", kind: "message", T: () => Timestamp }
@@ -3083,6 +3109,7 @@ class PodcastThumbnailProto$Type extends MessageType<PodcastThumbnailProto> {
         message.longTitle = "";
         message.badge = "";
         message.tags = [];
+        message.type = 0;
         message.path = "";
         if (value !== undefined)
             reflectionMergePartial<PodcastThumbnailProto>(this, message, value);
@@ -3113,6 +3140,9 @@ class PodcastThumbnailProto$Type extends MessageType<PodcastThumbnailProto> {
                     break;
                 case /* repeated string tags */ 10:
                     message.tags.push(reader.string());
+                    break;
+                case /* PodcastTypeProto type */ 11:
+                    message.type = reader.int32();
                     break;
                 case /* string path */ 6:
                     message.path = reader.string();
@@ -3156,6 +3186,9 @@ class PodcastThumbnailProto$Type extends MessageType<PodcastThumbnailProto> {
         /* repeated string tags = 10; */
         for (let i = 0; i < message.tags.length; i++)
             writer.tag(10, WireType.LengthDelimited).string(message.tags[i]);
+        /* PodcastTypeProto type = 11; */
+        if (message.type !== 0)
+            writer.tag(11, WireType.Varint).int32(message.type);
         /* string path = 6; */
         if (message.path !== "")
             writer.tag(6, WireType.LengthDelimited).string(message.path);
