@@ -28,7 +28,8 @@ message PodcastStreamApiRequestProto {
     GeneratePodcastRequestProto generate = 11;
     GetPodcastRequestProto podcast = 12;
     GetPodcastStoryRequestProto story = 13;
-    GetPodcastSuggestionPointsProto suggestion_points = 14;
+    GetPodcastSuggestionPointsRequestProto suggestion_points = 14;
+    GetPodcastFollowupPointsRequestProto followup_points = 17;
     GetPodcastHomeRequestProto home = 15;
     DeleteAccountRequestProto delete_account = 16;
   }
@@ -41,6 +42,7 @@ message PodcastStreamApiResponseHeaderProto {
     GetPodcastResponseHeaderProto podcast_header = 12;
     GetPodcastStoryResponseHeaderProto story_header = 13;
     GetPodcastSuggestionPointsResponseHeaderProto suggestion_points_header = 14;
+    GetPodcastFollowupPointsResponseHeaderProto followup_points_header = 17;
     GetPodcastHomeResponseHeaderProto home_header = 15;
     DeleteAccountResponseHeaderProto delete_account_header = 16;
   }
@@ -54,6 +56,7 @@ message PodcastStreamApiResponseDeltaProto {
     GetPodcastResponseDeltaProto podcast_delta = 12;
     GetPodcastStoryResponseDeltaProto story_delta = 13;
     GetPodcastSuggestionPointsResponseDeltaProto suggestion_points_delta = 14;
+    GetPodcastFollowupPointsResponseDeltaProto followup_points_deplta = 17;
     GetPodcastHomeResponseDeltaProto home_delta = 15;
     DeleteAccountResponseDeltaProto delete_account_delta = 16;
   }
@@ -124,13 +127,26 @@ message GetPodcastStoryResponseDeltaProto {
   }
 }
 
-message GetPodcastSuggestionPointsProto {
+message GetPodcastSuggestionPointsRequestProto {
   string podcast_id = 1;
 }
 
 message GetPodcastSuggestionPointsResponseHeaderProto {}
 
 message GetPodcastSuggestionPointsResponseDeltaProto {
+  oneof type {
+    PodcastPointProto point = 1;
+  }
+}
+
+message GetPodcastFollowupPointsRequestProto {
+  string podcast_id = 1;
+  string followup_id = 2;
+}
+
+message GetPodcastFollowupPointsResponseHeaderProto {}
+
+message GetPodcastFollowupPointsResponseDeltaProto {
   oneof type {
     PodcastPointProto point = 1;
   }

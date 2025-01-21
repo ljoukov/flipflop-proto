@@ -348,12 +348,20 @@ struct PodcastStreamApiRequestProto: Sendable {
     set {request = .story(newValue)}
   }
 
-  var suggestionPoints: GetPodcastSuggestionPointsProto {
+  var suggestionPoints: GetPodcastSuggestionPointsRequestProto {
     get {
       if case .suggestionPoints(let v)? = request {return v}
-      return GetPodcastSuggestionPointsProto()
+      return GetPodcastSuggestionPointsRequestProto()
     }
     set {request = .suggestionPoints(newValue)}
+  }
+
+  var followupPoints: GetPodcastFollowupPointsRequestProto {
+    get {
+      if case .followupPoints(let v)? = request {return v}
+      return GetPodcastFollowupPointsRequestProto()
+    }
+    set {request = .followupPoints(newValue)}
   }
 
   var home: GetPodcastHomeRequestProto {
@@ -379,7 +387,8 @@ struct PodcastStreamApiRequestProto: Sendable {
     case generate(GeneratePodcastRequestProto)
     case podcast(GetPodcastRequestProto)
     case story(GetPodcastStoryRequestProto)
-    case suggestionPoints(GetPodcastSuggestionPointsProto)
+    case suggestionPoints(GetPodcastSuggestionPointsRequestProto)
+    case followupPoints(GetPodcastFollowupPointsRequestProto)
     case home(GetPodcastHomeRequestProto)
     case deleteAccount(DeleteAccountRequestProto)
 
@@ -437,6 +446,14 @@ struct PodcastStreamApiResponseHeaderProto: Sendable {
     set {header = .suggestionPointsHeader(newValue)}
   }
 
+  var followupPointsHeader: GetPodcastFollowupPointsResponseHeaderProto {
+    get {
+      if case .followupPointsHeader(let v)? = header {return v}
+      return GetPodcastFollowupPointsResponseHeaderProto()
+    }
+    set {header = .followupPointsHeader(newValue)}
+  }
+
   var homeHeader: GetPodcastHomeResponseHeaderProto {
     get {
       if case .homeHeader(let v)? = header {return v}
@@ -463,6 +480,7 @@ struct PodcastStreamApiResponseHeaderProto: Sendable {
     case podcastHeader(GetPodcastResponseHeaderProto)
     case storyHeader(GetPodcastStoryResponseHeaderProto)
     case suggestionPointsHeader(GetPodcastSuggestionPointsResponseHeaderProto)
+    case followupPointsHeader(GetPodcastFollowupPointsResponseHeaderProto)
     case homeHeader(GetPodcastHomeResponseHeaderProto)
     case deleteAccountHeader(DeleteAccountResponseHeaderProto)
 
@@ -518,6 +536,14 @@ struct PodcastStreamApiResponseDeltaProto: Sendable {
     set {responseDelta = .suggestionPointsDelta(newValue)}
   }
 
+  var followupPointsDeplta: GetPodcastFollowupPointsResponseDeltaProto {
+    get {
+      if case .followupPointsDeplta(let v)? = responseDelta {return v}
+      return GetPodcastFollowupPointsResponseDeltaProto()
+    }
+    set {responseDelta = .followupPointsDeplta(newValue)}
+  }
+
   var homeDelta: GetPodcastHomeResponseDeltaProto {
     get {
       if case .homeDelta(let v)? = responseDelta {return v}
@@ -542,6 +568,7 @@ struct PodcastStreamApiResponseDeltaProto: Sendable {
     case podcastDelta(GetPodcastResponseDeltaProto)
     case storyDelta(GetPodcastStoryResponseDeltaProto)
     case suggestionPointsDelta(GetPodcastSuggestionPointsResponseDeltaProto)
+    case followupPointsDeplta(GetPodcastFollowupPointsResponseDeltaProto)
     case homeDelta(GetPodcastHomeResponseDeltaProto)
     case deleteAccountDelta(DeleteAccountResponseDeltaProto)
 
@@ -825,7 +852,7 @@ struct GetPodcastStoryResponseDeltaProto: Sendable {
   init() {}
 }
 
-struct GetPodcastSuggestionPointsProto: Sendable {
+struct GetPodcastSuggestionPointsRequestProto: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -853,6 +880,55 @@ struct GetPodcastSuggestionPointsResponseDeltaProto: Sendable {
   // methods supported on all messages.
 
   var type: GetPodcastSuggestionPointsResponseDeltaProto.OneOf_Type? = nil
+
+  var point: PodcastPointProto {
+    get {
+      if case .point(let v)? = type {return v}
+      return PodcastPointProto()
+    }
+    set {type = .point(newValue)}
+  }
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  enum OneOf_Type: Equatable, Sendable {
+    case point(PodcastPointProto)
+
+  }
+
+  init() {}
+}
+
+struct GetPodcastFollowupPointsRequestProto: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var podcastID: String = String()
+
+  var followupID: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct GetPodcastFollowupPointsResponseHeaderProto: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct GetPodcastFollowupPointsResponseDeltaProto: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var type: GetPodcastFollowupPointsResponseDeltaProto.OneOf_Type? = nil
 
   var point: PodcastPointProto {
     get {
@@ -2028,6 +2104,7 @@ extension PodcastStreamApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Me
     12: .same(proto: "podcast"),
     13: .same(proto: "story"),
     14: .standard(proto: "suggestion_points"),
+    17: .standard(proto: "followup_points"),
     15: .same(proto: "home"),
     16: .standard(proto: "delete_account"),
   ]
@@ -2092,7 +2169,7 @@ extension PodcastStreamApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Me
         }
       }()
       case 14: try {
-        var v: GetPodcastSuggestionPointsProto?
+        var v: GetPodcastSuggestionPointsRequestProto?
         var hadOneofValue = false
         if let current = self.request {
           hadOneofValue = true
@@ -2128,6 +2205,19 @@ extension PodcastStreamApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Me
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
           self.request = .deleteAccount(v)
+        }
+      }()
+      case 17: try {
+        var v: GetPodcastFollowupPointsRequestProto?
+        var hadOneofValue = false
+        if let current = self.request {
+          hadOneofValue = true
+          if case .followupPoints(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.request = .followupPoints(v)
         }
       }()
       default: break
@@ -2172,6 +2262,10 @@ extension PodcastStreamApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Me
       guard case .deleteAccount(let v)? = self.request else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 16)
     }()
+    case .followupPoints?: try {
+      guard case .followupPoints(let v)? = self.request else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 17)
+    }()
     case nil: break
     }
     try unknownFields.traverse(visitor: &visitor)
@@ -2193,6 +2287,7 @@ extension PodcastStreamApiResponseHeaderProto: SwiftProtobuf.Message, SwiftProto
     12: .standard(proto: "podcast_header"),
     13: .standard(proto: "story_header"),
     14: .standard(proto: "suggestion_points_header"),
+    17: .standard(proto: "followup_points_header"),
     15: .standard(proto: "home_header"),
     16: .standard(proto: "delete_account_header"),
     100: .same(proto: "latencies"),
@@ -2295,6 +2390,19 @@ extension PodcastStreamApiResponseHeaderProto: SwiftProtobuf.Message, SwiftProto
           self.header = .deleteAccountHeader(v)
         }
       }()
+      case 17: try {
+        var v: GetPodcastFollowupPointsResponseHeaderProto?
+        var hadOneofValue = false
+        if let current = self.header {
+          hadOneofValue = true
+          if case .followupPointsHeader(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.header = .followupPointsHeader(v)
+        }
+      }()
       case 100: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.Google_Protobuf_Duration>.self, value: &self.latencies) }()
       default: break
       }
@@ -2335,6 +2443,10 @@ extension PodcastStreamApiResponseHeaderProto: SwiftProtobuf.Message, SwiftProto
       guard case .deleteAccountHeader(let v)? = self.header else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 16)
     }()
+    case .followupPointsHeader?: try {
+      guard case .followupPointsHeader(let v)? = self.header else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 17)
+    }()
     case nil: break
     }
     if !self.latencies.isEmpty {
@@ -2359,6 +2471,7 @@ extension PodcastStreamApiResponseDeltaProto: SwiftProtobuf.Message, SwiftProtob
     12: .standard(proto: "podcast_delta"),
     13: .standard(proto: "story_delta"),
     14: .standard(proto: "suggestion_points_delta"),
+    17: .standard(proto: "followup_points_deplta"),
     15: .standard(proto: "home_delta"),
     16: .standard(proto: "delete_account_delta"),
   ]
@@ -2460,6 +2573,19 @@ extension PodcastStreamApiResponseDeltaProto: SwiftProtobuf.Message, SwiftProtob
           self.responseDelta = .deleteAccountDelta(v)
         }
       }()
+      case 17: try {
+        var v: GetPodcastFollowupPointsResponseDeltaProto?
+        var hadOneofValue = false
+        if let current = self.responseDelta {
+          hadOneofValue = true
+          if case .followupPointsDeplta(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.responseDelta = .followupPointsDeplta(v)
+        }
+      }()
       default: break
       }
     }
@@ -2498,6 +2624,10 @@ extension PodcastStreamApiResponseDeltaProto: SwiftProtobuf.Message, SwiftProtob
     case .deleteAccountDelta?: try {
       guard case .deleteAccountDelta(let v)? = self.responseDelta else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 16)
+    }()
+    case .followupPointsDeplta?: try {
+      guard case .followupPointsDeplta(let v)? = self.responseDelta else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 17)
     }()
     case nil: break
     }
@@ -3090,8 +3220,8 @@ extension GetPodcastStoryResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobu
   }
 }
 
-extension GetPodcastSuggestionPointsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "GetPodcastSuggestionPointsProto"
+extension GetPodcastSuggestionPointsRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "GetPodcastSuggestionPointsRequestProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "podcast_id"),
   ]
@@ -3115,7 +3245,7 @@ extension GetPodcastSuggestionPointsProto: SwiftProtobuf.Message, SwiftProtobuf.
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: GetPodcastSuggestionPointsProto, rhs: GetPodcastSuggestionPointsProto) -> Bool {
+  static func ==(lhs: GetPodcastSuggestionPointsRequestProto, rhs: GetPodcastSuggestionPointsRequestProto) -> Bool {
     if lhs.podcastID != rhs.podcastID {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
@@ -3183,6 +3313,111 @@ extension GetPodcastSuggestionPointsResponseDeltaProto: SwiftProtobuf.Message, S
   }
 
   static func ==(lhs: GetPodcastSuggestionPointsResponseDeltaProto, rhs: GetPodcastSuggestionPointsResponseDeltaProto) -> Bool {
+    if lhs.type != rhs.type {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension GetPodcastFollowupPointsRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "GetPodcastFollowupPointsRequestProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "podcast_id"),
+    2: .standard(proto: "followup_id"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.podcastID) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.followupID) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.podcastID.isEmpty {
+      try visitor.visitSingularStringField(value: self.podcastID, fieldNumber: 1)
+    }
+    if !self.followupID.isEmpty {
+      try visitor.visitSingularStringField(value: self.followupID, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: GetPodcastFollowupPointsRequestProto, rhs: GetPodcastFollowupPointsRequestProto) -> Bool {
+    if lhs.podcastID != rhs.podcastID {return false}
+    if lhs.followupID != rhs.followupID {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension GetPodcastFollowupPointsResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "GetPodcastFollowupPointsResponseHeaderProto"
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    // Load everything into unknown fields
+    while try decoder.nextFieldNumber() != nil {}
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: GetPodcastFollowupPointsResponseHeaderProto, rhs: GetPodcastFollowupPointsResponseHeaderProto) -> Bool {
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension GetPodcastFollowupPointsResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "GetPodcastFollowupPointsResponseDeltaProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "point"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try {
+        var v: PodcastPointProto?
+        var hadOneofValue = false
+        if let current = self.type {
+          hadOneofValue = true
+          if case .point(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.type = .point(v)
+        }
+      }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if case .point(let v)? = self.type {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: GetPodcastFollowupPointsResponseDeltaProto, rhs: GetPodcastFollowupPointsResponseDeltaProto) -> Bool {
     if lhs.type != rhs.type {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
