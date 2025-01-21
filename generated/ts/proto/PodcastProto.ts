@@ -214,11 +214,11 @@ export interface PodcastStreamApiResponseDeltaProto {
          */
         suggestionPointsDelta: GetPodcastSuggestionPointsResponseDeltaProto;
     } | {
-        oneofKind: "followupPointsDeplta";
+        oneofKind: "followupPointsDelta";
         /**
-         * @generated from protobuf field: GetPodcastFollowupPointsResponseDeltaProto followup_points_deplta = 17;
+         * @generated from protobuf field: GetPodcastFollowupPointsResponseDeltaProto followup_points_delta = 17;
          */
-        followupPointsDeplta: GetPodcastFollowupPointsResponseDeltaProto;
+        followupPointsDelta: GetPodcastFollowupPointsResponseDeltaProto;
     } | {
         oneofKind: "homeDelta";
         /**
@@ -1781,7 +1781,7 @@ class PodcastStreamApiResponseDeltaProto$Type extends MessageType<PodcastStreamA
             { no: 12, name: "podcast_delta", kind: "message", oneof: "responseDelta", T: () => GetPodcastResponseDeltaProto },
             { no: 13, name: "story_delta", kind: "message", oneof: "responseDelta", T: () => GetPodcastStoryResponseDeltaProto },
             { no: 14, name: "suggestion_points_delta", kind: "message", oneof: "responseDelta", T: () => GetPodcastSuggestionPointsResponseDeltaProto },
-            { no: 17, name: "followup_points_deplta", kind: "message", oneof: "responseDelta", T: () => GetPodcastFollowupPointsResponseDeltaProto },
+            { no: 17, name: "followup_points_delta", kind: "message", oneof: "responseDelta", T: () => GetPodcastFollowupPointsResponseDeltaProto },
             { no: 15, name: "home_delta", kind: "message", oneof: "responseDelta", T: () => GetPodcastHomeResponseDeltaProto },
             { no: 16, name: "delete_account_delta", kind: "message", oneof: "responseDelta", T: () => DeleteAccountResponseDeltaProto }
         ]);
@@ -1828,10 +1828,10 @@ class PodcastStreamApiResponseDeltaProto$Type extends MessageType<PodcastStreamA
                         suggestionPointsDelta: GetPodcastSuggestionPointsResponseDeltaProto.internalBinaryRead(reader, reader.uint32(), options, (message.responseDelta as any).suggestionPointsDelta)
                     };
                     break;
-                case /* GetPodcastFollowupPointsResponseDeltaProto followup_points_deplta */ 17:
+                case /* GetPodcastFollowupPointsResponseDeltaProto followup_points_delta */ 17:
                     message.responseDelta = {
-                        oneofKind: "followupPointsDeplta",
-                        followupPointsDeplta: GetPodcastFollowupPointsResponseDeltaProto.internalBinaryRead(reader, reader.uint32(), options, (message.responseDelta as any).followupPointsDeplta)
+                        oneofKind: "followupPointsDelta",
+                        followupPointsDelta: GetPodcastFollowupPointsResponseDeltaProto.internalBinaryRead(reader, reader.uint32(), options, (message.responseDelta as any).followupPointsDelta)
                     };
                     break;
                 case /* GetPodcastHomeResponseDeltaProto home_delta */ 15:
@@ -1873,9 +1873,9 @@ class PodcastStreamApiResponseDeltaProto$Type extends MessageType<PodcastStreamA
         /* GetPodcastSuggestionPointsResponseDeltaProto suggestion_points_delta = 14; */
         if (message.responseDelta.oneofKind === "suggestionPointsDelta")
             GetPodcastSuggestionPointsResponseDeltaProto.internalBinaryWrite(message.responseDelta.suggestionPointsDelta, writer.tag(14, WireType.LengthDelimited).fork(), options).join();
-        /* GetPodcastFollowupPointsResponseDeltaProto followup_points_deplta = 17; */
-        if (message.responseDelta.oneofKind === "followupPointsDeplta")
-            GetPodcastFollowupPointsResponseDeltaProto.internalBinaryWrite(message.responseDelta.followupPointsDeplta, writer.tag(17, WireType.LengthDelimited).fork(), options).join();
+        /* GetPodcastFollowupPointsResponseDeltaProto followup_points_delta = 17; */
+        if (message.responseDelta.oneofKind === "followupPointsDelta")
+            GetPodcastFollowupPointsResponseDeltaProto.internalBinaryWrite(message.responseDelta.followupPointsDelta, writer.tag(17, WireType.LengthDelimited).fork(), options).join();
         /* GetPodcastHomeResponseDeltaProto home_delta = 15; */
         if (message.responseDelta.oneofKind === "homeDelta")
             GetPodcastHomeResponseDeltaProto.internalBinaryWrite(message.responseDelta.homeDelta, writer.tag(15, WireType.LengthDelimited).fork(), options).join();

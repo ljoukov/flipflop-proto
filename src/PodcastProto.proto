@@ -56,7 +56,7 @@ message PodcastStreamApiResponseDeltaProto {
     GetPodcastResponseDeltaProto podcast_delta = 12;
     GetPodcastStoryResponseDeltaProto story_delta = 13;
     GetPodcastSuggestionPointsResponseDeltaProto suggestion_points_delta = 14;
-    GetPodcastFollowupPointsResponseDeltaProto followup_points_deplta = 17;
+    GetPodcastFollowupPointsResponseDeltaProto followup_points_delta = 17;
     GetPodcastHomeResponseDeltaProto home_delta = 15;
     DeleteAccountResponseDeltaProto delete_account_delta = 16;
   }

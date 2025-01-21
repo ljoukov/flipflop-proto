@@ -536,12 +536,12 @@ struct PodcastStreamApiResponseDeltaProto: Sendable {
     set {responseDelta = .suggestionPointsDelta(newValue)}
   }
 
-  var followupPointsDeplta: GetPodcastFollowupPointsResponseDeltaProto {
+  var followupPointsDelta: GetPodcastFollowupPointsResponseDeltaProto {
     get {
-      if case .followupPointsDeplta(let v)? = responseDelta {return v}
+      if case .followupPointsDelta(let v)? = responseDelta {return v}
       return GetPodcastFollowupPointsResponseDeltaProto()
     }
-    set {responseDelta = .followupPointsDeplta(newValue)}
+    set {responseDelta = .followupPointsDelta(newValue)}
   }
 
   var homeDelta: GetPodcastHomeResponseDeltaProto {
@@ -568,7 +568,7 @@ struct PodcastStreamApiResponseDeltaProto: Sendable {
     case podcastDelta(GetPodcastResponseDeltaProto)
     case storyDelta(GetPodcastStoryResponseDeltaProto)
     case suggestionPointsDelta(GetPodcastSuggestionPointsResponseDeltaProto)
-    case followupPointsDeplta(GetPodcastFollowupPointsResponseDeltaProto)
+    case followupPointsDelta(GetPodcastFollowupPointsResponseDeltaProto)
     case homeDelta(GetPodcastHomeResponseDeltaProto)
     case deleteAccountDelta(DeleteAccountResponseDeltaProto)
 
@@ -2471,7 +2471,7 @@ extension PodcastStreamApiResponseDeltaProto: SwiftProtobuf.Message, SwiftProtob
     12: .standard(proto: "podcast_delta"),
     13: .standard(proto: "story_delta"),
     14: .standard(proto: "suggestion_points_delta"),
-    17: .standard(proto: "followup_points_deplta"),
+    17: .standard(proto: "followup_points_delta"),
     15: .standard(proto: "home_delta"),
     16: .standard(proto: "delete_account_delta"),
   ]
@@ -2578,12 +2578,12 @@ extension PodcastStreamApiResponseDeltaProto: SwiftProtobuf.Message, SwiftProtob
         var hadOneofValue = false
         if let current = self.responseDelta {
           hadOneofValue = true
-          if case .followupPointsDeplta(let m) = current {v = m}
+          if case .followupPointsDelta(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.responseDelta = .followupPointsDeplta(v)
+          self.responseDelta = .followupPointsDelta(v)
         }
       }()
       default: break
@@ -2625,8 +2625,8 @@ extension PodcastStreamApiResponseDeltaProto: SwiftProtobuf.Message, SwiftProtob
       guard case .deleteAccountDelta(let v)? = self.responseDelta else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 16)
     }()
-    case .followupPointsDeplta?: try {
-      guard case .followupPointsDeplta(let v)? = self.responseDelta else { preconditionFailure() }
+    case .followupPointsDelta?: try {
+      guard case .followupPointsDelta(let v)? = self.responseDelta else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 17)
     }()
     case nil: break
