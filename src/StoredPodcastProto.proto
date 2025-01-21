@@ -102,9 +102,11 @@ message StoredPodcastSuggestionFromRoutineStepInputProto {
 
 message StoredPodcastSuggestionFromFollowupInputProto {
   string source_podcast_id = 1;
-  string followup_reasoning = 2;
-  string followup_emoji = 3;
-  string followup_outline = 4;
+  string source_podcast_title = 2;
+  string source_podcast_plan = 3;
+  string followup_reasoning = 4;
+  string followup_emoji = 5;
+  string followup_outline = 6;
 }
 
 message StoredPodcastSuggestionUserInputProto {

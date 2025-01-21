@@ -232,15 +232,23 @@ export interface StoredPodcastSuggestionFromFollowupInputProto {
      */
     sourcePodcastId: string;
     /**
-     * @generated from protobuf field: string followup_reasoning = 2;
+     * @generated from protobuf field: string source_podcast_title = 2;
+     */
+    sourcePodcastTitle: string;
+    /**
+     * @generated from protobuf field: string source_podcast_plan = 3;
+     */
+    sourcePodcastPlan: string;
+    /**
+     * @generated from protobuf field: string followup_reasoning = 4;
      */
     followupReasoning: string;
     /**
-     * @generated from protobuf field: string followup_emoji = 3;
+     * @generated from protobuf field: string followup_emoji = 5;
      */
     followupEmoji: string;
     /**
-     * @generated from protobuf field: string followup_outline = 4;
+     * @generated from protobuf field: string followup_outline = 6;
      */
     followupOutline: string;
 }
@@ -1889,14 +1897,18 @@ class StoredPodcastSuggestionFromFollowupInputProto$Type extends MessageType<Sto
     constructor() {
         super("StoredPodcastSuggestionFromFollowupInputProto", [
             { no: 1, name: "source_podcast_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "followup_reasoning", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "followup_emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "followup_outline", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "source_podcast_title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "source_podcast_plan", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "followup_reasoning", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "followup_emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "followup_outline", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastSuggestionFromFollowupInputProto>): StoredPodcastSuggestionFromFollowupInputProto {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.sourcePodcastId = "";
+        message.sourcePodcastTitle = "";
+        message.sourcePodcastPlan = "";
         message.followupReasoning = "";
         message.followupEmoji = "";
         message.followupOutline = "";
@@ -1912,13 +1924,19 @@ class StoredPodcastSuggestionFromFollowupInputProto$Type extends MessageType<Sto
                 case /* string source_podcast_id */ 1:
                     message.sourcePodcastId = reader.string();
                     break;
-                case /* string followup_reasoning */ 2:
+                case /* string source_podcast_title */ 2:
+                    message.sourcePodcastTitle = reader.string();
+                    break;
+                case /* string source_podcast_plan */ 3:
+                    message.sourcePodcastPlan = reader.string();
+                    break;
+                case /* string followup_reasoning */ 4:
                     message.followupReasoning = reader.string();
                     break;
-                case /* string followup_emoji */ 3:
+                case /* string followup_emoji */ 5:
                     message.followupEmoji = reader.string();
                     break;
-                case /* string followup_outline */ 4:
+                case /* string followup_outline */ 6:
                     message.followupOutline = reader.string();
                     break;
                 default:
@@ -1936,15 +1954,21 @@ class StoredPodcastSuggestionFromFollowupInputProto$Type extends MessageType<Sto
         /* string source_podcast_id = 1; */
         if (message.sourcePodcastId !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.sourcePodcastId);
-        /* string followup_reasoning = 2; */
+        /* string source_podcast_title = 2; */
+        if (message.sourcePodcastTitle !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.sourcePodcastTitle);
+        /* string source_podcast_plan = 3; */
+        if (message.sourcePodcastPlan !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.sourcePodcastPlan);
+        /* string followup_reasoning = 4; */
         if (message.followupReasoning !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.followupReasoning);
-        /* string followup_emoji = 3; */
+            writer.tag(4, WireType.LengthDelimited).string(message.followupReasoning);
+        /* string followup_emoji = 5; */
         if (message.followupEmoji !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.followupEmoji);
-        /* string followup_outline = 4; */
+            writer.tag(5, WireType.LengthDelimited).string(message.followupEmoji);
+        /* string followup_outline = 6; */
         if (message.followupOutline !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.followupOutline);
+            writer.tag(6, WireType.LengthDelimited).string(message.followupOutline);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

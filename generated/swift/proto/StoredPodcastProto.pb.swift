@@ -730,6 +730,10 @@ struct StoredPodcastSuggestionFromFollowupInputProto: Sendable {
 
   var sourcePodcastID: String = String()
 
+  var sourcePodcastTitle: String = String()
+
+  var sourcePodcastPlan: String = String()
+
   var followupReasoning: String = String()
 
   var followupEmoji: String = String()
@@ -2423,9 +2427,11 @@ extension StoredPodcastSuggestionFromFollowupInputProto: SwiftProtobuf.Message, 
   static let protoMessageName: String = "StoredPodcastSuggestionFromFollowupInputProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "source_podcast_id"),
-    2: .standard(proto: "followup_reasoning"),
-    3: .standard(proto: "followup_emoji"),
-    4: .standard(proto: "followup_outline"),
+    2: .standard(proto: "source_podcast_title"),
+    3: .standard(proto: "source_podcast_plan"),
+    4: .standard(proto: "followup_reasoning"),
+    5: .standard(proto: "followup_emoji"),
+    6: .standard(proto: "followup_outline"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2435,9 +2441,11 @@ extension StoredPodcastSuggestionFromFollowupInputProto: SwiftProtobuf.Message, 
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.sourcePodcastID) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.followupReasoning) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.followupEmoji) }()
-      case 4: try { try decoder.decodeSingularStringField(value: &self.followupOutline) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.sourcePodcastTitle) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.sourcePodcastPlan) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.followupReasoning) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.followupEmoji) }()
+      case 6: try { try decoder.decodeSingularStringField(value: &self.followupOutline) }()
       default: break
       }
     }
@@ -2447,20 +2455,28 @@ extension StoredPodcastSuggestionFromFollowupInputProto: SwiftProtobuf.Message, 
     if !self.sourcePodcastID.isEmpty {
       try visitor.visitSingularStringField(value: self.sourcePodcastID, fieldNumber: 1)
     }
+    if !self.sourcePodcastTitle.isEmpty {
+      try visitor.visitSingularStringField(value: self.sourcePodcastTitle, fieldNumber: 2)
+    }
+    if !self.sourcePodcastPlan.isEmpty {
+      try visitor.visitSingularStringField(value: self.sourcePodcastPlan, fieldNumber: 3)
+    }
     if !self.followupReasoning.isEmpty {
-      try visitor.visitSingularStringField(value: self.followupReasoning, fieldNumber: 2)
+      try visitor.visitSingularStringField(value: self.followupReasoning, fieldNumber: 4)
     }
     if !self.followupEmoji.isEmpty {
-      try visitor.visitSingularStringField(value: self.followupEmoji, fieldNumber: 3)
+      try visitor.visitSingularStringField(value: self.followupEmoji, fieldNumber: 5)
     }
     if !self.followupOutline.isEmpty {
-      try visitor.visitSingularStringField(value: self.followupOutline, fieldNumber: 4)
+      try visitor.visitSingularStringField(value: self.followupOutline, fieldNumber: 6)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: StoredPodcastSuggestionFromFollowupInputProto, rhs: StoredPodcastSuggestionFromFollowupInputProto) -> Bool {
     if lhs.sourcePodcastID != rhs.sourcePodcastID {return false}
+    if lhs.sourcePodcastTitle != rhs.sourcePodcastTitle {return false}
+    if lhs.sourcePodcastPlan != rhs.sourcePodcastPlan {return false}
     if lhs.followupReasoning != rhs.followupReasoning {return false}
     if lhs.followupEmoji != rhs.followupEmoji {return false}
     if lhs.followupOutline != rhs.followupOutline {return false}
