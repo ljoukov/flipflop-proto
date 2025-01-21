@@ -168,6 +168,12 @@ export interface StoredPodcastSuggestionInputProto {
          */
         routineStep: StoredPodcastSuggestionFromRoutineStepInputProto;
     } | {
+        oneofKind: "followup";
+        /**
+         * @generated from protobuf field: StoredPodcastSuggestionFromFollowupInputProto followup = 12;
+         */
+        followup: StoredPodcastSuggestionFromFollowupInputProto;
+    } | {
         oneofKind: undefined;
     };
     /**
@@ -216,6 +222,27 @@ export interface StoredPodcastSuggestionFromRoutineStepInputProto {
      * @generated from protobuf field: repeated string step_tags = 4;
      */
     stepTags: string[];
+}
+/**
+ * @generated from protobuf message StoredPodcastSuggestionFromFollowupInputProto
+ */
+export interface StoredPodcastSuggestionFromFollowupInputProto {
+    /**
+     * @generated from protobuf field: string source_podcast_id = 1;
+     */
+    sourcePodcastId: string;
+    /**
+     * @generated from protobuf field: string followup_reasoning = 2;
+     */
+    followupReasoning: string;
+    /**
+     * @generated from protobuf field: string followup_emoji = 3;
+     */
+    followupEmoji: string;
+    /**
+     * @generated from protobuf field: string followup_outline = 4;
+     */
+    followupOutline: string;
 }
 /**
  * @generated from protobuf message StoredPodcastSuggestionUserInputProto
@@ -1624,6 +1651,7 @@ class StoredPodcastSuggestionInputProto$Type extends MessageType<StoredPodcastSu
             { no: 3, name: "thumbnail_prompt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 10, name: "suggestion_section", kind: "message", oneof: "type", T: () => StoredPodcastSuggestionFromSectionInputProto },
             { no: 11, name: "routine_step", kind: "message", oneof: "type", T: () => StoredPodcastSuggestionFromRoutineStepInputProto },
+            { no: 12, name: "followup", kind: "message", oneof: "type", T: () => StoredPodcastSuggestionFromFollowupInputProto },
             { no: 20, name: "suggestion_points", kind: "message", T: () => StoredPodcastPointsProto },
             { no: 21, name: "user_input", kind: "message", T: () => StoredPodcastSuggestionUserInputProto }
         ]);
@@ -1664,6 +1692,12 @@ class StoredPodcastSuggestionInputProto$Type extends MessageType<StoredPodcastSu
                         routineStep: StoredPodcastSuggestionFromRoutineStepInputProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).routineStep)
                     };
                     break;
+                case /* StoredPodcastSuggestionFromFollowupInputProto followup */ 12:
+                    message.type = {
+                        oneofKind: "followup",
+                        followup: StoredPodcastSuggestionFromFollowupInputProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).followup)
+                    };
+                    break;
                 case /* StoredPodcastPointsProto suggestion_points */ 20:
                     message.suggestionPoints = StoredPodcastPointsProto.internalBinaryRead(reader, reader.uint32(), options, message.suggestionPoints);
                     break;
@@ -1697,6 +1731,9 @@ class StoredPodcastSuggestionInputProto$Type extends MessageType<StoredPodcastSu
         /* StoredPodcastSuggestionFromRoutineStepInputProto routine_step = 11; */
         if (message.type.oneofKind === "routineStep")
             StoredPodcastSuggestionFromRoutineStepInputProto.internalBinaryWrite(message.type.routineStep, writer.tag(11, WireType.LengthDelimited).fork(), options).join();
+        /* StoredPodcastSuggestionFromFollowupInputProto followup = 12; */
+        if (message.type.oneofKind === "followup")
+            StoredPodcastSuggestionFromFollowupInputProto.internalBinaryWrite(message.type.followup, writer.tag(12, WireType.LengthDelimited).fork(), options).join();
         /* StoredPodcastPointsProto suggestion_points = 20; */
         if (message.suggestionPoints)
             StoredPodcastPointsProto.internalBinaryWrite(message.suggestionPoints, writer.tag(20, WireType.LengthDelimited).fork(), options).join();
@@ -1847,6 +1884,77 @@ class StoredPodcastSuggestionFromRoutineStepInputProto$Type extends MessageType<
  * @generated MessageType for protobuf message StoredPodcastSuggestionFromRoutineStepInputProto
  */
 export const StoredPodcastSuggestionFromRoutineStepInputProto = new StoredPodcastSuggestionFromRoutineStepInputProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class StoredPodcastSuggestionFromFollowupInputProto$Type extends MessageType<StoredPodcastSuggestionFromFollowupInputProto> {
+    constructor() {
+        super("StoredPodcastSuggestionFromFollowupInputProto", [
+            { no: 1, name: "source_podcast_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "followup_reasoning", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "followup_emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "followup_outline", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<StoredPodcastSuggestionFromFollowupInputProto>): StoredPodcastSuggestionFromFollowupInputProto {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.sourcePodcastId = "";
+        message.followupReasoning = "";
+        message.followupEmoji = "";
+        message.followupOutline = "";
+        if (value !== undefined)
+            reflectionMergePartial<StoredPodcastSuggestionFromFollowupInputProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredPodcastSuggestionFromFollowupInputProto): StoredPodcastSuggestionFromFollowupInputProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string source_podcast_id */ 1:
+                    message.sourcePodcastId = reader.string();
+                    break;
+                case /* string followup_reasoning */ 2:
+                    message.followupReasoning = reader.string();
+                    break;
+                case /* string followup_emoji */ 3:
+                    message.followupEmoji = reader.string();
+                    break;
+                case /* string followup_outline */ 4:
+                    message.followupOutline = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: StoredPodcastSuggestionFromFollowupInputProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string source_podcast_id = 1; */
+        if (message.sourcePodcastId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.sourcePodcastId);
+        /* string followup_reasoning = 2; */
+        if (message.followupReasoning !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.followupReasoning);
+        /* string followup_emoji = 3; */
+        if (message.followupEmoji !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.followupEmoji);
+        /* string followup_outline = 4; */
+        if (message.followupOutline !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.followupOutline);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message StoredPodcastSuggestionFromFollowupInputProto
+ */
+export const StoredPodcastSuggestionFromFollowupInputProto = new StoredPodcastSuggestionFromFollowupInputProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class StoredPodcastSuggestionUserInputProto$Type extends MessageType<StoredPodcastSuggestionUserInputProto> {
     constructor() {

@@ -80,6 +80,7 @@ message StoredPodcastSuggestionInputProto {
   oneof type {
     StoredPodcastSuggestionFromSectionInputProto suggestion_section = 10;
     StoredPodcastSuggestionFromRoutineStepInputProto routine_step = 11;
+    StoredPodcastSuggestionFromFollowupInputProto followup = 12;
   }
 
   StoredPodcastPointsProto suggestion_points = 20;
@@ -97,6 +98,13 @@ message StoredPodcastSuggestionFromRoutineStepInputProto {
   string routine_reasoning = 2;
   string step_outline = 3;
   repeated string step_tags = 4;
+}
+
+message StoredPodcastSuggestionFromFollowupInputProto {
+  string source_podcast_id = 1;
+  string followup_reasoning = 2;
+  string followup_emoji = 3;
+  string followup_outline = 4;
 }
 
 message StoredPodcastSuggestionUserInputProto {
