@@ -931,7 +931,7 @@ struct StoredPodcastFollowupProto: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var followupID: String = String()
+  var followupPodcastID: String = String()
 
   var reasoning: String = String()
 
@@ -2915,7 +2915,7 @@ extension StoredPodcastFollowupsProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
 extension StoredPodcastFollowupProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "StoredPodcastFollowupProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "followup_id"),
+    1: .standard(proto: "followup_podcast_id"),
     2: .same(proto: "reasoning"),
     3: .same(proto: "emoji"),
     4: .same(proto: "outline"),
@@ -2927,7 +2927,7 @@ extension StoredPodcastFollowupProto: SwiftProtobuf.Message, SwiftProtobuf._Mess
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.followupID) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self.followupPodcastID) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.reasoning) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.emoji) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self.outline) }()
@@ -2937,8 +2937,8 @@ extension StoredPodcastFollowupProto: SwiftProtobuf.Message, SwiftProtobuf._Mess
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.followupID.isEmpty {
-      try visitor.visitSingularStringField(value: self.followupID, fieldNumber: 1)
+    if !self.followupPodcastID.isEmpty {
+      try visitor.visitSingularStringField(value: self.followupPodcastID, fieldNumber: 1)
     }
     if !self.reasoning.isEmpty {
       try visitor.visitSingularStringField(value: self.reasoning, fieldNumber: 2)
@@ -2953,7 +2953,7 @@ extension StoredPodcastFollowupProto: SwiftProtobuf.Message, SwiftProtobuf._Mess
   }
 
   static func ==(lhs: StoredPodcastFollowupProto, rhs: StoredPodcastFollowupProto) -> Bool {
-    if lhs.followupID != rhs.followupID {return false}
+    if lhs.followupPodcastID != rhs.followupPodcastID {return false}
     if lhs.reasoning != rhs.reasoning {return false}
     if lhs.emoji != rhs.emoji {return false}
     if lhs.outline != rhs.outline {return false}

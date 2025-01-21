@@ -187,7 +187,7 @@ message StoredPodcastFollowupsProto {
 }
 
 message StoredPodcastFollowupProto {
-  string followup_id = 1;
+  string followup_podcast_id = 1;
   string reasoning = 2;
   string emoji = 3;
   string outline = 4;

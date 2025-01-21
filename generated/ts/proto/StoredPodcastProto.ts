@@ -415,9 +415,9 @@ export interface StoredPodcastFollowupsProto {
  */
 export interface StoredPodcastFollowupProto {
     /**
-     * @generated from protobuf field: string followup_id = 1;
+     * @generated from protobuf field: string followup_podcast_id = 1;
      */
-    followupId: string;
+    followupPodcastId: string;
     /**
      * @generated from protobuf field: string reasoning = 2;
      */
@@ -2612,7 +2612,7 @@ export const StoredPodcastFollowupsProto = new StoredPodcastFollowupsProto$Type(
 class StoredPodcastFollowupProto$Type extends MessageType<StoredPodcastFollowupProto> {
     constructor() {
         super("StoredPodcastFollowupProto", [
-            { no: 1, name: "followup_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 1, name: "followup_podcast_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "reasoning", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "outline", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
@@ -2620,7 +2620,7 @@ class StoredPodcastFollowupProto$Type extends MessageType<StoredPodcastFollowupP
     }
     create(value?: PartialMessage<StoredPodcastFollowupProto>): StoredPodcastFollowupProto {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.followupId = "";
+        message.followupPodcastId = "";
         message.reasoning = "";
         message.emoji = "";
         message.outline = "";
@@ -2633,8 +2633,8 @@ class StoredPodcastFollowupProto$Type extends MessageType<StoredPodcastFollowupP
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string followup_id */ 1:
-                    message.followupId = reader.string();
+                case /* string followup_podcast_id */ 1:
+                    message.followupPodcastId = reader.string();
                     break;
                 case /* string reasoning */ 2:
                     message.reasoning = reader.string();
@@ -2657,9 +2657,9 @@ class StoredPodcastFollowupProto$Type extends MessageType<StoredPodcastFollowupP
         return message;
     }
     internalBinaryWrite(message: StoredPodcastFollowupProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string followup_id = 1; */
-        if (message.followupId !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.followupId);
+        /* string followup_podcast_id = 1; */
+        if (message.followupPodcastId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.followupPodcastId);
         /* string reasoning = 2; */
         if (message.reasoning !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.reasoning);
