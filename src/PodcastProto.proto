@@ -140,7 +140,7 @@ message GetPodcastSuggestionPointsResponseDeltaProto {
 }
 
 message GetPodcastFollowupPointsRequestProto {
-  string podcast_id = 1;
+  string source_podcast_id = 1;
   string followup_podcast_id = 2;
 }
 

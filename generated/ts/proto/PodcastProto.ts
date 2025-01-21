@@ -453,9 +453,9 @@ export interface GetPodcastSuggestionPointsResponseDeltaProto {
  */
 export interface GetPodcastFollowupPointsRequestProto {
     /**
-     * @generated from protobuf field: string podcast_id = 1;
+     * @generated from protobuf field: string source_podcast_id = 1;
      */
-    podcastId: string;
+    sourcePodcastId: string;
     /**
      * @generated from protobuf field: string followup_podcast_id = 2;
      */
@@ -2684,13 +2684,13 @@ export const GetPodcastSuggestionPointsResponseDeltaProto = new GetPodcastSugges
 class GetPodcastFollowupPointsRequestProto$Type extends MessageType<GetPodcastFollowupPointsRequestProto> {
     constructor() {
         super("GetPodcastFollowupPointsRequestProto", [
-            { no: 1, name: "podcast_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 1, name: "source_podcast_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "followup_podcast_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<GetPodcastFollowupPointsRequestProto>): GetPodcastFollowupPointsRequestProto {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.podcastId = "";
+        message.sourcePodcastId = "";
         message.followupPodcastId = "";
         if (value !== undefined)
             reflectionMergePartial<GetPodcastFollowupPointsRequestProto>(this, message, value);
@@ -2701,8 +2701,8 @@ class GetPodcastFollowupPointsRequestProto$Type extends MessageType<GetPodcastFo
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string podcast_id */ 1:
-                    message.podcastId = reader.string();
+                case /* string source_podcast_id */ 1:
+                    message.sourcePodcastId = reader.string();
                     break;
                 case /* string followup_podcast_id */ 2:
                     message.followupPodcastId = reader.string();
@@ -2719,9 +2719,9 @@ class GetPodcastFollowupPointsRequestProto$Type extends MessageType<GetPodcastFo
         return message;
     }
     internalBinaryWrite(message: GetPodcastFollowupPointsRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string podcast_id = 1; */
-        if (message.podcastId !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.podcastId);
+        /* string source_podcast_id = 1; */
+        if (message.sourcePodcastId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.sourcePodcastId);
         /* string followup_podcast_id = 2; */
         if (message.followupPodcastId !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.followupPodcastId);

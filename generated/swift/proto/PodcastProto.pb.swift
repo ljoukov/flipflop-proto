@@ -904,7 +904,7 @@ struct GetPodcastFollowupPointsRequestProto: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var podcastID: String = String()
+  var sourcePodcastID: String = String()
 
   var followupPodcastID: String = String()
 
@@ -3322,7 +3322,7 @@ extension GetPodcastSuggestionPointsResponseDeltaProto: SwiftProtobuf.Message, S
 extension GetPodcastFollowupPointsRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "GetPodcastFollowupPointsRequestProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "podcast_id"),
+    1: .standard(proto: "source_podcast_id"),
     2: .standard(proto: "followup_podcast_id"),
   ]
 
@@ -3332,7 +3332,7 @@ extension GetPodcastFollowupPointsRequestProto: SwiftProtobuf.Message, SwiftProt
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.podcastID) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self.sourcePodcastID) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.followupPodcastID) }()
       default: break
       }
@@ -3340,8 +3340,8 @@ extension GetPodcastFollowupPointsRequestProto: SwiftProtobuf.Message, SwiftProt
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.podcastID.isEmpty {
-      try visitor.visitSingularStringField(value: self.podcastID, fieldNumber: 1)
+    if !self.sourcePodcastID.isEmpty {
+      try visitor.visitSingularStringField(value: self.sourcePodcastID, fieldNumber: 1)
     }
     if !self.followupPodcastID.isEmpty {
       try visitor.visitSingularStringField(value: self.followupPodcastID, fieldNumber: 2)
@@ -3350,7 +3350,7 @@ extension GetPodcastFollowupPointsRequestProto: SwiftProtobuf.Message, SwiftProt
   }
 
   static func ==(lhs: GetPodcastFollowupPointsRequestProto, rhs: GetPodcastFollowupPointsRequestProto) -> Bool {
-    if lhs.podcastID != rhs.podcastID {return false}
+    if lhs.sourcePodcastID != rhs.sourcePodcastID {return false}
     if lhs.followupPodcastID != rhs.followupPodcastID {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
