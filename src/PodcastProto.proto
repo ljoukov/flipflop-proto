@@ -370,7 +370,7 @@ message PodcastFollowupsProto {
 }
 
 message PodcastFollowupProto {
-  string followup_id = 1;
+  string followup_podcast_id = 1;
   string emoji = 2;
   string outline = 3;
 }

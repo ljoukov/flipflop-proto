@@ -982,9 +982,9 @@ export interface PodcastFollowupsProto {
  */
 export interface PodcastFollowupProto {
     /**
-     * @generated from protobuf field: string followup_id = 1;
+     * @generated from protobuf field: string followup_podcast_id = 1;
      */
-    followupId: string;
+    followupPodcastId: string;
     /**
      * @generated from protobuf field: string emoji = 2;
      */
@@ -4560,14 +4560,14 @@ export const PodcastFollowupsProto = new PodcastFollowupsProto$Type();
 class PodcastFollowupProto$Type extends MessageType<PodcastFollowupProto> {
     constructor() {
         super("PodcastFollowupProto", [
-            { no: 1, name: "followup_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 1, name: "followup_podcast_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "outline", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PodcastFollowupProto>): PodcastFollowupProto {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.followupId = "";
+        message.followupPodcastId = "";
         message.emoji = "";
         message.outline = "";
         if (value !== undefined)
@@ -4579,8 +4579,8 @@ class PodcastFollowupProto$Type extends MessageType<PodcastFollowupProto> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string followup_id */ 1:
-                    message.followupId = reader.string();
+                case /* string followup_podcast_id */ 1:
+                    message.followupPodcastId = reader.string();
                     break;
                 case /* string emoji */ 2:
                     message.emoji = reader.string();
@@ -4600,9 +4600,9 @@ class PodcastFollowupProto$Type extends MessageType<PodcastFollowupProto> {
         return message;
     }
     internalBinaryWrite(message: PodcastFollowupProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string followup_id = 1; */
-        if (message.followupId !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.followupId);
+        /* string followup_podcast_id = 1; */
+        if (message.followupPodcastId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.followupPodcastId);
         /* string emoji = 2; */
         if (message.emoji !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.emoji);

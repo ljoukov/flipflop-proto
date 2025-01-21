@@ -1620,7 +1620,7 @@ struct PodcastFollowupProto: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var followupID: String = String()
+  var followupPodcastID: String = String()
 
   var emoji: String = String()
 
@@ -4788,7 +4788,7 @@ extension PodcastFollowupsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
 extension PodcastFollowupProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "PodcastFollowupProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "followup_id"),
+    1: .standard(proto: "followup_podcast_id"),
     2: .same(proto: "emoji"),
     3: .same(proto: "outline"),
   ]
@@ -4799,7 +4799,7 @@ extension PodcastFollowupProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.followupID) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self.followupPodcastID) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.emoji) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.outline) }()
       default: break
@@ -4808,8 +4808,8 @@ extension PodcastFollowupProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.followupID.isEmpty {
-      try visitor.visitSingularStringField(value: self.followupID, fieldNumber: 1)
+    if !self.followupPodcastID.isEmpty {
+      try visitor.visitSingularStringField(value: self.followupPodcastID, fieldNumber: 1)
     }
     if !self.emoji.isEmpty {
       try visitor.visitSingularStringField(value: self.emoji, fieldNumber: 2)
@@ -4821,7 +4821,7 @@ extension PodcastFollowupProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
   }
 
   static func ==(lhs: PodcastFollowupProto, rhs: PodcastFollowupProto) -> Bool {
-    if lhs.followupID != rhs.followupID {return false}
+    if lhs.followupPodcastID != rhs.followupPodcastID {return false}
     if lhs.emoji != rhs.emoji {return false}
     if lhs.outline != rhs.outline {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
