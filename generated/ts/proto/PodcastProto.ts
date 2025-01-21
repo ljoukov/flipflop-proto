@@ -457,9 +457,9 @@ export interface GetPodcastFollowupPointsRequestProto {
      */
     podcastId: string;
     /**
-     * @generated from protobuf field: string followup_id = 2;
+     * @generated from protobuf field: string followup_podcast_id = 2;
      */
-    followupId: string;
+    followupPodcastId: string;
 }
 /**
  * @generated from protobuf message GetPodcastFollowupPointsResponseHeaderProto
@@ -2685,13 +2685,13 @@ class GetPodcastFollowupPointsRequestProto$Type extends MessageType<GetPodcastFo
     constructor() {
         super("GetPodcastFollowupPointsRequestProto", [
             { no: 1, name: "podcast_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "followup_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "followup_podcast_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<GetPodcastFollowupPointsRequestProto>): GetPodcastFollowupPointsRequestProto {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.podcastId = "";
-        message.followupId = "";
+        message.followupPodcastId = "";
         if (value !== undefined)
             reflectionMergePartial<GetPodcastFollowupPointsRequestProto>(this, message, value);
         return message;
@@ -2704,8 +2704,8 @@ class GetPodcastFollowupPointsRequestProto$Type extends MessageType<GetPodcastFo
                 case /* string podcast_id */ 1:
                     message.podcastId = reader.string();
                     break;
-                case /* string followup_id */ 2:
-                    message.followupId = reader.string();
+                case /* string followup_podcast_id */ 2:
+                    message.followupPodcastId = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2722,9 +2722,9 @@ class GetPodcastFollowupPointsRequestProto$Type extends MessageType<GetPodcastFo
         /* string podcast_id = 1; */
         if (message.podcastId !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.podcastId);
-        /* string followup_id = 2; */
-        if (message.followupId !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.followupId);
+        /* string followup_podcast_id = 2; */
+        if (message.followupPodcastId !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.followupPodcastId);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

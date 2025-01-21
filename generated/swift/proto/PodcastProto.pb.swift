@@ -906,7 +906,7 @@ struct GetPodcastFollowupPointsRequestProto: Sendable {
 
   var podcastID: String = String()
 
-  var followupID: String = String()
+  var followupPodcastID: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -3323,7 +3323,7 @@ extension GetPodcastFollowupPointsRequestProto: SwiftProtobuf.Message, SwiftProt
   static let protoMessageName: String = "GetPodcastFollowupPointsRequestProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "podcast_id"),
-    2: .standard(proto: "followup_id"),
+    2: .standard(proto: "followup_podcast_id"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3333,7 +3333,7 @@ extension GetPodcastFollowupPointsRequestProto: SwiftProtobuf.Message, SwiftProt
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.podcastID) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.followupID) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.followupPodcastID) }()
       default: break
       }
     }
@@ -3343,15 +3343,15 @@ extension GetPodcastFollowupPointsRequestProto: SwiftProtobuf.Message, SwiftProt
     if !self.podcastID.isEmpty {
       try visitor.visitSingularStringField(value: self.podcastID, fieldNumber: 1)
     }
-    if !self.followupID.isEmpty {
-      try visitor.visitSingularStringField(value: self.followupID, fieldNumber: 2)
+    if !self.followupPodcastID.isEmpty {
+      try visitor.visitSingularStringField(value: self.followupPodcastID, fieldNumber: 2)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: GetPodcastFollowupPointsRequestProto, rhs: GetPodcastFollowupPointsRequestProto) -> Bool {
     if lhs.podcastID != rhs.podcastID {return false}
-    if lhs.followupID != rhs.followupID {return false}
+    if lhs.followupPodcastID != rhs.followupPodcastID {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
