@@ -31,6 +31,8 @@ enum ServerTTSVoiceProto: SwiftProtobuf.Enum, Swift.CaseIterable {
   case nova // = 5
   case shimmer // = 6
   case meditation // = 7
+  case journeyDMale // = 8
+  case journeyFFemale // = 9
   case UNRECOGNIZED(Int)
 
   init() {
@@ -47,6 +49,8 @@ enum ServerTTSVoiceProto: SwiftProtobuf.Enum, Swift.CaseIterable {
     case 5: self = .nova
     case 6: self = .shimmer
     case 7: self = .meditation
+    case 8: self = .journeyDMale
+    case 9: self = .journeyFFemale
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -61,6 +65,8 @@ enum ServerTTSVoiceProto: SwiftProtobuf.Enum, Swift.CaseIterable {
     case .nova: return 5
     case .shimmer: return 6
     case .meditation: return 7
+    case .journeyDMale: return 8
+    case .journeyFFemale: return 9
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -75,6 +81,8 @@ enum ServerTTSVoiceProto: SwiftProtobuf.Enum, Swift.CaseIterable {
     .nova,
     .shimmer,
     .meditation,
+    .journeyDMale,
+    .journeyFFemale,
   ]
 
 }
@@ -271,6 +279,8 @@ extension ServerTTSVoiceProto: SwiftProtobuf._ProtoNameProviding {
     5: .same(proto: "SERVER_TTS_VOICE_PROTO_NOVA"),
     6: .same(proto: "SERVER_TTS_VOICE_PROTO_SHIMMER"),
     7: .same(proto: "SERVER_TTS_VOICE_PROTO_MEDITATION"),
+    8: .same(proto: "SERVER_TTS_VOICE_PROTO_JOURNEY_D_MALE"),
+    9: .same(proto: "SERVER_TTS_VOICE_PROTO_JOURNEY_F_FEMALE"),
   ]
 }
 

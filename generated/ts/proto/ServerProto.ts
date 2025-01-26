@@ -203,7 +203,15 @@ export enum ServerTTSVoiceProto {
     /**
      * @generated from protobuf enum value: SERVER_TTS_VOICE_PROTO_MEDITATION = 7;
      */
-    SERVER_TTS_VOICE_PROTO_MEDITATION = 7
+    SERVER_TTS_VOICE_PROTO_MEDITATION = 7,
+    /**
+     * @generated from protobuf enum value: SERVER_TTS_VOICE_PROTO_JOURNEY_D_MALE = 8;
+     */
+    SERVER_TTS_VOICE_PROTO_JOURNEY_D_MALE = 8,
+    /**
+     * @generated from protobuf enum value: SERVER_TTS_VOICE_PROTO_JOURNEY_F_FEMALE = 9;
+     */
+    SERVER_TTS_VOICE_PROTO_JOURNEY_F_FEMALE = 9
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class ServerApiRequestProto$Type extends MessageType<ServerApiRequestProto> {
