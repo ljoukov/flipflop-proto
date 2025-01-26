@@ -65,6 +65,10 @@ export interface ServerTTSRequestProto {
      * @generated from protobuf field: float silence_sec = 2;
      */
     silenceSec: number;
+    /**
+     * @generated from protobuf field: bool disable_transcription = 3;
+     */
+    disableTranscription: boolean;
 }
 /**
  * @generated from protobuf message ServerTTSSegmentProto
@@ -346,13 +350,15 @@ class ServerTTSRequestProto$Type extends MessageType<ServerTTSRequestProto> {
     constructor() {
         super("ServerTTSRequestProto", [
             { no: 1, name: "segments", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ServerTTSSegmentProto },
-            { no: 2, name: "silence_sec", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ }
+            { no: 2, name: "silence_sec", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
+            { no: 3, name: "disable_transcription", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
     create(value?: PartialMessage<ServerTTSRequestProto>): ServerTTSRequestProto {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.segments = [];
         message.silenceSec = 0;
+        message.disableTranscription = false;
         if (value !== undefined)
             reflectionMergePartial<ServerTTSRequestProto>(this, message, value);
         return message;
@@ -367,6 +373,9 @@ class ServerTTSRequestProto$Type extends MessageType<ServerTTSRequestProto> {
                     break;
                 case /* float silence_sec */ 2:
                     message.silenceSec = reader.float();
+                    break;
+                case /* bool disable_transcription */ 3:
+                    message.disableTranscription = reader.bool();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -386,6 +395,9 @@ class ServerTTSRequestProto$Type extends MessageType<ServerTTSRequestProto> {
         /* float silence_sec = 2; */
         if (message.silenceSec !== 0)
             writer.tag(2, WireType.Bit32).float(message.silenceSec);
+        /* bool disable_transcription = 3; */
+        if (message.disableTranscription !== false)
+            writer.tag(3, WireType.Varint).bool(message.disableTranscription);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

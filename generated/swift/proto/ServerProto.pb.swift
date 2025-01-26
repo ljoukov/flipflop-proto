@@ -148,6 +148,8 @@ struct ServerTTSRequestProto: Sendable {
 
   var silenceSec: Float = 0
 
+  var disableTranscription: Bool = false
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -391,6 +393,7 @@ extension ServerTTSRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "segments"),
     2: .standard(proto: "silence_sec"),
+    3: .standard(proto: "disable_transcription"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -401,6 +404,7 @@ extension ServerTTSRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
       switch fieldNumber {
       case 1: try { try decoder.decodeRepeatedMessageField(value: &self.segments) }()
       case 2: try { try decoder.decodeSingularFloatField(value: &self.silenceSec) }()
+      case 3: try { try decoder.decodeSingularBoolField(value: &self.disableTranscription) }()
       default: break
       }
     }
@@ -413,12 +417,16 @@ extension ServerTTSRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     if self.silenceSec.bitPattern != 0 {
       try visitor.visitSingularFloatField(value: self.silenceSec, fieldNumber: 2)
     }
+    if self.disableTranscription != false {
+      try visitor.visitSingularBoolField(value: self.disableTranscription, fieldNumber: 3)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: ServerTTSRequestProto, rhs: ServerTTSRequestProto) -> Bool {
     if lhs.segments != rhs.segments {return false}
     if lhs.silenceSec != rhs.silenceSec {return false}
+    if lhs.disableTranscription != rhs.disableTranscription {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
