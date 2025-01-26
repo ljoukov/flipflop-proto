@@ -148,6 +148,27 @@ struct ServerTTSRequestProto: Sendable {
 
   var silenceSec: Float = 0
 
+  var options: ServerTTSOptionsProto {
+    get {return _options ?? ServerTTSOptionsProto()}
+    set {_options = newValue}
+  }
+  /// Returns true if `options` has been explicitly set.
+  var hasOptions: Bool {return self._options != nil}
+  /// Clears the value of `options`. Subsequent reads from it will return its default value.
+  mutating func clearOptions() {self._options = nil}
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+
+  fileprivate var _options: ServerTTSOptionsProto? = nil
+}
+
+struct ServerTTSOptionsProto: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
   var disableTranscription: Bool = false
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -393,7 +414,7 @@ extension ServerTTSRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "segments"),
     2: .standard(proto: "silence_sec"),
-    3: .standard(proto: "disable_transcription"),
+    3: .same(proto: "options"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -404,28 +425,64 @@ extension ServerTTSRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
       switch fieldNumber {
       case 1: try { try decoder.decodeRepeatedMessageField(value: &self.segments) }()
       case 2: try { try decoder.decodeSingularFloatField(value: &self.silenceSec) }()
-      case 3: try { try decoder.decodeSingularBoolField(value: &self.disableTranscription) }()
+      case 3: try { try decoder.decodeSingularMessageField(value: &self._options) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.segments.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.segments, fieldNumber: 1)
     }
     if self.silenceSec.bitPattern != 0 {
       try visitor.visitSingularFloatField(value: self.silenceSec, fieldNumber: 2)
     }
-    if self.disableTranscription != false {
-      try visitor.visitSingularBoolField(value: self.disableTranscription, fieldNumber: 3)
-    }
+    try { if let v = self._options {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: ServerTTSRequestProto, rhs: ServerTTSRequestProto) -> Bool {
     if lhs.segments != rhs.segments {return false}
     if lhs.silenceSec != rhs.silenceSec {return false}
+    if lhs._options != rhs._options {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension ServerTTSOptionsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "ServerTTSOptionsProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "disable_transcription"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularBoolField(value: &self.disableTranscription) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.disableTranscription != false {
+      try visitor.visitSingularBoolField(value: self.disableTranscription, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: ServerTTSOptionsProto, rhs: ServerTTSOptionsProto) -> Bool {
     if lhs.disableTranscription != rhs.disableTranscription {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

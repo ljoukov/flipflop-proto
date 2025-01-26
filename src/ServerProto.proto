@@ -18,8 +18,12 @@ message ServerApiResponseProto {
 message ServerTTSRequestProto {
   repeated ServerTTSSegmentProto segments = 1;
   float silence_sec = 2;
-  bool disable_transcription = 3;
+  ServerTTSOptionsProto options = 3;
 };
+
+message ServerTTSOptionsProto {
+  bool disable_transcription = 1;
+}
 
 message ServerTTSSegmentProto {
   float leading_silence_sec = 1;
