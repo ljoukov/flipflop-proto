@@ -1258,44 +1258,6 @@ export interface PodcastRoutineStepProgressProto {
     completed: boolean;
 }
 /**
- * @generated from protobuf message OnDeviceStoredUserDetailsProto
- */
-export interface OnDeviceStoredUserDetailsProto {
-    /**
-     * @generated from protobuf field: string user_id = 1;
-     */
-    userId: string;
-    /**
-     * @generated from protobuf field: PodcastSubscriptionSourceProto subscription_source = 2;
-     */
-    subscriptionSource: PodcastSubscriptionSourceProto;
-    /**
-     * @generated from protobuf field: string firestore_suggestions_path = 3;
-     */
-    firestoreSuggestionsPath: string;
-}
-/**
- * @generated from protobuf message OnDeviceStoredOnboardingInputProto
- */
-export interface OnDeviceStoredOnboardingInputProto {
-    /**
-     * @generated from protobuf field: string name = 1;
-     */
-    name: string;
-    /**
-     * @generated from protobuf field: repeated string goal_ids = 2;
-     */
-    goalIds: string[];
-    /**
-     * @generated from protobuf field: repeated string learning_style_ids = 3;
-     */
-    learningStyleIds: string[];
-    /**
-     * @generated from protobuf field: repeated string interest_ids = 4;
-     */
-    interestIds: string[];
-}
-/**
  * @generated from protobuf message PodcastOnboardingInputProto
  */
 export interface PodcastOnboardingInputProto {
@@ -1315,6 +1277,23 @@ export interface PodcastOnboardingInputProto {
      * @generated from protobuf field: repeated string interest_ids = 4;
      */
     interestIds: string[];
+}
+/**
+ * @generated from protobuf message OnDeviceStoredUserDetailsProto
+ */
+export interface OnDeviceStoredUserDetailsProto {
+    /**
+     * @generated from protobuf field: string user_id = 1;
+     */
+    userId: string;
+    /**
+     * @generated from protobuf field: PodcastSubscriptionSourceProto subscription_source = 2;
+     */
+    subscriptionSource: PodcastSubscriptionSourceProto;
+    /**
+     * @generated from protobuf field: string firestore_suggestions_path = 3;
+     */
+    firestoreSuggestionsPath: string;
 }
 /**
  * @generated from protobuf enum PodcastSubscriptionSourceProto
@@ -5684,140 +5663,6 @@ class PodcastRoutineStepProgressProto$Type extends MessageType<PodcastRoutineSte
  */
 export const PodcastRoutineStepProgressProto = new PodcastRoutineStepProgressProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class OnDeviceStoredUserDetailsProto$Type extends MessageType<OnDeviceStoredUserDetailsProto> {
-    constructor() {
-        super("OnDeviceStoredUserDetailsProto", [
-            { no: 1, name: "user_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "subscription_source", kind: "enum", T: () => ["PodcastSubscriptionSourceProto", PodcastSubscriptionSourceProto, "PODCAST_SUBSCRIPTION_SOURCE_PROTO_"] },
-            { no: 3, name: "firestore_suggestions_path", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
-        ]);
-    }
-    create(value?: PartialMessage<OnDeviceStoredUserDetailsProto>): OnDeviceStoredUserDetailsProto {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.userId = "";
-        message.subscriptionSource = 0;
-        message.firestoreSuggestionsPath = "";
-        if (value !== undefined)
-            reflectionMergePartial<OnDeviceStoredUserDetailsProto>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: OnDeviceStoredUserDetailsProto): OnDeviceStoredUserDetailsProto {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string user_id */ 1:
-                    message.userId = reader.string();
-                    break;
-                case /* PodcastSubscriptionSourceProto subscription_source */ 2:
-                    message.subscriptionSource = reader.int32();
-                    break;
-                case /* string firestore_suggestions_path */ 3:
-                    message.firestoreSuggestionsPath = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: OnDeviceStoredUserDetailsProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string user_id = 1; */
-        if (message.userId !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.userId);
-        /* PodcastSubscriptionSourceProto subscription_source = 2; */
-        if (message.subscriptionSource !== 0)
-            writer.tag(2, WireType.Varint).int32(message.subscriptionSource);
-        /* string firestore_suggestions_path = 3; */
-        if (message.firestoreSuggestionsPath !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.firestoreSuggestionsPath);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message OnDeviceStoredUserDetailsProto
- */
-export const OnDeviceStoredUserDetailsProto = new OnDeviceStoredUserDetailsProto$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class OnDeviceStoredOnboardingInputProto$Type extends MessageType<OnDeviceStoredOnboardingInputProto> {
-    constructor() {
-        super("OnDeviceStoredOnboardingInputProto", [
-            { no: 1, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "goal_ids", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "learning_style_ids", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "interest_ids", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
-        ]);
-    }
-    create(value?: PartialMessage<OnDeviceStoredOnboardingInputProto>): OnDeviceStoredOnboardingInputProto {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.name = "";
-        message.goalIds = [];
-        message.learningStyleIds = [];
-        message.interestIds = [];
-        if (value !== undefined)
-            reflectionMergePartial<OnDeviceStoredOnboardingInputProto>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: OnDeviceStoredOnboardingInputProto): OnDeviceStoredOnboardingInputProto {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string name */ 1:
-                    message.name = reader.string();
-                    break;
-                case /* repeated string goal_ids */ 2:
-                    message.goalIds.push(reader.string());
-                    break;
-                case /* repeated string learning_style_ids */ 3:
-                    message.learningStyleIds.push(reader.string());
-                    break;
-                case /* repeated string interest_ids */ 4:
-                    message.interestIds.push(reader.string());
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: OnDeviceStoredOnboardingInputProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string name = 1; */
-        if (message.name !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.name);
-        /* repeated string goal_ids = 2; */
-        for (let i = 0; i < message.goalIds.length; i++)
-            writer.tag(2, WireType.LengthDelimited).string(message.goalIds[i]);
-        /* repeated string learning_style_ids = 3; */
-        for (let i = 0; i < message.learningStyleIds.length; i++)
-            writer.tag(3, WireType.LengthDelimited).string(message.learningStyleIds[i]);
-        /* repeated string interest_ids = 4; */
-        for (let i = 0; i < message.interestIds.length; i++)
-            writer.tag(4, WireType.LengthDelimited).string(message.interestIds[i]);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message OnDeviceStoredOnboardingInputProto
- */
-export const OnDeviceStoredOnboardingInputProto = new OnDeviceStoredOnboardingInputProto$Type();
-// @generated message type with reflection information, may provide speed optimized methods
 class PodcastOnboardingInputProto$Type extends MessageType<PodcastOnboardingInputProto> {
     constructor() {
         super("PodcastOnboardingInputProto", [
@@ -5888,3 +5733,66 @@ class PodcastOnboardingInputProto$Type extends MessageType<PodcastOnboardingInpu
  * @generated MessageType for protobuf message PodcastOnboardingInputProto
  */
 export const PodcastOnboardingInputProto = new PodcastOnboardingInputProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class OnDeviceStoredUserDetailsProto$Type extends MessageType<OnDeviceStoredUserDetailsProto> {
+    constructor() {
+        super("OnDeviceStoredUserDetailsProto", [
+            { no: 1, name: "user_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "subscription_source", kind: "enum", T: () => ["PodcastSubscriptionSourceProto", PodcastSubscriptionSourceProto, "PODCAST_SUBSCRIPTION_SOURCE_PROTO_"] },
+            { no: 3, name: "firestore_suggestions_path", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<OnDeviceStoredUserDetailsProto>): OnDeviceStoredUserDetailsProto {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.userId = "";
+        message.subscriptionSource = 0;
+        message.firestoreSuggestionsPath = "";
+        if (value !== undefined)
+            reflectionMergePartial<OnDeviceStoredUserDetailsProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: OnDeviceStoredUserDetailsProto): OnDeviceStoredUserDetailsProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string user_id */ 1:
+                    message.userId = reader.string();
+                    break;
+                case /* PodcastSubscriptionSourceProto subscription_source */ 2:
+                    message.subscriptionSource = reader.int32();
+                    break;
+                case /* string firestore_suggestions_path */ 3:
+                    message.firestoreSuggestionsPath = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: OnDeviceStoredUserDetailsProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string user_id = 1; */
+        if (message.userId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.userId);
+        /* PodcastSubscriptionSourceProto subscription_source = 2; */
+        if (message.subscriptionSource !== 0)
+            writer.tag(2, WireType.Varint).int32(message.subscriptionSource);
+        /* string firestore_suggestions_path = 3; */
+        if (message.firestoreSuggestionsPath !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.firestoreSuggestionsPath);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message OnDeviceStoredUserDetailsProto
+ */
+export const OnDeviceStoredUserDetailsProto = new OnDeviceStoredUserDetailsProto$Type();
