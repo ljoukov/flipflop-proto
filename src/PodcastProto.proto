@@ -152,7 +152,9 @@ message GetPodcastFollowupPointsResponseDeltaProto {
   }
 }
 
-message GetPodcastHomeRequestProto {}
+message GetPodcastHomeRequestProto {
+  PodcastOnboardingInputProto onboarding_input = 1;
+}
 
 message GetPodcastHomeResponseHeaderProto {
   PodcastSubscriptionStatusProto subscription_status = 1;
@@ -482,6 +484,12 @@ message OnDeviceStoredUserDetailsProto {
 }
 
 message OnDeviceStoredOnboardingInputProto {
+  string name = 1;
+  repeated string goal_ids = 2;
+  repeated string interest_ids = 3;
+}
+
+message PodcastOnboardingInputProto {
   string name = 1;
   repeated string goal_ids = 2;
   repeated string interest_ids = 3;
