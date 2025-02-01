@@ -1287,7 +1287,11 @@ export interface OnDeviceStoredOnboardingInputProto {
      */
     goalIds: string[];
     /**
-     * @generated from protobuf field: repeated string interest_ids = 3;
+     * @generated from protobuf field: repeated string learning_style_ids = 3;
+     */
+    learningStyleIds: string[];
+    /**
+     * @generated from protobuf field: repeated string interest_ids = 4;
      */
     interestIds: string[];
 }
@@ -1304,7 +1308,11 @@ export interface PodcastOnboardingInputProto {
      */
     goalIds: string[];
     /**
-     * @generated from protobuf field: repeated string interest_ids = 3;
+     * @generated from protobuf field: repeated string learning_style_ids = 3;
+     */
+    learningStyleIds: string[];
+    /**
+     * @generated from protobuf field: repeated string interest_ids = 4;
      */
     interestIds: string[];
 }
@@ -5744,13 +5752,15 @@ class OnDeviceStoredOnboardingInputProto$Type extends MessageType<OnDeviceStored
         super("OnDeviceStoredOnboardingInputProto", [
             { no: 1, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "goal_ids", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "interest_ids", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+            { no: 3, name: "learning_style_ids", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "interest_ids", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<OnDeviceStoredOnboardingInputProto>): OnDeviceStoredOnboardingInputProto {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.name = "";
         message.goalIds = [];
+        message.learningStyleIds = [];
         message.interestIds = [];
         if (value !== undefined)
             reflectionMergePartial<OnDeviceStoredOnboardingInputProto>(this, message, value);
@@ -5767,7 +5777,10 @@ class OnDeviceStoredOnboardingInputProto$Type extends MessageType<OnDeviceStored
                 case /* repeated string goal_ids */ 2:
                     message.goalIds.push(reader.string());
                     break;
-                case /* repeated string interest_ids */ 3:
+                case /* repeated string learning_style_ids */ 3:
+                    message.learningStyleIds.push(reader.string());
+                    break;
+                case /* repeated string interest_ids */ 4:
                     message.interestIds.push(reader.string());
                     break;
                 default:
@@ -5788,9 +5801,12 @@ class OnDeviceStoredOnboardingInputProto$Type extends MessageType<OnDeviceStored
         /* repeated string goal_ids = 2; */
         for (let i = 0; i < message.goalIds.length; i++)
             writer.tag(2, WireType.LengthDelimited).string(message.goalIds[i]);
-        /* repeated string interest_ids = 3; */
+        /* repeated string learning_style_ids = 3; */
+        for (let i = 0; i < message.learningStyleIds.length; i++)
+            writer.tag(3, WireType.LengthDelimited).string(message.learningStyleIds[i]);
+        /* repeated string interest_ids = 4; */
         for (let i = 0; i < message.interestIds.length; i++)
-            writer.tag(3, WireType.LengthDelimited).string(message.interestIds[i]);
+            writer.tag(4, WireType.LengthDelimited).string(message.interestIds[i]);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -5807,13 +5823,15 @@ class PodcastOnboardingInputProto$Type extends MessageType<PodcastOnboardingInpu
         super("PodcastOnboardingInputProto", [
             { no: 1, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "goal_ids", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "interest_ids", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+            { no: 3, name: "learning_style_ids", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "interest_ids", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PodcastOnboardingInputProto>): PodcastOnboardingInputProto {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.name = "";
         message.goalIds = [];
+        message.learningStyleIds = [];
         message.interestIds = [];
         if (value !== undefined)
             reflectionMergePartial<PodcastOnboardingInputProto>(this, message, value);
@@ -5830,7 +5848,10 @@ class PodcastOnboardingInputProto$Type extends MessageType<PodcastOnboardingInpu
                 case /* repeated string goal_ids */ 2:
                     message.goalIds.push(reader.string());
                     break;
-                case /* repeated string interest_ids */ 3:
+                case /* repeated string learning_style_ids */ 3:
+                    message.learningStyleIds.push(reader.string());
+                    break;
+                case /* repeated string interest_ids */ 4:
                     message.interestIds.push(reader.string());
                     break;
                 default:
@@ -5851,9 +5872,12 @@ class PodcastOnboardingInputProto$Type extends MessageType<PodcastOnboardingInpu
         /* repeated string goal_ids = 2; */
         for (let i = 0; i < message.goalIds.length; i++)
             writer.tag(2, WireType.LengthDelimited).string(message.goalIds[i]);
-        /* repeated string interest_ids = 3; */
+        /* repeated string learning_style_ids = 3; */
+        for (let i = 0; i < message.learningStyleIds.length; i++)
+            writer.tag(3, WireType.LengthDelimited).string(message.learningStyleIds[i]);
+        /* repeated string interest_ids = 4; */
         for (let i = 0; i < message.interestIds.length; i++)
-            writer.tag(3, WireType.LengthDelimited).string(message.interestIds[i]);
+            writer.tag(4, WireType.LengthDelimited).string(message.interestIds[i]);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
