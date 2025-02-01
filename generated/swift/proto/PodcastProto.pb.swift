@@ -1968,12 +1968,10 @@ struct OnDeviceStoredUserDetailsProto: Sendable {
   init() {}
 }
 
-struct OnDeviceStoredOnboardingProto: Sendable {
+struct OnDeviceStoredOnboardingInputProto: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
-
-  var userID: String = String()
 
   var name: String = String()
 
@@ -5631,13 +5629,12 @@ extension OnDeviceStoredUserDetailsProto: SwiftProtobuf.Message, SwiftProtobuf._
   }
 }
 
-extension OnDeviceStoredOnboardingProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "OnDeviceStoredOnboardingProto"
+extension OnDeviceStoredOnboardingInputProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "OnDeviceStoredOnboardingInputProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "user_id"),
-    2: .same(proto: "name"),
-    3: .standard(proto: "goal_ids"),
-    4: .standard(proto: "interest_ids"),
+    1: .same(proto: "name"),
+    2: .standard(proto: "goal_ids"),
+    3: .standard(proto: "interest_ids"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -5646,33 +5643,28 @@ extension OnDeviceStoredOnboardingProto: SwiftProtobuf.Message, SwiftProtobuf._M
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.userID) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.name) }()
-      case 3: try { try decoder.decodeRepeatedStringField(value: &self.goalIds) }()
-      case 4: try { try decoder.decodeRepeatedStringField(value: &self.interestIds) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self.name) }()
+      case 2: try { try decoder.decodeRepeatedStringField(value: &self.goalIds) }()
+      case 3: try { try decoder.decodeRepeatedStringField(value: &self.interestIds) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.userID.isEmpty {
-      try visitor.visitSingularStringField(value: self.userID, fieldNumber: 1)
-    }
     if !self.name.isEmpty {
-      try visitor.visitSingularStringField(value: self.name, fieldNumber: 2)
+      try visitor.visitSingularStringField(value: self.name, fieldNumber: 1)
     }
     if !self.goalIds.isEmpty {
-      try visitor.visitRepeatedStringField(value: self.goalIds, fieldNumber: 3)
+      try visitor.visitRepeatedStringField(value: self.goalIds, fieldNumber: 2)
     }
     if !self.interestIds.isEmpty {
-      try visitor.visitRepeatedStringField(value: self.interestIds, fieldNumber: 4)
+      try visitor.visitRepeatedStringField(value: self.interestIds, fieldNumber: 3)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: OnDeviceStoredOnboardingProto, rhs: OnDeviceStoredOnboardingProto) -> Bool {
-    if lhs.userID != rhs.userID {return false}
+  static func ==(lhs: OnDeviceStoredOnboardingInputProto, rhs: OnDeviceStoredOnboardingInputProto) -> Bool {
     if lhs.name != rhs.name {return false}
     if lhs.goalIds != rhs.goalIds {return false}
     if lhs.interestIds != rhs.interestIds {return false}

@@ -481,9 +481,8 @@ message OnDeviceStoredUserDetailsProto {
   string firestore_suggestions_path = 3;
 }
 
-message OnDeviceStoredOnboardingProto {
-  string user_id = 1;
-  string name = 2;
-  repeated string goal_ids = 3;
-  repeated string interest_ids = 4;
+message OnDeviceStoredOnboardingInputProto {
+  string name = 1;
+  repeated string goal_ids = 2;
+  repeated string interest_ids = 3;
 }

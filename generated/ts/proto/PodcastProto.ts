@@ -1267,23 +1267,19 @@ export interface OnDeviceStoredUserDetailsProto {
     firestoreSuggestionsPath: string;
 }
 /**
- * @generated from protobuf message OnDeviceStoredOnboardingProto
+ * @generated from protobuf message OnDeviceStoredOnboardingInputProto
  */
-export interface OnDeviceStoredOnboardingProto {
+export interface OnDeviceStoredOnboardingInputProto {
     /**
-     * @generated from protobuf field: string user_id = 1;
-     */
-    userId: string;
-    /**
-     * @generated from protobuf field: string name = 2;
+     * @generated from protobuf field: string name = 1;
      */
     name: string;
     /**
-     * @generated from protobuf field: repeated string goal_ids = 3;
+     * @generated from protobuf field: repeated string goal_ids = 2;
      */
     goalIds: string[];
     /**
-     * @generated from protobuf field: repeated string interest_ids = 4;
+     * @generated from protobuf field: repeated string interest_ids = 3;
      */
     interestIds: string[];
 }
@@ -5689,40 +5685,35 @@ class OnDeviceStoredUserDetailsProto$Type extends MessageType<OnDeviceStoredUser
  */
 export const OnDeviceStoredUserDetailsProto = new OnDeviceStoredUserDetailsProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class OnDeviceStoredOnboardingProto$Type extends MessageType<OnDeviceStoredOnboardingProto> {
+class OnDeviceStoredOnboardingInputProto$Type extends MessageType<OnDeviceStoredOnboardingInputProto> {
     constructor() {
-        super("OnDeviceStoredOnboardingProto", [
-            { no: 1, name: "user_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "goal_ids", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "interest_ids", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+        super("OnDeviceStoredOnboardingInputProto", [
+            { no: 1, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "goal_ids", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "interest_ids", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<OnDeviceStoredOnboardingProto>): OnDeviceStoredOnboardingProto {
+    create(value?: PartialMessage<OnDeviceStoredOnboardingInputProto>): OnDeviceStoredOnboardingInputProto {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.userId = "";
         message.name = "";
         message.goalIds = [];
         message.interestIds = [];
         if (value !== undefined)
-            reflectionMergePartial<OnDeviceStoredOnboardingProto>(this, message, value);
+            reflectionMergePartial<OnDeviceStoredOnboardingInputProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: OnDeviceStoredOnboardingProto): OnDeviceStoredOnboardingProto {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: OnDeviceStoredOnboardingInputProto): OnDeviceStoredOnboardingInputProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string user_id */ 1:
-                    message.userId = reader.string();
-                    break;
-                case /* string name */ 2:
+                case /* string name */ 1:
                     message.name = reader.string();
                     break;
-                case /* repeated string goal_ids */ 3:
+                case /* repeated string goal_ids */ 2:
                     message.goalIds.push(reader.string());
                     break;
-                case /* repeated string interest_ids */ 4:
+                case /* repeated string interest_ids */ 3:
                     message.interestIds.push(reader.string());
                     break;
                 default:
@@ -5736,19 +5727,16 @@ class OnDeviceStoredOnboardingProto$Type extends MessageType<OnDeviceStoredOnboa
         }
         return message;
     }
-    internalBinaryWrite(message: OnDeviceStoredOnboardingProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string user_id = 1; */
-        if (message.userId !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.userId);
-        /* string name = 2; */
+    internalBinaryWrite(message: OnDeviceStoredOnboardingInputProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string name = 1; */
         if (message.name !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.name);
-        /* repeated string goal_ids = 3; */
+            writer.tag(1, WireType.LengthDelimited).string(message.name);
+        /* repeated string goal_ids = 2; */
         for (let i = 0; i < message.goalIds.length; i++)
-            writer.tag(3, WireType.LengthDelimited).string(message.goalIds[i]);
-        /* repeated string interest_ids = 4; */
+            writer.tag(2, WireType.LengthDelimited).string(message.goalIds[i]);
+        /* repeated string interest_ids = 3; */
         for (let i = 0; i < message.interestIds.length; i++)
-            writer.tag(4, WireType.LengthDelimited).string(message.interestIds[i]);
+            writer.tag(3, WireType.LengthDelimited).string(message.interestIds[i]);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -5756,6 +5744,6 @@ class OnDeviceStoredOnboardingProto$Type extends MessageType<OnDeviceStoredOnboa
     }
 }
 /**
- * @generated MessageType for protobuf message OnDeviceStoredOnboardingProto
+ * @generated MessageType for protobuf message OnDeviceStoredOnboardingInputProto
  */
-export const OnDeviceStoredOnboardingProto = new OnDeviceStoredOnboardingProto$Type();
+export const OnDeviceStoredOnboardingInputProto = new OnDeviceStoredOnboardingInputProto$Type();
