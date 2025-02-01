@@ -504,6 +504,10 @@ export interface GetPodcastHomeResponseHeaderProto {
      * @generated from protobuf field: string firestore_suggestions_path = 2;
      */
     firestoreSuggestionsPath: string;
+    /**
+     * @generated from protobuf field: bool onboarding_required = 3;
+     */
+    onboardingRequired: boolean;
 }
 /**
  * @generated from protobuf message GetPodcastHomeResponseDeltaProto
@@ -2916,12 +2920,14 @@ class GetPodcastHomeResponseHeaderProto$Type extends MessageType<GetPodcastHomeR
     constructor() {
         super("GetPodcastHomeResponseHeaderProto", [
             { no: 1, name: "subscription_status", kind: "message", T: () => PodcastSubscriptionStatusProto },
-            { no: 2, name: "firestore_suggestions_path", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "firestore_suggestions_path", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "onboarding_required", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
     create(value?: PartialMessage<GetPodcastHomeResponseHeaderProto>): GetPodcastHomeResponseHeaderProto {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.firestoreSuggestionsPath = "";
+        message.onboardingRequired = false;
         if (value !== undefined)
             reflectionMergePartial<GetPodcastHomeResponseHeaderProto>(this, message, value);
         return message;
@@ -2936,6 +2942,9 @@ class GetPodcastHomeResponseHeaderProto$Type extends MessageType<GetPodcastHomeR
                     break;
                 case /* string firestore_suggestions_path */ 2:
                     message.firestoreSuggestionsPath = reader.string();
+                    break;
+                case /* bool onboarding_required */ 3:
+                    message.onboardingRequired = reader.bool();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -2955,6 +2964,9 @@ class GetPodcastHomeResponseHeaderProto$Type extends MessageType<GetPodcastHomeR
         /* string firestore_suggestions_path = 2; */
         if (message.firestoreSuggestionsPath !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.firestoreSuggestionsPath);
+        /* bool onboarding_required = 3; */
+        if (message.onboardingRequired !== false)
+            writer.tag(3, WireType.Varint).bool(message.onboardingRequired);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

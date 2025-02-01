@@ -985,6 +985,8 @@ struct GetPodcastHomeResponseHeaderProto: Sendable {
 
   var firestoreSuggestionsPath: String = String()
 
+  var onboardingRequired: Bool = false
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -3524,6 +3526,7 @@ extension GetPodcastHomeResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobu
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "subscription_status"),
     2: .standard(proto: "firestore_suggestions_path"),
+    3: .standard(proto: "onboarding_required"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3534,6 +3537,7 @@ extension GetPodcastHomeResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobu
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularMessageField(value: &self._subscriptionStatus) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.firestoreSuggestionsPath) }()
+      case 3: try { try decoder.decodeSingularBoolField(value: &self.onboardingRequired) }()
       default: break
       }
     }
@@ -3550,12 +3554,16 @@ extension GetPodcastHomeResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobu
     if !self.firestoreSuggestionsPath.isEmpty {
       try visitor.visitSingularStringField(value: self.firestoreSuggestionsPath, fieldNumber: 2)
     }
+    if self.onboardingRequired != false {
+      try visitor.visitSingularBoolField(value: self.onboardingRequired, fieldNumber: 3)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: GetPodcastHomeResponseHeaderProto, rhs: GetPodcastHomeResponseHeaderProto) -> Bool {
     if lhs._subscriptionStatus != rhs._subscriptionStatus {return false}
     if lhs.firestoreSuggestionsPath != rhs.firestoreSuggestionsPath {return false}
+    if lhs.onboardingRequired != rhs.onboardingRequired {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

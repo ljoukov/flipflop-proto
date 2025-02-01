@@ -159,6 +159,7 @@ message GetPodcastHomeRequestProto {
 message GetPodcastHomeResponseHeaderProto {
   PodcastSubscriptionStatusProto subscription_status = 1;
   string firestore_suggestions_path = 2;
+  bool onboarding_required = 3;
 }
 
 message GetPodcastHomeResponseDeltaProto {}
