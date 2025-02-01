@@ -474,3 +474,16 @@ message PodcastRoutineStepProgressProto {
   google.protobuf.Timestamp completed_at = 1;
   bool completed = 2;
 }
+
+message OnDeviceStoredUserDetailsProto {
+  string user_id = 1;
+  PodcastSubscriptionSourceProto subscription_source = 2;
+  string firestore_suggestions_path = 3;
+}
+
+message OnDeviceStoredOnboardingProto {
+  string user_id = 1;
+  string name = 2;
+  repeated string goal_ids = 3;
+  repeated string interest_ids = 4;
+}
