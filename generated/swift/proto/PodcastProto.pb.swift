@@ -2022,14 +2022,14 @@ struct PodcastOnboardingConfigProto: Sendable {
   /// Clears the value of `learningStylesConfig`. Subsequent reads from it will return its default value.
   mutating func clearLearningStylesConfig() {self._learningStylesConfig = nil}
 
-  var interestGroupsConfig: PodcastOnboardingInterestGroupsConfigProto {
-    get {return _interestGroupsConfig ?? PodcastOnboardingInterestGroupsConfigProto()}
-    set {_interestGroupsConfig = newValue}
+  var interestsConfig: PodcastOnboardingInterestsConfigProto {
+    get {return _interestsConfig ?? PodcastOnboardingInterestsConfigProto()}
+    set {_interestsConfig = newValue}
   }
-  /// Returns true if `interestGroupsConfig` has been explicitly set.
-  var hasInterestGroupsConfig: Bool {return self._interestGroupsConfig != nil}
-  /// Clears the value of `interestGroupsConfig`. Subsequent reads from it will return its default value.
-  mutating func clearInterestGroupsConfig() {self._interestGroupsConfig = nil}
+  /// Returns true if `interestsConfig` has been explicitly set.
+  var hasInterestsConfig: Bool {return self._interestsConfig != nil}
+  /// Clears the value of `interestsConfig`. Subsequent reads from it will return its default value.
+  mutating func clearInterestsConfig() {self._interestsConfig = nil}
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -2037,7 +2037,7 @@ struct PodcastOnboardingConfigProto: Sendable {
 
   fileprivate var _goalsConfig: PodcastOnboardingGoalsConfigProto? = nil
   fileprivate var _learningStylesConfig: PodcastOnboardingLearningStylesConfigProto? = nil
-  fileprivate var _interestGroupsConfig: PodcastOnboardingInterestGroupsConfigProto? = nil
+  fileprivate var _interestsConfig: PodcastOnboardingInterestsConfigProto? = nil
 }
 
 struct PodcastOnboardingGoalsConfigProto: Sendable {
@@ -2064,7 +2064,7 @@ struct PodcastOnboardingLearningStylesConfigProto: Sendable {
   init() {}
 }
 
-struct PodcastOnboardingInterestGroupsConfigProto: Sendable {
+struct PodcastOnboardingInterestsConfigProto: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -5863,7 +5863,7 @@ extension PodcastOnboardingConfigProto: SwiftProtobuf.Message, SwiftProtobuf._Me
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "goals_config"),
     2: .standard(proto: "learning_styles_config"),
-    3: .standard(proto: "interest_groups_config"),
+    3: .standard(proto: "interests_config"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -5874,7 +5874,7 @@ extension PodcastOnboardingConfigProto: SwiftProtobuf.Message, SwiftProtobuf._Me
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularMessageField(value: &self._goalsConfig) }()
       case 2: try { try decoder.decodeSingularMessageField(value: &self._learningStylesConfig) }()
-      case 3: try { try decoder.decodeSingularMessageField(value: &self._interestGroupsConfig) }()
+      case 3: try { try decoder.decodeSingularMessageField(value: &self._interestsConfig) }()
       default: break
       }
     }
@@ -5891,7 +5891,7 @@ extension PodcastOnboardingConfigProto: SwiftProtobuf.Message, SwiftProtobuf._Me
     try { if let v = self._learningStylesConfig {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     } }()
-    try { if let v = self._interestGroupsConfig {
+    try { if let v = self._interestsConfig {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
     } }()
     try unknownFields.traverse(visitor: &visitor)
@@ -5900,7 +5900,7 @@ extension PodcastOnboardingConfigProto: SwiftProtobuf.Message, SwiftProtobuf._Me
   static func ==(lhs: PodcastOnboardingConfigProto, rhs: PodcastOnboardingConfigProto) -> Bool {
     if lhs._goalsConfig != rhs._goalsConfig {return false}
     if lhs._learningStylesConfig != rhs._learningStylesConfig {return false}
-    if lhs._interestGroupsConfig != rhs._interestGroupsConfig {return false}
+    if lhs._interestsConfig != rhs._interestsConfig {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -5970,8 +5970,8 @@ extension PodcastOnboardingLearningStylesConfigProto: SwiftProtobuf.Message, Swi
   }
 }
 
-extension PodcastOnboardingInterestGroupsConfigProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "PodcastOnboardingInterestGroupsConfigProto"
+extension PodcastOnboardingInterestsConfigProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastOnboardingInterestsConfigProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "interest_groups"),
   ]
@@ -5995,7 +5995,7 @@ extension PodcastOnboardingInterestGroupsConfigProto: SwiftProtobuf.Message, Swi
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: PodcastOnboardingInterestGroupsConfigProto, rhs: PodcastOnboardingInterestGroupsConfigProto) -> Bool {
+  static func ==(lhs: PodcastOnboardingInterestsConfigProto, rhs: PodcastOnboardingInterestsConfigProto) -> Bool {
     if lhs.interestGroups != rhs.interestGroups {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
