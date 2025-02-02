@@ -492,20 +492,20 @@ message OnDeviceStoredUserDetailsProto {
 }
 
 message PodcastOnboardingConfigProto {
-  PodcastOnboardingGoalsProto goals = 1;
-  PodcastOnboardingLearningStylesProto learning_styles = 2;
-  PodcastOnboardingInterestGroupsProto interest_groups = 3;
+  PodcastOnboardingGoalsConfigProto goals_config = 1;
+  PodcastOnboardingLearningStylesConfigProto learning_styles_config = 2;
+  PodcastOnboardingInterestGroupsConfigProto interest_groups_config = 3;
 }
 
-message PodcastOnboardingGoalsProto {
+message PodcastOnboardingGoalsConfigProto {
   repeated PodcastOnboardingGoalProto goals = 1;
 }
 
-message PodcastOnboardingLearningStylesProto {
+message PodcastOnboardingLearningStylesConfigProto {
   repeated PodcastOnboardingLearningStyleProto learning_styles = 1;
 }
 
-message PodcastOnboardingInterestGroupsProto {
+message PodcastOnboardingInterestGroupsConfigProto {
   repeated PodcastOnboardingInterestGroupProto interest_groups = 1;
 }
 
