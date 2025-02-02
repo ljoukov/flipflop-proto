@@ -467,3 +467,18 @@ enum StoredPodcastSubscriptionSourceProto {
   STORED_PODCAST_SUBSCRIPTION_SOURCE_PROTO_PLAYSTORE = 3;
   STORED_PODCAST_SUBSCRIPTION_SOURCE_PROTO_WEB = 4;
 }
+
+message StoredPodcastUserProto {
+  string user_id = 1;
+  google.protobuf.Timestamp created_at = 2;
+  google.protobuf.Timestamp updated_at = 3;
+  StoredPodcastOnboardingInputProto onboarding_input = 4;
+}
+
+message StoredPodcastOnboardingInputProto {
+  google.protobuf.Timestamp created_at = 1;
+  string name = 2;
+  repeated string goal_ids = 3;
+  repeated string learning_style_ids = 4;
+  repeated string interest_ids = 5;
+}

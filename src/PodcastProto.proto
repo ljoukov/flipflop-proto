@@ -490,3 +490,41 @@ message OnDeviceStoredUserDetailsProto {
   PodcastSubscriptionSourceProto subscription_source = 2;
   string firestore_suggestions_path = 3;
 }
+
+message PodcastOnboardingConfigProto {
+  PodcastOnboardingGoalsProto goals = 1;
+  PodcastOnboardingLearningStylesProto learning_styles = 2;
+  PodcastOnboardingInterestGroupsProto interest_groups = 3;
+}
+
+message PodcastOnboardingGoalsProto {
+  map<string, PodcastOnboardingGoalProto> goals = 1;
+}
+
+message PodcastOnboardingLearningStylesProto {
+  map<string, PodcastOnboardingLearningStyleProto> learning_styles = 1;
+}
+
+message PodcastOnboardingInterestGroupsProto {
+  map<string, PodcastOnboardingInterestGroupProto> interest_groups = 1;
+}
+
+message PodcastOnboardingInterestGroupProto {
+  map<string, PodcastOnboardingInterestProto> interests = 1;
+}
+
+message PodcastOnboardingGoalProto {
+  string label = 1;
+  string emoji = 2;
+}
+
+message PodcastOnboardingLearningStyleProto {
+  string label = 1;
+  string subtitle = 2;
+  string emoji = 3;
+}
+
+message PodcastOnboardingInterestProto {
+  string label = 1;
+  string emoji = 2;
+}
