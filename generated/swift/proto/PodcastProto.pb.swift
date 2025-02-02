@@ -2045,7 +2045,7 @@ struct PodcastOnboardingGoalsProto: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var goals: Dictionary<String,PodcastOnboardingGoalProto> = [:]
+  var goals: [PodcastOnboardingGoalProto] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -2057,7 +2057,7 @@ struct PodcastOnboardingLearningStylesProto: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var learningStyles: Dictionary<String,PodcastOnboardingLearningStyleProto> = [:]
+  var learningStyles: [PodcastOnboardingLearningStyleProto] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -2069,7 +2069,7 @@ struct PodcastOnboardingInterestGroupsProto: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var interestGroups: Dictionary<String,PodcastOnboardingInterestGroupProto> = [:]
+  var interestGroups: [PodcastOnboardingInterestGroupProto] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -2081,7 +2081,9 @@ struct PodcastOnboardingInterestGroupProto: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var interests: Dictionary<String,PodcastOnboardingInterestProto> = [:]
+  var interestGroupID: String = String()
+
+  var interests: [PodcastOnboardingInterestProto] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -2092,6 +2094,8 @@ struct PodcastOnboardingGoalProto: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
+
+  var goalID: String = String()
 
   var label: String = String()
 
@@ -2106,6 +2110,8 @@ struct PodcastOnboardingLearningStyleProto: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
+
+  var learningStyleID: String = String()
 
   var label: String = String()
 
@@ -2122,6 +2128,8 @@ struct PodcastOnboardingInterestProto: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
+
+  var interestID: String = String()
 
   var label: String = String()
 
@@ -5910,7 +5918,7 @@ extension PodcastOnboardingGoalsProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,PodcastOnboardingGoalProto>.self, value: &self.goals) }()
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.goals) }()
       default: break
       }
     }
@@ -5918,7 +5926,7 @@ extension PodcastOnboardingGoalsProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     if !self.goals.isEmpty {
-      try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,PodcastOnboardingGoalProto>.self, value: self.goals, fieldNumber: 1)
+      try visitor.visitRepeatedMessageField(value: self.goals, fieldNumber: 1)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -5942,7 +5950,7 @@ extension PodcastOnboardingLearningStylesProto: SwiftProtobuf.Message, SwiftProt
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,PodcastOnboardingLearningStyleProto>.self, value: &self.learningStyles) }()
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.learningStyles) }()
       default: break
       }
     }
@@ -5950,7 +5958,7 @@ extension PodcastOnboardingLearningStylesProto: SwiftProtobuf.Message, SwiftProt
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     if !self.learningStyles.isEmpty {
-      try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,PodcastOnboardingLearningStyleProto>.self, value: self.learningStyles, fieldNumber: 1)
+      try visitor.visitRepeatedMessageField(value: self.learningStyles, fieldNumber: 1)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -5974,7 +5982,7 @@ extension PodcastOnboardingInterestGroupsProto: SwiftProtobuf.Message, SwiftProt
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,PodcastOnboardingInterestGroupProto>.self, value: &self.interestGroups) }()
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.interestGroups) }()
       default: break
       }
     }
@@ -5982,7 +5990,7 @@ extension PodcastOnboardingInterestGroupsProto: SwiftProtobuf.Message, SwiftProt
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     if !self.interestGroups.isEmpty {
-      try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,PodcastOnboardingInterestGroupProto>.self, value: self.interestGroups, fieldNumber: 1)
+      try visitor.visitRepeatedMessageField(value: self.interestGroups, fieldNumber: 1)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -5997,7 +6005,8 @@ extension PodcastOnboardingInterestGroupsProto: SwiftProtobuf.Message, SwiftProt
 extension PodcastOnboardingInterestGroupProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "PodcastOnboardingInterestGroupProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "interests"),
+    1: .standard(proto: "interest_group_id"),
+    2: .same(proto: "interests"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -6006,20 +6015,25 @@ extension PodcastOnboardingInterestGroupProto: SwiftProtobuf.Message, SwiftProto
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,PodcastOnboardingInterestProto>.self, value: &self.interests) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self.interestGroupID) }()
+      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.interests) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.interestGroupID.isEmpty {
+      try visitor.visitSingularStringField(value: self.interestGroupID, fieldNumber: 1)
+    }
     if !self.interests.isEmpty {
-      try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,PodcastOnboardingInterestProto>.self, value: self.interests, fieldNumber: 1)
+      try visitor.visitRepeatedMessageField(value: self.interests, fieldNumber: 2)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: PodcastOnboardingInterestGroupProto, rhs: PodcastOnboardingInterestGroupProto) -> Bool {
+    if lhs.interestGroupID != rhs.interestGroupID {return false}
     if lhs.interests != rhs.interests {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
@@ -6029,8 +6043,9 @@ extension PodcastOnboardingInterestGroupProto: SwiftProtobuf.Message, SwiftProto
 extension PodcastOnboardingGoalProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "PodcastOnboardingGoalProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "label"),
-    2: .same(proto: "emoji"),
+    1: .standard(proto: "goal_id"),
+    2: .same(proto: "label"),
+    3: .same(proto: "emoji"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -6039,24 +6054,29 @@ extension PodcastOnboardingGoalProto: SwiftProtobuf.Message, SwiftProtobuf._Mess
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.label) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.emoji) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self.goalID) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.label) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.emoji) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.goalID.isEmpty {
+      try visitor.visitSingularStringField(value: self.goalID, fieldNumber: 1)
+    }
     if !self.label.isEmpty {
-      try visitor.visitSingularStringField(value: self.label, fieldNumber: 1)
+      try visitor.visitSingularStringField(value: self.label, fieldNumber: 2)
     }
     if !self.emoji.isEmpty {
-      try visitor.visitSingularStringField(value: self.emoji, fieldNumber: 2)
+      try visitor.visitSingularStringField(value: self.emoji, fieldNumber: 3)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: PodcastOnboardingGoalProto, rhs: PodcastOnboardingGoalProto) -> Bool {
+    if lhs.goalID != rhs.goalID {return false}
     if lhs.label != rhs.label {return false}
     if lhs.emoji != rhs.emoji {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
@@ -6067,9 +6087,10 @@ extension PodcastOnboardingGoalProto: SwiftProtobuf.Message, SwiftProtobuf._Mess
 extension PodcastOnboardingLearningStyleProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "PodcastOnboardingLearningStyleProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "label"),
-    2: .same(proto: "subtitle"),
-    3: .same(proto: "emoji"),
+    1: .standard(proto: "learning_style_id"),
+    2: .same(proto: "label"),
+    3: .same(proto: "subtitle"),
+    4: .same(proto: "emoji"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -6078,28 +6099,33 @@ extension PodcastOnboardingLearningStyleProto: SwiftProtobuf.Message, SwiftProto
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.label) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.subtitle) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.emoji) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self.learningStyleID) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.label) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.subtitle) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.emoji) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.learningStyleID.isEmpty {
+      try visitor.visitSingularStringField(value: self.learningStyleID, fieldNumber: 1)
+    }
     if !self.label.isEmpty {
-      try visitor.visitSingularStringField(value: self.label, fieldNumber: 1)
+      try visitor.visitSingularStringField(value: self.label, fieldNumber: 2)
     }
     if !self.subtitle.isEmpty {
-      try visitor.visitSingularStringField(value: self.subtitle, fieldNumber: 2)
+      try visitor.visitSingularStringField(value: self.subtitle, fieldNumber: 3)
     }
     if !self.emoji.isEmpty {
-      try visitor.visitSingularStringField(value: self.emoji, fieldNumber: 3)
+      try visitor.visitSingularStringField(value: self.emoji, fieldNumber: 4)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: PodcastOnboardingLearningStyleProto, rhs: PodcastOnboardingLearningStyleProto) -> Bool {
+    if lhs.learningStyleID != rhs.learningStyleID {return false}
     if lhs.label != rhs.label {return false}
     if lhs.subtitle != rhs.subtitle {return false}
     if lhs.emoji != rhs.emoji {return false}
@@ -6111,8 +6137,9 @@ extension PodcastOnboardingLearningStyleProto: SwiftProtobuf.Message, SwiftProto
 extension PodcastOnboardingInterestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "PodcastOnboardingInterestProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "label"),
-    2: .same(proto: "emoji"),
+    1: .standard(proto: "interest_id"),
+    2: .same(proto: "label"),
+    3: .same(proto: "emoji"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -6121,24 +6148,29 @@ extension PodcastOnboardingInterestProto: SwiftProtobuf.Message, SwiftProtobuf._
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.label) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.emoji) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self.interestID) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.label) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.emoji) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.interestID.isEmpty {
+      try visitor.visitSingularStringField(value: self.interestID, fieldNumber: 1)
+    }
     if !self.label.isEmpty {
-      try visitor.visitSingularStringField(value: self.label, fieldNumber: 1)
+      try visitor.visitSingularStringField(value: self.label, fieldNumber: 2)
     }
     if !self.emoji.isEmpty {
-      try visitor.visitSingularStringField(value: self.emoji, fieldNumber: 2)
+      try visitor.visitSingularStringField(value: self.emoji, fieldNumber: 3)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: PodcastOnboardingInterestProto, rhs: PodcastOnboardingInterestProto) -> Bool {
+    if lhs.interestID != rhs.interestID {return false}
     if lhs.label != rhs.label {return false}
     if lhs.emoji != rhs.emoji {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}

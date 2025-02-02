@@ -1317,55 +1317,55 @@ export interface PodcastOnboardingConfigProto {
  */
 export interface PodcastOnboardingGoalsProto {
     /**
-     * @generated from protobuf field: map<string, PodcastOnboardingGoalProto> goals = 1;
+     * @generated from protobuf field: repeated PodcastOnboardingGoalProto goals = 1;
      */
-    goals: {
-        [key: string]: PodcastOnboardingGoalProto;
-    };
+    goals: PodcastOnboardingGoalProto[];
 }
 /**
  * @generated from protobuf message PodcastOnboardingLearningStylesProto
  */
 export interface PodcastOnboardingLearningStylesProto {
     /**
-     * @generated from protobuf field: map<string, PodcastOnboardingLearningStyleProto> learning_styles = 1;
+     * @generated from protobuf field: repeated PodcastOnboardingLearningStyleProto learning_styles = 1;
      */
-    learningStyles: {
-        [key: string]: PodcastOnboardingLearningStyleProto;
-    };
+    learningStyles: PodcastOnboardingLearningStyleProto[];
 }
 /**
  * @generated from protobuf message PodcastOnboardingInterestGroupsProto
  */
 export interface PodcastOnboardingInterestGroupsProto {
     /**
-     * @generated from protobuf field: map<string, PodcastOnboardingInterestGroupProto> interest_groups = 1;
+     * @generated from protobuf field: repeated PodcastOnboardingInterestGroupProto interest_groups = 1;
      */
-    interestGroups: {
-        [key: string]: PodcastOnboardingInterestGroupProto;
-    };
+    interestGroups: PodcastOnboardingInterestGroupProto[];
 }
 /**
  * @generated from protobuf message PodcastOnboardingInterestGroupProto
  */
 export interface PodcastOnboardingInterestGroupProto {
     /**
-     * @generated from protobuf field: map<string, PodcastOnboardingInterestProto> interests = 1;
+     * @generated from protobuf field: string interest_group_id = 1;
      */
-    interests: {
-        [key: string]: PodcastOnboardingInterestProto;
-    };
+    interestGroupId: string;
+    /**
+     * @generated from protobuf field: repeated PodcastOnboardingInterestProto interests = 2;
+     */
+    interests: PodcastOnboardingInterestProto[];
 }
 /**
  * @generated from protobuf message PodcastOnboardingGoalProto
  */
 export interface PodcastOnboardingGoalProto {
     /**
-     * @generated from protobuf field: string label = 1;
+     * @generated from protobuf field: string goal_id = 1;
+     */
+    goalId: string;
+    /**
+     * @generated from protobuf field: string label = 2;
      */
     label: string;
     /**
-     * @generated from protobuf field: string emoji = 2;
+     * @generated from protobuf field: string emoji = 3;
      */
     emoji: string;
 }
@@ -1374,15 +1374,19 @@ export interface PodcastOnboardingGoalProto {
  */
 export interface PodcastOnboardingLearningStyleProto {
     /**
-     * @generated from protobuf field: string label = 1;
+     * @generated from protobuf field: string learning_style_id = 1;
+     */
+    learningStyleId: string;
+    /**
+     * @generated from protobuf field: string label = 2;
      */
     label: string;
     /**
-     * @generated from protobuf field: string subtitle = 2;
+     * @generated from protobuf field: string subtitle = 3;
      */
     subtitle: string;
     /**
-     * @generated from protobuf field: string emoji = 3;
+     * @generated from protobuf field: string emoji = 4;
      */
     emoji: string;
 }
@@ -1391,11 +1395,15 @@ export interface PodcastOnboardingLearningStyleProto {
  */
 export interface PodcastOnboardingInterestProto {
     /**
-     * @generated from protobuf field: string label = 1;
+     * @generated from protobuf field: string interest_id = 1;
+     */
+    interestId: string;
+    /**
+     * @generated from protobuf field: string label = 2;
      */
     label: string;
     /**
-     * @generated from protobuf field: string emoji = 2;
+     * @generated from protobuf field: string emoji = 3;
      */
     emoji: string;
 }
@@ -5964,12 +5972,12 @@ export const PodcastOnboardingConfigProto = new PodcastOnboardingConfigProto$Typ
 class PodcastOnboardingGoalsProto$Type extends MessageType<PodcastOnboardingGoalsProto> {
     constructor() {
         super("PodcastOnboardingGoalsProto", [
-            { no: 1, name: "goals", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => PodcastOnboardingGoalProto } }
+            { no: 1, name: "goals", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastOnboardingGoalProto }
         ]);
     }
     create(value?: PartialMessage<PodcastOnboardingGoalsProto>): PodcastOnboardingGoalsProto {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.goals = {};
+        message.goals = [];
         if (value !== undefined)
             reflectionMergePartial<PodcastOnboardingGoalsProto>(this, message, value);
         return message;
@@ -5979,8 +5987,8 @@ class PodcastOnboardingGoalsProto$Type extends MessageType<PodcastOnboardingGoal
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* map<string, PodcastOnboardingGoalProto> goals */ 1:
-                    this.binaryReadMap1(message.goals, reader, options);
+                case /* repeated PodcastOnboardingGoalProto goals */ 1:
+                    message.goals.push(PodcastOnboardingGoalProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -5993,30 +6001,10 @@ class PodcastOnboardingGoalsProto$Type extends MessageType<PodcastOnboardingGoal
         }
         return message;
     }
-    private binaryReadMap1(map: PodcastOnboardingGoalsProto["goals"], reader: IBinaryReader, options: BinaryReadOptions): void {
-        let len = reader.uint32(), end = reader.pos + len, key: keyof PodcastOnboardingGoalsProto["goals"] | undefined, val: PodcastOnboardingGoalsProto["goals"][any] | undefined;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case 1:
-                    key = reader.string();
-                    break;
-                case 2:
-                    val = PodcastOnboardingGoalProto.internalBinaryRead(reader, reader.uint32(), options);
-                    break;
-                default: throw new globalThis.Error("unknown map entry field for field PodcastOnboardingGoalsProto.goals");
-            }
-        }
-        map[key ?? ""] = val ?? PodcastOnboardingGoalProto.create();
-    }
     internalBinaryWrite(message: PodcastOnboardingGoalsProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* map<string, PodcastOnboardingGoalProto> goals = 1; */
-        for (let k of globalThis.Object.keys(message.goals)) {
-            writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k);
-            writer.tag(2, WireType.LengthDelimited).fork();
-            PodcastOnboardingGoalProto.internalBinaryWrite(message.goals[k], writer, options);
-            writer.join().join();
-        }
+        /* repeated PodcastOnboardingGoalProto goals = 1; */
+        for (let i = 0; i < message.goals.length; i++)
+            PodcastOnboardingGoalProto.internalBinaryWrite(message.goals[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -6031,12 +6019,12 @@ export const PodcastOnboardingGoalsProto = new PodcastOnboardingGoalsProto$Type(
 class PodcastOnboardingLearningStylesProto$Type extends MessageType<PodcastOnboardingLearningStylesProto> {
     constructor() {
         super("PodcastOnboardingLearningStylesProto", [
-            { no: 1, name: "learning_styles", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => PodcastOnboardingLearningStyleProto } }
+            { no: 1, name: "learning_styles", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastOnboardingLearningStyleProto }
         ]);
     }
     create(value?: PartialMessage<PodcastOnboardingLearningStylesProto>): PodcastOnboardingLearningStylesProto {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.learningStyles = {};
+        message.learningStyles = [];
         if (value !== undefined)
             reflectionMergePartial<PodcastOnboardingLearningStylesProto>(this, message, value);
         return message;
@@ -6046,8 +6034,8 @@ class PodcastOnboardingLearningStylesProto$Type extends MessageType<PodcastOnboa
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* map<string, PodcastOnboardingLearningStyleProto> learning_styles */ 1:
-                    this.binaryReadMap1(message.learningStyles, reader, options);
+                case /* repeated PodcastOnboardingLearningStyleProto learning_styles */ 1:
+                    message.learningStyles.push(PodcastOnboardingLearningStyleProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -6060,30 +6048,10 @@ class PodcastOnboardingLearningStylesProto$Type extends MessageType<PodcastOnboa
         }
         return message;
     }
-    private binaryReadMap1(map: PodcastOnboardingLearningStylesProto["learningStyles"], reader: IBinaryReader, options: BinaryReadOptions): void {
-        let len = reader.uint32(), end = reader.pos + len, key: keyof PodcastOnboardingLearningStylesProto["learningStyles"] | undefined, val: PodcastOnboardingLearningStylesProto["learningStyles"][any] | undefined;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case 1:
-                    key = reader.string();
-                    break;
-                case 2:
-                    val = PodcastOnboardingLearningStyleProto.internalBinaryRead(reader, reader.uint32(), options);
-                    break;
-                default: throw new globalThis.Error("unknown map entry field for field PodcastOnboardingLearningStylesProto.learning_styles");
-            }
-        }
-        map[key ?? ""] = val ?? PodcastOnboardingLearningStyleProto.create();
-    }
     internalBinaryWrite(message: PodcastOnboardingLearningStylesProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* map<string, PodcastOnboardingLearningStyleProto> learning_styles = 1; */
-        for (let k of globalThis.Object.keys(message.learningStyles)) {
-            writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k);
-            writer.tag(2, WireType.LengthDelimited).fork();
-            PodcastOnboardingLearningStyleProto.internalBinaryWrite(message.learningStyles[k], writer, options);
-            writer.join().join();
-        }
+        /* repeated PodcastOnboardingLearningStyleProto learning_styles = 1; */
+        for (let i = 0; i < message.learningStyles.length; i++)
+            PodcastOnboardingLearningStyleProto.internalBinaryWrite(message.learningStyles[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -6098,12 +6066,12 @@ export const PodcastOnboardingLearningStylesProto = new PodcastOnboardingLearnin
 class PodcastOnboardingInterestGroupsProto$Type extends MessageType<PodcastOnboardingInterestGroupsProto> {
     constructor() {
         super("PodcastOnboardingInterestGroupsProto", [
-            { no: 1, name: "interest_groups", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => PodcastOnboardingInterestGroupProto } }
+            { no: 1, name: "interest_groups", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastOnboardingInterestGroupProto }
         ]);
     }
     create(value?: PartialMessage<PodcastOnboardingInterestGroupsProto>): PodcastOnboardingInterestGroupsProto {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.interestGroups = {};
+        message.interestGroups = [];
         if (value !== undefined)
             reflectionMergePartial<PodcastOnboardingInterestGroupsProto>(this, message, value);
         return message;
@@ -6113,8 +6081,8 @@ class PodcastOnboardingInterestGroupsProto$Type extends MessageType<PodcastOnboa
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* map<string, PodcastOnboardingInterestGroupProto> interest_groups */ 1:
-                    this.binaryReadMap1(message.interestGroups, reader, options);
+                case /* repeated PodcastOnboardingInterestGroupProto interest_groups */ 1:
+                    message.interestGroups.push(PodcastOnboardingInterestGroupProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -6127,30 +6095,10 @@ class PodcastOnboardingInterestGroupsProto$Type extends MessageType<PodcastOnboa
         }
         return message;
     }
-    private binaryReadMap1(map: PodcastOnboardingInterestGroupsProto["interestGroups"], reader: IBinaryReader, options: BinaryReadOptions): void {
-        let len = reader.uint32(), end = reader.pos + len, key: keyof PodcastOnboardingInterestGroupsProto["interestGroups"] | undefined, val: PodcastOnboardingInterestGroupsProto["interestGroups"][any] | undefined;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case 1:
-                    key = reader.string();
-                    break;
-                case 2:
-                    val = PodcastOnboardingInterestGroupProto.internalBinaryRead(reader, reader.uint32(), options);
-                    break;
-                default: throw new globalThis.Error("unknown map entry field for field PodcastOnboardingInterestGroupsProto.interest_groups");
-            }
-        }
-        map[key ?? ""] = val ?? PodcastOnboardingInterestGroupProto.create();
-    }
     internalBinaryWrite(message: PodcastOnboardingInterestGroupsProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* map<string, PodcastOnboardingInterestGroupProto> interest_groups = 1; */
-        for (let k of globalThis.Object.keys(message.interestGroups)) {
-            writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k);
-            writer.tag(2, WireType.LengthDelimited).fork();
-            PodcastOnboardingInterestGroupProto.internalBinaryWrite(message.interestGroups[k], writer, options);
-            writer.join().join();
-        }
+        /* repeated PodcastOnboardingInterestGroupProto interest_groups = 1; */
+        for (let i = 0; i < message.interestGroups.length; i++)
+            PodcastOnboardingInterestGroupProto.internalBinaryWrite(message.interestGroups[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -6165,12 +6113,14 @@ export const PodcastOnboardingInterestGroupsProto = new PodcastOnboardingInteres
 class PodcastOnboardingInterestGroupProto$Type extends MessageType<PodcastOnboardingInterestGroupProto> {
     constructor() {
         super("PodcastOnboardingInterestGroupProto", [
-            { no: 1, name: "interests", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => PodcastOnboardingInterestProto } }
+            { no: 1, name: "interest_group_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "interests", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastOnboardingInterestProto }
         ]);
     }
     create(value?: PartialMessage<PodcastOnboardingInterestGroupProto>): PodcastOnboardingInterestGroupProto {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.interests = {};
+        message.interestGroupId = "";
+        message.interests = [];
         if (value !== undefined)
             reflectionMergePartial<PodcastOnboardingInterestGroupProto>(this, message, value);
         return message;
@@ -6180,8 +6130,11 @@ class PodcastOnboardingInterestGroupProto$Type extends MessageType<PodcastOnboar
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* map<string, PodcastOnboardingInterestProto> interests */ 1:
-                    this.binaryReadMap1(message.interests, reader, options);
+                case /* string interest_group_id */ 1:
+                    message.interestGroupId = reader.string();
+                    break;
+                case /* repeated PodcastOnboardingInterestProto interests */ 2:
+                    message.interests.push(PodcastOnboardingInterestProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -6194,30 +6147,13 @@ class PodcastOnboardingInterestGroupProto$Type extends MessageType<PodcastOnboar
         }
         return message;
     }
-    private binaryReadMap1(map: PodcastOnboardingInterestGroupProto["interests"], reader: IBinaryReader, options: BinaryReadOptions): void {
-        let len = reader.uint32(), end = reader.pos + len, key: keyof PodcastOnboardingInterestGroupProto["interests"] | undefined, val: PodcastOnboardingInterestGroupProto["interests"][any] | undefined;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case 1:
-                    key = reader.string();
-                    break;
-                case 2:
-                    val = PodcastOnboardingInterestProto.internalBinaryRead(reader, reader.uint32(), options);
-                    break;
-                default: throw new globalThis.Error("unknown map entry field for field PodcastOnboardingInterestGroupProto.interests");
-            }
-        }
-        map[key ?? ""] = val ?? PodcastOnboardingInterestProto.create();
-    }
     internalBinaryWrite(message: PodcastOnboardingInterestGroupProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* map<string, PodcastOnboardingInterestProto> interests = 1; */
-        for (let k of globalThis.Object.keys(message.interests)) {
-            writer.tag(1, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k);
-            writer.tag(2, WireType.LengthDelimited).fork();
-            PodcastOnboardingInterestProto.internalBinaryWrite(message.interests[k], writer, options);
-            writer.join().join();
-        }
+        /* string interest_group_id = 1; */
+        if (message.interestGroupId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.interestGroupId);
+        /* repeated PodcastOnboardingInterestProto interests = 2; */
+        for (let i = 0; i < message.interests.length; i++)
+            PodcastOnboardingInterestProto.internalBinaryWrite(message.interests[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -6232,12 +6168,14 @@ export const PodcastOnboardingInterestGroupProto = new PodcastOnboardingInterest
 class PodcastOnboardingGoalProto$Type extends MessageType<PodcastOnboardingGoalProto> {
     constructor() {
         super("PodcastOnboardingGoalProto", [
-            { no: 1, name: "label", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "goal_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "label", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PodcastOnboardingGoalProto>): PodcastOnboardingGoalProto {
         const message = globalThis.Object.create((this.messagePrototype!));
+        message.goalId = "";
         message.label = "";
         message.emoji = "";
         if (value !== undefined)
@@ -6249,68 +6187,11 @@ class PodcastOnboardingGoalProto$Type extends MessageType<PodcastOnboardingGoalP
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string label */ 1:
+                case /* string goal_id */ 1:
+                    message.goalId = reader.string();
+                    break;
+                case /* string label */ 2:
                     message.label = reader.string();
-                    break;
-                case /* string emoji */ 2:
-                    message.emoji = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: PodcastOnboardingGoalProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string label = 1; */
-        if (message.label !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.label);
-        /* string emoji = 2; */
-        if (message.emoji !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.emoji);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
-}
-/**
- * @generated MessageType for protobuf message PodcastOnboardingGoalProto
- */
-export const PodcastOnboardingGoalProto = new PodcastOnboardingGoalProto$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class PodcastOnboardingLearningStyleProto$Type extends MessageType<PodcastOnboardingLearningStyleProto> {
-    constructor() {
-        super("PodcastOnboardingLearningStyleProto", [
-            { no: 1, name: "label", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "subtitle", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
-        ]);
-    }
-    create(value?: PartialMessage<PodcastOnboardingLearningStyleProto>): PodcastOnboardingLearningStyleProto {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.label = "";
-        message.subtitle = "";
-        message.emoji = "";
-        if (value !== undefined)
-            reflectionMergePartial<PodcastOnboardingLearningStyleProto>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastOnboardingLearningStyleProto): PodcastOnboardingLearningStyleProto {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string label */ 1:
-                    message.label = reader.string();
-                    break;
-                case /* string subtitle */ 2:
-                    message.subtitle = reader.string();
                     break;
                 case /* string emoji */ 3:
                     message.emoji = reader.string();
@@ -6326,16 +6207,87 @@ class PodcastOnboardingLearningStyleProto$Type extends MessageType<PodcastOnboar
         }
         return message;
     }
-    internalBinaryWrite(message: PodcastOnboardingLearningStyleProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string label = 1; */
+    internalBinaryWrite(message: PodcastOnboardingGoalProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string goal_id = 1; */
+        if (message.goalId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.goalId);
+        /* string label = 2; */
         if (message.label !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.label);
-        /* string subtitle = 2; */
-        if (message.subtitle !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.subtitle);
+            writer.tag(2, WireType.LengthDelimited).string(message.label);
         /* string emoji = 3; */
         if (message.emoji !== "")
             writer.tag(3, WireType.LengthDelimited).string(message.emoji);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message PodcastOnboardingGoalProto
+ */
+export const PodcastOnboardingGoalProto = new PodcastOnboardingGoalProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PodcastOnboardingLearningStyleProto$Type extends MessageType<PodcastOnboardingLearningStyleProto> {
+    constructor() {
+        super("PodcastOnboardingLearningStyleProto", [
+            { no: 1, name: "learning_style_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "label", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "subtitle", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PodcastOnboardingLearningStyleProto>): PodcastOnboardingLearningStyleProto {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.learningStyleId = "";
+        message.label = "";
+        message.subtitle = "";
+        message.emoji = "";
+        if (value !== undefined)
+            reflectionMergePartial<PodcastOnboardingLearningStyleProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastOnboardingLearningStyleProto): PodcastOnboardingLearningStyleProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string learning_style_id */ 1:
+                    message.learningStyleId = reader.string();
+                    break;
+                case /* string label */ 2:
+                    message.label = reader.string();
+                    break;
+                case /* string subtitle */ 3:
+                    message.subtitle = reader.string();
+                    break;
+                case /* string emoji */ 4:
+                    message.emoji = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PodcastOnboardingLearningStyleProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string learning_style_id = 1; */
+        if (message.learningStyleId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.learningStyleId);
+        /* string label = 2; */
+        if (message.label !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.label);
+        /* string subtitle = 3; */
+        if (message.subtitle !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.subtitle);
+        /* string emoji = 4; */
+        if (message.emoji !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.emoji);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -6350,12 +6302,14 @@ export const PodcastOnboardingLearningStyleProto = new PodcastOnboardingLearning
 class PodcastOnboardingInterestProto$Type extends MessageType<PodcastOnboardingInterestProto> {
     constructor() {
         super("PodcastOnboardingInterestProto", [
-            { no: 1, name: "label", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "interest_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "label", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "emoji", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PodcastOnboardingInterestProto>): PodcastOnboardingInterestProto {
         const message = globalThis.Object.create((this.messagePrototype!));
+        message.interestId = "";
         message.label = "";
         message.emoji = "";
         if (value !== undefined)
@@ -6367,10 +6321,13 @@ class PodcastOnboardingInterestProto$Type extends MessageType<PodcastOnboardingI
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string label */ 1:
+                case /* string interest_id */ 1:
+                    message.interestId = reader.string();
+                    break;
+                case /* string label */ 2:
                     message.label = reader.string();
                     break;
-                case /* string emoji */ 2:
+                case /* string emoji */ 3:
                     message.emoji = reader.string();
                     break;
                 default:
@@ -6385,12 +6342,15 @@ class PodcastOnboardingInterestProto$Type extends MessageType<PodcastOnboardingI
         return message;
     }
     internalBinaryWrite(message: PodcastOnboardingInterestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string label = 1; */
+        /* string interest_id = 1; */
+        if (message.interestId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.interestId);
+        /* string label = 2; */
         if (message.label !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.label);
-        /* string emoji = 2; */
+            writer.tag(2, WireType.LengthDelimited).string(message.label);
+        /* string emoji = 3; */
         if (message.emoji !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.emoji);
+            writer.tag(3, WireType.LengthDelimited).string(message.emoji);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

@@ -498,33 +498,37 @@ message PodcastOnboardingConfigProto {
 }
 
 message PodcastOnboardingGoalsProto {
-  map<string, PodcastOnboardingGoalProto> goals = 1;
+  repeated PodcastOnboardingGoalProto goals = 1;
 }
 
 message PodcastOnboardingLearningStylesProto {
-  map<string, PodcastOnboardingLearningStyleProto> learning_styles = 1;
+  repeated PodcastOnboardingLearningStyleProto learning_styles = 1;
 }
 
 message PodcastOnboardingInterestGroupsProto {
-  map<string, PodcastOnboardingInterestGroupProto> interest_groups = 1;
+  repeated PodcastOnboardingInterestGroupProto interest_groups = 1;
 }
 
 message PodcastOnboardingInterestGroupProto {
-  map<string, PodcastOnboardingInterestProto> interests = 1;
+  string interest_group_id = 1;
+  repeated PodcastOnboardingInterestProto interests = 2;
 }
 
 message PodcastOnboardingGoalProto {
-  string label = 1;
-  string emoji = 2;
-}
-
-message PodcastOnboardingLearningStyleProto {
-  string label = 1;
-  string subtitle = 2;
+  string goal_id = 1;
+  string label = 2;
   string emoji = 3;
 }
 
+message PodcastOnboardingLearningStyleProto {
+  string learning_style_id = 1;
+  string label = 2;
+  string subtitle = 3;
+  string emoji = 4;
+}
+
 message PodcastOnboardingInterestProto {
-  string label = 1;
-  string emoji = 2;
+  string interest_id = 1;
+  string label = 2;
+  string emoji = 3;
 }
