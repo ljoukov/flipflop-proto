@@ -32,6 +32,7 @@ message PodcastStreamApiRequestProto {
     GetPodcastFollowupPointsRequestProto followup_points = 17;
     GetPodcastHomeRequestProto home = 15;
     DeleteAccountRequestProto delete_account = 16;
+    GetPodcastOnboardingInputRequestProto onboarding_input = 18;
   }
 }
 
@@ -45,6 +46,7 @@ message PodcastStreamApiResponseHeaderProto {
     GetPodcastFollowupPointsResponseHeaderProto followup_points_header = 17;
     GetPodcastHomeResponseHeaderProto home_header = 15;
     DeleteAccountResponseHeaderProto delete_account_header = 16;
+    GetPodcastOnboardingInputResponseHeaderProto onboarding_input = 18;
   }
   map<string, google.protobuf.Duration> latencies = 100;
 }
@@ -59,6 +61,7 @@ message PodcastStreamApiResponseDeltaProto {
     GetPodcastFollowupPointsResponseDeltaProto followup_points_delta = 17;
     GetPodcastHomeResponseDeltaProto home_delta = 15;
     DeleteAccountResponseDeltaProto delete_account_delta = 16;
+    GetPodcastOnboardingInputResponseDeltaProto onboarding_input_delta = 18;
   }
 }
 
@@ -169,6 +172,14 @@ message DeleteAccountRequestProto {}
 message DeleteAccountResponseHeaderProto {}
 
 message DeleteAccountResponseDeltaProto {}
+
+message GetPodcastOnboardingInputRequestProto {}
+
+message GetPodcastOnboardingInputResponseHeaderProto {
+  PodcastOnboardingInputProto onboarding_input = 1;
+}
+
+message GetPodcastOnboardingInputResponseDeltaProto {}
 
 message PodcastProto {
   google.protobuf.Timestamp updated_at = 1;

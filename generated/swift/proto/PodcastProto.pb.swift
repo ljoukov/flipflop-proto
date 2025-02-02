@@ -380,6 +380,14 @@ struct PodcastStreamApiRequestProto: Sendable {
     set {request = .deleteAccount(newValue)}
   }
 
+  var onboardingInput: GetPodcastOnboardingInputRequestProto {
+    get {
+      if case .onboardingInput(let v)? = request {return v}
+      return GetPodcastOnboardingInputRequestProto()
+    }
+    set {request = .onboardingInput(newValue)}
+  }
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_Request: Equatable, Sendable {
@@ -391,6 +399,7 @@ struct PodcastStreamApiRequestProto: Sendable {
     case followupPoints(GetPodcastFollowupPointsRequestProto)
     case home(GetPodcastHomeRequestProto)
     case deleteAccount(DeleteAccountRequestProto)
+    case onboardingInput(GetPodcastOnboardingInputRequestProto)
 
   }
 
@@ -470,6 +479,14 @@ struct PodcastStreamApiResponseHeaderProto: Sendable {
     set {header = .deleteAccountHeader(newValue)}
   }
 
+  var onboardingInput: GetPodcastOnboardingInputResponseHeaderProto {
+    get {
+      if case .onboardingInput(let v)? = header {return v}
+      return GetPodcastOnboardingInputResponseHeaderProto()
+    }
+    set {header = .onboardingInput(newValue)}
+  }
+
   var latencies: Dictionary<String,SwiftProtobuf.Google_Protobuf_Duration> = [:]
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -483,6 +500,7 @@ struct PodcastStreamApiResponseHeaderProto: Sendable {
     case followupPointsHeader(GetPodcastFollowupPointsResponseHeaderProto)
     case homeHeader(GetPodcastHomeResponseHeaderProto)
     case deleteAccountHeader(DeleteAccountResponseHeaderProto)
+    case onboardingInput(GetPodcastOnboardingInputResponseHeaderProto)
 
   }
 
@@ -560,6 +578,14 @@ struct PodcastStreamApiResponseDeltaProto: Sendable {
     set {responseDelta = .deleteAccountDelta(newValue)}
   }
 
+  var onboardingInputDelta: GetPodcastOnboardingInputResponseDeltaProto {
+    get {
+      if case .onboardingInputDelta(let v)? = responseDelta {return v}
+      return GetPodcastOnboardingInputResponseDeltaProto()
+    }
+    set {responseDelta = .onboardingInputDelta(newValue)}
+  }
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_ResponseDelta: Equatable, Sendable {
@@ -571,6 +597,7 @@ struct PodcastStreamApiResponseDeltaProto: Sendable {
     case followupPointsDelta(GetPodcastFollowupPointsResponseDeltaProto)
     case homeDelta(GetPodcastHomeResponseDeltaProto)
     case deleteAccountDelta(DeleteAccountResponseDeltaProto)
+    case onboardingInputDelta(GetPodcastOnboardingInputResponseDeltaProto)
 
   }
 
@@ -1025,6 +1052,47 @@ struct DeleteAccountResponseHeaderProto: Sendable {
 }
 
 struct DeleteAccountResponseDeltaProto: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct GetPodcastOnboardingInputRequestProto: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct GetPodcastOnboardingInputResponseHeaderProto: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var onboardingInput: PodcastOnboardingInputProto {
+    get {return _onboardingInput ?? PodcastOnboardingInputProto()}
+    set {_onboardingInput = newValue}
+  }
+  /// Returns true if `onboardingInput` has been explicitly set.
+  var hasOnboardingInput: Bool {return self._onboardingInput != nil}
+  /// Clears the value of `onboardingInput`. Subsequent reads from it will return its default value.
+  mutating func clearOnboardingInput() {self._onboardingInput = nil}
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+
+  fileprivate var _onboardingInput: PodcastOnboardingInputProto? = nil
+}
+
+struct GetPodcastOnboardingInputResponseDeltaProto: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -2295,6 +2363,7 @@ extension PodcastStreamApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Me
     17: .standard(proto: "followup_points"),
     15: .same(proto: "home"),
     16: .standard(proto: "delete_account"),
+    18: .standard(proto: "onboarding_input"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2408,6 +2477,19 @@ extension PodcastStreamApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Me
           self.request = .followupPoints(v)
         }
       }()
+      case 18: try {
+        var v: GetPodcastOnboardingInputRequestProto?
+        var hadOneofValue = false
+        if let current = self.request {
+          hadOneofValue = true
+          if case .onboardingInput(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.request = .onboardingInput(v)
+        }
+      }()
       default: break
       }
     }
@@ -2454,6 +2536,10 @@ extension PodcastStreamApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Me
       guard case .followupPoints(let v)? = self.request else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 17)
     }()
+    case .onboardingInput?: try {
+      guard case .onboardingInput(let v)? = self.request else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 18)
+    }()
     case nil: break
     }
     try unknownFields.traverse(visitor: &visitor)
@@ -2478,6 +2564,7 @@ extension PodcastStreamApiResponseHeaderProto: SwiftProtobuf.Message, SwiftProto
     17: .standard(proto: "followup_points_header"),
     15: .standard(proto: "home_header"),
     16: .standard(proto: "delete_account_header"),
+    18: .standard(proto: "onboarding_input"),
     100: .same(proto: "latencies"),
   ]
 
@@ -2591,6 +2678,19 @@ extension PodcastStreamApiResponseHeaderProto: SwiftProtobuf.Message, SwiftProto
           self.header = .followupPointsHeader(v)
         }
       }()
+      case 18: try {
+        var v: GetPodcastOnboardingInputResponseHeaderProto?
+        var hadOneofValue = false
+        if let current = self.header {
+          hadOneofValue = true
+          if case .onboardingInput(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.header = .onboardingInput(v)
+        }
+      }()
       case 100: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.Google_Protobuf_Duration>.self, value: &self.latencies) }()
       default: break
       }
@@ -2635,6 +2735,10 @@ extension PodcastStreamApiResponseHeaderProto: SwiftProtobuf.Message, SwiftProto
       guard case .followupPointsHeader(let v)? = self.header else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 17)
     }()
+    case .onboardingInput?: try {
+      guard case .onboardingInput(let v)? = self.header else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 18)
+    }()
     case nil: break
     }
     if !self.latencies.isEmpty {
@@ -2662,6 +2766,7 @@ extension PodcastStreamApiResponseDeltaProto: SwiftProtobuf.Message, SwiftProtob
     17: .standard(proto: "followup_points_delta"),
     15: .standard(proto: "home_delta"),
     16: .standard(proto: "delete_account_delta"),
+    18: .standard(proto: "onboarding_input_delta"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2774,6 +2879,19 @@ extension PodcastStreamApiResponseDeltaProto: SwiftProtobuf.Message, SwiftProtob
           self.responseDelta = .followupPointsDelta(v)
         }
       }()
+      case 18: try {
+        var v: GetPodcastOnboardingInputResponseDeltaProto?
+        var hadOneofValue = false
+        if let current = self.responseDelta {
+          hadOneofValue = true
+          if case .onboardingInputDelta(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.responseDelta = .onboardingInputDelta(v)
+        }
+      }()
       default: break
       }
     }
@@ -2816,6 +2934,10 @@ extension PodcastStreamApiResponseDeltaProto: SwiftProtobuf.Message, SwiftProtob
     case .followupPointsDelta?: try {
       guard case .followupPointsDelta(let v)? = self.responseDelta else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 17)
+    }()
+    case .onboardingInputDelta?: try {
+      guard case .onboardingInputDelta(let v)? = self.responseDelta else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 18)
     }()
     case nil: break
     }
@@ -3767,6 +3889,80 @@ extension DeleteAccountResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf.
   }
 
   static func ==(lhs: DeleteAccountResponseDeltaProto, rhs: DeleteAccountResponseDeltaProto) -> Bool {
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension GetPodcastOnboardingInputRequestProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "GetPodcastOnboardingInputRequestProto"
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    // Load everything into unknown fields
+    while try decoder.nextFieldNumber() != nil {}
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: GetPodcastOnboardingInputRequestProto, rhs: GetPodcastOnboardingInputRequestProto) -> Bool {
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension GetPodcastOnboardingInputResponseHeaderProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "GetPodcastOnboardingInputResponseHeaderProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "onboarding_input"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._onboardingInput) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._onboardingInput {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: GetPodcastOnboardingInputResponseHeaderProto, rhs: GetPodcastOnboardingInputResponseHeaderProto) -> Bool {
+    if lhs._onboardingInput != rhs._onboardingInput {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension GetPodcastOnboardingInputResponseDeltaProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "GetPodcastOnboardingInputResponseDeltaProto"
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    // Load everything into unknown fields
+    while try decoder.nextFieldNumber() != nil {}
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: GetPodcastOnboardingInputResponseDeltaProto, rhs: GetPodcastOnboardingInputResponseDeltaProto) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

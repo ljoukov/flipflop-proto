@@ -108,6 +108,12 @@ export interface PodcastStreamApiRequestProto {
          */
         deleteAccount: DeleteAccountRequestProto;
     } | {
+        oneofKind: "onboardingInput";
+        /**
+         * @generated from protobuf field: GetPodcastOnboardingInputRequestProto onboarding_input = 18;
+         */
+        onboardingInput: GetPodcastOnboardingInputRequestProto;
+    } | {
         oneofKind: undefined;
     };
 }
@@ -166,6 +172,12 @@ export interface PodcastStreamApiResponseHeaderProto {
          * @generated from protobuf field: DeleteAccountResponseHeaderProto delete_account_header = 16;
          */
         deleteAccountHeader: DeleteAccountResponseHeaderProto;
+    } | {
+        oneofKind: "onboardingInput";
+        /**
+         * @generated from protobuf field: GetPodcastOnboardingInputResponseHeaderProto onboarding_input = 18;
+         */
+        onboardingInput: GetPodcastOnboardingInputResponseHeaderProto;
     } | {
         oneofKind: undefined;
     };
@@ -231,6 +243,12 @@ export interface PodcastStreamApiResponseDeltaProto {
          * @generated from protobuf field: DeleteAccountResponseDeltaProto delete_account_delta = 16;
          */
         deleteAccountDelta: DeleteAccountResponseDeltaProto;
+    } | {
+        oneofKind: "onboardingInputDelta";
+        /**
+         * @generated from protobuf field: GetPodcastOnboardingInputResponseDeltaProto onboarding_input_delta = 18;
+         */
+        onboardingInputDelta: GetPodcastOnboardingInputResponseDeltaProto;
     } | {
         oneofKind: undefined;
     };
@@ -528,6 +546,25 @@ export interface DeleteAccountResponseHeaderProto {
  * @generated from protobuf message DeleteAccountResponseDeltaProto
  */
 export interface DeleteAccountResponseDeltaProto {
+}
+/**
+ * @generated from protobuf message GetPodcastOnboardingInputRequestProto
+ */
+export interface GetPodcastOnboardingInputRequestProto {
+}
+/**
+ * @generated from protobuf message GetPodcastOnboardingInputResponseHeaderProto
+ */
+export interface GetPodcastOnboardingInputResponseHeaderProto {
+    /**
+     * @generated from protobuf field: PodcastOnboardingInputProto onboarding_input = 1;
+     */
+    onboardingInput?: PodcastOnboardingInputProto;
+}
+/**
+ * @generated from protobuf message GetPodcastOnboardingInputResponseDeltaProto
+ */
+export interface GetPodcastOnboardingInputResponseDeltaProto {
 }
 /**
  * @generated from protobuf message PodcastProto
@@ -1667,7 +1704,8 @@ class PodcastStreamApiRequestProto$Type extends MessageType<PodcastStreamApiRequ
             { no: 14, name: "suggestion_points", kind: "message", oneof: "request", T: () => GetPodcastSuggestionPointsRequestProto },
             { no: 17, name: "followup_points", kind: "message", oneof: "request", T: () => GetPodcastFollowupPointsRequestProto },
             { no: 15, name: "home", kind: "message", oneof: "request", T: () => GetPodcastHomeRequestProto },
-            { no: 16, name: "delete_account", kind: "message", oneof: "request", T: () => DeleteAccountRequestProto }
+            { no: 16, name: "delete_account", kind: "message", oneof: "request", T: () => DeleteAccountRequestProto },
+            { no: 18, name: "onboarding_input", kind: "message", oneof: "request", T: () => GetPodcastOnboardingInputRequestProto }
         ]);
     }
     create(value?: PartialMessage<PodcastStreamApiRequestProto>): PodcastStreamApiRequestProto {
@@ -1733,6 +1771,12 @@ class PodcastStreamApiRequestProto$Type extends MessageType<PodcastStreamApiRequ
                         deleteAccount: DeleteAccountRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).deleteAccount)
                     };
                     break;
+                case /* GetPodcastOnboardingInputRequestProto onboarding_input */ 18:
+                    message.request = {
+                        oneofKind: "onboardingInput",
+                        onboardingInput: GetPodcastOnboardingInputRequestProto.internalBinaryRead(reader, reader.uint32(), options, (message.request as any).onboardingInput)
+                    };
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -1772,6 +1816,9 @@ class PodcastStreamApiRequestProto$Type extends MessageType<PodcastStreamApiRequ
         /* DeleteAccountRequestProto delete_account = 16; */
         if (message.request.oneofKind === "deleteAccount")
             DeleteAccountRequestProto.internalBinaryWrite(message.request.deleteAccount, writer.tag(16, WireType.LengthDelimited).fork(), options).join();
+        /* GetPodcastOnboardingInputRequestProto onboarding_input = 18; */
+        if (message.request.oneofKind === "onboardingInput")
+            GetPodcastOnboardingInputRequestProto.internalBinaryWrite(message.request.onboardingInput, writer.tag(18, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1794,6 +1841,7 @@ class PodcastStreamApiResponseHeaderProto$Type extends MessageType<PodcastStream
             { no: 17, name: "followup_points_header", kind: "message", oneof: "header", T: () => GetPodcastFollowupPointsResponseHeaderProto },
             { no: 15, name: "home_header", kind: "message", oneof: "header", T: () => GetPodcastHomeResponseHeaderProto },
             { no: 16, name: "delete_account_header", kind: "message", oneof: "header", T: () => DeleteAccountResponseHeaderProto },
+            { no: 18, name: "onboarding_input", kind: "message", oneof: "header", T: () => GetPodcastOnboardingInputResponseHeaderProto },
             { no: 100, name: "latencies", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "message", T: () => Duration } }
         ]);
     }
@@ -1858,6 +1906,12 @@ class PodcastStreamApiResponseHeaderProto$Type extends MessageType<PodcastStream
                         deleteAccountHeader: DeleteAccountResponseHeaderProto.internalBinaryRead(reader, reader.uint32(), options, (message.header as any).deleteAccountHeader)
                     };
                     break;
+                case /* GetPodcastOnboardingInputResponseHeaderProto onboarding_input */ 18:
+                    message.header = {
+                        oneofKind: "onboardingInput",
+                        onboardingInput: GetPodcastOnboardingInputResponseHeaderProto.internalBinaryRead(reader, reader.uint32(), options, (message.header as any).onboardingInput)
+                    };
+                    break;
                 case /* map<string, google.protobuf.Duration> latencies */ 100:
                     this.binaryReadMap100(message.latencies, reader, options);
                     break;
@@ -1913,6 +1967,9 @@ class PodcastStreamApiResponseHeaderProto$Type extends MessageType<PodcastStream
         /* DeleteAccountResponseHeaderProto delete_account_header = 16; */
         if (message.header.oneofKind === "deleteAccountHeader")
             DeleteAccountResponseHeaderProto.internalBinaryWrite(message.header.deleteAccountHeader, writer.tag(16, WireType.LengthDelimited).fork(), options).join();
+        /* GetPodcastOnboardingInputResponseHeaderProto onboarding_input = 18; */
+        if (message.header.oneofKind === "onboardingInput")
+            GetPodcastOnboardingInputResponseHeaderProto.internalBinaryWrite(message.header.onboardingInput, writer.tag(18, WireType.LengthDelimited).fork(), options).join();
         /* map<string, google.protobuf.Duration> latencies = 100; */
         for (let k of globalThis.Object.keys(message.latencies)) {
             writer.tag(100, WireType.LengthDelimited).fork().tag(1, WireType.LengthDelimited).string(k);
@@ -1941,7 +1998,8 @@ class PodcastStreamApiResponseDeltaProto$Type extends MessageType<PodcastStreamA
             { no: 14, name: "suggestion_points_delta", kind: "message", oneof: "responseDelta", T: () => GetPodcastSuggestionPointsResponseDeltaProto },
             { no: 17, name: "followup_points_delta", kind: "message", oneof: "responseDelta", T: () => GetPodcastFollowupPointsResponseDeltaProto },
             { no: 15, name: "home_delta", kind: "message", oneof: "responseDelta", T: () => GetPodcastHomeResponseDeltaProto },
-            { no: 16, name: "delete_account_delta", kind: "message", oneof: "responseDelta", T: () => DeleteAccountResponseDeltaProto }
+            { no: 16, name: "delete_account_delta", kind: "message", oneof: "responseDelta", T: () => DeleteAccountResponseDeltaProto },
+            { no: 18, name: "onboarding_input_delta", kind: "message", oneof: "responseDelta", T: () => GetPodcastOnboardingInputResponseDeltaProto }
         ]);
     }
     create(value?: PartialMessage<PodcastStreamApiResponseDeltaProto>): PodcastStreamApiResponseDeltaProto {
@@ -2004,6 +2062,12 @@ class PodcastStreamApiResponseDeltaProto$Type extends MessageType<PodcastStreamA
                         deleteAccountDelta: DeleteAccountResponseDeltaProto.internalBinaryRead(reader, reader.uint32(), options, (message.responseDelta as any).deleteAccountDelta)
                     };
                     break;
+                case /* GetPodcastOnboardingInputResponseDeltaProto onboarding_input_delta */ 18:
+                    message.responseDelta = {
+                        oneofKind: "onboardingInputDelta",
+                        onboardingInputDelta: GetPodcastOnboardingInputResponseDeltaProto.internalBinaryRead(reader, reader.uint32(), options, (message.responseDelta as any).onboardingInputDelta)
+                    };
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -2040,6 +2104,9 @@ class PodcastStreamApiResponseDeltaProto$Type extends MessageType<PodcastStreamA
         /* DeleteAccountResponseDeltaProto delete_account_delta = 16; */
         if (message.responseDelta.oneofKind === "deleteAccountDelta")
             DeleteAccountResponseDeltaProto.internalBinaryWrite(message.responseDelta.deleteAccountDelta, writer.tag(16, WireType.LengthDelimited).fork(), options).join();
+        /* GetPodcastOnboardingInputResponseDeltaProto onboarding_input_delta = 18; */
+        if (message.responseDelta.oneofKind === "onboardingInputDelta")
+            GetPodcastOnboardingInputResponseDeltaProto.internalBinaryWrite(message.responseDelta.onboardingInputDelta, writer.tag(18, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -3176,6 +3243,102 @@ class DeleteAccountResponseDeltaProto$Type extends MessageType<DeleteAccountResp
  * @generated MessageType for protobuf message DeleteAccountResponseDeltaProto
  */
 export const DeleteAccountResponseDeltaProto = new DeleteAccountResponseDeltaProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class GetPodcastOnboardingInputRequestProto$Type extends MessageType<GetPodcastOnboardingInputRequestProto> {
+    constructor() {
+        super("GetPodcastOnboardingInputRequestProto", []);
+    }
+    create(value?: PartialMessage<GetPodcastOnboardingInputRequestProto>): GetPodcastOnboardingInputRequestProto {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        if (value !== undefined)
+            reflectionMergePartial<GetPodcastOnboardingInputRequestProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetPodcastOnboardingInputRequestProto): GetPodcastOnboardingInputRequestProto {
+        return target ?? this.create();
+    }
+    internalBinaryWrite(message: GetPodcastOnboardingInputRequestProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message GetPodcastOnboardingInputRequestProto
+ */
+export const GetPodcastOnboardingInputRequestProto = new GetPodcastOnboardingInputRequestProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class GetPodcastOnboardingInputResponseHeaderProto$Type extends MessageType<GetPodcastOnboardingInputResponseHeaderProto> {
+    constructor() {
+        super("GetPodcastOnboardingInputResponseHeaderProto", [
+            { no: 1, name: "onboarding_input", kind: "message", T: () => PodcastOnboardingInputProto }
+        ]);
+    }
+    create(value?: PartialMessage<GetPodcastOnboardingInputResponseHeaderProto>): GetPodcastOnboardingInputResponseHeaderProto {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        if (value !== undefined)
+            reflectionMergePartial<GetPodcastOnboardingInputResponseHeaderProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetPodcastOnboardingInputResponseHeaderProto): GetPodcastOnboardingInputResponseHeaderProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* PodcastOnboardingInputProto onboarding_input */ 1:
+                    message.onboardingInput = PodcastOnboardingInputProto.internalBinaryRead(reader, reader.uint32(), options, message.onboardingInput);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: GetPodcastOnboardingInputResponseHeaderProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* PodcastOnboardingInputProto onboarding_input = 1; */
+        if (message.onboardingInput)
+            PodcastOnboardingInputProto.internalBinaryWrite(message.onboardingInput, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message GetPodcastOnboardingInputResponseHeaderProto
+ */
+export const GetPodcastOnboardingInputResponseHeaderProto = new GetPodcastOnboardingInputResponseHeaderProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class GetPodcastOnboardingInputResponseDeltaProto$Type extends MessageType<GetPodcastOnboardingInputResponseDeltaProto> {
+    constructor() {
+        super("GetPodcastOnboardingInputResponseDeltaProto", []);
+    }
+    create(value?: PartialMessage<GetPodcastOnboardingInputResponseDeltaProto>): GetPodcastOnboardingInputResponseDeltaProto {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        if (value !== undefined)
+            reflectionMergePartial<GetPodcastOnboardingInputResponseDeltaProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetPodcastOnboardingInputResponseDeltaProto): GetPodcastOnboardingInputResponseDeltaProto {
+        return target ?? this.create();
+    }
+    internalBinaryWrite(message: GetPodcastOnboardingInputResponseDeltaProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message GetPodcastOnboardingInputResponseDeltaProto
+ */
+export const GetPodcastOnboardingInputResponseDeltaProto = new GetPodcastOnboardingInputResponseDeltaProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class PodcastProto$Type extends MessageType<PodcastProto> {
     constructor() {
