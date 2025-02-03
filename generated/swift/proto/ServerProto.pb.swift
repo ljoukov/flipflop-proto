@@ -33,6 +33,7 @@ enum ServerTTSVoiceProto: SwiftProtobuf.Enum, Swift.CaseIterable {
   case meditation // = 7
   case journeyDMale // = 8
   case journeyFFemale // = 9
+  case journeyOFemale // = 10
   case UNRECOGNIZED(Int)
 
   init() {
@@ -51,6 +52,7 @@ enum ServerTTSVoiceProto: SwiftProtobuf.Enum, Swift.CaseIterable {
     case 7: self = .meditation
     case 8: self = .journeyDMale
     case 9: self = .journeyFFemale
+    case 10: self = .journeyOFemale
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -67,6 +69,7 @@ enum ServerTTSVoiceProto: SwiftProtobuf.Enum, Swift.CaseIterable {
     case .meditation: return 7
     case .journeyDMale: return 8
     case .journeyFFemale: return 9
+    case .journeyOFemale: return 10
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -83,6 +86,7 @@ enum ServerTTSVoiceProto: SwiftProtobuf.Enum, Swift.CaseIterable {
     .meditation,
     .journeyDMale,
     .journeyFFemale,
+    .journeyOFemale,
   ]
 
 }
@@ -304,6 +308,7 @@ extension ServerTTSVoiceProto: SwiftProtobuf._ProtoNameProviding {
     7: .same(proto: "SERVER_TTS_VOICE_PROTO_MEDITATION"),
     8: .same(proto: "SERVER_TTS_VOICE_PROTO_JOURNEY_D_MALE"),
     9: .same(proto: "SERVER_TTS_VOICE_PROTO_JOURNEY_F_FEMALE"),
+    10: .same(proto: "SERVER_TTS_VOICE_PROTO_JOURNEY_O_FEMALE"),
   ]
 }
 
