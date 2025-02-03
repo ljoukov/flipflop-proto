@@ -511,7 +511,10 @@ message PodcastOnboardingConfigProto {
 }
 
 message PodcastOnboardingGoalsConfigProto {
-  repeated PodcastOnboardingGoalProto goals = 1;
+  string page_title = 1;
+  string title = 2;
+  string subtitle = 3;
+  repeated PodcastOnboardingGoalProto goals = 4;
 }
 
 message PodcastOnboardingLearningStylesConfigProto {

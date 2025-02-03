@@ -1362,7 +1362,19 @@ export interface PodcastOnboardingConfigProto {
  */
 export interface PodcastOnboardingGoalsConfigProto {
     /**
-     * @generated from protobuf field: repeated PodcastOnboardingGoalProto goals = 1;
+     * @generated from protobuf field: string page_title = 1;
+     */
+    pageTitle: string;
+    /**
+     * @generated from protobuf field: string title = 2;
+     */
+    title: string;
+    /**
+     * @generated from protobuf field: string subtitle = 3;
+     */
+    subtitle: string;
+    /**
+     * @generated from protobuf field: repeated PodcastOnboardingGoalProto goals = 4;
      */
     goals: PodcastOnboardingGoalProto[];
 }
@@ -6224,11 +6236,17 @@ export const PodcastOnboardingConfigProto = new PodcastOnboardingConfigProto$Typ
 class PodcastOnboardingGoalsConfigProto$Type extends MessageType<PodcastOnboardingGoalsConfigProto> {
     constructor() {
         super("PodcastOnboardingGoalsConfigProto", [
-            { no: 1, name: "goals", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastOnboardingGoalProto }
+            { no: 1, name: "page_title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "subtitle", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "goals", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastOnboardingGoalProto }
         ]);
     }
     create(value?: PartialMessage<PodcastOnboardingGoalsConfigProto>): PodcastOnboardingGoalsConfigProto {
         const message = globalThis.Object.create((this.messagePrototype!));
+        message.pageTitle = "";
+        message.title = "";
+        message.subtitle = "";
         message.goals = [];
         if (value !== undefined)
             reflectionMergePartial<PodcastOnboardingGoalsConfigProto>(this, message, value);
@@ -6239,7 +6257,16 @@ class PodcastOnboardingGoalsConfigProto$Type extends MessageType<PodcastOnboardi
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* repeated PodcastOnboardingGoalProto goals */ 1:
+                case /* string page_title */ 1:
+                    message.pageTitle = reader.string();
+                    break;
+                case /* string title */ 2:
+                    message.title = reader.string();
+                    break;
+                case /* string subtitle */ 3:
+                    message.subtitle = reader.string();
+                    break;
+                case /* repeated PodcastOnboardingGoalProto goals */ 4:
                     message.goals.push(PodcastOnboardingGoalProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
@@ -6254,9 +6281,18 @@ class PodcastOnboardingGoalsConfigProto$Type extends MessageType<PodcastOnboardi
         return message;
     }
     internalBinaryWrite(message: PodcastOnboardingGoalsConfigProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated PodcastOnboardingGoalProto goals = 1; */
+        /* string page_title = 1; */
+        if (message.pageTitle !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.pageTitle);
+        /* string title = 2; */
+        if (message.title !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.title);
+        /* string subtitle = 3; */
+        if (message.subtitle !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.subtitle);
+        /* repeated PodcastOnboardingGoalProto goals = 4; */
         for (let i = 0; i < message.goals.length; i++)
-            PodcastOnboardingGoalProto.internalBinaryWrite(message.goals[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+            PodcastOnboardingGoalProto.internalBinaryWrite(message.goals[i], writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
