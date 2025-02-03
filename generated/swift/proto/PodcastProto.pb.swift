@@ -2267,7 +2267,7 @@ struct PodcastOnboardingVoiceProto: Sendable {
 
   var subtitle: String = String()
 
-  var samplePath: String = String()
+  var samplePath: [String] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -6574,7 +6574,7 @@ extension PodcastOnboardingVoiceProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
       case 1: try { try decoder.decodeSingularStringField(value: &self.voiceID) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.title) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.subtitle) }()
-      case 4: try { try decoder.decodeSingularStringField(value: &self.samplePath) }()
+      case 4: try { try decoder.decodeRepeatedStringField(value: &self.samplePath) }()
       default: break
       }
     }
@@ -6591,7 +6591,7 @@ extension PodcastOnboardingVoiceProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
       try visitor.visitSingularStringField(value: self.subtitle, fieldNumber: 3)
     }
     if !self.samplePath.isEmpty {
-      try visitor.visitSingularStringField(value: self.samplePath, fieldNumber: 4)
+      try visitor.visitRepeatedStringField(value: self.samplePath, fieldNumber: 4)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
