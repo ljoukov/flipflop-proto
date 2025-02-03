@@ -1348,6 +1348,10 @@ export interface PodcastOnboardingConfigProto {
      * @generated from protobuf field: PodcastOnboardingInterestsConfigProto interests_config = 3;
      */
     interestsConfig?: PodcastOnboardingInterestsConfigProto;
+    /**
+     * @generated from protobuf field: PodcastOnboardingVoicesConfigProto voices_config = 4;
+     */
+    voicesConfig?: PodcastOnboardingVoicesConfigProto;
 }
 /**
  * @generated from protobuf message PodcastOnboardingGoalsConfigProto
@@ -1363,7 +1367,19 @@ export interface PodcastOnboardingGoalsConfigProto {
  */
 export interface PodcastOnboardingLearningStylesConfigProto {
     /**
-     * @generated from protobuf field: repeated PodcastOnboardingLearningStyleProto learning_styles = 1;
+     * @generated from protobuf field: string page_title = 1;
+     */
+    pageTitle: string;
+    /**
+     * @generated from protobuf field: string title = 2;
+     */
+    title: string;
+    /**
+     * @generated from protobuf field: string subtitle = 3;
+     */
+    subtitle: string;
+    /**
+     * @generated from protobuf field: repeated PodcastOnboardingLearningStyleProto learning_styles = 4;
      */
     learningStyles: PodcastOnboardingLearningStyleProto[];
 }
@@ -1372,9 +1388,42 @@ export interface PodcastOnboardingLearningStylesConfigProto {
  */
 export interface PodcastOnboardingInterestsConfigProto {
     /**
-     * @generated from protobuf field: repeated PodcastOnboardingInterestGroupProto interest_groups = 1;
+     * @generated from protobuf field: string page_title = 1;
+     */
+    pageTitle: string;
+    /**
+     * @generated from protobuf field: string title = 2;
+     */
+    title: string;
+    /**
+     * @generated from protobuf field: string subtitle = 3;
+     */
+    subtitle: string;
+    /**
+     * @generated from protobuf field: repeated PodcastOnboardingInterestGroupProto interest_groups = 4;
      */
     interestGroups: PodcastOnboardingInterestGroupProto[];
+}
+/**
+ * @generated from protobuf message PodcastOnboardingVoicesConfigProto
+ */
+export interface PodcastOnboardingVoicesConfigProto {
+    /**
+     * @generated from protobuf field: string page_title = 1;
+     */
+    pageTitle: string;
+    /**
+     * @generated from protobuf field: string title = 2;
+     */
+    title: string;
+    /**
+     * @generated from protobuf field: string subtitle = 3;
+     */
+    subtitle: string;
+    /**
+     * @generated from protobuf field: repeated PodcastOnboardingVoiceProto voices = 4;
+     */
+    voices: PodcastOnboardingVoiceProto[];
 }
 /**
  * @generated from protobuf message PodcastOnboardingInterestGroupProto
@@ -1443,6 +1492,27 @@ export interface PodcastOnboardingInterestProto {
      * @generated from protobuf field: string emoji = 3;
      */
     emoji: string;
+}
+/**
+ * @generated from protobuf message PodcastOnboardingVoiceProto
+ */
+export interface PodcastOnboardingVoiceProto {
+    /**
+     * @generated from protobuf field: string voice_id = 1;
+     */
+    voiceId: string;
+    /**
+     * @generated from protobuf field: string title = 2;
+     */
+    title: string;
+    /**
+     * @generated from protobuf field: string subtitles = 3;
+     */
+    subtitles: string;
+    /**
+     * @generated from protobuf field: string sample_url = 4;
+     */
+    sampleUrl: string;
 }
 /**
  * @generated from protobuf enum PodcastSubscriptionSourceProto
@@ -6077,7 +6147,8 @@ class PodcastOnboardingConfigProto$Type extends MessageType<PodcastOnboardingCon
         super("PodcastOnboardingConfigProto", [
             { no: 1, name: "goals_config", kind: "message", T: () => PodcastOnboardingGoalsConfigProto },
             { no: 2, name: "learning_styles_config", kind: "message", T: () => PodcastOnboardingLearningStylesConfigProto },
-            { no: 3, name: "interests_config", kind: "message", T: () => PodcastOnboardingInterestsConfigProto }
+            { no: 3, name: "interests_config", kind: "message", T: () => PodcastOnboardingInterestsConfigProto },
+            { no: 4, name: "voices_config", kind: "message", T: () => PodcastOnboardingVoicesConfigProto }
         ]);
     }
     create(value?: PartialMessage<PodcastOnboardingConfigProto>): PodcastOnboardingConfigProto {
@@ -6100,6 +6171,9 @@ class PodcastOnboardingConfigProto$Type extends MessageType<PodcastOnboardingCon
                 case /* PodcastOnboardingInterestsConfigProto interests_config */ 3:
                     message.interestsConfig = PodcastOnboardingInterestsConfigProto.internalBinaryRead(reader, reader.uint32(), options, message.interestsConfig);
                     break;
+                case /* PodcastOnboardingVoicesConfigProto voices_config */ 4:
+                    message.voicesConfig = PodcastOnboardingVoicesConfigProto.internalBinaryRead(reader, reader.uint32(), options, message.voicesConfig);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -6121,6 +6195,9 @@ class PodcastOnboardingConfigProto$Type extends MessageType<PodcastOnboardingCon
         /* PodcastOnboardingInterestsConfigProto interests_config = 3; */
         if (message.interestsConfig)
             PodcastOnboardingInterestsConfigProto.internalBinaryWrite(message.interestsConfig, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastOnboardingVoicesConfigProto voices_config = 4; */
+        if (message.voicesConfig)
+            PodcastOnboardingVoicesConfigProto.internalBinaryWrite(message.voicesConfig, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -6182,11 +6259,17 @@ export const PodcastOnboardingGoalsConfigProto = new PodcastOnboardingGoalsConfi
 class PodcastOnboardingLearningStylesConfigProto$Type extends MessageType<PodcastOnboardingLearningStylesConfigProto> {
     constructor() {
         super("PodcastOnboardingLearningStylesConfigProto", [
-            { no: 1, name: "learning_styles", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastOnboardingLearningStyleProto }
+            { no: 1, name: "page_title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "subtitle", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "learning_styles", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastOnboardingLearningStyleProto }
         ]);
     }
     create(value?: PartialMessage<PodcastOnboardingLearningStylesConfigProto>): PodcastOnboardingLearningStylesConfigProto {
         const message = globalThis.Object.create((this.messagePrototype!));
+        message.pageTitle = "";
+        message.title = "";
+        message.subtitle = "";
         message.learningStyles = [];
         if (value !== undefined)
             reflectionMergePartial<PodcastOnboardingLearningStylesConfigProto>(this, message, value);
@@ -6197,7 +6280,16 @@ class PodcastOnboardingLearningStylesConfigProto$Type extends MessageType<Podcas
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* repeated PodcastOnboardingLearningStyleProto learning_styles */ 1:
+                case /* string page_title */ 1:
+                    message.pageTitle = reader.string();
+                    break;
+                case /* string title */ 2:
+                    message.title = reader.string();
+                    break;
+                case /* string subtitle */ 3:
+                    message.subtitle = reader.string();
+                    break;
+                case /* repeated PodcastOnboardingLearningStyleProto learning_styles */ 4:
                     message.learningStyles.push(PodcastOnboardingLearningStyleProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
@@ -6212,9 +6304,18 @@ class PodcastOnboardingLearningStylesConfigProto$Type extends MessageType<Podcas
         return message;
     }
     internalBinaryWrite(message: PodcastOnboardingLearningStylesConfigProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated PodcastOnboardingLearningStyleProto learning_styles = 1; */
+        /* string page_title = 1; */
+        if (message.pageTitle !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.pageTitle);
+        /* string title = 2; */
+        if (message.title !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.title);
+        /* string subtitle = 3; */
+        if (message.subtitle !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.subtitle);
+        /* repeated PodcastOnboardingLearningStyleProto learning_styles = 4; */
         for (let i = 0; i < message.learningStyles.length; i++)
-            PodcastOnboardingLearningStyleProto.internalBinaryWrite(message.learningStyles[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+            PodcastOnboardingLearningStyleProto.internalBinaryWrite(message.learningStyles[i], writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -6229,11 +6330,17 @@ export const PodcastOnboardingLearningStylesConfigProto = new PodcastOnboardingL
 class PodcastOnboardingInterestsConfigProto$Type extends MessageType<PodcastOnboardingInterestsConfigProto> {
     constructor() {
         super("PodcastOnboardingInterestsConfigProto", [
-            { no: 1, name: "interest_groups", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastOnboardingInterestGroupProto }
+            { no: 1, name: "page_title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "subtitle", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "interest_groups", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastOnboardingInterestGroupProto }
         ]);
     }
     create(value?: PartialMessage<PodcastOnboardingInterestsConfigProto>): PodcastOnboardingInterestsConfigProto {
         const message = globalThis.Object.create((this.messagePrototype!));
+        message.pageTitle = "";
+        message.title = "";
+        message.subtitle = "";
         message.interestGroups = [];
         if (value !== undefined)
             reflectionMergePartial<PodcastOnboardingInterestsConfigProto>(this, message, value);
@@ -6244,7 +6351,16 @@ class PodcastOnboardingInterestsConfigProto$Type extends MessageType<PodcastOnbo
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* repeated PodcastOnboardingInterestGroupProto interest_groups */ 1:
+                case /* string page_title */ 1:
+                    message.pageTitle = reader.string();
+                    break;
+                case /* string title */ 2:
+                    message.title = reader.string();
+                    break;
+                case /* string subtitle */ 3:
+                    message.subtitle = reader.string();
+                    break;
+                case /* repeated PodcastOnboardingInterestGroupProto interest_groups */ 4:
                     message.interestGroups.push(PodcastOnboardingInterestGroupProto.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
@@ -6259,9 +6375,18 @@ class PodcastOnboardingInterestsConfigProto$Type extends MessageType<PodcastOnbo
         return message;
     }
     internalBinaryWrite(message: PodcastOnboardingInterestsConfigProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated PodcastOnboardingInterestGroupProto interest_groups = 1; */
+        /* string page_title = 1; */
+        if (message.pageTitle !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.pageTitle);
+        /* string title = 2; */
+        if (message.title !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.title);
+        /* string subtitle = 3; */
+        if (message.subtitle !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.subtitle);
+        /* repeated PodcastOnboardingInterestGroupProto interest_groups = 4; */
         for (let i = 0; i < message.interestGroups.length; i++)
-            PodcastOnboardingInterestGroupProto.internalBinaryWrite(message.interestGroups[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+            PodcastOnboardingInterestGroupProto.internalBinaryWrite(message.interestGroups[i], writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -6272,6 +6397,77 @@ class PodcastOnboardingInterestsConfigProto$Type extends MessageType<PodcastOnbo
  * @generated MessageType for protobuf message PodcastOnboardingInterestsConfigProto
  */
 export const PodcastOnboardingInterestsConfigProto = new PodcastOnboardingInterestsConfigProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PodcastOnboardingVoicesConfigProto$Type extends MessageType<PodcastOnboardingVoicesConfigProto> {
+    constructor() {
+        super("PodcastOnboardingVoicesConfigProto", [
+            { no: 1, name: "page_title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "subtitle", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "voices", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PodcastOnboardingVoiceProto }
+        ]);
+    }
+    create(value?: PartialMessage<PodcastOnboardingVoicesConfigProto>): PodcastOnboardingVoicesConfigProto {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.pageTitle = "";
+        message.title = "";
+        message.subtitle = "";
+        message.voices = [];
+        if (value !== undefined)
+            reflectionMergePartial<PodcastOnboardingVoicesConfigProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastOnboardingVoicesConfigProto): PodcastOnboardingVoicesConfigProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string page_title */ 1:
+                    message.pageTitle = reader.string();
+                    break;
+                case /* string title */ 2:
+                    message.title = reader.string();
+                    break;
+                case /* string subtitle */ 3:
+                    message.subtitle = reader.string();
+                    break;
+                case /* repeated PodcastOnboardingVoiceProto voices */ 4:
+                    message.voices.push(PodcastOnboardingVoiceProto.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PodcastOnboardingVoicesConfigProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string page_title = 1; */
+        if (message.pageTitle !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.pageTitle);
+        /* string title = 2; */
+        if (message.title !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.title);
+        /* string subtitle = 3; */
+        if (message.subtitle !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.subtitle);
+        /* repeated PodcastOnboardingVoiceProto voices = 4; */
+        for (let i = 0; i < message.voices.length; i++)
+            PodcastOnboardingVoiceProto.internalBinaryWrite(message.voices[i], writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message PodcastOnboardingVoicesConfigProto
+ */
+export const PodcastOnboardingVoicesConfigProto = new PodcastOnboardingVoicesConfigProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class PodcastOnboardingInterestGroupProto$Type extends MessageType<PodcastOnboardingInterestGroupProto> {
     constructor() {
@@ -6524,3 +6720,74 @@ class PodcastOnboardingInterestProto$Type extends MessageType<PodcastOnboardingI
  * @generated MessageType for protobuf message PodcastOnboardingInterestProto
  */
 export const PodcastOnboardingInterestProto = new PodcastOnboardingInterestProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PodcastOnboardingVoiceProto$Type extends MessageType<PodcastOnboardingVoiceProto> {
+    constructor() {
+        super("PodcastOnboardingVoiceProto", [
+            { no: 1, name: "voice_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "subtitles", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "sample_url", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PodcastOnboardingVoiceProto>): PodcastOnboardingVoiceProto {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.voiceId = "";
+        message.title = "";
+        message.subtitles = "";
+        message.sampleUrl = "";
+        if (value !== undefined)
+            reflectionMergePartial<PodcastOnboardingVoiceProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastOnboardingVoiceProto): PodcastOnboardingVoiceProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string voice_id */ 1:
+                    message.voiceId = reader.string();
+                    break;
+                case /* string title */ 2:
+                    message.title = reader.string();
+                    break;
+                case /* string subtitles */ 3:
+                    message.subtitles = reader.string();
+                    break;
+                case /* string sample_url */ 4:
+                    message.sampleUrl = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PodcastOnboardingVoiceProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string voice_id = 1; */
+        if (message.voiceId !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.voiceId);
+        /* string title = 2; */
+        if (message.title !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.title);
+        /* string subtitles = 3; */
+        if (message.subtitles !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.subtitles);
+        /* string sample_url = 4; */
+        if (message.sampleUrl !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.sampleUrl);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message PodcastOnboardingVoiceProto
+ */
+export const PodcastOnboardingVoiceProto = new PodcastOnboardingVoiceProto$Type();

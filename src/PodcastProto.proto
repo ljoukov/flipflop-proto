@@ -506,6 +506,7 @@ message PodcastOnboardingConfigProto {
   PodcastOnboardingGoalsConfigProto goals_config = 1;
   PodcastOnboardingLearningStylesConfigProto learning_styles_config = 2;
   PodcastOnboardingInterestsConfigProto interests_config = 3;
+  PodcastOnboardingVoicesConfigProto voices_config = 4;
 }
 
 message PodcastOnboardingGoalsConfigProto {
@@ -513,11 +514,24 @@ message PodcastOnboardingGoalsConfigProto {
 }
 
 message PodcastOnboardingLearningStylesConfigProto {
-  repeated PodcastOnboardingLearningStyleProto learning_styles = 1;
+  string page_title = 1;
+  string title = 2;
+  string subtitle = 3;
+  repeated PodcastOnboardingLearningStyleProto learning_styles = 4;
 }
 
 message PodcastOnboardingInterestsConfigProto {
-  repeated PodcastOnboardingInterestGroupProto interest_groups = 1;
+  string page_title = 1;
+  string title = 2;
+  string subtitle = 3;
+  repeated PodcastOnboardingInterestGroupProto interest_groups = 4;
+}
+
+message PodcastOnboardingVoicesConfigProto {
+  string page_title = 1;
+  string title = 2;
+  string subtitle = 3;
+  repeated PodcastOnboardingVoiceProto voices = 4;
 }
 
 message PodcastOnboardingInterestGroupProto {
@@ -542,4 +556,11 @@ message PodcastOnboardingInterestProto {
   string interest_id = 1;
   string label = 2;
   string emoji = 3;
+}
+
+message PodcastOnboardingVoiceProto {
+  string voice_id = 1;
+  string title = 2;
+  string subtitles = 3;
+  string sample_url = 4;
 }

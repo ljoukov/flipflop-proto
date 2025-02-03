@@ -2099,6 +2099,15 @@ struct PodcastOnboardingConfigProto: Sendable {
   /// Clears the value of `interestsConfig`. Subsequent reads from it will return its default value.
   mutating func clearInterestsConfig() {self._interestsConfig = nil}
 
+  var voicesConfig: PodcastOnboardingVoicesConfigProto {
+    get {return _voicesConfig ?? PodcastOnboardingVoicesConfigProto()}
+    set {_voicesConfig = newValue}
+  }
+  /// Returns true if `voicesConfig` has been explicitly set.
+  var hasVoicesConfig: Bool {return self._voicesConfig != nil}
+  /// Clears the value of `voicesConfig`. Subsequent reads from it will return its default value.
+  mutating func clearVoicesConfig() {self._voicesConfig = nil}
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -2106,6 +2115,7 @@ struct PodcastOnboardingConfigProto: Sendable {
   fileprivate var _goalsConfig: PodcastOnboardingGoalsConfigProto? = nil
   fileprivate var _learningStylesConfig: PodcastOnboardingLearningStylesConfigProto? = nil
   fileprivate var _interestsConfig: PodcastOnboardingInterestsConfigProto? = nil
+  fileprivate var _voicesConfig: PodcastOnboardingVoicesConfigProto? = nil
 }
 
 struct PodcastOnboardingGoalsConfigProto: Sendable {
@@ -2125,6 +2135,12 @@ struct PodcastOnboardingLearningStylesConfigProto: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  var pageTitle: String = String()
+
+  var title: String = String()
+
+  var subtitle: String = String()
+
   var learningStyles: [PodcastOnboardingLearningStyleProto] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -2137,7 +2153,31 @@ struct PodcastOnboardingInterestsConfigProto: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  var pageTitle: String = String()
+
+  var title: String = String()
+
+  var subtitle: String = String()
+
   var interestGroups: [PodcastOnboardingInterestGroupProto] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct PodcastOnboardingVoicesConfigProto: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var pageTitle: String = String()
+
+  var title: String = String()
+
+  var subtitle: String = String()
+
+  var voices: [PodcastOnboardingVoiceProto] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -2202,6 +2242,24 @@ struct PodcastOnboardingInterestProto: Sendable {
   var label: String = String()
 
   var emoji: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct PodcastOnboardingVoiceProto: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var voiceID: String = String()
+
+  var title: String = String()
+
+  var subtitles: String = String()
+
+  var sampleURL: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -6060,6 +6118,7 @@ extension PodcastOnboardingConfigProto: SwiftProtobuf.Message, SwiftProtobuf._Me
     1: .standard(proto: "goals_config"),
     2: .standard(proto: "learning_styles_config"),
     3: .standard(proto: "interests_config"),
+    4: .standard(proto: "voices_config"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -6071,6 +6130,7 @@ extension PodcastOnboardingConfigProto: SwiftProtobuf.Message, SwiftProtobuf._Me
       case 1: try { try decoder.decodeSingularMessageField(value: &self._goalsConfig) }()
       case 2: try { try decoder.decodeSingularMessageField(value: &self._learningStylesConfig) }()
       case 3: try { try decoder.decodeSingularMessageField(value: &self._interestsConfig) }()
+      case 4: try { try decoder.decodeSingularMessageField(value: &self._voicesConfig) }()
       default: break
       }
     }
@@ -6090,6 +6150,9 @@ extension PodcastOnboardingConfigProto: SwiftProtobuf.Message, SwiftProtobuf._Me
     try { if let v = self._interestsConfig {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
     } }()
+    try { if let v = self._voicesConfig {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -6097,6 +6160,7 @@ extension PodcastOnboardingConfigProto: SwiftProtobuf.Message, SwiftProtobuf._Me
     if lhs._goalsConfig != rhs._goalsConfig {return false}
     if lhs._learningStylesConfig != rhs._learningStylesConfig {return false}
     if lhs._interestsConfig != rhs._interestsConfig {return false}
+    if lhs._voicesConfig != rhs._voicesConfig {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -6137,7 +6201,10 @@ extension PodcastOnboardingGoalsConfigProto: SwiftProtobuf.Message, SwiftProtobu
 extension PodcastOnboardingLearningStylesConfigProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "PodcastOnboardingLearningStylesConfigProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "learning_styles"),
+    1: .standard(proto: "page_title"),
+    2: .same(proto: "title"),
+    3: .same(proto: "subtitle"),
+    4: .standard(proto: "learning_styles"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -6146,20 +6213,35 @@ extension PodcastOnboardingLearningStylesConfigProto: SwiftProtobuf.Message, Swi
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.learningStyles) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self.pageTitle) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.title) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.subtitle) }()
+      case 4: try { try decoder.decodeRepeatedMessageField(value: &self.learningStyles) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.pageTitle.isEmpty {
+      try visitor.visitSingularStringField(value: self.pageTitle, fieldNumber: 1)
+    }
+    if !self.title.isEmpty {
+      try visitor.visitSingularStringField(value: self.title, fieldNumber: 2)
+    }
+    if !self.subtitle.isEmpty {
+      try visitor.visitSingularStringField(value: self.subtitle, fieldNumber: 3)
+    }
     if !self.learningStyles.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.learningStyles, fieldNumber: 1)
+      try visitor.visitRepeatedMessageField(value: self.learningStyles, fieldNumber: 4)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: PodcastOnboardingLearningStylesConfigProto, rhs: PodcastOnboardingLearningStylesConfigProto) -> Bool {
+    if lhs.pageTitle != rhs.pageTitle {return false}
+    if lhs.title != rhs.title {return false}
+    if lhs.subtitle != rhs.subtitle {return false}
     if lhs.learningStyles != rhs.learningStyles {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
@@ -6169,7 +6251,10 @@ extension PodcastOnboardingLearningStylesConfigProto: SwiftProtobuf.Message, Swi
 extension PodcastOnboardingInterestsConfigProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = "PodcastOnboardingInterestsConfigProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "interest_groups"),
+    1: .standard(proto: "page_title"),
+    2: .same(proto: "title"),
+    3: .same(proto: "subtitle"),
+    4: .standard(proto: "interest_groups"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -6178,21 +6263,86 @@ extension PodcastOnboardingInterestsConfigProto: SwiftProtobuf.Message, SwiftPro
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.interestGroups) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self.pageTitle) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.title) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.subtitle) }()
+      case 4: try { try decoder.decodeRepeatedMessageField(value: &self.interestGroups) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.pageTitle.isEmpty {
+      try visitor.visitSingularStringField(value: self.pageTitle, fieldNumber: 1)
+    }
+    if !self.title.isEmpty {
+      try visitor.visitSingularStringField(value: self.title, fieldNumber: 2)
+    }
+    if !self.subtitle.isEmpty {
+      try visitor.visitSingularStringField(value: self.subtitle, fieldNumber: 3)
+    }
     if !self.interestGroups.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.interestGroups, fieldNumber: 1)
+      try visitor.visitRepeatedMessageField(value: self.interestGroups, fieldNumber: 4)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: PodcastOnboardingInterestsConfigProto, rhs: PodcastOnboardingInterestsConfigProto) -> Bool {
+    if lhs.pageTitle != rhs.pageTitle {return false}
+    if lhs.title != rhs.title {return false}
+    if lhs.subtitle != rhs.subtitle {return false}
     if lhs.interestGroups != rhs.interestGroups {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension PodcastOnboardingVoicesConfigProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastOnboardingVoicesConfigProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "page_title"),
+    2: .same(proto: "title"),
+    3: .same(proto: "subtitle"),
+    4: .same(proto: "voices"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.pageTitle) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.title) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.subtitle) }()
+      case 4: try { try decoder.decodeRepeatedMessageField(value: &self.voices) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.pageTitle.isEmpty {
+      try visitor.visitSingularStringField(value: self.pageTitle, fieldNumber: 1)
+    }
+    if !self.title.isEmpty {
+      try visitor.visitSingularStringField(value: self.title, fieldNumber: 2)
+    }
+    if !self.subtitle.isEmpty {
+      try visitor.visitSingularStringField(value: self.subtitle, fieldNumber: 3)
+    }
+    if !self.voices.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.voices, fieldNumber: 4)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PodcastOnboardingVoicesConfigProto, rhs: PodcastOnboardingVoicesConfigProto) -> Bool {
+    if lhs.pageTitle != rhs.pageTitle {return false}
+    if lhs.title != rhs.title {return false}
+    if lhs.subtitle != rhs.subtitle {return false}
+    if lhs.voices != rhs.voices {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -6369,6 +6519,56 @@ extension PodcastOnboardingInterestProto: SwiftProtobuf.Message, SwiftProtobuf._
     if lhs.interestID != rhs.interestID {return false}
     if lhs.label != rhs.label {return false}
     if lhs.emoji != rhs.emoji {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension PodcastOnboardingVoiceProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastOnboardingVoiceProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "voice_id"),
+    2: .same(proto: "title"),
+    3: .same(proto: "subtitles"),
+    4: .standard(proto: "sample_url"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.voiceID) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.title) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.subtitles) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.sampleURL) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.voiceID.isEmpty {
+      try visitor.visitSingularStringField(value: self.voiceID, fieldNumber: 1)
+    }
+    if !self.title.isEmpty {
+      try visitor.visitSingularStringField(value: self.title, fieldNumber: 2)
+    }
+    if !self.subtitles.isEmpty {
+      try visitor.visitSingularStringField(value: self.subtitles, fieldNumber: 3)
+    }
+    if !self.sampleURL.isEmpty {
+      try visitor.visitSingularStringField(value: self.sampleURL, fieldNumber: 4)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PodcastOnboardingVoiceProto, rhs: PodcastOnboardingVoiceProto) -> Bool {
+    if lhs.voiceID != rhs.voiceID {return false}
+    if lhs.title != rhs.title {return false}
+    if lhs.subtitles != rhs.subtitles {return false}
+    if lhs.sampleURL != rhs.sampleURL {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
