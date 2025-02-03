@@ -1526,9 +1526,9 @@ export interface PodcastOnboardingVoiceProto {
      */
     subtitle: string;
     /**
-     * @generated from protobuf field: repeated string sample_path = 4;
+     * @generated from protobuf field: repeated string sample_paths = 4;
      */
-    samplePath: string[];
+    samplePaths: string[];
 }
 /**
  * @generated from protobuf enum PodcastSubscriptionSourceProto
@@ -6775,7 +6775,7 @@ class PodcastOnboardingVoiceProto$Type extends MessageType<PodcastOnboardingVoic
             { no: 1, name: "voice_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "subtitle", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "sample_path", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+            { no: 4, name: "sample_paths", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PodcastOnboardingVoiceProto>): PodcastOnboardingVoiceProto {
@@ -6783,7 +6783,7 @@ class PodcastOnboardingVoiceProto$Type extends MessageType<PodcastOnboardingVoic
         message.voiceId = "";
         message.title = "";
         message.subtitle = "";
-        message.samplePath = [];
+        message.samplePaths = [];
         if (value !== undefined)
             reflectionMergePartial<PodcastOnboardingVoiceProto>(this, message, value);
         return message;
@@ -6802,8 +6802,8 @@ class PodcastOnboardingVoiceProto$Type extends MessageType<PodcastOnboardingVoic
                 case /* string subtitle */ 3:
                     message.subtitle = reader.string();
                     break;
-                case /* repeated string sample_path */ 4:
-                    message.samplePath.push(reader.string());
+                case /* repeated string sample_paths */ 4:
+                    message.samplePaths.push(reader.string());
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -6826,9 +6826,9 @@ class PodcastOnboardingVoiceProto$Type extends MessageType<PodcastOnboardingVoic
         /* string subtitle = 3; */
         if (message.subtitle !== "")
             writer.tag(3, WireType.LengthDelimited).string(message.subtitle);
-        /* repeated string sample_path = 4; */
-        for (let i = 0; i < message.samplePath.length; i++)
-            writer.tag(4, WireType.LengthDelimited).string(message.samplePath[i]);
+        /* repeated string sample_paths = 4; */
+        for (let i = 0; i < message.samplePaths.length; i++)
+            writer.tag(4, WireType.LengthDelimited).string(message.samplePaths[i]);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

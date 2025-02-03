@@ -2267,7 +2267,7 @@ struct PodcastOnboardingVoiceProto: Sendable {
 
   var subtitle: String = String()
 
-  var samplePath: [String] = []
+  var samplePaths: [String] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -6562,7 +6562,7 @@ extension PodcastOnboardingVoiceProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
     1: .standard(proto: "voice_id"),
     2: .same(proto: "title"),
     3: .same(proto: "subtitle"),
-    4: .standard(proto: "sample_path"),
+    4: .standard(proto: "sample_paths"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -6574,7 +6574,7 @@ extension PodcastOnboardingVoiceProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
       case 1: try { try decoder.decodeSingularStringField(value: &self.voiceID) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.title) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.subtitle) }()
-      case 4: try { try decoder.decodeRepeatedStringField(value: &self.samplePath) }()
+      case 4: try { try decoder.decodeRepeatedStringField(value: &self.samplePaths) }()
       default: break
       }
     }
@@ -6590,8 +6590,8 @@ extension PodcastOnboardingVoiceProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
     if !self.subtitle.isEmpty {
       try visitor.visitSingularStringField(value: self.subtitle, fieldNumber: 3)
     }
-    if !self.samplePath.isEmpty {
-      try visitor.visitRepeatedStringField(value: self.samplePath, fieldNumber: 4)
+    if !self.samplePaths.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.samplePaths, fieldNumber: 4)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -6600,7 +6600,7 @@ extension PodcastOnboardingVoiceProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
     if lhs.voiceID != rhs.voiceID {return false}
     if lhs.title != rhs.title {return false}
     if lhs.subtitle != rhs.subtitle {return false}
-    if lhs.samplePath != rhs.samplePath {return false}
+    if lhs.samplePaths != rhs.samplePaths {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

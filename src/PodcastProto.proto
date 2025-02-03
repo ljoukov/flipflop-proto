@@ -566,5 +566,5 @@ message PodcastOnboardingVoiceProto {
   string voice_id = 1;
   string title = 2;
   string subtitle = 3;
-  repeated string sample_path = 4;
+  repeated string sample_paths = 4;
 }
