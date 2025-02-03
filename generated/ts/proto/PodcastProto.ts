@@ -1522,9 +1522,9 @@ export interface PodcastOnboardingVoiceProto {
      */
     title: string;
     /**
-     * @generated from protobuf field: string subtitles = 3;
+     * @generated from protobuf field: string subtitle = 3;
      */
-    subtitles: string;
+    subtitle: string;
     /**
      * @generated from protobuf field: string sample_url = 4;
      */
@@ -6774,7 +6774,7 @@ class PodcastOnboardingVoiceProto$Type extends MessageType<PodcastOnboardingVoic
         super("PodcastOnboardingVoiceProto", [
             { no: 1, name: "voice_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "subtitles", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "subtitle", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "sample_url", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
@@ -6782,7 +6782,7 @@ class PodcastOnboardingVoiceProto$Type extends MessageType<PodcastOnboardingVoic
         const message = globalThis.Object.create((this.messagePrototype!));
         message.voiceId = "";
         message.title = "";
-        message.subtitles = "";
+        message.subtitle = "";
         message.sampleUrl = "";
         if (value !== undefined)
             reflectionMergePartial<PodcastOnboardingVoiceProto>(this, message, value);
@@ -6799,8 +6799,8 @@ class PodcastOnboardingVoiceProto$Type extends MessageType<PodcastOnboardingVoic
                 case /* string title */ 2:
                     message.title = reader.string();
                     break;
-                case /* string subtitles */ 3:
-                    message.subtitles = reader.string();
+                case /* string subtitle */ 3:
+                    message.subtitle = reader.string();
                     break;
                 case /* string sample_url */ 4:
                     message.sampleUrl = reader.string();
@@ -6823,9 +6823,9 @@ class PodcastOnboardingVoiceProto$Type extends MessageType<PodcastOnboardingVoic
         /* string title = 2; */
         if (message.title !== "")
             writer.tag(2, WireType.LengthDelimited).string(message.title);
-        /* string subtitles = 3; */
-        if (message.subtitles !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.subtitles);
+        /* string subtitle = 3; */
+        if (message.subtitle !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.subtitle);
         /* string sample_url = 4; */
         if (message.sampleUrl !== "")
             writer.tag(4, WireType.LengthDelimited).string(message.sampleUrl);

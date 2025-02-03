@@ -2265,7 +2265,7 @@ struct PodcastOnboardingVoiceProto: Sendable {
 
   var title: String = String()
 
-  var subtitles: String = String()
+  var subtitle: String = String()
 
   var sampleURL: String = String()
 
@@ -6561,7 +6561,7 @@ extension PodcastOnboardingVoiceProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "voice_id"),
     2: .same(proto: "title"),
-    3: .same(proto: "subtitles"),
+    3: .same(proto: "subtitle"),
     4: .standard(proto: "sample_url"),
   ]
 
@@ -6573,7 +6573,7 @@ extension PodcastOnboardingVoiceProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.voiceID) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.title) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.subtitles) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.subtitle) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self.sampleURL) }()
       default: break
       }
@@ -6587,8 +6587,8 @@ extension PodcastOnboardingVoiceProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
     if !self.title.isEmpty {
       try visitor.visitSingularStringField(value: self.title, fieldNumber: 2)
     }
-    if !self.subtitles.isEmpty {
-      try visitor.visitSingularStringField(value: self.subtitles, fieldNumber: 3)
+    if !self.subtitle.isEmpty {
+      try visitor.visitSingularStringField(value: self.subtitle, fieldNumber: 3)
     }
     if !self.sampleURL.isEmpty {
       try visitor.visitSingularStringField(value: self.sampleURL, fieldNumber: 4)
@@ -6599,7 +6599,7 @@ extension PodcastOnboardingVoiceProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
   static func ==(lhs: PodcastOnboardingVoiceProto, rhs: PodcastOnboardingVoiceProto) -> Bool {
     if lhs.voiceID != rhs.voiceID {return false}
     if lhs.title != rhs.title {return false}
-    if lhs.subtitles != rhs.subtitles {return false}
+    if lhs.subtitle != rhs.subtitle {return false}
     if lhs.sampleURL != rhs.sampleURL {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

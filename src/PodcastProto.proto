@@ -565,6 +565,6 @@ message PodcastOnboardingInterestProto {
 message PodcastOnboardingVoiceProto {
   string voice_id = 1;
   string title = 2;
-  string subtitles = 3;
+  string subtitle = 3;
   string sample_url = 4;
 }
