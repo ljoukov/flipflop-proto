@@ -2267,7 +2267,7 @@ struct PodcastOnboardingVoiceProto: Sendable {
 
   var subtitle: String = String()
 
-  var sampleURL: String = String()
+  var samplePath: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -6562,7 +6562,7 @@ extension PodcastOnboardingVoiceProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
     1: .standard(proto: "voice_id"),
     2: .same(proto: "title"),
     3: .same(proto: "subtitle"),
-    4: .standard(proto: "sample_url"),
+    4: .standard(proto: "sample_path"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -6574,7 +6574,7 @@ extension PodcastOnboardingVoiceProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
       case 1: try { try decoder.decodeSingularStringField(value: &self.voiceID) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.title) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.subtitle) }()
-      case 4: try { try decoder.decodeSingularStringField(value: &self.sampleURL) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.samplePath) }()
       default: break
       }
     }
@@ -6590,8 +6590,8 @@ extension PodcastOnboardingVoiceProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
     if !self.subtitle.isEmpty {
       try visitor.visitSingularStringField(value: self.subtitle, fieldNumber: 3)
     }
-    if !self.sampleURL.isEmpty {
-      try visitor.visitSingularStringField(value: self.sampleURL, fieldNumber: 4)
+    if !self.samplePath.isEmpty {
+      try visitor.visitSingularStringField(value: self.samplePath, fieldNumber: 4)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -6600,7 +6600,7 @@ extension PodcastOnboardingVoiceProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
     if lhs.voiceID != rhs.voiceID {return false}
     if lhs.title != rhs.title {return false}
     if lhs.subtitle != rhs.subtitle {return false}
-    if lhs.sampleURL != rhs.sampleURL {return false}
+    if lhs.samplePath != rhs.samplePath {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
