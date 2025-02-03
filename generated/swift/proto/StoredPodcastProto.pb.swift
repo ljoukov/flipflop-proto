@@ -1878,6 +1878,8 @@ struct StoredPodcastOnboardingInputProto: Sendable {
 
   var interestIds: [String] = []
 
+  var voiceID: String = String()
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -4888,6 +4890,7 @@ extension StoredPodcastOnboardingInputProto: SwiftProtobuf.Message, SwiftProtobu
     3: .standard(proto: "goal_ids"),
     4: .standard(proto: "learning_style_ids"),
     5: .standard(proto: "interest_ids"),
+    6: .standard(proto: "voice_id"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -4901,6 +4904,7 @@ extension StoredPodcastOnboardingInputProto: SwiftProtobuf.Message, SwiftProtobu
       case 3: try { try decoder.decodeRepeatedStringField(value: &self.goalIds) }()
       case 4: try { try decoder.decodeRepeatedStringField(value: &self.learningStyleIds) }()
       case 5: try { try decoder.decodeRepeatedStringField(value: &self.interestIds) }()
+      case 6: try { try decoder.decodeSingularStringField(value: &self.voiceID) }()
       default: break
       }
     }
@@ -4926,6 +4930,9 @@ extension StoredPodcastOnboardingInputProto: SwiftProtobuf.Message, SwiftProtobu
     if !self.interestIds.isEmpty {
       try visitor.visitRepeatedStringField(value: self.interestIds, fieldNumber: 5)
     }
+    if !self.voiceID.isEmpty {
+      try visitor.visitSingularStringField(value: self.voiceID, fieldNumber: 6)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -4935,6 +4942,7 @@ extension StoredPodcastOnboardingInputProto: SwiftProtobuf.Message, SwiftProtobu
     if lhs.goalIds != rhs.goalIds {return false}
     if lhs.learningStyleIds != rhs.learningStyleIds {return false}
     if lhs.interestIds != rhs.interestIds {return false}
+    if lhs.voiceID != rhs.voiceID {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

@@ -494,6 +494,7 @@ message PodcastOnboardingInputProto {
   repeated string goal_ids = 2;
   repeated string learning_style_ids = 3;
   repeated string interest_ids = 4;
+  string voice_id = 5;
 }
 
 message OnDeviceStoredUserDetailsProto {

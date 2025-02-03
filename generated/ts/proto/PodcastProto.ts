@@ -1314,6 +1314,10 @@ export interface PodcastOnboardingInputProto {
      * @generated from protobuf field: repeated string interest_ids = 4;
      */
     interestIds: string[];
+    /**
+     * @generated from protobuf field: string voice_id = 5;
+     */
+    voiceId: string;
 }
 /**
  * @generated from protobuf message OnDeviceStoredUserDetailsProto
@@ -6014,7 +6018,8 @@ class PodcastOnboardingInputProto$Type extends MessageType<PodcastOnboardingInpu
             { no: 1, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "goal_ids", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "learning_style_ids", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "interest_ids", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+            { no: 4, name: "interest_ids", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "voice_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PodcastOnboardingInputProto>): PodcastOnboardingInputProto {
@@ -6023,6 +6028,7 @@ class PodcastOnboardingInputProto$Type extends MessageType<PodcastOnboardingInpu
         message.goalIds = [];
         message.learningStyleIds = [];
         message.interestIds = [];
+        message.voiceId = "";
         if (value !== undefined)
             reflectionMergePartial<PodcastOnboardingInputProto>(this, message, value);
         return message;
@@ -6043,6 +6049,9 @@ class PodcastOnboardingInputProto$Type extends MessageType<PodcastOnboardingInpu
                     break;
                 case /* repeated string interest_ids */ 4:
                     message.interestIds.push(reader.string());
+                    break;
+                case /* string voice_id */ 5:
+                    message.voiceId = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -6068,6 +6077,9 @@ class PodcastOnboardingInputProto$Type extends MessageType<PodcastOnboardingInpu
         /* repeated string interest_ids = 4; */
         for (let i = 0; i < message.interestIds.length; i++)
             writer.tag(4, WireType.LengthDelimited).string(message.interestIds[i]);
+        /* string voice_id = 5; */
+        if (message.voiceId !== "")
+            writer.tag(5, WireType.LengthDelimited).string(message.voiceId);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

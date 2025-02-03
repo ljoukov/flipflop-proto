@@ -481,4 +481,5 @@ message StoredPodcastOnboardingInputProto {
   repeated string goal_ids = 3;
   repeated string learning_style_ids = 4;
   repeated string interest_ids = 5;
+  string voice_id = 6;
 }
