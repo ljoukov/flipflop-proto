@@ -309,18 +309,18 @@ enum PodcastUserInterfaceStyleProto: SwiftProtobuf.Enum, Swift.CaseIterable {
 enum PodcastContentSizeCategoryProto: SwiftProtobuf.Enum, Swift.CaseIterable {
   typealias RawValue = Int
   case undefined // = 0
-  case xs // = 1
-  case s // = 2
-  case m // = 3
-  case l // = 4
-  case xl // = 5
-  case xxl // = 6
-  case xxxl // = 7
-  case accessibilityM // = 8
-  case accessibilityL // = 9
-  case accessibilityXl // = 10
-  case accessibilityXxl // = 11
-  case accessibilityXxxl // = 12
+  case xSmall // = 1
+  case small // = 2
+  case medium // = 3
+  case large // = 4
+  case xLarge // = 5
+  case xxLarge // = 6
+  case xxxLarge // = 7
+  case accessibilityMedium // = 8
+  case accessibilityLarge // = 9
+  case accessibilityXLarge // = 10
+  case accessibilityXxLarge // = 11
+  case accessibilityXxxLarge // = 12
   case UNRECOGNIZED(Int)
 
   init() {
@@ -330,18 +330,18 @@ enum PodcastContentSizeCategoryProto: SwiftProtobuf.Enum, Swift.CaseIterable {
   init?(rawValue: Int) {
     switch rawValue {
     case 0: self = .undefined
-    case 1: self = .xs
-    case 2: self = .s
-    case 3: self = .m
-    case 4: self = .l
-    case 5: self = .xl
-    case 6: self = .xxl
-    case 7: self = .xxxl
-    case 8: self = .accessibilityM
-    case 9: self = .accessibilityL
-    case 10: self = .accessibilityXl
-    case 11: self = .accessibilityXxl
-    case 12: self = .accessibilityXxxl
+    case 1: self = .xSmall
+    case 2: self = .small
+    case 3: self = .medium
+    case 4: self = .large
+    case 5: self = .xLarge
+    case 6: self = .xxLarge
+    case 7: self = .xxxLarge
+    case 8: self = .accessibilityMedium
+    case 9: self = .accessibilityLarge
+    case 10: self = .accessibilityXLarge
+    case 11: self = .accessibilityXxLarge
+    case 12: self = .accessibilityXxxLarge
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -349,18 +349,18 @@ enum PodcastContentSizeCategoryProto: SwiftProtobuf.Enum, Swift.CaseIterable {
   var rawValue: Int {
     switch self {
     case .undefined: return 0
-    case .xs: return 1
-    case .s: return 2
-    case .m: return 3
-    case .l: return 4
-    case .xl: return 5
-    case .xxl: return 6
-    case .xxxl: return 7
-    case .accessibilityM: return 8
-    case .accessibilityL: return 9
-    case .accessibilityXl: return 10
-    case .accessibilityXxl: return 11
-    case .accessibilityXxxl: return 12
+    case .xSmall: return 1
+    case .small: return 2
+    case .medium: return 3
+    case .large: return 4
+    case .xLarge: return 5
+    case .xxLarge: return 6
+    case .xxxLarge: return 7
+    case .accessibilityMedium: return 8
+    case .accessibilityLarge: return 9
+    case .accessibilityXLarge: return 10
+    case .accessibilityXxLarge: return 11
+    case .accessibilityXxxLarge: return 12
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -368,18 +368,18 @@ enum PodcastContentSizeCategoryProto: SwiftProtobuf.Enum, Swift.CaseIterable {
   // The compiler won't synthesize support with the UNRECOGNIZED case.
   static let allCases: [PodcastContentSizeCategoryProto] = [
     .undefined,
-    .xs,
-    .s,
-    .m,
-    .l,
-    .xl,
-    .xxl,
-    .xxxl,
-    .accessibilityM,
-    .accessibilityL,
-    .accessibilityXl,
-    .accessibilityXxl,
-    .accessibilityXxxl,
+    .xSmall,
+    .small,
+    .medium,
+    .large,
+    .xLarge,
+    .xxLarge,
+    .xxxLarge,
+    .accessibilityMedium,
+    .accessibilityLarge,
+    .accessibilityXLarge,
+    .accessibilityXxLarge,
+    .accessibilityXxxLarge,
   ]
 
 }
@@ -2597,18 +2597,18 @@ extension PodcastUserInterfaceStyleProto: SwiftProtobuf._ProtoNameProviding {
 extension PodcastContentSizeCategoryProto: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     0: .same(proto: "PODCAST_CONTENT_SIZE_CATEGORY_PROTO_UNDEFINED"),
-    1: .same(proto: "PODCAST_CONTENT_SIZE_CATEGORY_PROTO_XS"),
-    2: .same(proto: "PODCAST_CONTENT_SIZE_CATEGORY_PROTO_S"),
-    3: .same(proto: "PODCAST_CONTENT_SIZE_CATEGORY_PROTO_M"),
-    4: .same(proto: "PODCAST_CONTENT_SIZE_CATEGORY_PROTO_L"),
-    5: .same(proto: "PODCAST_CONTENT_SIZE_CATEGORY_PROTO_XL"),
-    6: .same(proto: "PODCAST_CONTENT_SIZE_CATEGORY_PROTO_XXL"),
-    7: .same(proto: "PODCAST_CONTENT_SIZE_CATEGORY_PROTO_XXXL"),
-    8: .same(proto: "PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_M"),
-    9: .same(proto: "PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_L"),
-    10: .same(proto: "PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_XL"),
-    11: .same(proto: "PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_XXL"),
-    12: .same(proto: "PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_XXXL"),
+    1: .same(proto: "PODCAST_CONTENT_SIZE_CATEGORY_PROTO_X_SMALL"),
+    2: .same(proto: "PODCAST_CONTENT_SIZE_CATEGORY_PROTO_SMALL"),
+    3: .same(proto: "PODCAST_CONTENT_SIZE_CATEGORY_PROTO_MEDIUM"),
+    4: .same(proto: "PODCAST_CONTENT_SIZE_CATEGORY_PROTO_LARGE"),
+    5: .same(proto: "PODCAST_CONTENT_SIZE_CATEGORY_PROTO_X_LARGE"),
+    6: .same(proto: "PODCAST_CONTENT_SIZE_CATEGORY_PROTO_XX_LARGE"),
+    7: .same(proto: "PODCAST_CONTENT_SIZE_CATEGORY_PROTO_XXX_LARGE"),
+    8: .same(proto: "PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_MEDIUM"),
+    9: .same(proto: "PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_LARGE"),
+    10: .same(proto: "PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_X_LARGE"),
+    11: .same(proto: "PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_XX_LARGE"),
+    12: .same(proto: "PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_XXX_LARGE"),
   ]
 }
 

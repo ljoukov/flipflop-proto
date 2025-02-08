@@ -1797,55 +1797,55 @@ export enum PodcastContentSizeCategoryProto {
     /**
      * @generated from protobuf enum value: PODCAST_CONTENT_SIZE_CATEGORY_PROTO_UNDEFINED = 0;
      */
-    PODCAST_CONTENT_SIZE_CATEGORY_PROTO_UNDEFINED = 0,
+    UNDEFINED = 0,
     /**
-     * @generated from protobuf enum value: PODCAST_CONTENT_SIZE_CATEGORY_PROTO_XS = 1;
+     * @generated from protobuf enum value: PODCAST_CONTENT_SIZE_CATEGORY_PROTO_X_SMALL = 1;
      */
-    PODCAST_CONTENT_SIZE_CATEGORY_PROTO_XS = 1,
+    X_SMALL = 1,
     /**
-     * @generated from protobuf enum value: PODCAST_CONTENT_SIZE_CATEGORY_PROTO_S = 2;
+     * @generated from protobuf enum value: PODCAST_CONTENT_SIZE_CATEGORY_PROTO_SMALL = 2;
      */
-    PODCAST_CONTENT_SIZE_CATEGORY_PROTO_S = 2,
+    SMALL = 2,
     /**
-     * @generated from protobuf enum value: PODCAST_CONTENT_SIZE_CATEGORY_PROTO_M = 3;
+     * @generated from protobuf enum value: PODCAST_CONTENT_SIZE_CATEGORY_PROTO_MEDIUM = 3;
      */
-    PODCAST_CONTENT_SIZE_CATEGORY_PROTO_M = 3,
+    MEDIUM = 3,
     /**
-     * @generated from protobuf enum value: PODCAST_CONTENT_SIZE_CATEGORY_PROTO_L = 4;
+     * @generated from protobuf enum value: PODCAST_CONTENT_SIZE_CATEGORY_PROTO_LARGE = 4;
      */
-    PODCAST_CONTENT_SIZE_CATEGORY_PROTO_L = 4,
+    LARGE = 4,
     /**
-     * @generated from protobuf enum value: PODCAST_CONTENT_SIZE_CATEGORY_PROTO_XL = 5;
+     * @generated from protobuf enum value: PODCAST_CONTENT_SIZE_CATEGORY_PROTO_X_LARGE = 5;
      */
-    PODCAST_CONTENT_SIZE_CATEGORY_PROTO_XL = 5,
+    X_LARGE = 5,
     /**
-     * @generated from protobuf enum value: PODCAST_CONTENT_SIZE_CATEGORY_PROTO_XXL = 6;
+     * @generated from protobuf enum value: PODCAST_CONTENT_SIZE_CATEGORY_PROTO_XX_LARGE = 6;
      */
-    PODCAST_CONTENT_SIZE_CATEGORY_PROTO_XXL = 6,
+    XX_LARGE = 6,
     /**
-     * @generated from protobuf enum value: PODCAST_CONTENT_SIZE_CATEGORY_PROTO_XXXL = 7;
+     * @generated from protobuf enum value: PODCAST_CONTENT_SIZE_CATEGORY_PROTO_XXX_LARGE = 7;
      */
-    PODCAST_CONTENT_SIZE_CATEGORY_PROTO_XXXL = 7,
+    XXX_LARGE = 7,
     /**
-     * @generated from protobuf enum value: PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_M = 8;
+     * @generated from protobuf enum value: PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_MEDIUM = 8;
      */
-    PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_M = 8,
+    ACCESSIBILITY_MEDIUM = 8,
     /**
-     * @generated from protobuf enum value: PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_L = 9;
+     * @generated from protobuf enum value: PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_LARGE = 9;
      */
-    PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_L = 9,
+    ACCESSIBILITY_LARGE = 9,
     /**
-     * @generated from protobuf enum value: PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_XL = 10;
+     * @generated from protobuf enum value: PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_X_LARGE = 10;
      */
-    PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_XL = 10,
+    ACCESSIBILITY_X_LARGE = 10,
     /**
-     * @generated from protobuf enum value: PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_XXL = 11;
+     * @generated from protobuf enum value: PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_XX_LARGE = 11;
      */
-    PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_XXL = 11,
+    ACCESSIBILITY_XX_LARGE = 11,
     /**
-     * @generated from protobuf enum value: PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_XXXL = 12;
+     * @generated from protobuf enum value: PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_XXX_LARGE = 12;
      */
-    PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_XXXL = 12
+    ACCESSIBILITY_XXX_LARGE = 12
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class PodcastRequestAuthProto$Type extends MessageType<PodcastRequestAuthProto> {
@@ -7329,7 +7329,7 @@ export const PodcastIOSDeviceProto = new PodcastIOSDeviceProto$Type();
 class PodcastAccessibilitySettingsProto$Type extends MessageType<PodcastAccessibilitySettingsProto> {
     constructor() {
         super("PodcastAccessibilitySettingsProto", [
-            { no: 1, name: "content_size_category", kind: "enum", T: () => ["PodcastContentSizeCategoryProto", PodcastContentSizeCategoryProto] },
+            { no: 1, name: "content_size_category", kind: "enum", T: () => ["PodcastContentSizeCategoryProto", PodcastContentSizeCategoryProto, "PODCAST_CONTENT_SIZE_CATEGORY_PROTO_"] },
             { no: 2, name: "bold_text", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
             { no: 3, name: "increase_contrast", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
             { no: 4, name: "reduce_transparency", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
