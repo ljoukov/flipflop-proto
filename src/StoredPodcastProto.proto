@@ -493,6 +493,7 @@ message StoredPodcastUserAgentProto {
   StoredPodcastLocationProto location = 4;
   StoredPodcastUserInterfaceStyleProto user_interface_style = 5;
   StoredPodcastAccessibilitySettingsProto accessibility_settings = 6;
+  StoredPodcastAudioSettingsProto audio_settings = 7;
 }
 
 message StoredPodcastAccessibilitySettingsProto {
@@ -555,4 +556,14 @@ message StoredPodcastIOSDeviceProto {
   string app_bundle_name = 6;
   string app_bundle_version = 7;
   string app_build_number = 8;
+}
+
+message StoredPodcastAudioSettingsProto {
+  float output_volume = 1;
+  repeated StoredPodcastAudioOutputPortProto output_ports = 2;
+}
+
+message StoredPodcastAudioOutputPortProto {
+  string type = 1;
+  string name = 2;
 }

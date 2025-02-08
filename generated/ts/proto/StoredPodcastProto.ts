@@ -1206,6 +1206,10 @@ export interface StoredPodcastUserAgentProto {
      * @generated from protobuf field: StoredPodcastAccessibilitySettingsProto accessibility_settings = 6;
      */
     accessibilitySettings?: StoredPodcastAccessibilitySettingsProto;
+    /**
+     * @generated from protobuf field: StoredPodcastAudioSettingsProto audio_settings = 7;
+     */
+    audioSettings?: StoredPodcastAudioSettingsProto;
 }
 /**
  * @generated from protobuf message StoredPodcastAccessibilitySettingsProto
@@ -1331,6 +1335,32 @@ export interface StoredPodcastIOSDeviceProto {
      * @generated from protobuf field: string app_build_number = 8;
      */
     appBuildNumber: string;
+}
+/**
+ * @generated from protobuf message StoredPodcastAudioSettingsProto
+ */
+export interface StoredPodcastAudioSettingsProto {
+    /**
+     * @generated from protobuf field: float output_volume = 1;
+     */
+    outputVolume: number;
+    /**
+     * @generated from protobuf field: repeated StoredPodcastAudioOutputPortProto output_ports = 2;
+     */
+    outputPorts: StoredPodcastAudioOutputPortProto[];
+}
+/**
+ * @generated from protobuf message StoredPodcastAudioOutputPortProto
+ */
+export interface StoredPodcastAudioOutputPortProto {
+    /**
+     * @generated from protobuf field: string type = 1;
+     */
+    type: string;
+    /**
+     * @generated from protobuf field: string name = 2;
+     */
+    name: string;
 }
 /**
  * @generated from protobuf enum StoredPodcastStateProto
@@ -5238,7 +5268,8 @@ class StoredPodcastUserAgentProto$Type extends MessageType<StoredPodcastUserAgen
             { no: 3, name: "locale", kind: "message", T: () => StoredPodcastLocaleProto },
             { no: 4, name: "location", kind: "message", T: () => StoredPodcastLocationProto },
             { no: 5, name: "user_interface_style", kind: "enum", T: () => ["StoredPodcastUserInterfaceStyleProto", StoredPodcastUserInterfaceStyleProto, "STORED_PODCAST_USER_INTERFACE_STYLE_PROTO_"] },
-            { no: 6, name: "accessibility_settings", kind: "message", T: () => StoredPodcastAccessibilitySettingsProto }
+            { no: 6, name: "accessibility_settings", kind: "message", T: () => StoredPodcastAccessibilitySettingsProto },
+            { no: 7, name: "audio_settings", kind: "message", T: () => StoredPodcastAudioSettingsProto }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastUserAgentProto>): StoredPodcastUserAgentProto {
@@ -5272,6 +5303,9 @@ class StoredPodcastUserAgentProto$Type extends MessageType<StoredPodcastUserAgen
                 case /* StoredPodcastAccessibilitySettingsProto accessibility_settings */ 6:
                     message.accessibilitySettings = StoredPodcastAccessibilitySettingsProto.internalBinaryRead(reader, reader.uint32(), options, message.accessibilitySettings);
                     break;
+                case /* StoredPodcastAudioSettingsProto audio_settings */ 7:
+                    message.audioSettings = StoredPodcastAudioSettingsProto.internalBinaryRead(reader, reader.uint32(), options, message.audioSettings);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -5302,6 +5336,9 @@ class StoredPodcastUserAgentProto$Type extends MessageType<StoredPodcastUserAgen
         /* StoredPodcastAccessibilitySettingsProto accessibility_settings = 6; */
         if (message.accessibilitySettings)
             StoredPodcastAccessibilitySettingsProto.internalBinaryWrite(message.accessibilitySettings, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+        /* StoredPodcastAudioSettingsProto audio_settings = 7; */
+        if (message.audioSettings)
+            StoredPodcastAudioSettingsProto.internalBinaryWrite(message.audioSettings, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -5694,3 +5731,113 @@ class StoredPodcastIOSDeviceProto$Type extends MessageType<StoredPodcastIOSDevic
  * @generated MessageType for protobuf message StoredPodcastIOSDeviceProto
  */
 export const StoredPodcastIOSDeviceProto = new StoredPodcastIOSDeviceProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class StoredPodcastAudioSettingsProto$Type extends MessageType<StoredPodcastAudioSettingsProto> {
+    constructor() {
+        super("StoredPodcastAudioSettingsProto", [
+            { no: 1, name: "output_volume", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
+            { no: 2, name: "output_ports", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => StoredPodcastAudioOutputPortProto }
+        ]);
+    }
+    create(value?: PartialMessage<StoredPodcastAudioSettingsProto>): StoredPodcastAudioSettingsProto {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.outputVolume = 0;
+        message.outputPorts = [];
+        if (value !== undefined)
+            reflectionMergePartial<StoredPodcastAudioSettingsProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredPodcastAudioSettingsProto): StoredPodcastAudioSettingsProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* float output_volume */ 1:
+                    message.outputVolume = reader.float();
+                    break;
+                case /* repeated StoredPodcastAudioOutputPortProto output_ports */ 2:
+                    message.outputPorts.push(StoredPodcastAudioOutputPortProto.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: StoredPodcastAudioSettingsProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* float output_volume = 1; */
+        if (message.outputVolume !== 0)
+            writer.tag(1, WireType.Bit32).float(message.outputVolume);
+        /* repeated StoredPodcastAudioOutputPortProto output_ports = 2; */
+        for (let i = 0; i < message.outputPorts.length; i++)
+            StoredPodcastAudioOutputPortProto.internalBinaryWrite(message.outputPorts[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message StoredPodcastAudioSettingsProto
+ */
+export const StoredPodcastAudioSettingsProto = new StoredPodcastAudioSettingsProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class StoredPodcastAudioOutputPortProto$Type extends MessageType<StoredPodcastAudioOutputPortProto> {
+    constructor() {
+        super("StoredPodcastAudioOutputPortProto", [
+            { no: 1, name: "type", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<StoredPodcastAudioOutputPortProto>): StoredPodcastAudioOutputPortProto {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.type = "";
+        message.name = "";
+        if (value !== undefined)
+            reflectionMergePartial<StoredPodcastAudioOutputPortProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredPodcastAudioOutputPortProto): StoredPodcastAudioOutputPortProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string type */ 1:
+                    message.type = reader.string();
+                    break;
+                case /* string name */ 2:
+                    message.name = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: StoredPodcastAudioOutputPortProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string type = 1; */
+        if (message.type !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.type);
+        /* string name = 2; */
+        if (message.name !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.name);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message StoredPodcastAudioOutputPortProto
+ */
+export const StoredPodcastAudioOutputPortProto = new StoredPodcastAudioOutputPortProto$Type();

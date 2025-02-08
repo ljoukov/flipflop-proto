@@ -2074,6 +2074,15 @@ struct StoredPodcastUserAgentProto: @unchecked Sendable {
   /// Clears the value of `accessibilitySettings`. Subsequent reads from it will return its default value.
   mutating func clearAccessibilitySettings() {_uniqueStorage()._accessibilitySettings = nil}
 
+  var audioSettings: StoredPodcastAudioSettingsProto {
+    get {return _storage._audioSettings ?? StoredPodcastAudioSettingsProto()}
+    set {_uniqueStorage()._audioSettings = newValue}
+  }
+  /// Returns true if `audioSettings` has been explicitly set.
+  var hasAudioSettings: Bool {return _storage._audioSettings != nil}
+  /// Clears the value of `audioSettings`. Subsequent reads from it will return its default value.
+  mutating func clearAudioSettings() {_uniqueStorage()._audioSettings = nil}
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -2184,6 +2193,34 @@ struct StoredPodcastIOSDeviceProto: Sendable {
   var appBundleVersion: String = String()
 
   var appBuildNumber: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct StoredPodcastAudioSettingsProto: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var outputVolume: Float = 0
+
+  var outputPorts: [StoredPodcastAudioOutputPortProto] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct StoredPodcastAudioOutputPortProto: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var type: String = String()
+
+  var name: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -5298,6 +5335,7 @@ extension StoredPodcastUserAgentProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
     4: .same(proto: "location"),
     5: .standard(proto: "user_interface_style"),
     6: .standard(proto: "accessibility_settings"),
+    7: .standard(proto: "audio_settings"),
   ]
 
   fileprivate class _StorageClass {
@@ -5307,6 +5345,7 @@ extension StoredPodcastUserAgentProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
     var _location: StoredPodcastLocationProto? = nil
     var _userInterfaceStyle: StoredPodcastUserInterfaceStyleProto = .undefined
     var _accessibilitySettings: StoredPodcastAccessibilitySettingsProto? = nil
+    var _audioSettings: StoredPodcastAudioSettingsProto? = nil
 
     #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
@@ -5327,6 +5366,7 @@ extension StoredPodcastUserAgentProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
       _location = source._location
       _userInterfaceStyle = source._userInterfaceStyle
       _accessibilitySettings = source._accessibilitySettings
+      _audioSettings = source._audioSettings
     }
   }
 
@@ -5351,6 +5391,7 @@ extension StoredPodcastUserAgentProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
         case 4: try { try decoder.decodeSingularMessageField(value: &_storage._location) }()
         case 5: try { try decoder.decodeSingularEnumField(value: &_storage._userInterfaceStyle) }()
         case 6: try { try decoder.decodeSingularMessageField(value: &_storage._accessibilitySettings) }()
+        case 7: try { try decoder.decodeSingularMessageField(value: &_storage._audioSettings) }()
         default: break
         }
       }
@@ -5381,6 +5422,9 @@ extension StoredPodcastUserAgentProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
       try { if let v = _storage._accessibilitySettings {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
       } }()
+      try { if let v = _storage._audioSettings {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
+      } }()
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -5396,6 +5440,7 @@ extension StoredPodcastUserAgentProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
         if _storage._location != rhs_storage._location {return false}
         if _storage._userInterfaceStyle != rhs_storage._userInterfaceStyle {return false}
         if _storage._accessibilitySettings != rhs_storage._accessibilitySettings {return false}
+        if _storage._audioSettings != rhs_storage._audioSettings {return false}
         return true
       }
       if !storagesAreEqual {return false}
@@ -5684,6 +5729,82 @@ extension StoredPodcastIOSDeviceProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
     if lhs.appBundleName != rhs.appBundleName {return false}
     if lhs.appBundleVersion != rhs.appBundleVersion {return false}
     if lhs.appBuildNumber != rhs.appBuildNumber {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension StoredPodcastAudioSettingsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredPodcastAudioSettingsProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "output_volume"),
+    2: .standard(proto: "output_ports"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularFloatField(value: &self.outputVolume) }()
+      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.outputPorts) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.outputVolume.bitPattern != 0 {
+      try visitor.visitSingularFloatField(value: self.outputVolume, fieldNumber: 1)
+    }
+    if !self.outputPorts.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.outputPorts, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: StoredPodcastAudioSettingsProto, rhs: StoredPodcastAudioSettingsProto) -> Bool {
+    if lhs.outputVolume != rhs.outputVolume {return false}
+    if lhs.outputPorts != rhs.outputPorts {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension StoredPodcastAudioOutputPortProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredPodcastAudioOutputPortProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "type"),
+    2: .same(proto: "name"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.type) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.name) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.type.isEmpty {
+      try visitor.visitSingularStringField(value: self.type, fieldNumber: 1)
+    }
+    if !self.name.isEmpty {
+      try visitor.visitSingularStringField(value: self.name, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: StoredPodcastAudioOutputPortProto, rhs: StoredPodcastAudioOutputPortProto) -> Bool {
+    if lhs.type != rhs.type {return false}
+    if lhs.name != rhs.name {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
