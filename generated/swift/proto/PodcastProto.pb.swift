@@ -2437,6 +2437,15 @@ struct PodcastUserAgentProto: @unchecked Sendable {
   /// Clears the value of `accessibilitySettings`. Subsequent reads from it will return its default value.
   mutating func clearAccessibilitySettings() {_uniqueStorage()._accessibilitySettings = nil}
 
+  var audioSettings: PodcastAudioSettings {
+    get {return _storage._audioSettings ?? PodcastAudioSettings()}
+    set {_uniqueStorage()._audioSettings = newValue}
+  }
+  /// Returns true if `audioSettings` has been explicitly set.
+  var hasAudioSettings: Bool {return _storage._audioSettings != nil}
+  /// Clears the value of `audioSettings`. Subsequent reads from it will return its default value.
+  mutating func clearAudioSettings() {_uniqueStorage()._audioSettings = nil}
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -2525,6 +2534,20 @@ struct PodcastAccessibilitySettingsProto: Sendable {
   var reduceTransparency: Bool = false
 
   var reduceMotion: Bool = false
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct PodcastAudioSettings: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var outputVolume: Float = 0
+
+  var outputPorts: [String] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -6902,6 +6925,7 @@ extension PodcastUserAgentProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     2: .same(proto: "locale"),
     3: .standard(proto: "user_interface_style"),
     4: .standard(proto: "accessibility_settings"),
+    5: .standard(proto: "audio_settings"),
   ]
 
   fileprivate class _StorageClass {
@@ -6909,6 +6933,7 @@ extension PodcastUserAgentProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     var _locale: PodcastLocaleProto? = nil
     var _userInterfaceStyle: PodcastUserInterfaceStyleProto = .undefined
     var _accessibilitySettings: PodcastAccessibilitySettingsProto? = nil
+    var _audioSettings: PodcastAudioSettings? = nil
 
     #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
@@ -6927,6 +6952,7 @@ extension PodcastUserAgentProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
       _locale = source._locale
       _userInterfaceStyle = source._userInterfaceStyle
       _accessibilitySettings = source._accessibilitySettings
+      _audioSettings = source._audioSettings
     }
   }
 
@@ -6949,6 +6975,7 @@ extension PodcastUserAgentProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
         case 2: try { try decoder.decodeSingularMessageField(value: &_storage._locale) }()
         case 3: try { try decoder.decodeSingularEnumField(value: &_storage._userInterfaceStyle) }()
         case 4: try { try decoder.decodeSingularMessageField(value: &_storage._accessibilitySettings) }()
+        case 5: try { try decoder.decodeSingularMessageField(value: &_storage._audioSettings) }()
         default: break
         }
       }
@@ -6973,6 +7000,9 @@ extension PodcastUserAgentProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
       try { if let v = _storage._accessibilitySettings {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
       } }()
+      try { if let v = _storage._audioSettings {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
+      } }()
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -6986,6 +7016,7 @@ extension PodcastUserAgentProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
         if _storage._locale != rhs_storage._locale {return false}
         if _storage._userInterfaceStyle != rhs_storage._userInterfaceStyle {return false}
         if _storage._accessibilitySettings != rhs_storage._accessibilitySettings {return false}
+        if _storage._audioSettings != rhs_storage._audioSettings {return false}
         return true
       }
       if !storagesAreEqual {return false}
@@ -7212,6 +7243,44 @@ extension PodcastAccessibilitySettingsProto: SwiftProtobuf.Message, SwiftProtobu
     if lhs.increaseContrast != rhs.increaseContrast {return false}
     if lhs.reduceTransparency != rhs.reduceTransparency {return false}
     if lhs.reduceMotion != rhs.reduceMotion {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension PodcastAudioSettings: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastAudioSettings"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "output_volume"),
+    2: .standard(proto: "output_ports"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularFloatField(value: &self.outputVolume) }()
+      case 2: try { try decoder.decodeRepeatedStringField(value: &self.outputPorts) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.outputVolume.bitPattern != 0 {
+      try visitor.visitSingularFloatField(value: self.outputVolume, fieldNumber: 1)
+    }
+    if !self.outputPorts.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.outputPorts, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PodcastAudioSettings, rhs: PodcastAudioSettings) -> Bool {
+    if lhs.outputVolume != rhs.outputVolume {return false}
+    if lhs.outputPorts != rhs.outputPorts {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
