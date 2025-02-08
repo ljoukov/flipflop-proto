@@ -1550,6 +1550,10 @@ export interface PodcastUserAgentProto {
      * @generated from protobuf field: PodcastUserInterfaceStyleProto user_interface_style = 3;
      */
     userInterfaceStyle: PodcastUserInterfaceStyleProto;
+    /**
+     * @generated from protobuf field: PodcastAccessibilitySettingsProto accessibility_settings = 4;
+     */
+    accessibilitySettings?: PodcastAccessibilitySettingsProto;
 }
 /**
  * @generated from protobuf message PodcastLocaleProto
@@ -1621,6 +1625,31 @@ export interface PodcastIOSDeviceProto {
      * @generated from protobuf field: string app_build_number = 8;
      */
     appBuildNumber: string;
+}
+/**
+ * @generated from protobuf message PodcastAccessibilitySettingsProto
+ */
+export interface PodcastAccessibilitySettingsProto {
+    /**
+     * @generated from protobuf field: PodcastContentSizeCategoryProto content_size_category = 1;
+     */
+    contentSizeCategory: PodcastContentSizeCategoryProto;
+    /**
+     * @generated from protobuf field: bool bold_text = 2;
+     */
+    boldText: boolean;
+    /**
+     * @generated from protobuf field: bool increase_contrast = 3;
+     */
+    increaseContrast: boolean;
+    /**
+     * @generated from protobuf field: bool reduce_transparency = 4;
+     */
+    reduceTransparency: boolean;
+    /**
+     * @generated from protobuf field: bool reduce_motion = 5;
+     */
+    reduceMotion: boolean;
 }
 /**
  * @generated from protobuf enum PodcastSubscriptionSourceProto
@@ -1760,6 +1789,63 @@ export enum PodcastUserInterfaceStyleProto {
      * @generated from protobuf enum value: PODCAST_USER_INTERFACE_STYLE_PROTO_DARK = 2;
      */
     DARK = 2
+}
+/**
+ * @generated from protobuf enum PodcastContentSizeCategoryProto
+ */
+export enum PodcastContentSizeCategoryProto {
+    /**
+     * @generated from protobuf enum value: PODCAST_CONTENT_SIZE_CATEGORY_PROTO_UNDEFINED = 0;
+     */
+    PODCAST_CONTENT_SIZE_CATEGORY_PROTO_UNDEFINED = 0,
+    /**
+     * @generated from protobuf enum value: PODCAST_CONTENT_SIZE_CATEGORY_PROTO_XS = 1;
+     */
+    PODCAST_CONTENT_SIZE_CATEGORY_PROTO_XS = 1,
+    /**
+     * @generated from protobuf enum value: PODCAST_CONTENT_SIZE_CATEGORY_PROTO_S = 2;
+     */
+    PODCAST_CONTENT_SIZE_CATEGORY_PROTO_S = 2,
+    /**
+     * @generated from protobuf enum value: PODCAST_CONTENT_SIZE_CATEGORY_PROTO_M = 3;
+     */
+    PODCAST_CONTENT_SIZE_CATEGORY_PROTO_M = 3,
+    /**
+     * @generated from protobuf enum value: PODCAST_CONTENT_SIZE_CATEGORY_PROTO_L = 4;
+     */
+    PODCAST_CONTENT_SIZE_CATEGORY_PROTO_L = 4,
+    /**
+     * @generated from protobuf enum value: PODCAST_CONTENT_SIZE_CATEGORY_PROTO_XL = 5;
+     */
+    PODCAST_CONTENT_SIZE_CATEGORY_PROTO_XL = 5,
+    /**
+     * @generated from protobuf enum value: PODCAST_CONTENT_SIZE_CATEGORY_PROTO_XXL = 6;
+     */
+    PODCAST_CONTENT_SIZE_CATEGORY_PROTO_XXL = 6,
+    /**
+     * @generated from protobuf enum value: PODCAST_CONTENT_SIZE_CATEGORY_PROTO_XXXL = 7;
+     */
+    PODCAST_CONTENT_SIZE_CATEGORY_PROTO_XXXL = 7,
+    /**
+     * @generated from protobuf enum value: PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_M = 8;
+     */
+    PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_M = 8,
+    /**
+     * @generated from protobuf enum value: PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_L = 9;
+     */
+    PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_L = 9,
+    /**
+     * @generated from protobuf enum value: PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_XL = 10;
+     */
+    PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_XL = 10,
+    /**
+     * @generated from protobuf enum value: PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_XXL = 11;
+     */
+    PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_XXL = 11,
+    /**
+     * @generated from protobuf enum value: PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_XXXL = 12;
+     */
+    PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_XXXL = 12
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class PodcastRequestAuthProto$Type extends MessageType<PodcastRequestAuthProto> {
@@ -6961,7 +7047,8 @@ class PodcastUserAgentProto$Type extends MessageType<PodcastUserAgentProto> {
         super("PodcastUserAgentProto", [
             { no: 1, name: "device", kind: "message", T: () => PodcastDeviceProto },
             { no: 2, name: "locale", kind: "message", T: () => PodcastLocaleProto },
-            { no: 3, name: "user_interface_style", kind: "enum", T: () => ["PodcastUserInterfaceStyleProto", PodcastUserInterfaceStyleProto, "PODCAST_USER_INTERFACE_STYLE_PROTO_"] }
+            { no: 3, name: "user_interface_style", kind: "enum", T: () => ["PodcastUserInterfaceStyleProto", PodcastUserInterfaceStyleProto, "PODCAST_USER_INTERFACE_STYLE_PROTO_"] },
+            { no: 4, name: "accessibility_settings", kind: "message", T: () => PodcastAccessibilitySettingsProto }
         ]);
     }
     create(value?: PartialMessage<PodcastUserAgentProto>): PodcastUserAgentProto {
@@ -6985,6 +7072,9 @@ class PodcastUserAgentProto$Type extends MessageType<PodcastUserAgentProto> {
                 case /* PodcastUserInterfaceStyleProto user_interface_style */ 3:
                     message.userInterfaceStyle = reader.int32();
                     break;
+                case /* PodcastAccessibilitySettingsProto accessibility_settings */ 4:
+                    message.accessibilitySettings = PodcastAccessibilitySettingsProto.internalBinaryRead(reader, reader.uint32(), options, message.accessibilitySettings);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -7006,6 +7096,9 @@ class PodcastUserAgentProto$Type extends MessageType<PodcastUserAgentProto> {
         /* PodcastUserInterfaceStyleProto user_interface_style = 3; */
         if (message.userInterfaceStyle !== 0)
             writer.tag(3, WireType.Varint).int32(message.userInterfaceStyle);
+        /* PodcastAccessibilitySettingsProto accessibility_settings = 4; */
+        if (message.accessibilitySettings)
+            PodcastAccessibilitySettingsProto.internalBinaryWrite(message.accessibilitySettings, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -7232,3 +7325,82 @@ class PodcastIOSDeviceProto$Type extends MessageType<PodcastIOSDeviceProto> {
  * @generated MessageType for protobuf message PodcastIOSDeviceProto
  */
 export const PodcastIOSDeviceProto = new PodcastIOSDeviceProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PodcastAccessibilitySettingsProto$Type extends MessageType<PodcastAccessibilitySettingsProto> {
+    constructor() {
+        super("PodcastAccessibilitySettingsProto", [
+            { no: 1, name: "content_size_category", kind: "enum", T: () => ["PodcastContentSizeCategoryProto", PodcastContentSizeCategoryProto] },
+            { no: 2, name: "bold_text", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 3, name: "increase_contrast", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 4, name: "reduce_transparency", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 5, name: "reduce_motion", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PodcastAccessibilitySettingsProto>): PodcastAccessibilitySettingsProto {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.contentSizeCategory = 0;
+        message.boldText = false;
+        message.increaseContrast = false;
+        message.reduceTransparency = false;
+        message.reduceMotion = false;
+        if (value !== undefined)
+            reflectionMergePartial<PodcastAccessibilitySettingsProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastAccessibilitySettingsProto): PodcastAccessibilitySettingsProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* PodcastContentSizeCategoryProto content_size_category */ 1:
+                    message.contentSizeCategory = reader.int32();
+                    break;
+                case /* bool bold_text */ 2:
+                    message.boldText = reader.bool();
+                    break;
+                case /* bool increase_contrast */ 3:
+                    message.increaseContrast = reader.bool();
+                    break;
+                case /* bool reduce_transparency */ 4:
+                    message.reduceTransparency = reader.bool();
+                    break;
+                case /* bool reduce_motion */ 5:
+                    message.reduceMotion = reader.bool();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PodcastAccessibilitySettingsProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* PodcastContentSizeCategoryProto content_size_category = 1; */
+        if (message.contentSizeCategory !== 0)
+            writer.tag(1, WireType.Varint).int32(message.contentSizeCategory);
+        /* bool bold_text = 2; */
+        if (message.boldText !== false)
+            writer.tag(2, WireType.Varint).bool(message.boldText);
+        /* bool increase_contrast = 3; */
+        if (message.increaseContrast !== false)
+            writer.tag(3, WireType.Varint).bool(message.increaseContrast);
+        /* bool reduce_transparency = 4; */
+        if (message.reduceTransparency !== false)
+            writer.tag(4, WireType.Varint).bool(message.reduceTransparency);
+        /* bool reduce_motion = 5; */
+        if (message.reduceMotion !== false)
+            writer.tag(5, WireType.Varint).bool(message.reduceMotion);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message PodcastAccessibilitySettingsProto
+ */
+export const PodcastAccessibilitySettingsProto = new PodcastAccessibilitySettingsProto$Type();

@@ -440,6 +440,84 @@ enum StoredPodcastUserInterfaceStyleProto: SwiftProtobuf.Enum, Swift.CaseIterabl
 
 }
 
+enum StoredPodcastContentSizeCategoryProto: SwiftProtobuf.Enum, Swift.CaseIterable {
+  typealias RawValue = Int
+  case undefined // = 0
+  case xSmall // = 1
+  case small // = 2
+  case medium // = 3
+  case large // = 4
+  case xLarge // = 5
+  case xxLarge // = 6
+  case xxxLarge // = 7
+  case accessibilityMedium // = 8
+  case accessibilityLarge // = 9
+  case accessibilityXLarge // = 10
+  case accessibilityXxLarge // = 11
+  case accessibilityXxxLarge // = 12
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .undefined
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .undefined
+    case 1: self = .xSmall
+    case 2: self = .small
+    case 3: self = .medium
+    case 4: self = .large
+    case 5: self = .xLarge
+    case 6: self = .xxLarge
+    case 7: self = .xxxLarge
+    case 8: self = .accessibilityMedium
+    case 9: self = .accessibilityLarge
+    case 10: self = .accessibilityXLarge
+    case 11: self = .accessibilityXxLarge
+    case 12: self = .accessibilityXxxLarge
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .undefined: return 0
+    case .xSmall: return 1
+    case .small: return 2
+    case .medium: return 3
+    case .large: return 4
+    case .xLarge: return 5
+    case .xxLarge: return 6
+    case .xxxLarge: return 7
+    case .accessibilityMedium: return 8
+    case .accessibilityLarge: return 9
+    case .accessibilityXLarge: return 10
+    case .accessibilityXxLarge: return 11
+    case .accessibilityXxxLarge: return 12
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static let allCases: [StoredPodcastContentSizeCategoryProto] = [
+    .undefined,
+    .xSmall,
+    .small,
+    .medium,
+    .large,
+    .xLarge,
+    .xxLarge,
+    .xxxLarge,
+    .accessibilityMedium,
+    .accessibilityLarge,
+    .accessibilityXLarge,
+    .accessibilityXxLarge,
+    .accessibilityXxxLarge,
+  ]
+
+}
+
 struct StoredPodcastProto: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -1987,11 +2065,40 @@ struct StoredUserAgentProto: @unchecked Sendable {
     set {_uniqueStorage()._userInterfaceStyle = newValue}
   }
 
+  var accessibilitySettings: StoredPodcastAccessibilitySettingsProto {
+    get {return _storage._accessibilitySettings ?? StoredPodcastAccessibilitySettingsProto()}
+    set {_uniqueStorage()._accessibilitySettings = newValue}
+  }
+  /// Returns true if `accessibilitySettings` has been explicitly set.
+  var hasAccessibilitySettings: Bool {return _storage._accessibilitySettings != nil}
+  /// Clears the value of `accessibilitySettings`. Subsequent reads from it will return its default value.
+  mutating func clearAccessibilitySettings() {_uniqueStorage()._accessibilitySettings = nil}
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 
   fileprivate var _storage = _StorageClass.defaultInstance
+}
+
+struct StoredPodcastAccessibilitySettingsProto: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var contentSizeCategory: StoredPodcastContentSizeCategoryProto = .undefined
+
+  var boldText: Bool = false
+
+  var increaseContrast: Bool = false
+
+  var reduceTransparency: Bool = false
+
+  var reduceMotion: Bool = false
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
 }
 
 struct StoredLocaleProto: Sendable {
@@ -2172,6 +2279,24 @@ extension StoredPodcastUserInterfaceStyleProto: SwiftProtobuf._ProtoNameProvidin
     0: .same(proto: "STORED_PODCAST_USER_INTERFACE_STYLE_PROTO_UNDEFINED"),
     1: .same(proto: "STORED_PODCAST_USER_INTERFACE_STYLE_PROTO_LIGHT"),
     2: .same(proto: "STORED_PODCAST_USER_INTERFACE_STYLE_PROTO_DARK"),
+  ]
+}
+
+extension StoredPodcastContentSizeCategoryProto: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "STORED_PODCAST_CONTENT_SIZE_CATEGORY_PROTO_UNDEFINED"),
+    1: .same(proto: "STORED_PODCAST_CONTENT_SIZE_CATEGORY_PROTO_X_SMALL"),
+    2: .same(proto: "STORED_PODCAST_CONTENT_SIZE_CATEGORY_PROTO_SMALL"),
+    3: .same(proto: "STORED_PODCAST_CONTENT_SIZE_CATEGORY_PROTO_MEDIUM"),
+    4: .same(proto: "STORED_PODCAST_CONTENT_SIZE_CATEGORY_PROTO_LARGE"),
+    5: .same(proto: "STORED_PODCAST_CONTENT_SIZE_CATEGORY_PROTO_X_LARGE"),
+    6: .same(proto: "STORED_PODCAST_CONTENT_SIZE_CATEGORY_PROTO_XX_LARGE"),
+    7: .same(proto: "STORED_PODCAST_CONTENT_SIZE_CATEGORY_PROTO_XXX_LARGE"),
+    8: .same(proto: "STORED_PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_MEDIUM"),
+    9: .same(proto: "STORED_PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_LARGE"),
+    10: .same(proto: "STORED_PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_X_LARGE"),
+    11: .same(proto: "STORED_PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_XX_LARGE"),
+    12: .same(proto: "STORED_PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_XXX_LARGE"),
   ]
 }
 
@@ -5172,6 +5297,7 @@ extension StoredUserAgentProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     3: .same(proto: "locale"),
     4: .same(proto: "location"),
     5: .standard(proto: "user_interface_style"),
+    6: .standard(proto: "accessibility_settings"),
   ]
 
   fileprivate class _StorageClass {
@@ -5180,6 +5306,7 @@ extension StoredUserAgentProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     var _locale: StoredLocaleProto? = nil
     var _location: StoredLocationProto? = nil
     var _userInterfaceStyle: StoredPodcastUserInterfaceStyleProto = .undefined
+    var _accessibilitySettings: StoredPodcastAccessibilitySettingsProto? = nil
 
     #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
@@ -5199,6 +5326,7 @@ extension StoredUserAgentProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
       _locale = source._locale
       _location = source._location
       _userInterfaceStyle = source._userInterfaceStyle
+      _accessibilitySettings = source._accessibilitySettings
     }
   }
 
@@ -5222,6 +5350,7 @@ extension StoredUserAgentProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
         case 3: try { try decoder.decodeSingularMessageField(value: &_storage._locale) }()
         case 4: try { try decoder.decodeSingularMessageField(value: &_storage._location) }()
         case 5: try { try decoder.decodeSingularEnumField(value: &_storage._userInterfaceStyle) }()
+        case 6: try { try decoder.decodeSingularMessageField(value: &_storage._accessibilitySettings) }()
         default: break
         }
       }
@@ -5249,6 +5378,9 @@ extension StoredUserAgentProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
       if _storage._userInterfaceStyle != .undefined {
         try visitor.visitSingularEnumField(value: _storage._userInterfaceStyle, fieldNumber: 5)
       }
+      try { if let v = _storage._accessibilitySettings {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
+      } }()
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -5263,10 +5395,67 @@ extension StoredUserAgentProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
         if _storage._locale != rhs_storage._locale {return false}
         if _storage._location != rhs_storage._location {return false}
         if _storage._userInterfaceStyle != rhs_storage._userInterfaceStyle {return false}
+        if _storage._accessibilitySettings != rhs_storage._accessibilitySettings {return false}
         return true
       }
       if !storagesAreEqual {return false}
     }
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension StoredPodcastAccessibilitySettingsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredPodcastAccessibilitySettingsProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "content_size_category"),
+    2: .standard(proto: "bold_text"),
+    3: .standard(proto: "increase_contrast"),
+    4: .standard(proto: "reduce_transparency"),
+    5: .standard(proto: "reduce_motion"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularEnumField(value: &self.contentSizeCategory) }()
+      case 2: try { try decoder.decodeSingularBoolField(value: &self.boldText) }()
+      case 3: try { try decoder.decodeSingularBoolField(value: &self.increaseContrast) }()
+      case 4: try { try decoder.decodeSingularBoolField(value: &self.reduceTransparency) }()
+      case 5: try { try decoder.decodeSingularBoolField(value: &self.reduceMotion) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.contentSizeCategory != .undefined {
+      try visitor.visitSingularEnumField(value: self.contentSizeCategory, fieldNumber: 1)
+    }
+    if self.boldText != false {
+      try visitor.visitSingularBoolField(value: self.boldText, fieldNumber: 2)
+    }
+    if self.increaseContrast != false {
+      try visitor.visitSingularBoolField(value: self.increaseContrast, fieldNumber: 3)
+    }
+    if self.reduceTransparency != false {
+      try visitor.visitSingularBoolField(value: self.reduceTransparency, fieldNumber: 4)
+    }
+    if self.reduceMotion != false {
+      try visitor.visitSingularBoolField(value: self.reduceMotion, fieldNumber: 5)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: StoredPodcastAccessibilitySettingsProto, rhs: StoredPodcastAccessibilitySettingsProto) -> Bool {
+    if lhs.contentSizeCategory != rhs.contentSizeCategory {return false}
+    if lhs.boldText != rhs.boldText {return false}
+    if lhs.increaseContrast != rhs.increaseContrast {return false}
+    if lhs.reduceTransparency != rhs.reduceTransparency {return false}
+    if lhs.reduceMotion != rhs.reduceMotion {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

@@ -574,6 +574,7 @@ message PodcastUserAgentProto {
   PodcastDeviceProto device = 1;
   PodcastLocaleProto locale = 2;
   PodcastUserInterfaceStyleProto user_interface_style = 3;
+  PodcastAccessibilitySettingsProto accessibility_settings = 4;
 }
 
 enum PodcastUserInterfaceStyleProto {
@@ -603,4 +604,28 @@ message PodcastIOSDeviceProto {
   string app_bundle_name = 6;
   string app_bundle_version = 7;
   string app_build_number = 8;
+}
+
+message PodcastAccessibilitySettingsProto {
+  PodcastContentSizeCategoryProto content_size_category = 1;
+  bool bold_text = 2;
+  bool increase_contrast = 3;
+  bool reduce_transparency = 4;
+  bool reduce_motion = 5;
+}
+
+enum PodcastContentSizeCategoryProto {
+  PODCAST_CONTENT_SIZE_CATEGORY_PROTO_UNDEFINED = 0;
+  PODCAST_CONTENT_SIZE_CATEGORY_PROTO_XS = 1;
+  PODCAST_CONTENT_SIZE_CATEGORY_PROTO_S = 2;
+  PODCAST_CONTENT_SIZE_CATEGORY_PROTO_M = 3;
+  PODCAST_CONTENT_SIZE_CATEGORY_PROTO_L = 4;
+  PODCAST_CONTENT_SIZE_CATEGORY_PROTO_XL = 5;
+  PODCAST_CONTENT_SIZE_CATEGORY_PROTO_XXL = 6;
+  PODCAST_CONTENT_SIZE_CATEGORY_PROTO_XXXL = 7;
+  PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_M = 8;
+  PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_L = 9;
+  PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_XL = 10;
+  PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_XXL = 11;
+  PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_XXXL = 12;
 }

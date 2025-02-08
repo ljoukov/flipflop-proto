@@ -306,6 +306,84 @@ enum PodcastUserInterfaceStyleProto: SwiftProtobuf.Enum, Swift.CaseIterable {
 
 }
 
+enum PodcastContentSizeCategoryProto: SwiftProtobuf.Enum, Swift.CaseIterable {
+  typealias RawValue = Int
+  case undefined // = 0
+  case xs // = 1
+  case s // = 2
+  case m // = 3
+  case l // = 4
+  case xl // = 5
+  case xxl // = 6
+  case xxxl // = 7
+  case accessibilityM // = 8
+  case accessibilityL // = 9
+  case accessibilityXl // = 10
+  case accessibilityXxl // = 11
+  case accessibilityXxxl // = 12
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .undefined
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .undefined
+    case 1: self = .xs
+    case 2: self = .s
+    case 3: self = .m
+    case 4: self = .l
+    case 5: self = .xl
+    case 6: self = .xxl
+    case 7: self = .xxxl
+    case 8: self = .accessibilityM
+    case 9: self = .accessibilityL
+    case 10: self = .accessibilityXl
+    case 11: self = .accessibilityXxl
+    case 12: self = .accessibilityXxxl
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .undefined: return 0
+    case .xs: return 1
+    case .s: return 2
+    case .m: return 3
+    case .l: return 4
+    case .xl: return 5
+    case .xxl: return 6
+    case .xxxl: return 7
+    case .accessibilityM: return 8
+    case .accessibilityL: return 9
+    case .accessibilityXl: return 10
+    case .accessibilityXxl: return 11
+    case .accessibilityXxxl: return 12
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static let allCases: [PodcastContentSizeCategoryProto] = [
+    .undefined,
+    .xs,
+    .s,
+    .m,
+    .l,
+    .xl,
+    .xxl,
+    .xxxl,
+    .accessibilityM,
+    .accessibilityL,
+    .accessibilityXl,
+    .accessibilityXxl,
+    .accessibilityXxxl,
+  ]
+
+}
+
 struct PodcastRequestAuthProto: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -338,104 +416,101 @@ struct PodcastSubscriptionStatusProto: Sendable {
   init() {}
 }
 
-struct PodcastStreamApiRequestProto: @unchecked Sendable {
+struct PodcastStreamApiRequestProto: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   var requestAuth: PodcastRequestAuthProto {
-    get {return _storage._requestAuth ?? PodcastRequestAuthProto()}
-    set {_uniqueStorage()._requestAuth = newValue}
+    get {return _requestAuth ?? PodcastRequestAuthProto()}
+    set {_requestAuth = newValue}
   }
   /// Returns true if `requestAuth` has been explicitly set.
-  var hasRequestAuth: Bool {return _storage._requestAuth != nil}
+  var hasRequestAuth: Bool {return self._requestAuth != nil}
   /// Clears the value of `requestAuth`. Subsequent reads from it will return its default value.
-  mutating func clearRequestAuth() {_uniqueStorage()._requestAuth = nil}
+  mutating func clearRequestAuth() {self._requestAuth = nil}
 
   var userAgent: PodcastUserAgentProto {
-    get {return _storage._userAgent ?? PodcastUserAgentProto()}
-    set {_uniqueStorage()._userAgent = newValue}
+    get {return _userAgent ?? PodcastUserAgentProto()}
+    set {_userAgent = newValue}
   }
   /// Returns true if `userAgent` has been explicitly set.
-  var hasUserAgent: Bool {return _storage._userAgent != nil}
+  var hasUserAgent: Bool {return self._userAgent != nil}
   /// Clears the value of `userAgent`. Subsequent reads from it will return its default value.
-  mutating func clearUserAgent() {_uniqueStorage()._userAgent = nil}
+  mutating func clearUserAgent() {self._userAgent = nil}
 
-  var request: OneOf_Request? {
-    get {return _storage._request}
-    set {_uniqueStorage()._request = newValue}
-  }
+  var request: PodcastStreamApiRequestProto.OneOf_Request? = nil
 
   var create: CreatePodcastRequestProto {
     get {
-      if case .create(let v)? = _storage._request {return v}
+      if case .create(let v)? = request {return v}
       return CreatePodcastRequestProto()
     }
-    set {_uniqueStorage()._request = .create(newValue)}
+    set {request = .create(newValue)}
   }
 
   var generate: GeneratePodcastRequestProto {
     get {
-      if case .generate(let v)? = _storage._request {return v}
+      if case .generate(let v)? = request {return v}
       return GeneratePodcastRequestProto()
     }
-    set {_uniqueStorage()._request = .generate(newValue)}
+    set {request = .generate(newValue)}
   }
 
   var podcast: GetPodcastRequestProto {
     get {
-      if case .podcast(let v)? = _storage._request {return v}
+      if case .podcast(let v)? = request {return v}
       return GetPodcastRequestProto()
     }
-    set {_uniqueStorage()._request = .podcast(newValue)}
+    set {request = .podcast(newValue)}
   }
 
   var story: GetPodcastStoryRequestProto {
     get {
-      if case .story(let v)? = _storage._request {return v}
+      if case .story(let v)? = request {return v}
       return GetPodcastStoryRequestProto()
     }
-    set {_uniqueStorage()._request = .story(newValue)}
+    set {request = .story(newValue)}
   }
 
   var suggestionPoints: GetPodcastSuggestionPointsRequestProto {
     get {
-      if case .suggestionPoints(let v)? = _storage._request {return v}
+      if case .suggestionPoints(let v)? = request {return v}
       return GetPodcastSuggestionPointsRequestProto()
     }
-    set {_uniqueStorage()._request = .suggestionPoints(newValue)}
+    set {request = .suggestionPoints(newValue)}
   }
 
   var followupPoints: GetPodcastFollowupPointsRequestProto {
     get {
-      if case .followupPoints(let v)? = _storage._request {return v}
+      if case .followupPoints(let v)? = request {return v}
       return GetPodcastFollowupPointsRequestProto()
     }
-    set {_uniqueStorage()._request = .followupPoints(newValue)}
+    set {request = .followupPoints(newValue)}
   }
 
   var home: GetPodcastHomeRequestProto {
     get {
-      if case .home(let v)? = _storage._request {return v}
+      if case .home(let v)? = request {return v}
       return GetPodcastHomeRequestProto()
     }
-    set {_uniqueStorage()._request = .home(newValue)}
+    set {request = .home(newValue)}
   }
 
   var deleteAccount: DeleteAccountRequestProto {
     get {
-      if case .deleteAccount(let v)? = _storage._request {return v}
+      if case .deleteAccount(let v)? = request {return v}
       return DeleteAccountRequestProto()
     }
-    set {_uniqueStorage()._request = .deleteAccount(newValue)}
+    set {request = .deleteAccount(newValue)}
   }
 
   var onboardingInput: GetPodcastOnboardingInputRequestProto {
     get {
-      if case .onboardingInput(let v)? = _storage._request {return v}
+      if case .onboardingInput(let v)? = request {return v}
       return GetPodcastOnboardingInputRequestProto()
     }
-    set {_uniqueStorage()._request = .onboardingInput(newValue)}
+    set {request = .onboardingInput(newValue)}
   }
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -455,7 +530,8 @@ struct PodcastStreamApiRequestProto: @unchecked Sendable {
 
   init() {}
 
-  fileprivate var _storage = _StorageClass.defaultInstance
+  fileprivate var _requestAuth: PodcastRequestAuthProto? = nil
+  fileprivate var _userAgent: PodcastUserAgentProto? = nil
 }
 
 struct PodcastStreamApiResponseHeaderProto: Sendable {
@@ -2324,37 +2400,48 @@ struct PodcastOnboardingVoiceProto: Sendable {
   init() {}
 }
 
-struct PodcastUserAgentProto: Sendable {
+struct PodcastUserAgentProto: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   var device: PodcastDeviceProto {
-    get {return _device ?? PodcastDeviceProto()}
-    set {_device = newValue}
+    get {return _storage._device ?? PodcastDeviceProto()}
+    set {_uniqueStorage()._device = newValue}
   }
   /// Returns true if `device` has been explicitly set.
-  var hasDevice: Bool {return self._device != nil}
+  var hasDevice: Bool {return _storage._device != nil}
   /// Clears the value of `device`. Subsequent reads from it will return its default value.
-  mutating func clearDevice() {self._device = nil}
+  mutating func clearDevice() {_uniqueStorage()._device = nil}
 
   var locale: PodcastLocaleProto {
-    get {return _locale ?? PodcastLocaleProto()}
-    set {_locale = newValue}
+    get {return _storage._locale ?? PodcastLocaleProto()}
+    set {_uniqueStorage()._locale = newValue}
   }
   /// Returns true if `locale` has been explicitly set.
-  var hasLocale: Bool {return self._locale != nil}
+  var hasLocale: Bool {return _storage._locale != nil}
   /// Clears the value of `locale`. Subsequent reads from it will return its default value.
-  mutating func clearLocale() {self._locale = nil}
+  mutating func clearLocale() {_uniqueStorage()._locale = nil}
 
-  var userInterfaceStyle: PodcastUserInterfaceStyleProto = .undefined
+  var userInterfaceStyle: PodcastUserInterfaceStyleProto {
+    get {return _storage._userInterfaceStyle}
+    set {_uniqueStorage()._userInterfaceStyle = newValue}
+  }
+
+  var accessibilitySettings: PodcastAccessibilitySettingsProto {
+    get {return _storage._accessibilitySettings ?? PodcastAccessibilitySettingsProto()}
+    set {_uniqueStorage()._accessibilitySettings = newValue}
+  }
+  /// Returns true if `accessibilitySettings` has been explicitly set.
+  var hasAccessibilitySettings: Bool {return _storage._accessibilitySettings != nil}
+  /// Clears the value of `accessibilitySettings`. Subsequent reads from it will return its default value.
+  mutating func clearAccessibilitySettings() {_uniqueStorage()._accessibilitySettings = nil}
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 
-  fileprivate var _device: PodcastDeviceProto? = nil
-  fileprivate var _locale: PodcastLocaleProto? = nil
+  fileprivate var _storage = _StorageClass.defaultInstance
 }
 
 struct PodcastLocaleProto: Sendable {
@@ -2424,6 +2511,26 @@ struct PodcastIOSDeviceProto: Sendable {
   init() {}
 }
 
+struct PodcastAccessibilitySettingsProto: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var contentSizeCategory: PodcastContentSizeCategoryProto = .undefined
+
+  var boldText: Bool = false
+
+  var increaseContrast: Bool = false
+
+  var reduceTransparency: Bool = false
+
+  var reduceMotion: Bool = false
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 extension PodcastSubscriptionSourceProto: SwiftProtobuf._ProtoNameProviding {
@@ -2484,6 +2591,24 @@ extension PodcastUserInterfaceStyleProto: SwiftProtobuf._ProtoNameProviding {
     0: .same(proto: "PODCAST_USER_INTERFACE_STYLE_PROTO_UNDEFINED"),
     1: .same(proto: "PODCAST_USER_INTERFACE_STYLE_PROTO_LIGHT"),
     2: .same(proto: "PODCAST_USER_INTERFACE_STYLE_PROTO_DARK"),
+  ]
+}
+
+extension PodcastContentSizeCategoryProto: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "PODCAST_CONTENT_SIZE_CATEGORY_PROTO_UNDEFINED"),
+    1: .same(proto: "PODCAST_CONTENT_SIZE_CATEGORY_PROTO_XS"),
+    2: .same(proto: "PODCAST_CONTENT_SIZE_CATEGORY_PROTO_S"),
+    3: .same(proto: "PODCAST_CONTENT_SIZE_CATEGORY_PROTO_M"),
+    4: .same(proto: "PODCAST_CONTENT_SIZE_CATEGORY_PROTO_L"),
+    5: .same(proto: "PODCAST_CONTENT_SIZE_CATEGORY_PROTO_XL"),
+    6: .same(proto: "PODCAST_CONTENT_SIZE_CATEGORY_PROTO_XXL"),
+    7: .same(proto: "PODCAST_CONTENT_SIZE_CATEGORY_PROTO_XXXL"),
+    8: .same(proto: "PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_M"),
+    9: .same(proto: "PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_L"),
+    10: .same(proto: "PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_XL"),
+    11: .same(proto: "PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_XXL"),
+    12: .same(proto: "PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_XXXL"),
   ]
 }
 
@@ -2591,237 +2716,193 @@ extension PodcastStreamApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Me
     18: .standard(proto: "onboarding_input"),
   ]
 
-  fileprivate class _StorageClass {
-    var _requestAuth: PodcastRequestAuthProto? = nil
-    var _userAgent: PodcastUserAgentProto? = nil
-    var _request: PodcastStreamApiRequestProto.OneOf_Request?
-
-    #if swift(>=5.10)
-      // This property is used as the initial default value for new instances of the type.
-      // The type itself is protecting the reference to its storage via CoW semantics.
-      // This will force a copy to be made of this reference when the first mutation occurs;
-      // hence, it is safe to mark this as `nonisolated(unsafe)`.
-      static nonisolated(unsafe) let defaultInstance = _StorageClass()
-    #else
-      static let defaultInstance = _StorageClass()
-    #endif
-
-    private init() {}
-
-    init(copying source: _StorageClass) {
-      _requestAuth = source._requestAuth
-      _userAgent = source._userAgent
-      _request = source._request
-    }
-  }
-
-  fileprivate mutating func _uniqueStorage() -> _StorageClass {
-    if !isKnownUniquelyReferenced(&_storage) {
-      _storage = _StorageClass(copying: _storage)
-    }
-    return _storage
-  }
-
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    _ = _uniqueStorage()
-    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
-      while let fieldNumber = try decoder.nextFieldNumber() {
-        // The use of inline closures is to circumvent an issue where the compiler
-        // allocates stack space for every case branch when no optimizations are
-        // enabled. https://github.com/apple/swift-protobuf/issues/1034
-        switch fieldNumber {
-        case 1: try { try decoder.decodeSingularMessageField(value: &_storage._requestAuth) }()
-        case 2: try { try decoder.decodeSingularMessageField(value: &_storage._userAgent) }()
-        case 10: try {
-          var v: CreatePodcastRequestProto?
-          var hadOneofValue = false
-          if let current = _storage._request {
-            hadOneofValue = true
-            if case .create(let m) = current {v = m}
-          }
-          try decoder.decodeSingularMessageField(value: &v)
-          if let v = v {
-            if hadOneofValue {try decoder.handleConflictingOneOf()}
-            _storage._request = .create(v)
-          }
-        }()
-        case 11: try {
-          var v: GeneratePodcastRequestProto?
-          var hadOneofValue = false
-          if let current = _storage._request {
-            hadOneofValue = true
-            if case .generate(let m) = current {v = m}
-          }
-          try decoder.decodeSingularMessageField(value: &v)
-          if let v = v {
-            if hadOneofValue {try decoder.handleConflictingOneOf()}
-            _storage._request = .generate(v)
-          }
-        }()
-        case 12: try {
-          var v: GetPodcastRequestProto?
-          var hadOneofValue = false
-          if let current = _storage._request {
-            hadOneofValue = true
-            if case .podcast(let m) = current {v = m}
-          }
-          try decoder.decodeSingularMessageField(value: &v)
-          if let v = v {
-            if hadOneofValue {try decoder.handleConflictingOneOf()}
-            _storage._request = .podcast(v)
-          }
-        }()
-        case 13: try {
-          var v: GetPodcastStoryRequestProto?
-          var hadOneofValue = false
-          if let current = _storage._request {
-            hadOneofValue = true
-            if case .story(let m) = current {v = m}
-          }
-          try decoder.decodeSingularMessageField(value: &v)
-          if let v = v {
-            if hadOneofValue {try decoder.handleConflictingOneOf()}
-            _storage._request = .story(v)
-          }
-        }()
-        case 14: try {
-          var v: GetPodcastSuggestionPointsRequestProto?
-          var hadOneofValue = false
-          if let current = _storage._request {
-            hadOneofValue = true
-            if case .suggestionPoints(let m) = current {v = m}
-          }
-          try decoder.decodeSingularMessageField(value: &v)
-          if let v = v {
-            if hadOneofValue {try decoder.handleConflictingOneOf()}
-            _storage._request = .suggestionPoints(v)
-          }
-        }()
-        case 15: try {
-          var v: GetPodcastHomeRequestProto?
-          var hadOneofValue = false
-          if let current = _storage._request {
-            hadOneofValue = true
-            if case .home(let m) = current {v = m}
-          }
-          try decoder.decodeSingularMessageField(value: &v)
-          if let v = v {
-            if hadOneofValue {try decoder.handleConflictingOneOf()}
-            _storage._request = .home(v)
-          }
-        }()
-        case 16: try {
-          var v: DeleteAccountRequestProto?
-          var hadOneofValue = false
-          if let current = _storage._request {
-            hadOneofValue = true
-            if case .deleteAccount(let m) = current {v = m}
-          }
-          try decoder.decodeSingularMessageField(value: &v)
-          if let v = v {
-            if hadOneofValue {try decoder.handleConflictingOneOf()}
-            _storage._request = .deleteAccount(v)
-          }
-        }()
-        case 17: try {
-          var v: GetPodcastFollowupPointsRequestProto?
-          var hadOneofValue = false
-          if let current = _storage._request {
-            hadOneofValue = true
-            if case .followupPoints(let m) = current {v = m}
-          }
-          try decoder.decodeSingularMessageField(value: &v)
-          if let v = v {
-            if hadOneofValue {try decoder.handleConflictingOneOf()}
-            _storage._request = .followupPoints(v)
-          }
-        }()
-        case 18: try {
-          var v: GetPodcastOnboardingInputRequestProto?
-          var hadOneofValue = false
-          if let current = _storage._request {
-            hadOneofValue = true
-            if case .onboardingInput(let m) = current {v = m}
-          }
-          try decoder.decodeSingularMessageField(value: &v)
-          if let v = v {
-            if hadOneofValue {try decoder.handleConflictingOneOf()}
-            _storage._request = .onboardingInput(v)
-          }
-        }()
-        default: break
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._requestAuth) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._userAgent) }()
+      case 10: try {
+        var v: CreatePodcastRequestProto?
+        var hadOneofValue = false
+        if let current = self.request {
+          hadOneofValue = true
+          if case .create(let m) = current {v = m}
         }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.request = .create(v)
+        }
+      }()
+      case 11: try {
+        var v: GeneratePodcastRequestProto?
+        var hadOneofValue = false
+        if let current = self.request {
+          hadOneofValue = true
+          if case .generate(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.request = .generate(v)
+        }
+      }()
+      case 12: try {
+        var v: GetPodcastRequestProto?
+        var hadOneofValue = false
+        if let current = self.request {
+          hadOneofValue = true
+          if case .podcast(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.request = .podcast(v)
+        }
+      }()
+      case 13: try {
+        var v: GetPodcastStoryRequestProto?
+        var hadOneofValue = false
+        if let current = self.request {
+          hadOneofValue = true
+          if case .story(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.request = .story(v)
+        }
+      }()
+      case 14: try {
+        var v: GetPodcastSuggestionPointsRequestProto?
+        var hadOneofValue = false
+        if let current = self.request {
+          hadOneofValue = true
+          if case .suggestionPoints(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.request = .suggestionPoints(v)
+        }
+      }()
+      case 15: try {
+        var v: GetPodcastHomeRequestProto?
+        var hadOneofValue = false
+        if let current = self.request {
+          hadOneofValue = true
+          if case .home(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.request = .home(v)
+        }
+      }()
+      case 16: try {
+        var v: DeleteAccountRequestProto?
+        var hadOneofValue = false
+        if let current = self.request {
+          hadOneofValue = true
+          if case .deleteAccount(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.request = .deleteAccount(v)
+        }
+      }()
+      case 17: try {
+        var v: GetPodcastFollowupPointsRequestProto?
+        var hadOneofValue = false
+        if let current = self.request {
+          hadOneofValue = true
+          if case .followupPoints(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.request = .followupPoints(v)
+        }
+      }()
+      case 18: try {
+        var v: GetPodcastOnboardingInputRequestProto?
+        var hadOneofValue = false
+        if let current = self.request {
+          hadOneofValue = true
+          if case .onboardingInput(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.request = .onboardingInput(v)
+        }
+      }()
+      default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every if/case branch local when no optimizations
-      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-      // https://github.com/apple/swift-protobuf/issues/1182
-      try { if let v = _storage._requestAuth {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-      } }()
-      try { if let v = _storage._userAgent {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
-      } }()
-      switch _storage._request {
-      case .create?: try {
-        guard case .create(let v)? = _storage._request else { preconditionFailure() }
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
-      }()
-      case .generate?: try {
-        guard case .generate(let v)? = _storage._request else { preconditionFailure() }
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 11)
-      }()
-      case .podcast?: try {
-        guard case .podcast(let v)? = _storage._request else { preconditionFailure() }
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 12)
-      }()
-      case .story?: try {
-        guard case .story(let v)? = _storage._request else { preconditionFailure() }
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 13)
-      }()
-      case .suggestionPoints?: try {
-        guard case .suggestionPoints(let v)? = _storage._request else { preconditionFailure() }
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 14)
-      }()
-      case .home?: try {
-        guard case .home(let v)? = _storage._request else { preconditionFailure() }
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
-      }()
-      case .deleteAccount?: try {
-        guard case .deleteAccount(let v)? = _storage._request else { preconditionFailure() }
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 16)
-      }()
-      case .followupPoints?: try {
-        guard case .followupPoints(let v)? = _storage._request else { preconditionFailure() }
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 17)
-      }()
-      case .onboardingInput?: try {
-        guard case .onboardingInput(let v)? = _storage._request else { preconditionFailure() }
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 18)
-      }()
-      case nil: break
-      }
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._requestAuth {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    try { if let v = self._userAgent {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
+    switch self.request {
+    case .create?: try {
+      guard case .create(let v)? = self.request else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
+    }()
+    case .generate?: try {
+      guard case .generate(let v)? = self.request else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 11)
+    }()
+    case .podcast?: try {
+      guard case .podcast(let v)? = self.request else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 12)
+    }()
+    case .story?: try {
+      guard case .story(let v)? = self.request else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 13)
+    }()
+    case .suggestionPoints?: try {
+      guard case .suggestionPoints(let v)? = self.request else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 14)
+    }()
+    case .home?: try {
+      guard case .home(let v)? = self.request else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
+    }()
+    case .deleteAccount?: try {
+      guard case .deleteAccount(let v)? = self.request else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 16)
+    }()
+    case .followupPoints?: try {
+      guard case .followupPoints(let v)? = self.request else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 17)
+    }()
+    case .onboardingInput?: try {
+      guard case .onboardingInput(let v)? = self.request else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 18)
+    }()
+    case nil: break
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: PodcastStreamApiRequestProto, rhs: PodcastStreamApiRequestProto) -> Bool {
-    if lhs._storage !== rhs._storage {
-      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
-        let _storage = _args.0
-        let rhs_storage = _args.1
-        if _storage._requestAuth != rhs_storage._requestAuth {return false}
-        if _storage._userAgent != rhs_storage._userAgent {return false}
-        if _storage._request != rhs_storage._request {return false}
-        return true
-      }
-      if !storagesAreEqual {return false}
-    }
+    if lhs._requestAuth != rhs._requestAuth {return false}
+    if lhs._userAgent != rhs._userAgent {return false}
+    if lhs.request != rhs.request {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -6820,43 +6901,95 @@ extension PodcastUserAgentProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     1: .same(proto: "device"),
     2: .same(proto: "locale"),
     3: .standard(proto: "user_interface_style"),
+    4: .standard(proto: "accessibility_settings"),
   ]
 
+  fileprivate class _StorageClass {
+    var _device: PodcastDeviceProto? = nil
+    var _locale: PodcastLocaleProto? = nil
+    var _userInterfaceStyle: PodcastUserInterfaceStyleProto = .undefined
+    var _accessibilitySettings: PodcastAccessibilitySettingsProto? = nil
+
+    #if swift(>=5.10)
+      // This property is used as the initial default value for new instances of the type.
+      // The type itself is protecting the reference to its storage via CoW semantics.
+      // This will force a copy to be made of this reference when the first mutation occurs;
+      // hence, it is safe to mark this as `nonisolated(unsafe)`.
+      static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
+
+    private init() {}
+
+    init(copying source: _StorageClass) {
+      _device = source._device
+      _locale = source._locale
+      _userInterfaceStyle = source._userInterfaceStyle
+      _accessibilitySettings = source._accessibilitySettings
+    }
+  }
+
+  fileprivate mutating func _uniqueStorage() -> _StorageClass {
+    if !isKnownUniquelyReferenced(&_storage) {
+      _storage = _StorageClass(copying: _storage)
+    }
+    return _storage
+  }
+
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularMessageField(value: &self._device) }()
-      case 2: try { try decoder.decodeSingularMessageField(value: &self._locale) }()
-      case 3: try { try decoder.decodeSingularEnumField(value: &self.userInterfaceStyle) }()
-      default: break
+    _ = _uniqueStorage()
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      while let fieldNumber = try decoder.nextFieldNumber() {
+        // The use of inline closures is to circumvent an issue where the compiler
+        // allocates stack space for every case branch when no optimizations are
+        // enabled. https://github.com/apple/swift-protobuf/issues/1034
+        switch fieldNumber {
+        case 1: try { try decoder.decodeSingularMessageField(value: &_storage._device) }()
+        case 2: try { try decoder.decodeSingularMessageField(value: &_storage._locale) }()
+        case 3: try { try decoder.decodeSingularEnumField(value: &_storage._userInterfaceStyle) }()
+        case 4: try { try decoder.decodeSingularMessageField(value: &_storage._accessibilitySettings) }()
+        default: break
+        }
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every if/case branch local when no optimizations
-    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-    // https://github.com/apple/swift-protobuf/issues/1182
-    try { if let v = self._device {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    } }()
-    try { if let v = self._locale {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
-    } }()
-    if self.userInterfaceStyle != .undefined {
-      try visitor.visitSingularEnumField(value: self.userInterfaceStyle, fieldNumber: 3)
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every if/case branch local when no optimizations
+      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+      // https://github.com/apple/swift-protobuf/issues/1182
+      try { if let v = _storage._device {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+      } }()
+      try { if let v = _storage._locale {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+      } }()
+      if _storage._userInterfaceStyle != .undefined {
+        try visitor.visitSingularEnumField(value: _storage._userInterfaceStyle, fieldNumber: 3)
+      }
+      try { if let v = _storage._accessibilitySettings {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+      } }()
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: PodcastUserAgentProto, rhs: PodcastUserAgentProto) -> Bool {
-    if lhs._device != rhs._device {return false}
-    if lhs._locale != rhs._locale {return false}
-    if lhs.userInterfaceStyle != rhs.userInterfaceStyle {return false}
+    if lhs._storage !== rhs._storage {
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+        let _storage = _args.0
+        let rhs_storage = _args.1
+        if _storage._device != rhs_storage._device {return false}
+        if _storage._locale != rhs_storage._locale {return false}
+        if _storage._userInterfaceStyle != rhs_storage._userInterfaceStyle {return false}
+        if _storage._accessibilitySettings != rhs_storage._accessibilitySettings {return false}
+        return true
+      }
+      if !storagesAreEqual {return false}
+    }
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -7023,6 +7156,62 @@ extension PodcastIOSDeviceProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     if lhs.appBundleName != rhs.appBundleName {return false}
     if lhs.appBundleVersion != rhs.appBundleVersion {return false}
     if lhs.appBuildNumber != rhs.appBuildNumber {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension PodcastAccessibilitySettingsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastAccessibilitySettingsProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "content_size_category"),
+    2: .standard(proto: "bold_text"),
+    3: .standard(proto: "increase_contrast"),
+    4: .standard(proto: "reduce_transparency"),
+    5: .standard(proto: "reduce_motion"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularEnumField(value: &self.contentSizeCategory) }()
+      case 2: try { try decoder.decodeSingularBoolField(value: &self.boldText) }()
+      case 3: try { try decoder.decodeSingularBoolField(value: &self.increaseContrast) }()
+      case 4: try { try decoder.decodeSingularBoolField(value: &self.reduceTransparency) }()
+      case 5: try { try decoder.decodeSingularBoolField(value: &self.reduceMotion) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.contentSizeCategory != .undefined {
+      try visitor.visitSingularEnumField(value: self.contentSizeCategory, fieldNumber: 1)
+    }
+    if self.boldText != false {
+      try visitor.visitSingularBoolField(value: self.boldText, fieldNumber: 2)
+    }
+    if self.increaseContrast != false {
+      try visitor.visitSingularBoolField(value: self.increaseContrast, fieldNumber: 3)
+    }
+    if self.reduceTransparency != false {
+      try visitor.visitSingularBoolField(value: self.reduceTransparency, fieldNumber: 4)
+    }
+    if self.reduceMotion != false {
+      try visitor.visitSingularBoolField(value: self.reduceMotion, fieldNumber: 5)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PodcastAccessibilitySettingsProto, rhs: PodcastAccessibilitySettingsProto) -> Bool {
+    if lhs.contentSizeCategory != rhs.contentSizeCategory {return false}
+    if lhs.boldText != rhs.boldText {return false}
+    if lhs.increaseContrast != rhs.increaseContrast {return false}
+    if lhs.reduceTransparency != rhs.reduceTransparency {return false}
+    if lhs.reduceMotion != rhs.reduceMotion {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
