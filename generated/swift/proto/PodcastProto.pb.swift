@@ -2547,7 +2547,21 @@ struct PodcastAudioSettingsProto: Sendable {
 
   var outputVolume: Float = 0
 
-  var outputPorts: [String] = []
+  var outputPorts: [PodcastAudioOutputPortProto] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct PodcastAudioOutputPortProto: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var name: String = String()
+
+  var type: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -7262,7 +7276,7 @@ extension PodcastAudioSettingsProto: SwiftProtobuf.Message, SwiftProtobuf._Messa
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularFloatField(value: &self.outputVolume) }()
-      case 2: try { try decoder.decodeRepeatedStringField(value: &self.outputPorts) }()
+      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.outputPorts) }()
       default: break
       }
     }
@@ -7273,7 +7287,7 @@ extension PodcastAudioSettingsProto: SwiftProtobuf.Message, SwiftProtobuf._Messa
       try visitor.visitSingularFloatField(value: self.outputVolume, fieldNumber: 1)
     }
     if !self.outputPorts.isEmpty {
-      try visitor.visitRepeatedStringField(value: self.outputPorts, fieldNumber: 2)
+      try visitor.visitRepeatedMessageField(value: self.outputPorts, fieldNumber: 2)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -7281,6 +7295,44 @@ extension PodcastAudioSettingsProto: SwiftProtobuf.Message, SwiftProtobuf._Messa
   static func ==(lhs: PodcastAudioSettingsProto, rhs: PodcastAudioSettingsProto) -> Bool {
     if lhs.outputVolume != rhs.outputVolume {return false}
     if lhs.outputPorts != rhs.outputPorts {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension PodcastAudioOutputPortProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastAudioOutputPortProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "name"),
+    2: .same(proto: "type"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.name) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.type) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.name.isEmpty {
+      try visitor.visitSingularStringField(value: self.name, fieldNumber: 1)
+    }
+    if !self.type.isEmpty {
+      try visitor.visitSingularStringField(value: self.type, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PodcastAudioOutputPortProto, rhs: PodcastAudioOutputPortProto) -> Bool {
+    if lhs.name != rhs.name {return false}
+    if lhs.type != rhs.type {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

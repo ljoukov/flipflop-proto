@@ -633,5 +633,10 @@ enum PodcastContentSizeCategoryProto {
 
 message PodcastAudioSettingsProto {
   float output_volume = 1;
-  repeated string output_ports = 2;
+  repeated PodcastAudioOutputPortProto output_ports = 2;
+}
+
+message PodcastAudioOutputPortProto {
+  string name = 1;
+  string type = 2;
 }
