@@ -2006,8 +2006,8 @@ struct StoredPodcastOnboardingInputProto: Sendable {
 
   var voiceID: String = String()
 
-  var userAgent: StoredUserAgentProto {
-    get {return _userAgent ?? StoredUserAgentProto()}
+  var userAgent: StoredPodcastUserAgentProto {
+    get {return _userAgent ?? StoredPodcastUserAgentProto()}
     set {_userAgent = newValue}
   }
   /// Returns true if `userAgent` has been explicitly set.
@@ -2020,10 +2020,10 @@ struct StoredPodcastOnboardingInputProto: Sendable {
   init() {}
 
   fileprivate var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
-  fileprivate var _userAgent: StoredUserAgentProto? = nil
+  fileprivate var _userAgent: StoredPodcastUserAgentProto? = nil
 }
 
-struct StoredUserAgentProto: @unchecked Sendable {
+struct StoredPodcastUserAgentProto: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -2033,8 +2033,8 @@ struct StoredUserAgentProto: @unchecked Sendable {
     set {_uniqueStorage()._userAgent = newValue}
   }
 
-  var device: StoredDeviceProto {
-    get {return _storage._device ?? StoredDeviceProto()}
+  var device: StoredPodcastDeviceProto {
+    get {return _storage._device ?? StoredPodcastDeviceProto()}
     set {_uniqueStorage()._device = newValue}
   }
   /// Returns true if `device` has been explicitly set.
@@ -2042,8 +2042,8 @@ struct StoredUserAgentProto: @unchecked Sendable {
   /// Clears the value of `device`. Subsequent reads from it will return its default value.
   mutating func clearDevice() {_uniqueStorage()._device = nil}
 
-  var locale: StoredLocaleProto {
-    get {return _storage._locale ?? StoredLocaleProto()}
+  var locale: StoredPodcastLocaleProto {
+    get {return _storage._locale ?? StoredPodcastLocaleProto()}
     set {_uniqueStorage()._locale = newValue}
   }
   /// Returns true if `locale` has been explicitly set.
@@ -2051,8 +2051,8 @@ struct StoredUserAgentProto: @unchecked Sendable {
   /// Clears the value of `locale`. Subsequent reads from it will return its default value.
   mutating func clearLocale() {_uniqueStorage()._locale = nil}
 
-  var location: StoredLocationProto {
-    get {return _storage._location ?? StoredLocationProto()}
+  var location: StoredPodcastLocationProto {
+    get {return _storage._location ?? StoredPodcastLocationProto()}
     set {_uniqueStorage()._location = newValue}
   }
   /// Returns true if `location` has been explicitly set.
@@ -2101,7 +2101,7 @@ struct StoredPodcastAccessibilitySettingsProto: Sendable {
   init() {}
 }
 
-struct StoredLocaleProto: Sendable {
+struct StoredPodcastLocaleProto: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -2117,7 +2117,7 @@ struct StoredLocaleProto: Sendable {
   init() {}
 }
 
-struct StoredLocationProto: Sendable {
+struct StoredPodcastLocationProto: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -2139,17 +2139,17 @@ struct StoredLocationProto: Sendable {
   init() {}
 }
 
-struct StoredDeviceProto: Sendable {
+struct StoredPodcastDeviceProto: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var type: StoredDeviceProto.OneOf_Type? = nil
+  var type: StoredPodcastDeviceProto.OneOf_Type? = nil
 
-  var ios: StoredIOSDeviceProto {
+  var ios: StoredPodcastIOSDeviceProto {
     get {
       if case .ios(let v)? = type {return v}
-      return StoredIOSDeviceProto()
+      return StoredPodcastIOSDeviceProto()
     }
     set {type = .ios(newValue)}
   }
@@ -2157,14 +2157,14 @@ struct StoredDeviceProto: Sendable {
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_Type: Equatable, Sendable {
-    case ios(StoredIOSDeviceProto)
+    case ios(StoredPodcastIOSDeviceProto)
 
   }
 
   init() {}
 }
 
-struct StoredIOSDeviceProto: Sendable {
+struct StoredPodcastIOSDeviceProto: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -5289,8 +5289,8 @@ extension StoredPodcastOnboardingInputProto: SwiftProtobuf.Message, SwiftProtobu
   }
 }
 
-extension StoredUserAgentProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "StoredUserAgentProto"
+extension StoredPodcastUserAgentProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredPodcastUserAgentProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "user_agent"),
     2: .same(proto: "device"),
@@ -5302,9 +5302,9 @@ extension StoredUserAgentProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
 
   fileprivate class _StorageClass {
     var _userAgent: String = String()
-    var _device: StoredDeviceProto? = nil
-    var _locale: StoredLocaleProto? = nil
-    var _location: StoredLocationProto? = nil
+    var _device: StoredPodcastDeviceProto? = nil
+    var _locale: StoredPodcastLocaleProto? = nil
+    var _location: StoredPodcastLocationProto? = nil
     var _userInterfaceStyle: StoredPodcastUserInterfaceStyleProto = .undefined
     var _accessibilitySettings: StoredPodcastAccessibilitySettingsProto? = nil
 
@@ -5385,7 +5385,7 @@ extension StoredUserAgentProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: StoredUserAgentProto, rhs: StoredUserAgentProto) -> Bool {
+  static func ==(lhs: StoredPodcastUserAgentProto, rhs: StoredPodcastUserAgentProto) -> Bool {
     if lhs._storage !== rhs._storage {
       let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
         let _storage = _args.0
@@ -5461,8 +5461,8 @@ extension StoredPodcastAccessibilitySettingsProto: SwiftProtobuf.Message, SwiftP
   }
 }
 
-extension StoredLocaleProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "StoredLocaleProto"
+extension StoredPodcastLocaleProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredPodcastLocaleProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "language"),
     2: .same(proto: "region"),
@@ -5496,7 +5496,7 @@ extension StoredLocaleProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: StoredLocaleProto, rhs: StoredLocaleProto) -> Bool {
+  static func ==(lhs: StoredPodcastLocaleProto, rhs: StoredPodcastLocaleProto) -> Bool {
     if lhs.language != rhs.language {return false}
     if lhs.region != rhs.region {return false}
     if lhs.timeZone != rhs.timeZone {return false}
@@ -5505,8 +5505,8 @@ extension StoredLocaleProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
   }
 }
 
-extension StoredLocationProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "StoredLocationProto"
+extension StoredPodcastLocationProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredPodcastLocationProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "region_code"),
     2: .same(proto: "country"),
@@ -5555,7 +5555,7 @@ extension StoredLocationProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: StoredLocationProto, rhs: StoredLocationProto) -> Bool {
+  static func ==(lhs: StoredPodcastLocationProto, rhs: StoredPodcastLocationProto) -> Bool {
     if lhs.regionCode != rhs.regionCode {return false}
     if lhs.country != rhs.country {return false}
     if lhs.city != rhs.city {return false}
@@ -5567,8 +5567,8 @@ extension StoredLocationProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
   }
 }
 
-extension StoredDeviceProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "StoredDeviceProto"
+extension StoredPodcastDeviceProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredPodcastDeviceProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "ios"),
   ]
@@ -5580,7 +5580,7 @@ extension StoredDeviceProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try {
-        var v: StoredIOSDeviceProto?
+        var v: StoredPodcastIOSDeviceProto?
         var hadOneofValue = false
         if let current = self.type {
           hadOneofValue = true
@@ -5608,15 +5608,15 @@ extension StoredDeviceProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: StoredDeviceProto, rhs: StoredDeviceProto) -> Bool {
+  static func ==(lhs: StoredPodcastDeviceProto, rhs: StoredPodcastDeviceProto) -> Bool {
     if lhs.type != rhs.type {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
-extension StoredIOSDeviceProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "StoredIOSDeviceProto"
+extension StoredPodcastIOSDeviceProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "StoredPodcastIOSDeviceProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "device_model"),
     2: .standard(proto: "device_identifier"),
@@ -5675,7 +5675,7 @@ extension StoredIOSDeviceProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: StoredIOSDeviceProto, rhs: StoredIOSDeviceProto) -> Bool {
+  static func ==(lhs: StoredPodcastIOSDeviceProto, rhs: StoredPodcastIOSDeviceProto) -> Bool {
     if lhs.deviceModel != rhs.deviceModel {return false}
     if lhs.deviceIdentifier != rhs.deviceIdentifier {return false}
     if lhs.isSimulator != rhs.isSimulator {return false}

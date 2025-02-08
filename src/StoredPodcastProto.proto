@@ -483,14 +483,14 @@ message StoredPodcastOnboardingInputProto {
   repeated string learning_style_ids = 4;
   repeated string interest_ids = 5;
   string voice_id = 6;
-  StoredUserAgentProto user_agent = 7;
+  StoredPodcastUserAgentProto user_agent = 7;
 }
 
-message StoredUserAgentProto {
+message StoredPodcastUserAgentProto {
   string user_agent = 1;
-  StoredDeviceProto device = 2;
-  StoredLocaleProto locale = 3;
-  StoredLocationProto location = 4;
+  StoredPodcastDeviceProto device = 2;
+  StoredPodcastLocaleProto locale = 3;
+  StoredPodcastLocationProto location = 4;
   StoredPodcastUserInterfaceStyleProto user_interface_style = 5;
   StoredPodcastAccessibilitySettingsProto accessibility_settings = 6;
 }
@@ -525,13 +525,13 @@ enum StoredPodcastContentSizeCategoryProto {
   STORED_PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_XXX_LARGE = 12;
 }
 
-message StoredLocaleProto {
+message StoredPodcastLocaleProto {
   string language = 1;
   string region = 2;
   string time_zone = 3;
 }
 
-message StoredLocationProto {
+message StoredPodcastLocationProto {
   string region_code = 1;
   string country = 2;
   string city = 3;
@@ -540,13 +540,13 @@ message StoredLocationProto {
   double longitude = 6;
 }
 
-message StoredDeviceProto {
+message StoredPodcastDeviceProto {
   oneof type {
-    StoredIOSDeviceProto ios = 1;
+    StoredPodcastIOSDeviceProto ios = 1;
   }
 }
 
-message StoredIOSDeviceProto {
+message StoredPodcastIOSDeviceProto {
   string device_model = 1;
   string device_identifier = 2;
   bool is_simulator = 3;

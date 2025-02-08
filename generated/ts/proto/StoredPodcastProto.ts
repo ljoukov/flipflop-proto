@@ -1174,30 +1174,30 @@ export interface StoredPodcastOnboardingInputProto {
      */
     voiceId: string;
     /**
-     * @generated from protobuf field: StoredUserAgentProto user_agent = 7;
+     * @generated from protobuf field: StoredPodcastUserAgentProto user_agent = 7;
      */
-    userAgent?: StoredUserAgentProto;
+    userAgent?: StoredPodcastUserAgentProto;
 }
 /**
- * @generated from protobuf message StoredUserAgentProto
+ * @generated from protobuf message StoredPodcastUserAgentProto
  */
-export interface StoredUserAgentProto {
+export interface StoredPodcastUserAgentProto {
     /**
      * @generated from protobuf field: string user_agent = 1;
      */
     userAgent: string;
     /**
-     * @generated from protobuf field: StoredDeviceProto device = 2;
+     * @generated from protobuf field: StoredPodcastDeviceProto device = 2;
      */
-    device?: StoredDeviceProto;
+    device?: StoredPodcastDeviceProto;
     /**
-     * @generated from protobuf field: StoredLocaleProto locale = 3;
+     * @generated from protobuf field: StoredPodcastLocaleProto locale = 3;
      */
-    locale?: StoredLocaleProto;
+    locale?: StoredPodcastLocaleProto;
     /**
-     * @generated from protobuf field: StoredLocationProto location = 4;
+     * @generated from protobuf field: StoredPodcastLocationProto location = 4;
      */
-    location?: StoredLocationProto;
+    location?: StoredPodcastLocationProto;
     /**
      * @generated from protobuf field: StoredPodcastUserInterfaceStyleProto user_interface_style = 5;
      */
@@ -1233,9 +1233,9 @@ export interface StoredPodcastAccessibilitySettingsProto {
     reduceMotion: boolean;
 }
 /**
- * @generated from protobuf message StoredLocaleProto
+ * @generated from protobuf message StoredPodcastLocaleProto
  */
-export interface StoredLocaleProto {
+export interface StoredPodcastLocaleProto {
     /**
      * @generated from protobuf field: string language = 1;
      */
@@ -1250,9 +1250,9 @@ export interface StoredLocaleProto {
     timeZone: string;
 }
 /**
- * @generated from protobuf message StoredLocationProto
+ * @generated from protobuf message StoredPodcastLocationProto
  */
-export interface StoredLocationProto {
+export interface StoredPodcastLocationProto {
     /**
      * @generated from protobuf field: string region_code = 1;
      */
@@ -1279,26 +1279,26 @@ export interface StoredLocationProto {
     longitude: number;
 }
 /**
- * @generated from protobuf message StoredDeviceProto
+ * @generated from protobuf message StoredPodcastDeviceProto
  */
-export interface StoredDeviceProto {
+export interface StoredPodcastDeviceProto {
     /**
      * @generated from protobuf oneof: type
      */
     type: {
         oneofKind: "ios";
         /**
-         * @generated from protobuf field: StoredIOSDeviceProto ios = 1;
+         * @generated from protobuf field: StoredPodcastIOSDeviceProto ios = 1;
          */
-        ios: StoredIOSDeviceProto;
+        ios: StoredPodcastIOSDeviceProto;
     } | {
         oneofKind: undefined;
     };
 }
 /**
- * @generated from protobuf message StoredIOSDeviceProto
+ * @generated from protobuf message StoredPodcastIOSDeviceProto
  */
-export interface StoredIOSDeviceProto {
+export interface StoredPodcastIOSDeviceProto {
     /**
      * @generated from protobuf field: string device_model = 1;
      */
@@ -5146,7 +5146,7 @@ class StoredPodcastOnboardingInputProto$Type extends MessageType<StoredPodcastOn
             { no: 4, name: "learning_style_ids", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "interest_ids", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
             { no: 6, name: "voice_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 7, name: "user_agent", kind: "message", T: () => StoredUserAgentProto }
+            { no: 7, name: "user_agent", kind: "message", T: () => StoredPodcastUserAgentProto }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastOnboardingInputProto>): StoredPodcastOnboardingInputProto {
@@ -5183,8 +5183,8 @@ class StoredPodcastOnboardingInputProto$Type extends MessageType<StoredPodcastOn
                 case /* string voice_id */ 6:
                     message.voiceId = reader.string();
                     break;
-                case /* StoredUserAgentProto user_agent */ 7:
-                    message.userAgent = StoredUserAgentProto.internalBinaryRead(reader, reader.uint32(), options, message.userAgent);
+                case /* StoredPodcastUserAgentProto user_agent */ 7:
+                    message.userAgent = StoredPodcastUserAgentProto.internalBinaryRead(reader, reader.uint32(), options, message.userAgent);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -5216,9 +5216,9 @@ class StoredPodcastOnboardingInputProto$Type extends MessageType<StoredPodcastOn
         /* string voice_id = 6; */
         if (message.voiceId !== "")
             writer.tag(6, WireType.LengthDelimited).string(message.voiceId);
-        /* StoredUserAgentProto user_agent = 7; */
+        /* StoredPodcastUserAgentProto user_agent = 7; */
         if (message.userAgent)
-            StoredUserAgentProto.internalBinaryWrite(message.userAgent, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
+            StoredPodcastUserAgentProto.internalBinaryWrite(message.userAgent, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -5230,26 +5230,26 @@ class StoredPodcastOnboardingInputProto$Type extends MessageType<StoredPodcastOn
  */
 export const StoredPodcastOnboardingInputProto = new StoredPodcastOnboardingInputProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class StoredUserAgentProto$Type extends MessageType<StoredUserAgentProto> {
+class StoredPodcastUserAgentProto$Type extends MessageType<StoredPodcastUserAgentProto> {
     constructor() {
-        super("StoredUserAgentProto", [
+        super("StoredPodcastUserAgentProto", [
             { no: 1, name: "user_agent", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "device", kind: "message", T: () => StoredDeviceProto },
-            { no: 3, name: "locale", kind: "message", T: () => StoredLocaleProto },
-            { no: 4, name: "location", kind: "message", T: () => StoredLocationProto },
+            { no: 2, name: "device", kind: "message", T: () => StoredPodcastDeviceProto },
+            { no: 3, name: "locale", kind: "message", T: () => StoredPodcastLocaleProto },
+            { no: 4, name: "location", kind: "message", T: () => StoredPodcastLocationProto },
             { no: 5, name: "user_interface_style", kind: "enum", T: () => ["StoredPodcastUserInterfaceStyleProto", StoredPodcastUserInterfaceStyleProto, "STORED_PODCAST_USER_INTERFACE_STYLE_PROTO_"] },
             { no: 6, name: "accessibility_settings", kind: "message", T: () => StoredPodcastAccessibilitySettingsProto }
         ]);
     }
-    create(value?: PartialMessage<StoredUserAgentProto>): StoredUserAgentProto {
+    create(value?: PartialMessage<StoredPodcastUserAgentProto>): StoredPodcastUserAgentProto {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.userAgent = "";
         message.userInterfaceStyle = 0;
         if (value !== undefined)
-            reflectionMergePartial<StoredUserAgentProto>(this, message, value);
+            reflectionMergePartial<StoredPodcastUserAgentProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredUserAgentProto): StoredUserAgentProto {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredPodcastUserAgentProto): StoredPodcastUserAgentProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -5257,14 +5257,14 @@ class StoredUserAgentProto$Type extends MessageType<StoredUserAgentProto> {
                 case /* string user_agent */ 1:
                     message.userAgent = reader.string();
                     break;
-                case /* StoredDeviceProto device */ 2:
-                    message.device = StoredDeviceProto.internalBinaryRead(reader, reader.uint32(), options, message.device);
+                case /* StoredPodcastDeviceProto device */ 2:
+                    message.device = StoredPodcastDeviceProto.internalBinaryRead(reader, reader.uint32(), options, message.device);
                     break;
-                case /* StoredLocaleProto locale */ 3:
-                    message.locale = StoredLocaleProto.internalBinaryRead(reader, reader.uint32(), options, message.locale);
+                case /* StoredPodcastLocaleProto locale */ 3:
+                    message.locale = StoredPodcastLocaleProto.internalBinaryRead(reader, reader.uint32(), options, message.locale);
                     break;
-                case /* StoredLocationProto location */ 4:
-                    message.location = StoredLocationProto.internalBinaryRead(reader, reader.uint32(), options, message.location);
+                case /* StoredPodcastLocationProto location */ 4:
+                    message.location = StoredPodcastLocationProto.internalBinaryRead(reader, reader.uint32(), options, message.location);
                     break;
                 case /* StoredPodcastUserInterfaceStyleProto user_interface_style */ 5:
                     message.userInterfaceStyle = reader.int32();
@@ -5283,19 +5283,19 @@ class StoredUserAgentProto$Type extends MessageType<StoredUserAgentProto> {
         }
         return message;
     }
-    internalBinaryWrite(message: StoredUserAgentProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: StoredPodcastUserAgentProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string user_agent = 1; */
         if (message.userAgent !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.userAgent);
-        /* StoredDeviceProto device = 2; */
+        /* StoredPodcastDeviceProto device = 2; */
         if (message.device)
-            StoredDeviceProto.internalBinaryWrite(message.device, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* StoredLocaleProto locale = 3; */
+            StoredPodcastDeviceProto.internalBinaryWrite(message.device, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* StoredPodcastLocaleProto locale = 3; */
         if (message.locale)
-            StoredLocaleProto.internalBinaryWrite(message.locale, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* StoredLocationProto location = 4; */
+            StoredPodcastLocaleProto.internalBinaryWrite(message.locale, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* StoredPodcastLocationProto location = 4; */
         if (message.location)
-            StoredLocationProto.internalBinaryWrite(message.location, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+            StoredPodcastLocationProto.internalBinaryWrite(message.location, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         /* StoredPodcastUserInterfaceStyleProto user_interface_style = 5; */
         if (message.userInterfaceStyle !== 0)
             writer.tag(5, WireType.Varint).int32(message.userInterfaceStyle);
@@ -5309,9 +5309,9 @@ class StoredUserAgentProto$Type extends MessageType<StoredUserAgentProto> {
     }
 }
 /**
- * @generated MessageType for protobuf message StoredUserAgentProto
+ * @generated MessageType for protobuf message StoredPodcastUserAgentProto
  */
-export const StoredUserAgentProto = new StoredUserAgentProto$Type();
+export const StoredPodcastUserAgentProto = new StoredPodcastUserAgentProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class StoredPodcastAccessibilitySettingsProto$Type extends MessageType<StoredPodcastAccessibilitySettingsProto> {
     constructor() {
@@ -5392,24 +5392,24 @@ class StoredPodcastAccessibilitySettingsProto$Type extends MessageType<StoredPod
  */
 export const StoredPodcastAccessibilitySettingsProto = new StoredPodcastAccessibilitySettingsProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class StoredLocaleProto$Type extends MessageType<StoredLocaleProto> {
+class StoredPodcastLocaleProto$Type extends MessageType<StoredPodcastLocaleProto> {
     constructor() {
-        super("StoredLocaleProto", [
+        super("StoredPodcastLocaleProto", [
             { no: 1, name: "language", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "region", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "time_zone", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<StoredLocaleProto>): StoredLocaleProto {
+    create(value?: PartialMessage<StoredPodcastLocaleProto>): StoredPodcastLocaleProto {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.language = "";
         message.region = "";
         message.timeZone = "";
         if (value !== undefined)
-            reflectionMergePartial<StoredLocaleProto>(this, message, value);
+            reflectionMergePartial<StoredPodcastLocaleProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredLocaleProto): StoredLocaleProto {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredPodcastLocaleProto): StoredPodcastLocaleProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -5434,7 +5434,7 @@ class StoredLocaleProto$Type extends MessageType<StoredLocaleProto> {
         }
         return message;
     }
-    internalBinaryWrite(message: StoredLocaleProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: StoredPodcastLocaleProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string language = 1; */
         if (message.language !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.language);
@@ -5451,13 +5451,13 @@ class StoredLocaleProto$Type extends MessageType<StoredLocaleProto> {
     }
 }
 /**
- * @generated MessageType for protobuf message StoredLocaleProto
+ * @generated MessageType for protobuf message StoredPodcastLocaleProto
  */
-export const StoredLocaleProto = new StoredLocaleProto$Type();
+export const StoredPodcastLocaleProto = new StoredPodcastLocaleProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class StoredLocationProto$Type extends MessageType<StoredLocationProto> {
+class StoredPodcastLocationProto$Type extends MessageType<StoredPodcastLocationProto> {
     constructor() {
-        super("StoredLocationProto", [
+        super("StoredPodcastLocationProto", [
             { no: 1, name: "region_code", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "country", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "city", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
@@ -5466,7 +5466,7 @@ class StoredLocationProto$Type extends MessageType<StoredLocationProto> {
             { no: 6, name: "longitude", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
         ]);
     }
-    create(value?: PartialMessage<StoredLocationProto>): StoredLocationProto {
+    create(value?: PartialMessage<StoredPodcastLocationProto>): StoredPodcastLocationProto {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.regionCode = "";
         message.country = "";
@@ -5475,10 +5475,10 @@ class StoredLocationProto$Type extends MessageType<StoredLocationProto> {
         message.latitude = 0;
         message.longitude = 0;
         if (value !== undefined)
-            reflectionMergePartial<StoredLocationProto>(this, message, value);
+            reflectionMergePartial<StoredPodcastLocationProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredLocationProto): StoredLocationProto {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredPodcastLocationProto): StoredPodcastLocationProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -5512,7 +5512,7 @@ class StoredLocationProto$Type extends MessageType<StoredLocationProto> {
         }
         return message;
     }
-    internalBinaryWrite(message: StoredLocationProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: StoredPodcastLocationProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string region_code = 1; */
         if (message.regionCode !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.regionCode);
@@ -5538,32 +5538,32 @@ class StoredLocationProto$Type extends MessageType<StoredLocationProto> {
     }
 }
 /**
- * @generated MessageType for protobuf message StoredLocationProto
+ * @generated MessageType for protobuf message StoredPodcastLocationProto
  */
-export const StoredLocationProto = new StoredLocationProto$Type();
+export const StoredPodcastLocationProto = new StoredPodcastLocationProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class StoredDeviceProto$Type extends MessageType<StoredDeviceProto> {
+class StoredPodcastDeviceProto$Type extends MessageType<StoredPodcastDeviceProto> {
     constructor() {
-        super("StoredDeviceProto", [
-            { no: 1, name: "ios", kind: "message", oneof: "type", T: () => StoredIOSDeviceProto }
+        super("StoredPodcastDeviceProto", [
+            { no: 1, name: "ios", kind: "message", oneof: "type", T: () => StoredPodcastIOSDeviceProto }
         ]);
     }
-    create(value?: PartialMessage<StoredDeviceProto>): StoredDeviceProto {
+    create(value?: PartialMessage<StoredPodcastDeviceProto>): StoredPodcastDeviceProto {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.type = { oneofKind: undefined };
         if (value !== undefined)
-            reflectionMergePartial<StoredDeviceProto>(this, message, value);
+            reflectionMergePartial<StoredPodcastDeviceProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredDeviceProto): StoredDeviceProto {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredPodcastDeviceProto): StoredPodcastDeviceProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* StoredIOSDeviceProto ios */ 1:
+                case /* StoredPodcastIOSDeviceProto ios */ 1:
                     message.type = {
                         oneofKind: "ios",
-                        ios: StoredIOSDeviceProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).ios)
+                        ios: StoredPodcastIOSDeviceProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).ios)
                     };
                     break;
                 default:
@@ -5577,10 +5577,10 @@ class StoredDeviceProto$Type extends MessageType<StoredDeviceProto> {
         }
         return message;
     }
-    internalBinaryWrite(message: StoredDeviceProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* StoredIOSDeviceProto ios = 1; */
+    internalBinaryWrite(message: StoredPodcastDeviceProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* StoredPodcastIOSDeviceProto ios = 1; */
         if (message.type.oneofKind === "ios")
-            StoredIOSDeviceProto.internalBinaryWrite(message.type.ios, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+            StoredPodcastIOSDeviceProto.internalBinaryWrite(message.type.ios, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -5588,13 +5588,13 @@ class StoredDeviceProto$Type extends MessageType<StoredDeviceProto> {
     }
 }
 /**
- * @generated MessageType for protobuf message StoredDeviceProto
+ * @generated MessageType for protobuf message StoredPodcastDeviceProto
  */
-export const StoredDeviceProto = new StoredDeviceProto$Type();
+export const StoredPodcastDeviceProto = new StoredPodcastDeviceProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class StoredIOSDeviceProto$Type extends MessageType<StoredIOSDeviceProto> {
+class StoredPodcastIOSDeviceProto$Type extends MessageType<StoredPodcastIOSDeviceProto> {
     constructor() {
-        super("StoredIOSDeviceProto", [
+        super("StoredPodcastIOSDeviceProto", [
             { no: 1, name: "device_model", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "device_identifier", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "is_simulator", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
@@ -5605,7 +5605,7 @@ class StoredIOSDeviceProto$Type extends MessageType<StoredIOSDeviceProto> {
             { no: 8, name: "app_build_number", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<StoredIOSDeviceProto>): StoredIOSDeviceProto {
+    create(value?: PartialMessage<StoredPodcastIOSDeviceProto>): StoredPodcastIOSDeviceProto {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.deviceModel = "";
         message.deviceIdentifier = "";
@@ -5616,10 +5616,10 @@ class StoredIOSDeviceProto$Type extends MessageType<StoredIOSDeviceProto> {
         message.appBundleVersion = "";
         message.appBuildNumber = "";
         if (value !== undefined)
-            reflectionMergePartial<StoredIOSDeviceProto>(this, message, value);
+            reflectionMergePartial<StoredPodcastIOSDeviceProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredIOSDeviceProto): StoredIOSDeviceProto {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredPodcastIOSDeviceProto): StoredPodcastIOSDeviceProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -5659,7 +5659,7 @@ class StoredIOSDeviceProto$Type extends MessageType<StoredIOSDeviceProto> {
         }
         return message;
     }
-    internalBinaryWrite(message: StoredIOSDeviceProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: StoredPodcastIOSDeviceProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string device_model = 1; */
         if (message.deviceModel !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.deviceModel);
@@ -5691,6 +5691,6 @@ class StoredIOSDeviceProto$Type extends MessageType<StoredIOSDeviceProto> {
     }
 }
 /**
- * @generated MessageType for protobuf message StoredIOSDeviceProto
+ * @generated MessageType for protobuf message StoredPodcastIOSDeviceProto
  */
-export const StoredIOSDeviceProto = new StoredIOSDeviceProto$Type();
+export const StoredPodcastIOSDeviceProto = new StoredPodcastIOSDeviceProto$Type();
