@@ -1838,6 +1838,15 @@ struct StoredPodcastUserProto: Sendable {
   /// Clears the value of `updatedAt`. Subsequent reads from it will return its default value.
   mutating func clearUpdatedAt() {self._updatedAt = nil}
 
+  var deletedAt: SwiftProtobuf.Google_Protobuf_Timestamp {
+    get {return _deletedAt ?? SwiftProtobuf.Google_Protobuf_Timestamp()}
+    set {_deletedAt = newValue}
+  }
+  /// Returns true if `deletedAt` has been explicitly set.
+  var hasDeletedAt: Bool {return self._deletedAt != nil}
+  /// Clears the value of `deletedAt`. Subsequent reads from it will return its default value.
+  mutating func clearDeletedAt() {self._deletedAt = nil}
+
   var onboardingInput: StoredPodcastOnboardingInputProto {
     get {return _onboardingInput ?? StoredPodcastOnboardingInputProto()}
     set {_onboardingInput = newValue}
@@ -1853,6 +1862,7 @@ struct StoredPodcastUserProto: Sendable {
 
   fileprivate var _createdAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
   fileprivate var _updatedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
+  fileprivate var _deletedAt: SwiftProtobuf.Google_Protobuf_Timestamp? = nil
   fileprivate var _onboardingInput: StoredPodcastOnboardingInputProto? = nil
 }
 
@@ -4834,6 +4844,7 @@ extension StoredPodcastUserProto: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     1: .standard(proto: "user_id"),
     2: .standard(proto: "created_at"),
     3: .standard(proto: "updated_at"),
+    5: .standard(proto: "deleted_at"),
     4: .standard(proto: "onboarding_input"),
   ]
 
@@ -4847,6 +4858,7 @@ extension StoredPodcastUserProto: SwiftProtobuf.Message, SwiftProtobuf._MessageI
       case 2: try { try decoder.decodeSingularMessageField(value: &self._createdAt) }()
       case 3: try { try decoder.decodeSingularMessageField(value: &self._updatedAt) }()
       case 4: try { try decoder.decodeSingularMessageField(value: &self._onboardingInput) }()
+      case 5: try { try decoder.decodeSingularMessageField(value: &self._deletedAt) }()
       default: break
       }
     }
@@ -4869,6 +4881,9 @@ extension StoredPodcastUserProto: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     try { if let v = self._onboardingInput {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
     } }()
+    try { if let v = self._deletedAt {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -4876,6 +4891,7 @@ extension StoredPodcastUserProto: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     if lhs.userID != rhs.userID {return false}
     if lhs._createdAt != rhs._createdAt {return false}
     if lhs._updatedAt != rhs._updatedAt {return false}
+    if lhs._deletedAt != rhs._deletedAt {return false}
     if lhs._onboardingInput != rhs._onboardingInput {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

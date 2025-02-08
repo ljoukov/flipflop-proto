@@ -472,6 +472,7 @@ message StoredPodcastUserProto {
   string user_id = 1;
   google.protobuf.Timestamp created_at = 2;
   google.protobuf.Timestamp updated_at = 3;
+  google.protobuf.Timestamp deleted_at = 5;
   StoredPodcastOnboardingInputProto onboarding_input = 4;
 }
 
