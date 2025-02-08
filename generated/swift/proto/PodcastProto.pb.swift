@@ -338,92 +338,104 @@ struct PodcastSubscriptionStatusProto: Sendable {
   init() {}
 }
 
-struct PodcastStreamApiRequestProto: Sendable {
+struct PodcastStreamApiRequestProto: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   var requestAuth: PodcastRequestAuthProto {
-    get {return _requestAuth ?? PodcastRequestAuthProto()}
-    set {_requestAuth = newValue}
+    get {return _storage._requestAuth ?? PodcastRequestAuthProto()}
+    set {_uniqueStorage()._requestAuth = newValue}
   }
   /// Returns true if `requestAuth` has been explicitly set.
-  var hasRequestAuth: Bool {return self._requestAuth != nil}
+  var hasRequestAuth: Bool {return _storage._requestAuth != nil}
   /// Clears the value of `requestAuth`. Subsequent reads from it will return its default value.
-  mutating func clearRequestAuth() {self._requestAuth = nil}
+  mutating func clearRequestAuth() {_uniqueStorage()._requestAuth = nil}
 
-  var request: PodcastStreamApiRequestProto.OneOf_Request? = nil
+  var userAgent: PodcastUserAgentProto {
+    get {return _storage._userAgent ?? PodcastUserAgentProto()}
+    set {_uniqueStorage()._userAgent = newValue}
+  }
+  /// Returns true if `userAgent` has been explicitly set.
+  var hasUserAgent: Bool {return _storage._userAgent != nil}
+  /// Clears the value of `userAgent`. Subsequent reads from it will return its default value.
+  mutating func clearUserAgent() {_uniqueStorage()._userAgent = nil}
+
+  var request: OneOf_Request? {
+    get {return _storage._request}
+    set {_uniqueStorage()._request = newValue}
+  }
 
   var create: CreatePodcastRequestProto {
     get {
-      if case .create(let v)? = request {return v}
+      if case .create(let v)? = _storage._request {return v}
       return CreatePodcastRequestProto()
     }
-    set {request = .create(newValue)}
+    set {_uniqueStorage()._request = .create(newValue)}
   }
 
   var generate: GeneratePodcastRequestProto {
     get {
-      if case .generate(let v)? = request {return v}
+      if case .generate(let v)? = _storage._request {return v}
       return GeneratePodcastRequestProto()
     }
-    set {request = .generate(newValue)}
+    set {_uniqueStorage()._request = .generate(newValue)}
   }
 
   var podcast: GetPodcastRequestProto {
     get {
-      if case .podcast(let v)? = request {return v}
+      if case .podcast(let v)? = _storage._request {return v}
       return GetPodcastRequestProto()
     }
-    set {request = .podcast(newValue)}
+    set {_uniqueStorage()._request = .podcast(newValue)}
   }
 
   var story: GetPodcastStoryRequestProto {
     get {
-      if case .story(let v)? = request {return v}
+      if case .story(let v)? = _storage._request {return v}
       return GetPodcastStoryRequestProto()
     }
-    set {request = .story(newValue)}
+    set {_uniqueStorage()._request = .story(newValue)}
   }
 
   var suggestionPoints: GetPodcastSuggestionPointsRequestProto {
     get {
-      if case .suggestionPoints(let v)? = request {return v}
+      if case .suggestionPoints(let v)? = _storage._request {return v}
       return GetPodcastSuggestionPointsRequestProto()
     }
-    set {request = .suggestionPoints(newValue)}
+    set {_uniqueStorage()._request = .suggestionPoints(newValue)}
   }
 
   var followupPoints: GetPodcastFollowupPointsRequestProto {
     get {
-      if case .followupPoints(let v)? = request {return v}
+      if case .followupPoints(let v)? = _storage._request {return v}
       return GetPodcastFollowupPointsRequestProto()
     }
-    set {request = .followupPoints(newValue)}
+    set {_uniqueStorage()._request = .followupPoints(newValue)}
   }
 
   var home: GetPodcastHomeRequestProto {
     get {
-      if case .home(let v)? = request {return v}
+      if case .home(let v)? = _storage._request {return v}
       return GetPodcastHomeRequestProto()
     }
-    set {request = .home(newValue)}
+    set {_uniqueStorage()._request = .home(newValue)}
   }
 
   var deleteAccount: DeleteAccountRequestProto {
     get {
-      if case .deleteAccount(let v)? = request {return v}
+      if case .deleteAccount(let v)? = _storage._request {return v}
       return DeleteAccountRequestProto()
     }
-    set {request = .deleteAccount(newValue)}
+    set {_uniqueStorage()._request = .deleteAccount(newValue)}
   }
 
   var onboardingInput: GetPodcastOnboardingInputRequestProto {
     get {
-      if case .onboardingInput(let v)? = request {return v}
+      if case .onboardingInput(let v)? = _storage._request {return v}
       return GetPodcastOnboardingInputRequestProto()
     }
-    set {request = .onboardingInput(newValue)}
+    set {_uniqueStorage()._request = .onboardingInput(newValue)}
   }
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -443,7 +455,7 @@ struct PodcastStreamApiRequestProto: Sendable {
 
   init() {}
 
-  fileprivate var _requestAuth: PodcastRequestAuthProto? = nil
+  fileprivate var _storage = _StorageClass.defaultInstance
 }
 
 struct PodcastStreamApiResponseHeaderProto: Sendable {
@@ -2567,6 +2579,7 @@ extension PodcastStreamApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Me
   static let protoMessageName: String = "PodcastStreamApiRequestProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "request_auth"),
+    2: .standard(proto: "user_agent"),
     10: .same(proto: "create"),
     11: .same(proto: "generate"),
     12: .same(proto: "podcast"),
@@ -2578,188 +2591,237 @@ extension PodcastStreamApiRequestProto: SwiftProtobuf.Message, SwiftProtobuf._Me
     18: .standard(proto: "onboarding_input"),
   ]
 
+  fileprivate class _StorageClass {
+    var _requestAuth: PodcastRequestAuthProto? = nil
+    var _userAgent: PodcastUserAgentProto? = nil
+    var _request: PodcastStreamApiRequestProto.OneOf_Request?
+
+    #if swift(>=5.10)
+      // This property is used as the initial default value for new instances of the type.
+      // The type itself is protecting the reference to its storage via CoW semantics.
+      // This will force a copy to be made of this reference when the first mutation occurs;
+      // hence, it is safe to mark this as `nonisolated(unsafe)`.
+      static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
+
+    private init() {}
+
+    init(copying source: _StorageClass) {
+      _requestAuth = source._requestAuth
+      _userAgent = source._userAgent
+      _request = source._request
+    }
+  }
+
+  fileprivate mutating func _uniqueStorage() -> _StorageClass {
+    if !isKnownUniquelyReferenced(&_storage) {
+      _storage = _StorageClass(copying: _storage)
+    }
+    return _storage
+  }
+
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularMessageField(value: &self._requestAuth) }()
-      case 10: try {
-        var v: CreatePodcastRequestProto?
-        var hadOneofValue = false
-        if let current = self.request {
-          hadOneofValue = true
-          if case .create(let m) = current {v = m}
+    _ = _uniqueStorage()
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      while let fieldNumber = try decoder.nextFieldNumber() {
+        // The use of inline closures is to circumvent an issue where the compiler
+        // allocates stack space for every case branch when no optimizations are
+        // enabled. https://github.com/apple/swift-protobuf/issues/1034
+        switch fieldNumber {
+        case 1: try { try decoder.decodeSingularMessageField(value: &_storage._requestAuth) }()
+        case 2: try { try decoder.decodeSingularMessageField(value: &_storage._userAgent) }()
+        case 10: try {
+          var v: CreatePodcastRequestProto?
+          var hadOneofValue = false
+          if let current = _storage._request {
+            hadOneofValue = true
+            if case .create(let m) = current {v = m}
+          }
+          try decoder.decodeSingularMessageField(value: &v)
+          if let v = v {
+            if hadOneofValue {try decoder.handleConflictingOneOf()}
+            _storage._request = .create(v)
+          }
+        }()
+        case 11: try {
+          var v: GeneratePodcastRequestProto?
+          var hadOneofValue = false
+          if let current = _storage._request {
+            hadOneofValue = true
+            if case .generate(let m) = current {v = m}
+          }
+          try decoder.decodeSingularMessageField(value: &v)
+          if let v = v {
+            if hadOneofValue {try decoder.handleConflictingOneOf()}
+            _storage._request = .generate(v)
+          }
+        }()
+        case 12: try {
+          var v: GetPodcastRequestProto?
+          var hadOneofValue = false
+          if let current = _storage._request {
+            hadOneofValue = true
+            if case .podcast(let m) = current {v = m}
+          }
+          try decoder.decodeSingularMessageField(value: &v)
+          if let v = v {
+            if hadOneofValue {try decoder.handleConflictingOneOf()}
+            _storage._request = .podcast(v)
+          }
+        }()
+        case 13: try {
+          var v: GetPodcastStoryRequestProto?
+          var hadOneofValue = false
+          if let current = _storage._request {
+            hadOneofValue = true
+            if case .story(let m) = current {v = m}
+          }
+          try decoder.decodeSingularMessageField(value: &v)
+          if let v = v {
+            if hadOneofValue {try decoder.handleConflictingOneOf()}
+            _storage._request = .story(v)
+          }
+        }()
+        case 14: try {
+          var v: GetPodcastSuggestionPointsRequestProto?
+          var hadOneofValue = false
+          if let current = _storage._request {
+            hadOneofValue = true
+            if case .suggestionPoints(let m) = current {v = m}
+          }
+          try decoder.decodeSingularMessageField(value: &v)
+          if let v = v {
+            if hadOneofValue {try decoder.handleConflictingOneOf()}
+            _storage._request = .suggestionPoints(v)
+          }
+        }()
+        case 15: try {
+          var v: GetPodcastHomeRequestProto?
+          var hadOneofValue = false
+          if let current = _storage._request {
+            hadOneofValue = true
+            if case .home(let m) = current {v = m}
+          }
+          try decoder.decodeSingularMessageField(value: &v)
+          if let v = v {
+            if hadOneofValue {try decoder.handleConflictingOneOf()}
+            _storage._request = .home(v)
+          }
+        }()
+        case 16: try {
+          var v: DeleteAccountRequestProto?
+          var hadOneofValue = false
+          if let current = _storage._request {
+            hadOneofValue = true
+            if case .deleteAccount(let m) = current {v = m}
+          }
+          try decoder.decodeSingularMessageField(value: &v)
+          if let v = v {
+            if hadOneofValue {try decoder.handleConflictingOneOf()}
+            _storage._request = .deleteAccount(v)
+          }
+        }()
+        case 17: try {
+          var v: GetPodcastFollowupPointsRequestProto?
+          var hadOneofValue = false
+          if let current = _storage._request {
+            hadOneofValue = true
+            if case .followupPoints(let m) = current {v = m}
+          }
+          try decoder.decodeSingularMessageField(value: &v)
+          if let v = v {
+            if hadOneofValue {try decoder.handleConflictingOneOf()}
+            _storage._request = .followupPoints(v)
+          }
+        }()
+        case 18: try {
+          var v: GetPodcastOnboardingInputRequestProto?
+          var hadOneofValue = false
+          if let current = _storage._request {
+            hadOneofValue = true
+            if case .onboardingInput(let m) = current {v = m}
+          }
+          try decoder.decodeSingularMessageField(value: &v)
+          if let v = v {
+            if hadOneofValue {try decoder.handleConflictingOneOf()}
+            _storage._request = .onboardingInput(v)
+          }
+        }()
+        default: break
         }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {
-          if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.request = .create(v)
-        }
-      }()
-      case 11: try {
-        var v: GeneratePodcastRequestProto?
-        var hadOneofValue = false
-        if let current = self.request {
-          hadOneofValue = true
-          if case .generate(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {
-          if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.request = .generate(v)
-        }
-      }()
-      case 12: try {
-        var v: GetPodcastRequestProto?
-        var hadOneofValue = false
-        if let current = self.request {
-          hadOneofValue = true
-          if case .podcast(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {
-          if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.request = .podcast(v)
-        }
-      }()
-      case 13: try {
-        var v: GetPodcastStoryRequestProto?
-        var hadOneofValue = false
-        if let current = self.request {
-          hadOneofValue = true
-          if case .story(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {
-          if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.request = .story(v)
-        }
-      }()
-      case 14: try {
-        var v: GetPodcastSuggestionPointsRequestProto?
-        var hadOneofValue = false
-        if let current = self.request {
-          hadOneofValue = true
-          if case .suggestionPoints(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {
-          if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.request = .suggestionPoints(v)
-        }
-      }()
-      case 15: try {
-        var v: GetPodcastHomeRequestProto?
-        var hadOneofValue = false
-        if let current = self.request {
-          hadOneofValue = true
-          if case .home(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {
-          if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.request = .home(v)
-        }
-      }()
-      case 16: try {
-        var v: DeleteAccountRequestProto?
-        var hadOneofValue = false
-        if let current = self.request {
-          hadOneofValue = true
-          if case .deleteAccount(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {
-          if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.request = .deleteAccount(v)
-        }
-      }()
-      case 17: try {
-        var v: GetPodcastFollowupPointsRequestProto?
-        var hadOneofValue = false
-        if let current = self.request {
-          hadOneofValue = true
-          if case .followupPoints(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {
-          if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.request = .followupPoints(v)
-        }
-      }()
-      case 18: try {
-        var v: GetPodcastOnboardingInputRequestProto?
-        var hadOneofValue = false
-        if let current = self.request {
-          hadOneofValue = true
-          if case .onboardingInput(let m) = current {v = m}
-        }
-        try decoder.decodeSingularMessageField(value: &v)
-        if let v = v {
-          if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.request = .onboardingInput(v)
-        }
-      }()
-      default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every if/case branch local when no optimizations
-    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-    // https://github.com/apple/swift-protobuf/issues/1182
-    try { if let v = self._requestAuth {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    } }()
-    switch self.request {
-    case .create?: try {
-      guard case .create(let v)? = self.request else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
-    }()
-    case .generate?: try {
-      guard case .generate(let v)? = self.request else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 11)
-    }()
-    case .podcast?: try {
-      guard case .podcast(let v)? = self.request else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 12)
-    }()
-    case .story?: try {
-      guard case .story(let v)? = self.request else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 13)
-    }()
-    case .suggestionPoints?: try {
-      guard case .suggestionPoints(let v)? = self.request else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 14)
-    }()
-    case .home?: try {
-      guard case .home(let v)? = self.request else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
-    }()
-    case .deleteAccount?: try {
-      guard case .deleteAccount(let v)? = self.request else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 16)
-    }()
-    case .followupPoints?: try {
-      guard case .followupPoints(let v)? = self.request else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 17)
-    }()
-    case .onboardingInput?: try {
-      guard case .onboardingInput(let v)? = self.request else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 18)
-    }()
-    case nil: break
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every if/case branch local when no optimizations
+      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+      // https://github.com/apple/swift-protobuf/issues/1182
+      try { if let v = _storage._requestAuth {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+      } }()
+      try { if let v = _storage._userAgent {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+      } }()
+      switch _storage._request {
+      case .create?: try {
+        guard case .create(let v)? = _storage._request else { preconditionFailure() }
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 10)
+      }()
+      case .generate?: try {
+        guard case .generate(let v)? = _storage._request else { preconditionFailure() }
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 11)
+      }()
+      case .podcast?: try {
+        guard case .podcast(let v)? = _storage._request else { preconditionFailure() }
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 12)
+      }()
+      case .story?: try {
+        guard case .story(let v)? = _storage._request else { preconditionFailure() }
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 13)
+      }()
+      case .suggestionPoints?: try {
+        guard case .suggestionPoints(let v)? = _storage._request else { preconditionFailure() }
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 14)
+      }()
+      case .home?: try {
+        guard case .home(let v)? = _storage._request else { preconditionFailure() }
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 15)
+      }()
+      case .deleteAccount?: try {
+        guard case .deleteAccount(let v)? = _storage._request else { preconditionFailure() }
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 16)
+      }()
+      case .followupPoints?: try {
+        guard case .followupPoints(let v)? = _storage._request else { preconditionFailure() }
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 17)
+      }()
+      case .onboardingInput?: try {
+        guard case .onboardingInput(let v)? = _storage._request else { preconditionFailure() }
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 18)
+      }()
+      case nil: break
+      }
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: PodcastStreamApiRequestProto, rhs: PodcastStreamApiRequestProto) -> Bool {
-    if lhs._requestAuth != rhs._requestAuth {return false}
-    if lhs.request != rhs.request {return false}
+    if lhs._storage !== rhs._storage {
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+        let _storage = _args.0
+        let rhs_storage = _args.1
+        if _storage._requestAuth != rhs_storage._requestAuth {return false}
+        if _storage._userAgent != rhs_storage._userAgent {return false}
+        if _storage._request != rhs_storage._request {return false}
+        return true
+      }
+      if !storagesAreEqual {return false}
+    }
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

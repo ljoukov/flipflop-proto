@@ -57,6 +57,10 @@ export interface PodcastStreamApiRequestProto {
      */
     requestAuth?: PodcastRequestAuthProto;
     /**
+     * @generated from protobuf field: PodcastUserAgentProto user_agent = 2;
+     */
+    userAgent?: PodcastUserAgentProto;
+    /**
      * @generated from protobuf oneof: request
      */
     request: {
@@ -1888,6 +1892,7 @@ class PodcastStreamApiRequestProto$Type extends MessageType<PodcastStreamApiRequ
     constructor() {
         super("PodcastStreamApiRequestProto", [
             { no: 1, name: "request_auth", kind: "message", T: () => PodcastRequestAuthProto },
+            { no: 2, name: "user_agent", kind: "message", T: () => PodcastUserAgentProto },
             { no: 10, name: "create", kind: "message", oneof: "request", T: () => CreatePodcastRequestProto },
             { no: 11, name: "generate", kind: "message", oneof: "request", T: () => GeneratePodcastRequestProto },
             { no: 12, name: "podcast", kind: "message", oneof: "request", T: () => GetPodcastRequestProto },
@@ -1913,6 +1918,9 @@ class PodcastStreamApiRequestProto$Type extends MessageType<PodcastStreamApiRequ
             switch (fieldNo) {
                 case /* PodcastRequestAuthProto request_auth */ 1:
                     message.requestAuth = PodcastRequestAuthProto.internalBinaryRead(reader, reader.uint32(), options, message.requestAuth);
+                    break;
+                case /* PodcastUserAgentProto user_agent */ 2:
+                    message.userAgent = PodcastUserAgentProto.internalBinaryRead(reader, reader.uint32(), options, message.userAgent);
                     break;
                 case /* CreatePodcastRequestProto create */ 10:
                     message.request = {
@@ -1983,6 +1991,9 @@ class PodcastStreamApiRequestProto$Type extends MessageType<PodcastStreamApiRequ
         /* PodcastRequestAuthProto request_auth = 1; */
         if (message.requestAuth)
             PodcastRequestAuthProto.internalBinaryWrite(message.requestAuth, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastUserAgentProto user_agent = 2; */
+        if (message.userAgent)
+            PodcastUserAgentProto.internalBinaryWrite(message.userAgent, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
         /* CreatePodcastRequestProto create = 10; */
         if (message.request.oneofKind === "create")
             CreatePodcastRequestProto.internalBinaryWrite(message.request.create, writer.tag(10, WireType.LengthDelimited).fork(), options).join();

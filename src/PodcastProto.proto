@@ -23,6 +23,7 @@ message PodcastSubscriptionStatusProto {
 
 message PodcastStreamApiRequestProto {
   PodcastRequestAuthProto request_auth = 1;
+  PodcastUserAgentProto user_agent = 2;
   oneof request {
     CreatePodcastRequestProto create = 10;
     GeneratePodcastRequestProto generate = 11;
