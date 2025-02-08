@@ -1173,6 +1173,135 @@ export interface StoredPodcastOnboardingInputProto {
      * @generated from protobuf field: string voice_id = 6;
      */
     voiceId: string;
+    /**
+     * @generated from protobuf field: StoredUserAgentProto user_agent = 7;
+     */
+    userAgent?: StoredUserAgentProto;
+}
+/**
+ * @generated from protobuf message StoredUserAgentProto
+ */
+export interface StoredUserAgentProto {
+    /**
+     * @generated from protobuf field: string user_agent = 1;
+     */
+    userAgent: string;
+    /**
+     * @generated from protobuf field: StoredDeviceProto device = 2;
+     */
+    device?: StoredDeviceProto;
+    /**
+     * @generated from protobuf field: StoredLocaleProto locale = 3;
+     */
+    locale?: StoredLocaleProto;
+    /**
+     * @generated from protobuf field: StoredLocationProto location = 4;
+     */
+    location?: StoredLocationProto;
+    /**
+     * @generated from protobuf field: StoredPodcastUserInterfaceStyleProto user_interface_style = 5;
+     */
+    userInterfaceStyle: StoredPodcastUserInterfaceStyleProto;
+}
+/**
+ * @generated from protobuf message StoredLocaleProto
+ */
+export interface StoredLocaleProto {
+    /**
+     * @generated from protobuf field: string language = 1;
+     */
+    language: string;
+    /**
+     * @generated from protobuf field: string country = 2;
+     */
+    country: string;
+    /**
+     * @generated from protobuf field: string time_zone = 3;
+     */
+    timeZone: string;
+}
+/**
+ * @generated from protobuf message StoredLocationProto
+ */
+export interface StoredLocationProto {
+    /**
+     * @generated from protobuf field: string region_code = 1;
+     */
+    regionCode: string;
+    /**
+     * @generated from protobuf field: string country = 2;
+     */
+    country: string;
+    /**
+     * @generated from protobuf field: string city = 3;
+     */
+    city: string;
+    /**
+     * @generated from protobuf field: string time_zone = 4;
+     */
+    timeZone: string;
+    /**
+     * @generated from protobuf field: double latitude = 5;
+     */
+    latitude: number;
+    /**
+     * @generated from protobuf field: double longitude = 6;
+     */
+    longitude: number;
+}
+/**
+ * @generated from protobuf message StoredDeviceProto
+ */
+export interface StoredDeviceProto {
+    /**
+     * @generated from protobuf oneof: type
+     */
+    type: {
+        oneofKind: "ios";
+        /**
+         * @generated from protobuf field: StoredIOSDeviceProto ios = 1;
+         */
+        ios: StoredIOSDeviceProto;
+    } | {
+        oneofKind: undefined;
+    };
+}
+/**
+ * @generated from protobuf message StoredIOSDeviceProto
+ */
+export interface StoredIOSDeviceProto {
+    /**
+     * @generated from protobuf field: string device_model = 1;
+     */
+    deviceModel: string;
+    /**
+     * @generated from protobuf field: string device_identifier = 2;
+     */
+    deviceIdentifier: string;
+    /**
+     * @generated from protobuf field: bool is_simulator = 3;
+     */
+    isSimulator: boolean;
+    /**
+     * @generated from protobuf field: string os_name = 4;
+     */
+    osName: string;
+    /**
+     * @generated from protobuf field: string os_version = 5;
+     */
+    osVersion: string;
+    /**
+     * @generated from protobuf field: string app_bundle_name = 6;
+     */
+    appBundleName: string;
+    /**
+     * @generated from protobuf field: string app_bundle_version = 7;
+     */
+    appBundleVersion: string;
+    /**
+     * @generated from protobuf field: string app_build_number = 8;
+     */
+    appBuildNumber: string;
 }
 /**
  * @generated from protobuf enum StoredPodcastStateProto
@@ -1387,6 +1516,23 @@ export enum StoredPodcastSubscriptionSourceProto {
      * @generated from protobuf enum value: STORED_PODCAST_SUBSCRIPTION_SOURCE_PROTO_WEB = 4;
      */
     WEB = 4
+}
+/**
+ * @generated from protobuf enum StoredPodcastUserInterfaceStyleProto
+ */
+export enum StoredPodcastUserInterfaceStyleProto {
+    /**
+     * @generated from protobuf enum value: STORED_PODCAST_USER_INTERFACE_STYLE_PROTO_UNDEFINED = 0;
+     */
+    UNDEFINED = 0,
+    /**
+     * @generated from protobuf enum value: STORED_PODCAST_USER_INTERFACE_STYLE_PROTO_LIGHT = 1;
+     */
+    LIGHT = 1,
+    /**
+     * @generated from protobuf enum value: STORED_PODCAST_USER_INTERFACE_STYLE_PROTO_DARK = 2;
+     */
+    DARK = 2
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class StoredPodcastProto$Type extends MessageType<StoredPodcastProto> {
@@ -4913,7 +5059,8 @@ class StoredPodcastOnboardingInputProto$Type extends MessageType<StoredPodcastOn
             { no: 3, name: "goal_ids", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "learning_style_ids", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "interest_ids", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
-            { no: 6, name: "voice_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 6, name: "voice_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 7, name: "user_agent", kind: "message", T: () => StoredUserAgentProto }
         ]);
     }
     create(value?: PartialMessage<StoredPodcastOnboardingInputProto>): StoredPodcastOnboardingInputProto {
@@ -4950,6 +5097,9 @@ class StoredPodcastOnboardingInputProto$Type extends MessageType<StoredPodcastOn
                 case /* string voice_id */ 6:
                     message.voiceId = reader.string();
                     break;
+                case /* StoredUserAgentProto user_agent */ 7:
+                    message.userAgent = StoredUserAgentProto.internalBinaryRead(reader, reader.uint32(), options, message.userAgent);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -4980,6 +5130,9 @@ class StoredPodcastOnboardingInputProto$Type extends MessageType<StoredPodcastOn
         /* string voice_id = 6; */
         if (message.voiceId !== "")
             writer.tag(6, WireType.LengthDelimited).string(message.voiceId);
+        /* StoredUserAgentProto user_agent = 7; */
+        if (message.userAgent)
+            StoredUserAgentProto.internalBinaryWrite(message.userAgent, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -4990,3 +5143,382 @@ class StoredPodcastOnboardingInputProto$Type extends MessageType<StoredPodcastOn
  * @generated MessageType for protobuf message StoredPodcastOnboardingInputProto
  */
 export const StoredPodcastOnboardingInputProto = new StoredPodcastOnboardingInputProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class StoredUserAgentProto$Type extends MessageType<StoredUserAgentProto> {
+    constructor() {
+        super("StoredUserAgentProto", [
+            { no: 1, name: "user_agent", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "device", kind: "message", T: () => StoredDeviceProto },
+            { no: 3, name: "locale", kind: "message", T: () => StoredLocaleProto },
+            { no: 4, name: "location", kind: "message", T: () => StoredLocationProto },
+            { no: 5, name: "user_interface_style", kind: "enum", T: () => ["StoredPodcastUserInterfaceStyleProto", StoredPodcastUserInterfaceStyleProto, "STORED_PODCAST_USER_INTERFACE_STYLE_PROTO_"] }
+        ]);
+    }
+    create(value?: PartialMessage<StoredUserAgentProto>): StoredUserAgentProto {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.userAgent = "";
+        message.userInterfaceStyle = 0;
+        if (value !== undefined)
+            reflectionMergePartial<StoredUserAgentProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredUserAgentProto): StoredUserAgentProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string user_agent */ 1:
+                    message.userAgent = reader.string();
+                    break;
+                case /* StoredDeviceProto device */ 2:
+                    message.device = StoredDeviceProto.internalBinaryRead(reader, reader.uint32(), options, message.device);
+                    break;
+                case /* StoredLocaleProto locale */ 3:
+                    message.locale = StoredLocaleProto.internalBinaryRead(reader, reader.uint32(), options, message.locale);
+                    break;
+                case /* StoredLocationProto location */ 4:
+                    message.location = StoredLocationProto.internalBinaryRead(reader, reader.uint32(), options, message.location);
+                    break;
+                case /* StoredPodcastUserInterfaceStyleProto user_interface_style */ 5:
+                    message.userInterfaceStyle = reader.int32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: StoredUserAgentProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string user_agent = 1; */
+        if (message.userAgent !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.userAgent);
+        /* StoredDeviceProto device = 2; */
+        if (message.device)
+            StoredDeviceProto.internalBinaryWrite(message.device, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* StoredLocaleProto locale = 3; */
+        if (message.locale)
+            StoredLocaleProto.internalBinaryWrite(message.locale, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* StoredLocationProto location = 4; */
+        if (message.location)
+            StoredLocationProto.internalBinaryWrite(message.location, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* StoredPodcastUserInterfaceStyleProto user_interface_style = 5; */
+        if (message.userInterfaceStyle !== 0)
+            writer.tag(5, WireType.Varint).int32(message.userInterfaceStyle);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message StoredUserAgentProto
+ */
+export const StoredUserAgentProto = new StoredUserAgentProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class StoredLocaleProto$Type extends MessageType<StoredLocaleProto> {
+    constructor() {
+        super("StoredLocaleProto", [
+            { no: 1, name: "language", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "country", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "time_zone", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<StoredLocaleProto>): StoredLocaleProto {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.language = "";
+        message.country = "";
+        message.timeZone = "";
+        if (value !== undefined)
+            reflectionMergePartial<StoredLocaleProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredLocaleProto): StoredLocaleProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string language */ 1:
+                    message.language = reader.string();
+                    break;
+                case /* string country */ 2:
+                    message.country = reader.string();
+                    break;
+                case /* string time_zone */ 3:
+                    message.timeZone = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: StoredLocaleProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string language = 1; */
+        if (message.language !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.language);
+        /* string country = 2; */
+        if (message.country !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.country);
+        /* string time_zone = 3; */
+        if (message.timeZone !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.timeZone);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message StoredLocaleProto
+ */
+export const StoredLocaleProto = new StoredLocaleProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class StoredLocationProto$Type extends MessageType<StoredLocationProto> {
+    constructor() {
+        super("StoredLocationProto", [
+            { no: 1, name: "region_code", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "country", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "city", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "time_zone", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "latitude", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 6, name: "longitude", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+        ]);
+    }
+    create(value?: PartialMessage<StoredLocationProto>): StoredLocationProto {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.regionCode = "";
+        message.country = "";
+        message.city = "";
+        message.timeZone = "";
+        message.latitude = 0;
+        message.longitude = 0;
+        if (value !== undefined)
+            reflectionMergePartial<StoredLocationProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredLocationProto): StoredLocationProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string region_code */ 1:
+                    message.regionCode = reader.string();
+                    break;
+                case /* string country */ 2:
+                    message.country = reader.string();
+                    break;
+                case /* string city */ 3:
+                    message.city = reader.string();
+                    break;
+                case /* string time_zone */ 4:
+                    message.timeZone = reader.string();
+                    break;
+                case /* double latitude */ 5:
+                    message.latitude = reader.double();
+                    break;
+                case /* double longitude */ 6:
+                    message.longitude = reader.double();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: StoredLocationProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string region_code = 1; */
+        if (message.regionCode !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.regionCode);
+        /* string country = 2; */
+        if (message.country !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.country);
+        /* string city = 3; */
+        if (message.city !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.city);
+        /* string time_zone = 4; */
+        if (message.timeZone !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.timeZone);
+        /* double latitude = 5; */
+        if (message.latitude !== 0)
+            writer.tag(5, WireType.Bit64).double(message.latitude);
+        /* double longitude = 6; */
+        if (message.longitude !== 0)
+            writer.tag(6, WireType.Bit64).double(message.longitude);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message StoredLocationProto
+ */
+export const StoredLocationProto = new StoredLocationProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class StoredDeviceProto$Type extends MessageType<StoredDeviceProto> {
+    constructor() {
+        super("StoredDeviceProto", [
+            { no: 1, name: "ios", kind: "message", oneof: "type", T: () => StoredIOSDeviceProto }
+        ]);
+    }
+    create(value?: PartialMessage<StoredDeviceProto>): StoredDeviceProto {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.type = { oneofKind: undefined };
+        if (value !== undefined)
+            reflectionMergePartial<StoredDeviceProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredDeviceProto): StoredDeviceProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* StoredIOSDeviceProto ios */ 1:
+                    message.type = {
+                        oneofKind: "ios",
+                        ios: StoredIOSDeviceProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).ios)
+                    };
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: StoredDeviceProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* StoredIOSDeviceProto ios = 1; */
+        if (message.type.oneofKind === "ios")
+            StoredIOSDeviceProto.internalBinaryWrite(message.type.ios, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message StoredDeviceProto
+ */
+export const StoredDeviceProto = new StoredDeviceProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class StoredIOSDeviceProto$Type extends MessageType<StoredIOSDeviceProto> {
+    constructor() {
+        super("StoredIOSDeviceProto", [
+            { no: 1, name: "device_model", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "device_identifier", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "is_simulator", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 4, name: "os_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "os_version", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "app_bundle_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 7, name: "app_bundle_version", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 8, name: "app_build_number", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<StoredIOSDeviceProto>): StoredIOSDeviceProto {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.deviceModel = "";
+        message.deviceIdentifier = "";
+        message.isSimulator = false;
+        message.osName = "";
+        message.osVersion = "";
+        message.appBundleName = "";
+        message.appBundleVersion = "";
+        message.appBuildNumber = "";
+        if (value !== undefined)
+            reflectionMergePartial<StoredIOSDeviceProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StoredIOSDeviceProto): StoredIOSDeviceProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string device_model */ 1:
+                    message.deviceModel = reader.string();
+                    break;
+                case /* string device_identifier */ 2:
+                    message.deviceIdentifier = reader.string();
+                    break;
+                case /* bool is_simulator */ 3:
+                    message.isSimulator = reader.bool();
+                    break;
+                case /* string os_name */ 4:
+                    message.osName = reader.string();
+                    break;
+                case /* string os_version */ 5:
+                    message.osVersion = reader.string();
+                    break;
+                case /* string app_bundle_name */ 6:
+                    message.appBundleName = reader.string();
+                    break;
+                case /* string app_bundle_version */ 7:
+                    message.appBundleVersion = reader.string();
+                    break;
+                case /* string app_build_number */ 8:
+                    message.appBuildNumber = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: StoredIOSDeviceProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string device_model = 1; */
+        if (message.deviceModel !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.deviceModel);
+        /* string device_identifier = 2; */
+        if (message.deviceIdentifier !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.deviceIdentifier);
+        /* bool is_simulator = 3; */
+        if (message.isSimulator !== false)
+            writer.tag(3, WireType.Varint).bool(message.isSimulator);
+        /* string os_name = 4; */
+        if (message.osName !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.osName);
+        /* string os_version = 5; */
+        if (message.osVersion !== "")
+            writer.tag(5, WireType.LengthDelimited).string(message.osVersion);
+        /* string app_bundle_name = 6; */
+        if (message.appBundleName !== "")
+            writer.tag(6, WireType.LengthDelimited).string(message.appBundleName);
+        /* string app_bundle_version = 7; */
+        if (message.appBundleVersion !== "")
+            writer.tag(7, WireType.LengthDelimited).string(message.appBundleVersion);
+        /* string app_build_number = 8; */
+        if (message.appBuildNumber !== "")
+            writer.tag(8, WireType.LengthDelimited).string(message.appBuildNumber);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message StoredIOSDeviceProto
+ */
+export const StoredIOSDeviceProto = new StoredIOSDeviceProto$Type();

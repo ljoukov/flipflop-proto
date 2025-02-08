@@ -568,3 +568,38 @@ message PodcastOnboardingVoiceProto {
   string subtitle = 3;
   repeated string sample_paths = 4;
 }
+
+message PodcastUserAgentProto {
+  PodcastDeviceProto device = 1;
+  PodcastLocaleProto locale = 2;
+  PodcastUserInterfaceStyleProto user_interface_style = 3;
+}
+
+enum PodcastUserInterfaceStyleProto {
+  PODCAST_USER_INTERFACE_STYLE_PROTO_UNDEFINED = 0;
+  PODCAST_USER_INTERFACE_STYLE_PROTO_LIGHT = 1;
+  PODCAST_USER_INTERFACE_STYLE_PROTO_DARK = 2;
+}
+
+message PodcastLocaleProto {
+  string language = 1;
+  string country = 2;
+  string time_zone = 3;
+}
+
+message PodcastDeviceProto {
+  oneof type {
+    PodcastIOSDeviceProto ios = 1;
+  }
+}
+
+message PodcastIOSDeviceProto {
+  string device_model = 1;
+  string device_identifier = 2;
+  bool is_simulator = 3;
+  string os_name = 4;
+  string os_version = 5;
+  string app_bundle_name = 6;
+  string app_bundle_version = 7;
+  string app_build_number = 8;
+}

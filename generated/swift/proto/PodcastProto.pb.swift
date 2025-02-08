@@ -268,6 +268,44 @@ enum PodcastSuggestionsStateProto: SwiftProtobuf.Enum, Swift.CaseIterable {
 
 }
 
+enum PodcastUserInterfaceStyleProto: SwiftProtobuf.Enum, Swift.CaseIterable {
+  typealias RawValue = Int
+  case undefined // = 0
+  case light // = 1
+  case dark // = 2
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .undefined
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .undefined
+    case 1: self = .light
+    case 2: self = .dark
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .undefined: return 0
+    case .light: return 1
+    case .dark: return 2
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static let allCases: [PodcastUserInterfaceStyleProto] = [
+    .undefined,
+    .light,
+    .dark,
+  ]
+
+}
+
 struct PodcastRequestAuthProto: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -2274,6 +2312,106 @@ struct PodcastOnboardingVoiceProto: Sendable {
   init() {}
 }
 
+struct PodcastUserAgentProto: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var device: PodcastDeviceProto {
+    get {return _device ?? PodcastDeviceProto()}
+    set {_device = newValue}
+  }
+  /// Returns true if `device` has been explicitly set.
+  var hasDevice: Bool {return self._device != nil}
+  /// Clears the value of `device`. Subsequent reads from it will return its default value.
+  mutating func clearDevice() {self._device = nil}
+
+  var locale: PodcastLocaleProto {
+    get {return _locale ?? PodcastLocaleProto()}
+    set {_locale = newValue}
+  }
+  /// Returns true if `locale` has been explicitly set.
+  var hasLocale: Bool {return self._locale != nil}
+  /// Clears the value of `locale`. Subsequent reads from it will return its default value.
+  mutating func clearLocale() {self._locale = nil}
+
+  var userInterfaceStyle: PodcastUserInterfaceStyleProto = .undefined
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+
+  fileprivate var _device: PodcastDeviceProto? = nil
+  fileprivate var _locale: PodcastLocaleProto? = nil
+}
+
+struct PodcastLocaleProto: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var language: String = String()
+
+  var country: String = String()
+
+  var timeZone: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct PodcastDeviceProto: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var type: PodcastDeviceProto.OneOf_Type? = nil
+
+  var ios: PodcastIOSDeviceProto {
+    get {
+      if case .ios(let v)? = type {return v}
+      return PodcastIOSDeviceProto()
+    }
+    set {type = .ios(newValue)}
+  }
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  enum OneOf_Type: Equatable, Sendable {
+    case ios(PodcastIOSDeviceProto)
+
+  }
+
+  init() {}
+}
+
+struct PodcastIOSDeviceProto: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var deviceModel: String = String()
+
+  var deviceIdentifier: String = String()
+
+  var isSimulator: Bool = false
+
+  var osName: String = String()
+
+  var osVersion: String = String()
+
+  var appBundleName: String = String()
+
+  var appBundleVersion: String = String()
+
+  var appBuildNumber: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 extension PodcastSubscriptionSourceProto: SwiftProtobuf._ProtoNameProviding {
@@ -2326,6 +2464,14 @@ extension PodcastSuggestionsStateProto: SwiftProtobuf._ProtoNameProviding {
     1: .same(proto: "PODCAST_SUGGESTIONS_STATE_PROTO_GENERATING"),
     2: .same(proto: "PODCAST_SUGGESTIONS_STATE_PROTO_READY"),
     3: .same(proto: "PODCAST_SUGGESTIONS_STATE_PROTO_FAILED"),
+  ]
+}
+
+extension PodcastUserInterfaceStyleProto: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "PODCAST_USER_INTERFACE_STYLE_PROTO_UNDEFINED"),
+    1: .same(proto: "PODCAST_USER_INTERFACE_STYLE_PROTO_LIGHT"),
+    2: .same(proto: "PODCAST_USER_INTERFACE_STYLE_PROTO_DARK"),
   ]
 }
 
@@ -6601,6 +6747,220 @@ extension PodcastOnboardingVoiceProto: SwiftProtobuf.Message, SwiftProtobuf._Mes
     if lhs.title != rhs.title {return false}
     if lhs.subtitle != rhs.subtitle {return false}
     if lhs.samplePaths != rhs.samplePaths {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension PodcastUserAgentProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastUserAgentProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "device"),
+    2: .same(proto: "locale"),
+    3: .standard(proto: "user_interface_style"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._device) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._locale) }()
+      case 3: try { try decoder.decodeSingularEnumField(value: &self.userInterfaceStyle) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._device {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    try { if let v = self._locale {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
+    if self.userInterfaceStyle != .undefined {
+      try visitor.visitSingularEnumField(value: self.userInterfaceStyle, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PodcastUserAgentProto, rhs: PodcastUserAgentProto) -> Bool {
+    if lhs._device != rhs._device {return false}
+    if lhs._locale != rhs._locale {return false}
+    if lhs.userInterfaceStyle != rhs.userInterfaceStyle {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension PodcastLocaleProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastLocaleProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "language"),
+    2: .same(proto: "country"),
+    3: .standard(proto: "time_zone"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.language) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.country) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.timeZone) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.language.isEmpty {
+      try visitor.visitSingularStringField(value: self.language, fieldNumber: 1)
+    }
+    if !self.country.isEmpty {
+      try visitor.visitSingularStringField(value: self.country, fieldNumber: 2)
+    }
+    if !self.timeZone.isEmpty {
+      try visitor.visitSingularStringField(value: self.timeZone, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PodcastLocaleProto, rhs: PodcastLocaleProto) -> Bool {
+    if lhs.language != rhs.language {return false}
+    if lhs.country != rhs.country {return false}
+    if lhs.timeZone != rhs.timeZone {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension PodcastDeviceProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastDeviceProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "ios"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try {
+        var v: PodcastIOSDeviceProto?
+        var hadOneofValue = false
+        if let current = self.type {
+          hadOneofValue = true
+          if case .ios(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.type = .ios(v)
+        }
+      }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if case .ios(let v)? = self.type {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PodcastDeviceProto, rhs: PodcastDeviceProto) -> Bool {
+    if lhs.type != rhs.type {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension PodcastIOSDeviceProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastIOSDeviceProto"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "device_model"),
+    2: .standard(proto: "device_identifier"),
+    3: .standard(proto: "is_simulator"),
+    4: .standard(proto: "os_name"),
+    5: .standard(proto: "os_version"),
+    6: .standard(proto: "app_bundle_name"),
+    7: .standard(proto: "app_bundle_version"),
+    8: .standard(proto: "app_build_number"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.deviceModel) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.deviceIdentifier) }()
+      case 3: try { try decoder.decodeSingularBoolField(value: &self.isSimulator) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.osName) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.osVersion) }()
+      case 6: try { try decoder.decodeSingularStringField(value: &self.appBundleName) }()
+      case 7: try { try decoder.decodeSingularStringField(value: &self.appBundleVersion) }()
+      case 8: try { try decoder.decodeSingularStringField(value: &self.appBuildNumber) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.deviceModel.isEmpty {
+      try visitor.visitSingularStringField(value: self.deviceModel, fieldNumber: 1)
+    }
+    if !self.deviceIdentifier.isEmpty {
+      try visitor.visitSingularStringField(value: self.deviceIdentifier, fieldNumber: 2)
+    }
+    if self.isSimulator != false {
+      try visitor.visitSingularBoolField(value: self.isSimulator, fieldNumber: 3)
+    }
+    if !self.osName.isEmpty {
+      try visitor.visitSingularStringField(value: self.osName, fieldNumber: 4)
+    }
+    if !self.osVersion.isEmpty {
+      try visitor.visitSingularStringField(value: self.osVersion, fieldNumber: 5)
+    }
+    if !self.appBundleName.isEmpty {
+      try visitor.visitSingularStringField(value: self.appBundleName, fieldNumber: 6)
+    }
+    if !self.appBundleVersion.isEmpty {
+      try visitor.visitSingularStringField(value: self.appBundleVersion, fieldNumber: 7)
+    }
+    if !self.appBuildNumber.isEmpty {
+      try visitor.visitSingularStringField(value: self.appBuildNumber, fieldNumber: 8)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PodcastIOSDeviceProto, rhs: PodcastIOSDeviceProto) -> Bool {
+    if lhs.deviceModel != rhs.deviceModel {return false}
+    if lhs.deviceIdentifier != rhs.deviceIdentifier {return false}
+    if lhs.isSimulator != rhs.isSimulator {return false}
+    if lhs.osName != rhs.osName {return false}
+    if lhs.osVersion != rhs.osVersion {return false}
+    if lhs.appBundleName != rhs.appBundleName {return false}
+    if lhs.appBundleVersion != rhs.appBundleVersion {return false}
+    if lhs.appBuildNumber != rhs.appBuildNumber {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

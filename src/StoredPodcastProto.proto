@@ -483,4 +483,51 @@ message StoredPodcastOnboardingInputProto {
   repeated string learning_style_ids = 4;
   repeated string interest_ids = 5;
   string voice_id = 6;
+  StoredUserAgentProto user_agent = 7;
+}
+
+message StoredUserAgentProto {
+  string user_agent = 1;
+  StoredDeviceProto device = 2;
+  StoredLocaleProto locale = 3;
+  StoredLocationProto location = 4;
+  StoredPodcastUserInterfaceStyleProto user_interface_style = 5;
+}
+
+enum StoredPodcastUserInterfaceStyleProto {
+  STORED_PODCAST_USER_INTERFACE_STYLE_PROTO_UNDEFINED = 0;
+  STORED_PODCAST_USER_INTERFACE_STYLE_PROTO_LIGHT = 1;
+  STORED_PODCAST_USER_INTERFACE_STYLE_PROTO_DARK = 2;
+}
+
+message StoredLocaleProto {
+  string language = 1;
+  string country = 2;
+  string time_zone = 3;
+}
+
+message StoredLocationProto {
+  string region_code = 1;
+  string country = 2;
+  string city = 3;
+  string time_zone = 4;
+  double latitude = 5;
+  double longitude = 6;
+}
+
+message StoredDeviceProto {
+  oneof type {
+    StoredIOSDeviceProto ios = 1;
+  }
+}
+
+message StoredIOSDeviceProto {
+  string device_model = 1;
+  string device_identifier = 2;
+  bool is_simulator = 3;
+  string os_name = 4;
+  string os_version = 5;
+  string app_bundle_name = 6;
+  string app_bundle_version = 7;
+  string app_build_number = 8;
 }

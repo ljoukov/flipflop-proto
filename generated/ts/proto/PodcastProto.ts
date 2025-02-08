@@ -1531,6 +1531,94 @@ export interface PodcastOnboardingVoiceProto {
     samplePaths: string[];
 }
 /**
+ * @generated from protobuf message PodcastUserAgentProto
+ */
+export interface PodcastUserAgentProto {
+    /**
+     * @generated from protobuf field: PodcastDeviceProto device = 1;
+     */
+    device?: PodcastDeviceProto;
+    /**
+     * @generated from protobuf field: PodcastLocaleProto locale = 2;
+     */
+    locale?: PodcastLocaleProto;
+    /**
+     * @generated from protobuf field: PodcastUserInterfaceStyleProto user_interface_style = 3;
+     */
+    userInterfaceStyle: PodcastUserInterfaceStyleProto;
+}
+/**
+ * @generated from protobuf message PodcastLocaleProto
+ */
+export interface PodcastLocaleProto {
+    /**
+     * @generated from protobuf field: string language = 1;
+     */
+    language: string;
+    /**
+     * @generated from protobuf field: string country = 2;
+     */
+    country: string;
+    /**
+     * @generated from protobuf field: string time_zone = 3;
+     */
+    timeZone: string;
+}
+/**
+ * @generated from protobuf message PodcastDeviceProto
+ */
+export interface PodcastDeviceProto {
+    /**
+     * @generated from protobuf oneof: type
+     */
+    type: {
+        oneofKind: "ios";
+        /**
+         * @generated from protobuf field: PodcastIOSDeviceProto ios = 1;
+         */
+        ios: PodcastIOSDeviceProto;
+    } | {
+        oneofKind: undefined;
+    };
+}
+/**
+ * @generated from protobuf message PodcastIOSDeviceProto
+ */
+export interface PodcastIOSDeviceProto {
+    /**
+     * @generated from protobuf field: string device_model = 1;
+     */
+    deviceModel: string;
+    /**
+     * @generated from protobuf field: string device_identifier = 2;
+     */
+    deviceIdentifier: string;
+    /**
+     * @generated from protobuf field: bool is_simulator = 3;
+     */
+    isSimulator: boolean;
+    /**
+     * @generated from protobuf field: string os_name = 4;
+     */
+    osName: string;
+    /**
+     * @generated from protobuf field: string os_version = 5;
+     */
+    osVersion: string;
+    /**
+     * @generated from protobuf field: string app_bundle_name = 6;
+     */
+    appBundleName: string;
+    /**
+     * @generated from protobuf field: string app_bundle_version = 7;
+     */
+    appBundleVersion: string;
+    /**
+     * @generated from protobuf field: string app_build_number = 8;
+     */
+    appBuildNumber: string;
+}
+/**
  * @generated from protobuf enum PodcastSubscriptionSourceProto
  */
 export enum PodcastSubscriptionSourceProto {
@@ -1651,6 +1739,23 @@ export enum PodcastSuggestionsStateProto {
      * @generated from protobuf enum value: PODCAST_SUGGESTIONS_STATE_PROTO_FAILED = 3;
      */
     FAILED = 3
+}
+/**
+ * @generated from protobuf enum PodcastUserInterfaceStyleProto
+ */
+export enum PodcastUserInterfaceStyleProto {
+    /**
+     * @generated from protobuf enum value: PODCAST_USER_INTERFACE_STYLE_PROTO_UNDEFINED = 0;
+     */
+    UNDEFINED = 0,
+    /**
+     * @generated from protobuf enum value: PODCAST_USER_INTERFACE_STYLE_PROTO_LIGHT = 1;
+     */
+    LIGHT = 1,
+    /**
+     * @generated from protobuf enum value: PODCAST_USER_INTERFACE_STYLE_PROTO_DARK = 2;
+     */
+    DARK = 2
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class PodcastRequestAuthProto$Type extends MessageType<PodcastRequestAuthProto> {
@@ -6839,3 +6944,280 @@ class PodcastOnboardingVoiceProto$Type extends MessageType<PodcastOnboardingVoic
  * @generated MessageType for protobuf message PodcastOnboardingVoiceProto
  */
 export const PodcastOnboardingVoiceProto = new PodcastOnboardingVoiceProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PodcastUserAgentProto$Type extends MessageType<PodcastUserAgentProto> {
+    constructor() {
+        super("PodcastUserAgentProto", [
+            { no: 1, name: "device", kind: "message", T: () => PodcastDeviceProto },
+            { no: 2, name: "locale", kind: "message", T: () => PodcastLocaleProto },
+            { no: 3, name: "user_interface_style", kind: "enum", T: () => ["PodcastUserInterfaceStyleProto", PodcastUserInterfaceStyleProto, "PODCAST_USER_INTERFACE_STYLE_PROTO_"] }
+        ]);
+    }
+    create(value?: PartialMessage<PodcastUserAgentProto>): PodcastUserAgentProto {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.userInterfaceStyle = 0;
+        if (value !== undefined)
+            reflectionMergePartial<PodcastUserAgentProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastUserAgentProto): PodcastUserAgentProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* PodcastDeviceProto device */ 1:
+                    message.device = PodcastDeviceProto.internalBinaryRead(reader, reader.uint32(), options, message.device);
+                    break;
+                case /* PodcastLocaleProto locale */ 2:
+                    message.locale = PodcastLocaleProto.internalBinaryRead(reader, reader.uint32(), options, message.locale);
+                    break;
+                case /* PodcastUserInterfaceStyleProto user_interface_style */ 3:
+                    message.userInterfaceStyle = reader.int32();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PodcastUserAgentProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* PodcastDeviceProto device = 1; */
+        if (message.device)
+            PodcastDeviceProto.internalBinaryWrite(message.device, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastLocaleProto locale = 2; */
+        if (message.locale)
+            PodcastLocaleProto.internalBinaryWrite(message.locale, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* PodcastUserInterfaceStyleProto user_interface_style = 3; */
+        if (message.userInterfaceStyle !== 0)
+            writer.tag(3, WireType.Varint).int32(message.userInterfaceStyle);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message PodcastUserAgentProto
+ */
+export const PodcastUserAgentProto = new PodcastUserAgentProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PodcastLocaleProto$Type extends MessageType<PodcastLocaleProto> {
+    constructor() {
+        super("PodcastLocaleProto", [
+            { no: 1, name: "language", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "country", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "time_zone", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PodcastLocaleProto>): PodcastLocaleProto {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.language = "";
+        message.country = "";
+        message.timeZone = "";
+        if (value !== undefined)
+            reflectionMergePartial<PodcastLocaleProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastLocaleProto): PodcastLocaleProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string language */ 1:
+                    message.language = reader.string();
+                    break;
+                case /* string country */ 2:
+                    message.country = reader.string();
+                    break;
+                case /* string time_zone */ 3:
+                    message.timeZone = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PodcastLocaleProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string language = 1; */
+        if (message.language !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.language);
+        /* string country = 2; */
+        if (message.country !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.country);
+        /* string time_zone = 3; */
+        if (message.timeZone !== "")
+            writer.tag(3, WireType.LengthDelimited).string(message.timeZone);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message PodcastLocaleProto
+ */
+export const PodcastLocaleProto = new PodcastLocaleProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PodcastDeviceProto$Type extends MessageType<PodcastDeviceProto> {
+    constructor() {
+        super("PodcastDeviceProto", [
+            { no: 1, name: "ios", kind: "message", oneof: "type", T: () => PodcastIOSDeviceProto }
+        ]);
+    }
+    create(value?: PartialMessage<PodcastDeviceProto>): PodcastDeviceProto {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.type = { oneofKind: undefined };
+        if (value !== undefined)
+            reflectionMergePartial<PodcastDeviceProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastDeviceProto): PodcastDeviceProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* PodcastIOSDeviceProto ios */ 1:
+                    message.type = {
+                        oneofKind: "ios",
+                        ios: PodcastIOSDeviceProto.internalBinaryRead(reader, reader.uint32(), options, (message.type as any).ios)
+                    };
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PodcastDeviceProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* PodcastIOSDeviceProto ios = 1; */
+        if (message.type.oneofKind === "ios")
+            PodcastIOSDeviceProto.internalBinaryWrite(message.type.ios, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message PodcastDeviceProto
+ */
+export const PodcastDeviceProto = new PodcastDeviceProto$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PodcastIOSDeviceProto$Type extends MessageType<PodcastIOSDeviceProto> {
+    constructor() {
+        super("PodcastIOSDeviceProto", [
+            { no: 1, name: "device_model", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "device_identifier", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "is_simulator", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 4, name: "os_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "os_version", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "app_bundle_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 7, name: "app_bundle_version", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 8, name: "app_build_number", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PodcastIOSDeviceProto>): PodcastIOSDeviceProto {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.deviceModel = "";
+        message.deviceIdentifier = "";
+        message.isSimulator = false;
+        message.osName = "";
+        message.osVersion = "";
+        message.appBundleName = "";
+        message.appBundleVersion = "";
+        message.appBuildNumber = "";
+        if (value !== undefined)
+            reflectionMergePartial<PodcastIOSDeviceProto>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastIOSDeviceProto): PodcastIOSDeviceProto {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string device_model */ 1:
+                    message.deviceModel = reader.string();
+                    break;
+                case /* string device_identifier */ 2:
+                    message.deviceIdentifier = reader.string();
+                    break;
+                case /* bool is_simulator */ 3:
+                    message.isSimulator = reader.bool();
+                    break;
+                case /* string os_name */ 4:
+                    message.osName = reader.string();
+                    break;
+                case /* string os_version */ 5:
+                    message.osVersion = reader.string();
+                    break;
+                case /* string app_bundle_name */ 6:
+                    message.appBundleName = reader.string();
+                    break;
+                case /* string app_bundle_version */ 7:
+                    message.appBundleVersion = reader.string();
+                    break;
+                case /* string app_build_number */ 8:
+                    message.appBuildNumber = reader.string();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PodcastIOSDeviceProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string device_model = 1; */
+        if (message.deviceModel !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.deviceModel);
+        /* string device_identifier = 2; */
+        if (message.deviceIdentifier !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.deviceIdentifier);
+        /* bool is_simulator = 3; */
+        if (message.isSimulator !== false)
+            writer.tag(3, WireType.Varint).bool(message.isSimulator);
+        /* string os_name = 4; */
+        if (message.osName !== "")
+            writer.tag(4, WireType.LengthDelimited).string(message.osName);
+        /* string os_version = 5; */
+        if (message.osVersion !== "")
+            writer.tag(5, WireType.LengthDelimited).string(message.osVersion);
+        /* string app_bundle_name = 6; */
+        if (message.appBundleName !== "")
+            writer.tag(6, WireType.LengthDelimited).string(message.appBundleName);
+        /* string app_bundle_version = 7; */
+        if (message.appBundleVersion !== "")
+            writer.tag(7, WireType.LengthDelimited).string(message.appBundleVersion);
+        /* string app_build_number = 8; */
+        if (message.appBuildNumber !== "")
+            writer.tag(8, WireType.LengthDelimited).string(message.appBuildNumber);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message PodcastIOSDeviceProto
+ */
+export const PodcastIOSDeviceProto = new PodcastIOSDeviceProto$Type();
