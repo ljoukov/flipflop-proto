@@ -1555,9 +1555,9 @@ export interface PodcastUserAgentProto {
      */
     accessibilitySettings?: PodcastAccessibilitySettingsProto;
     /**
-     * @generated from protobuf field: PodcastAudioSettings audio_settings = 5;
+     * @generated from protobuf field: PodcastAudioSettingsProto audio_settings = 5;
      */
-    audioSettings?: PodcastAudioSettings;
+    audioSettings?: PodcastAudioSettingsProto;
 }
 /**
  * @generated from protobuf message PodcastLocaleProto
@@ -1656,9 +1656,9 @@ export interface PodcastAccessibilitySettingsProto {
     reduceMotion: boolean;
 }
 /**
- * @generated from protobuf message PodcastAudioSettings
+ * @generated from protobuf message PodcastAudioSettingsProto
  */
-export interface PodcastAudioSettings {
+export interface PodcastAudioSettingsProto {
     /**
      * @generated from protobuf field: float output_volume = 1;
      */
@@ -7066,7 +7066,7 @@ class PodcastUserAgentProto$Type extends MessageType<PodcastUserAgentProto> {
             { no: 2, name: "locale", kind: "message", T: () => PodcastLocaleProto },
             { no: 3, name: "user_interface_style", kind: "enum", T: () => ["PodcastUserInterfaceStyleProto", PodcastUserInterfaceStyleProto, "PODCAST_USER_INTERFACE_STYLE_PROTO_"] },
             { no: 4, name: "accessibility_settings", kind: "message", T: () => PodcastAccessibilitySettingsProto },
-            { no: 5, name: "audio_settings", kind: "message", T: () => PodcastAudioSettings }
+            { no: 5, name: "audio_settings", kind: "message", T: () => PodcastAudioSettingsProto }
         ]);
     }
     create(value?: PartialMessage<PodcastUserAgentProto>): PodcastUserAgentProto {
@@ -7093,8 +7093,8 @@ class PodcastUserAgentProto$Type extends MessageType<PodcastUserAgentProto> {
                 case /* PodcastAccessibilitySettingsProto accessibility_settings */ 4:
                     message.accessibilitySettings = PodcastAccessibilitySettingsProto.internalBinaryRead(reader, reader.uint32(), options, message.accessibilitySettings);
                     break;
-                case /* PodcastAudioSettings audio_settings */ 5:
-                    message.audioSettings = PodcastAudioSettings.internalBinaryRead(reader, reader.uint32(), options, message.audioSettings);
+                case /* PodcastAudioSettingsProto audio_settings */ 5:
+                    message.audioSettings = PodcastAudioSettingsProto.internalBinaryRead(reader, reader.uint32(), options, message.audioSettings);
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -7120,9 +7120,9 @@ class PodcastUserAgentProto$Type extends MessageType<PodcastUserAgentProto> {
         /* PodcastAccessibilitySettingsProto accessibility_settings = 4; */
         if (message.accessibilitySettings)
             PodcastAccessibilitySettingsProto.internalBinaryWrite(message.accessibilitySettings, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
-        /* PodcastAudioSettings audio_settings = 5; */
+        /* PodcastAudioSettingsProto audio_settings = 5; */
         if (message.audioSettings)
-            PodcastAudioSettings.internalBinaryWrite(message.audioSettings, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+            PodcastAudioSettingsProto.internalBinaryWrite(message.audioSettings, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -7429,22 +7429,22 @@ class PodcastAccessibilitySettingsProto$Type extends MessageType<PodcastAccessib
  */
 export const PodcastAccessibilitySettingsProto = new PodcastAccessibilitySettingsProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class PodcastAudioSettings$Type extends MessageType<PodcastAudioSettings> {
+class PodcastAudioSettingsProto$Type extends MessageType<PodcastAudioSettingsProto> {
     constructor() {
-        super("PodcastAudioSettings", [
+        super("PodcastAudioSettingsProto", [
             { no: 1, name: "output_volume", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
             { no: 2, name: "output_ports", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
-    create(value?: PartialMessage<PodcastAudioSettings>): PodcastAudioSettings {
+    create(value?: PartialMessage<PodcastAudioSettingsProto>): PodcastAudioSettingsProto {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.outputVolume = 0;
         message.outputPorts = [];
         if (value !== undefined)
-            reflectionMergePartial<PodcastAudioSettings>(this, message, value);
+            reflectionMergePartial<PodcastAudioSettingsProto>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastAudioSettings): PodcastAudioSettings {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PodcastAudioSettingsProto): PodcastAudioSettingsProto {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -7466,7 +7466,7 @@ class PodcastAudioSettings$Type extends MessageType<PodcastAudioSettings> {
         }
         return message;
     }
-    internalBinaryWrite(message: PodcastAudioSettings, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: PodcastAudioSettingsProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* float output_volume = 1; */
         if (message.outputVolume !== 0)
             writer.tag(1, WireType.Bit32).float(message.outputVolume);
@@ -7480,6 +7480,6 @@ class PodcastAudioSettings$Type extends MessageType<PodcastAudioSettings> {
     }
 }
 /**
- * @generated MessageType for protobuf message PodcastAudioSettings
+ * @generated MessageType for protobuf message PodcastAudioSettingsProto
  */
-export const PodcastAudioSettings = new PodcastAudioSettings$Type();
+export const PodcastAudioSettingsProto = new PodcastAudioSettingsProto$Type();

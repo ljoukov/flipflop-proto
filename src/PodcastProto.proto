@@ -575,7 +575,7 @@ message PodcastUserAgentProto {
   PodcastLocaleProto locale = 2;
   PodcastUserInterfaceStyleProto user_interface_style = 3;
   PodcastAccessibilitySettingsProto accessibility_settings = 4;
-  PodcastAudioSettings audio_settings = 5;
+  PodcastAudioSettingsProto audio_settings = 5;
 }
 
 enum PodcastUserInterfaceStyleProto {
@@ -631,7 +631,7 @@ enum PodcastContentSizeCategoryProto {
   PODCAST_CONTENT_SIZE_CATEGORY_PROTO_ACCESSIBILITY_XXX_LARGE = 12;
 }
 
-message PodcastAudioSettings {
+message PodcastAudioSettingsProto {
   float output_volume = 1;
   repeated string output_ports = 2;
 }

@@ -2437,8 +2437,8 @@ struct PodcastUserAgentProto: @unchecked Sendable {
   /// Clears the value of `accessibilitySettings`. Subsequent reads from it will return its default value.
   mutating func clearAccessibilitySettings() {_uniqueStorage()._accessibilitySettings = nil}
 
-  var audioSettings: PodcastAudioSettings {
-    get {return _storage._audioSettings ?? PodcastAudioSettings()}
+  var audioSettings: PodcastAudioSettingsProto {
+    get {return _storage._audioSettings ?? PodcastAudioSettingsProto()}
     set {_uniqueStorage()._audioSettings = newValue}
   }
   /// Returns true if `audioSettings` has been explicitly set.
@@ -2540,7 +2540,7 @@ struct PodcastAccessibilitySettingsProto: Sendable {
   init() {}
 }
 
-struct PodcastAudioSettings: Sendable {
+struct PodcastAudioSettingsProto: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -6933,7 +6933,7 @@ extension PodcastUserAgentProto: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     var _locale: PodcastLocaleProto? = nil
     var _userInterfaceStyle: PodcastUserInterfaceStyleProto = .undefined
     var _accessibilitySettings: PodcastAccessibilitySettingsProto? = nil
-    var _audioSettings: PodcastAudioSettings? = nil
+    var _audioSettings: PodcastAudioSettingsProto? = nil
 
     #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
@@ -7248,8 +7248,8 @@ extension PodcastAccessibilitySettingsProto: SwiftProtobuf.Message, SwiftProtobu
   }
 }
 
-extension PodcastAudioSettings: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "PodcastAudioSettings"
+extension PodcastAudioSettingsProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PodcastAudioSettingsProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "output_volume"),
     2: .standard(proto: "output_ports"),
@@ -7278,7 +7278,7 @@ extension PodcastAudioSettings: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: PodcastAudioSettings, rhs: PodcastAudioSettings) -> Bool {
+  static func ==(lhs: PodcastAudioSettingsProto, rhs: PodcastAudioSettingsProto) -> Bool {
     if lhs.outputVolume != rhs.outputVolume {return false}
     if lhs.outputPorts != rhs.outputPorts {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
