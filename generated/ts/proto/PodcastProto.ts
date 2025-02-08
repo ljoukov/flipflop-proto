@@ -1673,13 +1673,13 @@ export interface PodcastAudioSettingsProto {
  */
 export interface PodcastAudioOutputPortProto {
     /**
-     * @generated from protobuf field: string name = 1;
-     */
-    name: string;
-    /**
-     * @generated from protobuf field: string type = 2;
+     * @generated from protobuf field: string type = 1;
      */
     type: string;
+    /**
+     * @generated from protobuf field: string name = 2;
+     */
+    name: string;
 }
 /**
  * @generated from protobuf enum PodcastSubscriptionSourceProto
@@ -7500,14 +7500,14 @@ export const PodcastAudioSettingsProto = new PodcastAudioSettingsProto$Type();
 class PodcastAudioOutputPortProto$Type extends MessageType<PodcastAudioOutputPortProto> {
     constructor() {
         super("PodcastAudioOutputPortProto", [
-            { no: 1, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "type", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "type", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<PodcastAudioOutputPortProto>): PodcastAudioOutputPortProto {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.name = "";
         message.type = "";
+        message.name = "";
         if (value !== undefined)
             reflectionMergePartial<PodcastAudioOutputPortProto>(this, message, value);
         return message;
@@ -7517,11 +7517,11 @@ class PodcastAudioOutputPortProto$Type extends MessageType<PodcastAudioOutputPor
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* string name */ 1:
-                    message.name = reader.string();
-                    break;
-                case /* string type */ 2:
+                case /* string type */ 1:
                     message.type = reader.string();
+                    break;
+                case /* string name */ 2:
+                    message.name = reader.string();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -7535,12 +7535,12 @@ class PodcastAudioOutputPortProto$Type extends MessageType<PodcastAudioOutputPor
         return message;
     }
     internalBinaryWrite(message: PodcastAudioOutputPortProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string name = 1; */
-        if (message.name !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.name);
-        /* string type = 2; */
+        /* string type = 1; */
         if (message.type !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.type);
+            writer.tag(1, WireType.LengthDelimited).string(message.type);
+        /* string name = 2; */
+        if (message.name !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.name);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
