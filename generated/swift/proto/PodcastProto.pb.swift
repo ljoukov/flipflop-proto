@@ -2352,7 +2352,7 @@ struct PodcastLocaleProto: Sendable {
 
   var language: String = String()
 
-  var country: String = String()
+  var region: String = String()
 
   var timeZone: String = String()
 
@@ -6804,7 +6804,7 @@ extension PodcastLocaleProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
   static let protoMessageName: String = "PodcastLocaleProto"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "language"),
-    2: .same(proto: "country"),
+    2: .same(proto: "region"),
     3: .standard(proto: "time_zone"),
   ]
 
@@ -6815,7 +6815,7 @@ extension PodcastLocaleProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.language) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.country) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.region) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.timeZone) }()
       default: break
       }
@@ -6826,8 +6826,8 @@ extension PodcastLocaleProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     if !self.language.isEmpty {
       try visitor.visitSingularStringField(value: self.language, fieldNumber: 1)
     }
-    if !self.country.isEmpty {
-      try visitor.visitSingularStringField(value: self.country, fieldNumber: 2)
+    if !self.region.isEmpty {
+      try visitor.visitSingularStringField(value: self.region, fieldNumber: 2)
     }
     if !self.timeZone.isEmpty {
       try visitor.visitSingularStringField(value: self.timeZone, fieldNumber: 3)
@@ -6837,7 +6837,7 @@ extension PodcastLocaleProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
 
   static func ==(lhs: PodcastLocaleProto, rhs: PodcastLocaleProto) -> Bool {
     if lhs.language != rhs.language {return false}
-    if lhs.country != rhs.country {return false}
+    if lhs.region != rhs.region {return false}
     if lhs.timeZone != rhs.timeZone {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

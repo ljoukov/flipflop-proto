@@ -1212,9 +1212,9 @@ export interface StoredLocaleProto {
      */
     language: string;
     /**
-     * @generated from protobuf field: string country = 2;
+     * @generated from protobuf field: string region = 2;
      */
-    country: string;
+    region: string;
     /**
      * @generated from protobuf field: string time_zone = 3;
      */
@@ -5224,14 +5224,14 @@ class StoredLocaleProto$Type extends MessageType<StoredLocaleProto> {
     constructor() {
         super("StoredLocaleProto", [
             { no: 1, name: "language", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "country", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "region", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "time_zone", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<StoredLocaleProto>): StoredLocaleProto {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.language = "";
-        message.country = "";
+        message.region = "";
         message.timeZone = "";
         if (value !== undefined)
             reflectionMergePartial<StoredLocaleProto>(this, message, value);
@@ -5245,8 +5245,8 @@ class StoredLocaleProto$Type extends MessageType<StoredLocaleProto> {
                 case /* string language */ 1:
                     message.language = reader.string();
                     break;
-                case /* string country */ 2:
-                    message.country = reader.string();
+                case /* string region */ 2:
+                    message.region = reader.string();
                     break;
                 case /* string time_zone */ 3:
                     message.timeZone = reader.string();
@@ -5266,9 +5266,9 @@ class StoredLocaleProto$Type extends MessageType<StoredLocaleProto> {
         /* string language = 1; */
         if (message.language !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.language);
-        /* string country = 2; */
-        if (message.country !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.country);
+        /* string region = 2; */
+        if (message.region !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.region);
         /* string time_zone = 3; */
         if (message.timeZone !== "")
             writer.tag(3, WireType.LengthDelimited).string(message.timeZone);

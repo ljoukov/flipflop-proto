@@ -502,7 +502,7 @@ enum StoredPodcastUserInterfaceStyleProto {
 
 message StoredLocaleProto {
   string language = 1;
-  string country = 2;
+  string region = 2;
   string time_zone = 3;
 }
 
