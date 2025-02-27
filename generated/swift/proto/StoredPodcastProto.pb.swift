@@ -1250,6 +1250,11 @@ struct StoredPodcastSuggestionsSectionProto: @unchecked Sendable {
   /// Clears the value of `style`. Subsequent reads from it will return its default value.
   mutating func clearStyle() {_uniqueStorage()._style = nil}
 
+  var interestIds: [String] {
+    get {return _storage._interestIds}
+    set {_uniqueStorage()._interestIds = newValue}
+  }
+
   var bannerSuggestion: StoredPodcastSuggestionProto {
     get {return _storage._bannerSuggestion ?? StoredPodcastSuggestionProto()}
     set {_uniqueStorage()._bannerSuggestion = newValue}
@@ -3778,6 +3783,7 @@ extension StoredPodcastSuggestionsSectionProto: SwiftProtobuf.Message, SwiftProt
     2: .same(proto: "reasoning"),
     3: .same(proto: "title"),
     9: .same(proto: "style"),
+    10: .standard(proto: "interest_ids"),
     5: .standard(proto: "banner_suggestion"),
     6: .standard(proto: "footer_suggestion"),
     7: .same(proto: "story1"),
@@ -3789,6 +3795,7 @@ extension StoredPodcastSuggestionsSectionProto: SwiftProtobuf.Message, SwiftProt
     var _reasoning: String = String()
     var _title: String = String()
     var _style: StoredPodcastStyleProto? = nil
+    var _interestIds: [String] = []
     var _bannerSuggestion: StoredPodcastSuggestionProto? = nil
     var _footerSuggestion: StoredPodcastSuggestionProto? = nil
     var _story1: StoredPodcastStorySuggestionProto? = nil
@@ -3811,6 +3818,7 @@ extension StoredPodcastSuggestionsSectionProto: SwiftProtobuf.Message, SwiftProt
       _reasoning = source._reasoning
       _title = source._title
       _style = source._style
+      _interestIds = source._interestIds
       _bannerSuggestion = source._bannerSuggestion
       _footerSuggestion = source._footerSuggestion
       _story1 = source._story1
@@ -3841,6 +3849,7 @@ extension StoredPodcastSuggestionsSectionProto: SwiftProtobuf.Message, SwiftProt
         case 7: try { try decoder.decodeSingularMessageField(value: &_storage._story1) }()
         case 8: try { try decoder.decodeSingularMessageField(value: &_storage._story2) }()
         case 9: try { try decoder.decodeSingularMessageField(value: &_storage._style) }()
+        case 10: try { try decoder.decodeRepeatedStringField(value: &_storage._interestIds) }()
         default: break
         }
       }
@@ -3877,6 +3886,9 @@ extension StoredPodcastSuggestionsSectionProto: SwiftProtobuf.Message, SwiftProt
       try { if let v = _storage._style {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 9)
       } }()
+      if !_storage._interestIds.isEmpty {
+        try visitor.visitRepeatedStringField(value: _storage._interestIds, fieldNumber: 10)
+      }
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -3890,6 +3902,7 @@ extension StoredPodcastSuggestionsSectionProto: SwiftProtobuf.Message, SwiftProt
         if _storage._reasoning != rhs_storage._reasoning {return false}
         if _storage._title != rhs_storage._title {return false}
         if _storage._style != rhs_storage._style {return false}
+        if _storage._interestIds != rhs_storage._interestIds {return false}
         if _storage._bannerSuggestion != rhs_storage._bannerSuggestion {return false}
         if _storage._footerSuggestion != rhs_storage._footerSuggestion {return false}
         if _storage._story1 != rhs_storage._story1 {return false}

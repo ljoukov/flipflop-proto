@@ -257,6 +257,7 @@ message StoredPodcastSuggestionsSectionProto {
   string title = 3;
   reserved 4;  // deprecated style_prompt
   StoredPodcastStyleProto style = 9;
+  repeated string interest_ids = 10;
 
   StoredPodcastSuggestionProto banner_suggestion = 5;
   StoredPodcastSuggestionProto footer_suggestion = 6;

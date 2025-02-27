@@ -580,6 +580,10 @@ export interface StoredPodcastSuggestionsSectionProto {
      */
     style?: StoredPodcastStyleProto;
     /**
+     * @generated from protobuf field: repeated string interest_ids = 10;
+     */
+    interestIds: string[];
+    /**
      * @generated from protobuf field: StoredPodcastSuggestionProto banner_suggestion = 5;
      */
     bannerSuggestion?: StoredPodcastSuggestionProto;
@@ -3415,6 +3419,7 @@ class StoredPodcastSuggestionsSectionProto$Type extends MessageType<StoredPodcas
             { no: 2, name: "reasoning", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 9, name: "style", kind: "message", T: () => StoredPodcastStyleProto },
+            { no: 10, name: "interest_ids", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "banner_suggestion", kind: "message", T: () => StoredPodcastSuggestionProto },
             { no: 6, name: "footer_suggestion", kind: "message", T: () => StoredPodcastSuggestionProto },
             { no: 7, name: "story1", kind: "message", T: () => StoredPodcastStorySuggestionProto },
@@ -3426,6 +3431,7 @@ class StoredPodcastSuggestionsSectionProto$Type extends MessageType<StoredPodcas
         message.sectionId = "";
         message.reasoning = "";
         message.title = "";
+        message.interestIds = [];
         if (value !== undefined)
             reflectionMergePartial<StoredPodcastSuggestionsSectionProto>(this, message, value);
         return message;
@@ -3446,6 +3452,9 @@ class StoredPodcastSuggestionsSectionProto$Type extends MessageType<StoredPodcas
                     break;
                 case /* StoredPodcastStyleProto style */ 9:
                     message.style = StoredPodcastStyleProto.internalBinaryRead(reader, reader.uint32(), options, message.style);
+                    break;
+                case /* repeated string interest_ids */ 10:
+                    message.interestIds.push(reader.string());
                     break;
                 case /* StoredPodcastSuggestionProto banner_suggestion */ 5:
                     message.bannerSuggestion = StoredPodcastSuggestionProto.internalBinaryRead(reader, reader.uint32(), options, message.bannerSuggestion);
@@ -3483,6 +3492,9 @@ class StoredPodcastSuggestionsSectionProto$Type extends MessageType<StoredPodcas
         /* StoredPodcastStyleProto style = 9; */
         if (message.style)
             StoredPodcastStyleProto.internalBinaryWrite(message.style, writer.tag(9, WireType.LengthDelimited).fork(), options).join();
+        /* repeated string interest_ids = 10; */
+        for (let i = 0; i < message.interestIds.length; i++)
+            writer.tag(10, WireType.LengthDelimited).string(message.interestIds[i]);
         /* StoredPodcastSuggestionProto banner_suggestion = 5; */
         if (message.bannerSuggestion)
             StoredPodcastSuggestionProto.internalBinaryWrite(message.bannerSuggestion, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
